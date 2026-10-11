@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-11",
+  "attribution": "Derek physical test reply in current task; not inferred from DOM trace",
+  "prepared_state": {
+    "reported_zoom_percent": 125,
+    "observed_dpr": 2.5,
+    "jaw_width": 0,
+    "revision": 3,
+    "screenshot": "observed/chrome-physical-ready125.png"
+  },
+  "requested_checks": [
+    "After Restart, enter 女娲 with Chinese IME in Work: candidates near caret, Space selects once and does not pause scene",
+    "Command+A/V, switch to input recovery control tab and back, continue Chinese input",
+    "Physical continuous jaw drag followed by one Undo back to0"
+  ],
+  "reply_verbatim": "三项全部正常",
+  "result": "PASS (human reported; all three requested cases)",
+  "handback": {
+    "screenshot": "observed/chrome-human-handback.png",
+    "work": "observed/chrome-human-after.nvwa.json",
+    "revision": 7,
+    "jaw_width": 0,
+    "complete_baseline_content_restored": true,
+    "gesture_count_inferred": false
+  },
+  "limits": [
+    "Exact input-method name not collected",
+    "No candidate screenshot or per-action timing",
+    "DOM recovery trace contains untrusted compositionend sequence710 of unknown origin; conservative checker remains PARTIAL",
+    "Scale tail truncated to rows326–1125; not full-session proof"
+  ]
+}

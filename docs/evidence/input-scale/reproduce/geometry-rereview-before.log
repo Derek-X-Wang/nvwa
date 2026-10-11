@@ -1,0 +1,131 @@
+.FFFFFFFFFFFEFF
+======================================================================
+ERROR: test_retained_tail_is_only_interval_proof (__main__.GeometryCaptureTests.test_retained_tail_is_only_interval_proof)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 126, in test_retained_tail_is_only_interval_proof
+    self.assertEqual(result['inventory']['first_index'],70)
+                     ~~~~~~^^^^^^^^^^^^^
+KeyError: 'inventory'
+
+======================================================================
+FAIL: test_actual_stale_pair_rejected (__main__.GeometryCaptureTests.test_actual_stale_pair_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 42, in test_actual_stale_pair_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_click_time_dpr_mutant_rejected (__main__.GeometryCaptureTests.test_click_time_dpr_mutant_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 66, in test_click_time_dpr_mutant_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_duplicate_index_rejected (__main__.GeometryCaptureTests.test_duplicate_index_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 119, in test_duplicate_index_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_external_focus_transfer_rejected (__main__.GeometryCaptureTests.test_external_focus_transfer_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 107, in test_external_focus_transfer_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_index_gap_rejected (__main__.GeometryCaptureTests.test_index_gap_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 113, in test_index_gap_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_intermediate_scale_change_rejected_even_if_restored (__main__.GeometryCaptureTests.test_intermediate_scale_change_rejected_even_if_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 89, in test_intermediate_scale_change_rejected_even_if_restored
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_intervening_document_focus_loss_rejected (__main__.GeometryCaptureTests.test_intervening_document_focus_loss_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 77, in test_intervening_document_focus_loss_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_intervening_outside_pointer_rejected (__main__.GeometryCaptureTests.test_intervening_outside_pointer_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 71, in test_intervening_outside_pointer_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_intervening_resize_rejected_even_if_final_size_restored (__main__.GeometryCaptureTests.test_intervening_resize_rejected_even_if_final_size_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 82, in test_intervening_resize_rejected_even_if_final_size_restored
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_max_age_deadline_rejected (__main__.GeometryCaptureTests.test_max_age_deadline_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 102, in test_max_age_deadline_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_other_pointer_timer_rejected (__main__.GeometryCaptureTests.test_other_pointer_timer_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 95, in test_other_pointer_timer_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_review_exact_intervening_pointer_mutant_rejected (__main__.GeometryCaptureTests.test_review_exact_intervening_pointer_mutant_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 58, in test_review_exact_intervening_pointer_mutant_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_review_exact_stale_click_dpr_mutant_rejected (__main__.GeometryCaptureTests.test_review_exact_stale_click_dpr_mutant_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/experiments/20-scale-boundary/test_geometry.py", line 49, in test_review_exact_stale_click_dpr_mutant_rejected
+    with self.assertRaises(AssertionError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.035s
+
+FAILED (failures=13, errors=1)

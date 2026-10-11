@@ -28,3 +28,13 @@ PARTIAL — M0 and eleven isolated experiment reports retain actual evidence or 
 
 
 Later acceptance update: Derek manually unlocked the Mac. The same current native binary (`3be9380f…`) now exits0 with a visually inspected real character playing wave, revision9 and18 joints/4 morphs/3 timeline entries. [Unlocked native evidence](evidence/single-transfer/native-unlocked.png) supersedes only the earlier blocked visual result; both black captures remain retained failures. This is a functional smoke, not a current performance benchmark. PR18 is merged at `07858fe6b5d6062200d28df654c5ce53ad89007b`, with #1/#19 closed; #2/#3 remain open. PR20 remains pending merge; PR21 completes local acceptance and is pending review/merge.
+
+## 2026-10-11：输入恢复与缩放边界
+
+| 实验 | 决定 | 已运行证据与边界 |
+| --- | --- | --- |
+| [19 输入恢复](../experiments/19-input-focus-recovery/REPORT.md) | 采用被动诊断工具；无产品修复 | 实际 Chrome 标签离开/返回后自然继续输入，完整作品不变；Derek 的125%中文/Space、Command+A/V与切换恢复通过。来源不明的 untrusted compositionend 保留 PARTIAL。 |
+| [20 缩放边界](../experiments/20-scale-boundary/README.md) | 正常 Chrome zoom 通过；原始 IAB 问题保留 | 实际 DPR2→2.2→2.5→2；点击/光标、jaw修改/Undo、完整作品检查通过。独立审查修复证据检查器误判，15测试通过；旧脚本13断言失败与1schema错误保留。CSS也改变，固定CSS DPR隔离和原始IAB入口 NOT-RUN。 |
+| [21 完整作品检查](../experiments/21-input-scale-evidence-checks/README.md) | 保留独立离线核验 | 实际 tab-return 全文含revision相等；jaw修改/Undo全文核验通过。该检查器只要求revision递增；单次提交断言由实验20承担。数值几何一致不等于输入命中。 |
+
+复现、运行环境、精确原始JSON/截图、真人归因和清理记录统一见[验收](evidence/input-scale/ACCEPTANCE.md)。无新增 Cargo 依赖、重编译或性能测试；当前正式 Rust/资产输入31项与已验收构建保持相同。
