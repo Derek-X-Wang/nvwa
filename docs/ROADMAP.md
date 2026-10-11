@@ -11,12 +11,15 @@ Latest continuous-idle follow-up: identical revision0 Work and Studio1280×720 o
 | M0：双端 Rust Studio |真实角色、骨骼/形变、共享命令、撤销/重做、保存与跨端交换|已交付；双端真实运行。当前 main 为571604f，包含已验收的93测试整合版|
 | 薄 M1：编排与分享 |三段5–10s动作、播放/暂停/定位、点击互动、静态双端 Player|已交付；PR17/18/20/21已合并。基本中文/IME/剪贴板/恢复验收通过；长期历史已限制，角色单次下载已验证|
 | M1 稳定与发行验收 |输入/缩放、启动/性能、发行包与平台矩阵|正在补证据；本轮三个诊断实验已实际运行，zoom/DPR、稳定性能、其他平台和签名发行仍未完成|
+| M1.1：编辑器体验与 Web 构建优化验证 |共享 egui 组件小原型、Web 构建 A/B、实际双端运行与测试、采用结论|2026-10-11 已授权并开始；实验准备并行，重编译与 GPU 验收排队。通过后再决定哪些进入主线；不扩大 M2|
 | M2：真实动作生成 |一个真实provider、任务/取消/失败、规范化动作、rig映射与播放质量|尚未获准实施；现有preset导入不能视为生成。先明确模型/权重许可、runtime和输出合同|
 | 后续：更广角色生态 |Blender插件→额外角色/服装→指定版本VRM→有限IK/接触→只读VaM检查|全为候选；另定范围。软体物理、VR、多人、市场和任意脚本不在本轮|
 
 **当前路径：**先完成已授权薄M1的稳定性证据，再验证可分发构建。PR18/20/21已依次合并，#1/#6/#8/#19关闭。#2/#3/#4保留：DPR1视口缩放和native scale2实测通过，但真实Web zoom/DPR变化、隔离的连续动画性能、精确首帧和Web/GPU内存仍未知。基础真人输入验收沿用Derek的明确结果，不把自动化限制当产品缺陷。当前实验报告：[native启动/RSS](evidence/native-startup/ACCEPTANCE.md)、[Web启动边界](evidence/web-startup/ACCEPTANCE.md)、[视口/HiDPI](evidence/viewport-boundary/ACCEPTANCE.md)、[独立复审](evidence/startup-viewport-review.md)。不承诺日期；M2与一般rig、VaM仍需另定范围。
 
 ## 已验证的风险与限制
+
+M1.1 的问题、对照与退出条件见[实施合同](implementation/m1-1-experiment-contract.md)，参考[Storytold 源码研究](research/2026-10-11-storytold-rust-editor-lessons.md)。本阶段以实际运行与证据为完成标准；研究建议和编译成功不能替代功能或性能验收。
 
 | 项目 | 证据支持的结论 | 影响/仍未知 |
 |---|---|---|
