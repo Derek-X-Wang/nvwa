@@ -1,0 +1,76 @@
+   Compiling nvwa-runtime v0.1.0 (/Users/derekxwang/.codex/worktrees/single-glb-transfer/nvwa/crates/nvwa-runtime)
+warning: this lint expectation is unfulfilled
+   --> crates/nvwa-runtime/src/loading_tests.rs:409:5
+    |
+409 |     deprecated,
+    |     ^^^^^^^^^^
+    |
+    = note: Inspect immutable scene contents without emitting asset modification events
+    = note: `#[warn(unfulfilled_lint_expectations)]` on by default
+
+warning: `nvwa-runtime` (lib test) generated 1 warning
+    Finished `test` profile [optimized + debuginfo] target(s) in 16.17s
+     Running unittests src/lib.rs (target/single-glb-transfer/debug/deps/nvwa_runtime-74980f9e59502172)
+
+running 31 tests
+test loading_tests::asynchronous_io_failure_cannot_reuse_verified_scene_and_recovers ... ok
+test loading_tests::corrupt_and_missing_sources_recover_on_same_path_work_open ... ok
+test loading_tests::long_lived_ready_reader_failure_preserves_specific_error_until_recovery ... FAILED
+test loading_tests::matching_hash_glb_with_gltf_parse_error_surfaces_and_recovers ... ok
+test loading_tests::one_retrieval_supplies_hash_scene_skin_morphs_and_animations ... ok
+test loading_tests::ready_character_replaced_by_corrupt_bytes_is_not_exposed ... ok
+test loading_tests::same_path_overlapping_opens_a_first_never_publish_a_to_current_work ... FAILED
+test loading_tests::same_path_overlapping_opens_attempt_b_first_fences_stale_scene_mesh_animation ... FAILED
+test loading_tests::switching_to_a_new_asset_path_retrieves_it_once ... ok
+test loading_tests::wrong_profile_then_correct_profile_at_same_path_requires_fresh_retrieval ... ok
+test tests::actual_async_reload_waits_for_fresh_bytes_and_recovers_hash_error ... ok
+test tests::character_click_wave_restores_running_sequence_cursor_and_history ... ok
+test tests::character_hotspot_rejects_background_stale_clicks_and_tracks_animated_joint ... ok
+test tests::character_interaction_cancels_on_open_edit_undo_and_player_loss ... ok
+test tests::character_wave_restores_paused_completed_and_m0_loop_samples ... ok
+test tests::chest_and_head_hotspots_accept_small_scale_centers_without_accepting_outside ... ok
+test tests::current_gltf_failure_is_visible_until_a_fresh_success ... ok
+test tests::explicit_same_profile_open_changes_load_generation_but_edits_do_not ... ok
+test tests::fresh_successful_gltf_completion_clears_superseded_parse_error ... ok
+test tests::gap_holds_source_endpoint_and_nonunit_speed_maps_wall_time ... ok
+test tests::invalid_preview_preserves_document_and_previous_valid_preview ... ok
+test tests::m0_loop_pause_holds_rendered_joint_and_resume_advances_in_production_order ... ok
+test tests::opening_same_profile_with_empty_timeline_stops_existing_animation ... ok
+test tests::overlap_transaction_is_rejected_without_changing_cursor_or_joint ... ok
+test tests::repeated_preview_is_one_undoable_transaction ... ok
+test tests::repeated_source_entries_backward_seeks_completion_and_restart_are_deterministic ... ok
+test tests::replacement_player_initializes_already_applied_clip_and_advances ... ok
+test tests::replacing_document_discards_transient_preview ... ok
+test tests::sequence_advances_real_joint_across_boundaries_and_pause_seek_holds ... ok
+test tests::sequence_reopen_undo_and_replacement_player_reset_and_sample_real_pose ... ok
+test tests::startup_waits_for_explicit_work_without_falling_back_to_fixture ... ok
+
+failures:
+
+---- loading_tests::long_lived_ready_reader_failure_preserves_specific_error_until_recovery stdout ----
+
+thread 'loading_tests::long_lived_ready_reader_failure_preserves_specific_error_until_recovery' (20492301) panicked at crates/nvwa-runtime/src/loading_tests.rs:561:5:
+Terminal I/O error was replaced: Asset verification exceeded 30 seconds
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- loading_tests::same_path_overlapping_opens_a_first_never_publish_a_to_current_work stdout ----
+
+thread 'loading_tests::same_path_overlapping_opens_a_first_never_publish_a_to_current_work' (20492307) panicked at crates/nvwa-runtime/src/loading_tests.rs:513:5:
+Superseded A authorized the current generation's error: RuntimeStatus { phase: "Loading character…", error: Some("asset_hash_mismatch: asset SHA-256 mismatch: expected f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6, received 5204fa6843bc70415f8732b0e328aa60e69c52423332cba25d89cc7f3456d07a"), ready: false, meshes: 0, skins: 0, joints: 0, morph_nodes: 0, morph_weights: 0, players: 0, active_animations: 0, paused_animations: 0, frames: 81, frame_times_ms: [0.0, 0.839834, 0.145541, 1.64325, 1.6793749, 1.66375, 1.653875, 1.692084, 1.6707909, 1.691167, 1.697083, 1.727959, 1.73775, 1.661916, 1.6407499, 1.1840839, 1.731208, 1.6605829, 1.721209, 1.729875, 1.6775409, 1.725125, 1.683667, 1.663875, 1.655708, 1.622334, 1.6251249, 1.322791, 1.711125, 1.636917, 1.412792, 1.730291, 1.682334, 1.698541, 1.6439999, 1.628334, 1.624125, 1.613583, 1.609917, 1.718791, 1.735209, 1.738291, 1.715042, 1.6767501, 1.6895, 1.702708, 1.695542, 1.678625, 1.686958, 1.676584, 1.715333, 1.726208, 1.706084, 1.6365, 1.6364579, 1.635958, 1.678, 1.644875, 1.664625, 1.646875, 1.761834, 1.6967081, 1.668583, 1.6195, 1.663, 1.700375, 1.684417, 12.711708, 12.530917, 1.697708, 1.628834, 1.625458, 1.699208, 1.7229999, 1.282084, 1.734083, 1.20675, 1.770875, 1.679125, 1.677083, 1.660584], first_ready_seconds: None, ready_frames: 0, warmed_frame_times_ms: [] }
+
+---- loading_tests::same_path_overlapping_opens_attempt_b_first_fences_stale_scene_mesh_animation stdout ----
+
+thread 'loading_tests::same_path_overlapping_opens_attempt_b_first_fences_stale_scene_mesh_animation' (20492321) panicked at crates/nvwa-runtime/src/loading_tests.rs:496:9:
+assertion `left == right` failed: Rejected A overwrote B's live scene/mesh/animation assets
+  left: SceneFingerprint { scene_head: Vec3(0.0, 5.1, 0.0), mesh_position: Vec3(4.922, 1.6842226, 0.16451678), animation_duration: 6.0833335, live_head: Vec3(0.0, 0.100000024, 0.0) }
+ right: SceneFingerprint { scene_head: Vec3(0.0, 0.100000024, 0.0), mesh_position: Vec3(-0.078, 1.6842226, 0.16451678), animation_duration: 3.0416667, live_head: Vec3(0.0, 0.100000024, 0.0) }
+
+
+failures:
+    loading_tests::long_lived_ready_reader_failure_preserves_specific_error_until_recovery
+    loading_tests::same_path_overlapping_opens_a_first_never_publish_a_to_current_work
+    loading_tests::same_path_overlapping_opens_attempt_b_first_fences_stale_scene_mesh_animation
+
+test result: FAILED. 28 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.88s
+
+error: test failed, to rerun pass `-p nvwa-runtime --lib`
