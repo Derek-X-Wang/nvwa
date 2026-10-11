@@ -1,0 +1,19 @@
+   Compiling nvwa-studio v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-studio)
+    Finished `test` profile [optimized + debuginfo] target(s) in 5.06s
+     Running unittests src/lib.rs (target/debug/deps/nvwa_studio-e3c988591ca20719)
+
+running 12 tests
+test web_input::tests::command_keys_use_event_modifiers_and_browser_paste_delivery ... ok
+test web_input::tests::composition_input_and_repeated_commits_have_one_owner ... ok
+test web_input::tests::batched_commit_then_new_preedit_cancel_preserves_intermediate_commit ... ok
+test web_input::tests::confirmed_selected_text_replaces_once_and_space_is_ordinary_text ... ok
+test web_input::tests::desktop_web_platform_metadata_preserves_unsupported_shortcuts ... ok
+test web_input::tests::canceled_preedit_never_mutates_canonical_path_or_cursor ... ok
+test web_input::tests::commit_select_all_then_preedit_cancel_preserves_commit_and_selection ... ok
+test web_input::tests::control_repeat_release_and_command_paste_keep_editor_ownership ... ok
+test web_input::tests::select_all_then_preedit_cancel_preserves_original_selection_and_text ... ok
+test web_input::tests::paste_normalizes_singleline_and_deduplicates_followup ... ok
+test web_input::tests::control_navigation_moves_canonical_work_cursor_on_mac ... ok
+test web_input::tests::control_deletion_shortcuts_edit_canonical_work ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 19 filtered out; finished in 0.01s

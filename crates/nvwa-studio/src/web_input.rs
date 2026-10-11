@@ -78,12 +78,22 @@ pub(super) fn work_text_edit(ui: &mut egui::Ui, text: &mut String, width: f32) {
         .show(ui);
 }
 
+/// The desktop proxy and egui must interpret the same browser platform.
+/// This metadata enables egui's own macOS navigation; no edit is implemented here.
+fn configure_web_os(context: &egui::Context, user_agent: &str) {
+    context.set_os(egui::os::OperatingSystem::from_user_agent(user_agent));
+}
+
 fn key_event(
     key: &str,
     pressed: bool,
     repeat: bool,
     modifiers: egui::Modifiers,
+    mac: bool,
 ) -> Option<(Vec<egui::Event>, bool)> {
+    // Pinned egui owns the edits. macOS Control navigation does not use Command,
+    // and Shift disables those navigation forms; Control deletion works on all OSes.
+    let control_navigation = mac && modifiers.ctrl && !modifiers.shift;
     let key = match key {
         "ArrowLeft" => egui::Key::ArrowLeft,
         "ArrowRight" => egui::Key::ArrowRight,
@@ -98,7 +108,16 @@ fn key_event(
         "Enter" => egui::Key::Enter,
         "Tab" => egui::Key::Tab,
         "Escape" => egui::Key::Escape,
-        "a" | "A" if modifiers.command => egui::Key::A,
+        "a" | "A" if modifiers.command || control_navigation => egui::Key::A,
+        "b" | "B" if control_navigation => egui::Key::B,
+        "e" | "E" if control_navigation => egui::Key::E,
+        "f" | "F" if control_navigation => egui::Key::F,
+        "n" | "N" if control_navigation => egui::Key::N,
+        "p" | "P" if control_navigation => egui::Key::P,
+        "h" | "H" if modifiers.ctrl => egui::Key::H,
+        "k" | "K" if modifiers.ctrl => egui::Key::K,
+        "u" | "U" if modifiers.ctrl => egui::Key::U,
+        "w" | "W" if modifiers.ctrl => egui::Key::W,
         "c" | "C" if modifiers.command => egui::Key::C,
         "x" | "X" if modifiers.command => egui::Key::X,
         "v" | "V" if modifiers.command => egui::Key::V,
@@ -191,6 +210,7 @@ mod browser {
         shared: Shared,
         wake: Wake,
         listeners: Vec<Listener>,
+        user_agent: String,
     }
     impl Agent {
         fn listen(
@@ -252,6 +272,12 @@ mod browser {
     impl Plugin for DesktopWebInputPlugin {
         fn build(&self, app: &mut App) {
             app.add_systems(Startup, install.after(EguiStartupSet::InitContexts))
+                .add_systems(
+                    PreUpdate,
+                    initialize_context_os
+                        .after(EguiPreUpdateSet::InitContexts)
+                        .before(EguiInputSet::WriteEguiEvents),
+                )
                 .add_systems(
                     PreUpdate,
                     discard_external_clipboard
@@ -329,6 +355,7 @@ mod browser {
             shared,
             wake,
             listeners: Vec::new(),
+            user_agent: ua.clone(),
         };
         install_listeners(&mut agent, ua.contains("Mac"))?;
         agent
@@ -339,6 +366,18 @@ mod browser {
             .map_err(|e| format!("Web text append: {e:?}"))?;
         world.insert_non_send(agent);
         Ok(())
+    }
+
+    fn initialize_context_os(
+        agent: Option<NonSend<Agent>>,
+        mut contexts: Query<&mut EguiContext, Added<EguiContext>>,
+    ) {
+        let Some(agent) = agent else {
+            return;
+        };
+        for mut context in &mut contexts {
+            configure_web_os(context.get_mut(), &agent.user_agent);
+        }
     }
 
     fn install_listeners(agent: &mut Agent, mac: bool) -> Result<(), String> {
@@ -422,9 +461,13 @@ mod browser {
                         event.ctrl_key() && !event.alt_key()
                     },
                 };
-                if let Some((events, prevent)) =
-                    key_event(&event.key(), name == "keydown", event.repeat(), modifiers)
-                {
+                if let Some((events, prevent)) = key_event(
+                    &event.key(),
+                    name == "keydown",
+                    event.repeat(),
+                    modifiers,
+                    mac,
+                ) {
                     if prevent {
                         event.prevent_default();
                     }
@@ -686,6 +729,7 @@ mod tests {
                 mac_cmd: true,
                 ..Default::default()
             },
+            true,
         )
         .unwrap()
         .0
@@ -696,6 +740,172 @@ mod tests {
             .cursor
             .char_range()
             .unwrap()
+    }
+    fn keyboard_fixture(text: &str, os: egui::os::OperatingSystem) -> (egui::Context, String) {
+        let ctx = egui::Context::default();
+        let user_agent = match os {
+            egui::os::OperatingSystem::Mac => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+            egui::os::OperatingSystem::Windows => "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+            _ => "unrecognized desktop platform",
+        };
+        configure_web_os(&ctx, user_agent);
+        assert_eq!(ctx.os(), os);
+        ctx.memory_mut(|memory| memory.request_focus(work_id()));
+        let mut text = text.to_owned();
+        frame(&ctx, &mut text, vec![]);
+        (ctx, text)
+    }
+    fn transport_key(
+        ctx: &egui::Context,
+        text: &mut String,
+        key: &str,
+        modifiers: egui::Modifiers,
+    ) {
+        // A dropped DOM key must reach the behavior assertion as no editor change.
+        let events = key_event(
+            key,
+            true,
+            false,
+            modifiers,
+            ctx.os() == egui::os::OperatingSystem::Mac,
+        )
+        .map(|(events, prevent)| {
+            assert!(
+                prevent,
+                "editor operations must prevent temporary-textarea edits"
+            );
+            events
+        })
+        .unwrap_or_default();
+        frame(ctx, text, events);
+    }
+    fn position_cursor(ctx: &egui::Context, text: &mut String, index: usize) {
+        transport_key(ctx, text, "Home", egui::Modifiers::NONE);
+        for _ in 0..index {
+            transport_key(ctx, text, "ArrowRight", egui::Modifiers::NONE);
+        }
+    }
+    #[test]
+    fn control_deletion_shortcuts_edit_canonical_work() {
+        for os in [
+            egui::os::OperatingSystem::Mac,
+            egui::os::OperatingSystem::Windows,
+        ] {
+            let ctrl = egui::Modifiers {
+                ctrl: true,
+                command: os != egui::os::OperatingSystem::Mac,
+                ..Default::default()
+            };
+            for (key, initial, cursor, expected) in [
+                ("h", "abc", 3, "ab"),
+                ("K", "abc", 1, "a"),
+                ("u", "abc", 2, "c"),
+                ("W", "one two", 7, "one "),
+            ] {
+                let (ctx, mut text) = keyboard_fixture(initial, os);
+                position_cursor(&ctx, &mut text, cursor);
+                transport_key(&ctx, &mut text, key, ctrl);
+                assert_eq!(text, expected, "Control+{key} on {os:?}");
+                assert!(selection(&ctx).is_empty());
+            }
+            let (ctx, mut text) = keyboard_fixture("one two", os);
+            frame(&ctx, &mut text, select_all());
+            transport_key(&ctx, &mut text, "w", ctrl);
+            assert_eq!(text, "", "Control+W must delete the canonical selection");
+        }
+    }
+    #[test]
+    fn control_navigation_moves_canonical_work_cursor_on_mac() {
+        let ctrl = egui::Modifiers {
+            ctrl: true,
+            ..Default::default()
+        };
+        for (key, before, after) in [
+            ("a", 2, 0),
+            ("E", 1, 3),
+            ("b", 2, 1),
+            ("F", 1, 2),
+            ("p", 2, 0),
+            ("N", 1, 3),
+        ] {
+            let (ctx, mut text) = keyboard_fixture("abc", egui::os::OperatingSystem::Mac);
+            position_cursor(&ctx, &mut text, before);
+            transport_key(&ctx, &mut text, key, ctrl);
+            assert_eq!(text, "abc", "Control+{key} must only move the cursor");
+            assert_eq!(
+                selection(&ctx).as_sorted_char_range(),
+                egui::text::CharIndex(after)..egui::text::CharIndex(after),
+                "Control+{key} must move the canonical cursor"
+            );
+        }
+    }
+    #[test]
+    fn desktop_web_platform_metadata_preserves_unsupported_shortcuts() {
+        let (ctx, mut text) = keyboard_fixture("abc", egui::os::OperatingSystem::Unknown);
+        position_cursor(&ctx, &mut text, 2);
+        let ctrl = egui::Modifiers {
+            ctrl: true,
+            ..Default::default()
+        };
+        for key in ["a", "b", "e", "f", "n", "p"] {
+            assert!(key_event(key, true, false, ctrl, false).is_none());
+        }
+        let shifted_ctrl = egui::Modifiers {
+            shift: true,
+            ..ctrl
+        };
+        for key in ["a", "b", "e", "f", "n", "p"] {
+            assert!(key_event(key, true, false, shifted_ctrl, true).is_none());
+        }
+        frame(&ctx, &mut text, vec![]);
+        assert_eq!(text, "abc");
+        assert_eq!(
+            selection(&ctx).as_sorted_char_range(),
+            egui::text::CharIndex(2)..egui::text::CharIndex(2)
+        );
+    }
+    #[test]
+    fn control_repeat_release_and_command_paste_keep_editor_ownership() {
+        let (ctx, mut text) = keyboard_fixture("abc", egui::os::OperatingSystem::Mac);
+        position_cursor(&ctx, &mut text, 3);
+        let ctrl = egui::Modifiers {
+            ctrl: true,
+            shift: true,
+            ..Default::default()
+        };
+        let (events, prevent) = key_event("H", true, true, ctrl, true).unwrap_or_default();
+        frame(&ctx, &mut text, events);
+        assert_eq!(
+            text, "ab",
+            "repeated Control+H must edit once using event modifiers"
+        );
+        assert!(prevent);
+        let (events, prevent) = key_event("H", false, false, ctrl, true).unwrap();
+        frame(&ctx, &mut text, events);
+        assert_eq!(text, "ab", "key release cannot delete another character");
+        assert!(prevent);
+        frame(&ctx, &mut text, select_all());
+        let command = egui::Modifiers {
+            command: true,
+            mac_cmd: true,
+            ..Default::default()
+        };
+        let (events, prevent) = key_event("v", true, false, command, true).unwrap();
+        assert!(
+            !prevent,
+            "Command+V must retain browser ClipboardEvent delivery"
+        );
+        frame(&ctx, &mut text, events);
+        assert_eq!(text, "ab");
+        frame(
+            &ctx,
+            &mut text,
+            TextDelivery::default().paste("pasted".into()),
+        );
+        assert_eq!(text, "pasted", "Command+A selection remains egui-owned");
+        for key in ["a", "b", "e", "f", "h", "k", "n", "p", "u", "w", " "] {
+            assert!(key_event(key, true, false, egui::Modifiers::NONE, true).is_none());
+        }
     }
     #[test]
     fn canceled_preedit_never_mutates_canonical_path_or_cursor() {
@@ -835,13 +1045,13 @@ mod tests {
             shift: true,
             ..Default::default()
         };
-        let (events, prevent) = key_event("a", true, false, modifiers).unwrap();
+        let (events, prevent) = key_event("a", true, false, modifiers, true).unwrap();
         assert!(prevent);
         assert!(
             matches!(events[0], egui::Event::Key { key: egui::Key::A, modifiers: actual, pressed: true, .. } if actual == modifiers)
         );
-        assert!(!key_event("v", true, false, modifiers).unwrap().1);
-        assert!(key_event("a", true, false, egui::Modifiers::NONE).is_none());
-        assert!(key_event(" ", true, false, egui::Modifiers::NONE).is_none());
+        assert!(!key_event("v", true, false, modifiers, true).unwrap().1);
+        assert!(key_event("a", true, false, egui::Modifiers::NONE, true).is_none());
+        assert!(key_event(" ", true, false, egui::Modifiers::NONE, true).is_none());
     }
 }

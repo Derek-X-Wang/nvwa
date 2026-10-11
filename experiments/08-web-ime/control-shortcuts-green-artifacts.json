@@ -1,0 +1,31 @@
+{
+  "stage": "green",
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "versions_verified_from_dep_info": {
+    "bevy_egui": [
+      "0.42.0"
+    ],
+    "egui": [
+      "0.36.2"
+    ]
+  },
+  "fingerprint": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/.fingerprint/bevy_egui-8f0c4f5d73444aef/lib-bevy_egui.json",
+  "features": "[\"arboard\", \"bevy_asset\", \"bevy_color\", \"bevy_core_pipeline\", \"bevy_image\", \"bevy_mesh\", \"bevy_render\", \"bevy_shader\", \"bevy_transform\", \"bytemuck\", \"default_fonts\", \"encase\", \"itertools\", \"manage_clipboard\", \"render\", \"smithay-clipboard\", \"thread_local\", \"wgpu-types\"]",
+  "linked_rlibs": {
+    "bevy_egui": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib",
+      "sha256": "28c6be21010bcabd3f7077fab6b06aad260f6e9d6f4de24308d125a73d84c2fa"
+    },
+    "egui": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libegui-e9f92947873eaa49.rlib",
+      "sha256": "35f624f84f1d8956db692c17f632df0fe06c6c77733514c7df425e82d0ca5fa0"
+    }
+  },
+  "sources_sha256": {
+    "crates/nvwa-studio/src/web_input.rs": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+    "experiments/08-web-ime/run_control_shortcuts_probe.py": "dee0106b3c76793cd80d40f133e67c9df09d02e9c37a1d2f47b9fd9ed141fbd0"
+  },
+  "compile_command": "rustc --test --edition=2024 -C debuginfo=0 /var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/nvwa-control-shortcuts-f8bedutu/production.rs -L dependency=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps --extern bevy_egui=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib -o /var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/nvwa-control-shortcuts-f8bedutu/control-shortcuts-tests",
+  "run_command": "/var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/nvwa-control-shortcuts-f8bedutu/control-shortcuts-tests --nocapture",
+  "temporary_directory_removed_on_exit": "/var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/nvwa-control-shortcuts-f8bedutu"
+}

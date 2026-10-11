@@ -1,0 +1,21 @@
+COMPILE rustc --test --edition=2024 -C debuginfo=0 /var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/nvwa-control-shortcuts-f8bedutu/production.rs -L dependency=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps --extern bevy_egui=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib -o /var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/nvwa-control-shortcuts-f8bedutu/control-shortcuts-tests
+RUN /var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/nvwa-control-shortcuts-f8bedutu/control-shortcuts-tests --nocapture
+
+running 12 tests
+test production::tests::composition_input_and_repeated_commits_have_one_owner ... ok
+test production::tests::command_keys_use_event_modifiers_and_browser_paste_delivery ... ok
+test production::tests::canceled_preedit_never_mutates_canonical_path_or_cursor ... ok
+test production::tests::select_all_then_preedit_cancel_preserves_original_selection_and_text ... ok
+test production::tests::desktop_web_platform_metadata_preserves_unsupported_shortcuts ... ok
+test production::tests::batched_commit_then_new_preedit_cancel_preserves_intermediate_commit ... ok
+test production::tests::commit_select_all_then_preedit_cancel_preserves_commit_and_selection ... ok
+test production::tests::confirmed_selected_text_replaces_once_and_space_is_ordinary_text ... ok
+test production::tests::paste_normalizes_singleline_and_deduplicates_followup ... ok
+test production::tests::control_repeat_release_and_command_paste_keep_editor_ownership ... ok
+test production::tests::control_navigation_moves_canonical_work_cursor_on_mac ... ok
+test production::tests::control_deletion_shortcuts_edit_canonical_work ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+EXIT 0
