@@ -106,10 +106,15 @@ and scrolling passed at 1280×720 and 1024×768. The later small-window probe
 resolved an ineffective pointer attempt by locating the actual separator;
 no source change was required.
 
-The native Studio remains open for a necessary hand-test of continuous drag,
-split/Escape and window shrink. Native Open/reload, Web-to-native exchange and
-native Player follow that handback. They are pending, not covered by the build
-or headless results. Physical IME/DPR limits remain explicit. See the
+The human confirmed continuous native drag/one Undo and split/Escape on this
+final production candidate. Actual native Open/reload, Web-to-native exchange
+and native Player transport also passed. Complete saved Works verify the
+exchange and reload. The small native handback was about602×385 content points
+and visibly clipped some controls. A later packaged resize1175×704 passed
+control checks and complete Work invariance. A separate startup-size harness
+then ran the unchanged production UI at1024×768 and passed real controls plus
+full Work invariance. Exact packaged-binary1024 sizing, physical IME and DPI
+limits remain explicit. See the
 [production acceptance report](../evidence/m1-1-ui/ACCEPTANCE.md) for artifact
 hashes, individual evidence, commands and remaining checks.
 
