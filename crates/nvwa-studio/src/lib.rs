@@ -656,13 +656,7 @@ fn draw_studio(
         ui.horizontal(|ui| {
             ui.heading("Animation");
             ui.add_enabled_ui(status.ready && document.as_ref().is_some_and(|doc| !doc.timeline.is_empty()), |ui| {
-                if ui.button(if next_playback.playing { "Pause" } else if next_playback.completed { "Replay" } else { "Play" }).clicked() {
-                    next_playback.playing = !next_playback.playing;
-                }
-                if ui.button("Restart").clicked() {
-                    next_playback.seek_request = Some(0.0);
-                    next_playback.playing = true;
-                }
+                draw_transport_buttons(ui, &mut next_playback);
             });
             if let Some(doc) = &document {
                 let has_sequence_actions = ["idle", "wave", "turn"].iter().all(|id| doc.profile.clips.iter().any(|clip| clip.id == *id));
@@ -676,16 +670,7 @@ fn draw_studio(
                         }
                     }
                 });
-                let duration = if doc.is_single_loop() {
-                    doc.profile.clips.iter().find(|clip| clip.id == doc.timeline[0].clip_id).map(|clip| clip.duration_seconds).unwrap_or(0.0)
-                } else { doc.timeline_duration_seconds() };
-                if duration > 0.0 {
-                    let mut position = if doc.is_single_loop() { next_playback.position_seconds.rem_euclid(duration) }
-                        else { next_playback.position_seconds };
-                    if ui.add(egui::Slider::new(&mut position, 0.0..=duration).text("seconds")).changed() {
-                        next_playback.seek_request = Some(position);
-                    }
-                }
+                draw_transport_seek(ui, doc, &mut next_playback);
                 ui.label(format!("Active: {} · {}{}", next_playback.active_timeline_id, next_playback.clip_id,
                     if next_playback.completed { " · complete" } else { "" }));
             }
@@ -839,49 +824,9 @@ fn draw_player(
                 ui.add_enabled_ui(
                     status.ready && !interaction.busy() && !next.clip_id.is_empty(),
                     |ui| {
-                        if ui
-                            .button(if next.playing {
-                                "Pause"
-                            } else if next.completed {
-                                "Replay"
-                            } else {
-                                "Play"
-                            })
-                            .clicked()
-                        {
-                            next.playing = !next.playing;
-                        }
-                        if ui.button("Restart").clicked() {
-                            next.seek_request = Some(0.0);
-                            next.playing = true;
-                        }
+                        draw_transport_buttons(ui, &mut next);
                         if let Some(doc) = editor.document() {
-                            let duration = if doc.is_single_loop() {
-                                doc.profile
-                                    .clips
-                                    .iter()
-                                    .find(|clip| clip.id == doc.timeline[0].clip_id)
-                                    .map(|clip| clip.duration_seconds)
-                                    .unwrap_or(0.0)
-                            } else {
-                                doc.timeline_duration_seconds()
-                            };
-                            if duration > 0.0 {
-                                let mut position = if doc.is_single_loop() {
-                                    next.position_seconds.rem_euclid(duration)
-                                } else {
-                                    next.position_seconds
-                                };
-                                if ui
-                                    .add(
-                                        egui::Slider::new(&mut position, 0.0..=duration)
-                                            .text("seconds"),
-                                    )
-                                    .changed()
-                                {
-                                    next.seek_request = Some(position);
-                                }
-                            }
+                            draw_transport_seek(ui, doc, &mut next);
                         }
                     },
                 );
@@ -926,6 +871,51 @@ fn draw_player(
         match io.request_open(&state.file_path) {
             Ok(()) => state.error = None,
             Err(error) => state.error = Some(error),
+        }
+    }
+}
+
+fn draw_transport_buttons(ui: &mut egui::Ui, playback: &mut Playback) {
+    if ui
+        .button(if playback.playing {
+            "Pause"
+        } else if playback.completed {
+            "Replay"
+        } else {
+            "Play"
+        })
+        .clicked()
+    {
+        playback.playing = !playback.playing;
+    }
+    if ui.button("Restart").clicked() {
+        playback.seek_request = Some(0.0);
+        playback.playing = true;
+    }
+}
+
+fn draw_transport_seek(ui: &mut egui::Ui, doc: &SceneDocument, playback: &mut Playback) {
+    let duration = if doc.is_single_loop() {
+        doc.profile
+            .clips
+            .iter()
+            .find(|clip| clip.id == doc.timeline[0].clip_id)
+            .map(|clip| clip.duration_seconds)
+            .unwrap_or(0.0)
+    } else {
+        doc.timeline_duration_seconds()
+    };
+    if duration > 0.0 {
+        let mut position = if doc.is_single_loop() {
+            playback.position_seconds.rem_euclid(duration)
+        } else {
+            playback.position_seconds
+        };
+        if ui
+            .add(egui::Slider::new(&mut position, 0.0..=duration).text("seconds"))
+            .changed()
+        {
+            playback.seek_request = Some(position);
         }
     }
 }

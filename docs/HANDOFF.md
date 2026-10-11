@@ -62,3 +62,5 @@ The extra **native failed-startup manual-recovery GUI check is NOT-RUN to comple
 All implementation/review workers finished. No task-owned compiler or native renderer is retained. The negative-response server on9202 was stopped. The temporary relocated app was removed after binary/asset equality checks; evidence is retained and the standard `dist/Nvwa.app` remains. Only the loopback preview server/tab is retained. No paid API/cloud resource, hosted deployment, signing, merge or unlimited CI was used.
 
 PARTIAL — Thin M1 local functionality, actual dual-platform release runs/exchange,57tests and cadence measurements verified; the explicit hand-test/platform/measurement limits remain open.
+
+Independent PR17 review subsequently found one nonblocking duplicated transport widget, which was extracted and accepted by both targeted rereviews. The fresh57tests/strict checks, dual release rebuilds and actual native/Web repair runs are in [PR17 acceptance](evidence/pr17-review/ACCEPTANCE.md) and its [repaired artifact manifest](evidence/pr17-review/build-manifest.json). The earlier M1 manifest describes its original4af6a19 snapshot.
