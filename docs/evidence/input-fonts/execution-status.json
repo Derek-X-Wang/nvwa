@@ -35,8 +35,28 @@
       "<task-owned absolute Chinese filename holding revision6 baseline>"
     ],
     "runtime": "actual track-click edit, one Undo, Redo, whole-document save checks, per-key Space focus guard and macOS window zoom/recovery; CUA continuous drag still unaccepted",
-    "exit_code": null,
-    "note": "process retained paused for user physical input checks; no exit inferred",
-    "evidence": "UNLOCKED-ACCEPTANCE.md"
+    "exit_code": 0,
+    "note": "after hand-test, exposed close button used; session11150 exit0 and exact PID19740 absent; no replacement launch",
+    "evidence": "UNLOCKED-ACCEPTANCE.md",
+    "physical_input": "user reported all four requested native checks normal; see NATIVE-HAND-TEST.md; Web physical input remains unverified",
+    "native_log_diagnostic": "IMK mach-port diagnostic retained; cause uninvestigated; user reports normal input"
+  },
+  "web_physical_hand_test": {
+    "status": "pending user-performed check; no outcome inferred",
+    "url": "http://127.0.0.1:9201/?work=works/exchanged.nvwa.json",
+    "browser": "Codex in-app Browser; current engine version and DPR were not established",
+    "tab_id": "3",
+    "screenshot_pixels": [
+      689,
+      853
+    ],
+    "renderer": "actual same pinned Web font release; revision6 work and real actor loaded",
+    "requested_checks": [
+      "continuous text and Chinese candidate composition; Space must not pause transport",
+      "Command+A and Command+V",
+      "page/app switch and continued input"
+    ],
+    "lifecycle": "retained visible for user hand-test; loopback9201 retained",
+    "evidence": "web-human-test-ready.jpg"
   }
 }
