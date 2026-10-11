@@ -21,6 +21,8 @@ Latest continuous-idle follow-up: identical revision0 Work and Studio1280×720 o
 
 M1.1 的问题、对照与退出条件见[实施合同](implementation/m1-1-experiment-contract.md)，参考[Storytold 源码研究](research/2026-10-11-storytold-rust-editor-lessons.md)。本阶段以实际运行与证据为完成标准；研究建议和编译成功不能替代功能或性能验收。
 
+GitHub 跟踪：[M1.1 milestone](https://github.com/Derek-X-Wang/nvwa/milestone/1)、[#24 界面组件原型](https://github.com/Derek-X-Wang/nvwa/issues/24)、[#25 Web 构建 A/B](https://github.com/Derek-X-Wang/nvwa/issues/25)。
+
 | 项目 | 证据支持的结论 | 影响/仍未知 |
 |---|---|---|
 | 单一角色的能力边界 | 原创 CC0 fixture 有单一连续蒙皮主体、18 骨骼、4 个不同 morph、3 个手工动作；原生与 Web 实际播放已验证。 | 这是风格化固定 rig，不代表任意角色导入。手部粗糙；腋下及极端形变可能夹皱，生产级权重和全组合视觉检查未完成。见 [角色报告](../experiments/01-character/REPORT.md)。 |
@@ -67,3 +69,11 @@ M1.1 的问题、对照与退出条件见[实施合同](implementation/m1-1-expe
 双端实际构建与运行使用93测试release；本轮只增加隔离实验和证据，没有重编译产品。DPR1 live1600×900/1024×768的每次拖动只提交一次revision，一次Undo完整还原作品；native scale2点击/Undo/Save通过。真实浏览器zoom/DPR和精确首帧仍需后续专门验证。
 
 PARTIAL — M0/薄M1和字体/输入/历史/单次传输均已合并；当前受测功能通过。发行、更多平台、完整性能、广泛rig和真实AI仍未验证。
+
+## M1.1 实验结论（2026-10-11）
+
+组件原型已完成99项测试、桌面/Web release构建和真实角色操作。原生连续拖动/单步Undo、分隔条/Escape由Derek实机确认；Web在1280×720和1024×768通过，完整作品可双向交换。选择小范围标签/分隔条及由应用管理布局状态的方案，单独整合审查；原生1024×768 GUI、新原型真实IME/DPR仍未验证。
+
+Web体积配置B首屏gzip20,539,196→18,034,148bytes，减少12.1964%。三组交替测量中，idle配对2退化11.17%，有限编排配对1退化10.50%，因此暂缓默认采用。有限编排采样含完成后的静止姿态，不是纯动作性能；冷启动、GPU/显示呈现及浏览器内存仍NOT-RUN。原始93项测试重新通过。见[本轮验收](evidence/m1-1/ACCEPTANCE.md)。
+
+后续执行：[#26 窄界面整合](https://github.com/Derek-X-Wang/nvwa/issues/26) 与 [#27 有上限的构建性能复核](https://github.com/Derek-X-Wang/nvwa/issues/27)，均在 [M1.1](https://github.com/Derek-X-Wang/nvwa/milestone/1)。实验阶段完成不等于主线发布验收。

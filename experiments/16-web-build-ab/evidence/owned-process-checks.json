@@ -1,0 +1,97 @@
+{
+  "interruption": {
+    "cleanup": {
+      "direct_child_reaped": true,
+      "group": 24874,
+      "group_alive_after_cleanup": false,
+      "kill_sent": true,
+      "term_sent": true
+    },
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/parent.py",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/child.py",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/interruption.pid"
+    ],
+    "descendant_gone": true,
+    "descendant_pid": 24875,
+    "error": {
+      "message": "stub cancellation",
+      "type": "KeyboardInterrupt"
+    },
+    "exit_code": -15,
+    "interrupted": true,
+    "owned_pid": 24874,
+    "timed_out": false,
+    "wall_seconds": 0.5688086249865592
+  },
+  "normal": {
+    "cleanup": {
+      "direct_child_reaped": true,
+      "group": 24873,
+      "group_alive_after_cleanup": false,
+      "kill_sent": false,
+      "term_sent": false
+    },
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-c",
+      "print(\"normal\")"
+    ],
+    "error": null,
+    "exit_code": 0,
+    "interrupted": false,
+    "owned_pid": 24873,
+    "timed_out": false,
+    "wall_seconds": 0.041544040985172614
+  },
+  "snapshot_exception": {
+    "cleanup": {
+      "direct_child_reaped": true,
+      "group": 24888,
+      "group_alive_after_cleanup": false,
+      "kill_sent": true,
+      "term_sent": true
+    },
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/parent.py",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/child.py",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/snapshot_exception.pid"
+    ],
+    "descendant_gone": true,
+    "descendant_pid": 24889,
+    "error": {
+      "message": "stub snapshot failure",
+      "type": "RuntimeError"
+    },
+    "exit_code": -15,
+    "interrupted": false,
+    "owned_pid": 24888,
+    "timed_out": false,
+    "wall_seconds": 0.5650610419979785
+  },
+  "timeout": {
+    "cleanup": {
+      "direct_child_reaped": true,
+      "group": 24891,
+      "group_alive_after_cleanup": false,
+      "kill_sent": true,
+      "term_sent": true
+    },
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/parent.py",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/child.py",
+      "<WEB_WORKTREE>/.work/m11-web/owned-process-check-5u_ccl77/timeout.pid"
+    ],
+    "descendant_gone": true,
+    "descendant_pid": 24892,
+    "error": null,
+    "exit_code": -15,
+    "interrupted": false,
+    "owned_pid": 24891,
+    "timed_out": true,
+    "wall_seconds": 0.9747396250022575
+  }
+}

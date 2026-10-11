@@ -1,0 +1,6 @@
+# Proposal only. Root applies this fragment to generated .work/m11-web/source/Cargo.toml.
+[profile.web-size]
+inherits = "release"
+opt-level = "s"
+lto = "thin"
+codegen-units = 1

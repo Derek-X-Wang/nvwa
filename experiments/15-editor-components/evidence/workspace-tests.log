@@ -1,0 +1,82 @@
+   Compiling nvwa-core v0.1.0 (<generated-workspace>/crates/nvwa-core)
+   Compiling craft-ui v0.1.0 (https://github.com/storytold/craft-libs?rev=5c874d51eeb3de70e735c8ce87a59a7dedd47675#5c874d51)
+   Compiling nvwa-cli v0.1.0 (<generated-workspace>/crates/nvwa-cli)
+   Compiling nvwa-runtime v0.1.0 (<generated-workspace>/crates/nvwa-runtime)
+   Compiling nvwa-studio v0.1.0 (<generated-workspace>/crates/nvwa-studio)
+error[E0308]: mismatched types
+    --> crates/nvwa-studio/src/editor_layout.rs:374:48
+     |
+ 374 |             egui::CentralPanel::default().show(&ctx, |ui| {
+     |                                           ---- ^^^^ types differ in mutability
+     |                                           |
+     |                                           arguments to this method are incorrect
+     |
+     = note: expected mutable reference `&mut Ui`
+                        found reference `&bevy_egui::egui::Context`
+note: method defined here
+    --> <cargo-home>/registry/src/index.crates.io-1949cf8c6b5b557f/egui-0.36.2/src/containers/panel.rs:1212:12
+     |
+1212 |     pub fn show<R>(self, ui: &mut Ui, add_contents: impl FnOnce(&mut Ui) -> R) -> InnerResponse<R> {
+     |            ^^^^
+
+error[E0308]: mismatched types
+    --> crates/nvwa-studio/src/editor_layout.rs:393:44
+     |
+ 393 |         egui::CentralPanel::default().show(&ctx, |ui| {
+     |                                       ---- ^^^^ types differ in mutability
+     |                                       |
+     |                                       arguments to this method are incorrect
+     |
+     = note: expected mutable reference `&mut Ui`
+                        found reference `&bevy_egui::egui::Context`
+note: method defined here
+    --> <cargo-home>/registry/src/index.crates.io-1949cf8c6b5b557f/egui-0.36.2/src/containers/panel.rs:1212:12
+     |
+1212 |     pub fn show<R>(self, ui: &mut Ui, add_contents: impl FnOnce(&mut Ui) -> R) -> InnerResponse<R> {
+     |            ^^^^
+
+error[E0308]: mismatched types
+    --> crates/nvwa-studio/src/editor_layout.rs:435:52
+     |
+ 435 |                 egui::CentralPanel::default().show(&ctx, |ui| {
+     |                                               ---- ^^^^ types differ in mutability
+     |                                               |
+     |                                               arguments to this method are incorrect
+     |
+     = note: expected mutable reference `&mut Ui`
+                        found reference `&bevy_egui::egui::Context`
+note: method defined here
+    --> <cargo-home>/registry/src/index.crates.io-1949cf8c6b5b557f/egui-0.36.2/src/containers/panel.rs:1212:12
+     |
+1212 |     pub fn show<R>(self, ui: &mut Ui, add_contents: impl FnOnce(&mut Ui) -> R) -> InnerResponse<R> {
+     |            ^^^^
+
+error[E0308]: mismatched types
+    --> crates/nvwa-studio/src/editor_layout.rs:450:48
+     |
+ 450 |             egui::CentralPanel::default().show(&ctx, |ui| {
+     |                                           ---- ^^^^ types differ in mutability
+     |                                           |
+     |                                           arguments to this method are incorrect
+     |
+     = note: expected mutable reference `&mut Ui`
+                        found reference `&bevy_egui::egui::Context`
+note: method defined here
+    --> <cargo-home>/registry/src/index.crates.io-1949cf8c6b5b557f/egui-0.36.2/src/containers/panel.rs:1212:12
+     |
+1212 |     pub fn show<R>(self, ui: &mut Ui, add_contents: impl FnOnce(&mut Ui) -> R) -> InnerResponse<R> {
+     |            ^^^^
+
+warning: value assigned to `layout` is never read
+   --> crates/nvwa-studio/src/editor_layout.rs:236:9
+    |
+236 |         layout.component = false;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+For more information about this error, try `rustc --explain E0308`.
+warning: `nvwa-studio` (lib test) generated 1 warning
+error: could not compile `nvwa-studio` (lib test) due to 4 previous errors; 1 warning emitted
+warning: build failed, waiting for other jobs to finish...

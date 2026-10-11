@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "native": "NOT-RUN: blank window/noWindowsAvailable",
+  "web": "frozenA actual skin/morph/animation seen; real pointer drag one revision; Undo/Redo all Work fields equal apart from required monotonic revision; actual downloads persisted",
+  "document_revisions": {
+    "A-base": 0,
+    "A-drag": 1,
+    "A-undo": 2,
+    "A-redo": 3
+  },
+  "measurement": "functional only, UI compilation concurrent; no performance claim",
+  "initial_assertion": "Rejected an incorrect entire-JSON Undo assertion: revision intentionally advances on Undo/Redo; all other Work fields now compared with explicit revision assertions"
+}

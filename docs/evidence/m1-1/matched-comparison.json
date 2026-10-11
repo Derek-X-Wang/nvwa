@@ -1,0 +1,802 @@
+{
+  "comparison_rule": "Every matched pair must stay within10%; medians describe the sample and never override pair breaches",
+  "comparisons": [
+    {
+      "median_change_percent": 6.914889839451965,
+      "median_p95_ms": {
+        "A": 18.799999237060547,
+        "B": 20.099998474121094
+      },
+      "pairs": [
+        {
+          "A_p95_ms": 19.700000762939453,
+          "B_p95_ms": 19.099998474121094,
+          "change_percent": -3.0456967796017143,
+          "repetition": 1
+        },
+        {
+          "A_p95_ms": 18.799999237060547,
+          "B_p95_ms": 20.899999618530273,
+          "change_percent": 11.170215248360126,
+          "repetition": 2
+        },
+        {
+          "A_p95_ms": 18.600000381469727,
+          "B_p95_ms": 20.099998474121094,
+          "change_percent": 8.064505709073755,
+          "repetition": 3
+        }
+      ],
+      "workload": "idle"
+    },
+    {
+      "median_change_percent": -3.0769250331780795,
+      "median_p95_ms": {
+        "A": 19.5,
+        "B": 18.899999618530273
+      },
+      "pairs": [
+        {
+          "A_p95_ms": 18.100000381469727,
+          "B_p95_ms": 20.0,
+          "change_percent": 10.497235240256897,
+          "repetition": 1
+        },
+        {
+          "A_p95_ms": 20.400001525878906,
+          "B_p95_ms": 18.899999618530273,
+          "change_percent": -7.352949976232937,
+          "repetition": 2
+        },
+        {
+          "A_p95_ms": 19.5,
+          "B_p95_ms": 18.200000762939453,
+          "change_percent": -6.666662754156649,
+          "repetition": 3
+        }
+      ],
+      "workload": "finite"
+    }
+  ],
+  "default_profile_recommendation": "DEFER",
+  "http_summaries": [
+    {
+      "first_screen_body_bytes_written": 20539196,
+      "label": "A1",
+      "player_body_bytes_written": null,
+      "workload": "idle"
+    },
+    {
+      "first_screen_body_bytes_written": 20539196,
+      "label": "A1",
+      "player_body_bytes_written": 20539719,
+      "workload": "finite"
+    },
+    {
+      "first_screen_body_bytes_written": 20539196,
+      "label": "A2",
+      "player_body_bytes_written": null,
+      "workload": "idle"
+    },
+    {
+      "first_screen_body_bytes_written": 20539196,
+      "label": "A2",
+      "player_body_bytes_written": 20539719,
+      "workload": "finite"
+    },
+    {
+      "first_screen_body_bytes_written": 20539196,
+      "label": "A3",
+      "player_body_bytes_written": null,
+      "workload": "idle"
+    },
+    {
+      "first_screen_body_bytes_written": 20539196,
+      "label": "A3",
+      "player_body_bytes_written": 20539719,
+      "workload": "finite"
+    },
+    {
+      "first_screen_body_bytes_written": 18034148,
+      "label": "B1",
+      "player_body_bytes_written": null,
+      "workload": "idle"
+    },
+    {
+      "first_screen_body_bytes_written": 18034148,
+      "label": "B1",
+      "player_body_bytes_written": 18034671,
+      "workload": "finite"
+    },
+    {
+      "first_screen_body_bytes_written": 18034148,
+      "label": "B2",
+      "player_body_bytes_written": null,
+      "workload": "idle"
+    },
+    {
+      "first_screen_body_bytes_written": 18034148,
+      "label": "B2",
+      "player_body_bytes_written": 18034671,
+      "workload": "finite"
+    },
+    {
+      "first_screen_body_bytes_written": 18034148,
+      "label": "B3",
+      "player_body_bytes_written": null,
+      "workload": "idle"
+    },
+    {
+      "first_screen_body_bytes_written": 18034148,
+      "label": "B3",
+      "player_body_bytes_written": 18034671,
+      "workload": "finite"
+    }
+  ],
+  "limits": {
+    "browser_receipt": "NOT-RUN; browser-UA request inventory/server writes; Python body receipts audited separately",
+    "cache": "Fresh documents/no-store with existing Wasm/driver caches; cold-cache NOT-RUN",
+    "cadence": "Rust main loop, not GPU or display presentation",
+    "finite_window": "Recent600 frames around15s includes active animation and held completed pose after9s; not motion-only cadence",
+    "memory": "Browser/GPU peak NOT-RUN",
+    "startup": "first_asset_ready_seconds uses Bevy TimeReal since first update; navigation-to-ready NOT-RUN",
+    "statistical_power": "Three matched repetitions per workload; variable samples, no causal or significance claim"
+  },
+  "order": [
+    "A1",
+    "B1",
+    "B2",
+    "A2",
+    "A3",
+    "B3"
+  ],
+  "pair_gate_breaches": [
+    {
+      "A_p95_ms": 18.799999237060547,
+      "B_p95_ms": 20.899999618530273,
+      "change_percent": 11.170215248360126,
+      "repetition": 2,
+      "workload": "idle"
+    },
+    {
+      "A_p95_ms": 18.100000381469727,
+      "B_p95_ms": 20.0,
+      "change_percent": 10.497235240256897,
+      "repetition": 1,
+      "workload": "finite"
+    }
+  ],
+  "runs": [
+    {
+      "arm": "A",
+      "console_timestamp": "2026-10-11T17:51:26.700Z",
+      "repetition": 1,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 2.8617334365844727,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.3954,
+        "capture_file_bytes": 0,
+        "clip": "idle",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": false,
+        "document_revision": 0,
+        "elapsed_seconds": 15.3954,
+        "error": null,
+        "first_asset_ready_seconds": 0.3736,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.3954,
+        "frame_ms_p50": 16.5,
+        "frame_ms_p95": 19.700000762939453,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 900,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 0,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": true,
+        "ready": true,
+        "ready_frames": 895,
+        "skins": 9,
+        "timeline_count": 1,
+        "timeout": false
+      },
+      "workload": "idle"
+    },
+    {
+      "arm": "A",
+      "console_timestamp": "2026-10-11T17:52:20.606Z",
+      "repetition": 1,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.3983,
+        "capture_file_bytes": 0,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 1,
+        "elapsed_seconds": 15.3983,
+        "error": null,
+        "first_asset_ready_seconds": 0.3703,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.3983,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 18.100000381469727,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 900,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "player",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 895,
+        "skins": 9,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "workload": "finite"
+    },
+    {
+      "arm": "A",
+      "console_timestamp": "2026-10-11T17:54:44.349Z",
+      "repetition": 2,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 2.869333028793335,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.3965,
+        "capture_file_bytes": 0,
+        "clip": "idle",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": false,
+        "document_revision": 0,
+        "elapsed_seconds": 15.3965,
+        "error": null,
+        "first_asset_ready_seconds": 0.3638,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.3965,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 18.799999237060547,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 899,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 0,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": true,
+        "ready": true,
+        "ready_frames": 895,
+        "skins": 9,
+        "timeline_count": 1,
+        "timeout": false
+      },
+      "workload": "idle"
+    },
+    {
+      "arm": "A",
+      "console_timestamp": "2026-10-11T17:55:02.960Z",
+      "repetition": 2,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.4491,
+        "capture_file_bytes": 0,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 1,
+        "elapsed_seconds": 15.4491,
+        "error": null,
+        "first_asset_ready_seconds": 0.4225,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.4491,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 20.400001525878906,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 866,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "player",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 861,
+        "skins": 9,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "workload": "finite"
+    },
+    {
+      "arm": "A",
+      "console_timestamp": "2026-10-11T17:55:33.501Z",
+      "repetition": 3,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 2.858228921890259,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.3652,
+        "capture_file_bytes": 0,
+        "clip": "idle",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": false,
+        "document_revision": 0,
+        "elapsed_seconds": 15.3652,
+        "error": null,
+        "first_asset_ready_seconds": 0.3433,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.3652,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 18.600000381469727,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 899,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 0,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": true,
+        "ready": true,
+        "ready_frames": 895,
+        "skins": 9,
+        "timeline_count": 1,
+        "timeout": false
+      },
+      "workload": "idle"
+    },
+    {
+      "arm": "A",
+      "console_timestamp": "2026-10-11T17:55:51.952Z",
+      "repetition": 3,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.3961,
+        "capture_file_bytes": 0,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 1,
+        "elapsed_seconds": 15.3961,
+        "error": null,
+        "first_asset_ready_seconds": 0.3716,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.3961,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 19.5,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 900,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "player",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 895,
+        "skins": 9,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "workload": "finite"
+    },
+    {
+      "arm": "B",
+      "console_timestamp": "2026-10-11T17:53:07.611Z",
+      "repetition": 1,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 2.8655314445495605,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.4332,
+        "capture_file_bytes": 0,
+        "clip": "idle",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": false,
+        "document_revision": 0,
+        "elapsed_seconds": 15.4332,
+        "error": null,
+        "first_asset_ready_seconds": 0.4056,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.4332,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 19.099998474121094,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 903,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 0,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": true,
+        "ready": true,
+        "ready_frames": 898,
+        "skins": 9,
+        "timeline_count": 1,
+        "timeout": false
+      },
+      "workload": "idle"
+    },
+    {
+      "arm": "B",
+      "console_timestamp": "2026-10-11T17:53:26.186Z",
+      "repetition": 1,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.4116,
+        "capture_file_bytes": 0,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 1,
+        "elapsed_seconds": 15.4116,
+        "error": null,
+        "first_asset_ready_seconds": 0.3877,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.4116,
+        "frame_ms_p50": 16.5,
+        "frame_ms_p95": 20.0,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 903,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "player",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 898,
+        "skins": 9,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "workload": "finite"
+    },
+    {
+      "arm": "B",
+      "console_timestamp": "2026-10-11T17:53:58.609Z",
+      "repetition": 2,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 2.869032859802246,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.4148,
+        "capture_file_bytes": 0,
+        "clip": "idle",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": false,
+        "document_revision": 0,
+        "elapsed_seconds": 15.4148,
+        "error": null,
+        "first_asset_ready_seconds": 0.3828,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.4148,
+        "frame_ms_p50": 16.5,
+        "frame_ms_p95": 20.899999618530273,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 902,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 0,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": true,
+        "ready": true,
+        "ready_frames": 898,
+        "skins": 9,
+        "timeline_count": 1,
+        "timeout": false
+      },
+      "workload": "idle"
+    },
+    {
+      "arm": "B",
+      "console_timestamp": "2026-10-11T17:54:17.632Z",
+      "repetition": 2,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.3994,
+        "capture_file_bytes": 0,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 1,
+        "elapsed_seconds": 15.3994,
+        "error": null,
+        "first_asset_ready_seconds": 0.3722,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.3994,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 18.899999618530273,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 903,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "player",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 898,
+        "skins": 9,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "workload": "finite"
+    },
+    {
+      "arm": "B",
+      "console_timestamp": "2026-10-11T17:56:23.725Z",
+      "repetition": 3,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 2.867631673812866,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.4172,
+        "capture_file_bytes": 0,
+        "clip": "idle",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": false,
+        "document_revision": 0,
+        "elapsed_seconds": 15.4172,
+        "error": null,
+        "first_asset_ready_seconds": 0.3913,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.4172,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 20.099998474121094,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 891,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 0,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": true,
+        "ready": true,
+        "ready_frames": 887,
+        "skins": 9,
+        "timeline_count": 1,
+        "timeout": false
+      },
+      "workload": "idle"
+    },
+    {
+      "arm": "B",
+      "console_timestamp": "2026-10-11T17:56:42.313Z",
+      "repetition": 3,
+      "runtime": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 15.4133,
+        "capture_file_bytes": 0,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 1,
+        "elapsed_seconds": 15.4133,
+        "error": null,
+        "first_asset_ready_seconds": 0.3878,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 15.4133,
+        "frame_ms_p50": 16.600000381469727,
+        "frame_ms_p95": 18.200000762939453,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 902,
+        "gpu": {
+          "backend": "BrowserWebGpu",
+          "name": ""
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "player",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 897,
+        "skins": 9,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "workload": "finite"
+    }
+  ],
+  "size_gate": {
+    "A_first_screen_gzip_bytes": 20539196,
+    "B_first_screen_gzip_bytes": 18034148,
+    "passes_10_percent": true,
+    "reduction_percent": 12.196426773472535
+  },
+  "status": "INCONCLUSIVE"
+}

@@ -1,0 +1,17 @@
+# M1.1 Web profile A/B proposal
+
+Throwaway profile-only experiment at frozen source `11fc789e898119e0ed2b423f8a909dacb547f772`.
+
+B inherits release with `opt-level="s"`, thin LTO and one codegen unit. All package features, dependencies, Rust source, fonts, assets, Work, HTML and lock remain identical. Root applies PROPOSED-PROFILE.toml to the generated workspace, after approving exact values.
+
+Approved paths: generated source `.work/m11-web/source`; separate candidate `.work/m11-web/candidate/web`; logs/manifests `.work/m11-web/evidence` in the assigned worktree. Root approved shared cache `<primary-checkout>/target`; the `web-size` profile directory remains distinct from release. No dedicated cache copy. No build script uses dist or the accepted baseline as output.
+
+Proposed compile: `CARGO_BUILD_JOBS=1 cargo build --manifest-path .work/m11-web/source/Cargo.toml -p nvwa-studio --lib --target wasm32-unknown-unknown --profile web-size --locked --offline`. Pin Rust 1.95.0 through unchanged rust-toolchain.toml and existing root wasm-bindgen 0.2.129. One heavy compile; propose 45-minute cap, with progress and process memory sampled every 15 seconds. Keep incomplete results and timeout evidence. No fat LTO without a second explicit lease.
+
+Prepare copies tracked product inputs and unchanged manifest/lock without running Cargo. Build rejects source/lock changes except the exact approved root-added profile. Package invokes the pinned wasm-bindgen into a fresh candidate and copies exact accepted static resources. Deterministic gzip uses level 9, empty filename and mtime 0. Manifest records encoded and decoded sizes and SHA-256; every gzip must decompress exactly to its paired file. Before/after snapshots cover frozen baseline and generated inputs.
+
+Root measurement protocol: same browser/version/backend, viewport/DPR and Work; one renderer; zero heavy compilation during runs. Serve A/B with identical gzip HTTP handling and no-store/cache policy. Alternate A-B-B-A across at least three matched repetitions per arm. Record requested resource URLs, Content-Encoding, encoded body bytes written by the server, and separate initial first-screen/published-Work totals. Server writes do not prove browser or TCP receipt. The root-invoked HTTP audit separately records bytes received by Python requests and compares encoded/decoded hashes; those requests do not prove browser receipt. Use identical diagnostic bootstrap for A/B and exclude its bytes from product totals. Run continuous idle, authored wave and finite sequence; record p50/p95 Rust cadence, sample counts, startup navigation/ready timing. The existing native 9.366 ms and Web 18 ms p95 are prior evidence only. Warm/no-store runs cannot establish cold-cache timing; exact presentation/GPU/browser memory remain NOT-RUN unless root measures them.
+
+Function checks for each A/B arm: real skin/morph/animation, finite sequence, interaction, parameter drag/one commit, Undo/Redo, Save/Open and JSON exchange with native. Root owns native/Web launches and 93-test revalidation under a separate granted lease.
+
+Adopt only after all behavior gates pass, matched repeated p95 is no more than 10% worse and compressed first-screen total improves at least 10%. Separately assess total against 30,000,000 compressed bytes and largest raw file against future file-host limits. Until actual candidate build and root measurements, verdict is INCONCLUSIVE.

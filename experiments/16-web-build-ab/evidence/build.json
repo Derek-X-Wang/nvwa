@@ -1,0 +1,43 @@
+{
+  "cleanup": {
+    "direct_child_reaped": true,
+    "group": 46634,
+    "group_alive_after_cleanup": false,
+    "kill_sent": false,
+    "term_sent": false
+  },
+  "command": [
+    "/usr/bin/time",
+    "-l",
+    "cargo",
+    "build",
+    "--manifest-path",
+    "<WEB_WORKTREE>/.work/m11-web/source/Cargo.toml",
+    "-p",
+    "nvwa-studio",
+    "--lib",
+    "--target",
+    "wasm32-unknown-unknown",
+    "--profile",
+    "web-size",
+    "--locked",
+    "--offline"
+  ],
+  "error": null,
+  "exit_code": 0,
+  "freeze_after_verified": true,
+  "interrupted": false,
+  "jobs": 1,
+  "lease": "WEB-SIZE-2026-10-11-1",
+  "owned_pid": 46634,
+  "primary_checkout": "<PRIMARY>",
+  "target": "<PRIMARY>/target",
+  "timed_out": false,
+  "timeout_seconds": 2700,
+  "versions": {
+    "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+    "rustc": "rustc 1.95.0 (59807616e 2026-04-14)\nbinary: rustc\ncommit-hash: 59807616e1fa2540724bfbac14d7976d7e4a3860\ncommit-date: 2026-04-14\nhost: aarch64-apple-darwin\nrelease: 1.95.0\nLLVM version: 22.1.2",
+    "wasm_bindgen": "wasm-bindgen 0.2.129"
+  },
+  "wall_seconds": 596.8753308340092
+}

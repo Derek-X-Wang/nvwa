@@ -1,0 +1,88 @@
+{
+  "lease": "UI-2026-10-11-1",
+  "stage": "wasm",
+  "command": [
+    "cargo",
+    "build",
+    "-p",
+    "nvwa-studio",
+    "--lib",
+    "--release",
+    "--target",
+    "wasm32-unknown-unknown",
+    "--locked",
+    "--offline"
+  ],
+  "exit_code": 0,
+  "status": "passed",
+  "source_sha256": {
+    "crates/nvwa-studio/src/lib.rs": "1050e240c176ad4a2c6a35c0d38669d3783fb9573a51f263eee075dece827ab5",
+    "crates/nvwa-studio/src/editor_layout.rs": "7578d2dce3a03df1f309ff285434f1dc4b0a1525512dc06617a0735fb6c93d05",
+    "Cargo.lock": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+    "crates/nvwa-studio/Cargo.toml": "e4625c6659d54f9d930b02ca52c49bdf9b1ec92811d180fbe7fdf054050f865b"
+  },
+  "artifact": {
+    "path": ".work/m11-ui/candidate/nvwa_studio.wasm",
+    "bytes": 85589065,
+    "sha256": "98763bf27983a249d77f2827616791856effe9ecdc6ce774fa8ef12fa02563f8"
+  },
+  "web_files": {
+    "assets/character.profile.json": {
+      "bytes": 1064,
+      "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353"
+    },
+    "assets/fixtures/LICENSE.txt": {
+      "bytes": 1069,
+      "sha256": "b10b199096d04791fe942e0de62eb4643edbd9d289791b88715789cad87fe151"
+    },
+    "assets/fixtures/nvwa-humanoid.glb": {
+      "bytes": 3827840,
+      "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+    },
+    "assets/fixtures/provenance-manifest.json": {
+      "bytes": 3579,
+      "sha256": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f"
+    },
+    "index.html": {
+      "bytes": 2690,
+      "sha256": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114"
+    },
+    "licenses/craft-ui/LICENSE-MIT.txt": {
+      "bytes": 1102,
+      "sha256": "2f42c0cafc8ad394d91373fe1f342aee5453850b151a51405c68cae9ada86d26"
+    },
+    "licenses/fonts/NOTICE.md": {
+      "bytes": 948,
+      "sha256": "2a1118c4fd3a2939f03b2f176a5324010baec38dab1ada70c6d05cfcb574fac4"
+    },
+    "licenses/fonts/OFL.txt": {
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    },
+    "licenses/fonts/PROVENANCE.json": {
+      "bytes": 2687,
+      "sha256": "1c8eb96ee0efdb5b1da79621f1b0902848fe59167c1313ce1d481739ccd084aa"
+    },
+    "nvwa_studio.d.ts": {
+      "bytes": 5004,
+      "sha256": "7320c3edef76f4a2aa061264cb51f217528e4b29efee155c2084fa8a112cc431"
+    },
+    "nvwa_studio.js": {
+      "bytes": 123623,
+      "sha256": "bf592700776ed52d6b16548f1ba7c9d24b2a4b5fe99e23b2be8c3a75b3d9127e"
+    },
+    "nvwa_studio_bg.wasm": {
+      "bytes": 85610102,
+      "sha256": "09f62cbf4de9338f1e452f11c5e15bc1cbce674e156ae8e564ba5f72b34a5fc8"
+    },
+    "nvwa_studio_bg.wasm.d.ts": {
+      "bytes": 3982,
+      "sha256": "081dfdcd5b7a99169b5642365bce8e6c1b179ffd26b743303c31b23a07c74b65"
+    },
+    "works/m1-sequence.nvwa.json": {
+      "bytes": 1942,
+      "sha256": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa"
+    }
+  },
+  "duration_seconds": 32.200424250011565
+}

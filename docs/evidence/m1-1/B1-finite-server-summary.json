@@ -1,0 +1,92 @@
+{
+  "boundary": "Observed browser-UA requests and server output.write bytes; browser/TCP receipt NOT-RUN",
+  "cache_state": "no-store local run; cold-cache NOT-RUN",
+  "excluded_nonproduct_browser_requests": [
+    "/assets/fixtures/nvwa-humanoid.glb.meta"
+  ],
+  "excluded_python_audit_requests": 0,
+  "first_screen_body_bytes_written": 18034148,
+  "player_body_bytes_written": 18034671,
+  "product_requests": [
+    {
+      "arm": "B",
+      "body_bytes_written": 1438,
+      "boundary": "server output.write returned; browser/TCP receipt NOT-RUN",
+      "client_kind": "browser-candidate",
+      "content_encoding": "gzip",
+      "content_length": "1438",
+      "duration_seconds": 0.0007535830000016119,
+      "epoch_seconds": 1791741190.1620748,
+      "path": "/",
+      "product_path": "/index.html",
+      "request_target": "/?benchmark=1&player=1&work=works%2Fm1-sequence.nvwa.json",
+      "status": 200,
+      "transfer_error": null,
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "arm": "B",
+      "body_bytes_written": 19135,
+      "boundary": "server output.write returned; browser/TCP receipt NOT-RUN",
+      "client_kind": "browser-candidate",
+      "content_encoding": "gzip",
+      "content_length": "19135",
+      "duration_seconds": 0.0005106670000003533,
+      "epoch_seconds": 1791741190.177105,
+      "path": "/nvwa_studio.js",
+      "product_path": "/nvwa_studio.js",
+      "request_target": "/nvwa_studio.js",
+      "status": 200,
+      "transfer_error": null,
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "arm": "B",
+      "body_bytes_written": 16884494,
+      "boundary": "server output.write returned; browser/TCP receipt NOT-RUN",
+      "client_kind": "browser-candidate",
+      "content_encoding": "gzip",
+      "content_length": "16884494",
+      "duration_seconds": 0.12403816699999837,
+      "epoch_seconds": 1791741190.3200629,
+      "path": "/nvwa_studio_bg.wasm",
+      "product_path": "/nvwa_studio_bg.wasm",
+      "request_target": "/nvwa_studio_bg.wasm",
+      "status": 200,
+      "transfer_error": null,
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "arm": "B",
+      "body_bytes_written": 523,
+      "boundary": "server output.write returned; browser/TCP receipt NOT-RUN",
+      "client_kind": "browser-candidate",
+      "content_encoding": "gzip",
+      "content_length": "523",
+      "duration_seconds": 0.0005403340000000867,
+      "epoch_seconds": 1791741190.613328,
+      "path": "/works/m1-sequence.nvwa.json",
+      "product_path": "/works/m1-sequence.nvwa.json",
+      "request_target": "/works/m1-sequence.nvwa.json",
+      "status": 200,
+      "transfer_error": null,
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    },
+    {
+      "arm": "B",
+      "body_bytes_written": 1129081,
+      "boundary": "server output.write returned; browser/TCP receipt NOT-RUN",
+      "client_kind": "browser-candidate",
+      "content_encoding": "gzip",
+      "content_length": "1129081",
+      "duration_seconds": 0.0012901250000041387,
+      "epoch_seconds": 1791741191.001172,
+      "path": "/assets/fixtures/nvwa-humanoid.glb",
+      "product_path": "/assets/fixtures/nvwa-humanoid.glb",
+      "request_target": "/assets/fixtures/nvwa-humanoid.glb",
+      "status": 200,
+      "transfer_error": null,
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+    }
+  ]
+}
