@@ -1,0 +1,157 @@
+{
+  "baseline_sha256": {
+    "crates/nvwa-studio/src/lib.rs": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+    "crates/nvwa-studio/src/editor_layout.rs": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5"
+  },
+  "trials": [
+    {
+      "name": "idle-height-clamp",
+      "production_file": "crates/nvwa-studio/src/editor_layout.rs",
+      "mutation_sha256": "1459574f31909afef4fe1c0c6b5395309cc931f59340359e6126f8113e96cadd",
+      "baseline_sha256": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5",
+      "target_test": "actual_resize_idle_window_shrink_preserves_preferred_height",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "nvwa-studio",
+        "--locked",
+        "--lib",
+        "editor_layout::tests::actual_resize_idle_window_shrink_preserves_preferred_height",
+        "--",
+        "--exact"
+      ],
+      "log": ".work/ui26/mutations/idle-height-clamp.log",
+      "diff": ".work/ui26/mutations/idle-height-clamp.diff",
+      "exit": 101,
+      "named_test_failed": true,
+      "runtime_assertion": true,
+      "assertion_excerpt": "thread 'editor_layout::tests::actual_resize_idle_window_shrink_preserves_preferred_height' (24802024) panicked at crates/nvwa-studio/src/editor_layout.rs:701:13:\nassertion `left == right` failed: idle window height 720 lost preferred layout\n  left: 396.0\n right: 422.40002\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n",
+      "restored_sha256": {
+        "crates/nvwa-studio/src/lib.rs": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+        "crates/nvwa-studio/src/editor_layout.rs": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5"
+      },
+      "exact_restore": true
+    },
+    {
+      "name": "commit-every-drag-frame",
+      "production_file": "crates/nvwa-studio/src/lib.rs",
+      "mutation_sha256": "0cf699c61784744cd742d5fa06921d36113ee9eda5cd9e8abc1d9e61ac25778f",
+      "baseline_sha256": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+      "target_test": "actual_shape_drag_is_one_command_and_undo_redo_restore_complete_work",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "nvwa-studio",
+        "--locked",
+        "--lib",
+        "editor_layout::tests::actual_shape_drag_is_one_command_and_undo_redo_restore_complete_work",
+        "--",
+        "--exact"
+      ],
+      "log": ".work/ui26/mutations/commit-every-drag-frame.log",
+      "diff": ".work/ui26/mutations/commit-every-drag-frame.diff",
+      "exit": 101,
+      "named_test_failed": true,
+      "runtime_assertion": true,
+      "assertion_excerpt": "thread 'editor_layout::tests::actual_shape_drag_is_one_command_and_undo_redo_restore_complete_work' (24802342) panicked at crates/nvwa-studio/src/editor_layout.rs:357:17:\nreal slider must preview at [1280.0 720.0]\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n",
+      "restored_sha256": {
+        "crates/nvwa-studio/src/lib.rs": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+        "crates/nvwa-studio/src/editor_layout.rs": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5"
+      },
+      "exact_restore": true
+    },
+    {
+      "name": "space-keyboard-guard",
+      "production_file": "crates/nvwa-studio/src/lib.rs",
+      "mutation_sha256": "a15c79cd5a75d953ff347ee269187a20aee94cfb16692014a3f85440db679271",
+      "baseline_sha256": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+      "target_test": "actual_work_path_focus_blocks_space_and_document_shortcuts",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "nvwa-studio",
+        "--locked",
+        "--lib",
+        "editor_layout::tests::actual_work_path_focus_blocks_space_and_document_shortcuts",
+        "--",
+        "--exact"
+      ],
+      "log": ".work/ui26/mutations/space-keyboard-guard.log",
+      "diff": ".work/ui26/mutations/space-keyboard-guard.diff",
+      "exit": 101,
+      "named_test_failed": true,
+      "runtime_assertion": true,
+      "assertion_excerpt": "thread 'editor_layout::tests::actual_work_path_focus_blocks_space_and_document_shortcuts' (24802885) panicked at crates/nvwa-studio/src/editor_layout.rs:497:13:\nassertion failed: !app.playback.playing\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n",
+      "restored_sha256": {
+        "crates/nvwa-studio/src/lib.rs": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+        "crates/nvwa-studio/src/editor_layout.rs": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5"
+      },
+      "exact_restore": true
+    },
+    {
+      "name": "command-keyboard-guard",
+      "production_file": "crates/nvwa-studio/src/lib.rs",
+      "mutation_sha256": "b6dd2bcd08c16aabc141382f8549474bb534ad14df85e563edcf2d27a506c203",
+      "baseline_sha256": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+      "target_test": "actual_studio_layout_controls_preserve_work_history_and_guard_focused_space",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "nvwa-studio",
+        "--locked",
+        "--lib",
+        "editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space",
+        "--",
+        "--exact"
+      ],
+      "log": ".work/ui26/mutations/command-keyboard-guard.log",
+      "diff": ".work/ui26/mutations/command-keyboard-guard.diff",
+      "exit": 101,
+      "named_test_failed": true,
+      "runtime_assertion": true,
+      "assertion_excerpt": "thread 'editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space' (24803261) panicked at crates/nvwa-studio/src/editor_layout.rs:413:13:\nassertion `left == right` failed\n  left: \"{\\n  \\\"schema_version\\\": 1,\\n  \\\"revision\\\": 5,\\n  \\\"profile\\\": {\\n    \\\"id\\\": \\\"nvwa-original-humanoid-v1\\\",\\n    \\\"asset_path\\\": \\\"fixtures/nvwa-humanoid.glb\\\",\\n    \\\"asset_sha256\\\": \\\"f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6\\\",\\n    \\\"license\\\": \\\"CC0-1.0 (original Nvwa test fixture only)\\\",\\n    \\\"parameters\\\": [\\n      {\\n        \\\"id\\\": \\\"jaw_width\\\",\\n        \\\"morph_index\\\": 0,\\n        \\\"min\\\": 0.0,\\n        \\\"max\\\": 1.0,\\n        \\\"default\\\": 0.0\\n      },\\n      {\\n        \\\"id\\\": \\\"nose_width\\\",\\n        \\\"morph_index\\\": 1,\\n        \\\"min\\\": 0.0,\\n        \\\"max\\\": 1.0,\\n        \\\"default\\\": 0.0\\n      },\\n      {\\n        \\\"id\\\": \\\"smile\\\",\\n        \\\"morph_index\\\": 2,\\n        \\\"min\\\": 0.0,\\n        \\\"max\\\": 1.0,\\n        \\\"default\\\": 0.0\\n      },\\n      {\\n        \\\"id\\\": \\\"shoulder_width\\\",\\n        \\\"morph_index\\\": 3,\\n        \\\"min\\\": 0.0,\\n        \\\"max\\\": 1.0,\\n        \\\"default\\\": 0.0\\n      }\\n    ],\\n    \\\"clips\\\": [\\n      {\\n        \\\"id\\\": \\\"idle\\\",\\n        \\\"animation_index\\\": 0,\\n        \\\"duration_seconds\\\": 3.0416667\\n      },\\n      {\\n        \\\"id\\\": \\\"turn\\\",\\n        \\\"animation_index\\\": 1,\\n        \\\"duration_seconds\\\": 4.0416665\\n      },\\n      {\\n        \\\"id\\\": \\\"wave\\\",\\n        \\\"animation_index\\\": 2,\\n        \\\"duration_seconds\\\": 3.0416667\\n      }\\n    ]\\n  },\\n  \\\"character\\\": {\\n    \\\"id\\\": \\\"character-1\\\",\\n    \\\"profile_id\\\": \\\"nvwa-original-humanoid-v1\\\",\\n    \\\"parameters\\\": {\\n      \\\"jaw_width\\\": 0.4,\\n      \\\"nose_width\\\": 0.0,\\n      \\\"shoulder_width\\\": 0.0,\\n      \\\"smile\\\": 0.0\\n    },\\n    \\\"scale\\\": 1.0\\n  },\\n  \\\"timeline\\\": [\\n    {\\n      \\\"id\\\": \\\"timeline-1\\\",\\n      \\\"clip_id\\\": \\\"idle\\\",\\n      \\\"start_seconds\\\": 0.0,\\n      \\\"duration_seconds\\\": 3.0416667,\\n      \\\"speed\\\": 1.0,\\n      \\\"looping\\\": true\\n    }\\n  ]\\n}\"\n right: \"{\\n  \\\"schema_version\\\": 1,\\n  \\\"revision\\\": 3,\\n  \\\"profile\\\": {\\n    \\\"id\\\": \\\"nvwa-original-humanoid-v1\\\",\\n    \\\"asset_path\\\": \\\"fixtures/nvwa-humanoid.glb\\\",\\n    \\\"asset_sha256\\\": \\\"f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6\\\",\\n    \\\"license\\\": \\\"CC0-1.0 (original Nvwa test fixture only)\\\",\\n    \\\"parameters\\\": [\\n      {\\n        \\\"id\\\": \\\"jaw_width\\\",\\n        \\\"morph_index\\\": 0,\\n        \\\"min\\\": 0.0,\\n        \\\"max\\\": 1.0,\\n        \\\"default\\\": 0.0\\n      },\\n      {\\n        \\\"id\\\": \\\"nose_width\\\",\\n        \\\"morph_index\\\": 1,\\n        \\\"min\\\": 0.0,\\n        \\\"max\\\": 1.0,\\n        \\\"default\\\": 0.0\\n      },\\n      {\\n        \\\"id\\\": \\\"smile\\\",\\n        \\\"morph_index\\\": 2,\\n        \\\"min\\\": 0.0,\\n        \\\"max\\\": 1.0,\\n        \\\"default\\\": 0.0\\n      },\\n      {\\n        \\\"id\\\": \\\"shoulder_width\\\",\\n        \\\"morph_index\\\": 3,\\n        \\\"min\\\": 0.0,\\n        \\\"max\\\": 1.0,\\n        \\\"default\\\": 0.0\\n      }\\n    ],\\n    \\\"clips\\\": [\\n      {\\n        \\\"id\\\": \\\"idle\\\",\\n        \\\"animation_index\\\": 0,\\n        \\\"duration_seconds\\\": 3.0416667\\n      },\\n      {\\n        \\\"id\\\": \\\"turn\\\",\\n        \\\"animation_index\\\": 1,\\n        \\\"duration_seconds\\\": 4.0416665\\n      },\\n      {\\n        \\\"id\\\": \\\"wave\\\",\\n        \\\"animation_index\\\": 2,\\n        \\\"duration_seconds\\\": 3.0416667\\n      }\\n    ]\\n  },\\n  \\\"character\\\": {\\n    \\\"id\\\": \\\"character-1\\\",\\n    \\\"profile_id\\\": \\\"nvwa-original-humanoid-v1\\\",\\n    \\\"parameters\\\": {\\n      \\\"jaw_width\\\": 0.4,\\n      \\\"nose_width\\\": 0.0,\\n      \\\"shoulder_width\\\": 0.0,\\n      \\\"smile\\\": 0.0\\n    },\\n    \\\"scale\\\": 1.0\\n  },\\n  \\\"timeline\\\": [\\n    {\\n      \\\"id\\\": \\\"timeline-1\\\",\\n      \\\"clip_id\\\": \\\"idle\\\",\\n      \\\"start_seconds\\\": 0.0,\\n      \\\"duration_seconds\\\": 3.0416667,\\n      \\\"speed\\\": 1.0,\\n      \\\"looping\\\": true\\n    }\\n  ]\\n}\"\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n",
+      "restored_sha256": {
+        "crates/nvwa-studio/src/lib.rs": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+        "crates/nvwa-studio/src/editor_layout.rs": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5"
+      },
+      "exact_restore": true
+    },
+    {
+      "name": "discarded-pass-side-effects",
+      "production_file": "crates/nvwa-studio/src/lib.rs",
+      "mutation_sha256": "8c8239660eba20ce21043598cb36c5cf079cbfe1177528af4172db3009aacf2e",
+      "baseline_sha256": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+      "target_test": "discarded_editor_pass_does_not_install_layout_or_apply_commands",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "nvwa-studio",
+        "--locked",
+        "--lib",
+        "editor_layout::tests::discarded_editor_pass_does_not_install_layout_or_apply_commands",
+        "--",
+        "--exact"
+      ],
+      "log": ".work/ui26/mutations/discarded-pass-side-effects.log",
+      "diff": ".work/ui26/mutations/discarded-pass-side-effects.diff",
+      "exit": 101,
+      "named_test_failed": true,
+      "runtime_assertion": true,
+      "assertion_excerpt": "thread 'editor_layout::tests::discarded_editor_pass_does_not_install_layout_or_apply_commands' (24804020) panicked at crates/nvwa-studio/src/editor_layout.rs:553:13:\nassertion `left == right` failed\n  left: EditorLayout { tab: Profile, locked: false, height: 210.0, drag_origin: None, cancelled_drag: false }\n right: EditorLayout { tab: Shape, locked: false, height: 210.0, drag_origin: None, cancelled_drag: false }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n",
+      "restored_sha256": {
+        "crates/nvwa-studio/src/lib.rs": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+        "crates/nvwa-studio/src/editor_layout.rs": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5"
+      },
+      "exact_restore": true
+    }
+  ],
+  "final_restored_sha256": {
+    "crates/nvwa-studio/src/lib.rs": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+    "crates/nvwa-studio/src/editor_layout.rs": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5"
+  }
+}

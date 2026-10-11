@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--release",
+    "--locked",
+    "--offline",
+    "--manifest-path",
+    "experiments/18-native-viewport-harness/Cargo.toml"
+  ],
+  "env": {
+    "CARGO_BUILD_JOBS": "3",
+    "CARGO_TARGET_DIR": "<UI_WORKTREE>/target"
+  },
+  "pid": 76712,
+  "exit_code": 0,
+  "elapsed_seconds": 254.428
+}

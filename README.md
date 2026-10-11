@@ -16,6 +16,8 @@ The toolbar File field names the local JSON file on native. In the packaged app,
 
 Select the character, drag the four sliders, choose a clip, and use Play/Pause or the seek slider. One completed parameter drag commits one undoable command. A saved document includes all parameter values, scale, asset hash and animation settings. Playback cursor and undo history are session state.
 
+The inspector separates editable **Shape** parameters from read-only **Profile** details. Drag the thin separator above Animation to change the timeline height; Escape cancels a current separator drag. **Lock timeline height** prevents resizing and **Reset layout** restores Shape and the initial height while retaining the lock. Layout changes belong to this session and do not change the saved work or Undo/Redo history. The timeline scrolls when its content does not fit.
+
 ```sh
 python3 scripts/install-web-tools.py
 bash scripts/build-web.sh

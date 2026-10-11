@@ -1,0 +1,10 @@
+--- crates/nvwa-studio/src/lib.rs
++++ crates/nvwa-studio/src/lib.rs
+@@ -660,6 +660,7 @@
+                             .text(parameter.id.replace('_', " ")),
+                     );
+                     if response.changed() {
++                        commit_drag = true;
+                         preview = Some(values.clone());
+                     }
+                     if response.drag_stopped()

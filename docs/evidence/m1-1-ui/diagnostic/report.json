@@ -1,0 +1,37 @@
+{
+  "source_before": {
+    "crates/nvwa-studio/src/lib.rs": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+    "crates/nvwa-studio/src/editor_layout.rs": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c"
+  },
+  "scope": "Headless production draw_editor_ui, real controls and logical pointer events; no browser/GPU/controller execution",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "nvwa-studio",
+    "--locked",
+    "--lib",
+    "editor_layout::tests::diagnostic_lock_reset_unlock_split_drag_changes_height_at_1024",
+    "--",
+    "--exact",
+    "--nocapture"
+  ],
+  "temporary_source_sha256": "0af083501c36b846d1b7a1cd5c8244eb04d2b8c0264d56c24f99d24ebdaa9bc3",
+  "exit": 0,
+  "named_test_passed": true,
+  "runtime_assertion_failed": false,
+  "source_after": {
+    "crates/nvwa-studio/src/lib.rs": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+    "crates/nvwa-studio/src/editor_layout.rs": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c"
+  },
+  "exact_final_source_restore": true,
+  "post_cleanup_source_sha256": {
+    "crates/nvwa-studio/src/lib.rs": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+    "crates/nvwa-studio/src/editor_layout.rs": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c"
+  },
+  "temporary_instrumentation_removed": true,
+  "owned_processes_running": [],
+  "completed_exec_session": 74735,
+  "interpretation": "The headless production UI did not reproduce failure to resize after lock/reset/unlock at1024, including1280\u21921024 transition. This does not identify the live Web/CUA cause.",
+  "gui_browser_controller_verification": "NOT-RUN; forbidden by bounded diagnostic dispatch"
+}

@@ -1,0 +1,25 @@
+[package]
+name = "nvwa-native-viewport-harness"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+
+[workspace]
+resolver = "3"
+
+[dependencies]
+nvwa-studio = { path = "../../crates/nvwa-studio" }
+bevy = { version = "=0.19.1", default-features = false }
+
+# Match the production profiles so the authorized shared cache can be reused.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 1
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 8

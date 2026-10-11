@@ -14,8 +14,11 @@ Selected exact downloaded crate metadata:
 | serde-1.0.228 | MIT OR Apache-2.0 |
 | sha2-0.10.9 | MIT OR Apache-2.0 |
 | arboard-3.6.1 | MIT OR Apache-2.0 |
+| craft-ui (git rev `5c874d51eeb3de70e735c8ce87a59a7dedd47675`) | MIT |
 
 Cargo.lock identifies all transitive packages. This selected list is not a full redistribution-notice audit. The local app is unsigned and has not been publicly distributed in this round. For a public binary release, produce complete dependency notices.
+
+The private editor layout adapter uses tabs and a resize handle from [Storytold craft-libs](https://github.com/storytold/craft-libs/tree/5c874d51eeb3de70e735c8ce87a59a7dedd47675). The complete pinned MIT notice is retained in [licenses/craft-ui/LICENSE-MIT.txt](../licenses/craft-ui/LICENSE-MIT.txt) and copied to native `Contents/Resources/licenses/craft-ui` and Web `licenses/craft-ui`. Its existing egui 0.36.2 edge shares the pinned egui dependency; no other dependency version changed.
 
 Chinese text uses the embedded [Nvwa Sans SC Regular](../assets/fonts/README.md), derived from the pinned Google Fonts Noto Sans SC variable font at weight 400. No additional character subset was applied. The derivative has a new family name and keeps the original SIL Open Font License 1.1 and copyright notice. [Provenance](../assets/fonts/PROVENANCE.json) records source and derivative hashes, exact source commit, derivation tool/version and coverage limits; [experiment 06](../experiments/06-cjk-fonts/REPORT.md) records the size comparison and reproduction. The native package copies OFL/NOTICE/provenance to `Contents/Resources/licenses/fonts`; the Web bundle copies them to `licenses/fonts`. Runtime loads the font from the Rust artifact and does not fetch a font or use proprietary local system fonts. Common simplified/traditional text is covered; most supplementary Han, including 𠮷, remains unsupported. Rendering evidence does not establish IME composition support.
 

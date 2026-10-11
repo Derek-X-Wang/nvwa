@@ -1,0 +1,48 @@
+{
+  "scope": "Own unpushed production UI commit transplanted onto verified current main; no conflict resolution or compiled input change",
+  "before_commit": "b40cf3b",
+  "after_commit": "2f436782f47970b8e8631addb1970c22982798c7",
+  "main": "571604f4f5caaa67b4a0af792860261cd8262cfb",
+  "all_31_measured_inputs_exactly_preserved": true,
+  "product_patch_byte_identical_before_after_rebase": true,
+  "product_patch_sha256": "3ff6ff05ffca18262cdbc4d8fb96fb4ea59bce0cc77c6fecdb2db8ec1dbced18",
+  "verification_policy": "Existing build/test identity retained through exact input comparison; no source or dependencies modified by rebase",
+  "exact_patch_commands": [
+    [
+      "git",
+      "diff",
+      "--binary",
+      "bb21905879d1fdd6dd3a37ba38400d90801a6b72",
+      "b40cf3b",
+      "--",
+      "Cargo.toml",
+      "Cargo.lock",
+      "rust-toolchain.toml",
+      "crates",
+      "assets",
+      "web",
+      "scripts",
+      "examples",
+      "README.md",
+      "licenses"
+    ],
+    [
+      "git",
+      "diff",
+      "--binary",
+      "571604f4f5caaa67b4a0af792860261cd8262cfb",
+      "2f436782f47970b8e8631addb1970c22982798c7",
+      "--",
+      "Cargo.toml",
+      "Cargo.lock",
+      "rust-toolchain.toml",
+      "crates",
+      "assets",
+      "web",
+      "scripts",
+      "examples",
+      "README.md",
+      "licenses"
+    ]
+  ]
+}

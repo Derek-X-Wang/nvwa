@@ -1,4 +1,5 @@
 //! Rust Studio: egui and the renderer share one Bevy event loop on both targets.
+mod editor_layout;
 mod fonts;
 pub mod platform;
 #[cfg(any(target_arch = "wasm32", test))]
@@ -21,6 +22,7 @@ use std::collections::BTreeMap;
 #[derive(Resource)]
 struct StudioUi {
     selected: bool,
+    layout: editor_layout::EditorLayout,
     file_path: String,
     error: Option<String>,
 }
@@ -28,6 +30,7 @@ impl Default for StudioUi {
     fn default() -> Self {
         Self {
             selected: true,
+            layout: default(),
             file_path: "scene.nvwa.json".into(),
             error: None,
         }
@@ -524,6 +527,43 @@ fn draw_studio(
         );
         return Ok(());
     }
+    draw_editor_ui(
+        ctx,
+        &status,
+        &interaction,
+        EditorUiSession {
+            editor: &mut editor,
+            playback: &mut playback,
+            state: &mut state,
+            io: &mut io,
+            guard: &mut guard,
+        },
+    )
+}
+
+/// Borrowed editor session shared by Bevy and real-control headless tests.
+struct EditorUiSession<'a> {
+    editor: &'a mut EditorState,
+    playback: &'a mut Playback,
+    state: &'a mut StudioUi,
+    io: &'a mut PlatformIo,
+    guard: &'a mut UiInputGuard,
+}
+
+/// Shared editor draw path, exercised with real controls in headless tests.
+fn draw_editor_ui(
+    ctx: &egui::Context,
+    status: &RuntimeStatus,
+    interaction: &CharacterInteraction,
+    session: EditorUiSession<'_>,
+) -> Result {
+    let EditorUiSession {
+        editor,
+        playback,
+        state,
+        io,
+        guard,
+    } = session;
     let mut viewport_ui = egui::Ui::new(
         ctx.clone(),
         "nvwa_viewport".into(),
@@ -531,8 +571,9 @@ fn draw_studio(
             .layer_id(egui::LayerId::background())
             .max_rect(ctx.viewport_rect()),
     );
+    let mut layout = state.layout.clone();
     let document = editor.visible_document().cloned();
-    let mut next_playback = (*playback).clone();
+    let mut next_playback = playback.clone();
     let mut file_action = None;
     let mut command = None;
     let mut preview: Option<BTreeMap<String, f32>> = None;
@@ -619,71 +660,121 @@ fn draw_studio(
                 ui.label("Waiting for a valid profile.");
                 return;
             };
-            ui.label("Shape parameters");
-            ui.small("Drag to preview. Release to make one edit.");
-            let mut values = doc.character.parameters.clone();
-            for parameter in doc.profile.parameters.iter().take(4) {
-                let value = values
-                    .entry(parameter.id.clone())
-                    .or_insert(parameter.default);
-                let response = ui.add(
-                    egui::Slider::new(value, parameter.min..=parameter.max)
-                        .text(parameter.id.replace('_', " ")),
-                );
-                if response.changed() {
-                    preview = Some(values.clone());
+            layout.draw_tabs(ui);
+            if layout.tab == editor_layout::InspectorTab::Shape {
+                ui.label("Shape parameters");
+                ui.small("Drag to preview. Release to make one edit.");
+                let mut values = doc.character.parameters.clone();
+                for parameter in doc.profile.parameters.iter().take(4) {
+                    let value = values
+                        .entry(parameter.id.clone())
+                        .or_insert(parameter.default);
+                    let response = ui.add(
+                        egui::Slider::new(value, parameter.min..=parameter.max)
+                            .text(parameter.id.replace('_', " ")),
+                    );
+                    if response.changed() {
+                        preview = Some(values.clone());
+                    }
+                    if response.drag_stopped()
+                        || (response.changed()
+                            && !response.is_pointer_button_down_on()
+                            && !response.dragged())
+                    {
+                        commit_drag = true;
+                    }
                 }
-                if response.drag_stopped()
-                    || (response.changed()
-                        && !response.is_pointer_button_down_on()
-                        && !response.dragged())
-                {
-                    commit_drag = true;
+                if editor.preview.is_some() {
+                    ui.label("Preview · document unchanged");
                 }
+                if ui.button("Reset shape").clicked() {
+                    command = Some(Command::SetParameters {
+                        character_id: doc.character.id.clone(),
+                        values: doc
+                            .profile
+                            .parameters
+                            .iter()
+                            .map(|p| (p.id.clone(), p.default))
+                            .collect(),
+                    });
+                }
+                ui.separator();
+                ui.label(format!("Scale {:.2}", doc.character.scale));
+                ui.separator();
             }
-            if editor.preview.is_some() {
-                ui.label("Preview · document unchanged");
+            if layout.tab == editor_layout::InspectorTab::Profile {
+                ui.small(format!("Profile: {}", doc.profile.id));
+                ui.small(format!("Asset: {}", doc.profile.asset_path));
+                ui.small(format!("License: {}", doc.profile.license));
             }
-            if ui.button("Reset shape").clicked() {
-                command = Some(Command::SetParameters {
-                    character_id: doc.character.id.clone(),
-                    values: doc
-                        .profile
-                        .parameters
-                        .iter()
-                        .map(|p| (p.id.clone(), p.default))
-                        .collect(),
-                });
-            }
-            ui.separator();
-            ui.label(format!("Scale {:.2}", doc.character.scale));
-            ui.separator();
-            ui.small(format!("Profile: {}", doc.profile.id));
-            ui.small(format!("Asset: {}", doc.profile.asset_path));
-            ui.small(format!("License: {}", doc.profile.license));
         });
-    egui::Panel::bottom("timeline").min_size(210.0).show(&mut viewport_ui, |ui| {
-        if interaction.busy() { ui.disable(); }
+    let timeline_height = layout.height_for(ctx.viewport_rect().height());
+    let state_error = state.error.clone();
+    let mut timeline_body = |ui: &mut egui::Ui| {
+        if interaction.busy() {
+            ui.disable();
+        }
         ui.horizontal(|ui| {
             ui.heading("Animation");
-            ui.add_enabled_ui(status.ready && document.as_ref().is_some_and(|doc| !doc.timeline.is_empty()), |ui| {
-                draw_transport_buttons(ui, &mut next_playback);
-            });
+            ui.add_enabled_ui(
+                status.ready
+                    && document
+                        .as_ref()
+                        .is_some_and(|doc| !doc.timeline.is_empty()),
+                |ui| {
+                    draw_transport_buttons(ui, &mut next_playback);
+                },
+            );
             if let Some(doc) = &document {
-                let has_sequence_actions = ["idle", "wave", "turn"].iter().all(|id| doc.profile.clips.iter().any(|clip| clip.id == *id));
-                if ui.add_enabled(has_sequence_actions, egui::Button::new("Create 9s sequence")).clicked() {
-                    command = Some(Command::SetTimeline { clips: nine_second_sequence() });
+                let has_sequence_actions = ["idle", "wave", "turn"]
+                    .iter()
+                    .all(|id| doc.profile.clips.iter().any(|clip| clip.id == *id));
+                if ui
+                    .add_enabled(
+                        has_sequence_actions,
+                        egui::Button::new("Create 9s sequence"),
+                    )
+                    .clicked()
+                {
+                    command = Some(Command::SetTimeline {
+                        clips: nine_second_sequence(),
+                    });
                 }
-                egui::ComboBox::from_id_salt("single_clip").selected_text("Single action…").show_ui(ui, |ui| {
-                    for clip in &doc.profile.clips {
-                        if ui.selectable_label(doc.is_single_loop() && doc.timeline[0].clip_id == clip.id, &clip.id).clicked() {
-                            command = Some(Command::SetTimeline { clips: vec![TimelineClip { id: "timeline-1".into(), clip_id: clip.id.clone(), start_seconds: 0.0, duration_seconds: clip.duration_seconds, speed: 1.0, looping: true }] });
+                egui::ComboBox::from_id_salt("single_clip")
+                    .selected_text("Single action…")
+                    .show_ui(ui, |ui| {
+                        for clip in &doc.profile.clips {
+                            if ui
+                                .selectable_label(
+                                    doc.is_single_loop() && doc.timeline[0].clip_id == clip.id,
+                                    &clip.id,
+                                )
+                                .clicked()
+                            {
+                                command = Some(Command::SetTimeline {
+                                    clips: vec![TimelineClip {
+                                        id: "timeline-1".into(),
+                                        clip_id: clip.id.clone(),
+                                        start_seconds: 0.0,
+                                        duration_seconds: clip.duration_seconds,
+                                        speed: 1.0,
+                                        looping: true,
+                                    }],
+                                });
+                            }
                         }
-                    }
-                });
+                    });
                 draw_transport_seek(ui, doc, &mut next_playback);
-                ui.label(format!("Active: {} · {}{}", next_playback.active_timeline_id, next_playback.clip_id,
-                    if next_playback.completed { " · complete" } else { "" }));
+                ui.label(format!(
+                    "Active: {} · {}{}",
+                    next_playback.active_timeline_id,
+                    next_playback.clip_id,
+                    if next_playback.completed {
+                        " · complete"
+                    } else {
+                        ""
+                    }
+                ));
             }
         });
         if let Some(doc) = &document {
@@ -692,35 +783,60 @@ fn draw_studio(
             if !doc.is_single_loop() {
                 for (index, entry) in ordered.iter().enumerate() {
                     ui.horizontal(|ui| {
-                        ui.label(format!("{} · {:.1}–{:.1}s", index + 1, entry.start_seconds, entry.start_seconds + entry.duration_seconds));
-                        egui::ComboBox::from_id_salt(("sequence_action", &entry.id)).selected_text(&entry.clip_id).show_ui(ui, |ui| {
-                            for clip in &doc.profile.clips {
-                                if ui.selectable_label(entry.clip_id == clip.id, &clip.id).clicked() {
-                                    let mut clips = ordered.clone();
-                                    clips[index].clip_id = clip.id.clone();
-                                    command = Some(Command::SetTimeline { clips });
+                        ui.label(format!(
+                            "{} · {:.1}–{:.1}s",
+                            index + 1,
+                            entry.start_seconds,
+                            entry.start_seconds + entry.duration_seconds
+                        ));
+                        egui::ComboBox::from_id_salt(("sequence_action", &entry.id))
+                            .selected_text(&entry.clip_id)
+                            .show_ui(ui, |ui| {
+                                for clip in &doc.profile.clips {
+                                    if ui
+                                        .selectable_label(entry.clip_id == clip.id, &clip.id)
+                                        .clicked()
+                                    {
+                                        let mut clips = ordered.clone();
+                                        clips[index].clip_id = clip.id.clone();
+                                        command = Some(Command::SetTimeline { clips });
+                                    }
                                 }
-                            }
-                        });
+                            });
                         ui.label(format!("{:.1}s", entry.duration_seconds));
                         for (label, delta) in [("−0.5s", -0.5), ("+0.5s", 0.5)] {
                             if ui.button(label).clicked() {
                                 let mut clips = ordered.clone();
-                                clips[index].duration_seconds = (entry.duration_seconds + delta).clamp(0.5, 10.0);
-                                command = Some(Command::SetTimeline { clips: compact_sequence(clips) });
+                                clips[index].duration_seconds =
+                                    (entry.duration_seconds + delta).clamp(0.5, 10.0);
+                                command = Some(Command::SetTimeline {
+                                    clips: compact_sequence(clips),
+                                });
                             }
                         }
                         if ui.add_enabled(index > 0, egui::Button::new("↑")).clicked() {
-                            let mut clips = ordered.clone(); clips.swap(index, index - 1);
-                            command = Some(Command::SetTimeline { clips: compact_sequence(clips) });
+                            let mut clips = ordered.clone();
+                            clips.swap(index, index - 1);
+                            command = Some(Command::SetTimeline {
+                                clips: compact_sequence(clips),
+                            });
                         }
-                        if ui.add_enabled(index + 1 < ordered.len(), egui::Button::new("↓")).clicked() {
-                            let mut clips = ordered.clone(); clips.swap(index, index + 1);
-                            command = Some(Command::SetTimeline { clips: compact_sequence(clips) });
+                        if ui
+                            .add_enabled(index + 1 < ordered.len(), egui::Button::new("↓"))
+                            .clicked()
+                        {
+                            let mut clips = ordered.clone();
+                            clips.swap(index, index + 1);
+                            command = Some(Command::SetTimeline {
+                                clips: compact_sequence(clips),
+                            });
                         }
                         if ui.button("Remove").clicked() {
-                            let mut clips = ordered.clone(); clips.remove(index);
-                            command = Some(Command::SetTimeline { clips: compact_sequence(clips) });
+                            let mut clips = ordered.clone();
+                            clips.remove(index);
+                            command = Some(Command::SetTimeline {
+                                clips: compact_sequence(clips),
+                            });
                         }
                     });
                 }
@@ -728,12 +844,32 @@ fn draw_studio(
             }
         }
         ui.small("Viewport camera is fixed. Space plays or pauses when the editor has no keyboard focus.");
-        ui.small(if interaction.busy() { "Wave interaction · sequence cursor held" } else { "Original fixture: Click chest/head to wave" });
-        if let Some(error) = &status.error { ui.colored_label(egui::Color32::LIGHT_RED, error); }
-        if let Some(error) = &next_playback.error { ui.colored_label(egui::Color32::LIGHT_RED, error); }
-        if let Some(error) = &state.error { ui.colored_label(egui::Color32::LIGHT_RED, error); }
+        ui.small(if interaction.busy() {
+            "Wave interaction · sequence cursor held"
+        } else {
+            "Original fixture: Click chest/head to wave"
+        });
+        if let Some(error) = &status.error {
+            ui.colored_label(egui::Color32::LIGHT_RED, error);
+        }
+        if let Some(error) = &next_playback.error {
+            ui.colored_label(egui::Color32::LIGHT_RED, error);
+        }
+        if let Some(error) = &state_error {
+            ui.colored_label(egui::Color32::LIGHT_RED, error);
+        }
         ui.label(&editor.message);
-    });
+    };
+    egui::Panel::bottom("timeline")
+        .resizable(false)
+        .exact_size(timeline_height)
+        .show(&mut viewport_ui, |ui| {
+            layout.draw_resize(ui, ctx.viewport_rect().height());
+            layout.draw_controls(ui);
+            egui::ScrollArea::both()
+                .id_salt("timeline_scroll")
+                .show(ui, &mut timeline_body);
+        });
     // Do not paint a central egui panel: the scene remains visible through it.
     guard.pointer = editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
     guard.keyboard = ctx.egui_wants_keyboard_input();
@@ -756,6 +892,7 @@ fn draw_studio(
     if ctx.will_discard() {
         return Ok(());
     }
+    state.layout = layout;
     *playback = next_playback;
     if let Some(save) = file_action {
         let result = if save {

@@ -15,6 +15,7 @@ fi
 CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-3}" cargo build -p nvwa-studio --lib --target wasm32-unknown-unknown --locked "${profile_args[@]}"
 mkdir -p dist/web/assets/fixtures dist/web/works
 mkdir -p dist/web/licenses/fonts
+mkdir -p dist/web/licenses/craft-ui
 artifact_root="${CARGO_TARGET_DIR:-target}"
 "$tool" --target web --out-dir dist/web "$artifact_root/wasm32-unknown-unknown/$profile/nvwa_studio.wasm"
 cp web/index.html dist/web/index.html
@@ -22,4 +23,5 @@ cp assets/character.profile.json dist/web/assets/
 cp assets/fixtures/nvwa-humanoid.glb assets/fixtures/LICENSE.txt assets/fixtures/provenance-manifest.json dist/web/assets/fixtures/
 cp examples/m1-sequence.nvwa.json dist/web/works/
 cp assets/fonts/OFL.txt assets/fonts/NOTICE.md assets/fonts/PROVENANCE.json dist/web/licenses/fonts/
+cp licenses/craft-ui/LICENSE-MIT.txt dist/web/licenses/craft-ui/
 python3 scripts/bundle-sizes.py

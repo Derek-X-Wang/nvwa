@@ -1,0 +1,75 @@
+--- crates/nvwa-studio/src/editor_layout.rs
++++ crates/nvwa-studio/src/editor_layout.rs
+@@ -136,6 +136,8 @@
+                 .show(ui)
+             })
+             .inner;
++        #[cfg(test)]
++        ui.ctx().data_mut(|data| data.insert_temp(egui::Id::new("ui26_resize_probe"), response.response.rect));
+         if response.response.drag_started() {
+             self.drag_origin = Some(self.height);
+             self.cancelled_drag = false;
+@@ -819,4 +821,63 @@
+             ctx.end_pass().drop_without_applying_deltas();
+         }
+     }
++    #[test]
++    fn diagnostic_lock_reset_unlock_split_drag_changes_height_at_1024() {
++        for resize_from_1280 in [false, true] {
++            let mut app = StudioHarness::new(if resize_from_1280 {
++                egui::vec2(1280.0, 720.0)
++            } else {
++                egui::vec2(1024.0, 768.0)
++            });
++            app.frame(vec![]).drop_without_applying_deltas();
++            let before_work = app.editor.document().unwrap().to_json().unwrap();
++            let before_history = format!("{:?}", app.editor.editor.as_ref().unwrap());
++            let split_rect = |app: &StudioHarness| {
++                app.ctx.data_mut(|data| data.get_temp::<egui::Rect>(egui::Id::new("ui26_resize_probe")))
++                    .expect("production ResizeHandle must return a rectangle")
++            };
++            let drag = |app: &mut StudioHarness, distance: f32| {
++                app.frame(vec![]).drop_without_applying_deltas();
++                let origin = split_rect(app).center();
++                app.frame(vec![egui::Event::PointerMoved(origin), pointer(origin, true)])
++                    .drop_without_applying_deltas();
++                for step in 1..=4 {
++                    let position = origin + egui::vec2(0.0, distance * step as f32 / 4.0);
++                    app.frame(vec![egui::Event::PointerMoved(position)]).drop_without_applying_deltas();
++                    println!("UI26_SPLIT_PROBE viewport={:?} start={:?} pointer={:?} height={} locked={} cancelled={} drag_origin={:?} returned_rect={:?}",
++                        app.size, origin, position, app.state.layout.height, app.state.layout.locked,
++                        app.state.layout.cancelled_drag, app.state.layout.drag_origin, split_rect(app));
++                }
++                app.frame(vec![pointer(origin + egui::vec2(0.0, distance), false)])
++                    .drop_without_applying_deltas();
++            };
++            if resize_from_1280 {
++                drag(&mut app, -72.0);
++                assert!(app.state.layout.height > 210.0, "1280 production split drag must resize");
++            }
++            let output = app.frame(vec![]);
++            app.click(label_rect(&output, "Lock timeline height").center());
++            assert!(app.state.layout.locked);
++            let locked_height = app.state.layout.height;
++            drag(&mut app, 32.0);
++            assert_eq!(app.state.layout.height, locked_height, "real lock must hold height");
++            if resize_from_1280 {
++                app.size = egui::vec2(1024.0, 768.0);
++                app.frame(vec![]).drop_without_applying_deltas();
++            }
++            let output = app.frame(vec![]);
++            app.click(label_rect(&output, "Reset layout").center());
++            assert_eq!(app.state.layout.height, 210.0);
++            assert!(app.state.layout.locked, "reset must retain existing lock");
++            let output = app.frame(vec![]);
++            app.click(label_rect(&output, "Lock timeline height").center());
++            assert!(!app.state.layout.locked, "actual unlock click must clear the lock");
++            drag(&mut app, 80.0);
++            assert!(app.state.layout.height < 210.0,
++                "1024 real multi-frame split drag after lock/reset/unlock must change height; transition={resize_from_1280}");
++            assert_eq!(app.state.layout.height, 160.0, "80-point downward drag reaches the 160-point minimum");
++            assert_eq!(app.editor.document().unwrap().to_json().unwrap(), before_work);
++            assert_eq!(format!("{:?}", app.editor.editor.as_ref().unwrap()), before_history);
++        }
++    }
+ }

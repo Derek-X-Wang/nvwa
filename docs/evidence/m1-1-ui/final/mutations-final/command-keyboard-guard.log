@@ -1,0 +1,24 @@
+   Compiling nvwa-studio v0.1.0 (<UI_WORKTREE>/crates/nvwa-studio)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2.60s
+     Running unittests src/lib.rs (target/debug/deps/nvwa_studio-ce1f91218472297b)
+
+running 1 test
+test editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space ... FAILED
+
+failures:
+
+---- editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space stdout ----
+
+thread 'editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space' (24845170) panicked at crates/nvwa-studio/src/editor_layout.rs:415:13:
+assertion `left == right` failed
+  left: "{\n  \"schema_version\": 1,\n  \"revision\": 5,\n  \"profile\": {\n    \"id\": \"nvwa-original-humanoid-v1\",\n    \"asset_path\": \"fixtures/nvwa-humanoid.glb\",\n    \"asset_sha256\": \"f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6\",\n    \"license\": \"CC0-1.0 (original Nvwa test fixture only)\",\n    \"parameters\": [\n      {\n        \"id\": \"jaw_width\",\n        \"morph_index\": 0,\n        \"min\": 0.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"nose_width\",\n        \"morph_index\": 1,\n        \"min\": 0.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"smile\",\n        \"morph_index\": 2,\n        \"min\": 0.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"shoulder_width\",\n        \"morph_index\": 3,\n        \"min\": 0.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      }\n    ],\n    \"clips\": [\n      {\n        \"id\": \"idle\",\n        \"animation_index\": 0,\n        \"duration_seconds\": 3.0416667\n      },\n      {\n        \"id\": \"turn\",\n        \"animation_index\": 1,\n        \"duration_seconds\": 4.0416665\n      },\n      {\n        \"id\": \"wave\",\n        \"animation_index\": 2,\n        \"duration_seconds\": 3.0416667\n      }\n    ]\n  },\n  \"character\": {\n    \"id\": \"character-1\",\n    \"profile_id\": \"nvwa-original-humanoid-v1\",\n    \"parameters\": {\n      \"jaw_width\": 0.4,\n      \"nose_width\": 0.0,\n      \"shoulder_width\": 0.0,\n      \"smile\": 0.0\n    },\n    \"scale\": 1.0\n  },\n  \"timeline\": [\n    {\n      \"id\": \"timeline-1\",\n      \"clip_id\": \"idle\",\n      \"start_seconds\": 0.0,\n      \"duration_seconds\": 3.0416667,\n      \"speed\": 1.0,\n      \"looping\": true\n    }\n  ]\n}"
+ right: "{\n  \"schema_version\": 1,\n  \"revision\": 3,\n  \"profile\": {\n    \"id\": \"nvwa-original-humanoid-v1\",\n    \"asset_path\": \"fixtures/nvwa-humanoid.glb\",\n    \"asset_sha256\": \"f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6\",\n    \"license\": \"CC0-1.0 (original Nvwa test fixture only)\",\n    \"parameters\": [\n      {\n        \"id\": \"jaw_width\",\n        \"morph_index\": 0,\n        \"min\": 0.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"nose_width\",\n        \"morph_index\": 1,\n        \"min\": 0.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"smile\",\n        \"morph_index\": 2,\n        \"min\": 0.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"shoulder_width\",\n        \"morph_index\": 3,\n        \"min\": 0.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      }\n    ],\n    \"clips\": [\n      {\n        \"id\": \"idle\",\n        \"animation_index\": 0,\n        \"duration_seconds\": 3.0416667\n      },\n      {\n        \"id\": \"turn\",\n        \"animation_index\": 1,\n        \"duration_seconds\": 4.0416665\n      },\n      {\n        \"id\": \"wave\",\n        \"animation_index\": 2,\n        \"duration_seconds\": 3.0416667\n      }\n    ]\n  },\n  \"character\": {\n    \"id\": \"character-1\",\n    \"profile_id\": \"nvwa-original-humanoid-v1\",\n    \"parameters\": {\n      \"jaw_width\": 0.4,\n      \"nose_width\": 0.0,\n      \"shoulder_width\": 0.0,\n      \"smile\": 0.0\n    },\n    \"scale\": 1.0\n  },\n  \"timeline\": [\n    {\n      \"id\": \"timeline-1\",\n      \"clip_id\": \"idle\",\n      \"start_seconds\": 0.0,\n      \"duration_seconds\": 3.0416667,\n      \"speed\": 1.0,\n      \"looping\": true\n    }\n  ]\n}"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 40 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p nvwa-studio --lib`
