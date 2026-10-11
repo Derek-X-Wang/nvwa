@@ -25,3 +25,6 @@ A/B compared two motion mappings on the same real fixture and sampling condition
 Final evidence: [GUI session](evidence/GUI-SESSION.md), [exchange equality](evidence/exchange-result.json), [CLI/GUI replay](evidence/cli-gui-parity.json), [test matrix](TEST-MATRIX.md) and [performance](PERFORMANCE.md). Decisions are in [ADRs](adr/).
 
 PARTIAL — M0 and eleven isolated experiment reports retain actual evidence or explicit unavailability; genuine AI inference is NOT-RUN, retargeting is numerical-only for controlled derivatives. The bounded desktop Web input repair has actual callback and user-performed physical acceptance.
+
+
+Later acceptance update: Derek manually unlocked the Mac. The same current native binary (`3be9380f…`) now exits0 with a visually inspected real character playing wave, revision9 and18 joints/4 morphs/3 timeline entries. [Unlocked native evidence](evidence/single-transfer/native-unlocked.png) supersedes only the earlier blocked visual result; both black captures remain retained failures. This is a functional smoke, not a current performance benchmark. PR18 is merged at `07858fe6b5d6062200d28df654c5ce53ad89007b`, with #1/#19 closed; #2/#3 remain open. PR20 remains pending merge; PR21 completes local acceptance and is pending review/merge.

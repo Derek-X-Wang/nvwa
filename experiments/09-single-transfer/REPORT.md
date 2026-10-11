@@ -253,3 +253,6 @@ Open `/baseline/?player=1&work=works/m1-sequence.nvwa.json` and `/candidate/?pla
 
 
 The exact worker source patch is stored as `r2-final-source.patch.gz` (gzip mtime0). Its decompressed bytes retain the SHA/table identity above. This preserves literal diff context spaces without treating the patch text as production trailing whitespace. Extract with `gzip -dc experiments/09-single-transfer/r2-final-source.patch.gz > /tmp/nvwa-single-transfer-final.patch`; the primary production source has no trailing-whitespace errors.
+
+
+Later acceptance update: Derek manually unlocked the Mac. The same current native binary (`3be9380f…`) now exits0 with a visually inspected real character playing wave, revision9 and18 joints/4 morphs/3 timeline entries. [Unlocked native evidence](../../docs/evidence/single-transfer/native-unlocked.png) supersedes only the earlier blocked visual result; both black captures remain retained failures. This is a functional smoke, not a current performance benchmark. PR18 is merged at `07858fe6b5d6062200d28df654c5ce53ad89007b`, with #1/#19 closed; #2/#3 remain open. PR20 remains pending merge; PR21 completes local acceptance and is pending review/merge.

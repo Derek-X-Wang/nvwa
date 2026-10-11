@@ -105,7 +105,10 @@
   "actual_native_startup": {
     "process_exit": 0,
     "runtime_ready": true,
-    "visual_acceptance": "NOT-RUN unlocked: screenshots black, CUA confirmed Mac locked. Both failed visual captures retained. Prior branch visual proof does not validate these artifacts."
+    "visual_acceptance": "VERIFIED after user manual unlock: fresh native-unlocked.png shows real character waving; revision9,18 joints,4 morph weights,3 timeline entries,1 active animation. Earlier locked black captures retained as failed visual evidence.",
+    "binary_sha256": "3be9380f1747c8a6266c59e49f73550e180038fb1259187942af16033a2bc929",
+    "capture": "native-unlocked.png",
+    "performance": "Functional smoke only, no formal first-frame/cold/GPU memory claim."
   },
   "network": {
     "measurement": "HTTP response body bytes actually written; excludes headers/TCP overhead",

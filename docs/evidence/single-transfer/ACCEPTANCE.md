@@ -1,7 +1,7 @@
 # Single GLB retrieval: integrated acceptance
 
 Source: `fix/single-glb-transfer`, based on `bf536f8` (the history PR), with exact
-runtime hashes in [build-manifest.json](build-manifest.json). This is a new
+runtime hashes in [build-manifest.json](build-manifest.json). PR18 is now merged to main at `07858fe6`; the current production artifact bytes remain identical to the tested integration. This is a new
 integrated release, not a relabelled PR18, worker or historical performance run.
 
 ## Compilation and independent review
@@ -68,15 +68,14 @@ and [hash recovery](web-hash-recovered.jpg) preserve outcomes. Only disposable
 copies changed; the published fixture/profile and normal release stayed intact.
 This checks missing/changed bytes; it is not a visual test of every malformed GLB.
 
-## Native execution and blocked visual acceptance
+## Native execution, failed locked captures and unlocked acceptance
 
 Both actual packaged native Player launches exited0, loading exchanged revision9
 with18 joints,4 morph weights,3 timeline entries and one active animation on Metal
 M2Pro. [Logs](native-current.log) and [extracted evidence](native-evidence.json)
 record this. However, both2-second and6-second captured PNGs are black. CUA then
 reported that the Mac is locked and could not unlock it. Runtime Ready and capture
-success are **not** visual acceptance. Both failed captures are retained. Unlocked
-native visual acceptance for this artifact remains NOT-RUN pending manual unlock.
+success are **not** visual acceptance. Both failed captures are retained. Derek subsequently unlocked the Mac. A third launch on the same exact native binary exited0 and produced [native-unlocked.png](native-unlocked.png), visually inspected: the real character is waving, Player reads Ready, revision9/18 joints/4 morphs/3 timeline entries/1 active animation are recorded in [native-unlocked.log](native-unlocked.log). Current native visual acceptance therefore passes.
 The previous history branch's valid native screenshot is separate evidence.
 
 ## Limits and lifecycle
@@ -93,7 +92,7 @@ prove immediate GPU reclamation. The supported fixture is self-contained.
 No current formal startup/cadence/GPU/memory benchmark, additional browser/OS,
 physical IME retest, hosted CI, public hosting or signing was performed. Both probe
 tabs and native processes exited;9202 diagnostic server stopped. The existing9201
-production preview remains for Derek. Both worker checkouts are confirmed archived and their ignored build caches absent; disposable A/B copies were removed after preserving evidence. [Cleanup](cleanup.json). PR21 is published as draft, pending unlocked native visual proof.
+production preview remains for Derek. Both worker checkouts are confirmed archived and their ignored build caches absent; disposable A/B copies were removed after preserving evidence. [Cleanup](cleanup.json). PR21 has completed bounded local acceptance and can leave draft after this evidence is published.
 
 ```sh
 cargo test --workspace --locked
@@ -101,6 +100,4 @@ bash experiments/09-single-transfer/reproduce.sh
 python3 experiments/09-single-transfer/summarize_http.py docs/evidence/single-transfer/http-requests.jsonl
 ```
 
-PARTIAL —93 tests, strict checks, dual release builds, actual Web Ready/animation,
-2→1 GLB requests and missing/hash same-path recovery passed. Native process/Ready
-passed; unlocked native visual acceptance and current performance remain NOT-RUN.
+VERIFIED —93 tests, strict checks, dual release builds, actual native/Web character/animation,2→1 GLB requests and missing/hash same-path recovery passed. PARTIAL —current cold-start/GPU/browser-memory and broader platform coverage remain NOT-RUN.
