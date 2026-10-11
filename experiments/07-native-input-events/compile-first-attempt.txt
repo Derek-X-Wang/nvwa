@@ -1,0 +1,11 @@
+error[E0433]: cannot find `TextEditState` in `egui`
+  --> /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/07-native-input-events/probe.rs:81:27
+   |
+81 |     let mut state = egui::TextEditState::load(&ctx, id).expect("text state");
+   |                           ^^^^^^^^^^^^^ could not find `TextEditState` in `egui`
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0433`.
+
+NOT-RUN: rustc exit=1; no dependency rebuild attempted
