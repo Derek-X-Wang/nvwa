@@ -90,9 +90,33 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             if command == "inspect" {
                 println!("{}", document.to_json()?);
             } else {
+                // Preserve the profile's existing f32 JSON representation;
+                // to_value would widen floats to f64 before output encoding.
+                let profile_json = serde_json::to_string(&document.profile)
+                    .map_err(|e| CoreError::new("serialize", e.to_string()))?;
+                let mut capabilities: serde_json::Value = serde_json::from_str(&profile_json)
+                    .map_err(|e| CoreError::new("serialize", e.to_string()))?;
+                capabilities["editor_retention"] = serde_json::json!({
+                    "limits": nvwa_core::EDITOR_RETENTION_LIMITS,
+                    "session_local": true,
+                    "persisted_in_document": false,
+                    "eviction": "fifo",
+                    "duplicate_reads_refresh_retention": false,
+                    "retained_identical_envelope": "duplicate",
+                    "retained_conflicting_id": "command_id_conflict",
+                    "expired_original_envelope": "revision_conflict",
+                    "expired_id_reuse": "allowed_with_current_revision_and_valid_command",
+                    "oversized_snapshot": "clear_destination_history_without_rejecting_edit",
+                    "oversized_retry_entry": "evict_all_older_entries_then_expire_without_rejecting_edit",
+                    "byte_accounting": {
+                        "history": "sum_of_compact_scene_document_json_bytes",
+                        "retry": "sum_of_compact_envelope_result_tuple_json_bytes",
+                        "excludes": ["live_document", "temporary_candidates", "allocation_overhead"]
+                    }
+                });
                 println!(
                     "{}",
-                    serde_json::to_string_pretty(&document.profile)
+                    serde_json::to_string_pretty(&capabilities)
                         .map_err(|e| CoreError::new("serialize", e.to_string()))?
                 );
             }

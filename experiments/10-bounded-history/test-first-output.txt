@@ -1,0 +1,175 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling version_check v0.9.5
+   Compiling unicode-ident v1.0.26
+   Compiling generic-array v0.14.7
+   Compiling typenum v1.20.1
+   Compiling syn v3.0.7
+   Compiling libc v0.2.190
+   Compiling serde_core v1.0.229
+   Compiling zmij v1.0.23
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling thiserror v2.0.21
+   Compiling serde_json v1.0.152
+   Compiling serde v1.0.229
+   Compiling digest v0.10.7
+   Compiling cpufeatures v0.2.17
+   Compiling itoa v1.0.18
+   Compiling cfg-if v1.0.5
+   Compiling memchr v2.8.3
+   Compiling sha2 v0.10.9
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.21
+   Compiling nvwa-core v0.1.0 (/Users/derekxwang/.codex/worktrees/bounded-history/nvwa/crates/nvwa-core)
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+  --> crates/nvwa-core/src/bounded_history_tests.rs:68:18
+   |
+66 |     failure_leaves_session(
+   |     ---------------------- mutable borrow later used by call
+67 |         &mut editor,
+   |         ----------- mutable borrow occurs here
+68 |         envelope(&editor, "empty", Command::Undo),
+   |                  ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+  --> crates/nvwa-core/src/bounded_history_tests.rs:81:18
+   |
+79 |     failure_leaves_session(
+   |     ---------------------- mutable borrow later used by call
+80 |         &mut editor,
+   |         ----------- mutable borrow occurs here
+81 |         envelope(&editor, "no-redo", Command::Redo),
+   |                  ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:103:18
+    |
+101 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+102 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+103 |         envelope(&editor, "first", scale(&editor, 3.0)),
+    |                  ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:103:42
+    |
+101 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+102 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+103 |         envelope(&editor, "first", scale(&editor, 3.0)),
+    |                                          ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:108:18
+    |
+106 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+107 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+108 |         envelope(&editor, "invalid", scale(&editor, -1.0)),
+    |                  ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:108:44
+    |
+106 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+107 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+108 |         envelope(&editor, "invalid", scale(&editor, -1.0)),
+    |                                            ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:145:18
+    |
+143 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+144 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+145 |         envelope(&editor, "undo-more", Command::Undo),
+    |                  ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:169:46
+    |
+169 |     apply(&mut editor, "huge", huge_timeline(&editor));
+    |     ----- -----------                        ^^^^^^^ immutable borrow occurs here
+    |     |     |
+    |     |     mutable borrow occurs here
+    |     mutable borrow later used by call
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:177:18
+    |
+175 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+176 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+177 |         envelope(&editor, "no-jump", Command::Undo),
+    |                  ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:187:46
+    |
+187 |     apply(&mut editor, "huge", huge_timeline(&editor));
+    |     ----- -----------                        ^^^^^^^ immutable borrow occurs here
+    |     |     |
+    |     |     mutable borrow occurs here
+    |     mutable borrow later used by call
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:192:18
+    |
+190 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+191 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+192 |         envelope(&editor, "no-redo-jump", Command::Redo),
+    |                  ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:247:18
+    |
+245 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+246 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+247 |         envelope(&editor, "overflow", scale(&editor, 2.0)),
+    |                  ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:247:45
+    |
+245 |     failure_leaves_session(
+    |     ---------------------- mutable borrow later used by call
+246 |         &mut editor,
+    |         ----------- mutable borrow occurs here
+247 |         envelope(&editor, "overflow", scale(&editor, 2.0)),
+    |                                             ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:274:22
+    |
+272 |         failure_leaves_session(
+    |         ---------------------- mutable borrow later used by call
+273 |             &mut editor,
+    |             ----------- mutable borrow occurs here
+274 |             envelope(&editor, format!("invalid-{index}"), scale(&editor, -1.0)),
+    |                      ^^^^^^^ immutable borrow occurs here
+
+error[E0502]: cannot borrow `editor` as immutable because it is also borrowed as mutable
+   --> crates/nvwa-core/src/bounded_history_tests.rs:274:65
+    |
+272 |         failure_leaves_session(
+    |         ---------------------- mutable borrow later used by call
+273 |             &mut editor,
+    |             ----------- mutable borrow occurs here
+274 |             envelope(&editor, format!("invalid-{index}"), scale(&editor, -1.0)),
+    |                                                                 ^^^^^^^ immutable borrow occurs here
+
+For more information about this error, try `rustc --explain E0502`.
+error: could not compile `nvwa-core` (lib test) due to 15 previous errors
+warning: build failed, waiting for other jobs to finish...
