@@ -2,7 +2,7 @@
 
 Rust character Studio and Player for native macOS and browser WebGPU. One Rust document, command core, Bevy runtime and egui UI serve both targets. The original clothed humanoid has a continuous skinned body, four real morph targets and authored idle, wave and turn animations. These animations are presets, not AI generation.
 
-The repository implements M0 editing/exchange plus thin M1: a three-action 5–10 second work, transport, a chest/head click that plays one wave and restores the work, and an editor-free static Player. See [M1 evidence](docs/M1-VERIFICATION.md), [verification matrix](docs/TEST-MATRIX.md) and [known issues](docs/ISSUES.md). Arbitrary character imports remain outside this prototype.
+The repository implements M0 editing/exchange plus thin M1: a three-action 5–10 second work, transport, a chest/head click that plays one wave and restores the work, and an editor-free static Player. See the [roadmap](docs/ROADMAP.md), [M1 evidence](docs/M1-VERIFICATION.md), [verification matrix](docs/TEST-MATRIX.md) and [known issues](docs/ISSUES.md). Arbitrary character imports remain outside this prototype.
 
 ## Run
 

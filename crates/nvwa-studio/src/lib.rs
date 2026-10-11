@@ -1,4 +1,5 @@
 //! Rust Studio: egui and the renderer share one Bevy event loop on both targets.
+mod fonts;
 pub mod platform;
 
 use bevy::{
@@ -141,6 +142,12 @@ fn build_app_for_mode(config: LaunchConfig, smoke: SmokeRun) -> App {
     )
     .insert_resource(smoke)
     .add_systems(Startup, request_initial_work)
+    .add_systems(
+        PreUpdate,
+        fonts::install_fonts
+            .after(bevy_egui::EguiPreUpdateSet::InitContexts)
+            .before(bevy_egui::EguiPreUpdateSet::BeginPass),
+    )
     .add_systems(EguiPrimaryContextPass, draw_studio)
     .add_systems(Update, poll_files)
     .add_systems(
@@ -543,7 +550,7 @@ fn draw_studio(
                 command = Some(Command::Redo);
             }
             ui.separator();
-            ui.label("File");
+            ui.label("作品 / Work");
             ui.add(egui::TextEdit::singleline(&mut state.file_path).desired_width(220.0));
             if ui
                 .add_enabled(!io.busy(), egui::Button::new("Open…"))

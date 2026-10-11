@@ -1,11 +1,11 @@
 # GitHub work index
 
-M0 was published as [`d74493d`](https://github.com/Derek-X-Wang/nvwa/commit/d74493df0ab14f786e798cee03efe5ef9e2e4670). Issues are the canonical task detail; this is a compact navigation index. Known gaps do not all gate thin M1.
+M0 was first published as [`d74493d`](https://github.com/Derek-X-Wang/nvwa/commit/d74493df0ab14f786e798cee03efe5ef9e2e4670). Thin M1 and the PR #17 transport repair are now merged to main at [`96c00de`](https://github.com/Derek-X-Wang/nvwa/commit/96c00dedf9a4a74038edb7abf20d99d89871ae6b). Issues remain the canonical task detail; this is a compact navigation index. Known gaps do not all gate the completed thin M1 slice.
 
 ## Known M0 gaps
 
-- [Render Chinese text with redistributable CJK fonts](https://github.com/Derek-X-Wang/nvwa/issues/1) — ready-for-agent
-- [Hand-test native and Web text, drag, clipboard and focus behavior](https://github.com/Derek-X-Wang/nvwa/issues/2) — ready-for-human
+- [Render Chinese text with redistributable CJK fonts](https://github.com/Derek-X-Wang/nvwa/issues/1) — technical acceptance complete on `fix/cjk-input-acceptance`, pending merge: same licensed fallback, 59 tests, actual native/Web CJK labels/filenames and Unicode GUI Save/Open; provenance/notices and gzip impact recorded. See [acceptance](evidence/input-fonts/ACCEPTANCE.md).
+- [Hand-test native and Web text, drag, clipboard and focus behavior](https://github.com/Derek-X-Wang/nvwa/issues/2) — partial, ready-for-human: actual native missing-work GUI recovery and Unicode Save/Open; actual Web one-drag/one-Undo full-document checks, paste and per-key Space focus guard. Native adapter drag, clipboard/Command chords and bulk Unicode entry did not produce the intended input; physical behavior remains unverified. Mac locked before remaining native tests. See [acceptance](evidence/input-fonts/ACCEPTANCE.md) and [diagnosis](evidence/input-fonts/INPUT-DIAGNOSIS.md).
 - [Fix or diagnose stale input scaling under IAB viewport and DPR changes](https://github.com/Derek-X-Wang/nvwa/issues/3) — ready-for-agent
 - [Measure first presentation, cold Web startup and GPU/browser memory](https://github.com/Derek-X-Wang/nvwa/issues/4) — ready-for-agent
 - [Make automatic Web screenshot export persist in embedded browsers](https://github.com/Derek-X-Wang/nvwa/issues/5) — ready-for-agent
@@ -20,10 +20,12 @@ M0 was published as [`d74493d`](https://github.com/Derek-X-Wang/nvwa/commit/d744
 
 ## User-approved thin M1
 
-All three issues are closed. Implementation/evidence is published in [draft PR #17](https://github.com/Derek-X-Wang/nvwa/pull/17), code commit [4af6a19](https://github.com/Derek-X-Wang/nvwa/commit/4af6a1963783199f2b4bf4e5d2b44ca694900ecb). The PR remains unmerged; main retains M0.
+All three issues are closed for their documented local acceptance. Implementation began at [4af6a19](https://github.com/Derek-X-Wang/nvwa/commit/4af6a1963783199f2b4bf4e5d2b44ca694900ecb); [PR #17](https://github.com/Derek-X-Wang/nvwa/pull/17) was independently reviewed, repaired in `976331d`, and merged to main at `96c00de`. Review and the fresh 57-test, dual-release acceptance are in [review](evidence/pr17-review/REVIEW.md), [acceptance](evidence/pr17-review/ACCEPTANCE.md), and [repair manifest](evidence/pr17-review/build-manifest.json). The original M1 manifest remains the historical `4af6a19` snapshot. The 57-test result predates the current font integration.
 
 - [Compose and exchange a three-action 5–10 second work](https://github.com/Derek-X-Wang/nvwa/issues/14) — completed; sequence/exchange acceptance recorded in [M1 verification](M1-VERIFICATION.md)
 - [Click the character to trigger one authored action and resume the work](https://github.com/Derek-X-Wang/nvwa/issues/15) — completed; native/Web interaction acceptance
 - [Open the saved work in an editor-free static Player](https://github.com/Derek-X-Wang/nvwa/issues/16) — completed; local release acceptance recorded; [release evidence and limits](evidence/m1/player-acceptance.md)
 
 The native GitHub blocking edges are three-action work → click interaction → static Player; Player also depends directly on the three-action work. The user approved this decomposition. No accounts, general rig importer, physics, genuine AI generation, VaM compatibility or remote live GUI bridge is included.
+
+`M1-VERIFICATION.md` records the earlier state when native negative-startup recovery was incomplete. The screenshots linked under issue #2 above supersede that single gap; the new acceptance also records Web drag/focus and dual-target Unicode Save/Open. It does not close the remaining physical input, native drag, OS focus/zoom or scaling checks.

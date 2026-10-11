@@ -20,6 +20,10 @@ resources.mkdir(parents=True, exist_ok=True)
 for name in ['nvwa-humanoid.glb', 'LICENSE.txt', 'provenance-manifest.json']:
     shutil.copy2(root / 'assets/fixtures' / name, resources / name)
 shutil.copy2(root / 'assets/character.profile.json', resources.parent / 'character.profile.json')
+font_notices = contents / 'Resources/licenses/fonts'
+font_notices.mkdir(parents=True, exist_ok=True)
+for name in ['OFL.txt', 'NOTICE.md', 'PROVENANCE.json']:
+    shutil.copy2(root / 'assets/fonts' / name, font_notices / name)
 works = contents / 'Resources/works'
 works.mkdir(parents=True, exist_ok=True)
 shutil.copy2(root / 'examples/m1-sequence.nvwa.json', works / 'm1-sequence.nvwa.json')

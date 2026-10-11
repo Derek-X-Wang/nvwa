@@ -1,0 +1,31 @@
+{
+  "native_pre_font_player_recovery": {
+    "command_arguments": [
+      "--player",
+      "--work",
+      "<task-owned intentionally missing absolute path>"
+    ],
+    "runtime": "actual GUI Open recovery to published revision6 work",
+    "exit_code": 0,
+    "note": "window closed; a default CUA observation-created replacement process was stopped by exact PID"
+  },
+  "native_font_studio_unicode": {
+    "command_arguments": [
+      "--work",
+      "<task-owned absolute Chinese filename holding revision6 baseline>"
+    ],
+    "runtime": "actual Chinese rendering, GUI Save/Open, animation; first automated drag produced no edit; next blocked by locked Mac",
+    "exit_code": 143,
+    "note": "intentional exact-PID SIGTERM cleanup after all work/screenshots saved, not a crash or graceful-close acceptance"
+  },
+  "native_ascii_font_studio": {
+    "exit_code": 143,
+    "note": "intentional stop to restart with known Unicode path after CUA bulk Chinese text insertion omitted Chinese"
+  },
+  "web_font_studio": {
+    "runtime": "actual CJK/Unicode Save/Open, complete-document equality, drag/Undo and per-key focus guard",
+    "tab": "temporarily blanked to isolate native test",
+    "process_exit": "not applicable; browser session"
+  },
+  "new_font_performance": "NOT-RUN; desktop locked"
+}
