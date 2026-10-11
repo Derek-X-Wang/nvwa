@@ -72,3 +72,39 @@ PARTIAL — Final M0 functional loop and dual-platform release runs verified; ch
 The user authorized publishing the complete current M0 to Derek-X-Wang/nvwa, creating issues for known problems/unverified acceptance, then implementing only the kickoff's thin M1. Remote target and public visibility were freshly verified; the remote was empty. Earlier no-commit/no-push entries are historical checkpoints, superseded by this instruction. Source/assets/reproduction scripts and actual evidence are published; generated target/dist/tool caches remain ignored. No cloud deployment, paid services or unlimited CI is authorized.
 
 M1 remains three authored actions over 5–10seconds, timeline play/pause/seek, one click-triggered action and an editor-free static Player using the shared runtime. Arbitrary rigs/AI/physics/market/multiplayer are excluded. Task slicing is being checked using to-tickets; M0 publication and known issue reporting proceed independently.
+
+## M1 first sequence checkpoint
+
+M0 main publication verified: local and remote HEAD both d74493df0ab14f786e798cee03efe5ef9e2e4670. Created 13 known-gap issues plus three user-approved vertical M1 slices; native GitHub blocking edges 15<-14 and16<-14,15 verified. Development proceeds on feat/thin-m1. Root owns external writes/manifests/lock/builds and sole graphics controller. Sol-high worker owns sequence/core/runtime/Studio; a bounded Luna-max helper delivered CLI fixture/test through existing APIs; Sol-high interaction worker prepared exact-source picking facts only while blocked. No shared source/output mutation.
+
+First sequence workspace run passed40 tests (core13, CLI6, runtime14, Studio7). Fresh Astra-high R2 review found legacy M0 pause cursor can advance one delta because control follows animation advancement. Original owner is correcting production ordering with actual-joint regressions; this passing test count is not an acceptance claim. Actual native/Web M1 runs remain pending.
+
+## M1 sequence accepted; interaction active
+
+Pause repair accepted by independent Astra R2 rereview, followed by41 passing workspace tests. Native/Web dev builds passed. Actual native9s completion/paused wave pose, duration edit/Undo/Redo and native5→Web6→freshnative6 full-JSON equality passed. #14 closed with scoped local acceptance; integration PR/release measurements remain pending.
+
+Root controls graphics/builds and packages the shared demo work. Sol-high interaction worker owns runtime/Studio interaction edits. Sol-high sequence worker prepares only a separate Player note while #16 is blocked. Luna-max bounded evidence worker owns only M1 verification/CLI evidence documents and task-local files. Four active scopes fit the four-slot limit; no worker compilers or GPU runs. No paid service, CI or deployment.
+
+Accepted hotspot tradeoff: conservative chest/head ellipsoids follow actual original-fixture animated joints. Installed Bevy CPU mesh picking ignores skin/morph deformation, so it cannot establish exact GPU silhouette hits. The product hint states chest/head scope; broad picking/rig support remains outside thin M1.
+
+## Interaction accepted; static Player active
+
+Two accepted R2 findings repaired: actual primary-window refocus-frame rejection and small-scale collider invertibility. Targeted R2 accepted both.48 tests/native-Web dev builds pass. Actual nativepaused2.815/Webpaused0.104 restore after authored wave; Webrunning0.303 continues toturn8.105. Both exports entire-JSON-equal to pre-interactionrevision6. #15 closed; #16 now active. Sol worker owns Studio/platform/minimalruntime startup policy, root owns existing web-sys feature expansion/packaging/build/UI. Luna helper prepares a separate local negative-response fixture server on reservedloopback9202; no product service or cloud dependency.
+
+## Thin M1 final local acceptance
+
+The original owner completed static Player on the shared runtime. Fresh cross-model Astra R2 accepted argument/query parsing, bounded streaming static work fetch, explicit startup failure/no fallback, and the targeted readable browser-error repair. Initial strict-clippy findings were repaired without suppressions; full window-focus event draining is preserved. Final source passed57 workspace tests (core13/CLI6/runtime21/Studio-platform17), fmt and strict native/Wasm clippy. Both final release builds exited0; packaged/native binary and canonical GLB hashes match the recorded manifest. Cargo.lock is unchanged from M0.
+
+Actual Player release acceptance: native relocated package from /tmp, completion/replay/pause/seek, head interaction returning exactly5.3s, Open of Web6; static Web completion/refresh/subdirectory/chest interaction returning exactly4.966s, malformed/missing/oversized/redirect/hash/asset errors and stalled-body timeout followed by actual manual recovery. A separate native failed-startup manual-recovery GUI check could not finish because the CUA adapter lost window binding while the process remained alive; no app crash or recovery pass is inferred. Normal native Open, headless native recovery and fresh direct-work native restart are separate positive evidence. The remaining GUI gap belongs to #2.
+
+Formal final release samples used physical1280×720,600recent cadence observations, no competing task-owned heavy jobs, one actor and revision6 finite9.5s work holding its final pose. Native p50/p95=8.327/8.924ms, child peak RSS240599040bytes; Web8.300/9.500ms. Unique gzip bytes including measured work=14179929; duplicate GLB transfers remain #6. These are not continuous-animation GPU timings, first presentation or cold-network measurements. The original M0 continuous-idle observations remain separate.
+
+All workers/reviews finished. Root stopped both task-owned negative-startup native processes and the9202 negative-response server. The duplicate generated relocated app was removed only after equality checks against retained dist/Nvwa.app; evidence remains. No compiler or native renderer remains. The normal9201 preview/tab is retained as a deliverable. All13M0 issues remain open; no M2/paid resources/public hosting/CI/signing/merge is added. Publication of feat/thin-m1 and its draft integration PR is the final authorized step.
+
+PARTIAL — Final thin M1 local acceptance and release checks complete; listed hand-test/platform/measurement limits remain open.
+
+## Authorized thin M1 publication
+
+Published implementation/evidence commit4af6a1963783199f2b4bf4e5d2b44ca694900ecb to origin/feat/thin-m1; remote SHA matched. Created and attached [draft PR#17](https://github.com/Derek-X-Wang/nvwa/pull/17). Main remains the M0 commitd74493df0ab14f786e798cee03efe5ef9e2e4670; no merge was performed. Issues14/15/16 are closed for the bounded documented local acceptance. All13M0gap issues remain open. [Issue#2 update](https://github.com/Derek-X-Wang/nvwa/issues/2#issuecomment-6105856441) preserves the extra native failed-startup GUI recovery gap. Final publication metadata is documentation-only; tested code/artifacts remain frozen. HostedCI is NOT-RUN (no configured workflow).
+
+PARTIAL — Source/evidence pushed and draft PR attached; local dual-platform acceptance verified with explicit remaining gaps.

@@ -1,8 +1,8 @@
 # Nvwa
 
-Rust character Studio for native macOS and browser WebGPU. One Rust document, command core, Bevy runtime and egui editor serve both targets. The original clothed humanoid has a continuous skinned body, four real morph targets and authored idle, wave and turn animations. These animations are presets, not AI generation.
+Rust character Studio and Player for native macOS and browser WebGPU. One Rust document, command core, Bevy runtime and egui UI serve both targets. The original clothed humanoid has a continuous skinned body, four real morph targets and authored idle, wave and turn animations. These animations are presets, not AI generation.
 
-The repository implements a bounded M0: one fixed character rig, parameter editing, clip playback, undo/redo and portable JSON files. See [verification matrix](docs/TEST-MATRIX.md) for actual build/run evidence and unfinished validation. Multi-clip sequencing and arbitrary character imports are outside the delivered M0.
+The repository implements M0 editing/exchange plus thin M1: a three-action 5–10 second work, transport, a chest/head click that plays one wave and restores the work, and an editor-free static Player. See [M1 evidence](docs/M1-VERIFICATION.md), [verification matrix](docs/TEST-MATRIX.md) and [known issues](docs/ISSUES.md). Arbitrary character imports remain outside this prototype.
 
 ## Run
 
@@ -30,7 +30,26 @@ python3 scripts/package-native.py
 open dist/Nvwa.app
 ```
 
-The local macOS bundle includes its fixture assets. It is unsigned; distribution signing/notarization and other operating systems need separate validation.
+The local macOS bundle includes its fixture assets and demonstration work. It is unsigned; distribution signing/notarization and other operating systems need separate validation.
+
+## Compose and play a work
+
+In Studio, **Create 9s sequence** creates idle → wave → turn. The sequence rows change action, duration and order; each completed edit uses the same undoable command contract. The global transport can pause and seek across the whole work. Finite works stop and hold their final pose; Play/Replay restarts a completed work. The M0 single looping clip retains its previous behavior.
+
+Click the original character's chest or head to play one authored wave. The interaction holds the sequence cursor, then restores its pose and playing/paused state. It does not change the saved document or undo history. Targets are conservative joint-following hotspots; this does not claim exact deformed-surface picking for arbitrary rigs.
+
+Launch the same Rust app as a Player with a saved work:
+
+```sh
+NVWA_PROJECT="$PWD"
+"$NVWA_PROJECT/dist/Nvwa.app/Contents/MacOS/Nvwa" --player --work "$NVWA_PROJECT/examples/m1-sequence.nvwa.json"
+```
+
+`--work` requires an absolute path and also works without `--player`. Player without a work waits for Open. Failed explicit startup shows an error and allows Open recovery. Asset paths resolve against the bundled asset directory.
+
+For Web, build and serve as above, then open `http://127.0.0.1:9201/?player=1&work=works/m1-sequence.nvwa.json`. The Player has Open, transport and the same character interaction. It hides editing and Save. The URL loads a static same-origin relative work; refresh loads it again. Publish `dist/web` together, including `works/` and `assets/`. Static work requests reject redirects, traversal, invalid UTF-8, files above 2 MiB and requests longer than 30 seconds. No account or model service is required. Public hosting itself has not been tested.
+
+The exchanged [revision 6 work](docs/evidence/m1/web-sequence.nvwa.json) contains both edited appearance values and a 9.5-second timeline. Open it in either Studio or Player. To publish it, copy the file into the static bundle's `works/` directory and use its relative path in the URL.
 
 ## Programmatic edits
 
@@ -43,6 +62,13 @@ cargo run -p nvwa-cli --locked -- apply examples/default.nvwa.json examples/m0-c
 cargo run -p nvwa-cli --locked -- validate examples/edited.nvwa.json assets
 cargo run -p nvwa-cli --locked -- save examples/edited.nvwa.json examples/portable.nvwa.json
 cargo run -p nvwa-cli --locked -- inspect examples/portable.nvwa.json
+```
+
+Recreate the three-action work through shared commands:
+
+```sh
+cargo run -p nvwa-cli --locked -- apply examples/default.nvwa.json examples/m1-commands.json /tmp/nvwa-m1.nvwa.json
+cargo run -p nvwa-cli --locked -- validate /tmp/nvwa-m1.nvwa.json assets
 ```
 
 Commands include expected revision and unique command IDs. Failed edits preserve the original document. Repeating an identical envelope is idempotent within an editor session. Conflicting ID reuse, stale revisions, unknown fields, duplicate JSON keys, invalid ranges, oversized JSON and unsafe asset paths return structured errors.

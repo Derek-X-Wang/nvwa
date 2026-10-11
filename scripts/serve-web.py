@@ -16,7 +16,7 @@ class StaticHandler(SimpleHTTPRequestHandler):
     def send_head(self):
         if urlsplit(self.path).path in ('/', '/index.html'):
             # Record the actual browser build for reproducible local measurements.
-            # Document files are local picker data and never reach this server.
+            # Manual Open uses picker data; published Player works are static files.
             print('NVWA_BROWSER ' + self.headers.get('User-Agent', 'unavailable'), flush=True)
         original = Path(self.translate_path(self.path))
         compressed = Path(str(original) + '.gz')

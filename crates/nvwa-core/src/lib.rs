@@ -82,6 +82,7 @@ pub struct TimelineClip {
     pub id: String,
     pub clip_id: String,
     pub start_seconds: f32,
+    /// Wall-time span. Source pose time advances by `speed` within this span.
     pub duration_seconds: f32,
     pub speed: f32,
     pub looping: bool,
@@ -413,7 +414,34 @@ impl SceneDocument {
                 "timeline playback duration",
             )?;
         }
+        // A bounded sequence has one action at a time. Array order is storage
+        // order; start times define playback order. Gaps are valid holds.
+        let mut ordered: Vec<_> = self.timeline.iter().collect();
+        ordered.sort_by(|a, b| a.start_seconds.total_cmp(&b.start_seconds));
+        for pair in ordered.windows(2) {
+            if pair[1].start_seconds < pair[0].start_seconds + pair[0].duration_seconds {
+                return Err(CoreError::new(
+                    "overlapping_timeline",
+                    format!("timeline entries {} and {} overlap", pair[0].id, pair[1].id),
+                ));
+            }
+        }
         Ok(())
+    }
+
+    /// End of the final wall-time span; gaps count toward this duration.
+    pub fn timeline_duration_seconds(&self) -> f32 {
+        self.timeline
+            .iter()
+            .map(|clip| clip.start_seconds + clip.duration_seconds)
+            .fold(0.0, f32::max)
+    }
+
+    /// Preserve the M0 start-zero single-action loop as an indefinite preview.
+    pub fn is_single_loop(&self) -> bool {
+        self.timeline.len() == 1
+            && self.timeline[0].start_seconds == 0.0
+            && self.timeline[0].looping
     }
 
     fn validate_parameter(&self, parameter_id: &str, value: f32) -> Result<()> {

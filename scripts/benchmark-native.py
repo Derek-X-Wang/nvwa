@@ -13,6 +13,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--profile', choices=['debug', 'release'], default='release')
 parser.add_argument('--seconds', type=float, default=15)
 parser.add_argument('--label', default='native-release')
+parser.add_argument('--work', type=Path, help='Load this work before measuring the real renderer')
+parser.add_argument('--player', action='store_true', help='Measure the editor-free Player')
 args = parser.parse_args()
 root = Path(__file__).resolve().parent.parent
 evidence = root / 'docs/evidence/performance'
@@ -23,6 +25,10 @@ image = evidence / (args.label + '.png')
 log = evidence / (args.label + '.log')
 command = [str(root / 'target' / args.profile / 'nvwa-studio'), '--benchmark', '--smoke',
            '--smoke-seconds', str(args.seconds), '--capture', str(image), '--timeout', '90']
+if args.work:
+    command.extend(['--work', str(args.work.resolve(strict=True))])
+if args.player:
+    command.append('--player')
 environment = dict(os.environ)
 environment['RUST_LOG'] = 'info,wgpu=warn,naga=warn'
 start_utc = datetime.datetime.now(datetime.timezone.utc)

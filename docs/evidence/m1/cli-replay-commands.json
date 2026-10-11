@@ -1,0 +1,156 @@
+[
+  {
+    "command_id": "gui-equivalence-01-create-9s",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "sequence-1",
+          "clip_id": "idle",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "sequence-2",
+          "clip_id": "wave",
+          "start_seconds": 3.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "sequence-3",
+          "clip_id": "turn",
+          "start_seconds": 6.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  },
+  {
+    "command_id": "gui-equivalence-02-smile-034",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": {
+        "smile": 0.34
+      }
+    }
+  },
+  {
+    "command_id": "gui-equivalence-03-first-span-35s",
+    "expected_revision": 2,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "sequence-1",
+          "clip_id": "idle",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.5,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "sequence-2",
+          "clip_id": "wave",
+          "start_seconds": 3.5,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "sequence-3",
+          "clip_id": "turn",
+          "start_seconds": 6.5,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  },
+  {
+    "command_id": "gui-equivalence-04-undo-effect-9s",
+    "expected_revision": 3,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "sequence-1",
+          "clip_id": "idle",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "sequence-2",
+          "clip_id": "wave",
+          "start_seconds": 3.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "sequence-3",
+          "clip_id": "turn",
+          "start_seconds": 6.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  },
+  {
+    "command_id": "gui-equivalence-05-redo-effect-95s",
+    "expected_revision": 4,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "sequence-1",
+          "clip_id": "idle",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.5,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "sequence-2",
+          "clip_id": "wave",
+          "start_seconds": 3.5,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "sequence-3",
+          "clip_id": "turn",
+          "start_seconds": 6.5,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  },
+  {
+    "command_id": "gui-equivalence-06-jaw-width-053",
+    "expected_revision": 5,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": {
+        "jaw_width": 0.53
+      }
+    }
+  }
+]

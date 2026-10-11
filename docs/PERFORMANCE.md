@@ -52,3 +52,25 @@ Open `http://127.0.0.1:9201/?benchmark=1` without viewport emulation. After 15 s
 These reproduction instructions are not claims of extra runs. Benchmark scheduling is continuous even unfocused; normal scheduling retains Bevy's default focus behavior. No cache, browser/GPU identity, first-frame or memory result beyond these observations is asserted.
 
 PARTIAL — Isolated 1280×720 release cadence, native child RSS, actual PNGs and compressed bytes measured. Exact presentation/GPU timing, cold Web startup and browser memory are NOT-RUN.
+
+## Thin M1 final release Player
+
+Measured the same actual [revision6 exchange work](evidence/m1/web-sequence.nvwa.json) in both targets. It contains three segments over9.5s and retains appearance edits. Native Metal and IAB WebGPU reported player mode, revision6, timeline_count3,18joints,9skins,4morph weights, ready=true, completed=true,playing=false,cursor9.5.
+
+| Target | Recent samples | Cadence p50 / p95 | Memory | Evidence |
+| --- | --- | --- | --- | --- |
+| Native Metal |600|8.327 /8.924ms|240,599,040bytes peak child RSS (~229.5MiB)|[JSON](evidence/performance/m1-player-native-release.json),[actual pixels](evidence/performance/m1-player-native-release.png)|
+| IAB WebGPU |600|8.300 /9.500ms|NOT-RUN browser/GPU memory|[JSON](evidence/performance/m1-player-web-release.json),[exact console event](evidence/m1/player-web-benchmark-console.json),[actual download](evidence/performance/m1-player-web-release.png)|
+
+Physical1280×720; one actor; task-owned compilers/tests/other Nvwa renderers stopped; native measurement used a blank browser, Web used no native renderer. User applications were not controlled. The recent sample window was after the finite work completed; it measured the held final pose, not continuing animation or GPU/presentation timing. M0's continuous-idle cadence remains the separate animated baseline above. Native capture completion upper bound16.965s includes15s requested warmup and is not exact first presentation.
+
+[Actual gzip report](evidence/m1/web-size-report.json): unique HTML+generatedJS+Wasm+GLB+measured work=14,179,929bytes (shipped9s demo=14,179,914). Raw Wasm74,738,859bytes,gzip13,030,222. These are file-size sums, not a cold-network trace; duplicateGLB transfers remain issue#6. Cold Web first presentation/GPU timestamps/browser memory are still NOT-RUN.
+
+Reproduce native after closing other renderers/heavy tasks:
+
+```sh
+python3 scripts/benchmark-native.py --seconds 15 --label m1-player-native-release --player --work docs/evidence/m1/web-sequence.nvwa.json
+cp docs/evidence/m1/web-sequence.nvwa.json dist/web/works/exchanged.nvwa.json
+```
+
+Then open `http://127.0.0.1:9201/?benchmark=1&player=1&work=works/exchanged.nvwa.json`, read the actual `NVWA_EVIDENCE` console.log record and use the benchmark PNG button. Keep viewport emulation off and only one renderer running.

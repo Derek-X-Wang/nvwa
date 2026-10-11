@@ -1,0 +1,22 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Checking nvwa-runtime v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-runtime)
+    Checking nvwa-studio v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-studio)
+error: field assignment outside of initializer for an instance created with Default::default()
+   --> crates/nvwa-studio/src/platform.rs:462:9
+    |
+462 |         io.pending = true;
+    |         ^^^^^^^^^^^^^^^^^^
+    |
+note: consider initializing the variable with `platform::PlatformIo { pending: true, ..Default::default() }` and removing relevant reassignments
+   --> crates/nvwa-studio/src/platform.rs:461:9
+    |
+461 |         let mut io = PlatformIo::default();
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#field_reassign_with_default
+    = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: could not compile `nvwa-studio` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

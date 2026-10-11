@@ -1,0 +1,26 @@
+    Blocking waiting for file lock on build directory
+    Checking nvwa-core v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-core)
+    Checking nvwa-cli v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-cli)
+    Checking nvwa-runtime v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-runtime)
+error: field assignment outside of initializer for an instance created with Default::default()
+    --> crates/nvwa-runtime/src/lib.rs:1421:13
+     |
+1421 |             asset.verified = true;
+     |             ^^^^^^^^^^^^^^^^^^^^^^
+     |
+note: consider initializing the variable with `CharacterAsset { verified: true, scene_ready: true, document_generation: app.world().resource::<EditorState>().document_generation, nodes: profile
+                      .clips
+                      .iter()
+                      .zip(nodes)
+                      .map(|(spec, node)| (spec.id.clone(), node))
+                      .collect(), ..Default::default() }` and removing relevant reassignments
+    --> crates/nvwa-runtime/src/lib.rs:1420:13
+     |
+1420 |             let mut asset = CharacterAsset::default();
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#field_reassign_with_default
+     = note: `-D clippy::field-reassign-with-default` implied by `-D warnings`
+     = help: to override `-D warnings` add `#[allow(clippy::field_reassign_with_default)]`
+
+error: could not compile `nvwa-runtime` (lib test) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

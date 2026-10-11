@@ -1,0 +1,35 @@
+[
+  {
+    "command_id": "m1-sequence-1",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "m1-idle",
+          "clip_id": "idle",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "m1-wave",
+          "clip_id": "wave",
+          "start_seconds": 3.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "m1-turn",
+          "clip_id": "turn",
+          "start_seconds": 6.0,
+          "duration_seconds": 3.0,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  }
+]
