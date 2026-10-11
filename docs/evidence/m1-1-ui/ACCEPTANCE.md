@@ -10,6 +10,10 @@ All checks below use the final source recorded in
 [the build input inventory](build/build-inputs-final-before.json). Its 31 input
 files matched after both builds. The temporary 1024-point headless diagnostic
 was removed with exact-byte restoration before the later browser probe.
+[The rebase checkpoint](rebase-checkpoint.json) verifies that the production
+patch is byte-identical and all 31 measured inputs are unchanged after moving
+the own unpushed commit onto current main. No build result is inferred from a
+different product source.
 
 | Artifact | SHA256 |
 | --- | --- |
@@ -113,6 +117,11 @@ Failed/no-effect controller captures and full machine/process metadata remain
 private. Historical test/build failures remain separately scoped and are not
 rewritten as current successes. Public evidence contains no executables or
 Wasm binaries.
+
+Copied test logs retain Cargo's trailing blank line. Ordinary `git diff --check`
+reports that preserved raw-output formatting; source/document checks pass with
+logs excluded, and log checks pass with only `blank-at-eof` excluded. No log
+content or test assertion is removed to silence the formatting report.
 
 The temporary browser tabs, viewport override and loopback servers were
 released. The native Studio and integration worktree remain task-owned and
