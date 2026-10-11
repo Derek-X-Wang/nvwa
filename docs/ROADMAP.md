@@ -11,7 +11,7 @@
 | M2：真实动作生成 | 一个真实 provider、任务状态/取消/失败、规范化动作、到目标 rig 的映射及质量验证。 | **提议；未开始，也未获准实施。** 现有实验只证明隔离的 authored-preset 导入边界；没有进行模型推理。需先解决授权模型/运行时、输出格式和目标 rig 映射，再决定是否进入 M2。见 [AI 实验报告](../experiments/05-ai-motion/REPORT.md)。 |
 | 后续（顺序仍待决） | 简单 Blender 插件 → 额外角色/服装验证 → 指定版本 VRM → 约束/IK/接触 → 只读 VaM 检查器 → 经许可审核的迁移子集。 | **全为提议，未授权实现。** VaM 检查器只读；真实样本与许可不足时，合成包解析不能作为兼容证据。软体物理、头发/布料、VR、多人、市场、任意脚本插件不在前三个里程碑。 |
 
-**当前顺序：**PR #17 独立审查和合并已完成。#1 字体修复在 `fix/cjk-input-acceptance` 通过技术验收并等待合并；#2 的原生错误恢复、两端 Unicode Save/Open、Web 拖动/撤销与按键焦点已验证。原生自动化拖动、剪贴板/Command 组合键和批量中文输入未取得预期结果，不能外推为真人输入故障。Mac 锁定后剩余桌面操作受阻，已请求手动解锁。先完成剩余输入验收，再按风险重排 #3/#4/#6/#8/#9/#10 等稳定性和发行缺口；不承诺日期或工期。
+**当前顺序：**PR #17 独立审查和合并已完成。#1 字体修复在 `fix/cjk-input-acceptance` 通过技术验收并等待合并；#2 的原生错误恢复、两端 Unicode Save/Open、Web 拖动/撤销与按键焦点已验证。原生自动化拖动、剪贴板/Command 组合键和批量中文输入未取得预期结果，不能外推为真人输入故障。用户解锁后，原生点击修改/撤销/重做及整份作品保存比对、文本按键焦点保护和窗口缩放/恢复均通过。原生自动化连续拖动仍未得到有效输入；物理输入及 OS 失焦切换待真人检查。见[解锁后验收](evidence/input-fonts/UNLOCKED-ACCEPTANCE.md)。先完成剩余输入验收，再按风险重排 #3/#4/#6/#8/#9/#10 等稳定性和发行缺口；不承诺日期或工期。
 
 ## 已验证的风险与限制
 
@@ -19,7 +19,7 @@
 |---|---|---|
 | 单一角色的能力边界 | 原创 CC0 fixture 有单一连续蒙皮主体、18 骨骼、4 个不同 morph、3 个手工动作；原生与 Web 实际播放已验证。 | 这是风格化固定 rig，不代表任意角色导入。手部粗糙；腋下及极端形变可能夹皱，生产级权重和全组合视觉检查未完成。见 [角色报告](../experiments/01-character/REPORT.md)。 |
 | 导出复现性（#7） | 两次独立 Blender 导出的 GLB/Blend **字节不同**；已测拓扑、结构与 morph 数据保持一致，差异原因未定位。 | 不得声称字节可复现。发布时需重写 profile/manifest 以匹配实际文件；跨版本/跨平台未测。 |
-| 字体与输入（#1、#2） | 同 cmap static Regular 400 fallback：30,890 映射码点、31,036 glyph；standalone gzip6,303,513bytes，对比 variable11,276,563bytes。59 项测试、strict checks、native/Web release 与实际中英标签、中文文件名、Unicode GUI Save/Open 通过；完整 JSON 等于 baseline。原生 missing-work 经真实 GUI Open 恢复。Web 一次连续拖动提交一个 revision，一次 Undo 恢复全作品；文本 Space 不暂停播放。 | #1 待合并。罕见补充汉字仍缺失；不等于真实 IME 通过。原生 CUA 拖动、剪贴板/Command、批量 Unicode entry 未获有效结果；Mac 锁定阻断后续。物理输入、原生拖动、OS 失焦/缩放仍待验证，不将自动化限制视作真人缺陷。见 [验收](evidence/input-fonts/ACCEPTANCE.md)、[字体实验](../experiments/06-cjk-fonts/REPORT.md)。 |
+| 字体与输入（#1、#2） | 同 cmap static Regular 400 fallback：30,890 映射码点、31,036 glyph；standalone gzip6,303,513bytes，对比 variable11,276,563bytes。59 项测试、strict checks、native/Web release 与实际中英标签、中文文件名、Unicode GUI Save/Open 通过；完整 JSON 等于 baseline。原生 missing-work 经真实 GUI Open 恢复。Web 一次连续拖动提交一个 revision，一次 Undo 恢复全作品；文本 Space 不暂停播放。 | #1 待合并。罕见补充汉字仍缺失；不等于真实 IME 通过。解锁后原生点击修改/撤销/重做和整份作品保存比对、文本焦点与窗口缩放恢复通过。原生 CUA 连续拖动、剪贴板/Command、批量 Unicode entry 未获有效结果；物理输入与 OS 失焦切换仍待真人验证，不将自动化限制视作真人缺陷。见 [验收](evidence/input-fonts/ACCEPTANCE.md)、[字体实验](../experiments/06-cjk-fonts/REPORT.md)。 |
 | 浏览器缩放（#3） | IAB 视口/DPR 模拟曾出现显示与输入比例陈旧；普通未模拟视口的输入通过。 | 不把模拟视口结果外推到所有浏览器。Live resize/DPR 恢复仍待验证。 |
 | 性能与启动（#4） | M0 连续空闲 release cadence：原生 p95 8.65 ms、Web 11.20 ms。薄 M1 Player 的 600 样本约为原生 8.327/8.924 ms、Web 8.300/9.500 ms（p50/p95）。M1 样本来自 9.5 秒作品已结束并停在末帧之后。压缩文件和为 14,179,929 bytes。 | cadence 不是 GPU 帧完成时间。M1 数字不证明持续动画表现；首次精确呈现、冷启动 Web、浏览器/GPU 内存未测。native 首次截图约 8.52 秒只是可见性的上界。Web 重复 GLB 请求仍可多传约 1,129,081 bytes（#6）。30 fps/30 MB 是任务书初始预算，不是完整性能验收。见 [性能记录](PERFORMANCE.md)。 |
 | 命令历史（#8） | 命令事务、撤销/重做和 CLI/GUI 文档结果等价已验证。 | 历史和重试记录只在进程会话内，当前没有内存上限；长时间编辑的内存边界未验证。 |

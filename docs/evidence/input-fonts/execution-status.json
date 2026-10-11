@@ -24,8 +24,19 @@
   },
   "web_font_studio": {
     "runtime": "actual CJK/Unicode Save/Open, complete-document equality, drag/Undo and per-key focus guard",
-    "tab": "temporarily blanked to isolate native test",
+    "tab": "earlier browser session removed its preview tab; no Web renderer ran during unlocked native input observations",
     "process_exit": "not applicable; browser session"
   },
-  "new_font_performance": "NOT-RUN; desktop locked"
+  "new_font_performance": "NOT-RUN; current unlocked checkpoint exercises input only; earlier lock remains historical",
+  "native_font_studio_after_manual_unlock": {
+    "source_commit": "028e1b6833f42d24092cbac2a4037d931bfb1da3",
+    "command_arguments": [
+      "--work",
+      "<task-owned absolute Chinese filename holding revision6 baseline>"
+    ],
+    "runtime": "actual track-click edit, one Undo, Redo, whole-document save checks, per-key Space focus guard and macOS window zoom/recovery; CUA continuous drag still unaccepted",
+    "exit_code": null,
+    "note": "process retained paused for user physical input checks; no exit inferred",
+    "evidence": "UNLOCKED-ACCEPTANCE.md"
+  }
 }
