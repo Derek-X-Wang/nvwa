@@ -1,0 +1,27 @@
+{
+  "reviewer": "independent Astra agent m11_integration_review",
+  "scope": "Read-only source and final publication/evidence review; no reviewer GUI actions or fresh builds",
+  "result": "PASS for explicitly PARTIAL candidate",
+  "source_sha256": {
+    "crates/nvwa-studio/src/lib.rs": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+    "crates/nvwa-studio/src/editor_layout.rs": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c"
+  },
+  "verified": [
+    "Public full-Work verifier executed and all assertions passed",
+    "All 44 GUI manifest entries match public hashes; 43 copied files match originals except exact disclosed console path redactions",
+    "All 22 screenshots visually inspected: real rig and no private user paths",
+    "Two console logs differ only by 10 exact Cargo-registry-prefix replacements each",
+    "Diagnostic/build exact worktree-prefix-only redactions match manifests",
+    "Live 31 build inputs equal before/after inventory",
+    "Packaged native and Wasm hashes and both MIT notices match",
+    "Temporary diagnostic patch reconstructs recorded temporary source SHA; final source exactly restored",
+    "Actual later Web1024 screenshots support 210 to160, locked160, reset210 retaining lock, unlock to160 and vertical scroll; Save fullJSON equals Web redo"
+  ],
+  "actionable_findings": [],
+  "limits": [
+    "Gesture provenance is root recorded execution plus checkpoints; reviewer did not drive GUI",
+    "Native continuous drag/Escape/small window, native Open/Web-to-native and native Player remain pending",
+    "Physical IME/DPR NOT-RUN",
+    "PASS establishes source/evidence quality, not full issue26 completion or main-promotion readiness"
+  ]
+}

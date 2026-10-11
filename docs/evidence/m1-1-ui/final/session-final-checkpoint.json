@@ -1,0 +1,47 @@
+{
+  "owned_changed_files": [
+    "crates/nvwa-studio/src/lib.rs",
+    "crates/nvwa-studio/src/editor_layout.rs"
+  ],
+  "source_sha256": {
+    "crates/nvwa-studio/src/lib.rs": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+    "crates/nvwa-studio/src/editor_layout.rs": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c"
+  },
+  "draw_body_byte_identical": true,
+  "original31_studio_tests_retained": true,
+  "full_workspace_tests": {
+    "passed": 103,
+    "exit": 0,
+    "log": ".work/ui26/tests-session-final.log"
+  },
+  "clippy": {
+    "command": "CARGO_BUILD_JOBS=3 cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "exit": 0,
+    "log": ".work/ui26/clippy-session.log"
+  },
+  "mutation_proof": {
+    "red_trials": 5,
+    "manifest": ".work/ui26/mutations-final/manifest.json",
+    "exact_restores": true
+  },
+  "assert_locations": {
+    "idle-height-clamp": "crates/nvwa-studio/src/editor_layout.rs:711:13:",
+    "commit-every-drag-frame": "crates/nvwa-studio/src/editor_layout.rs:359:17:",
+    "space-keyboard-guard": "crates/nvwa-studio/src/editor_layout.rs:499:13:",
+    "command-keyboard-guard": "crates/nvwa-studio/src/editor_layout.rs:415:13:",
+    "discarded-pass-side-effects": "crates/nvwa-studio/src/editor_layout.rs:557:13:"
+  },
+  "completed_exec_sessions": [
+    52992,
+    83632,
+    68413,
+    79974
+  ],
+  "owned_processes_running": [],
+  "captured_completed_pids": [
+    61493,
+    61505,
+    61873
+  ],
+  "root_owned_next": "notes/source freeze, native+Wasm rebuild and GUI acceptance"
+}

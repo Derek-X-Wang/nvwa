@@ -1,0 +1,60 @@
+{
+  "owned_files": [
+    "crates/nvwa-studio/src/lib.rs",
+    "crates/nvwa-studio/src/editor_layout.rs",
+    "docs/implementation/m1-1-ui-integration.md"
+  ],
+  "source_sha256": {
+    "crates/nvwa-studio/src/lib.rs": "f8df01c2cdbb7fc0df8cacd3238728809210b434d15add4789b4452128f77a5a",
+    "crates/nvwa-studio/src/editor_layout.rs": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5",
+    "docs/implementation/m1-1-ui-integration.md": "0f2ec3e76720b8fb693be50e5b8495e35bce1cb61c517fa0d92a41842dbc270a"
+  },
+  "original_lib_test_bodies_preserved": true,
+  "workspace_test_passed": 103,
+  "studio_tests_passed": 41,
+  "original_studio_tests_retained": 31,
+  "new_layout_tests": 10,
+  "first_run": {
+    "exit": 101,
+    "log": ".work/ui26/tests-first.log",
+    "failure": "incorrect mouse-tab-focus expectation, replaced with real Tab-key focus traversal"
+  },
+  "second_run": {
+    "exit": 0,
+    "log": ".work/ui26/tests-second.log",
+    "command": "CARGO_BUILD_JOBS=3 cargo test --workspace --locked"
+  },
+  "verification_limits": [
+    "Native/Web actual GUI/build/exchange owned by root and NOT-RUN by worker"
+  ],
+  "owned_processes_running": [],
+  "completed_exec_sessions": [
+    59051,
+    94994,
+    84823,
+    63445,
+    94020
+  ],
+  "completed_pids": [
+    9988,
+    9998,
+    50038,
+    50048,
+    51397,
+    51417,
+    51715
+  ],
+  "last_tested_layout_sha256": "01bb3f17e43722634c6d1a3eea3b377f19f302b0700c17d684d30d2a0c11b5a5",
+  "current_checkpoint_tests": "VERIFIED; final workspace103 after five separately red production mutants with exact source restores",
+  "final_run": {
+    "exit": 0,
+    "log": ".work/ui26/tests-final.log",
+    "command": "CARGO_BUILD_JOBS=3 cargo test --workspace --locked",
+    "passed": 103
+  },
+  "mutation_trials": {
+    "runtime_red": 5,
+    "manifest": ".work/ui26/mutations/manifest.json",
+    "final_exact_restore": true
+  }
+}

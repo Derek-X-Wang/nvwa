@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "comparison": "Complete Work JSON equality including revision, not selected fields",
+  "expected": "web-redo.nvwa.json",
+  "actual": "web-small-split-final.nvwa.json",
+  "viewport": {
+    "width": 1024,
+    "height": 768,
+    "deviceScaleFactor": 1
+  },
+  "actual_actions": [
+    "fresh load of real saved Work",
+    "split 210 to 160",
+    "lock and attempt drag remains 160",
+    "reset to 210 retaining lock",
+    "unlock then split 210 to 160",
+    "vertical scroll reaches Document opened status",
+    "Save via browser download"
+  ],
+  "earlier_no_effect_probe": "Pointer started at y=570, outside subsequently confirmed hit region. Retargeted actual browser y=565 succeeded. No product code changed.",
+  "limits": [
+    "Escape during held drag requires native hand-test; not claimed by this browser sequence",
+    "Physical IME not tested by automated Unicode input"
+  ]
+}

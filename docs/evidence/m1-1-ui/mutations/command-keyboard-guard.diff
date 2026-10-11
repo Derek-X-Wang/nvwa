@@ -1,0 +1,11 @@
+--- crates/nvwa-studio/src/lib.rs
++++ crates/nvwa-studio/src/lib.rs
+@@ -866,7 +866,7 @@
+     {
+         next_playback.playing = !next_playback.playing;
+     }
+-    if !guard.keyboard && ctx.input(|i| i.modifiers.command && i.key_pressed(egui::Key::Z)) {
++    if ctx.input(|i| i.modifiers.command && i.key_pressed(egui::Key::Z)) {
+         command = Some(if ctx.input(|i| i.modifiers.shift) {
+             Command::Redo
+         } else {

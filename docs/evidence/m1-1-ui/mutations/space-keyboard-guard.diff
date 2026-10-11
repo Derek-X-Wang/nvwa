@@ -1,0 +1,12 @@
+--- crates/nvwa-studio/src/lib.rs
++++ crates/nvwa-studio/src/lib.rs
+@@ -859,8 +859,7 @@
+     // Do not paint a central egui panel: the scene remains visible through it.
+     guard.pointer = editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
+     guard.keyboard = ctx.egui_wants_keyboard_input();
+-    if !guard.keyboard
+-        && !interaction.busy()
++    if !interaction.busy()
+         && !next_playback.clip_id.is_empty()
+         && ctx.input(|i| i.key_pressed(egui::Key::Space))
+     {

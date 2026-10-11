@@ -1,0 +1,11 @@
+--- crates/nvwa-studio/src/editor_layout.rs
++++ crates/nvwa-studio/src/editor_layout.rs
+@@ -56,7 +56,7 @@
+         self.locked = locked;
+     }
+     fn resize(&mut self, delta: f32, viewport_height: f32) {
+-        if !self.locked && !self.cancelled_drag && delta.is_finite() && delta != 0.0 {
++        if !self.locked && !self.cancelled_drag && delta.is_finite() {
+             self.height = (self.height - delta).clamp(160.0, Self::maximum(viewport_height));
+         }
+     }

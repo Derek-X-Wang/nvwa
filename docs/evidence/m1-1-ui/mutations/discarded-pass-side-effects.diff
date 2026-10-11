@@ -1,0 +1,11 @@
+--- crates/nvwa-studio/src/lib.rs
++++ crates/nvwa-studio/src/lib.rs
+@@ -875,7 +875,7 @@
+     }
+     // egui can repeat a discarded layout pass. Apply side effects only once,
+     // after the final pass has produced its input intents.
+-    if ctx.will_discard() {
++    if false && ctx.will_discard() {
+         return Ok(());
+     }
+     state.layout = layout;

@@ -24,6 +24,9 @@ font_notices = contents / 'Resources/licenses/fonts'
 font_notices.mkdir(parents=True, exist_ok=True)
 for name in ['OFL.txt', 'NOTICE.md', 'PROVENANCE.json']:
     shutil.copy2(root / 'assets/fonts' / name, font_notices / name)
+component_notices = contents / 'Resources/licenses/craft-ui'
+component_notices.mkdir(parents=True, exist_ok=True)
+shutil.copy2(root / 'licenses/craft-ui/LICENSE-MIT.txt', component_notices / 'LICENSE-MIT.txt')
 works = contents / 'Resources/works'
 works.mkdir(parents=True, exist_ok=True)
 shutil.copy2(root / 'examples/m1-sequence.nvwa.json', works / 'm1-sequence.nvwa.json')
