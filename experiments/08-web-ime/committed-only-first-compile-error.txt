@@ -1,0 +1,18 @@
+COMPILE rustc --test --edition=2024 -C debuginfo=0 /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs -L dependency=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps --extern bevy_egui=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib -o /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-tests
+RUN /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-tests --nocapture
+error[E0599]: no method named `wants_keyboard_input` found for struct `bevy_egui::egui::Context` in the current scope
+   --> /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:789:21
+    |
+789 |         assert!(ctx.wants_keyboard_input());
+    |                     ^^^^^^^^^^^^^^^^^^^^
+    |
+help: there is a method `egui_wants_keyboard_input` with a similar name
+    |
+789 |         assert!(ctx.egui_wants_keyboard_input());
+    |                     +++++
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0599`.
+
+EXIT 1

@@ -1,0 +1,180 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Checking web-sys v0.3.106
+    Checking wgpu-types v29.0.4
+    Checking winit v0.30.13
+    Checking accesskit_winit v0.32.2
+    Checking egui v0.36.2
+    Checking bevy_reflect v0.19.1
+    Checking wgpu-naga-bridge v29.0.4
+    Checking wgpu v29.0.4
+    Checking bevy_ecs v0.19.1
+    Checking bevy_math v0.19.1
+    Checking bevy_color v0.19.1
+    Checking bevy_app v0.19.1
+    Checking bevy_time v0.19.1
+    Checking bevy_transform v0.19.1
+    Checking bevy_input v0.19.1
+    Checking bevy_diagnostic v0.19.1
+    Checking bevy_asset v0.19.1
+    Checking bevy_window v0.19.1
+    Checking bevy_log v0.19.1
+    Checking bevy_input_focus v0.19.1
+    Checking bevy_mesh v0.19.1
+    Checking bevy_image v0.19.1
+    Checking bevy_shader v0.19.1
+    Checking bevy_a11y v0.19.1
+    Checking bevy_winit v0.19.1
+    Checking bevy_camera v0.19.1
+    Checking bevy_material v0.19.1
+    Checking bevy_animation v0.19.1
+    Checking bevy_light v0.19.1
+    Checking bevy_render v0.19.1
+    Checking bevy_world_serialization v0.19.1
+    Checking bevy_gltf v0.19.1
+    Checking bevy_scene v0.19.1
+    Checking bevy_core_pipeline v0.19.1
+    Checking bevy_pbr v0.19.1
+    Checking bevy_egui v0.42.0
+    Checking bevy_internal v0.19.1
+    Checking bevy v0.19.1
+    Checking nvwa-runtime v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-runtime)
+    Checking nvwa-studio v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-studio)
+error: use of deprecated method `bevy::prelude::World::insert_non_send_resource`: use World::insert_non_send
+   --> crates/nvwa-studio/src/web_input.rs:321:15
+    |
+321 |         world.insert_non_send_resource(agent);
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `-D deprecated` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(deprecated)]`
+
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/web_input.rs:161:13
+    |
+161 | /             if let Some(callback) = self.callback.take() {
+162 | |                 if let Err(error) = self.target.remove_event_listener_with_callback(
+163 | |                     self.name,
+164 | |                     callback.as_ref().unchecked_ref(),
+...   |
+170 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+161 ~             if let Some(callback) = self.callback.take()
+162 ~                 && let Err(error) = self.target.remove_event_listener_with_callback(
+163 |                     self.name,
+...
+168 |                     callback.forget();
+169 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/web_input.rs:229:13
+    |
+229 | /             if let Some(parent) = self.input.parent_node() {
+230 | |                 if let Err(error) = parent.remove_child(&self.input) {
+231 | |                     error!("Web text agent teardown: {error:?}");
+232 | |                 }
+233 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+229 ~             if let Some(parent) = self.input.parent_node()
+230 ~                 && let Err(error) = parent.remove_child(&self.input) {
+231 |                     error!("Web text agent teardown: {error:?}");
+232 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/web_input.rs:477:13
+    |
+477 | /             if let Ok(mut context) = contexts.get_mut(queued.target.context) {
+478 | |                 if context.get_mut().memory(|memory| memory.focused()) == Some(queued.target.widget)
+479 | |                 {
+480 | |                     writer.write(EguiInputEvent {
+...   |
+485 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+477 ~             if let Ok(mut context) = contexts.get_mut(queued.target.context)
+478 ~                 && context.get_mut().memory(|memory| memory.focused()) == Some(queued.target.widget)
+479 |                 {
+...
+483 |                     });
+484 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/web_input.rs:496:9
+    |
+496 | /         if agent.document.has_focus().unwrap_or(false) && agent.own_focus() {
+497 | |             if let Some(target) = agent.shared.borrow().target {
+498 | |                 if let Ok(mut input) = inputs.get_mut(target.context) {
+499 | |                     input.focused = true;
+...   |
+502 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+496 ~         if agent.document.has_focus().unwrap_or(false) && agent.own_focus()
+497 ~             && let Some(target) = agent.shared.borrow().target {
+498 |                 if let Ok(mut input) = inputs.get_mut(target.context) {
+499 |                     input.focused = true;
+500 |                 }
+501 ~             }
+    |
+
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/web_input.rs:497:13
+    |
+497 | /             if let Some(target) = agent.shared.borrow().target {
+498 | |                 if let Ok(mut input) = inputs.get_mut(target.context) {
+499 | |                     input.focused = true;
+500 | |                 }
+501 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+497 ~             if let Some(target) = agent.shared.borrow().target
+498 ~                 && let Ok(mut input) = inputs.get_mut(target.context) {
+499 |                     input.focused = true;
+500 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/web_input.rs:595:13
+    |
+595 | /             if own && page_focused {
+596 | |                 if let Err(error) = agent.canvas.focus() {
+597 | |                     agent
+598 | |                         .shared
+...   |
+603 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+595 ~             if own && page_focused
+596 ~                 && let Err(error) = agent.canvas.focus() {
+597 |                     agent
+...
+601 |                         .push(format!("Web canvas focus restore: {error:?}"));
+602 ~                 }
+    |
+
+error: could not compile `nvwa-studio` (lib) due to 7 previous errors
