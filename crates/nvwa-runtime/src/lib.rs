@@ -8,11 +8,20 @@ use bevy::{
         io::Reader,
     },
     ecs::system::SystemParam,
+    math::bounding::{BoundingSphere, RayCast3d},
     mesh::{morph::MorphWeights, skinning::SkinnedMesh},
     prelude::*,
     world_serialization::WorldInstanceReady,
 };
-use nvwa_core::{CharacterProfile, Command, CommandEnvelope, Editor, SceneDocument};
+use nvwa_core::{CharacterProfile, Command, CommandEnvelope, Editor, SceneDocument, TimelineClip};
+
+/// Launch-only policy; a requested work must never silently show the fixture.
+#[derive(Resource, Default, Clone, Copy)]
+pub enum StartupDocumentPolicy {
+    #[default]
+    DefaultFixture,
+    WaitForOpen,
+}
 
 #[derive(Resource, Default)]
 pub struct EditorState {
@@ -90,10 +99,118 @@ pub struct RuntimeStatus {
 }
 #[derive(Resource, Default, Clone)]
 pub struct Playback {
+    /// Actual sampled authored action, including a held action in a gap.
     pub clip_id: String,
     pub playing: bool,
     pub position_seconds: f32,
     pub seek_request: Option<f32>,
+    pub active_timeline_id: String,
+    pub completed: bool,
+    pub error: Option<String>,
+}
+/// The one scene camera, shared by Studio and the editor-free Player.
+#[derive(Component)]
+pub struct SceneCamera;
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+struct InteractionScope {
+    generation: u64,
+    revision: u64,
+}
+struct ActiveInteraction {
+    scope: InteractionScope,
+    prior: Playback,
+    node: AnimationNodeIndex,
+    players: Vec<Entity>,
+}
+/// Temporary authored interaction. Never serialized or applied as an edit.
+#[derive(Resource, Default)]
+pub struct CharacterInteraction {
+    requested: Option<InteractionScope>,
+    active: Option<ActiveInteraction>,
+}
+impl CharacterInteraction {
+    /// Includes a click awaiting the next animation-control pass.
+    pub fn busy(&self) -> bool {
+        self.requested.is_some() || self.active.is_some()
+    }
+}
+
+/// Real ray input for the original fixture's conservative chest/head hotspots.
+/// It intentionally does not claim full deformed-mesh silhouette picking.
+#[derive(SystemParam)]
+pub struct CharacterInteractionInput<'w, 's> {
+    editor: Res<'w, EditorState>,
+    asset: Res<'w, CharacterAsset>,
+    status: Res<'w, RuntimeStatus>,
+    joints: Query<'w, 's, (&'static Name, &'static GlobalTransform), With<CharacterPart>>,
+    interaction: ResMut<'w, CharacterInteraction>,
+}
+impl CharacterInteractionInput<'_, '_> {
+    /// A caller must first reject editor-owned input and unfocused windows.
+    /// Repeated hits while pending/active are ignored, never queued.
+    pub fn click(&mut self, ray: Ray3d) -> bool {
+        let Some(document) = self.editor.document() else {
+            return false;
+        };
+        if self.interaction.busy()
+            || !self.status.ready
+            || !self.asset.verified
+            || !self.asset.scene_ready
+            || self.asset.document_generation != self.editor.document_generation
+            || document.timeline.is_empty()
+            || document.profile.id != "nvwa-original-humanoid-v1"
+            || document.profile.asset_sha256
+                != "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+            || !self.asset.nodes.contains_key("wave")
+        {
+            return false;
+        }
+        let hit = self.joints.iter().any(|(name, transform)| {
+            let (center, radii) = match name.as_str() {
+                "chest" => (Vec3::new(0.0, 0.03, 0.0), Vec3::new(0.17, 0.18, 0.10)),
+                "head" => (Vec3::new(0.0, 0.17, 0.015), Vec3::new(0.11, 0.15, 0.09)),
+                _ => return false,
+            };
+            hotspot_hit(ray, transform, center, radii)
+        });
+        if hit {
+            self.interaction.requested = Some(InteractionScope {
+                generation: self.editor.document_generation,
+                revision: document.revision,
+            });
+        }
+        hit
+    }
+}
+
+fn hotspot_hit(ray: Ray3d, joint: &GlobalTransform, center: Vec3, radii: Vec3) -> bool {
+    if !ray.origin.is_finite() || !radii.is_finite() || radii.min_element() <= 0.0 {
+        return false;
+    }
+    let world_from_sphere = joint.affine()
+        * bevy::math::Affine3A::from_scale_rotation_translation(radii, Quat::IDENTITY, center);
+    let determinant = world_from_sphere.matrix3.determinant();
+    if !determinant.is_finite() || determinant == 0.0 {
+        return false;
+    }
+    let sphere_from_world = world_from_sphere.inverse();
+    if !sphere_from_world.is_finite() {
+        return false;
+    }
+    let origin = sphere_from_world.transform_point3(ray.origin);
+    let direction = sphere_from_world.transform_vector3(*ray.direction);
+    let length = direction.length();
+    let Ok(direction) = Dir3::new(direction) else {
+        return false;
+    };
+    let max_distance = 100.0 * length;
+    if !origin.is_finite() || !max_distance.is_finite() {
+        return false;
+    }
+    RayCast3d::from_ray(Ray3d::new(origin, direction), max_distance)
+        .sphere_intersection_at(&BoundingSphere::new(Vec3::ZERO, 1.0))
+        .is_some()
 }
 #[derive(Component)]
 struct CharacterRoot;
@@ -118,6 +235,8 @@ struct CharacterAsset {
     elapsed: f32,
     applied_clip: String,
     applied_playing: bool,
+    applied_timeline: Vec<TimelineClip>,
+    playback_generation: u64,
 }
 
 #[derive(Asset, TypePath)]
@@ -142,6 +261,7 @@ impl AssetLoader for GlbBytesLoader {
 
 #[derive(SystemSet, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum RuntimeSystems {
+    Transport,
     Mirror,
 }
 
@@ -151,11 +271,12 @@ impl Plugin for NvwaRuntimePlugin {
         app.init_asset::<GlbBytes>()
             .init_asset_loader::<GlbBytesLoader>()
             .init_resource::<EditorState>()
+            .init_resource::<StartupDocumentPolicy>()
             .init_resource::<RuntimeStatus>()
             .init_resource::<Playback>()
             .init_resource::<CharacterAsset>()
             .add_systems(Startup, (open_default_document, setup_environment))
-            .add_systems(Update, (load_character, control_playback).chain())
+            .add_systems(Update, load_character)
             // Override user morph channels after skeletal animation evaluation.
             // The joints and recipe morphs therefore remain active together.
             .add_systems(
@@ -166,10 +287,40 @@ impl Plugin for NvwaRuntimePlugin {
                     .in_set(RuntimeSystems::Mirror)
                     .before(bevy::transform::TransformSystems::Propagate),
             );
+        add_playback_systems(app);
     }
 }
 
-fn open_default_document(mut editor: ResMut<EditorState>, mut status: ResMut<RuntimeStatus>) {
+/// Keep production and real-graph CPU regression tests on the same ordering.
+fn add_playback_systems(app: &mut App) {
+    app.init_resource::<CharacterInteraction>()
+        .add_systems(
+            PostUpdate,
+            (
+                begin_character_interaction,
+                control_single_loop_before_advance,
+            )
+                .chain()
+                .in_set(RuntimeSystems::Transport)
+                .before(bevy::animation::advance_animations),
+        )
+        .add_systems(
+            PostUpdate,
+            control_playback
+                .after(bevy::animation::advance_animations)
+                .before(bevy::animation::animate_targets),
+        );
+}
+
+fn open_default_document(
+    mut editor: ResMut<EditorState>,
+    mut status: ResMut<RuntimeStatus>,
+    policy: Res<StartupDocumentPolicy>,
+) {
+    if matches!(*policy, StartupDocumentPolicy::WaitForOpen) {
+        status.phase = "Open a work to play".into();
+        return;
+    }
     let result = serde_json::from_str::<CharacterProfile>(include_str!(
         "../../../assets/character.profile.json"
     ))
@@ -192,6 +343,7 @@ fn setup_environment(
         ..default()
     });
     commands.spawn((
+        SceneCamera,
         Camera3d::default(),
         bevy::core_pipeline::tonemapping::Tonemapping::Reinhard,
         Transform::from_xyz(3.1, 2.0, 4.8).looking_at(Vec3::new(0.0, 0.95, 0.0), Vec3::Y),
@@ -310,6 +462,10 @@ fn load_character(
             .unwrap_or_default();
         playback.playing = true;
         playback.position_seconds = 0.0;
+        playback.seek_request = None;
+        playback.completed = false;
+        playback.active_timeline_id.clear();
+        playback.error = None;
         return;
     }
     asset.elapsed += time.delta_secs();
@@ -518,19 +674,299 @@ fn scene_loaded(
     asset.scene_ready = true;
 }
 
+fn prepare_timeline(
+    asset: &mut CharacterAsset,
+    playback: &mut Playback,
+    document: &SceneDocument,
+    generation: u64,
+) -> bool {
+    let changed =
+        asset.applied_timeline != document.timeline || asset.playback_generation != generation;
+    if changed {
+        // A timeline transaction or explicit open discards the old cursor. A
+        // concurrent explicit seek still wins. Appearance edits keep the cursor.
+        playback.position_seconds = 0.0;
+        playback.completed = false;
+        asset.applied_clip.clear();
+        asset.applied_timeline = document.timeline.clone();
+        asset.playback_generation = generation;
+    }
+    changed
+}
+
+fn interaction_scope(editor: &EditorState) -> Option<InteractionScope> {
+    editor.document().map(|document| InteractionScope {
+        generation: editor.document_generation,
+        revision: document.revision,
+    })
+}
+
+fn same_transport(a: &Playback, b: &Playback) -> bool {
+    a.clip_id == b.clip_id
+        && a.playing == b.playing
+        && a.position_seconds == b.position_seconds
+        && a.seek_request == b.seek_request
+        && a.active_timeline_id == b.active_timeline_id
+        && a.completed == b.completed
+}
+
+fn begin_character_interaction(
+    mut players: Query<(Entity, &mut AnimationPlayer), With<CharacterPart>>,
+    mut asset: ResMut<CharacterAsset>,
+    playback: Res<Playback>,
+    editor: Res<EditorState>,
+    status: Option<Res<RuntimeStatus>>,
+    mut interaction: ResMut<CharacterInteraction>,
+) {
+    let scope = interaction_scope(&editor);
+    let ready = status.as_ref().is_some_and(|status| status.ready)
+        && asset.verified
+        && asset.scene_ready
+        && asset.document_generation == editor.document_generation;
+    if let Some(active) = &interaction.active {
+        let unchanged_players = players.iter().count() == active.players.len()
+            && active.players.iter().all(|entity| {
+                players
+                    .get(*entity)
+                    .is_ok_and(|(_, player)| player.animation(active.node).is_some())
+            });
+        if scope != Some(active.scope)
+            || !ready
+            || !unchanged_players
+            || !same_transport(&playback, &active.prior)
+        {
+            // Playback was never overwritten by the wave. Discard the old
+            // snapshot; current document/transport intents remain authoritative.
+            interaction.active = None;
+            asset.applied_clip.clear();
+        }
+    }
+    let Some(requested) = interaction.requested.take() else {
+        return;
+    };
+    if interaction.active.is_some()
+        || scope != Some(requested)
+        || !ready
+        || players.is_empty()
+        || editor.document().is_none_or(|doc| doc.timeline.is_empty())
+    {
+        return;
+    }
+    let Some(&node) = asset.nodes.get("wave") else {
+        return;
+    };
+    let mut entities = Vec::new();
+    for (entity, mut player) in &mut players {
+        player.stop_all();
+        player.play(node).replay();
+        if let Some(active) = player.animation_mut(node) {
+            active.set_speed(1.0);
+            active.set_repeat(bevy::animation::RepeatAnimation::Never);
+            active.resume();
+        }
+        entities.push(entity);
+    }
+    interaction.active = Some(ActiveInteraction {
+        scope: requested,
+        prior: (*playback).clone(),
+        node,
+        players: entities,
+    });
+}
+
+/// Apply M0 transport intents before Bevy advances its natural looping clock.
+/// Pause therefore holds the last rendered pose, and resume advances this frame.
+fn control_single_loop_before_advance(
+    mut players: Query<&mut AnimationPlayer, With<CharacterPart>>,
+    mut asset: ResMut<CharacterAsset>,
+    mut playback: ResMut<Playback>,
+    editor: Res<EditorState>,
+    interaction: Option<Res<CharacterInteraction>>,
+) {
+    if interaction.is_some_and(|interaction| interaction.active.is_some()) {
+        return;
+    }
+    let Some(document) = editor
+        .document()
+        .filter(|document| document.is_single_loop())
+    else {
+        return;
+    };
+    prepare_timeline(
+        &mut asset,
+        &mut playback,
+        document,
+        editor.document_generation,
+    );
+    playback.error = None;
+    playback.active_timeline_id = document.timeline[0].id.clone();
+    playback.completed = false;
+    control_single_loop(&mut players, &mut asset, &mut playback, document);
+}
+
 fn control_playback(
     mut players: Query<&mut AnimationPlayer, With<CharacterPart>>,
     mut asset: ResMut<CharacterAsset>,
     mut playback: ResMut<Playback>,
     editor: Res<EditorState>,
+    time: Option<Res<Time>>,
+    interaction: Option<ResMut<CharacterInteraction>>,
 ) {
+    let mut restored = false;
+    if let Some(mut interaction) = interaction
+        && let Some(active) = &interaction.active
+    {
+        if !players.iter().all(|player| {
+            player
+                .animation(active.node)
+                .is_some_and(|animation| animation.is_finished())
+        }) {
+            return;
+        }
+        // Completion is observed after Bevy's actual wave clock advances.
+        // Reconstruct the prior sample in this frame, with no cursor advance.
+        *playback = active.prior.clone();
+        interaction.active = None;
+        asset.applied_clip.clear();
+        restored = true;
+    }
     let Some(document) = editor.document() else {
         return;
     };
+    let changed = prepare_timeline(
+        &mut asset,
+        &mut playback,
+        document,
+        editor.document_generation,
+    );
+    playback.error = None;
+    if document.timeline.is_empty() {
+        for mut player in &mut players {
+            player.stop_all();
+        }
+        playback.clip_id.clear();
+        playback.active_timeline_id.clear();
+        playback.playing = false;
+        playback.position_seconds = 0.0;
+        playback.seek_request = None;
+        playback.completed = false;
+        asset.applied_clip.clear();
+        asset.applied_playing = false;
+        return;
+    }
+    if document.is_single_loop() {
+        if restored {
+            playback.seek_request = Some(playback.position_seconds);
+            control_single_loop(&mut players, &mut asset, &mut playback, document);
+        }
+        // Loop controls ran before advancement. Mirror the pose Bevy will now
+        // evaluate without applying pause/seek/switch intents a second time.
+        if let Some(&node) = asset.nodes.get(&playback.clip_id) {
+            for player in &mut players {
+                if let Some(active) = player.animation(node) {
+                    playback.position_seconds = active.seek_time();
+                }
+            }
+        }
+        return;
+    }
+    let duration = document.timeline_duration_seconds();
+    let seek = playback.seek_request.take();
+    let restarting = playback.completed && playback.playing && seek.is_none();
+    if let Some(position) = seek {
+        if position.is_finite() {
+            playback.position_seconds = position.clamp(0.0, duration);
+        } else {
+            playback.error = Some("Seek time must be finite".into());
+        }
+    } else if restarting {
+        playback.position_seconds = 0.0;
+    } else if playback.playing && !changed && !restored && !players.is_empty() {
+        playback.position_seconds = (playback.position_seconds
+            + time.as_ref().map(|time| time.delta_secs()).unwrap_or(0.0))
+        .min(duration);
+    }
+    playback.completed = playback.position_seconds >= duration;
+    if playback.completed {
+        playback.playing = false;
+    }
+    let (entry, local_seconds) = sequence_sample(document, playback.position_seconds);
+    playback.clip_id = entry.clip_id.clone();
+    playback.active_timeline_id = entry.id.clone();
+    let Some(&node) = asset.nodes.get(&entry.clip_id) else {
+        playback.error = Some(format!("Animation {} is not ready", entry.clip_id));
+        for mut player in &mut players {
+            player.stop_all();
+        }
+        return;
+    };
+    for mut player in &mut players {
+        // The entry ID, not the source ID, distinguishes repeated actions.
+        // Sampling absolute local time also removes completion-counter history
+        // from backward seeks and reopens. Bevy evaluates the real graph next.
+        if asset.applied_clip != entry.id || player.animation(node).is_none() {
+            player.stop_all();
+            player.play(node);
+        }
+        if let Some(active) = player.animation_mut(node) {
+            active.replay();
+            active.set_repeat(bevy::animation::RepeatAnimation::Never);
+            active.set_speed(entry.speed);
+            active.set_seek_time(local_seconds);
+            if playback.playing {
+                active.resume();
+            } else {
+                active.pause();
+            }
+        }
+    }
+    asset.applied_clip = entry.id.clone();
+    asset.applied_playing = playback.playing;
+}
+
+/// Half-open spans select the next action at an exact boundary. Gaps hold the
+/// preceding endpoint; before the first entry hold its initial pose.
+fn sequence_sample(document: &SceneDocument, position: f32) -> (&TimelineClip, f32) {
+    let first = document
+        .timeline
+        .iter()
+        .min_by(|a, b| a.start_seconds.total_cmp(&b.start_seconds))
+        .expect("nonempty timeline");
+    let entry = document
+        .timeline
+        .iter()
+        .filter(|entry| entry.start_seconds <= position)
+        .max_by(|a, b| a.start_seconds.total_cmp(&b.start_seconds))
+        .unwrap_or(first);
+    let wall_time = (position - entry.start_seconds).clamp(0.0, entry.duration_seconds);
+    let source_duration = document
+        .profile
+        .clips
+        .iter()
+        .find(|clip| clip.id == entry.clip_id)
+        .expect("validated clip reference")
+        .duration_seconds;
+    let local_time = wall_time * entry.speed;
+    (
+        entry,
+        if entry.looping {
+            local_time.rem_euclid(source_duration)
+        } else {
+            local_time.min(source_duration)
+        },
+    )
+}
+
+fn control_single_loop(
+    players: &mut Query<&mut AnimationPlayer, With<CharacterPart>>,
+    asset: &mut CharacterAsset,
+    playback: &mut Playback,
+    document: &SceneDocument,
+) {
     // An empty authoritative timeline also applies to a newly opened document
     // with the same profile. Stop the existing player rather than retaining it.
     let Some(first) = document.timeline.first() else {
-        for mut player in &mut players {
+        for mut player in players.iter_mut() {
             player.stop_all();
         }
         playback.clip_id.clear();
@@ -558,7 +994,7 @@ fn control_playback(
     let speed = timeline.map(|c| c.speed).unwrap_or(1.0);
     let looping = timeline.map(|c| c.looping).unwrap_or(true);
     let mut found = false;
-    for mut player in &mut players {
+    for mut player in players.iter_mut() {
         // Shared playback state can already be applied to an earlier scene's
         // player while its replacement arrives with no active animation.
         let initializing = switching || player.animation(node).is_none();
@@ -715,6 +1151,36 @@ fn collect_evidence(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn startup_waits_for_explicit_work_without_falling_back_to_fixture() {
+        let mut app = App::new();
+        app.init_resource::<EditorState>()
+            .init_resource::<RuntimeStatus>()
+            .insert_resource(StartupDocumentPolicy::WaitForOpen)
+            .add_systems(Startup, open_default_document);
+        app.update();
+        assert!(app.world().resource::<EditorState>().document().is_none());
+        assert!(!app.world().resource::<RuntimeStatus>().ready);
+        assert_eq!(
+            app.world().resource::<RuntimeStatus>().phase,
+            "Open a work to play"
+        );
+        let mut default_app = App::new();
+        default_app
+            .init_resource::<EditorState>()
+            .init_resource::<RuntimeStatus>()
+            .init_resource::<StartupDocumentPolicy>()
+            .add_systems(Startup, open_default_document);
+        default_app.update();
+        assert!(
+            default_app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .is_some()
+        );
+    }
     fn state() -> EditorState {
         let profile: CharacterProfile =
             serde_json::from_str(include_str!("../../../assets/character.profile.json")).unwrap();
@@ -791,8 +1257,12 @@ mod tests {
                 playing: true,
                 position_seconds: 1.0,
                 seek_request: Some(1.0),
+                ..default()
             })
-            .add_systems(Update, control_playback);
+            .add_systems(
+                PostUpdate,
+                (control_single_loop_before_advance, control_playback).chain(),
+            );
         let entity = app.world_mut().spawn((CharacterPart, player)).id();
         app.update();
         assert_eq!(
@@ -853,90 +1323,702 @@ mod tests {
         editor.replace(same_profile).unwrap();
         assert_eq!(editor.document_generation, generation + 1);
     }
-    #[test]
-    fn seeking_completed_nonloop_animation_resets_completion_and_advances() {
-        let mut editor = state();
-        let mut document = editor.document().unwrap().clone();
-        document.timeline[0].looping = false;
-        editor.replace(document).unwrap();
-        let mut clips = Assets::<AnimationClip>::default();
-        let mut clip = AnimationClip::default();
-        clip.set_duration(3.0);
-        let handle = clips.add(clip);
-        let (graph, node) = AnimationGraph::from_clip(handle);
-        let mut graphs = Assets::<AnimationGraph>::default();
-        let graph_handle = graphs.add(graph);
-        let mut asset = CharacterAsset {
-            applied_clip: "idle".into(),
-            applied_playing: true,
-            ..default()
-        };
-        asset.nodes.insert("idle".into(), node);
-        let mut player = AnimationPlayer::default();
-        player.play(node);
-        let mut time = Time::<()>::default();
-        time.advance_by(std::time::Duration::from_secs_f32(4.0));
-        let mut app = App::new();
-        app.add_plugins(TaskPoolPlugin::default())
-            .insert_resource(editor)
-            .insert_resource(asset)
-            .insert_resource(Playback {
-                clip_id: "idle".into(),
-                playing: true,
-                position_seconds: 0.0,
-                seek_request: None,
+    fn sequence() -> Vec<TimelineClip> {
+        ["idle", "wave", "turn"]
+            .iter()
+            .enumerate()
+            .map(|(index, id)| TimelineClip {
+                id: format!("part-{}", index + 1),
+                clip_id: (*id).into(),
+                start_seconds: index as f32 * 3.0,
+                duration_seconds: 3.0,
+                speed: 1.0,
+                looping: false,
             })
-            .insert_resource(clips)
-            .insert_resource(graphs)
-            .insert_resource(time)
-            .add_systems(Update, bevy::animation::advance_animations);
-        let entity = app
-            .world_mut()
-            .spawn((CharacterPart, player, AnimationGraphHandle(graph_handle)))
-            .id();
-        app.update();
-        assert!(
-            app.world()
-                .get::<AnimationPlayer>(entity)
+            .collect()
+    }
+
+    struct SequenceHarness {
+        app: App,
+        player: Entity,
+        joint: Entity,
+        graph: Handle<AnimationGraph>,
+    }
+    impl SequenceHarness {
+        fn new(timeline: Vec<TimelineClip>) -> Self {
+            use bevy::animation::{AnimatedBy, AnimationTargetId, animated_field};
+            let mut editor = state();
+            editor
+                .apply(Command::SetTimeline { clips: timeline })
+                .unwrap();
+            let target = AnimationTargetId::from_name(&Name::new("test-joint"));
+            let mut app = App::new();
+            app.add_plugins((
+                MinimalPlugins,
+                AssetPlugin::default(),
+                AnimationPlugin,
+                TransformPlugin,
+            ))
+            .insert_resource(editor)
+            .insert_resource(RuntimeStatus {
+                ready: true,
+                ..default()
+            })
+            .insert_resource(Playback {
+                playing: true,
+                ..default()
+            })
+            .insert_resource(bevy::time::TimeUpdateStrategy::ManualDuration(
+                std::time::Duration::ZERO,
+            ));
+            add_playback_systems(&mut app);
+            app.world_mut()
+                .resource_mut::<Time<Virtual>>()
+                .set_max_delta(std::time::Duration::from_secs(20));
+            let profile = app
+                .world()
+                .resource::<EditorState>()
+                .document()
                 .unwrap()
-                .animation(node)
+                .profile
+                .clone();
+            let handles: Vec<_> = profile
+                .clips
+                .iter()
+                .map(|spec| {
+                    let base = match spec.id.as_str() {
+                        "idle" => 0.0,
+                        "wave" => 10.0,
+                        "turn" => 20.0,
+                        _ => panic!("fixture action"),
+                    };
+                    let mut clip = AnimationClip::default();
+                    clip.add_curve_to_target(
+                        target,
+                        AnimatableCurve::new(
+                            animated_field!(Transform::translation),
+                            AnimatableKeyframeCurve::new([
+                                (0.0, Vec3::new(base, 0.0, 0.0)),
+                                (
+                                    spec.duration_seconds,
+                                    Vec3::new(base + spec.duration_seconds, 0.0, 0.0),
+                                ),
+                            ])
+                            .unwrap(),
+                        ),
+                    );
+                    app.world_mut()
+                        .resource_mut::<Assets<AnimationClip>>()
+                        .add(clip)
+                })
+                .collect();
+            let (graph, nodes) = AnimationGraph::from_clips(handles);
+            let graph = app
+                .world_mut()
+                .resource_mut::<Assets<AnimationGraph>>()
+                .add(graph);
+            let asset = CharacterAsset {
+                verified: true,
+                scene_ready: true,
+                document_generation: app.world().resource::<EditorState>().document_generation,
+                nodes: profile
+                    .clips
+                    .iter()
+                    .zip(nodes)
+                    .map(|(spec, node)| (spec.id.clone(), node))
+                    .collect(),
+                ..default()
+            };
+            app.insert_resource(asset);
+            let player = app
+                .world_mut()
+                .spawn((
+                    CharacterPart,
+                    AnimationPlayer::default(),
+                    AnimationGraphHandle(graph.clone()),
+                ))
+                .id();
+            let joint = app
+                .world_mut()
+                .spawn((
+                    CharacterPart,
+                    Name::new("chest"),
+                    Transform::default(),
+                    target,
+                    AnimatedBy(player),
+                ))
+                .id();
+            let mut harness = Self {
+                app,
+                player,
+                joint,
+                graph,
+            };
+            // Deliver graph asset events and prepare the actual evaluator.
+            harness.tick(0.0);
+            harness.tick(0.0);
+            harness
+        }
+        fn tick(&mut self, seconds: f32) {
+            self.app
+                .insert_resource(bevy::time::TimeUpdateStrategy::ManualDuration(
+                    std::time::Duration::from_secs_f32(seconds),
+                ));
+            self.app.update();
+        }
+        fn seek(&mut self, seconds: f32) {
+            self.app.world_mut().resource_mut::<Playback>().seek_request = Some(seconds);
+            self.tick(0.0);
+        }
+        fn assert_pose(&self, x: f32) {
+            let actual = self
+                .app
+                .world()
+                .get::<Transform>(self.joint)
                 .unwrap()
-                .is_finished()
-        );
-        app.world_mut().resource_mut::<Playback>().seek_request = Some(1.0);
-        app.world_mut()
-            .resource_mut::<Time>()
-            .advance_by(std::time::Duration::from_secs_f32(0.1));
-        app.add_systems(
-            Update,
-            control_playback.before(bevy::animation::advance_animations),
-        );
-        app.update();
-        let active = app
+                .translation
+                .x;
+            assert!((actual - x).abs() < 0.001, "joint pose {actual} != {x}");
+            assert_eq!(
+                self.app
+                    .world()
+                    .get::<AnimationPlayer>(self.player)
+                    .unwrap()
+                    .playing_animations()
+                    .count(),
+                1
+            );
+        }
+        fn playback(&self) -> &Playback {
+            self.app.world().resource::<Playback>()
+        }
+        fn click(&mut self) -> bool {
+            let position = self
+                .app
+                .world()
+                .get::<GlobalTransform>(self.joint)
+                .unwrap()
+                .translation();
+            self.click_ray(Ray3d::new(
+                position + Vec3::new(0.0, 0.03, 5.0),
+                Dir3::NEG_Z,
+            ))
+        }
+        fn click_ray(&mut self, ray: Ray3d) -> bool {
+            use bevy::ecs::system::RunSystemOnce;
+            self.app
+                .world_mut()
+                .run_system_once(move |mut input: CharacterInteractionInput| input.click(ray))
+                .unwrap()
+        }
+        fn busy(&self) -> bool {
+            self.app.world().resource::<CharacterInteraction>().busy()
+        }
+    }
+
+    #[test]
+    fn character_click_wave_restores_running_sequence_cursor_and_history() {
+        let mut test = SequenceHarness::new(sequence());
+        test.seek(4.25);
+        let before = test
+            .app
             .world()
-            .get::<AnimationPlayer>(entity)
+            .resource::<EditorState>()
+            .document()
             .unwrap()
-            .animation(node)
-            .unwrap();
-        assert!(!active.is_finished());
-        assert!((active.seek_time() - 1.1).abs() < 0.001);
-        // Without a new user request, reaching the end stays stopped.
-        app.world_mut()
-            .resource_mut::<Time>()
-            .advance_by(std::time::Duration::from_secs_f32(4.0));
-        app.update();
-        app.world_mut()
-            .resource_mut::<Time>()
-            .advance_by(std::time::Duration::from_secs_f32(0.1));
-        app.update();
-        assert!(
-            app.world()
-                .get::<AnimationPlayer>(entity)
-                .unwrap()
-                .animation(node)
-                .unwrap()
-                .is_finished()
+            .clone();
+        assert!(test.click());
+        assert!(!test.click());
+        test.tick(0.0);
+        test.assert_pose(10.0);
+        test.tick(1.0);
+        test.assert_pose(11.0);
+        assert_eq!(test.playback().position_seconds, 4.25);
+        assert!(test.playback().playing);
+        assert!(!test.click());
+        test.tick(2.0);
+        test.assert_pose(13.0);
+        assert!(test.busy());
+        test.tick(0.05);
+        test.assert_pose(11.25);
+        assert!(!test.busy());
+        assert_eq!(test.playback().position_seconds, 4.25);
+        assert_eq!(test.playback().active_timeline_id, "part-2");
+        assert_eq!(
+            test.app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap(),
+            &before
         );
+        test.tick(0.25);
+        test.assert_pose(11.5);
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::Undo)
+            .unwrap();
+        // The next undo is still the preceding SetTimeline transaction.
+        assert!(
+            test.app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .is_single_loop()
+        );
+    }
+
+    #[test]
+    fn character_wave_restores_paused_completed_and_m0_loop_samples() {
+        for (timeline, cursor, expected_pose, completed) in [
+            (sequence(), 7.0, 21.0, false),
+            (sequence(), 9.0, 23.0, true),
+            (
+                state().document().unwrap().timeline.clone(),
+                1.75,
+                1.75,
+                false,
+            ),
+        ] {
+            let mut test = SequenceHarness::new(timeline);
+            test.app.world_mut().resource_mut::<Playback>().playing = false;
+            test.seek(cursor);
+            test.assert_pose(expected_pose);
+            assert!(test.click());
+            test.tick(0.0);
+            test.tick(1.0);
+            test.assert_pose(11.0);
+            assert_eq!(test.playback().position_seconds, cursor);
+            test.tick(2.05);
+            test.assert_pose(expected_pose);
+            assert!(!test.busy());
+            assert!(!test.playback().playing);
+            assert_eq!(test.playback().position_seconds, cursor);
+            assert_eq!(test.playback().completed, completed);
+            test.tick(0.5);
+            test.assert_pose(expected_pose);
+        }
+        // Running M0 also restores source time without advancing on completion.
+        let mut test = SequenceHarness::new(state().document().unwrap().timeline.clone());
+        test.seek(1.25);
+        assert!(test.click());
+        test.tick(0.0);
+        test.tick(3.05);
+        test.assert_pose(1.25);
+        assert_eq!(test.playback().position_seconds, 1.25);
+        test.tick(0.25);
+        test.assert_pose(1.5);
+    }
+
+    #[test]
+    fn character_interaction_cancels_on_open_edit_undo_and_player_loss() {
+        let mut test = SequenceHarness::new(sequence());
+        test.seek(7.0);
+        assert!(test.click());
+        test.tick(0.0);
+        let document = test
+            .app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .replace(document)
+            .unwrap();
+        test.tick(0.0);
+        assert!(!test.busy());
+        test.assert_pose(0.0);
+        // Simulate the loader's newly verified generation after replacement.
+        let generation = test
+            .app
+            .world()
+            .resource::<EditorState>()
+            .document_generation;
+        test.app
+            .world_mut()
+            .resource_mut::<CharacterAsset>()
+            .document_generation = generation;
+        test.seek(4.5);
+        assert!(test.click());
+        test.tick(0.0);
+        let mut values = test
+            .app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .parameters
+            .clone();
+        values.insert("smile".into(), 0.6);
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::SetParameters {
+                character_id: "character-1".into(),
+                values,
+            })
+            .unwrap();
+        test.tick(0.0);
+        assert!(!test.busy());
+        test.assert_pose(11.5);
+        assert!(test.click());
+        test.tick(0.0);
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::Undo)
+            .unwrap();
+        test.tick(0.0);
+        assert!(!test.busy());
+        test.assert_pose(11.5);
+        assert!(test.click());
+        test.tick(0.0);
+        test.app.world_mut().despawn(test.player);
+        test.tick(0.5);
+        assert!(!test.busy());
+        assert_eq!(test.playback().position_seconds, 4.5);
+    }
+
+    #[test]
+    fn character_hotspot_rejects_background_stale_clicks_and_tracks_animated_joint() {
+        let mut test = SequenceHarness::new(sequence());
+        test.seek(7.0);
+        assert!(!test.click_ray(Ray3d::new(Vec3::new(0.0, 0.03, 5.0), Dir3::NEG_Z)));
+        assert!(!test.click_ray(Ray3d::new(Vec3::new(22.0, 0.03, 5.0), Dir3::NEG_Z)));
+        assert!(test.click());
+        let document = test
+            .app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .replace(document)
+            .unwrap();
+        test.tick(0.0);
+        assert!(!test.busy());
+        test.assert_pose(0.0);
+        assert!(!test.click()); // loader has not verified this generation
+        assert!(!hotspot_hit(
+            Ray3d::new(Vec3::new(0.0, 0.03, 5.0), Dir3::NEG_Z),
+            &GlobalTransform::from(Transform::from_scale(Vec3::ZERO)),
+            Vec3::ZERO,
+            Vec3::ONE,
+        ));
+    }
+
+    #[test]
+    fn chest_and_head_hotspots_accept_small_scale_centers_without_accepting_outside() {
+        for scale in [0.01, 0.03, 0.1, 1.0] {
+            let joint = GlobalTransform::from(Transform::from_scale(Vec3::splat(scale)));
+            for (center, radii) in [
+                (Vec3::new(0.0, 0.03, 0.0), Vec3::new(0.17, 0.18, 0.10)),
+                (Vec3::new(0.0, 0.17, 0.015), Vec3::new(0.11, 0.15, 0.09)),
+            ] {
+                let center_world = joint.affine().transform_point3(center);
+                assert!(
+                    hotspot_hit(
+                        Ray3d::new(center_world + Vec3::Z, Dir3::NEG_Z),
+                        &joint,
+                        center,
+                        radii,
+                    ),
+                    "center must hit at scale {scale}"
+                );
+                assert!(
+                    !hotspot_hit(
+                        Ray3d::new(
+                            center_world + Vec3::new(radii.x * scale * 1.1, 0.0, 1.0),
+                            Dir3::NEG_Z
+                        ),
+                        &joint,
+                        center,
+                        radii,
+                    ),
+                    "outside must miss at scale {scale}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn m0_loop_pause_holds_rendered_joint_and_resume_advances_in_production_order() {
+        let timeline = state().document().unwrap().timeline.clone();
+        let duration = timeline[0].duration_seconds;
+        let mut test = SequenceHarness::new(timeline);
+        test.tick(1.0);
+        test.assert_pose(1.0);
+        assert_eq!(test.playback().position_seconds, 1.0);
+        test.app.world_mut().resource_mut::<Playback>().playing = false;
+        test.tick(0.25);
+        test.assert_pose(1.0);
+        assert_eq!(test.playback().position_seconds, 1.0);
+        for _ in 0..3 {
+            test.tick(0.5);
+            test.assert_pose(1.0);
+        }
+        // A paused seek is exact even on a frame with nonzero time delta.
+        test.app.world_mut().resource_mut::<Playback>().seek_request = Some(1.75);
+        test.tick(0.25);
+        test.assert_pose(1.75);
+        test.tick(0.5);
+        test.assert_pose(1.75);
+        test.app.world_mut().resource_mut::<Playback>().playing = true;
+        test.tick(0.25);
+        test.assert_pose(2.0);
+        test.tick(0.25);
+        test.assert_pose(2.25);
+        test.tick(1.0);
+        test.assert_pose(3.25 % duration);
+        // A paused action switch initializes its real source pose before advance.
+        test.app.world_mut().resource_mut::<Playback>().playing = false;
+        let mut clips = test
+            .app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .timeline
+            .clone();
+        clips[0].clip_id = "wave".into();
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::SetTimeline { clips })
+            .unwrap();
+        test.tick(0.25);
+        test.assert_pose(10.0);
+        test.tick(0.25);
+        test.assert_pose(10.0);
+        test.app.world_mut().resource_mut::<Playback>().playing = true;
+        test.tick(0.25);
+        test.assert_pose(10.25);
+    }
+
+    #[test]
+    fn sequence_advances_real_joint_across_boundaries_and_pause_seek_holds() {
+        let mut test = SequenceHarness::new(sequence());
+        test.assert_pose(0.0);
+        test.tick(2.5);
+        test.assert_pose(2.5);
+        test.tick(0.5);
+        test.assert_pose(10.0);
+        assert_eq!(test.playback().active_timeline_id, "part-2");
+        test.tick(0.25);
+        test.assert_pose(10.25);
+        test.app.world_mut().resource_mut::<Playback>().playing = false;
+        test.tick(1.0);
+        test.assert_pose(10.25);
+        assert_eq!(test.playback().position_seconds, 3.25);
+        test.seek(6.5);
+        test.assert_pose(20.5);
+        test.tick(1.0);
+        test.assert_pose(20.5);
+        test.seek(1.0);
+        test.assert_pose(1.0);
+        test.seek(3.0);
+        test.assert_pose(10.0);
+        test.app.world_mut().resource_mut::<Playback>().playing = true;
+        test.tick(0.5);
+        test.assert_pose(10.5);
+    }
+
+    #[test]
+    fn repeated_source_entries_backward_seeks_completion_and_restart_are_deterministic() {
+        let mut clips = sequence();
+        clips[0].clip_id = "wave".into();
+        let mut test = SequenceHarness::new(clips);
+        test.seek(2.75);
+        test.assert_pose(12.75);
+        test.seek(3.0);
+        test.assert_pose(10.0);
+        test.seek(4.5);
+        test.assert_pose(11.5);
+        test.seek(0.5);
+        test.assert_pose(10.5);
+        test.seek(8.5);
+        test.tick(1.0);
+        test.assert_pose(23.0);
+        assert!(test.playback().completed);
+        assert!(!test.playback().playing);
+        assert_eq!(test.playback().position_seconds, 9.0);
+        test.tick(1.0);
+        test.assert_pose(23.0);
+        test.app.world_mut().resource_mut::<Playback>().playing = true;
+        test.tick(0.25);
+        test.assert_pose(10.0);
+        assert!(!test.playback().completed);
+        test.tick(0.5);
+        test.assert_pose(10.5);
+        // A seek after completion can resume without stale Bevy completion state.
+        test.seek(9.0);
+        test.seek(7.0);
+        test.assert_pose(21.0);
+        test.app.world_mut().resource_mut::<Playback>().playing = true;
+        test.tick(0.25);
+        test.assert_pose(21.25);
+    }
+
+    #[test]
+    fn gap_holds_source_endpoint_and_nonunit_speed_maps_wall_time() {
+        let mut clips = sequence();
+        clips.truncate(2);
+        clips[0].start_seconds = 1.0;
+        clips[0].duration_seconds = 1.0;
+        clips[0].speed = 2.0;
+        clips[1].start_seconds = 3.0;
+        clips[1].duration_seconds = 2.0;
+        clips[1].speed = 0.5;
+        // Playback is independent of storage ordering.
+        clips.reverse();
+        let mut test = SequenceHarness::new(clips);
+        test.assert_pose(0.0);
+        test.seek(1.5);
+        test.assert_pose(1.0);
+        test.seek(2.5);
+        test.assert_pose(2.0);
+        test.seek(3.0);
+        test.assert_pose(10.0);
+        test.seek(4.0);
+        test.assert_pose(10.5);
+        test.seek(5.0);
+        test.assert_pose(11.0);
+        assert!(test.playback().completed);
+        let mut clips = sequence();
+        clips[0].speed = 2.0;
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::SetTimeline {
+                clips: clips.clone(),
+            })
+            .unwrap();
+        test.seek(2.5);
+        let source_end = test
+            .app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .profile
+            .clips
+            .iter()
+            .find(|clip| clip.id == "idle")
+            .unwrap()
+            .duration_seconds;
+        test.assert_pose(source_end);
+        // Looping repeats only the source pose inside its finite sequence span.
+        clips[0].looping = true;
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::SetTimeline { clips })
+            .unwrap();
+        test.seek(2.5);
+        test.assert_pose(5.0 % source_end);
+    }
+
+    #[test]
+    fn sequence_reopen_undo_and_replacement_player_reset_and_sample_real_pose() {
+        use bevy::animation::AnimatedBy;
+        let mut test = SequenceHarness::new(sequence());
+        test.app.world_mut().resource_mut::<Playback>().playing = false;
+        test.seek(4.25);
+        test.assert_pose(11.25);
+        let saved = test
+            .app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .to_json()
+            .unwrap();
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::Undo)
+            .unwrap();
+        test.tick(0.0);
+        test.assert_pose(0.0);
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::Redo)
+            .unwrap();
+        test.tick(0.0);
+        test.assert_pose(0.0);
+        test.seek(7.0);
+        test.assert_pose(21.0);
+        test.app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .replace(SceneDocument::from_json(&saved).unwrap())
+            .unwrap();
+        test.tick(0.0);
+        test.assert_pose(0.0);
+        test.seek(4.25);
+        test.assert_pose(11.25);
+        test.app.world_mut().despawn(test.player);
+        test.player = test
+            .app
+            .world_mut()
+            .spawn((
+                CharacterPart,
+                AnimationPlayer::default(),
+                AnimationGraphHandle(test.graph.clone()),
+            ))
+            .id();
+        test.app
+            .world_mut()
+            .entity_mut(test.joint)
+            .insert(AnimatedBy(test.player));
+        test.tick(0.5);
+        test.assert_pose(11.25);
+        test.app.world_mut().resource_mut::<Playback>().playing = true;
+        test.tick(0.25);
+        test.assert_pose(11.5);
+    }
+
+    #[test]
+    fn overlap_transaction_is_rejected_without_changing_cursor_or_joint() {
+        let mut test = SequenceHarness::new(sequence());
+        test.seek(4.0);
+        let before = test
+            .app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        let mut clips = sequence();
+        clips[1].start_seconds = 2.0;
+        let error = test
+            .app
+            .world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::SetTimeline { clips })
+            .unwrap_err();
+        assert!(error.contains("overlapping_timeline"));
+        assert_eq!(
+            test.app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap(),
+            &before
+        );
+        test.tick(0.0);
+        test.assert_pose(11.0);
+        assert_eq!(test.playback().position_seconds, 4.0);
     }
 
     #[test]
@@ -961,13 +2043,19 @@ mod tests {
                 playing: true,
                 position_seconds: 0.0,
                 seek_request: None,
+                ..default()
             })
             .insert_resource(clips)
             .insert_resource(graphs)
             .insert_resource(time)
             .add_systems(
-                Update,
-                (control_playback, bevy::animation::advance_animations).chain(),
+                PostUpdate,
+                (
+                    control_single_loop_before_advance,
+                    bevy::animation::advance_animations,
+                    control_playback,
+                )
+                    .chain(),
             );
         let original = app
             .world_mut()

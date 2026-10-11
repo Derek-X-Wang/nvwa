@@ -21,4 +21,11 @@ libc.workspace = true
 wasm-bindgen = "=0.2.129"
 wasm-bindgen-futures = "=0.4.79"
 js-sys = "=0.3.106"
-web-sys = { version = "=0.3.106", features = ["Window", "Location", "Document", "HtmlInputElement", "HtmlElement", "HtmlAnchorElement", "File", "FileList", "Blob", "BlobPropertyBag", "Url", "Event", "EventTarget", "Node", "console"] }
+web-sys = { version = "=0.3.106", features = [
+    "Window", "Location", "Document", "HtmlInputElement", "HtmlElement",
+    "HtmlAnchorElement", "File", "FileList", "Blob", "BlobPropertyBag", "Url",
+    "Event", "EventTarget", "Node", "console", "UrlSearchParams", "RequestInit",
+    "RequestMode", "RequestRedirect", "RequestCredentials", "Response", "Headers",
+    "ReadableStream", "ReadableStreamDefaultReader", "ReadableStreamReadResult",
+    "AbortController", "AbortSignal",
+] }

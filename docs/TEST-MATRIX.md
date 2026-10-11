@@ -1,6 +1,10 @@
 # Actual verification matrix
 
-Final local snapshot: 2026-10-10 PDT / 2026-10-11 UTC. Build, execution, interaction and measurement are separate claims. All final Rust checks use pinned Rust 1.95.0 and Cargo.lock; no check was disabled to obtain a pass.
+Current thin M1 evidence is recorded separately in [M1 verification](M1-VERIFICATION.md). The table below is the archived M0 acceptance: M0 was subsequently committed/pushed as `d74493d`, and the user approved bounded thin M1. The M0 build manifest describes that earlier source/artifact snapshot.
+
+## M0 acceptance
+
+M0 snapshot: 2026-10-10 PDT / 2026-10-11 UTC. Build, execution, interaction and measurement are separate claims. All final Rust checks use pinned Rust 1.95.0 and Cargo.lock; no check was disabled to obtain a pass.
 
 | Area | Docs/source | Compiled | Native ran | Web ran | Validated evidence |
 |---|---|---|---|---|---|
@@ -38,3 +42,16 @@ Evidence: [workspace tests](evidence/workspace-tests.log), [native clippy](evide
 - Asset reexports preserve measured structure/morph data but are not byte-identical. Session undo/retry history has no eviction cap and is not saved in documents.
 
 PARTIAL — M0 functional loop, both release builds/runs, 33 Rust tests and isolated cadence measurements verified. Input/font coverage, exact GPU/first-frame timing, other platforms and real AI inference remain limited as listed.
+
+## Thin M1 final acceptance
+
+| Area | Compiled | Actual run / validated | Limits |
+| --- | --- | --- | --- |
+| Three-action work | native/Wasm release | actual native/Web sequence, pause/seek, undo/redo and revision5→Web6→freshnative6 whole-JSON equality | one fixed original rig, authored clips |
+| Character click | native/Wasm release | real chest/head targets, wave once, exact paused/running restore and unchanged saved document | conservative hotspots; no exact GPU-deformed silhouette claim |
+| Native Player | release packaged | copied bundle from /tmp, real9s completion/replay, paused5.3s restore, Web6 Open, missing-work error; fresh final process direct-reopened6 | negative-startup manual-recovery GUI blocked by desktop adapter; headless path tested |
+| Static Web Player | release | ordinary static server, subdirectory, refresh, portable-work Open, all documented negative responses, actual30sabort and manual recovery | IAB WebGPU only; no public hosting validation |
+| Checks/review | exact selected features |57tests,fmt,strictnative/Wasmclippy,fixturehash; independent cross-model R2 plus repair rereviews | no hosted CI |
+| Performance | final release | physical1280×720,600cadence samples; native8.327/8.924ms,p50/p95,Web8.300/9.500ms; native~229.5MiB RSS; uniquegzip14,179,929bytes | finite work completed/held pose; not GPU timestamps or cold launch |
+
+[Player evidence](evidence/m1/player-acceptance.md), [M1 register](M1-VERIFICATION.md) and [known issues](ISSUES.md) are the current checkpoint. M0 experiment conclusions and earlier measurements above remain valid for their recorded snapshot.
