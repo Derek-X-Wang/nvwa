@@ -11,7 +11,7 @@ Latest continuous-idle follow-up: identical revision0 Work and Studio1280×720 o
 | M0：双端 Rust Studio |真实角色、骨骼/形变、共享命令、撤销/重做、保存与跨端交换|已交付；双端真实运行。当前 main 为571604f，包含已验收的93测试整合版|
 | 薄 M1：编排与分享 |三段5–10s动作、播放/暂停/定位、点击互动、静态双端 Player|已交付；PR17/18/20/21已合并。基本中文/IME/剪贴板/恢复验收通过；长期历史已限制，角色单次下载已验证|
 | M1 稳定与发行验收 |输入/缩放、启动/性能、发行包与平台矩阵|正在补证据；本轮三个诊断实验已实际运行，zoom/DPR、稳定性能、其他平台和签名发行仍未完成|
-| **M1.1：编辑器体验与 Web 构建优化验证** | 真实 Studio 标签/分隔条原型；profile-only Web A/B；依照实际结果选择整合范围。 | 有界实验已完成：93/99测试、双端构建/操作与三组A/B证据通过复审；选窄界面方案，Web默认配置暂缓。#26整合与#27性能复核分别推进。 | [里程碑](https://github.com/Derek-X-Wang/nvwa/milestone/1)、[合同](implementation/m1-1-experiment-contract.md)、[验收](evidence/m1-1/ACCEPTANCE.md)。 |
+| **M1.1：编辑器体验与 Web 构建优化验证** | 真实 Studio 标签/分隔条原型；profile-only Web A/B；依照实际结果选择整合范围。 | 有界实验已完成：93/99测试、双端构建/操作与三组A/B证据通过复审；选窄界面方案，Web默认配置暂缓。#26整合与#27性能复核分别推进。[里程碑](https://github.com/Derek-X-Wang/nvwa/milestone/1)、[合同](implementation/m1-1-experiment-contract.md)、[验收](evidence/m1-1/ACCEPTANCE.md)。 |
 | M2：真实动作生成 |一个真实provider、任务/取消/失败、规范化动作、rig映射与播放质量|尚未获准实施；现有preset导入不能视为生成。先明确模型/权重许可、runtime和输出合同|
 | 后续：更广角色生态 |Blender插件→额外角色/服装→指定版本VRM→有限IK/接触→只读VaM检查|全为候选；另定范围。软体物理、VR、多人、市场和任意脚本不在本轮|
 
