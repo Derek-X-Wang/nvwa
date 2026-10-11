@@ -124,8 +124,14 @@ logs excluded, and log checks pass with only `blank-at-eof` excluded. No log
 content or test assertion is removed to silence the formatting report.
 
 The temporary browser tabs, viewport override and loopback servers were
-released. The native Studio and integration worktree remain task-owned and
-open for the hand-test. No main merge is performed by this evidence stage.
+released. The earlier native window subsequently exited; the cause and exit
+code are unknown. The exact frozen binary was restarted with the saved native
+redo Work, restoring the 0.73/revision4 hand-test baseline. Its owned process is
+running, but CUA reports the Mac locked. Rendering of that replacement window
+is NOT-RUN until manual unlock. [Handoff status](handoff-status.json) is a
+resource observation, not an additional native acceptance result. The native
+process and integration worktree remain task-owned for handback. No main merge
+is performed by this evidence stage.
 
 PARTIAL — final-source tests, independent source review, both builds and actual
 Web acceptance pass; native hand-test, native reload/Web→native and native
