@@ -102,3 +102,9 @@ Formal final release samples used physical1280×720,600recent cadence observatio
 All workers/reviews finished. Root stopped both task-owned negative-startup native processes and the9202 negative-response server. The duplicate generated relocated app was removed only after equality checks against retained dist/Nvwa.app; evidence remains. No compiler or native renderer remains. The normal9201 preview/tab is retained as a deliverable. All13M0 issues remain open; no M2/paid resources/public hosting/CI/signing/merge is added. Publication of feat/thin-m1 and its draft integration PR is the final authorized step.
 
 PARTIAL — Final thin M1 local acceptance and release checks complete; listed hand-test/platform/measurement limits remain open.
+
+## Authorized thin M1 publication
+
+Published implementation/evidence commit4af6a1963783199f2b4bf4e5d2b44ca694900ecb to origin/feat/thin-m1; remote SHA matched. Created and attached [draft PR#17](https://github.com/Derek-X-Wang/nvwa/pull/17). Main remains the M0 commitd74493df0ab14f786e798cee03efe5ef9e2e4670; no merge was performed. Issues14/15/16 are closed for the bounded documented local acceptance. All13M0gap issues remain open. [Issue#2 update](https://github.com/Derek-X-Wang/nvwa/issues/2#issuecomment-6105856441) preserves the extra native failed-startup GUI recovery gap. Final publication metadata is documentation-only; tested code/artifacts remain frozen. HostedCI is NOT-RUN (no configured workflow).
+
+PARTIAL — Source/evidence pushed and draft PR attached; local dual-platform acceptance verified with explicit remaining gaps.

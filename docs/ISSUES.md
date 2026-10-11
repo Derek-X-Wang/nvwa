@@ -20,8 +20,10 @@ M0 was published as [`d74493d`](https://github.com/Derek-X-Wang/nvwa/commit/d744
 
 ## User-approved thin M1
 
+All three issues are closed. Implementation/evidence is published in [draft PR #17](https://github.com/Derek-X-Wang/nvwa/pull/17), code commit [4af6a19](https://github.com/Derek-X-Wang/nvwa/commit/4af6a1963783199f2b4bf4e5d2b44ca694900ecb). The PR remains unmerged; main retains M0.
+
 - [Compose and exchange a three-action 5–10 second work](https://github.com/Derek-X-Wang/nvwa/issues/14) — completed; sequence/exchange acceptance recorded in [M1 verification](M1-VERIFICATION.md)
 - [Click the character to trigger one authored action and resume the work](https://github.com/Derek-X-Wang/nvwa/issues/15) — completed; native/Web interaction acceptance
-- [Open the saved work in an editor-free static Player](https://github.com/Derek-X-Wang/nvwa/issues/16) — local acceptance complete; [release evidence and limits](evidence/m1/player-acceptance.md)
+- [Open the saved work in an editor-free static Player](https://github.com/Derek-X-Wang/nvwa/issues/16) — completed; local release acceptance recorded; [release evidence and limits](evidence/m1/player-acceptance.md)
 
 The native GitHub blocking edges are three-action work → click interaction → static Player; Player also depends directly on the three-action work. The user approved this decomposition. No accounts, general rig importer, physics, genuine AI generation, VaM compatibility or remote live GUI bridge is included.
