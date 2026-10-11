@@ -1,0 +1,11 @@
+{
+  "note": "Synthetic command fixture; use with a profile containing jaw_width and smile in range 0..1. Asset bytes are covered by the core tests.",
+  "commands": [
+    {"command_id":"parameters-1","expected_revision":0,"command":{"type":"set_parameters","character_id":"character-1","values":{"jaw_width":0.75,"smile":0.3}}},
+    {"command_id":"parameters-1","expected_revision":0,"command":{"type":"set_parameters","character_id":"character-1","values":{"jaw_width":0.75,"smile":0.3}}},
+    {"command_id":"undo-1","expected_revision":1,"command":{"type":"undo"}},
+    {"command_id":"redo-1","expected_revision":2,"command":{"type":"redo"}}
+  ],
+  "expected_revisions": [1,1,2,3],
+  "expected_duplicate_flags": [false,true,false,false]
+}

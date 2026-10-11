@@ -1,0 +1,53 @@
+{
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "python": "3.9.5",
+  "packages": {
+    "kimodo": false,
+    "torch": true,
+    "mlx": false,
+    "transformers": false,
+    "llm2vec": false,
+    "numpy": true
+  },
+  "executables": {
+    "kimodo_gen": null,
+    "kmd-generate": null,
+    "blender": "/opt/homebrew/bin/blender"
+  },
+  "configured_cache_paths": {
+    "HF_HOME": null,
+    "HF_HUB_CACHE": null,
+    "HUGGINGFACE_HUB_CACHE": null,
+    "TORCH_HOME": null
+  },
+  "model_cache_checks": {
+    "/Users/derekxwang/.cache/huggingface/hub": {
+      "exists": false,
+      "candidate_entries": []
+    },
+    "/Users/derekxwang/.cache/torch/hub/checkpoints": {
+      "exists": false,
+      "candidate_entries": []
+    },
+    "/Users/derekxwang/KimodoMotionRuntime": {
+      "exists": false,
+      "candidate_entries": []
+    },
+    "/Users/derekxwang/.kimodo_venv": {
+      "exists": false,
+      "candidate_entries": []
+    },
+    "/Users/derekxwang/.kimodo-runtime": {
+      "exists": false,
+      "candidate_entries": []
+    }
+  },
+  "machdep.cpu.brand_string": "Apple M2 Pro",
+  "hw.memsize": "17179869184",
+  "torch": {
+    "version": "2.7.1",
+    "mps_built": true,
+    "mps_available": true
+  }
+}

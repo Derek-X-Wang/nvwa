@@ -1,0 +1,19 @@
+# Experiment conclusions
+
+Final snapshot: 2026-10-10 PDT / 2026-10-11 UTC. Source compilation, CPU checks, native/browser execution, UI exchange and isolated cadence measurements have separate evidence. Four implementation workflows ran within the four-agent limit; reviews and optional experiments followed as slots became available. Experiment code stays outside mainline dependencies.
+
+| Experiment | Decision and actual evidence | Limit / effect on architecture |
+|---|---|---|
+| [01 — Original character](../experiments/01-character/REPORT.md) | **Adopt.** Continuous 22,572-vertex primary body, normalized skin weights, 18 joints, 4 distinct nonzero morphs, 3 authored clips. Binary validation, Blender inspection and native/Web rendering passed. | One original fixed rig with CC0 fixture provenance. Two exports match measured structure/morph hashes but differ in file bytes. Production hands/weighting remain future work. |
+| [02 — Command transactions](../experiments/02-command-transactions/REPORT.md) | **Adopt.** 13 core tests plus actual CLI equality with GUI-produced revisions 7 and 10. Real Web drag commits once; history restores geometry. | One pure Rust authoritative document and atomic typed API serve CLI/runtime/UI. Retry/undo history is session-only and currently unbounded. |
+| [03 — Runtime/UI](../experiments/03-runtime-ui/REPORT.md) | **Adopt.** Same Bevy/egui Rust app runs native Metal/WebGPU. Actual four morphs, skeletal clips, save/reload/error recovery, bidirectional exchange and final 33 tests passed. 1280×720 steady cadence p95 native 8.65 ms, Web 11.20 ms. | Keep one runtime/editor. Real import revealed and fixed replacement-player initialization. CJK/IME/native drag/clipboard and browser scaling/input coverage remain limited. Cadence is not GPU timing. |
+| [04 — Rest-basis retargeting A/B](../experiments/04-retarget-basis/REPORT.md) | **Adopt correction / reject naive copying for this controlled case.** 19 real-wave samples, 18 joints, 24,736 vertices in exported/reloaded GLBs. Max vertex error corrected 3.08e-8 m, naive 0.868 m. Identity/rest and invalid-input controls pass. | Narrow future basis conversion rule. Derivatives retain anatomy/topology/proportions; visual retarget playback, arbitrary rigs, IK/root-motion policy NOT-RUN. Nothing added to M0 runtime. |
+| [05 — Optional AI motion](../experiments/05-ai-motion/REPORT.md) | **Inconclusive for genuine inference; adopt only isolated import seam.** Official Kimodo/component licenses checked. Runtime/authorized weights absent in checked locations; 9 Python tests use an authored preset with ai_generated=false. | No model packages/weights/paid calls/inference in Studio. 16 GiB M2 feasibility, output schema/mapping, performance and genuine generated playback unverified. M0 proceeds independently. |
+
+Publication: [character.profile.json](../assets/character.profile.json), [provenance/hash manifest](../assets/fixtures/provenance-manifest.json), [sources and licenses](SOURCES-LICENSES.md). Asset/code/model licenses are distinct. Retarget derivatives and AI-boundary presets do not replace the frozen main fixture or enter normal builds.
+
+A/B compared two motion mappings on the same real fixture and sampling conditions. It establishes a high-risk basis-conversion result without a second product renderer. No Bevy UI/Feathers comparison, full IK, VaM inspector or real AI inference ran. Each retained experiment has reproduction steps and an explicit conclusion; unavailable paths were not relabelled as successes.
+
+Final evidence: [GUI session](evidence/GUI-SESSION.md), [exchange equality](evidence/exchange-result.json), [CLI/GUI replay](evidence/cli-gui-parity.json), [test matrix](TEST-MATRIX.md) and [performance](PERFORMANCE.md). Decisions are in [ADRs](adr/).
+
+PARTIAL — M0 and four bounded experiment conclusions have actual evidence; genuine AI inference is NOT-RUN, retargeting is numerical-only for controlled derivatives.

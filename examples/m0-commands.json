@@ -1,0 +1,47 @@
+[
+  {
+    "command_id": "example-morphs-1",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": {
+        "jaw_width": 0.8,
+        "nose_width": 0.6,
+        "smile": 0.9,
+        "shoulder_width": 0.7
+      }
+    }
+  },
+  {
+    "command_id": "example-wave-2",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "wave-1",
+          "clip_id": "wave",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.0416667461395264,
+          "speed": 1.0,
+          "looping": true
+        }
+      ]
+    }
+  },
+  {
+    "command_id": "example-undo-3",
+    "expected_revision": 2,
+    "command": {
+      "type": "undo"
+    }
+  },
+  {
+    "command_id": "example-redo-4",
+    "expected_revision": 3,
+    "command": {
+      "type": "redo"
+    }
+  }
+]

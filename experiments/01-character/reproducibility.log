@@ -1,0 +1,230 @@
+{
+  "command": "/opt/homebrew/bin/blender -b -t 2 --python tools/blender/generate_fixture.py",
+  "independent_process_count": 2,
+  "runs": [
+    {
+      "nvwa-humanoid.glb": "864d0a9700b7c21e68e99ef1539a992d873dbe0e71f5f240b1a1b2a8568d41fd",
+      "nvwa-humanoid.blend": "9359308cefa8926d595e1bf7d3d5aafe5fb874d50effc7f264eaa206b1e73945",
+      "source-structure.json": "acd23cb37f1d315dd0b371014365b0a8c254532b4971390fcf7a3be89f1e1b1d"
+    },
+    {
+      "nvwa-humanoid.glb": "13fe50db57c27d7556267756425206138d7189516bc4588d8cabb615ed4eb8c7",
+      "nvwa-humanoid.blend": "ddaca9af632a995c6f455b23298352bece6005862724cb5ae23b900255ff6d88",
+      "source-structure.json": "acd23cb37f1d315dd0b371014365b0a8c254532b4971390fcf7a3be89f1e1b1d"
+    }
+  ],
+  "output_directory_pattern": "experiments/01-character/reexports/run-{1,2}",
+  "byte_identical": {
+    "nvwa-humanoid.glb": false,
+    "nvwa-humanoid.blend": false,
+    "source-structure.json": true
+  },
+  "structural_metrics_and_morph_delta_hashes_identical": true,
+  "chunk_hashes": [
+    {
+      "json_sorted_sha256": "1426a0cf77aab14b66ca4ed2a80eef04d0af0d385dd2c6058d047cef0c27aba1",
+      "binary_sha256": "0129f5f8a98d45b07ce837e9203d2b0827df571a0f9db7def8b96e3e1939757d"
+    },
+    {
+      "json_sorted_sha256": "e0a6a19c39ec211a044ec36d477bdb8cda648d134b339f01e8dcb2ecc21a6747",
+      "binary_sha256": "2e505f70344bb6def9123c7edbe6f4e30885f684b26cbf7099500d75e31b1e92"
+    }
+  ],
+  "run_structures": [
+    {
+      "status": "PASS",
+      "joint_count": 18,
+      "joint_names": [
+        "root",
+        "pelvis",
+        "spine",
+        "chest",
+        "neck",
+        "head",
+        "upper_arm.L",
+        "forearm.L",
+        "hand.L",
+        "upper_arm.R",
+        "forearm.R",
+        "hand.R",
+        "thigh.L",
+        "shin.L",
+        "foot.L",
+        "thigh.R",
+        "shin.R",
+        "foot.R"
+      ],
+      "primary_mesh": "Nvwa continuous clothed surface",
+      "material_split_vertex_count": 23044,
+      "welded_vertex_count": 22572,
+      "continuous_surface_components": [
+        22572
+      ],
+      "weighted_vertices": 23044,
+      "vertices_with_multiple_influences": 21648,
+      "opaque_materials": true,
+      "morphs": [
+        {
+          "id": "jaw_width",
+          "morph_index": 0,
+          "nonzero_vertices_with_seams": 2718,
+          "maximum_displacement_metres": 0.0688607394695282,
+          "delta_sha256": "0fdc0449ee1638c7e73d92f393f9f4ec72230333ac0bac60eb6460355a52f6bd"
+        },
+        {
+          "id": "nose_width",
+          "morph_index": 1,
+          "nonzero_vertices_with_seams": 296,
+          "maximum_displacement_metres": 0.06944765770627767,
+          "delta_sha256": "7f360f3778035b1ee82618522c39f17447528a37838eb6efcba0dc55b9f4dba9"
+        },
+        {
+          "id": "smile",
+          "morph_index": 2,
+          "nonzero_vertices_with_seams": 678,
+          "maximum_displacement_metres": 0.03925796059651317,
+          "delta_sha256": "563f96a4e10be4327325fdfd140046cf28dabffde7af8bcfeeb9535ed2bfa3f6"
+        },
+        {
+          "id": "shoulder_width",
+          "morph_index": 3,
+          "nonzero_vertices_with_seams": 9390,
+          "maximum_displacement_metres": 0.08988398313522339,
+          "delta_sha256": "d413e703567efbcc1f252620d0f39860131d61012d3ea8633cd80bac914f69bc"
+        }
+      ],
+      "clips": [
+        {
+          "id": "idle",
+          "animation_index": 0,
+          "duration_seconds": 3.0,
+          "changed_bones": [
+            "chest",
+            "head",
+            "pelvis",
+            "upper_arm.L",
+            "upper_arm.R"
+          ]
+        },
+        {
+          "id": "turn",
+          "animation_index": 1,
+          "duration_seconds": 4.0,
+          "changed_bones": [
+            "root"
+          ]
+        },
+        {
+          "id": "wave",
+          "animation_index": 2,
+          "duration_seconds": 3.0,
+          "changed_bones": [
+            "forearm.R",
+            "hand.R",
+            "head",
+            "upper_arm.R"
+          ]
+        }
+      ],
+      "validation_scope": "GLB binary structure and numeric deformation data; no native or Web runtime claim"
+    },
+    {
+      "status": "PASS",
+      "joint_count": 18,
+      "joint_names": [
+        "root",
+        "pelvis",
+        "spine",
+        "chest",
+        "neck",
+        "head",
+        "upper_arm.L",
+        "forearm.L",
+        "hand.L",
+        "upper_arm.R",
+        "forearm.R",
+        "hand.R",
+        "thigh.L",
+        "shin.L",
+        "foot.L",
+        "thigh.R",
+        "shin.R",
+        "foot.R"
+      ],
+      "primary_mesh": "Nvwa continuous clothed surface",
+      "material_split_vertex_count": 23044,
+      "welded_vertex_count": 22572,
+      "continuous_surface_components": [
+        22572
+      ],
+      "weighted_vertices": 23044,
+      "vertices_with_multiple_influences": 21648,
+      "opaque_materials": true,
+      "morphs": [
+        {
+          "id": "jaw_width",
+          "morph_index": 0,
+          "nonzero_vertices_with_seams": 2718,
+          "maximum_displacement_metres": 0.0688607394695282,
+          "delta_sha256": "0fdc0449ee1638c7e73d92f393f9f4ec72230333ac0bac60eb6460355a52f6bd"
+        },
+        {
+          "id": "nose_width",
+          "morph_index": 1,
+          "nonzero_vertices_with_seams": 296,
+          "maximum_displacement_metres": 0.06944765770627767,
+          "delta_sha256": "7f360f3778035b1ee82618522c39f17447528a37838eb6efcba0dc55b9f4dba9"
+        },
+        {
+          "id": "smile",
+          "morph_index": 2,
+          "nonzero_vertices_with_seams": 678,
+          "maximum_displacement_metres": 0.03925796059651317,
+          "delta_sha256": "563f96a4e10be4327325fdfd140046cf28dabffde7af8bcfeeb9535ed2bfa3f6"
+        },
+        {
+          "id": "shoulder_width",
+          "morph_index": 3,
+          "nonzero_vertices_with_seams": 9390,
+          "maximum_displacement_metres": 0.08988398313522339,
+          "delta_sha256": "d413e703567efbcc1f252620d0f39860131d61012d3ea8633cd80bac914f69bc"
+        }
+      ],
+      "clips": [
+        {
+          "id": "idle",
+          "animation_index": 0,
+          "duration_seconds": 3.0,
+          "changed_bones": [
+            "chest",
+            "head",
+            "pelvis",
+            "upper_arm.L",
+            "upper_arm.R"
+          ]
+        },
+        {
+          "id": "turn",
+          "animation_index": 1,
+          "duration_seconds": 4.0,
+          "changed_bones": [
+            "root"
+          ]
+        },
+        {
+          "id": "wave",
+          "animation_index": 2,
+          "duration_seconds": 3.0,
+          "changed_bones": [
+            "forearm.R",
+            "hand.R",
+            "head",
+            "upper_arm.R"
+          ]
+        }
+      ],
+      "validation_scope": "GLB binary structure and numeric deformation data; no native or Web runtime claim"
+    }
+  ],
+  "limit": "Repeatability measured on Blender 3.3.1 arm64 on this host only. No claim across Blender/exporter versions or platforms. Native .blend includes nondeterministic save metadata if hashes differ."
+}

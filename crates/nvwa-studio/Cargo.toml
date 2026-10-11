@@ -1,0 +1,24 @@
+[package]
+name = "nvwa-studio"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+bevy.workspace = true
+bevy_egui.workspace = true
+nvwa-core.workspace = true
+nvwa-runtime.workspace = true
+serde_json.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[target.'cfg(unix)'.dependencies]
+libc.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "=0.2.129"
+wasm-bindgen-futures = "=0.4.79"
+js-sys = "=0.3.106"
+web-sys = { version = "=0.3.106", features = ["Window", "Location", "Document", "HtmlInputElement", "HtmlElement", "HtmlAnchorElement", "File", "FileList", "Blob", "BlobPropertyBag", "Url", "Event", "EventTarget", "Node", "console"] }

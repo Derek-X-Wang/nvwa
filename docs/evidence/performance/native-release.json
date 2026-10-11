@@ -1,0 +1,63 @@
+{
+  "command": [
+    "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/nvwa-studio",
+    "--benchmark",
+    "--smoke",
+    "--smoke-seconds",
+    "15.0",
+    "--capture",
+    "/Users/derekxwang/Development/incubator/Nvwa/nvwa/docs/evidence/performance/native-release.png",
+    "--timeout",
+    "90"
+  ],
+  "exit_code": 0,
+  "process_start_utc": "2026-10-11T03:52:43.631271+00:00",
+  "process_total_wall_seconds": 15.597772542000001,
+  "peak_child_rss_bytes": 248561664,
+  "memory_kind": "child process peak RSS, not GPU or total unified allocation",
+  "image": "docs/evidence/performance/native-release.png",
+  "runtime": {
+    "active_animations": 1,
+    "animation_seconds": 2.8594274520874023,
+    "build_profile": "release",
+    "capture_callback": true,
+    "capture_callback_seconds": 15.080001292,
+    "capture_file_bytes": 347471,
+    "clip": "idle",
+    "clock": "bevy_TimeReal_since_first_update",
+    "elapsed_seconds": 15.080001292,
+    "error": null,
+    "first_asset_ready_seconds": 0.046833625,
+    "first_visible_kind": "screenshot_callback_after_requested_warmup",
+    "first_visible_upper_bound_seconds": 15.080001292,
+    "frame_ms_p50": 8.336333274841309,
+    "frame_ms_p95": 8.64900016784668,
+    "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+    "frame_sample_count": 600,
+    "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+    "frames": 1783,
+    "gpu": {
+      "backend": "Metal",
+      "name": "Apple M2 Pro"
+    },
+    "joints": 18,
+    "meshes": 9,
+    "morph_nodes": 1,
+    "morph_weights": 4,
+    "paused_animations": 0,
+    "physical_window": {
+      "height": 720,
+      "scale_factor": 1.0,
+      "width": 1280
+    },
+    "players": 1,
+    "ready": true,
+    "ready_frames": 1782,
+    "skins": 9,
+    "timeout": false
+  },
+  "concurrent_heavy_jobs": "none running; checked native-heavy-jobs.log, browser about:blank; one Nvwa GPU process",
+  "process_visible_upper_bound_seconds": 15.552668,
+  "visible_kind": "actual screenshot completed, includes requested warmup; not exact first presentation",
+  "cache_conditions": "First startup probe on this new executable, then same executable repeated; no cache purge. Attribution to shader initialization is unproven."
+}

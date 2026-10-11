@@ -1,0 +1,50 @@
+[
+  {
+    "command_id": "gui-replay-8",
+    "expected_revision": 7,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "timeline-1",
+          "clip_id": "turn",
+          "start_seconds": 0.0,
+          "duration_seconds": 4.0416665,
+          "speed": 1.0,
+          "looping": true
+        }
+      ]
+    }
+  },
+  {
+    "command_id": "gui-replay-9",
+    "expected_revision": 8,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": {
+        "jaw_width": 0.82,
+        "nose_width": 0.91,
+        "shoulder_width": 0.68,
+        "smile": 0.79
+      }
+    }
+  },
+  {
+    "command_id": "gui-replay-10",
+    "expected_revision": 9,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "timeline-1",
+          "clip_id": "wave",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.0416667,
+          "speed": 1.0,
+          "looping": true
+        }
+      ]
+    }
+  }
+]
