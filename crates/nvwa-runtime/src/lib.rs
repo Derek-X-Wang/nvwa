@@ -4,8 +4,9 @@ use std::collections::{BTreeMap, BTreeSet};
 use bevy::{
     app::AnimationSystems,
     asset::{
-        AssetLoadFailedEvent, AssetLoader, LoadContext, LoadState, RecursiveDependencyLoadState,
-        io::Reader,
+        AssetId, AssetLoadFailedEvent, AssetLoader, LoadContext, LoadState,
+        RecursiveDependencyLoadState,
+        io::{Reader, VecReader},
     },
     ecs::system::SystemParam,
     math::bounding::{BoundingSphere, RayCast3d},
@@ -221,11 +222,12 @@ struct CharacterAsset {
     path: String,
     profile_key: String,
     document_generation: u64,
-    bytes: Option<Handle<GlbBytes>>,
+    bytes: Option<Handle<CharacterGlb>>,
+    retiring: Vec<RetiringCharacterLoad>,
+    pending_open: bool,
+    load_completed: bool,
     verified: bool,
     fresh_bytes: bool,
-    fresh_gltf: bool,
-    gltf_failure: Option<String>,
     handle: Option<Handle<Gltf>>,
     root: Option<Entity>,
     graph: Option<Handle<AnimationGraph>>,
@@ -239,23 +241,61 @@ struct CharacterAsset {
     playback_generation: u64,
 }
 
+// Retain a superseded request until its publication and dependencies settle.
+// Then drop the root and wait for Bevy to purge its path cache before another
+// request can publish into the shared GLTF subasset labels.
+struct RetiringCharacterLoad {
+    path: String,
+    id: AssetId<CharacterGlb>,
+    handle: Option<Handle<CharacterGlb>>,
+    completed: bool,
+}
+
 #[derive(Asset, TypePath)]
-struct GlbBytes(Vec<u8>);
+struct CharacterGlb {
+    bytes: Vec<u8>,
+    #[dependency]
+    gltf: Option<Handle<Gltf>>,
+    parse_error: Option<String>,
+}
 #[derive(Default, TypePath)]
-struct GlbBytesLoader;
-impl AssetLoader for GlbBytesLoader {
-    type Asset = GlbBytes;
+struct CharacterGlbLoader;
+impl AssetLoader for CharacterGlbLoader {
+    type Asset = CharacterGlb;
     type Settings = ();
     type Error = std::io::Error;
     async fn load(
         &self,
         reader: &mut dyn Reader,
         _: &(),
-        _: &mut LoadContext<'_>,
-    ) -> Result<GlbBytes, Self::Error> {
+        context: &mut LoadContext<'_>,
+    ) -> Result<CharacterGlb, Self::Error> {
         let mut bytes = Vec::new();
         reader.read_to_end(&mut bytes).await?;
-        Ok(GlbBytes(bytes))
+        // Delegate the pinned Bevy loader from these retrieved bytes. Keeping
+        // its LoadedAsset intact preserves all scene/animation subassets and
+        // dependency tracking without a second asset-source read.
+        let mut reader = VecReader::new(bytes);
+        let path = context.path().clone();
+        let parsed = context
+            .load_builder()
+            .load_value_from_reader::<Gltf>(path, &mut reader)
+            .await;
+        let (gltf, parse_error) = match parsed {
+            Ok(gltf) => (
+                Some(context.add_loaded_labeled_asset("NvwaGltf", gltf)),
+                None,
+            ),
+            Err(error) => (None, Some(format!("Character load failed: {error}"))),
+        };
+        // A parse failure still retains the retrieved bytes so current-profile
+        // validation can report its missing/hash/structure error first. Only
+        // a verified root with a successful parse can expose a scene.
+        Ok(CharacterGlb {
+            bytes: reader.bytes,
+            gltf,
+            parse_error,
+        })
     }
 }
 
@@ -268,8 +308,8 @@ pub enum RuntimeSystems {
 pub struct NvwaRuntimePlugin;
 impl Plugin for NvwaRuntimePlugin {
     fn build(&self, app: &mut App) {
-        app.init_asset::<GlbBytes>()
-            .init_asset_loader::<GlbBytesLoader>()
+        app.init_asset::<CharacterGlb>()
+            .init_asset_loader::<CharacterGlbLoader>()
             .init_resource::<EditorState>()
             .init_resource::<StartupDocumentPolicy>()
             .init_resource::<RuntimeStatus>()
@@ -365,13 +405,11 @@ fn setup_environment(
 struct CharacterLoadAssets<'w, 's> {
     server: Res<'w, AssetServer>,
     gltfs: Res<'w, Assets<Gltf>>,
-    raw_assets: Res<'w, Assets<GlbBytes>>,
+    raw_assets: Res<'w, Assets<CharacterGlb>>,
     clips: Res<'w, Assets<AnimationClip>>,
     graphs: ResMut<'w, Assets<AnimationGraph>>,
-    byte_events: MessageReader<'w, 's, AssetEvent<GlbBytes>>,
-    byte_failures: MessageReader<'w, 's, AssetLoadFailedEvent<GlbBytes>>,
-    gltf_events: MessageReader<'w, 's, AssetEvent<Gltf>>,
-    gltf_failures: MessageReader<'w, 's, AssetLoadFailedEvent<Gltf>>,
+    byte_events: MessageReader<'w, 's, AssetEvent<CharacterGlb>>,
+    byte_failures: MessageReader<'w, 's, AssetLoadFailedEvent<CharacterGlb>>,
 }
 
 fn load_character(
@@ -391,8 +429,6 @@ fn load_character(
         mut graphs,
         mut byte_events,
         mut byte_failures,
-        mut gltf_events,
-        mut gltf_failures,
     } = loading;
     // Drain before issuing a new generation request. Earlier completion events
     // cannot authorize validation of this generation's cached bytes.
@@ -409,19 +445,6 @@ fn load_character(
         .read()
         .map(|event| (event.id, event.error.to_string()))
         .collect();
-    let completed_gltf: Vec<_> = gltf_events
-        .read()
-        .filter_map(|event| match event {
-            AssetEvent::Added { id }
-            | AssetEvent::Modified { id }
-            | AssetEvent::LoadedWithDependencies { id } => Some(*id),
-            _ => None,
-        })
-        .collect();
-    let failed_gltf: Vec<_> = gltf_failures
-        .read()
-        .map(|event| (event.id, event.error.to_string()))
-        .collect();
     let Some(document) = editor.document() else {
         return;
     };
@@ -434,20 +457,23 @@ fn load_character(
         if let Some(root) = asset.root {
             commands.entity(root).despawn();
         }
-        let reload = asset.handle.is_some();
+        let mut retiring = std::mem::take(&mut asset.retiring);
+        if let Some(handle) = asset.bytes.take() {
+            retiring.push(RetiringCharacterLoad {
+                path: asset.path.clone(),
+                id: handle.id(),
+                handle: Some(handle),
+                completed: asset.load_completed,
+            });
+        }
         *asset = CharacterAsset {
             path: path.clone(),
             profile_key,
             document_generation: editor.document_generation,
-            bytes: Some(server.load(path.clone())),
-            handle: Some(server.load(path.clone())),
+            retiring,
+            pending_open: true,
             ..default()
         };
-        // `load` can return a cached failed handle. Explicit open must also
-        // request a real retry after the user restores the missing file.
-        if reload {
-            server.reload(path.clone());
-        }
         status.ready = false;
         status.first_ready_seconds = None;
         status.ready_frames = 0;
@@ -466,26 +492,38 @@ fn load_character(
         playback.completed = false;
         playback.active_timeline_id.clear();
         playback.error = None;
+        advance_character_request(
+            &server,
+            &mut asset,
+            &mut status,
+            &completed_bytes,
+            &failed_bytes,
+        );
         return;
     }
     asset.elapsed += time.delta_secs();
+    if advance_character_request(
+        &server,
+        &mut asset,
+        &mut status,
+        &completed_bytes,
+        &failed_bytes,
+    ) {
+        return;
+    }
     if let Some(id) = asset.bytes.as_ref().map(Handle::id) {
         if completed_bytes.contains(&id) {
+            asset.load_completed = true;
             asset.fresh_bytes = true;
             asset.verified = false;
         }
         if let Some((_, error)) = failed_bytes.iter().find(|(failed_id, _)| *failed_id == id) {
+            asset.load_completed = true;
+            asset.verified = false;
+            asset.fresh_bytes = false;
             status.error = Some(format!("Asset byte load failed: {error}"));
             status.ready = false;
             status.phase = "Load error".into();
-        }
-    }
-    if let Some(id) = asset.handle.as_ref().map(Handle::id) {
-        if completed_gltf.contains(&id) {
-            asset.fresh_gltf = true;
-        }
-        if let Some((_, error)) = failed_gltf.iter().find(|(failed_id, _)| *failed_id == id) {
-            asset.gltf_failure = Some(format!("Character load failed: {error}"));
         }
     }
     if !verify_byte_generation(
@@ -497,38 +535,39 @@ fn load_character(
     ) {
         return;
     }
+    let Some(bytes) = asset
+        .bytes
+        .as_ref()
+        .and_then(|handle| raw_assets.get(handle))
+    else {
+        return;
+    };
+    asset.handle = bytes.gltf.clone();
+    // This root completion contains the GLTF parsed from the exact bytes that
+    // just passed current-profile validation. A cached root is never enough.
+    if let Some(error) = &bytes.parse_error {
+        status.error = Some(error.clone());
+        status.phase = "Load error".into();
+        status.ready = false;
+        return;
+    }
     let Some(handle) = asset.handle.clone() else {
         return;
     };
-    // Cached load/dependency failures can belong to the previous request.
-    // Only a failure event or a freshly parsed root can authorize this error.
-    let loaded = asset.fresh_gltf && server.is_loaded_with_dependencies(handle.id());
-    let fresh_dependency_failure = if asset.fresh_gltf {
-        match server.get_recursive_dependency_load_state(handle.id()) {
-            Some(RecursiveDependencyLoadState::Failed(error)) => {
-                Some(format!("Character dependency failed: {error}"))
-            }
-            _ => None,
+    // The verified root owns this parsed GLTF and its entire dependency tree.
+    // No independent cached GLTF completion can authorize scene exposure.
+    let loaded = server.is_loaded_with_dependencies(handle.id());
+    let dependency_failure = match server.get_recursive_dependency_load_state(handle.id()) {
+        Some(RecursiveDependencyLoadState::Failed(error)) => {
+            Some(format!("Character dependency failed: {error}"))
         }
-    } else {
-        None
+        _ => None,
     };
-    let had_gltf_failure = asset.gltf_failure.is_some();
-    if loaded {
-        asset.gltf_failure = None;
-    } else if let Some(error) = fresh_dependency_failure {
-        asset.gltf_failure = Some(error);
-    }
-    if asset.spawned && loaded && !had_gltf_failure {
+    if asset.spawned && loaded && status.error.is_none() {
         return;
     }
-    if !accept_gltf_completion(
-        asset.fresh_gltf,
-        loaded,
-        asset.gltf_failure.as_deref(),
-        &mut status,
-    ) {
-        if asset.elapsed > 30.0 && asset.gltf_failure.is_none() {
+    if !accept_gltf_completion(true, loaded, dependency_failure.as_deref(), &mut status) {
+        if asset.elapsed > 30.0 && dependency_failure.is_none() {
             status.error = Some("Character loading exceeded 30 seconds".into());
             status.ready = false;
         }
@@ -588,6 +627,64 @@ fn load_character(
     status.phase = "Preparing skin and animation…".into();
 }
 
+/// Serialize same-path explicit opens before later nested subassets can
+/// publish into the same identities. Dropping a completed root also avoids forced-reload fallback
+/// and path-only cache reuse. Superseding again replaces only the queued work.
+fn advance_character_request(
+    server: &AssetServer,
+    asset: &mut CharacterAsset,
+    status: &mut RuntimeStatus,
+    completed: &[AssetId<CharacterGlb>],
+    failed: &[(AssetId<CharacterGlb>, String)],
+) -> bool {
+    for retiring in &mut asset.retiring {
+        retiring.completed |=
+            completed.contains(&retiring.id) || failed.iter().any(|(id, _)| *id == retiring.id);
+        let settled = retiring.completed
+            && match server.get_load_state(retiring.id) {
+                Some(LoadState::Failed(_)) => true,
+                Some(LoadState::Loaded) => matches!(
+                    server.get_recursive_dependency_load_state(retiring.id),
+                    Some(
+                        RecursiveDependencyLoadState::Loaded
+                            | RecursiveDependencyLoadState::Failed(_)
+                    )
+                ),
+                _ => false,
+            };
+        if settled {
+            retiring.handle.take();
+        }
+    }
+    // Asset tracking removes cached IDs and normal load tasks after the last
+    // root handle drops. A dead weak handle alone is not publication fencing.
+    asset.retiring.retain(|retiring| {
+        retiring.handle.is_some() || server.get_load_state(retiring.id).is_some()
+    });
+    if !asset.pending_open {
+        return false;
+    }
+    if asset
+        .retiring
+        .iter()
+        .any(|retiring| retiring.path == asset.path)
+    {
+        // Only same-path labels can alias the current self-contained fixture.
+        // Another path can load while a superseded request remains pending.
+        if asset.elapsed > 30.0 && status.error.is_none() {
+            status.error = Some("Previous character load exceeded 30 seconds".into());
+        }
+        return true;
+    }
+    asset.bytes = Some(server.load(asset.path.clone()));
+    asset.pending_open = false;
+    asset.load_completed = false;
+    asset.elapsed = 0.0;
+    status.error = None;
+    status.phase = "Loading character…".into();
+    true
+}
+
 fn accept_gltf_completion(
     fresh: bool,
     loaded_with_dependencies: bool,
@@ -613,7 +710,7 @@ fn accept_gltf_completion(
 fn verify_byte_generation(
     profile: &CharacterProfile,
     server: &AssetServer,
-    raw_assets: &Assets<GlbBytes>,
+    raw_assets: &Assets<CharacterGlb>,
     asset: &mut CharacterAsset,
     status: &mut RuntimeStatus,
 ) -> bool {
@@ -625,7 +722,7 @@ fn verify_byte_generation(
     };
     if !asset.fresh_bytes || !matches!(server.get_load_state(handle.id()), Some(LoadState::Loaded))
     {
-        if asset.elapsed > 30.0 {
+        if asset.elapsed > 30.0 && status.error.is_none() {
             status.error = Some("Asset verification exceeded 30 seconds".into());
             status.ready = false;
         }
@@ -635,7 +732,7 @@ fn verify_byte_generation(
         return false;
     };
     asset.fresh_bytes = false;
-    match profile.validate_asset_bytes(&bytes.0) {
+    match profile.validate_asset_bytes(&bytes.bytes) {
         Ok(()) => {
             asset.verified = true;
             status.error = None;
@@ -2131,10 +2228,10 @@ mod tests {
     fn verify_test_bytes(
         profile: Res<TestProfile>,
         server: Res<AssetServer>,
-        bytes: Res<Assets<GlbBytes>>,
+        bytes: Res<Assets<CharacterGlb>>,
         mut asset: ResMut<CharacterAsset>,
         mut status: ResMut<RuntimeStatus>,
-        mut events: MessageReader<AssetEvent<GlbBytes>>,
+        mut events: MessageReader<AssetEvent<CharacterGlb>>,
     ) {
         let id = asset.bytes.as_ref().unwrap().id();
         if events.read().fold(false, |seen, event| {
@@ -2171,12 +2268,12 @@ mod tests {
                 file_path: directory.to_string_lossy().into_owned(),
                 ..default()
             })
-            .init_asset::<GlbBytes>()
-            .init_asset_loader::<GlbBytesLoader>()
+            .init_asset::<CharacterGlb>()
+            .init_asset_loader::<CharacterGlbLoader>()
             .insert_resource(TestProfile(profile.clone()))
             .init_resource::<RuntimeStatus>()
             .add_systems(Update, verify_test_bytes);
-        let handle: Handle<GlbBytes> = app
+        let handle: Handle<CharacterGlb> = app
             .world()
             .resource::<AssetServer>()
             .load(profile.asset_path.clone());
@@ -2214,7 +2311,7 @@ mod tests {
         assert!(!verify_byte_generation(
             &profile,
             &server,
-            app.world().resource::<Assets<GlbBytes>>(),
+            app.world().resource::<Assets<CharacterGlb>>(),
             &mut asset,
             &mut status
         ));
@@ -2230,10 +2327,10 @@ mod tests {
         assert!(app.world().resource::<RuntimeStatus>().error.is_none());
         assert_eq!(
             app.world()
-                .resource::<Assets<GlbBytes>>()
+                .resource::<Assets<CharacterGlb>>()
                 .get(&handle)
                 .unwrap()
-                .0
+                .bytes
                 .as_slice(),
             correct.as_slice()
         );
@@ -2279,3 +2376,6 @@ mod tests {
         assert!(status.error.is_none());
     }
 }
+
+#[cfg(test)]
+mod loading_tests;

@@ -1,0 +1,270 @@
+{
+  "parent": "bf536f8525dc8fa76a82f9c58be1290767a00ed3",
+  "source_identity": "Containing commit plus exact source and artifact hashes. Worker source/review and baseline bundle are separately identified.",
+  "workspace_tests": {
+    "passed": 93,
+    "failed": 0,
+    "ignored": 0
+  },
+  "gate_exits": [
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "-p",
+        "nvwa-studio",
+        "--lib",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "build-native",
+      "command": [
+        "cargo",
+        "build",
+        "-p",
+        "nvwa-studio",
+        "-p",
+        "nvwa-cli",
+        "--release",
+        "--locked"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "package-native",
+      "command": [
+        "python3",
+        "scripts/package-native.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "build-web",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "real-cli-probe",
+      "command": [
+        "python3",
+        "experiments/10-bounded-history/capability_probe.py",
+        "target/release/nvwa-cli"
+      ],
+      "exit": 0
+    }
+  ],
+  "actual_web_startup": "Ready with real skin/morph/animation; actual restart and missing/hash failure then same-path recovery.",
+  "actual_native_startup": {
+    "process_exit": 0,
+    "runtime_ready": true,
+    "visual_acceptance": "VERIFIED after user manual unlock: fresh native-unlocked.png shows real character waving; revision9,18 joints,4 morph weights,3 timeline entries,1 active animation. Earlier locked black captures retained as failed visual evidence.",
+    "binary_sha256": "3be9380f1747c8a6266c59e49f73550e180038fb1259187942af16033a2bc929",
+    "capture": "native-unlocked.png",
+    "performance": "Functional smoke only, no formal first-frame/cold/GPU memory claim."
+  },
+  "network": {
+    "measurement": "HTTP response body bytes actually written; excludes headers/TCP overhead",
+    "cache_policy": "no-store; fresh baseline/candidate URLs; no cold compiler/GPU claim",
+    "baseline": {
+      "glb_requests": 2,
+      "glb_body_bytes": 2258162,
+      "all_response_body_bytes": 21656114,
+      "all_response_count": 8
+    },
+    "candidate": {
+      "glb_requests": 1,
+      "glb_body_bytes": 1129081,
+      "all_response_body_bytes": 20541440,
+      "all_response_count": 6
+    },
+    "fault_open_sequence": [
+      "missing rejected",
+      "same-path valid recovery",
+      "modified hash rejected",
+      "same-path valid recovery"
+    ],
+    "glb_body_bytes_saved": 1129081,
+    "all_response_body_bytes_saved": 1114674,
+    "limits": "GUI outcome is separately evidenced by screenshots; parser checks retained capture only."
+  },
+  "initial_unique_gzip_bytes": 20539196,
+  "player_initial_unique_gzip_bytes": 20539719,
+  "performance": "NOT-RUN current cold startup/first presentation/GPU/browser memory. Functional smoke cadence is not a benchmark.",
+  "physical_ime": "Not repeated; prior67-build user acceptance separately attributed.",
+  "hosted_ci": "NOT-RUN no workflow",
+  "files": [
+    {
+      "path": "Cargo.toml",
+      "bytes": 1223,
+      "sha256": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7"
+    },
+    {
+      "path": "Cargo.lock",
+      "bytes": 142444,
+      "sha256": "d4f6610f830ff73d1fde4307f9c5523056ec736add2530e43860c161ba8d8ec5"
+    },
+    {
+      "path": "crates/nvwa-studio/Cargo.toml",
+      "bytes": 1138,
+      "sha256": "7532429f4e3ebf34bea8bfb5a52c99ed02bae6714ac33a59fcf897252bb74050"
+    },
+    {
+      "path": "crates/nvwa-studio/src/lib.rs",
+      "bytes": 56056,
+      "sha256": "4e00f2d61a9f44439616f31c65dfca125908f29a346aca0dcfba000b0f6b5181"
+    },
+    {
+      "path": "crates/nvwa-studio/src/web_input.rs",
+      "bytes": 39460,
+      "sha256": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7"
+    },
+    {
+      "path": "crates/nvwa-studio/src/fonts.rs",
+      "bytes": 6274,
+      "sha256": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2"
+    },
+    {
+      "path": "assets/fonts/NvwaSansSC-Regular.ttf",
+      "bytes": 10595928,
+      "sha256": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea"
+    },
+    {
+      "path": "assets/fixtures/nvwa-humanoid.glb",
+      "bytes": 3827840,
+      "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+    },
+    {
+      "path": "scripts/build-web.sh",
+      "bytes": 1249,
+      "sha256": "d63ee823d860d22673da351cb1cbc546f328c5e756741e799edcad6ab0d590e2"
+    },
+    {
+      "path": "scripts/package-native.py",
+      "bytes": 1808,
+      "sha256": "b12d993c314e5361f46ec1016bfeb538185cff29fb188d70b8a6f44010c98340"
+    },
+    {
+      "path": "web/index.html",
+      "bytes": 2690,
+      "sha256": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114"
+    },
+    {
+      "path": "target/release/nvwa-studio",
+      "bytes": 102985296,
+      "sha256": "3be9380f1747c8a6266c59e49f73550e180038fb1259187942af16033a2bc929"
+    },
+    {
+      "path": "dist/Nvwa.app/Contents/MacOS/Nvwa",
+      "bytes": 102985296,
+      "sha256": "3be9380f1747c8a6266c59e49f73550e180038fb1259187942af16033a2bc929"
+    },
+    {
+      "path": "dist/web/nvwa_studio_bg.wasm",
+      "bytes": 85583469,
+      "sha256": "0d8e1b7907d82f1b6d7fbd9799d54bb90e2bdce9797979a4df06fdd9801cc93c"
+    },
+    {
+      "path": "dist/web/nvwa_studio.js",
+      "bytes": 123555,
+      "sha256": "5360898356fed182f838984768f649830c783e9730e604bce29d51cfbe2b6cc6"
+    },
+    {
+      "path": "docs/evidence/web-input/\u5973\u5a32.nvwa.json",
+      "bytes": 1953,
+      "sha256": "99092aea82ed536b30e88b7c7277da2b915655d328df12d81775457e733f57f4"
+    },
+    {
+      "path": "crates/nvwa-core/src/lib.rs",
+      "bytes": 30473,
+      "sha256": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797"
+    },
+    {
+      "path": "crates/nvwa-core/src/bounded_history_tests.rs",
+      "bytes": 13337,
+      "sha256": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b"
+    },
+    {
+      "path": "crates/nvwa-cli/src/main.rs",
+      "bytes": 8298,
+      "sha256": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b"
+    },
+    {
+      "path": "docs/adr/0005-portable-document-and-commands.md",
+      "bytes": 2314,
+      "sha256": "35bb5cd4669adc4d95f406cec446b664adbb229d05c4368c541ef511c7538f4c"
+    },
+    {
+      "path": "target/release/nvwa-cli",
+      "bytes": 972064,
+      "sha256": "99f21922c030607b476e5e872ffce663c848913f6c3c55bd2c3c9087903a6add"
+    },
+    {
+      "path": "crates/nvwa-runtime/src/lib.rs",
+      "bytes": 82619,
+      "sha256": "bd6da4b2212a6bec251ad8ae4ca7b8fbca1038b383a6031cec1b9c0fa1b8ce72"
+    },
+    {
+      "path": "crates/nvwa-runtime/src/loading_tests.rs",
+      "bytes": 24394,
+      "sha256": "9fec6b200db271117b26db45eef2758820f644a8bbc7ef4e74de4d8cc9a8c26a"
+    },
+    {
+      "path": "experiments/09-single-transfer/http_probe_server.py",
+      "bytes": 3863,
+      "sha256": "f50e7c2fba4a90d9eee95de41f5c1ac7bd3d9833d9d24db0cd41fbcc3ee41910"
+    },
+    {
+      "path": "experiments/09-single-transfer/summarize_http.py",
+      "bytes": 2343,
+      "sha256": "0ca1c53844a5dfa3375dd5d4e1d91db451b8ab43727a68d380d7e46f1870d6cb"
+    }
+  ]
+}

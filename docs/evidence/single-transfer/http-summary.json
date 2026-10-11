@@ -1,0 +1,25 @@
+{
+  "measurement": "HTTP response body bytes actually written; excludes headers/TCP overhead",
+  "cache_policy": "no-store; fresh baseline/candidate URLs; no cold compiler/GPU claim",
+  "baseline": {
+    "glb_requests": 2,
+    "glb_body_bytes": 2258162,
+    "all_response_body_bytes": 21656114,
+    "all_response_count": 8
+  },
+  "candidate": {
+    "glb_requests": 1,
+    "glb_body_bytes": 1129081,
+    "all_response_body_bytes": 20541440,
+    "all_response_count": 6
+  },
+  "fault_open_sequence": [
+    "missing rejected",
+    "same-path valid recovery",
+    "modified hash rejected",
+    "same-path valid recovery"
+  ],
+  "glb_body_bytes_saved": 1129081,
+  "all_response_body_bytes_saved": 1114674,
+  "limits": "GUI outcome is separately evidenced by screenshots; parser checks retained capture only."
+}

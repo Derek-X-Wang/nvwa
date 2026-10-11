@@ -1,0 +1,12 @@
+Working directory: /Users/derekxwang/.codex/worktrees/single-glb-transfer/nvwa
+Final frozen-source checks, following 35-test suite and native clippy:
+cargo fmt -p nvwa-runtime -- --check: exit 0, no output
+git diff --check: exit 0, no output
+bash -n experiments/09-single-transfer/reproduce.sh: exit 0, no output
+shasum -a 256 (all frozen artifacts below): exit 0
+bd6da4b2212a6bec251ad8ae4ca7b8fbca1038b383a6031cec1b9c0fa1b8ce72  crates/nvwa-runtime/src/lib.rs
+9fec6b200db271117b26db45eef2758820f644a8bbc7ef4e74de4d8cc9a8c26a  crates/nvwa-runtime/src/loading_tests.rs
+1f53696336ac9a31e334a8034cadd4553fcc67d7c4644119f17ef88cf57c1c1d  experiments/09-single-transfer/r2-final-source.patch
+0215921182d69dfbd32a4f53852e531aa847bdf8d3fee7b35459052d1e77bc4d  experiments/09-single-transfer/r2-red-loading-tests.rs
+f2d0fb53d769a543e60e575dc057623de46ade1d092c54570cbde636594ac513  target/single-glb-transfer/debug/deps/nvwa_runtime-74980f9e59502172
+a1c83f7d7c84b88cd6ece674cb673f92ae641b406f328c227c7ec07559d9ed47  target/single-glb-transfer/debug/deps/libnvwa_runtime-e91db866af5cfb84.rmeta

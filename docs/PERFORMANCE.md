@@ -74,3 +74,11 @@ cp docs/evidence/m1/web-sequence.nvwa.json dist/web/works/exchanged.nvwa.json
 ```
 
 Then open `http://127.0.0.1:9201/?benchmark=1&player=1&work=works/exchanged.nvwa.json`, read the actual `NVWA_EVIDENCE` console.log record and use the benchmark PNG button. Keep viewport emulation off and only one renderer running.
+
+
+## Current single-transfer network checkpoint
+
+The current93-test release has an actual loopback HTTP comparison against PR18 `de9dac0`. Both are no-store, fresh task URLs with one renderer and no competing heavy build. Successful GLB GETs are2→1; actual gzip response bodies are2,258,162→1,129,081bytes. All initial response bodies are21,656,114→20,541,440bytes; that also includes bundle-version changes and one fewer404 metadata body. Current unique gzip file sum is20,539,196bytes (demo Player20,539,719). Directory HTML in this trace is uncompressed; response-body sums exclude headers and TCP overhead. [Capture, source identities and limits](evidence/single-transfer/ACCEPTANCE.md) distinguish these quantities. This measures avoided transfer, not cold Wasm compilation, GPU startup, exact first presentation, browser memory or current cadence. Native functional Ready telemetry is not a benchmark; locked-screen black captures do not establish visual presentation. Earlier performance snapshots remain historical.
+
+
+Later acceptance update: Derek manually unlocked the Mac. The same current native binary (`3be9380f…`) now exits0 with a visually inspected real character playing wave, revision9 and18 joints/4 morphs/3 timeline entries. [Unlocked native evidence](evidence/single-transfer/native-unlocked.png) supersedes only the earlier blocked visual result; both black captures remain retained failures. This is a functional smoke, not a current performance benchmark. PR18 is merged at `07858fe6b5d6062200d28df654c5ce53ad89007b`, with #1/#19 closed; #2/#3 remain open. PR20 remains pending merge; PR21 completes local acceptance and is pending review/merge.
