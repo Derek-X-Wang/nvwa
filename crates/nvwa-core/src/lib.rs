@@ -2,12 +2,41 @@
 #![forbid(unsafe_code)]
 
 mod asset;
+#[cfg(test)]
+mod bounded_history_tests;
 
 use serde::{Deserialize, Serialize};
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
 pub const SCHEMA_VERSION: u32 = 1;
 pub const MAX_JSON_BYTES: usize = 2 * 1024 * 1024;
+
+/// Session retention limits. Bytes measure compact JSON payloads, not heap usage.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+pub struct EditorRetentionLimits {
+    pub history_snapshots: usize,
+    pub history_bytes: usize,
+    pub retry_entries: usize,
+    pub retry_bytes: usize,
+}
+
+pub const EDITOR_RETENTION_LIMITS: EditorRetentionLimits = EditorRetentionLimits {
+    history_snapshots: 128,
+    history_bytes: 16 * 1024 * 1024,
+    retry_entries: 1024,
+    retry_bytes: 8 * 1024 * 1024,
+};
+
+/// Retained session payloads only; the live document and temporary candidates
+/// are excluded. Save/open does not persist these counters or their contents.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+pub struct EditorRetentionStats {
+    pub undo_snapshots: usize,
+    pub redo_snapshots: usize,
+    pub history_bytes: usize,
+    pub retry_entries: usize,
+    pub retry_bytes: usize,
+}
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize, thiserror::Error)]
 #[error("{code}: {message}")]
@@ -522,14 +551,57 @@ impl CommandEnvelope {
     }
 }
 
-/// An in-memory editing session. Retry IDs and undo history are session-local.
-/// Save/open persists scene content; it does not persist the command journal.
+/// An in-memory editing session with [`EDITOR_RETENTION_LIMITS`] FIFO retention.
+/// Snapshot eviction removes farthest reachable states. An adjacent snapshot
+/// larger than the byte budget clears that direction's history (a barrier),
+/// without rejecting the edit. Retry reads do not refresh retention. An expired
+/// original envelope gets `revision_conflict`; its ID can be used again with a
+/// fresh valid envelope. Oversized retry entries expire immediately.
+/// Save/open persists scene content; it does not persist session history.
 #[derive(Clone, Debug)]
 pub struct Editor {
     document: SceneDocument,
-    undo: Vec<SceneDocument>,
-    redo: Vec<SceneDocument>,
-    committed: BTreeMap<String, (CommandEnvelope, CommandResult)>,
+    undo: VecDeque<Snapshot>,
+    redo: VecDeque<Snapshot>,
+    history_bytes: usize,
+    committed: VecDeque<RetryEntry>,
+    retry_bytes: usize,
+}
+
+#[derive(Clone, Debug)]
+struct Snapshot {
+    document: SceneDocument,
+    bytes: usize,
+    inserted_revision: u64,
+}
+
+#[derive(Clone, Debug)]
+struct RetryEntry {
+    envelope: CommandEnvelope,
+    result: CommandResult,
+    bytes: usize,
+}
+
+// Count serialized bytes without allocating another copy of a large payload.
+fn compact_json_bytes(value: &impl Serialize) -> Result<usize> {
+    #[derive(Default)]
+    struct Counter(usize);
+    impl std::io::Write for Counter {
+        fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+            self.0 = self
+                .0
+                .checked_add(bytes.len())
+                .ok_or_else(|| std::io::Error::other("serialized byte count overflow"))?;
+            Ok(bytes.len())
+        }
+        fn flush(&mut self) -> std::io::Result<()> {
+            Ok(())
+        }
+    }
+    let mut counter = Counter::default();
+    serde_json::to_writer(&mut counter, value)
+        .map_err(|error| CoreError::new("invalid_json", error.to_string()))?;
+    Ok(counter.0)
 }
 
 impl Editor {
@@ -537,14 +609,26 @@ impl Editor {
         document.validate()?;
         Ok(Self {
             document,
-            undo: Vec::new(),
-            redo: Vec::new(),
-            committed: BTreeMap::new(),
+            undo: VecDeque::new(),
+            redo: VecDeque::new(),
+            history_bytes: 0,
+            committed: VecDeque::new(),
+            retry_bytes: 0,
         })
     }
 
     pub fn document(&self) -> &SceneDocument {
         &self.document
+    }
+
+    pub fn retention_stats(&self) -> EditorRetentionStats {
+        EditorRetentionStats {
+            undo_snapshots: self.undo.len(),
+            redo_snapshots: self.redo.len(),
+            history_bytes: self.history_bytes,
+            retry_entries: self.committed.len(),
+            retry_bytes: self.retry_bytes,
+        }
     }
 
     /// Validate temporary slider values without advancing revision or history.
@@ -557,14 +641,18 @@ impl Editor {
 
     pub fn apply(&mut self, envelope: CommandEnvelope) -> Result<CommandResult> {
         id(&envelope.command_id, "command id")?;
-        if let Some((previous, result)) = self.committed.get(&envelope.command_id) {
-            if previous != &envelope {
+        if let Some(previous) = self
+            .committed
+            .iter()
+            .find(|entry| entry.envelope.command_id == envelope.command_id)
+        {
+            if previous.envelope != envelope {
                 return Err(CoreError::new(
                     "command_id_conflict",
                     "command ID was already committed with a different payload",
                 ));
             }
-            let mut duplicate = result.clone();
+            let mut duplicate = previous.result.clone();
             duplicate.duplicate = true;
             return Ok(duplicate);
         }
@@ -586,15 +674,15 @@ impl Editor {
         let (mut candidate, summary) = match &envelope.command {
             Command::Undo => (
                 self.undo
-                    .last()
-                    .cloned()
+                    .back()
+                    .map(|snapshot| snapshot.document.clone())
                     .ok_or_else(|| CoreError::new("nothing_to_undo", "no edit to undo"))?,
                 "Undo".to_string(),
             ),
             Command::Redo => (
                 self.redo
-                    .last()
-                    .cloned()
+                    .back()
+                    .map(|snapshot| snapshot.document.clone())
                     .ok_or_else(|| CoreError::new("nothing_to_redo", "no edit to redo"))?,
                 "Redo".to_string(),
             ),
@@ -602,30 +690,97 @@ impl Editor {
         };
         candidate.revision = revision;
         candidate.validate()?;
-        // All fallible work is complete. Commit state and journal together.
-        match &envelope.command {
-            Command::Undo => {
-                self.undo.pop();
-                self.redo.push(self.document.clone());
-            }
-            Command::Redo => {
-                self.redo.pop();
-                self.undo.push(self.document.clone());
-            }
-            _ => {
-                self.undo.push(self.document.clone());
-                self.redo.clear();
-            }
-        }
-        self.document = candidate;
+        let snapshot_bytes = compact_json_bytes(&self.document)?;
         let result = CommandResult {
             revision,
             summary,
             duplicate: false,
         };
-        self.committed
-            .insert(envelope.command_id.clone(), (envelope, result.clone()));
+        let retry_bytes = compact_json_bytes(&(&envelope, &result))?;
+        // All fallible work is complete. Commit state and journal together.
+        match &envelope.command {
+            Command::Undo => {
+                self.history_bytes -= self.undo.pop_back().unwrap().bytes;
+                self.retain_snapshot(true, snapshot_bytes, revision);
+            }
+            Command::Redo => {
+                self.history_bytes -= self.redo.pop_back().unwrap().bytes;
+                self.retain_snapshot(false, snapshot_bytes, revision);
+            }
+            _ => {
+                self.history_bytes -= self
+                    .redo
+                    .iter()
+                    .map(|snapshot| snapshot.bytes)
+                    .sum::<usize>();
+                self.redo.clear();
+                self.retain_snapshot(false, snapshot_bytes, revision);
+            }
+        }
+        self.document = candidate;
+        if retry_bytes <= EDITOR_RETENTION_LIMITS.retry_bytes {
+            while self.committed.len() >= EDITOR_RETENTION_LIMITS.retry_entries
+                || self.retry_bytes > EDITOR_RETENTION_LIMITS.retry_bytes - retry_bytes
+            {
+                self.retry_bytes -= self.committed.pop_front().unwrap().bytes;
+            }
+            self.retry_bytes += retry_bytes;
+            self.committed.push_back(RetryEntry {
+                envelope,
+                result: result.clone(),
+                bytes: retry_bytes,
+            });
+        } else {
+            // FIFO reaches the oversized newest entry only after every older
+            // entry expires. The edit still succeeds without retry retention.
+            self.committed.clear();
+            self.retry_bytes = 0;
+        }
         Ok(result)
+    }
+
+    fn retain_snapshot(&mut self, to_redo: bool, bytes: usize, revision: u64) {
+        if bytes > EDITOR_RETENTION_LIMITS.history_bytes {
+            // Keeping older states behind this absent adjacent state would
+            // make undo/redo jump across an edit, so clear the whole direction.
+            let stack = if to_redo {
+                &mut self.redo
+            } else {
+                &mut self.undo
+            };
+            self.history_bytes -= stack.iter().map(|snapshot| snapshot.bytes).sum::<usize>();
+            stack.clear();
+            return;
+        }
+        while self.undo.len() + self.redo.len() >= EDITOR_RETENTION_LIMITS.history_snapshots
+            || self.history_bytes > EDITOR_RETENTION_LIMITS.history_bytes - bytes
+        {
+            // Each stack is ordered by insertion. Its front is also its
+            // farthest reachable state, so FIFO eviction preserves adjacency.
+            let from_undo = match (self.undo.front(), self.redo.front()) {
+                (Some(undo), Some(redo)) => undo.inserted_revision < redo.inserted_revision,
+                (Some(_), None) => true,
+                (None, Some(_)) => false,
+                (None, None) => unreachable!("nonempty history exceeds retention"),
+            };
+            let oldest = if from_undo {
+                self.undo.pop_front()
+            } else {
+                self.redo.pop_front()
+            };
+            self.history_bytes -= oldest.unwrap().bytes;
+        }
+        let snapshot = Snapshot {
+            document: self.document.clone(),
+            bytes,
+            inserted_revision: revision,
+        };
+        self.history_bytes += bytes;
+        if to_redo {
+            self.redo.push_back(snapshot);
+        } else {
+            self.undo.push_back(snapshot);
+        }
     }
 }
 

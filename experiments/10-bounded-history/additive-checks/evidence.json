@@ -1,0 +1,47 @@
+{
+  "source_sha256": {
+    "crates/nvwa-core/src/lib.rs": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797",
+    "crates/nvwa-core/src/bounded_history_tests.rs": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+    "crates/nvwa-core/src/asset.rs": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+    "crates/nvwa-core/tests/transactions.rs": "a09433d4f7a7f89f07d96c89f68c7871af9bd9b0a6329bda6cfec2e53bfe3e7a",
+    "crates/nvwa-core/Cargo.toml": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+    "Cargo.toml": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+    "Cargo.lock": "d4f6610f830ff73d1fde4307f9c5523056ec736add2530e43860c161ba8d8ec5",
+    "examples/default.nvwa.json": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+    "crates/nvwa-cli/src/main.rs": "be678f9530e053b20dbe7194109e469843ab839a94b5da8ff2bbb0e8ba7ca7d7",
+    "crates/nvwa-cli/tests/offline.rs": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+    "crates/nvwa-cli/Cargo.toml": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+    "docs/adr/0005-portable-document-and-commands.md": "35bb5cd4669adc4d95f406cec446b664adbb229d05c4368c541ef511c7538f4c"
+  },
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+  "target_dir": "/private/tmp/nvwa-bounded-history-target",
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "nvwa-core",
+        "-p",
+        "nvwa-cli",
+        "--locked",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0,
+      "seconds": 9.447,
+      "log": "/Users/derekxwang/.codex/worktrees/bounded-history/nvwa/experiments/10-bounded-history/additive-checks/tests-output.txt"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/bounded-history/nvwa/experiments/10-bounded-history/capability_probe.py",
+        "/tmp/nvwa-bounded-history-target/debug/nvwa-cli"
+      ],
+      "exit": 1,
+      "seconds": 0.065,
+      "log": "/Users/derekxwang/.codex/worktrees/bounded-history/nvwa/experiments/10-bounded-history/additive-checks/capability-probe-output.txt"
+    }
+  ]
+}

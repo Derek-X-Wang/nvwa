@@ -11,7 +11,7 @@ M0 was first published as [`d74493d`](https://github.com/Derek-X-Wang/nvwa/commi
 - [Make automatic Web screenshot export persist in embedded browsers](https://github.com/Derek-X-Wang/nvwa/issues/5) — ready-for-agent
 - [Avoid duplicate GLB transfers while retaining asset integrity checks](https://github.com/Derek-X-Wang/nvwa/issues/6) — ready-for-agent
 - [Explain or eliminate byte drift in repeated Blender fixture exports](https://github.com/Derek-X-Wang/nvwa/issues/7) — ready-for-agent
-- [Bound editing history and command-retry memory for long sessions](https://github.com/Derek-X-Wang/nvwa/issues/8) — ready-for-agent
+- [Bound editing history and command-retry memory for long sessions](https://github.com/Derek-X-Wang/nvwa/issues/8) — implemented on `fix/bounded-edit-history`:128 snapshots/16MiB,1024 retries/8MiB compact payload budgets;79 workspace tests and long-session bounds pass, independent rereview accepted. Dual release builds and actual startup/GUI complete Undo/Redo/Save/Open/cross-target acceptance passed; pending publication/merge. [Experiment10](../experiments/10-bounded-history/REPORT.md).
 - [Validate additional native platforms and WebGPU browsers](https://github.com/Derek-X-Wang/nvwa/issues/9) — ready-for-human
 - [Prepare dependency notices and signed distribution validation](https://github.com/Derek-X-Wang/nvwa/issues/10) — ready-for-human
 - [Improve and validate humanoid hand shape and skin weighting](https://github.com/Derek-X-Wang/nvwa/issues/11) — ready-for-human

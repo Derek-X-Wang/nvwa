@@ -1,0 +1,95 @@
+[
+  {
+    "name": "tests",
+    "command": [
+      "cargo",
+      "test",
+      "--workspace",
+      "--locked",
+      "--",
+      "--nocapture"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "clippy-native",
+    "command": [
+      "cargo",
+      "clippy",
+      "--workspace",
+      "--all-targets",
+      "--locked",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "clippy-wasm",
+    "command": [
+      "cargo",
+      "clippy",
+      "-p",
+      "nvwa-studio",
+      "--lib",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--locked",
+      "--",
+      "-D",
+      "warnings"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "build-native",
+    "command": [
+      "cargo",
+      "build",
+      "-p",
+      "nvwa-studio",
+      "-p",
+      "nvwa-cli",
+      "--release",
+      "--locked"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "package-native",
+    "command": [
+      "python3",
+      "scripts/package-native.py"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "build-web",
+    "command": [
+      "bash",
+      "scripts/build-web.sh"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "real-cli-probe",
+    "command": [
+      "python3",
+      "experiments/10-bounded-history/capability_probe.py",
+      "target/release/nvwa-cli"
+    ],
+    "exit": 0
+  }
+]

@@ -1,0 +1,238 @@
+{
+  "parent": "de9dac026321fbe57ce2c9bc09ae2d5c1bbd7e42",
+  "source_identity": "Containing commit and exact source hashes; worker and prior input snapshots remain separate.",
+  "workspace_tests": {
+    "passed": 79,
+    "failed": 0,
+    "ignored": 0
+  },
+  "gate_exits": [
+    {
+      "name": "tests",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked",
+        "--",
+        "--nocapture"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "fmt",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "clippy-native",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "clippy-wasm",
+      "command": [
+        "cargo",
+        "clippy",
+        "-p",
+        "nvwa-studio",
+        "--lib",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "build-native",
+      "command": [
+        "cargo",
+        "build",
+        "-p",
+        "nvwa-studio",
+        "-p",
+        "nvwa-cli",
+        "--release",
+        "--locked"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "package-native",
+      "command": [
+        "python3",
+        "scripts/package-native.py"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "build-web",
+      "command": [
+        "bash",
+        "scripts/build-web.sh"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "real-cli-probe",
+      "command": [
+        "python3",
+        "experiments/10-bounded-history/capability_probe.py",
+        "target/release/nvwa-cli"
+      ],
+      "exit": 0
+    }
+  ],
+  "actual_native_startup": {
+    "initial_player_exit": 0,
+    "exchanged_revision9_exit": 0,
+    "fresh_capture": true
+  },
+  "actual_web_startup": "Real rig/morph/animation; complete drag/Undo/Redo/Save/Open equality at revisions6\u21927\u21928\u21929.",
+  "native_smoke_command": [
+    "dist/Nvwa.app/Contents/MacOS/Nvwa",
+    "--player",
+    "--work",
+    "docs/evidence/bounded-history/history-reloaded.json (absolute path)",
+    "--smoke",
+    "--smoke-seconds",
+    "2",
+    "--timeout",
+    "60",
+    "--capture",
+    "docs/evidence/bounded-history/native-exchanged.png (absolute path)"
+  ],
+  "native_smoke_env": {
+    "RUST_LOG": "info"
+  },
+  "initial_unique_gzip_bytes": 20533526,
+  "player_initial_unique_gzip_bytes": 20534049,
+  "performance": "NOT-RUN formal current measurement; smoke telemetry is not a benchmark, builds may be competing.",
+  "physical_ime": "Not repeated; prior67-build physical input evidence retained separately.",
+  "hosted_ci": "NOT-RUN no workflow",
+  "files": [
+    {
+      "path": "Cargo.toml",
+      "bytes": 1223,
+      "sha256": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7"
+    },
+    {
+      "path": "Cargo.lock",
+      "bytes": 142444,
+      "sha256": "d4f6610f830ff73d1fde4307f9c5523056ec736add2530e43860c161ba8d8ec5"
+    },
+    {
+      "path": "crates/nvwa-studio/Cargo.toml",
+      "bytes": 1138,
+      "sha256": "7532429f4e3ebf34bea8bfb5a52c99ed02bae6714ac33a59fcf897252bb74050"
+    },
+    {
+      "path": "crates/nvwa-studio/src/lib.rs",
+      "bytes": 56056,
+      "sha256": "4e00f2d61a9f44439616f31c65dfca125908f29a346aca0dcfba000b0f6b5181"
+    },
+    {
+      "path": "crates/nvwa-studio/src/web_input.rs",
+      "bytes": 39460,
+      "sha256": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7"
+    },
+    {
+      "path": "crates/nvwa-studio/src/fonts.rs",
+      "bytes": 6274,
+      "sha256": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2"
+    },
+    {
+      "path": "assets/fonts/NvwaSansSC-Regular.ttf",
+      "bytes": 10595928,
+      "sha256": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea"
+    },
+    {
+      "path": "assets/fixtures/nvwa-humanoid.glb",
+      "bytes": 3827840,
+      "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+    },
+    {
+      "path": "scripts/build-web.sh",
+      "bytes": 1249,
+      "sha256": "d63ee823d860d22673da351cb1cbc546f328c5e756741e799edcad6ab0d590e2"
+    },
+    {
+      "path": "scripts/package-native.py",
+      "bytes": 1808,
+      "sha256": "b12d993c314e5361f46ec1016bfeb538185cff29fb188d70b8a6f44010c98340"
+    },
+    {
+      "path": "web/index.html",
+      "bytes": 2690,
+      "sha256": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114"
+    },
+    {
+      "path": "target/release/nvwa-studio",
+      "bytes": 102916368,
+      "sha256": "0f7c0fa92e358b3c88e4ab495e901b0e394266551beb33b0865ccd7ce1c61e45"
+    },
+    {
+      "path": "dist/Nvwa.app/Contents/MacOS/Nvwa",
+      "bytes": 102916368,
+      "sha256": "0f7c0fa92e358b3c88e4ab495e901b0e394266551beb33b0865ccd7ce1c61e45"
+    },
+    {
+      "path": "dist/web/nvwa_studio_bg.wasm",
+      "bytes": 85623798,
+      "sha256": "18f851a32c7b180dcac654a1bb29532e400712865d70f65120893b28229cdcbe"
+    },
+    {
+      "path": "dist/web/nvwa_studio.js",
+      "bytes": 123555,
+      "sha256": "fb7344f3e33b1fd2a3434135bd80d2a67ab25b06f316f8a7cf4a9ed9a677727b"
+    },
+    {
+      "path": "docs/evidence/web-input/\u5973\u5a32.nvwa.json",
+      "bytes": 1953,
+      "sha256": "99092aea82ed536b30e88b7c7277da2b915655d328df12d81775457e733f57f4"
+    },
+    {
+      "path": "crates/nvwa-core/src/lib.rs",
+      "bytes": 30473,
+      "sha256": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797"
+    },
+    {
+      "path": "crates/nvwa-core/src/bounded_history_tests.rs",
+      "bytes": 13337,
+      "sha256": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b"
+    },
+    {
+      "path": "crates/nvwa-cli/src/main.rs",
+      "bytes": 8298,
+      "sha256": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b"
+    },
+    {
+      "path": "docs/adr/0005-portable-document-and-commands.md",
+      "bytes": 2314,
+      "sha256": "35bb5cd4669adc4d95f406cec446b664adbb229d05c4368c541ef511c7538f4c"
+    },
+    {
+      "path": "target/release/nvwa-cli",
+      "bytes": 972064,
+      "sha256": "99f21922c030607b476e5e872ffce663c848913f6c3c55bd2c3c9087903a6add"
+    }
+  ]
+}

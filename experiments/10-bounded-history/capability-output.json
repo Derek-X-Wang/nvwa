@@ -1,0 +1,80 @@
+{
+  "asset_path": "fixtures/nvwa-humanoid.glb",
+  "asset_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+  "clips": [
+    {
+      "animation_index": 0,
+      "duration_seconds": 3.0416667,
+      "id": "idle"
+    },
+    {
+      "animation_index": 1,
+      "duration_seconds": 4.0416665,
+      "id": "turn"
+    },
+    {
+      "animation_index": 2,
+      "duration_seconds": 3.0416667,
+      "id": "wave"
+    }
+  ],
+  "editor_retention": {
+    "byte_accounting": {
+      "excludes": [
+        "live_document",
+        "temporary_candidates",
+        "allocation_overhead"
+      ],
+      "history": "sum_of_compact_scene_document_json_bytes",
+      "retry": "sum_of_compact_envelope_result_tuple_json_bytes"
+    },
+    "duplicate_reads_refresh_retention": false,
+    "eviction": "fifo",
+    "expired_id_reuse": "allowed_with_current_revision_and_valid_command",
+    "expired_original_envelope": "revision_conflict",
+    "limits": {
+      "history_bytes": 16777216,
+      "history_snapshots": 128,
+      "retry_bytes": 8388608,
+      "retry_entries": 1024
+    },
+    "oversized_retry_entry": "evict_all_older_entries_then_expire_without_rejecting_edit",
+    "oversized_snapshot": "clear_destination_history_without_rejecting_edit",
+    "persisted_in_document": false,
+    "retained_conflicting_id": "command_id_conflict",
+    "retained_identical_envelope": "duplicate",
+    "session_local": true
+  },
+  "id": "nvwa-original-humanoid-v1",
+  "license": "CC0-1.0 (original Nvwa test fixture only)",
+  "parameters": [
+    {
+      "default": 0.0,
+      "id": "jaw_width",
+      "max": 1.0,
+      "min": 0.0,
+      "morph_index": 0
+    },
+    {
+      "default": 0.0,
+      "id": "nose_width",
+      "max": 1.0,
+      "min": 0.0,
+      "morph_index": 1
+    },
+    {
+      "default": 0.0,
+      "id": "smile",
+      "max": 1.0,
+      "min": 0.0,
+      "morph_index": 2
+    },
+    {
+      "default": 0.0,
+      "id": "shoulder_width",
+      "max": 1.0,
+      "min": 0.0,
+      "morph_index": 3
+    }
+  ]
+}

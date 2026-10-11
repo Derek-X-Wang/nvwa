@@ -1,0 +1,80 @@
+   Compiling nvwa-cli v0.1.0 (/Users/derekxwang/.codex/worktrees/bounded-history/nvwa/crates/nvwa-cli)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1.19s
+     Running unittests src/lib.rs (/private/tmp/nvwa-bounded-history-target/debug/deps/nvwa_cli-54dbe823ee8850f0)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/private/tmp/nvwa-bounded-history-target/debug/deps/nvwa_cli-44c1e79be1d3d10d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/offline.rs (/private/tmp/nvwa-bounded-history-target/debug/deps/offline-6d735567952b6d64)
+
+running 4 tests
+test failed_batch_does_not_overwrite_existing_output ... ok
+test fifo_without_writer_is_rejected_within_timeout ... ok
+test cli_rejects_duplicate_map_keys_and_preserves_unrelated_save_sibling ... ok
+test typed_ui_and_offline_cli_produce_equivalent_documents ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests/sequence.rs (/private/tmp/nvwa-bounded-history-target/debug/deps/sequence-b9b62eb25187c6d4)
+
+running 2 tests
+test failed_cli_batch_preserves_input_and_existing_work ... ok
+test cli_applies_and_round_trips_the_m1_sequence ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/lib.rs (/private/tmp/nvwa-bounded-history-target/debug/deps/nvwa_core-0de29df5b55c70d6)
+
+running 8 tests
+test bounded_history_tests::overflow_is_atomic_and_open_starts_with_empty_session_retention ... ok
+test bounded_history_tests::history_count_boundary_preserves_contiguous_undo_redo_and_branching ... ok
+test bounded_history_tests::retry_fifo_duplicates_conflicts_failure_and_expired_id_reuse ... ok
+checkpoint edits=1000 successes=1200 stats=EditorRetentionStats { undo_snapshots: 128, redo_snapshots: 0, history_bytes: 133706, retry_entries: 1024, retry_bytes: 181267 }
+test bounded_history_tests::mixed_stack_byte_eviction_removes_only_farthest_reachable_states ... ok
+test bounded_history_tests::exact_retry_byte_limit_overflow_and_oversized_retry_expiry ... ok
+test bounded_history_tests::oversized_adjacent_snapshot_creates_edit_and_undo_barriers ... ok
+checkpoint edits=5000 successes=6000 stats=EditorRetentionStats { undo_snapshots: 128, redo_snapshots: 0, history_bytes: 133706, retry_entries: 1024, retry_bytes: 183938 }
+test bounded_history_tests::exact_history_byte_limit_and_next_snapshot_evict_farthest_state ... ok
+checkpoint edits=10000 successes=12000 stats=EditorRetentionStats { undo_snapshots: 128, redo_snapshots: 0, history_bytes: 133834, retry_entries: 1024, retry_bytes: 185986 }
+long-session edits=10000 successes=12000 final=EditorRetentionStats { undo_snapshots: 128, redo_snapshots: 0, history_bytes: 133834, retry_entries: 1024, retry_bytes: 185986 }
+test bounded_history_tests::long_session_fixed_workload_stays_bounded ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+
+     Running tests/transactions.rs (/private/tmp/nvwa-bounded-history-target/debug/deps/transactions-79cd32a30fb4422e)
+
+running 13 tests
+test retry_is_idempotent_even_after_later_commits_and_id_reuse_conflicts ... ok
+test failed_multi_parameter_command_has_no_partial_mutation_or_history ... ok
+test single_and_batch_command_parsers_reject_duplicate_parameter_keys ... ok
+test profile_ids_paths_hashes_defaults_and_references_are_strict ... ok
+test undo_redo_restore_content_and_monotonically_advance_revision ... ok
+test nonfinite_ranges_invalid_timeline_and_overflow_never_mutate ... ok
+test typed_and_serialized_commands_produce_identical_results ... ok
+test missing_corrupt_and_mismatched_assets_are_rejected ... ok
+test defaults_and_json_roundtrip_preserve_document ... ok
+test slider_previews_are_one_committed_transaction ... ok
+test valid_timeline_command_is_undoable_and_invalid_character_is_rejected ... ok
+test batch_parser_matches_single_envelopes_and_bounds_whole_input ... ok
+test unknown_fields_duplicate_keys_oversized_json_and_schema_are_rejected ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nvwa_cli
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nvwa_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
