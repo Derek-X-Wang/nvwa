@@ -1,0 +1,12 @@
+<!-- Appended to the real dist index.html by install.py. No app layout rules. -->
+<details id="viewport-boundary-panel" style="position:fixed;right:8px;bottom:8px;z-index:2147483647;max-width:min(620px,90vw);color:#edf4ff;background:#172331;border:1px solid #8796a8;border-radius:6px;padding:6px;font:12px system-ui">
+  <summary style="cursor:pointer">Viewport measurements</summary>
+  <p>Read-only DOM measurements. No text values or pointer events. Opening this panel can move focus; collapse it before editing.</p>
+  <button id="viewport-boundary-snapshot" type="button">Snapshot geometry</button>
+  <button id="viewport-boundary-sampling" type="button">Record next 180 seconds</button>
+  <button id="viewport-boundary-download" type="button">Download viewport measurements JSON</button>
+  <p id="viewport-boundary-status" role="status">Collector starting.</p>
+  <pre id="viewport-boundary-view" style="max-height:45vh;overflow:auto;white-space:pre-wrap;word-break:break-word"></pre>
+</details>
+<script id="viewport-boundary-json" type="application/json">{}</script>
+<script src="./viewport-boundary.js" defer></script>

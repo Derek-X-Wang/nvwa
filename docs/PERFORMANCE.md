@@ -1,5 +1,11 @@
 # Actual release measurements
 
+Latest continuous-idle follow-up: identical revision0 Work and Studio1280×720 on both targets, still playing at capture;600 samples each. Native p50/p95 8.304/9.366ms;Web16.600/18.000ms. Native sampledRSS216.77MiB. No compiler/Nvwa competitor detected at start/end. This resolves the narrow continuous-idle baseline only; prior unfavorable39.026ms finite-run result is retained, exact presentation/GPU/full-workload verdict stays open. [Actual evidence](evidence/continuous-idle.md).
+
+## Current release measurement checkpoint
+
+The new evidence reuses the93-test release binary and Wasm. Native process→reviewed capture completion receipt4.010s (includes1s readiness delay); sampled child RSS193.84MiB. Native15s p95 main-loop cadence39.026ms is an unfavorable retained observation. Web diagnostic init848.1ms; rendered pixels preserved. These are boundary measurements, not exact first presentation, cold caches, GPU timing or isolated stable performance; competing compilers were detected. Native Studio and Web Player workloads differ. See [native](evidence/native-startup/ACCEPTANCE.md) and [Web](evidence/web-startup/ACCEPTANCE.md). Current single-GLB request writes1,129,081 gzip-body bytes; duplicated request has been removed in mergedPR21.
+
 Recorded 2026-10-10 PDT / 2026-10-11 UTC on macOS 27.0.1 arm64, Apple M2 Pro, 16 GiB unified memory, 12 CPUs. Rust 1.95.0, Bevy 0.19.1 and bevy_egui 0.42.0. Native backend is Metal with observed adapter Apple M2 Pro. Browser is Codex IAB with HTTP User-Agent Chrome/155.0.0.0; BrowserWebGpu is observed, adapter name hidden. No other browser is inferred.
 
 Both used final release artifacts, original GLB `f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6`, one default character playing idle, physical 1280×720 with scale override 1, continuous benchmark scheduling. The scene retained 9 meshes/skins, 18 joints, 4 morph weights and 1 active animation player. Other Nvwa renderers were closed. Compilers were stopped during Web measurement; native measurements followed all builds. No competing heavy task was running.

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nvwa · Web startup boundary probe</title>
+  <style>
+    html,body { margin:0; width:100%; height:100%; background:#101721; color:#edf4ff; font:16px system-ui; overflow:hidden }
+    canvas { display:block; width:100%; height:100%; outline:none }
+    #boot-status { position:absolute; left:16px; top:16px; padding:12px; background:#172331; border-radius:8px; max-width:680px; z-index:1 }
+    #probe-controls { position:fixed; right:8px; top:8px; z-index:3; background:#172331; padding:8px; max-width:480px; font:12px system-ui }
+    button { margin:2px; padding:5px }
+    pre { margin:8px 0 0; max-height:50vh; overflow:auto; white-space:pre-wrap; font:11px monospace }
+  </style>
+</head>
+<body>
+  <div id="boot-status" role="status">Loading Rust Studio…</div>
+  <canvas id="nvwa" aria-label="Nvwa 3D character editor" tabindex="0"></canvas>
+  <div id="probe-controls">
+    <span id="probe-summary" role="status">Probe starting</span><br>
+    <button id="probe-json">Download boundary JSON</button>
+    <button id="probe-png">Download actual benchmark canvas PNG</button>
+    <details><summary>Read boundary report</summary><pre id="startup-probe-report"></pre></details>
+  </div>
+  <script type="module">
+    // Diagnostic-only bootstrap. No app command/control interface is exported.
+    // This script deliberately changes the HTML bootstrap, but not JS/Wasm bytes.
+    const startedAt = performance.now();
+    const params = new URLSearchParams(location.search);
+    const run = params.get('startup_probe_run') || 'unspecified';
+    const resources = [];
+    const paints = [];
+    const evidence = [];
+    const errors = [];
+    const visibility = [{ atMs: startedAt, state: document.visibilityState, focused: document.hasFocus() }];
+    const marks = { probeScriptStartMs: startedAt };
+    const captures = [];
+    const observers = [];
+    const support = {};
+    let resourceOverflow = false;
+    let lastEvidence = null;
+    let deadlineReached = false;
+    const status = document.getElementById('boot-status');
+    const originalLog = console.log;
+    const json = (value) => {
+      try { return JSON.stringify(value); } catch { return '[unserializable]'; }
+    };
+    const recordError = (kind, value) => {
+      if (errors.length < 100) errors.push({ atMs: performance.now(), kind, message: String(value).slice(0, 4096) });
+    };
+    const interceptLog = (...args) => {
+      try {
+        const line = args.map(value => typeof value === 'string' ? value : json(value)).join(' ');
+        const offset = line.indexOf('NVWA_EVIDENCE ');
+        if (offset >= 0 && evidence.length < 10) {
+          const raw = line.slice(offset + 'NVWA_EVIDENCE '.length);
+          let parsed = null;
+          // Strip logger suffixes only after locating a balanced JSON object.
+          const begin = raw.indexOf('{');
+          if (begin >= 0) {
+            let depth = 0, quoted = false, escaped = false;
+            for (let i = begin; i < raw.length; i++) {
+              const char = raw[i];
+              if (quoted) {
+                if (escaped) escaped = false;
+                else if (char === '\\') escaped = true;
+                else if (char === '"') quoted = false;
+              } else if (char === '"') quoted = true;
+              else if (char === '{') depth++;
+              else if (char === '}' && --depth === 0) {
+                try { parsed = JSON.parse(raw.slice(begin, i + 1)); } catch { /* raw remains available */ }
+                break;
+              }
+            }
+          }
+          lastEvidence = parsed;
+          evidence.push({ observedAtMs: performance.now(), raw: raw.slice(0, 16384), parsed });
+        }
+      } catch (error) { recordError('console-capture', error); }
+      Reflect.apply(originalLog, console, args);
+    };
+    console.log = interceptLog;
+    const onError = event => recordError('window-error', event.message || event.error);
+    const onRejection = event => recordError('unhandled-rejection', event.reason);
+    const onVisibility = () => {
+      if (visibility.length < 200) visibility.push({ atMs: performance.now(), state: document.visibilityState, focused: document.hasFocus() });
+    };
+    window.addEventListener('error', onError);
+    window.addEventListener('unhandledrejection', onRejection);
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('focus', onVisibility);
+    window.addEventListener('blur', onVisibility);
+
+    const observe = (type, target) => {
+      try {
+        if (!('PerformanceObserver' in window) || !PerformanceObserver.supportedEntryTypes.includes(type)) {
+          support[type] = 'NOT-RUN: PerformanceObserver entry type unavailable';
+          return;
+        }
+        const observer = new PerformanceObserver(list => {
+          for (const entry of list.getEntries()) {
+            if (target.length < 512) target.push(entry.toJSON());
+            else resourceOverflow = true;
+          }
+        });
+        observer.observe({ type, buffered: true });
+        observers.push(observer);
+        support[type] = 'supported';
+      } catch (error) { support[type] = `NOT-RUN: ${error}`; }
+    };
+    observe('resource', resources);
+    observe('paint', paints);
+
+    const frameCallback = name => requestAnimationFrame(timestamp => {
+      marks[name] = { callbackAtMs: performance.now(), frameTimestampMs: timestamp, kind: 'browser animation-frame callback; no pixel or presentation proof' };
+    });
+    frameCallback('firstCallbackAfterProbeScript');
+    const navigation = () => {
+      try { return performance.getEntriesByType('navigation').map(entry => entry.toJSON()); }
+      catch (error) { return [{ status: 'NOT-RUN', reason: String(error) }]; }
+    };
+    const report = () => {
+      const canvas = document.getElementById('nvwa');
+      const rect = canvas.getBoundingClientRect();
+      const lengths = { ...marks };
+      if (marks.moduleImportEndMs !== undefined) lengths.moduleImportDurationMs = marks.moduleImportEndMs - marks.moduleImportStartMs;
+      if (marks.initResolvedMs !== undefined) lengths.initDurationMs = marks.initResolvedMs - marks.initCalledMs;
+      if (evidence.length) lengths.firstEvidenceObservedMs = evidence[0].observedAtMs;
+      return {
+        kind: 'nvwa_web_bootstrap_boundary_v1', run, capturedAt: new Date().toISOString(),
+        clock: 'performance.now milliseconds relative to this document navigation timeOrigin',
+        timeOriginMs: performance.timeOrigin, url: location.href,
+        userAgent: navigator.userAgent, devicePixelRatio: window.devicePixelRatio,
+        webGpuExposed: Boolean(navigator.gpu), secureContext: window.isSecureContext,
+        viewportCss: { width: innerWidth, height: innerHeight },
+        canvas: { width: canvas.width, height: canvas.height, cssWidth: rect.width, cssHeight: rect.height },
+        serviceWorkerController: navigator.serviceWorker?.controller?.scriptURL || null,
+        cacheCondition: {
+          declared: params.get('startup_probe_cache') || 'unspecified',
+          verifiedByPage: false,
+          note: 'Check server response headers and HTTP log. Fresh document/import URL and no-store responses do not prove cleared HTTP, Wasm compiler, driver, or GPU caches.',
+        },
+        marks: lengths, observerSupport: support, navigation: navigation(), resources, paints,
+        resourceOverflow, visibility, evidence, errors, captures, deadlineReached,
+        limitations: {
+          assetsReady: 'Use Rust first_asset_ready_seconds; Bevy TimeReal since first update, not navigation clock. Resources alone do not prove Rust asset readiness.',
+          moduleImport: 'Dynamic import resolution includes JS fetch/parse/evaluation; does not include Wasm initialization.',
+          initResolved: 'wasm-bindgen init promise resolved; includes initialization/start entry. Does not prove character pixels or first presentation.',
+          htmlFcp: 'HTML paint only; overlay text may determine first-contentful-paint.',
+          animationFrame: 'Callback scheduling only; does not prove a rendered or presented canvas frame.',
+          characterPixels: 'NOT-RUN until saved PNG is inspected and actual character pixels are confirmed externally.',
+          exactFirstPresentedFrame: 'NOT-RUN: no compositor presentation timestamp is collected.',
+          gpuDuration: 'NOT-RUN: no GPU timestamp query or submission instrumentation.',
+          memory: 'NOT-RUN: no portable cross-browser process/GPU/peak-memory API is collected.',
+          coldCompilerAndGpu: 'NOT-RUN: profile, compiler, driver, and GPU caches are not cleared or verified.',
+          downloadPersistence: 'NOT-RUN: a triggered download does not prove saved-file persistence.',
+          instrumentation: 'Observer/console/DOM report overhead is present; this is a separate bootstrap diagnostic, not untouched index.html timing.',
+        },
+      };
+    };
+    const refresh = () => {
+      document.getElementById('startup-probe-report').textContent = JSON.stringify(report(), null, 2);
+      document.getElementById('probe-summary').textContent = errors.length ? `Errors: ${errors.length}; evidence: ${evidence.length}`
+        : lastEvidence ? `Rust evidence: ready=${lastEvidence.ready}, meshes=${lastEvidence.meshes}, physical=${canvasSize(lastEvidence)}`
+        : `Boundary running; Rust evidence: ${evidence.length}`;
+    };
+    const canvasSize = item => item.physical_window ? `${item.physical_window.width}×${item.physical_window.height}` : 'unavailable';
+    const download = (blob, name) => {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = name;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    };
+    document.getElementById('probe-json').addEventListener('click', () => {
+      refresh();
+      download(new Blob([document.getElementById('startup-probe-report').textContent], { type: 'application/json' }), 'nvwa-web-startup-boundary.json');
+    });
+    document.getElementById('probe-png').addEventListener('click', () => {
+      const capture = { requestedAtMs: performance.now(), kind: 'one explicit canvas.toBlob; no frame polling' };
+      captures.push(capture);
+      try {
+        document.getElementById('nvwa').toBlob(blob => {
+          capture.callbackAtMs = performance.now();
+          capture.bytes = blob?.size || 0;
+          capture.downloadTriggered = Boolean(blob);
+          if (blob) download(blob, 'nvwa-web-startup-canvas.png');
+          else recordError('canvas-png', 'Canvas PNG export returned null');
+          refresh();
+        }, 'image/png');
+      } catch (error) { recordError('canvas-png', error); refresh(); }
+    });
+    refresh();
+    const interval = setInterval(refresh, 2000);
+    // Bounded passive observation. Keep export controls usable afterward.
+    setTimeout(() => {
+      deadlineReached = true;
+      marks.passiveObservationStoppedMs = performance.now();
+      for (const observer of observers) {
+        const target = observer.takeRecords();
+        for (const entry of target) {
+          const destination = entry.entryType === 'paint' ? paints : resources;
+          if (destination.length < 512) destination.push(entry.toJSON());
+          else resourceOverflow = true;
+        }
+        observer.disconnect();
+      }
+      if (console.log === interceptLog) console.log = originalLog;
+      clearInterval(interval);
+      window.removeEventListener('error', onError);
+      window.removeEventListener('unhandledrejection', onRejection);
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('focus', onVisibility);
+      window.removeEventListener('blur', onVisibility);
+      refresh();
+    }, 75000);
+
+    try {
+      // Match existing index.html capability check, before calling Wasm init.
+      if (!navigator.gpu) throw new Error('WebGPU unavailable. Use a supported desktop browser on localhost or HTTPS.');
+      marks.capabilityAdapterRequestStartMs = performance.now();
+      const adapter = await navigator.gpu.requestAdapter();
+      marks.capabilityAdapterRequestEndMs = performance.now();
+      if (!adapter) throw new Error('WebGPU adapter unavailable; no validated WebGL2 fallback.');
+      marks.moduleImportStartMs = performance.now();
+      const module = await import(`./nvwa_studio.js?startup_probe_run=${encodeURIComponent(run)}`);
+      marks.moduleImportEndMs = performance.now();
+      marks.initCalledMs = performance.now();
+      await module.default();
+      marks.initResolvedMs = performance.now();
+      status.hidden = true;
+      frameCallback('firstCallbackAfterInitResolved');
+    } catch (error) {
+      marks.bootstrapFailedMs = performance.now();
+      status.textContent = `Startup failed: ${error.message ?? error}`;
+      recordError('bootstrap', error);
+      console.error(error);
+    }
+    refresh();
+  </script>
+</body>
+</html>

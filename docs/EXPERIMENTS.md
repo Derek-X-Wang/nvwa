@@ -1,5 +1,11 @@
 # Experiment conclusions
 
+Latest continuous-idle follow-up: identical revision0 Work and Studio1280×720 on both targets, still playing at capture;600 samples each. Native p50/p95 8.304/9.366ms;Web16.600/18.000ms. Native sampledRSS216.77MiB. No compiler/Nvwa competitor detected at start/end. This resolves the narrow continuous-idle baseline only; prior unfavorable39.026ms finite-run result is retained, exact presentation/GPU/full-workload verdict stays open. [Actual evidence](evidence/continuous-idle.md).
+
+## Latest completed probes12–14
+
+12: bounded native process/capture/RSS collector;13: disposable passive viewport diagnostic;14: separate Web bootstrap clock/resource collector. All had real root execution using unchanged release artifacts. Diagnostic gzip packaging and Python3.9 failures were repaired with failures retained and independent R2 rereview. Conclusions: adopt diagnostic tools only; inconclusive for actual zoom/DPR, cold caches and isolated stable performance. See [review](evidence/startup-viewport-review.md), [native](evidence/native-startup/ACCEPTANCE.md), [viewport](evidence/viewport-boundary/ACCEPTANCE.md), [Web](evidence/web-startup/ACCEPTANCE.md). Earlier tables below are historical snapshots.
+
 Final snapshot: 2026-10-10 PDT / 2026-10-11 UTC. Source compilation, CPU checks, native/browser execution, UI exchange and isolated cadence measurements have separate evidence. Four implementation workflows ran within the four-agent limit; reviews and optional experiments followed as slots became available. Experiment code stays outside mainline dependencies.
 
 | Experiment | Decision and actual evidence | Limit / effect on architecture |

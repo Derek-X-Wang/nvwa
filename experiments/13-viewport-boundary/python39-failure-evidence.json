@@ -1,0 +1,15 @@
+{
+  "performedAt": "2026-10-11T16:19:43Z",
+  "scope": "actual Python 3.9 installer failure before destination creation; no server/browser/app/GPU",
+  "interpreter": "/Users/derekxwang/.pyenv/versions/3.9.5/bin/python3",
+  "pythonVersion": "Python 3.9.5",
+  "installerPath": "/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/experiments/13-viewport-boundary/install.py",
+  "installerBeforeFixSha256": "14d60032c1c1e59a0f504bbc8a4b8e03739b6851be8132bd1ff81e9b52b9f65e",
+  "sourceDist": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/dist/web",
+  "destination": "/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/experiments/13-viewport-boundary/.python39-failure-check",
+  "destinationCreated": false,
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/experiments/13-viewport-boundary/install.py\", line 83, in <module>\n    install(arguments.source, arguments.destination)\n  File \"/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/experiments/13-viewport-boundary/install.py\", line 39, in install\n    before = {str(path.relative_to(source)): sha256(path) for path in files}\n  File \"/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/experiments/13-viewport-boundary/install.py\", line 39, in <dictcomp>\n    before = {str(path.relative_to(source)): sha256(path) for path in files}\n  File \"/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/experiments/13-viewport-boundary/install.py\", line 13, in sha256\n    return hashlib.file_digest(stream, \"sha256\").hexdigest()\nAttributeError: module 'hashlib' has no attribute 'file_digest'\n",
+  "rootReportedFailure": "Root ordinary python3 is 3.9.5; hashlib.file_digest unavailable; no destination created"
+}

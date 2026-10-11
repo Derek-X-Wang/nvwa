@@ -1,0 +1,1914 @@
+{
+  "sourceCheckpoint": "4b9ba411b88d2f6f6dba90bba1c2760bface2237",
+  "evidenceKind": "local owning-source bytes and excerpts; no runtime observation",
+  "files": [
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/web/index.html",
+      "sha256": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114",
+      "excerpts": [
+        {
+          "startLine": 5,
+          "endLine": 15,
+          "lines": [
+            {
+              "number": 5,
+              "text": "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+            },
+            {
+              "number": 6,
+              "text": "  <title>Nvwa \u00b7 Rust Character Studio</title>"
+            },
+            {
+              "number": 7,
+              "text": "  <style>"
+            },
+            {
+              "number": 8,
+              "text": "    html,body { margin:0; width:100%; height:100%; background:#101721; color:#edf4ff; font:16px system-ui; overflow:hidden }"
+            },
+            {
+              "number": 9,
+              "text": "    canvas { display:block; width:100%; height:100%; outline:none }"
+            },
+            {
+              "number": 10,
+              "text": "    #boot-status { position:absolute; left:16px; top:16px; padding:12px; background:#172331; border-radius:8px; max-width:680px; z-index:1 }"
+            },
+            {
+              "number": 11,
+              "text": "  </style>"
+            },
+            {
+              "number": 12,
+              "text": "</head>"
+            },
+            {
+              "number": 13,
+              "text": "<body>"
+            },
+            {
+              "number": 14,
+              "text": "  <div id=\"boot-status\" role=\"status\">\u6b63\u5728\u52a0\u8f7d Rust Studio\u2026</div>"
+            },
+            {
+              "number": 15,
+              "text": "  <canvas id=\"nvwa\" aria-label=\"Nvwa 3D character editor\" tabindex=\"0\"></canvas>"
+            }
+          ]
+        },
+        {
+          "startLine": 16,
+          "endLine": 28,
+          "lines": [
+            {
+              "number": 16,
+              "text": "  <script type=\"module\">"
+            },
+            {
+              "number": 17,
+              "text": "    // Browser capability/bootstrap boundary only. All editing, animation and"
+            },
+            {
+              "number": 18,
+              "text": "    // character business logic lives in the shared Rust application."
+            },
+            {
+              "number": 19,
+              "text": "    import init from './nvwa_studio.js';"
+            },
+            {
+              "number": 20,
+              "text": "    const status = document.getElementById('boot-status');"
+            },
+            {
+              "number": 21,
+              "text": "    try {"
+            },
+            {
+              "number": 22,
+              "text": "      if (!navigator.gpu) throw new Error('\u6b64\u6d4f\u89c8\u5668\u672a\u63d0\u4f9b WebGPU\u3002\u8bf7\u4f7f\u7528\u652f\u6301 WebGPU \u7684\u684c\u9762\u6d4f\u89c8\u5668\u5e76\u901a\u8fc7 localhost \u6216 HTTPS \u6253\u5f00\u3002');"
+            },
+            {
+              "number": 23,
+              "text": "      const adapter = await navigator.gpu.requestAdapter();"
+            },
+            {
+              "number": 24,
+              "text": "      if (!adapter) throw new Error('WebGPU \u65e0\u6cd5\u53d6\u5f97\u56fe\u5f62\u9002\u914d\u5668\u3002\u6b64\u7248\u672c\u6ca1\u6709\u7ecf\u8fc7\u9a8c\u8bc1\u7684 WebGL2 \u56de\u9000\u3002');"
+            },
+            {
+              "number": 25,
+              "text": "      await init();"
+            },
+            {
+              "number": 26,
+              "text": "      status.hidden = true;"
+            },
+            {
+              "number": 27,
+              "text": "      if (new URLSearchParams(location.search).get('benchmark') === '1') {"
+            },
+            {
+              "number": 28,
+              "text": "        // Some embedded browsers reject Bevy's automatic unattached download."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/crates/nvwa-studio/src/lib.rs",
+      "sha256": "4e00f2d61a9f44439616f31c65dfca125908f29a346aca0dcfba000b0f6b5181",
+      "excerpts": [
+        {
+          "startLine": 94,
+          "endLine": 119,
+          "lines": [
+            {
+              "number": 94,
+              "text": "    let window = Window {"
+            },
+            {
+              "number": 95,
+              "text": "        title: if config.mode == AppMode::Player {"
+            },
+            {
+              "number": 96,
+              "text": "            \"Nvwa \u00b7 Player\""
+            },
+            {
+              "number": 97,
+              "text": "        } else {"
+            },
+            {
+              "number": 98,
+              "text": "            \"Nvwa \u00b7 Character Studio\""
+            },
+            {
+              "number": 99,
+              "text": "        }"
+            },
+            {
+              "number": 100,
+              "text": "        .into(),"
+            },
+            {
+              "number": 101,
+              "text": "        resolution: (1280, 720).into(),"
+            },
+            {
+              "number": 102,
+              "text": "        #[cfg(target_arch = \"wasm32\")]"
+            },
+            {
+              "number": 103,
+              "text": "        canvas: Some(\"#nvwa\".into()),"
+            },
+            {
+              "number": 104,
+              "text": "        #[cfg(target_arch = \"wasm32\")]"
+            },
+            {
+              "number": 105,
+              "text": "        fit_canvas_to_parent: true,"
+            },
+            {
+              "number": 106,
+              "text": "        ..default()"
+            },
+            {
+              "number": 107,
+              "text": "    };"
+            },
+            {
+              "number": 108,
+              "text": "    let window = if benchmark {"
+            },
+            {
+              "number": 109,
+              "text": "        Window {"
+            },
+            {
+              "number": 110,
+              "text": "            resolution: bevy::window::WindowResolution::new(1280, 720)"
+            },
+            {
+              "number": 111,
+              "text": "                .with_scale_factor_override(1.0),"
+            },
+            {
+              "number": 112,
+              "text": "            // Winit sizes this canvas from the requested physical dimensions."
+            },
+            {
+              "number": 113,
+              "text": "            // Fitting its CSS size to the parent would restore device-pixel scaling."
+            },
+            {
+              "number": 114,
+              "text": "            #[cfg(target_arch = \"wasm32\")]"
+            },
+            {
+              "number": 115,
+              "text": "            fit_canvas_to_parent: false,"
+            },
+            {
+              "number": 116,
+              "text": "            ..window"
+            },
+            {
+              "number": 117,
+              "text": "        }"
+            },
+            {
+              "number": 118,
+              "text": "    } else {"
+            },
+            {
+              "number": 119,
+              "text": "        window"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/crates/nvwa-studio/src/web_input.rs",
+      "sha256": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+      "excerpts": [
+        {
+          "startLine": 316,
+          "endLine": 342,
+          "lines": [
+            {
+              "number": 316,
+              "text": "        let canvas = document"
+            },
+            {
+              "number": 317,
+              "text": "            .get_element_by_id(\"nvwa\")"
+            },
+            {
+              "number": 318,
+              "text": "            .ok_or(\"Web text: missing canvas #nvwa\")?"
+            },
+            {
+              "number": 319,
+              "text": "            .dyn_into::<web_sys::HtmlElement>()"
+            },
+            {
+              "number": 320,
+              "text": "            .map_err(|_| \"Web text: canvas is not an HTML element\")?;"
+            },
+            {
+              "number": 321,
+              "text": "        let input = document"
+            },
+            {
+              "number": 322,
+              "text": "            .create_element(\"textarea\")"
+            },
+            {
+              "number": 323,
+              "text": "            .map_err(|e| format!(\"Web text create: {e:?}\"))?"
+            },
+            {
+              "number": 324,
+              "text": "            .dyn_into::<web_sys::HtmlTextAreaElement>()"
+            },
+            {
+              "number": 325,
+              "text": "            .map_err(|_| \"Web text: textarea cast failed\")?;"
+            },
+            {
+              "number": 326,
+              "text": "        input.set_id(\"nvwa_text_input\");"
+            },
+            {
+              "number": 327,
+              "text": "        input.set_tab_index(-1);"
+            },
+            {
+              "number": 328,
+              "text": "        input.set_hidden(true);"
+            },
+            {
+              "number": 329,
+              "text": "        for (name, value) in ["
+            },
+            {
+              "number": 330,
+              "text": "            (\"aria-label\", \"Nvwa text input\"),"
+            },
+            {
+              "number": 331,
+              "text": "            (\"autocapitalize\", \"off\"),"
+            },
+            {
+              "number": 332,
+              "text": "            (\"autocomplete\", \"off\"),"
+            },
+            {
+              "number": 333,
+              "text": "            (\"spellcheck\", \"false\"),"
+            },
+            {
+              "number": 334,
+              "text": "        ] {"
+            },
+            {
+              "number": 335,
+              "text": "            input"
+            },
+            {
+              "number": 336,
+              "text": "                .set_attribute(name, value)"
+            },
+            {
+              "number": 337,
+              "text": "                .map_err(|e| format!(\"Web text attribute {name}: {e:?}\"))?;"
+            },
+            {
+              "number": 338,
+              "text": "        }"
+            },
+            {
+              "number": 339,
+              "text": "        input.set_attribute(\"style\", \"position:fixed;width:1px;height:1px;padding:0;border:0;opacity:0;pointer-events:none;resize:none;overflow:hidden;\")"
+            },
+            {
+              "number": 340,
+              "text": "            .map_err(|e| format!(\"Web text initial style: {e:?}\"))?;"
+            },
+            {
+              "number": 341,
+              "text": "        let shared = Shared::default();"
+            },
+            {
+              "number": 342,
+              "text": "        let proxy = world"
+            }
+          ]
+        },
+        {
+          "startLine": 644,
+          "endLine": 670,
+          "lines": [
+            {
+              "number": 644,
+              "text": "                    (agent.wake)();"
+            },
+            {
+              "number": 645,
+              "text": "                }"
+            },
+            {
+              "number": 646,
+              "text": "                return;"
+            },
+            {
+              "number": 647,
+              "text": "            }"
+            },
+            {
+              "number": 648,
+              "text": "            state.accepting = true;"
+            },
+            {
+              "number": 649,
+              "text": "            let rect = agent.canvas.get_bounding_client_rect();"
+            },
+            {
+              "number": 650,
+              "text": "            // egui points \u2192 canvas backing pixels \u2192 canvas CSS pixels."
+            },
+            {
+              "number": 651,
+              "text": "            let width = agent"
+            },
+            {
+              "number": 652,
+              "text": "                .canvas"
+            },
+            {
+              "number": 653,
+              "text": "                .get_attribute(\"width\")"
+            },
+            {
+              "number": 654,
+              "text": "                .and_then(|v| v.parse::<f64>().ok())"
+            },
+            {
+              "number": 655,
+              "text": "                .unwrap_or(rect.width());"
+            },
+            {
+              "number": 656,
+              "text": "            let height = agent"
+            },
+            {
+              "number": 657,
+              "text": "                .canvas"
+            },
+            {
+              "number": 658,
+              "text": "                .get_attribute(\"height\")"
+            },
+            {
+              "number": 659,
+              "text": "                .and_then(|v| v.parse::<f64>().ok())"
+            },
+            {
+              "number": 660,
+              "text": "                .unwrap_or(rect.height());"
+            },
+            {
+              "number": 661,
+              "text": "            let x = rect.left()"
+            },
+            {
+              "number": 662,
+              "text": "                + f64::from(ime.cursor_rect.left() * pixels_per_point) * rect.width()"
+            },
+            {
+              "number": 663,
+              "text": "                    / width.max(1.0);"
+            },
+            {
+              "number": 664,
+              "text": "            let y = rect.top()"
+            },
+            {
+              "number": 665,
+              "text": "                + f64::from(ime.cursor_rect.bottom() * pixels_per_point) * rect.height()"
+            },
+            {
+              "number": 666,
+              "text": "                    / height.max(1.0);"
+            },
+            {
+              "number": 667,
+              "text": "            agent.input.set_hidden(false);"
+            },
+            {
+              "number": 668,
+              "text": "            drop(state);"
+            },
+            {
+              "number": 669,
+              "text": "            agent.style(\"left\", &format!(\"{x}px\"));"
+            },
+            {
+              "number": 670,
+              "text": "            agent.style(\"top\", &format!(\"{y}px\"));"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winit-0.30.13/src/platform_impl/web/web_sys/mod.rs",
+      "sha256": "60c26a5a11e998a7ebaa0432fdc11aa1458a9b6676ca6c398487f7d9dbbdffc9",
+      "excerpts": [
+        {
+          "startLine": 52,
+          "endLine": 54,
+          "lines": [
+            {
+              "number": 52,
+              "text": "pub fn scale_factor(window: &web_sys::Window) -> f64 {"
+            },
+            {
+              "number": 53,
+              "text": "    window.device_pixel_ratio()"
+            },
+            {
+              "number": 54,
+              "text": "}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winit-0.30.13/src/platform_impl/web/web_sys/resize_scaling.rs",
+      "sha256": "fe98de29d14f60d10447ddd87ffec46bd24bfdf90095b608143f8d253627e06e",
+      "excerpts": [
+        {
+          "startLine": 87,
+          "endLine": 100,
+          "lines": [
+            {
+              "number": 87,
+              "text": "            let weak_self = weak_self.clone();"
+            },
+            {
+              "number": 88,
+              "text": "            let observer_closure = Closure::new(move |entries: Array, _| {"
+            },
+            {
+              "number": 89,
+              "text": "                if let Some(this) = weak_self.upgrade() {"
+            },
+            {
+              "number": 90,
+              "text": "                    let size = this.process_entry(entries);"
+            },
+            {
+              "number": 91,
+              "text": ""
+            },
+            {
+              "number": 92,
+              "text": "                    if this.notify_scale.replace(false) {"
+            },
+            {
+              "number": 93,
+              "text": "                        let scale = backend::scale_factor(&this.window);"
+            },
+            {
+              "number": 94,
+              "text": "                        (this.scale_handler)(size, scale)"
+            },
+            {
+              "number": 95,
+              "text": "                    } else {"
+            },
+            {
+              "number": 96,
+              "text": "                        (this.resize_handler)(size)"
+            },
+            {
+              "number": 97,
+              "text": "                    }"
+            },
+            {
+              "number": 98,
+              "text": "                }"
+            },
+            {
+              "number": 99,
+              "text": "            });"
+            },
+            {
+              "number": 100,
+              "text": "            let observer = Self::create_observer(&canvas, observer_closure.as_ref());"
+            }
+          ]
+        },
+        {
+          "startLine": 136,
+          "endLine": 150,
+          "lines": [
+            {
+              "number": 136,
+              "text": "    fn create_observer(canvas: &HtmlCanvasElement, closure: &JsValue) -> ResizeObserver {"
+            },
+            {
+              "number": 137,
+              "text": "        let observer = ResizeObserver::new(closure.as_ref().unchecked_ref())"
+            },
+            {
+              "number": 138,
+              "text": "            .expect(\"Failed to create `ResizeObserver`\");"
+            },
+            {
+              "number": 139,
+              "text": ""
+            },
+            {
+              "number": 140,
+              "text": "        // Safari doesn't support `devicePixelContentBoxSize`"
+            },
+            {
+              "number": 141,
+              "text": "        if has_device_pixel_support() {"
+            },
+            {
+              "number": 142,
+              "text": "            let options = ResizeObserverOptions::new();"
+            },
+            {
+              "number": 143,
+              "text": "            options.set_box(ResizeObserverBoxOptions::DevicePixelContentBox);"
+            },
+            {
+              "number": 144,
+              "text": "            observer.observe_with_options(canvas, &options);"
+            },
+            {
+              "number": 145,
+              "text": "        } else {"
+            },
+            {
+              "number": 146,
+              "text": "            observer.observe(canvas);"
+            },
+            {
+              "number": 147,
+              "text": "        }"
+            },
+            {
+              "number": 148,
+              "text": ""
+            },
+            {
+              "number": 149,
+              "text": "        observer"
+            },
+            {
+              "number": 150,
+              "text": "    }"
+            }
+          ]
+        },
+        {
+          "startLine": 227,
+          "endLine": 239,
+          "lines": [
+            {
+              "number": 227,
+              "text": "    fn process_entry(&self, entries: Array) -> PhysicalSize<u32> {"
+            },
+            {
+              "number": 228,
+              "text": "        let entry: ResizeObserverEntry = entries.get(0).unchecked_into();"
+            },
+            {
+              "number": 229,
+              "text": ""
+            },
+            {
+              "number": 230,
+              "text": "        // Safari doesn't support `devicePixelContentBoxSize`"
+            },
+            {
+              "number": 231,
+              "text": "        if !has_device_pixel_support() {"
+            },
+            {
+              "number": 232,
+              "text": "            let rect = entry.content_rect();"
+            },
+            {
+              "number": 233,
+              "text": ""
+            },
+            {
+              "number": 234,
+              "text": "            return LogicalSize::new(rect.width(), rect.height())"
+            },
+            {
+              "number": 235,
+              "text": "                .to_physical(backend::scale_factor(&self.window));"
+            },
+            {
+              "number": 236,
+              "text": "        }"
+            },
+            {
+              "number": 237,
+              "text": ""
+            },
+            {
+              "number": 238,
+              "text": "        let entry: ResizeObserverSize ="
+            },
+            {
+              "number": 239,
+              "text": "            entry.device_pixel_content_box_size().get(0).unchecked_into();"
+            }
+          ]
+        },
+        {
+          "startLine": 249,
+          "endLine": 268,
+          "lines": [
+            {
+              "number": 249,
+              "text": "        }"
+            },
+            {
+              "number": 250,
+              "text": ""
+            },
+            {
+              "number": 251,
+              "text": "        let horizontal = match writing_mode.as_str() {"
+            },
+            {
+              "number": 252,
+              "text": "            _ if writing_mode.starts_with(\"horizontal\") => true,"
+            },
+            {
+              "number": 253,
+              "text": "            _ if writing_mode.starts_with(\"vertical\") | writing_mode.starts_with(\"sideways\") => {"
+            },
+            {
+              "number": 254,
+              "text": "                false"
+            },
+            {
+              "number": 255,
+              "text": "            },"
+            },
+            {
+              "number": 256,
+              "text": "            // deprecated values"
+            },
+            {
+              "number": 257,
+              "text": "            \"lr\" | \"lr-tb\" | \"rl\" => true,"
+            },
+            {
+              "number": 258,
+              "text": "            \"tb\" | \"tb-lr\" | \"tb-rl\" => false,"
+            },
+            {
+              "number": 259,
+              "text": "            _ => {"
+            },
+            {
+              "number": 260,
+              "text": "                warn!(\"unrecognized `writing-mode`, assuming horizontal\");"
+            },
+            {
+              "number": 261,
+              "text": "                true"
+            },
+            {
+              "number": 262,
+              "text": "            },"
+            },
+            {
+              "number": 263,
+              "text": "        };"
+            },
+            {
+              "number": 264,
+              "text": ""
+            },
+            {
+              "number": 265,
+              "text": "        if horizontal {"
+            },
+            {
+              "number": 266,
+              "text": "            PhysicalSize::new(entry.inline_size() as u32, entry.block_size() as u32)"
+            },
+            {
+              "number": 267,
+              "text": "        } else {"
+            },
+            {
+              "number": 268,
+              "text": "            PhysicalSize::new(entry.block_size() as u32, entry.inline_size() as u32)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winit-0.30.13/src/platform_impl/web/web_sys/event.rs",
+      "sha256": "f73d5c0509b1e4a430ac238712e5963d21d378e0701e9c2b67cf839d890e3fb1",
+      "excerpts": [
+        {
+          "startLine": 83,
+          "endLine": 98,
+          "lines": [
+            {
+              "number": 83,
+              "text": "pub fn mouse_position(event: &MouseEvent) -> LogicalPosition<f64> {"
+            },
+            {
+              "number": 84,
+              "text": "    #[wasm_bindgen]"
+            },
+            {
+              "number": 85,
+              "text": "    extern \"C\" {"
+            },
+            {
+              "number": 86,
+              "text": "        type MouseEventExt;"
+            },
+            {
+              "number": 87,
+              "text": ""
+            },
+            {
+              "number": 88,
+              "text": "        #[wasm_bindgen(method, getter, js_name = offsetX)]"
+            },
+            {
+              "number": 89,
+              "text": "        fn offset_x(this: &MouseEventExt) -> f64;"
+            },
+            {
+              "number": 90,
+              "text": ""
+            },
+            {
+              "number": 91,
+              "text": "        #[wasm_bindgen(method, getter, js_name = offsetY)]"
+            },
+            {
+              "number": 92,
+              "text": "        fn offset_y(this: &MouseEventExt) -> f64;"
+            },
+            {
+              "number": 93,
+              "text": "    }"
+            },
+            {
+              "number": 94,
+              "text": ""
+            },
+            {
+              "number": 95,
+              "text": "    let event: &MouseEventExt = event.unchecked_ref();"
+            },
+            {
+              "number": 96,
+              "text": ""
+            },
+            {
+              "number": 97,
+              "text": "    LogicalPosition { x: event.offset_x(), y: event.offset_y() }"
+            },
+            {
+              "number": 98,
+              "text": "}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winit-0.30.13/src/platform_impl/web/web_sys/pointer.rs",
+      "sha256": "e6277ddcc06acf6d3e09ba95ea54e618c3d355a82f92fa8ee56463bd30c6f643",
+      "excerpts": [
+        {
+          "startLine": 78,
+          "endLine": 96,
+          "lines": [
+            {
+              "number": 78,
+              "text": "    {"
+            },
+            {
+              "number": 79,
+              "text": "        let window = canvas_common.window.clone();"
+            },
+            {
+              "number": 80,
+              "text": "        self.on_pointer_release ="
+            },
+            {
+              "number": 81,
+              "text": "            Some(canvas_common.add_event(\"pointerup\", move |event: PointerEvent| {"
+            },
+            {
+              "number": 82,
+              "text": "                let modifiers = event::mouse_modifiers(&event);"
+            },
+            {
+              "number": 83,
+              "text": ""
+            },
+            {
+              "number": 84,
+              "text": "                match event.pointer_type().as_str() {"
+            },
+            {
+              "number": 85,
+              "text": "                    \"touch\" => touch_handler("
+            },
+            {
+              "number": 86,
+              "text": "                        modifiers,"
+            },
+            {
+              "number": 87,
+              "text": "                        event.pointer_id(),"
+            },
+            {
+              "number": 88,
+              "text": "                        event::mouse_position(&event).to_physical(super::scale_factor(&window)),"
+            },
+            {
+              "number": 89,
+              "text": "                        Force::Normalized(event.pressure() as f64),"
+            },
+            {
+              "number": 90,
+              "text": "                    ),"
+            },
+            {
+              "number": 91,
+              "text": "                    _ => mouse_handler("
+            },
+            {
+              "number": 92,
+              "text": "                        modifiers,"
+            },
+            {
+              "number": 93,
+              "text": "                        event.pointer_id(),"
+            },
+            {
+              "number": 94,
+              "text": "                        event::mouse_position(&event).to_physical(super::scale_factor(&window)),"
+            },
+            {
+              "number": 95,
+              "text": "                        event::mouse_button(&event).expect(\"no mouse button released\"),"
+            },
+            {
+              "number": 96,
+              "text": "                    ),"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/winit-0.30.13/src/platform_impl/web/web_sys/canvas.rs",
+      "sha256": "f2272f16a45b2245bd2e7dfc9458899d1fd248a9615ab49d5976bd1584d9af56",
+      "excerpts": [
+        {
+          "startLine": 460,
+          "endLine": 491,
+          "lines": [
+            {
+              "number": 460,
+              "text": "    pub(crate) fn handle_scale_change("
+            },
+            {
+              "number": 461,
+              "text": "        &self,"
+            },
+            {
+              "number": 462,
+              "text": "        runner: &super::super::event_loop::runner::Shared,"
+            },
+            {
+              "number": 463,
+              "text": "        event_handler: impl FnOnce(crate::event::Event<()>),"
+            },
+            {
+              "number": 464,
+              "text": "        current_size: PhysicalSize<u32>,"
+            },
+            {
+              "number": 465,
+              "text": "        scale: f64,"
+            },
+            {
+              "number": 466,
+              "text": "    ) {"
+            },
+            {
+              "number": 467,
+              "text": "        // First, we send the `ScaleFactorChanged` event:"
+            },
+            {
+              "number": 468,
+              "text": "        self.set_current_size(current_size);"
+            },
+            {
+              "number": 469,
+              "text": "        let new_size = {"
+            },
+            {
+              "number": 470,
+              "text": "            let new_size = Arc::new(Mutex::new(current_size));"
+            },
+            {
+              "number": 471,
+              "text": "            event_handler(crate::event::Event::WindowEvent {"
+            },
+            {
+              "number": 472,
+              "text": "                window_id: RootWindowId(self.id),"
+            },
+            {
+              "number": 473,
+              "text": "                event: crate::event::WindowEvent::ScaleFactorChanged {"
+            },
+            {
+              "number": 474,
+              "text": "                    scale_factor: scale,"
+            },
+            {
+              "number": 475,
+              "text": "                    inner_size_writer: InnerSizeWriter::new(Arc::downgrade(&new_size)),"
+            },
+            {
+              "number": 476,
+              "text": "                },"
+            },
+            {
+              "number": 477,
+              "text": "            });"
+            },
+            {
+              "number": 478,
+              "text": ""
+            },
+            {
+              "number": 479,
+              "text": "            let new_size = *new_size.lock().unwrap();"
+            },
+            {
+              "number": 480,
+              "text": "            new_size"
+            },
+            {
+              "number": 481,
+              "text": "        };"
+            },
+            {
+              "number": 482,
+              "text": ""
+            },
+            {
+              "number": 483,
+              "text": "        if current_size != new_size {"
+            },
+            {
+              "number": 484,
+              "text": "            // Then we resize the canvas to the new size, a new"
+            },
+            {
+              "number": 485,
+              "text": "            // `Resized` event will be sent by the `ResizeObserver`:"
+            },
+            {
+              "number": 486,
+              "text": "            let new_size = new_size.to_logical(scale);"
+            },
+            {
+              "number": 487,
+              "text": "            super::set_canvas_size(self.document(), self.raw(), self.style(), new_size);"
+            },
+            {
+              "number": 488,
+              "text": ""
+            },
+            {
+              "number": 489,
+              "text": "            // Set the size might not trigger the event because the calculation is inaccurate."
+            },
+            {
+              "number": 490,
+              "text": "            self.on_resize_scale"
+            },
+            {
+              "number": 491,
+              "text": "                .as_ref()"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_winit-0.19.1/src/system.rs",
+      "sha256": "1011351e10cc7374b96338c2265a56c4eb0b0e900cf9e0c753b85e2c775de379",
+      "excerpts": [
+        {
+          "startLine": 83,
+          "endLine": 87,
+          "lines": [
+            {
+              "number": 83,
+              "text": ""
+            },
+            {
+              "number": 84,
+              "text": "                window"
+            },
+            {
+              "number": 85,
+              "text": "                    .resolution"
+            },
+            {
+              "number": 86,
+              "text": "                    .set_scale_factor_and_apply_to_physical_size(winit_window.scale_factor() as f32);"
+            },
+            {
+              "number": 87,
+              "text": ""
+            }
+          ]
+        },
+        {
+          "startLine": 101,
+          "endLine": 112,
+          "lines": [
+            {
+              "number": 101,
+              "text": "                #[cfg(target_arch = \"wasm32\")]"
+            },
+            {
+              "number": 102,
+              "text": "                {"
+            },
+            {
+              "number": 103,
+              "text": "                    if window.fit_canvas_to_parent {"
+            },
+            {
+              "number": 104,
+              "text": "                        let canvas = winit_window"
+            },
+            {
+              "number": 105,
+              "text": "                            .canvas()"
+            },
+            {
+              "number": 106,
+              "text": "                            .expect(\"window.canvas() can only be called in main thread.\");"
+            },
+            {
+              "number": 107,
+              "text": "                        let style = canvas.style();"
+            },
+            {
+              "number": 108,
+              "text": "                        style.set_property(\"width\", \"100%\").unwrap();"
+            },
+            {
+              "number": 109,
+              "text": "                        style.set_property(\"height\", \"100%\").unwrap();"
+            },
+            {
+              "number": 110,
+              "text": "                    }"
+            },
+            {
+              "number": 111,
+              "text": "                }"
+            },
+            {
+              "number": 112,
+              "text": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_winit-0.19.1/src/state.rs",
+      "sha256": "f1611243188618b51ae87b30003157c8222b4aeddb50a899861616cc9787c915",
+      "excerpts": [
+        {
+          "startLine": 285,
+          "endLine": 300,
+          "lines": [
+            {
+              "number": 285,
+              "text": "                        let physical_position = DVec2::new(position.x, position.y);"
+            },
+            {
+              "number": 286,
+              "text": ""
+            },
+            {
+              "number": 287,
+              "text": "                        let last_position = win.physical_cursor_position();"
+            },
+            {
+              "number": 288,
+              "text": "                        let delta = last_position.map(|last_pos| {"
+            },
+            {
+              "number": 289,
+              "text": "                            (physical_position.as_vec2() - last_pos) / win.resolution.scale_factor()"
+            },
+            {
+              "number": 290,
+              "text": "                        });"
+            },
+            {
+              "number": 291,
+              "text": ""
+            },
+            {
+              "number": 292,
+              "text": "                        win.set_physical_cursor_position(Some(physical_position));"
+            },
+            {
+              "number": 293,
+              "text": "                        let position ="
+            },
+            {
+              "number": 294,
+              "text": "                            (physical_position / win.resolution.scale_factor() as f64).as_vec2();"
+            },
+            {
+              "number": 295,
+              "text": "                        self.bevy_window_events.send(CursorMoved {"
+            },
+            {
+              "number": 296,
+              "text": "                            window,"
+            },
+            {
+              "number": 297,
+              "text": "                            position,"
+            },
+            {
+              "number": 298,
+              "text": "                            delta,"
+            },
+            {
+              "number": 299,
+              "text": "                        });"
+            },
+            {
+              "number": 300,
+              "text": "                    }"
+            }
+          ]
+        },
+        {
+          "startLine": 914,
+          "endLine": 928,
+          "lines": [
+            {
+              "number": 914,
+              "text": ""
+            },
+            {
+              "number": 915,
+              "text": "pub(crate) fn react_to_resize("
+            },
+            {
+              "number": 916,
+              "text": "    window_entity: Entity,"
+            },
+            {
+              "number": 917,
+              "text": "    window: &mut Window,"
+            },
+            {
+              "number": 918,
+              "text": "    size: PhysicalSize<u32>,"
+            },
+            {
+              "number": 919,
+              "text": ") -> WindowResized {"
+            },
+            {
+              "number": 920,
+              "text": "    window"
+            },
+            {
+              "number": 921,
+              "text": "        .resolution"
+            },
+            {
+              "number": 922,
+              "text": "        .set_physical_resolution(size.width, size.height);"
+            },
+            {
+              "number": 923,
+              "text": ""
+            },
+            {
+              "number": 924,
+              "text": "    WindowResized {"
+            },
+            {
+              "number": 925,
+              "text": "        window: window_entity,"
+            },
+            {
+              "number": 926,
+              "text": "        width: window.width(),"
+            },
+            {
+              "number": 927,
+              "text": "        height: window.height(),"
+            },
+            {
+              "number": 928,
+              "text": "    }"
+            }
+          ]
+        },
+        {
+          "startLine": 938,
+          "endLine": 958,
+          "lines": [
+            {
+              "number": 938,
+              "text": ") {"
+            },
+            {
+              "number": 939,
+              "text": "    let prior_factor = window.resolution.scale_factor();"
+            },
+            {
+              "number": 940,
+              "text": "    window.resolution.set_scale_factor(scale_factor as f32);"
+            },
+            {
+              "number": 941,
+              "text": ""
+            },
+            {
+              "number": 942,
+              "text": "    let window_backend_scale_factor_changed = WindowBackendScaleFactorChanged {"
+            },
+            {
+              "number": 943,
+              "text": "        window: window_entity,"
+            },
+            {
+              "number": 944,
+              "text": "        scale_factor,"
+            },
+            {
+              "number": 945,
+              "text": "    };"
+            },
+            {
+              "number": 946,
+              "text": ""
+            },
+            {
+              "number": 947,
+              "text": "    let scale_factor_override = window.resolution.scale_factor_override();"
+            },
+            {
+              "number": 948,
+              "text": ""
+            },
+            {
+              "number": 949,
+              "text": "    let window_scale_factor_changed ="
+            },
+            {
+              "number": 950,
+              "text": "        if scale_factor_override.is_none() && !relative_eq!(scale_factor as f32, prior_factor) {"
+            },
+            {
+              "number": 951,
+              "text": "            let window_scale_factor_changed = WindowScaleFactorChanged {"
+            },
+            {
+              "number": 952,
+              "text": "                window: window_entity,"
+            },
+            {
+              "number": 953,
+              "text": "                scale_factor,"
+            },
+            {
+              "number": 954,
+              "text": "            };"
+            },
+            {
+              "number": 955,
+              "text": "            Some(window_scale_factor_changed)"
+            },
+            {
+              "number": 956,
+              "text": "        } else {"
+            },
+            {
+              "number": 957,
+              "text": "            None"
+            },
+            {
+              "number": 958,
+              "text": "        };"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_window-0.19.1/src/window.rs",
+      "sha256": "c22b231a454a673fc0fe79d4859436dd7c812320a0903f7bdcb12c558afb0d2e",
+      "excerpts": [
+        {
+          "startLine": 935,
+          "endLine": 947,
+          "lines": [
+            {
+              "number": 935,
+              "text": "    }"
+            },
+            {
+              "number": 936,
+              "text": ""
+            },
+            {
+              "number": 937,
+              "text": "    /// The window's client area width in logical pixels."
+            },
+            {
+              "number": 938,
+              "text": "    #[inline]"
+            },
+            {
+              "number": 939,
+              "text": "    pub fn width(&self) -> f32 {"
+            },
+            {
+              "number": 940,
+              "text": "        self.physical_width() as f32 / self.scale_factor()"
+            },
+            {
+              "number": 941,
+              "text": "    }"
+            },
+            {
+              "number": 942,
+              "text": ""
+            },
+            {
+              "number": 943,
+              "text": "    /// The window's client area height in logical pixels."
+            },
+            {
+              "number": 944,
+              "text": "    #[inline]"
+            },
+            {
+              "number": 945,
+              "text": "    pub fn height(&self) -> f32 {"
+            },
+            {
+              "number": 946,
+              "text": "        self.physical_height() as f32 / self.scale_factor()"
+            },
+            {
+              "number": 947,
+              "text": "    }"
+            }
+          ]
+        },
+        {
+          "startLine": 971,
+          "endLine": 987,
+          "lines": [
+            {
+              "number": 971,
+              "text": "    }"
+            },
+            {
+              "number": 972,
+              "text": ""
+            },
+            {
+              "number": 973,
+              "text": "    /// The ratio of physical pixels to logical pixels."
+            },
+            {
+              "number": 974,
+              "text": "    ///"
+            },
+            {
+              "number": 975,
+              "text": "    /// `physical_pixels = logical_pixels * scale_factor`"
+            },
+            {
+              "number": 976,
+              "text": "    pub fn scale_factor(&self) -> f32 {"
+            },
+            {
+              "number": 977,
+              "text": "        self.scale_factor_override"
+            },
+            {
+              "number": 978,
+              "text": "            .unwrap_or_else(|| self.base_scale_factor())"
+            },
+            {
+              "number": 979,
+              "text": "    }"
+            },
+            {
+              "number": 980,
+              "text": ""
+            },
+            {
+              "number": 981,
+              "text": "    /// The window scale factor as reported by the window backend."
+            },
+            {
+              "number": 982,
+              "text": "    ///"
+            },
+            {
+              "number": 983,
+              "text": "    /// This value is unaffected by [`WindowResolution::scale_factor_override`]."
+            },
+            {
+              "number": 984,
+              "text": "    #[inline]"
+            },
+            {
+              "number": 985,
+              "text": "    pub fn base_scale_factor(&self) -> f32 {"
+            },
+            {
+              "number": 986,
+              "text": "        self.scale_factor"
+            },
+            {
+              "number": 987,
+              "text": "    }"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_egui-0.42.0/src/input.rs",
+      "sha256": "a9d7a6d35e4c458e1ce7c5cceadbc70f80ecf86fc70cd05b1f877379bbd0e8ed",
+      "excerpts": [
+        {
+          "startLine": 475,
+          "endLine": 484,
+          "lines": [
+            {
+              "number": 475,
+              "text": "                    }"
+            },
+            {
+              "number": 476,
+              "text": ""
+            },
+            {
+              "number": 477,
+              "text": "                    let position ="
+            },
+            {
+              "number": 478,
+              "text": "                        vec2_into_egui_pos2(message.position / egui_zoom_factor.zoom_factor);"
+            },
+            {
+              "number": 479,
+              "text": "                    pointer_position.position = position;"
+            },
+            {
+              "number": 480,
+              "text": "                    egui_input_message_writer.write(EguiInputEvent {"
+            },
+            {
+              "number": 481,
+              "text": "                        context,"
+            },
+            {
+              "number": 482,
+              "text": "                        event: egui::Event::PointerMoved(position),"
+            },
+            {
+              "number": 483,
+              "text": "                    });"
+            },
+            {
+              "number": 484,
+              "text": "                }"
+            }
+          ]
+        },
+        {
+          "startLine": 1510,
+          "endLine": 1516,
+          "lines": [
+            {
+              "number": 1510,
+              "text": "            |context| context.0 == entity,"
+            },
+            {
+              "number": 1511,
+              "text": "        );"
+            },
+            {
+              "number": 1512,
+              "text": "        egui_input"
+            },
+            {
+              "number": 1513,
+              "text": "            .viewports"
+            },
+            {
+              "number": 1514,
+              "text": "            .entry(ViewportId::ROOT)"
+            },
+            {
+              "number": 1515,
+              "text": "            .or_default()"
+            },
+            {
+              "number": 1516,
+              "text": "            .native_pixels_per_point = camera.target_scaling_factor();"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_egui-0.42.0/src/lib.rs",
+      "sha256": "29a32048c646f3da0c8b6707079d95c3b05e951b892d6fe08b6ea89592b9402e",
+      "excerpts": [
+        {
+          "startLine": 1777,
+          "endLine": 1796,
+          "lines": [
+            {
+              "number": 1777,
+              "text": "/// Updates UI [`egui::RawInput::screen_rect`]."
+            },
+            {
+              "number": 1778,
+              "text": "pub fn update_ui_screen_rect(mut contexts: Query<UpdateUiSizeAndScaleQuery>) {"
+            },
+            {
+              "number": 1779,
+              "text": "    for mut context in contexts.iter_mut() {"
+            },
+            {
+              "number": 1780,
+              "text": "        let Some(viewport_rect) = context.camera.physical_viewport_rect() else {"
+            },
+            {
+              "number": 1781,
+              "text": "            continue;"
+            },
+            {
+              "number": 1782,
+              "text": "        };"
+            },
+            {
+              "number": 1783,
+              "text": ""
+            },
+            {
+              "number": 1784,
+              "text": "        let viewport_rect = egui::Rect {"
+            },
+            {
+              "number": 1785,
+              "text": "            min: helpers::vec2_into_egui_pos2("
+            },
+            {
+              "number": 1786,
+              "text": "                viewport_rect.min.as_vec2() / context.egui_output.pixels_per_point,"
+            },
+            {
+              "number": 1787,
+              "text": "            ),"
+            },
+            {
+              "number": 1788,
+              "text": "            max: helpers::vec2_into_egui_pos2("
+            },
+            {
+              "number": 1789,
+              "text": "                viewport_rect.max.as_vec2() / context.egui_output.pixels_per_point,"
+            },
+            {
+              "number": 1790,
+              "text": "            ),"
+            },
+            {
+              "number": 1791,
+              "text": "        };"
+            },
+            {
+              "number": 1792,
+              "text": "        if viewport_rect.width() < 1.0 || viewport_rect.height() < 1.0 {"
+            },
+            {
+              "number": 1793,
+              "text": "            continue;"
+            },
+            {
+              "number": 1794,
+              "text": "        }"
+            },
+            {
+              "number": 1795,
+              "text": "        context.egui_input.screen_rect = Some(viewport_rect);"
+            },
+            {
+              "number": 1796,
+              "text": "    }"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_camera-0.19.1/src/camera.rs",
+      "sha256": "c1994ad01318588e5d61bdb8c33439189d62873c4a7142b5017d6042c048bfff",
+      "excerpts": [
+        {
+          "startLine": 520,
+          "endLine": 525,
+          "lines": [
+            {
+              "number": 520,
+              "text": "    pub fn target_scaling_factor(&self) -> Option<f32> {"
+            },
+            {
+              "number": 521,
+              "text": "        self.computed"
+            },
+            {
+              "number": 522,
+              "text": "            .target_info"
+            },
+            {
+              "number": 523,
+              "text": "            .as_ref()"
+            },
+            {
+              "number": 524,
+              "text": "            .map(|t: &RenderTargetInfo| t.scale_factor)"
+            },
+            {
+              "number": 525,
+              "text": "    }"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/egui-0.36.2/src/context.rs",
+      "sha256": "c1152788996a49f6ebfb45d817d4e9541d731334c12817ee075d448c0e55eea3",
+      "excerpts": [
+        {
+          "startLine": 450,
+          "endLine": 455,
+          "lines": [
+            {
+              "number": 450,
+              "text": "        }"
+            },
+            {
+              "number": 451,
+              "text": "        let native_pixels_per_point = new_raw_input"
+            },
+            {
+              "number": 452,
+              "text": "            .viewport()"
+            },
+            {
+              "number": 453,
+              "text": "            .native_pixels_per_point"
+            },
+            {
+              "number": 454,
+              "text": "            .unwrap_or(1.0);"
+            },
+            {
+              "number": 455,
+              "text": "        let pixels_per_point = self.memory.options.zoom_factor * native_pixels_per_point;"
+            }
+          ]
+        },
+        {
+          "startLine": 2282,
+          "endLine": 2292,
+          "lines": [
+            {
+              "number": 2282,
+              "text": "    }"
+            },
+            {
+              "number": 2283,
+              "text": ""
+            },
+            {
+              "number": 2284,
+              "text": "    /// The number of physical pixels for each logical point."
+            },
+            {
+              "number": 2285,
+              "text": "    ///"
+            },
+            {
+              "number": 2286,
+              "text": "    /// This is calculated as [`Self::zoom_factor`] * [`Self::native_pixels_per_point`]"
+            },
+            {
+              "number": 2287,
+              "text": "    #[inline(always)]"
+            },
+            {
+              "number": 2288,
+              "text": "    pub fn pixels_per_point(&self) -> f32 {"
+            },
+            {
+              "number": 2289,
+              "text": "        self.input(|i| i.pixels_per_point)"
+            },
+            {
+              "number": 2290,
+              "text": "    }"
+            },
+            {
+              "number": 2291,
+              "text": ""
+            },
+            {
+              "number": 2292,
+              "text": "    /// Set the number of physical pixels for each logical point."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/Cargo.toml",
+      "sha256": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+      "excerpts": []
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/Cargo.lock",
+      "sha256": "d4f6610f830ff73d1fde4307f9c5523056ec736add2530e43860c161ba8d8ec5",
+      "excerpts": []
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/viewport-diagnosis/nvwa/experiments/09-single-transfer/http_probe_server.py",
+      "sha256": "f50e7c2fba4a90d9eee95de41f5c1ac7bd3d9833d9d24db0cd41fbcc3ee41910",
+      "excerpts": [
+        {
+          "startLine": 57,
+          "endLine": 71,
+          "lines": [
+            {
+              "number": 57,
+              "text": "        def send_head(self):"
+            },
+            {
+              "number": 58,
+              "text": "            original = Path(self.translate_path(self.path))"
+            },
+            {
+              "number": 59,
+              "text": "            compressed = Path(str(original) + '.gz')"
+            },
+            {
+              "number": 60,
+              "text": "            if 'gzip' in self.headers.get('Accept-Encoding', '') and original.is_file() and compressed.is_file():"
+            },
+            {
+              "number": 61,
+              "text": "                self.encoding = 'gzip'"
+            },
+            {
+              "number": 62,
+              "text": "                self.declared_bytes = compressed.stat().st_size"
+            },
+            {
+              "number": 63,
+              "text": "                source = compressed.open('rb')"
+            },
+            {
+              "number": 64,
+              "text": "                self.send_response(200)"
+            },
+            {
+              "number": 65,
+              "text": "                self.send_header('Content-Type', self.guess_type(str(original)))"
+            },
+            {
+              "number": 66,
+              "text": "                self.send_header('Content-Encoding', 'gzip')"
+            },
+            {
+              "number": 67,
+              "text": "                self.send_header('Content-Length', str(self.declared_bytes))"
+            },
+            {
+              "number": 68,
+              "text": "                self.send_header('Vary', 'Accept-Encoding')"
+            },
+            {
+              "number": 69,
+              "text": "                self.end_headers()"
+            },
+            {
+              "number": 70,
+              "text": "                return source"
+            },
+            {
+              "number": 71,
+              "text": "            return super().send_head()"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,17 +1,20 @@
 # Nvwa 路线图
 
+Latest continuous-idle follow-up: identical revision0 Work and Studio1280×720 on both targets, still playing at capture;600 samples each. Native p50/p95 8.304/9.366ms;Web16.600/18.000ms. Native sampledRSS216.77MiB. No compiler/Nvwa competitor detected at start/end. This resolves the narrow continuous-idle baseline only; prior unfavorable39.026ms finite-run result is retained, exact presentation/GPU/full-workload verdict stays open. [Actual evidence](evidence/continuous-idle.md).
+
 > 范围依据：[启动任务](specs/Nvwa_Codex_Kickoff_Parallel_Spikes.md)、[Rust-first 原型任务书](specs/Nvwa_Codex_Prototype_Brief_Rust_First_v2.md)、[实验登记](EXPERIMENTS.md)、[M1 验收](M1-VERIFICATION.md)、[问题索引](ISSUES.md)、[交接](HANDOFF.md)及各实验 `REPORT.md`。这是一份状态与证据登记，不授权后续功能实现。
 
 ## 里程碑与当前状态
 
-| 里程碑 | 目标 | 已证实状态与边界 |
+| 里程碑 | 目标 | 当前状态 |
 |---|---|---|
-| M0：双端 Rust Studio | 共用核心、桌面/Web 运行时、真实可变形角色、骨骼动画、命令、存档与跨端重载。 | **已交付**。M0 首次发布为 `d74493d`；薄 M1 后续合并后的 main 当前记录为 [`96c00de`](https://github.com/Derek-X-Wang/nvwa/commit/96c00dedf9a4a74038edb7abf20d99d89871ae6b)。真实原生 Metal 与 WebGPU 运行、双向作品交换、33 项 M0 Rust 测试及构建/测量证据已记录。M0 的已知验收缺口仍未全部关闭；功能闭环不等于完整发布就绪。见 [M0 实验](EXPERIMENTS.md)、[性能记录](PERFORMANCE.md)。 |
-| M1：可捏、可编排、可分享 | 任务书定义的较完整阶段：有限角色控制、简单时间轴、三段动作、撤销/重做、双端保存/重载、互动、静态 Player、可分发原生构建、CLI/agent 说明。 | **用户批准的薄 M1 已合并**：三段动作与播放/暂停/定位；点击角色触发一次 wave 后恢复作品；原生/Web 静态 Player。#14–#16 按记录的本地验收关闭。PR #17 独立 Standards 审查发现一项 P3 transport 重复代码建议，修复提交 `976331d` 已合并到 main 的 `96c00de`，并通过 targeted rereview；Spec 轴无发现。独立修复验收记录了 57 项测试、strict checks、双端 release 构建与实际运行。该 57 项结果是字体集成前的快照；字体快照另有 59 项测试、双端构建及实际中文/Unicode 文件验收；后续桌面 Web 输入修复现有 67 项测试、strict checks、双端 release 与实际运行及 Unicode 全量存档比对。修复后的 Web 实机候选框/Space、Command+A/V、跨应用恢复编辑已由 Derek 确认“全部正常”；PR #18 尚待合并。完整 M1 任务书的输入、缩放、性能、发行等验收缺口仍在。见 [PR #17 审查](evidence/pr17-review/REVIEW.md)和[修复验收](evidence/pr17-review/ACCEPTANCE.md)。 |
-| M2：真实动作生成 | 一个真实 provider、任务状态/取消/失败、规范化动作、到目标 rig 的映射及质量验证。 | **提议；未开始，也未获准实施。** 现有实验只证明隔离的 authored-preset 导入边界；没有进行模型推理。需先解决授权模型/运行时、输出格式和目标 rig 映射，再决定是否进入 M2。见 [AI 实验报告](../experiments/05-ai-motion/REPORT.md)。 |
-| 后续（顺序仍待决） | 简单 Blender 插件 → 额外角色/服装验证 → 指定版本 VRM → 约束/IK/接触 → 只读 VaM 检查器 → 经许可审核的迁移子集。 | **全为提议，未授权实现。** VaM 检查器只读；真实样本与许可不足时，合成包解析不能作为兼容证据。软体物理、头发/布料、VR、多人、市场、任意脚本插件不在前三个里程碑。 |
+| M0：双端 Rust Studio |真实角色、骨骼/形变、共享命令、撤销/重做、保存与跨端交换|已交付；双端真实运行。当前 main 为571604f，包含已验收的93测试整合版|
+| 薄 M1：编排与分享 |三段5–10s动作、播放/暂停/定位、点击互动、静态双端 Player|已交付；PR17/18/20/21已合并。基本中文/IME/剪贴板/恢复验收通过；长期历史已限制，角色单次下载已验证|
+| M1 稳定与发行验收 |输入/缩放、启动/性能、发行包与平台矩阵|正在补证据；本轮三个诊断实验已实际运行，zoom/DPR、稳定性能、其他平台和签名发行仍未完成|
+| M2：真实动作生成 |一个真实provider、任务/取消/失败、规范化动作、rig映射与播放质量|尚未获准实施；现有preset导入不能视为生成。先明确模型/权重许可、runtime和输出合同|
+| 后续：更广角色生态 |Blender插件→额外角色/服装→指定版本VRM→有限IK/接触→只读VaM检查|全为候选；另定范围。软体物理、VR、多人、市场和任意脚本不在本轮|
 
-**当前顺序：**PR #17 独立审查和合并已完成。#1 字体修复在 `fix/cjk-input-acceptance` 通过技术验收并等待合并；#2 的原生错误恢复、两端 Unicode Save/Open、Web 拖动/撤销与按键焦点已验证。原生自动化拖动、剪贴板/Command 组合键和批量中文输入未取得预期结果，不能外推为真人输入故障。用户解锁后，原生点击修改/撤销/重做及整份作品保存比对、文本按键焦点保护和窗口缩放/恢复均通过。原生自动化连续拖动仍未得到有效输入；Derek 已实机确认四项原生检查正常：连续拖动/一次撤销、中文候选选字、Command+A/V 和跨应用恢复编辑。Web 手测先报告无法输入中文且没有候选框；[#19](https://github.com/Derek-X-Wang/nvwa/issues/19) 已在 PR #18 修复桌面浏览器输入。当前 67 项测试、双端 release/实际启动、中文提交及完整存档比对通过。Derek 已确认修复后的候选框/Space、Command+A/V 和跨应用恢复编辑“全部正常”。见[独立输入验收](evidence/web-input/ACCEPTANCE.md)与[真人复测](evidence/web-input/WEB-HAND-TEST.md)。浏览器缩放/DPR 与额外平台仍待验证。见[实机验收](evidence/input-fonts/NATIVE-HAND-TEST.md)。同帧/跨帧 Command+A 的真实依赖库对照已复跑并独立审查；同帧组合键丢失 modifier，但 OS/CUA 实际事件序列仍未知，暂不整合 workaround。见[输入事件实验](../experiments/07-native-input-events/REPORT.md)。见[解锁后验收](evidence/input-fonts/UNLOCKED-ACCEPTANCE.md)。先完成剩余输入验收，再按风险重排 #3/#4/#6/#8/#9/#10 等稳定性和发行缺口；不承诺日期或工期。
+**当前路径：**先完成已授权薄M1的稳定性证据，再验证可分发构建。PR18/20/21已依次合并，#1/#6/#8/#19关闭。#2/#3/#4保留：DPR1视口缩放和native scale2实测通过，但真实Web zoom/DPR变化、隔离的连续动画性能、精确首帧和Web/GPU内存仍未知。基础真人输入验收沿用Derek的明确结果，不把自动化限制当产品缺陷。当前实验报告：[native启动/RSS](evidence/native-startup/ACCEPTANCE.md)、[Web启动边界](evidence/web-startup/ACCEPTANCE.md)、[视口/HiDPI](evidence/viewport-boundary/ACCEPTANCE.md)、[独立复审](evidence/startup-viewport-review.md)。不承诺日期；M2与一般rig、VaM仍需另定范围。
 
 ## 已验证的风险与限制
 
@@ -19,10 +22,10 @@
 |---|---|---|
 | 单一角色的能力边界 | 原创 CC0 fixture 有单一连续蒙皮主体、18 骨骼、4 个不同 morph、3 个手工动作；原生与 Web 实际播放已验证。 | 这是风格化固定 rig，不代表任意角色导入。手部粗糙；腋下及极端形变可能夹皱，生产级权重和全组合视觉检查未完成。见 [角色报告](../experiments/01-character/REPORT.md)。 |
 | 导出复现性（#7） | 两次独立 Blender 导出的 GLB/Blend **字节不同**；已测拓扑、结构与 morph 数据保持一致，差异原因未定位。 | 不得声称字节可复现。发布时需重写 profile/manifest 以匹配实际文件；跨版本/跨平台未测。 |
-| 字体与输入（#1、#2） | 同 cmap static Regular 400 fallback：30,890 映射码点、31,036 glyph；standalone gzip6,303,513bytes，对比 variable11,276,563bytes。59 项测试、strict checks、native/Web release 与实际中英标签、中文文件名、Unicode GUI Save/Open 通过；完整 JSON 等于 baseline。原生 missing-work 经真实 GUI Open 恢复。Web 一次连续拖动提交一个 revision，一次 Undo 恢复全作品；文本 Space 不暂停播放。 | #1 待合并。罕见补充汉字仍缺失；不等于真实 IME 通过。解锁后原生点击修改/撤销/重做和整份作品保存比对、文本焦点与窗口缩放恢复通过。原生 CUA 连续拖动、剪贴板/Command、批量 Unicode entry 未获有效结果；Derek 已确认上述四项原生实机输入正常；Web 真人输入先报告无候选框；#19 的 Rust/wasm 桌面输入代理现已通过 67 项测试及双端构建/实际运行。Derek 对修复后的候选框/Space、Command+A/V 和应用切换恢复回复“全部正常”；PR #18 待合并。缩放/DPR、额外浏览器仍待验证。不将自动化限制视作真人缺陷。见 [验收](evidence/input-fonts/ACCEPTANCE.md)、[字体实验](../experiments/06-cjk-fonts/REPORT.md)。 |
+| 字体与输入（#1、#2） | 同 cmap static Regular 400 fallback：30,890 映射码点、31,036 glyph；standalone gzip6,303,513bytes，对比 variable11,276,563bytes。59 项测试、strict checks、native/Web release 与实际中英标签、中文文件名、Unicode GUI Save/Open 通过；完整 JSON 等于 baseline。原生 missing-work 经真实 GUI Open 恢复。Web 一次连续拖动提交一个 revision，一次 Undo 恢复全作品；文本 Space 不暂停播放。 | #1已合并关闭。罕见补充汉字仍缺失；不等于真实 IME 通过。解锁后原生点击修改/撤销/重做和整份作品保存比对、文本焦点与窗口缩放恢复通过。原生 CUA 连续拖动、剪贴板/Command、批量 Unicode entry 未获有效结果；Derek 已确认上述四项原生实机输入正常；Web 真人输入先报告无候选框；#19 的 Rust/wasm 桌面输入代理现已通过 67 项测试及双端构建/实际运行。Derek 对修复后的候选框/Space、Command+A/V 和应用切换恢复回复“全部正常”；PR #18已合并。缩放/DPR、额外浏览器仍待验证。不将自动化限制视作真人缺陷。见 [验收](evidence/input-fonts/ACCEPTANCE.md)、[字体实验](../experiments/06-cjk-fonts/REPORT.md)。 |
 | 浏览器缩放（#3） | IAB 视口/DPR 模拟曾出现显示与输入比例陈旧；普通未模拟视口的输入通过。 | 不把模拟视口结果外推到所有浏览器。当前 live1600×900 与1024×768（DPR1）已通过文本、滑块与全量 Undo；改变 DPR 的入口未暴露，原模拟比例故障未复现，真实 zoom/DPR 仍待验证。见 [受控报告](../experiments/11-viewport-input/REPORT.md)。 |
-| 性能与启动（#4） | M0 连续空闲 release cadence：原生 p95 8.65 ms、Web 11.20 ms。薄 M1 Player 的 600 样本约为原生 8.327/8.924 ms、Web 8.300/9.500 ms（p50/p95）。M1 样本来自 9.5 秒作品已结束并停在末帧之后。压缩文件和为 14,179,929 bytes。 | cadence 不是 GPU 帧完成时间。M1 数字不证明持续动画表现；首次精确呈现、冷启动 Web、浏览器/GPU 内存未测。native 首次截图约 8.52 秒只是可见性的上界。Web 重复 GLB 请求仍可多传约 1,129,081 bytes（#6）。30 fps/30 MB 是任务书初始预算，不是完整性能验收。见 [性能记录](PERFORMANCE.md)。 |
-| 命令历史（#8） | `fix/bounded-edit-history` 已整合128步/16MiB历史及1024条/8MiB重试记录上限；79项完整测试通过，10,000次编辑工作负载保持边界；CLI可发现策略且原profile值不变，独立修复复审通过。 | 容量按紧凑JSON内容计算，不是精确heap/RSS；会话内FIFO过期，保存只含作品。双端发布构建、原生/Web实际启动和GUI完整作品Undo/Redo/Save/Open/跨端重载通过，尚未合并。见[实验10](../experiments/10-bounded-history/REPORT.md)。 |
+| 性能与启动（#4） | M0 连续空闲 release cadence：原生 p95 8.65 ms、Web 11.20 ms。薄 M1 Player 的 600 样本约为原生 8.327/8.924 ms、Web 8.300/9.500 ms（p50/p95）。M1 样本来自 9.5 秒作品已结束并停在末帧之后。压缩文件和为 14,179,929 bytes。 | cadence 不是 GPU 帧完成时间。M1 数字不证明持续动画表现；首次精确呈现、冷启动 Web、浏览器/GPU 内存未测。native 首次截图约 8.52 秒只是可见性的上界。该历史快照仍有重复GLB传输；当前PR21已合并并实测省去1,129,081bytes，#6关闭。30 fps/30 MB 是任务书初始预算，不是完整性能验收。见 [性能记录](PERFORMANCE.md)。 |
+| 命令历史（#8） | `fix/bounded-edit-history` 已整合128步/16MiB历史及1024条/8MiB重试记录上限；79项完整测试通过，10,000次编辑工作负载保持边界；CLI可发现策略且原profile值不变，独立修复复审通过。 | 容量按紧凑JSON内容计算，不是精确heap/RSS；会话内FIFO过期，保存只含作品。双端发布构建、原生/Web实际启动和GUI完整作品Undo/Redo/Save/Open/跨端重载通过，PR20已合并，#8关闭。见[实验10](../experiments/10-bounded-history/REPORT.md)。 |
 | 互动命中 | 薄 M1 用原 rig 的胸/头保守目标触发 wave；恢复后的文档与交互前完整相等。 | 不是变形网格精确拾取。所有姿势/morph 极值下的热点包含性未验证；不能外推为任意 rig 支持。 |
 | 动作重定向（#13） | 真实动作的 19 个采样点数值 A/B：直接复制旋转的最大顶点误差约 0.868 m；受控 rest-basis 修正约 3.08e-8 m，退化输入检查通过。 | 仅证明骨长/拓扑/语义相同的坐标基变换。目标 GLB 未在渲染器视觉播放；不同骨长、缺骨、任意 rig、root motion、IK/接触均未验证。见 [A/B 报告](../experiments/04-retarget-basis/REPORT.md)。 |
 | AI 动作（#12） | 本地有限目录探测未发现可用 Kimodo runtime/授权权重；9 项 Python 测试只导入有明确标记的手工 wave preset。 | 真推理、M2 资源用量和播放兼容均为 NOT-RUN。Kimodo 文档对输出骨数有 30/77 的差异；M2 16 GiB 可行性和准确许可/权重仍需核对。不要把 preset 称作 AI。见 [AI 实验报告](../experiments/05-ai-motion/REPORT.md)。 |
@@ -30,11 +33,11 @@
 
 ## 提议的原型与验证队列
 
-以下都是**候选验证工作，不是实现授权**。PR #17 已合并；当前 #1 字体分支验证已完成，等待合并；先完成 #2 剩余输入验收。M2、一般 rig 支持和 VaM 工作仍需单独明确范围。
+以下表格记录已做对照与后续候选。#1/#6已完成并合并；#2/#3/#4继续补验收。M2、一般rig和VaM仅是候选，不是实施授权。
 
 | 原型 | 问题与 A/B 候选 | 最小可复现证据 | Go / no-go | 依赖 |
 |---|---|---|---|---|
-| #1 CJK 字体 | A：完整 variable；B：同 cmap static Regular400。选择 B，standalone gzip 少约4.97MB；共享回退已集成并完成技术验收。 | 实际 native/Web 中文标签/文件名、GUI Unicode Save/Open、59测试、双端构建和完整随包许可。Web 同文件集合 gzip 增加6,314,437bytes，总20,497,855bytes。 | 当前受测字符/两端范围通过，等待合并；保留补充汉字和真实 IME 边界。 | [验收/复现](evidence/input-fonts/ACCEPTANCE.md)、[许可](SOURCES-LICENSES.md)。 |
+| #1 CJK 字体 | A：完整 variable；B：同 cmap static Regular400。选择 B，standalone gzip 少约4.97MB；共享回退已集成并完成技术验收。 | 实际 native/Web 中文标签/文件名、GUI Unicode Save/Open、59测试、双端构建和完整随包许可。Web 同文件集合 gzip 增加6,314,437bytes，总20,497,855bytes。 | 当前受测字符/两端范围通过，PR18已合并；保留补充汉字和真实 IME 边界。 | [验收/复现](evidence/input-fonts/ACCEPTANCE.md)、[许可](SOURCES-LICENSES.md)。 |
 | #2 输入与失败恢复 | 原生实际键入/Open恢复；Web实际按键、剪贴板、连续拖动/Undo；原生适配器组合键和拖动与物理输入分别验证。 | 已通过：原生 missing-work GUI恢复、两端Unicode Save/Open、Web revision6→7的一次拖动及Undo全量恢复revision8、文本Space焦点保护。原生四项物理输入已由 Derek 确认；修复后的 Web 候选框/Space、Command+A/V、跨应用恢复也已确认“全部正常”。原生窗口 zoom/恢复有工具证据；Web zoom/DPR 覆盖仍待验证。 | 当前双端基本实机输入通过；适配器限制与真人结果分开。#19 的真实无候选框故障已在 PR #18 修复，仍保留失败实验和未覆盖的 Web zoom/DPR 项。 | [验收](evidence/input-fonts/ACCEPTANCE.md)、[输入诊断](evidence/input-fonts/INPUT-DIAGNOSIS.md)；公开 baseline 为 `docs/evidence/m1/web-sequence.nvwa.json`。 |
 | #13 受控 rig 重定向视觉检查 | A：直接复制关节旋转（数值实验已失败）；B：按 rest basis 转换（数值实验已通过）。 | 用原 fixture 和现有两个 derivative GLB，在同一 runtime、相机和 wave 采样点播放；保留真实画面/播放记录，并复核数值误差及退化输入。 | B 视觉动作可辨且无基姿/末端明显偏移，才把结论扩大到这类受控 rig；否则只保留数值结论，不支持一般重定向。 | [已有受控 A/B 产物](../experiments/04-retarget-basis/REPORT.md)；原 fixture；不得替换成不同拓扑来扩大结论。 |
 | #6 GLB 重复传输 | A：当前两个实际 fetch 路径；B：单份已校验字节在加载路径间复用。 | 静态 Player 实际请求跟踪；记录 GLB 请求数、传输字节、SHA-256 校验结果和角色成功加载。 | B 保持完整性校验且只请求一次则通过；否则保留当前正确性并明确重复传输。 | 实际 Web release bundle、静态服务器、网络请求记录。 |
@@ -54,10 +57,10 @@
 - 当前整合与开放工作：[M1 验收](M1-VERIFICATION.md)、[问题索引](ISSUES.md)、[交接](HANDOFF.md)。
 - 已做实验与决策：[实验汇总](EXPERIMENTS.md)、[角色](../experiments/01-character/REPORT.md)、[命令](../experiments/02-command-transactions/REPORT.md)、[运行时/UI](../experiments/03-runtime-ui/REPORT.md)、[重定向 A/B](../experiments/04-retarget-basis/REPORT.md)、[AI motion](../experiments/05-ai-motion/REPORT.md)。
 
-Current Control-key checkpoint:71 workspace tests, strict native/Wasm checks and both release builds/package pass. The rebuilt Web actually starts and explicit Control+H/Control+A callbacks pass. Native bytes match the67-build; its startup is not repeated. An independent final P2 review was repaired and rereviewed; [acceptance](evidence/web-input-control/ACCEPTANCE.md) records exact identities and the CUA Meta/Control distinction. The67-build physical Chinese-input acceptance remains separately attributed. Live1600x900/1024x768 DPR1 input checks pass; actual zoom/DPR and browser-tab transition remain unverified.
+## 本轮新证据
 
+原生1s延迟probe的截图完成证据在进程启动后4.010s收到；采样RSS最大193.84MiB。原生15s p95循环间隔39.026ms保留为不利观察，不能宣称稳定达标。Web实际bootstrap init848.1ms；截图证实真实角色。两端使用同一revision9作品，但Studio/Player负载不同；编译任务干扰、缓存和采样开销未完全控制，稳定比较仍NOT-RUN。
 
-Current stability integration: PR20 publishes bounded history with79-test/dual-target actual GUI acceptance, pending merge. The subsequent `fix/single-glb-transfer` runtime has93 integrated tests, strict checks and dual release builds. Actual no-store Web A/B saves1,129,081 GLB body bytes (2→1 requests), and same-path missing/hash rejection/recovery passes. Independent R2 accepted the repaired publication fence and specific-error ordering. Native Ready passes; current visual captures are black with the Mac locked, so unlocked visual acceptance remains NOT-RUN. See [current acceptance](evidence/single-transfer/ACCEPTANCE.md). Next bounded work is completion of this visual acceptance, then #4/#3 measurement/coverage; genuine AI/M2, additional characters and VaM remain separate decisions.
+双端实际构建与运行使用93测试release；本轮只增加隔离实验和证据，没有重编译产品。DPR1 live1600×900/1024×768的每次拖动只提交一次revision，一次Undo完整还原作品；native scale2点击/Undo/Save通过。真实浏览器zoom/DPR和精确首帧仍需后续专门验证。
 
-
-Later acceptance update: Derek manually unlocked the Mac. The same current native binary (`3be9380f…`) now exits0 with a visually inspected real character playing wave, revision9 and18 joints/4 morphs/3 timeline entries. [Unlocked native evidence](evidence/single-transfer/native-unlocked.png) supersedes only the earlier blocked visual result; both black captures remain retained failures. This is a functional smoke, not a current performance benchmark. PR18 is merged at `07858fe6b5d6062200d28df654c5ce53ad89007b`, with #1/#19 closed; #2/#3 remain open. PR20 remains pending merge; PR21 completes local acceptance and is pending review/merge.
+PARTIAL — M0/薄M1和字体/输入/历史/单次传输均已合并；当前受测功能通过。发行、更多平台、完整性能、广泛rig和真实AI仍未验证。

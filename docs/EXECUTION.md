@@ -108,3 +108,9 @@ PARTIAL — Final thin M1 local acceptance and release checks complete; listed h
 Published implementation/evidence commit4af6a1963783199f2b4bf4e5d2b44ca694900ecb to origin/feat/thin-m1; remote SHA matched. Created and attached [draft PR#17](https://github.com/Derek-X-Wang/nvwa/pull/17). Main remains the M0 commitd74493df0ab14f786e798cee03efe5ef9e2e4670; no merge was performed. Issues14/15/16 are closed for the bounded documented local acceptance. All13M0gap issues remain open. [Issue#2 update](https://github.com/Derek-X-Wang/nvwa/issues/2#issuecomment-6105856441) preserves the extra native failed-startup GUI recovery gap. Final publication metadata is documentation-only; tested code/artifacts remain frozen. HostedCI is NOT-RUN (no configured workflow).
 
 PARTIAL — Source/evidence pushed and draft PR attached; local dual-platform acceptance verified with explicit remaining gaps.
+
+## 2026-10-11 completed checkpoint
+
+Root integrated and measured; three Sol workers owned experiments12(native),13(viewport),14(Web bootstrap) in separate managed worktrees. One fresh Astra/high read-only R2 reviewer reviewed and accepted targeted repairs. Maximum four active native agents including root; root held the sole GPU slot, workers did no product builds/GPU. No root dependency/lock changes.
+
+PR18/20/21 merged by explicit user approvals;main571604f equals acceptedPR21tree. Functional/capture evidence is separate from compilers/builds and performance limits. No product rebuild for new experiments. Other-project compilers appeared; stable isolated performance was not claimed. #2/#3/#4 remain open; M2 scope unchanged.

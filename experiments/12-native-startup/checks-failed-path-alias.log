@@ -1,0 +1,31 @@
+test_fresh_black_capture_is_valid_but_not_visual_evidence (test_measure_native.CaptureTests.test_fresh_black_capture_is_valid_but_not_visual_evidence) ... ok
+test_nonblack_does_not_claim_character_or_first_frame (test_measure_native.CaptureTests.test_nonblack_does_not_claim_character_or_first_frame) ... ok
+test_truncated_crc_or_wrong_size_captures_fail (test_measure_native.CaptureTests.test_truncated_crc_or_wrong_size_captures_fail) ... ok
+test_cli_failure_report_keeps_exit_and_never_claims_mock_character (test_measure_native.FakeProcessTests.test_cli_failure_report_keeps_exit_and_never_claims_mock_character) ... FAIL
+test_malformed_event_retained_and_partial_no_newline_parsed (test_measure_native.FakeProcessTests.test_malformed_event_retained_and_partial_no_newline_parsed) ... ok
+test_missing_executable_has_report_instead_of_exception (test_measure_native.FakeProcessTests.test_missing_executable_has_report_instead_of_exception) ... ok
+test_nonzero_failure_and_both_raw_streams_retained (test_measure_native.FakeProcessTests.test_nonzero_failure_and_both_raw_streams_retained) ... ok
+test_sigterm_cancellation_retains_report_and_stops_owned_fake_child (test_measure_native.FakeProcessTests.test_sigterm_cancellation_retains_report_and_stops_owned_fake_child) ... ok
+test_timeout_stops_only_the_owned_child_and_retains_log (test_measure_native.FakeProcessTests.test_timeout_stops_only_the_owned_child_and_retains_log) ... ok
+test_evidence_ansi_and_non_evidence (test_measure_native.ParserTests.test_evidence_ansi_and_non_evidence) ... ok
+test_malformed_or_nonobject_evidence_rejected (test_measure_native.ParserTests.test_malformed_or_nonobject_evidence_rejected) ... ok
+test_rss_identity_and_units (test_measure_native.ParserTests.test_rss_identity_and_units) ... ok
+test_runtime_requires_exact_boundary_identities (test_measure_native.ParserTests.test_runtime_requires_exact_boundary_identities) ... ok
+
+======================================================================
+FAIL: test_cli_failure_report_keeps_exit_and_never_claims_mock_character (test_measure_native.FakeProcessTests.test_cli_failure_report_keeps_exit_and_never_claims_mock_character)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/startup-measurement/nvwa/experiments/12-native-startup/test_measure_native.py", line 185, in test_cli_failure_report_keeps_exit_and_never_claims_mock_character
+    self.assertEqual(report["environment_overrides"]["NVWA_ASSET_ROOT"], str(root / "assets"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '/private/var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/tmpaj6afatj/assets' != '/var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/tmpaj6afatj/assets'
+- /private/var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/tmpaj6afatj/assets
+? --------
++ /var/folders/5d/q9gt4gxj7bj29zjmfqv39vlm0000gp/T/tmpaj6afatj/assets
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.933s
+
+FAILED (failures=1)
