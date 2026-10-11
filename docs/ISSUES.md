@@ -40,3 +40,5 @@ Current Control-key checkpoint:71 workspace tests, strict native/Wasm checks and
 
 
 Later acceptance update: Derek manually unlocked the Mac. The same current native binary (`3be9380f…`) now exits0 with a visually inspected real character playing wave, revision9 and18 joints/4 morphs/3 timeline entries. [Unlocked native evidence](evidence/single-transfer/native-unlocked.png) supersedes only the earlier blocked visual result; both black captures remain retained failures. This is a functional smoke, not a current performance benchmark. PR18 is merged at `07858fe6b5d6062200d28df654c5ce53ad89007b`, with #1/#19 closed; #2/#3 remain open. PR20/21 subsequently merged;#8/#6 closed.
+
+- [Investigate bounded retention for stalled character asset loads](https://github.com/Derek-X-Wang/nvwa/issues/23) — needs-triage: source retains nonterminal retired roots; distinct paths have no finite count/content budget. Actual stalled-path resource exhaustion and a bounded policy are NOT-RUN. This follows closed#6 without reopening its verified single-transfer/fencing result.
