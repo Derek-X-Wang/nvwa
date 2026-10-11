@@ -1,0 +1,11 @@
+plain_a frame=0 modifier_state=ModifierKeysState { shift: false, ctrl: false, alt: false, win: false, is_macos: true } events=[Text("a"), Key { key: A, physical_key: Some(A), pressed: true, repeat: false, modifiers: Modifiers::NONE }, Key { key: A, physical_key: Some(A), pressed: false, repeat: false, modifiers: Modifiers::NONE }]
+PASS plain_a: command_at_a=false selected="" replacement_result="jaw targetaSENTINEL"
+command_a_one_frame frame=0 modifier_state=ModifierKeysState { shift: false, ctrl: false, alt: false, win: false, is_macos: true } events=[Text("a"), Key { key: A, physical_key: Some(A), pressed: true, repeat: false, modifiers: Modifiers::NONE }, Key { key: A, physical_key: Some(A), pressed: false, repeat: false, modifiers: Modifiers::NONE }]
+PASS command_a_one_frame: command_at_a=false selected="" replacement_result="jaw targetaSENTINEL"
+command_a_held_frames frame=0 modifier_state=ModifierKeysState { shift: false, ctrl: false, alt: false, win: true, is_macos: true } events=[]
+command_a_held_frames frame=1 modifier_state=ModifierKeysState { shift: false, ctrl: false, alt: false, win: true, is_macos: true } events=[Key { key: A, physical_key: Some(A), pressed: true, repeat: false, modifiers: Modifiers { mac_cmd: true, command: true } }, Key { key: A, physical_key: Some(A), pressed: false, repeat: false, modifiers: Modifiers { mac_cmd: true, command: true } }]
+command_a_held_frames frame=2 modifier_state=ModifierKeysState { shift: false, ctrl: false, alt: false, win: false, is_macos: true } events=[]
+PASS command_a_held_frames: command_at_a=true selected="jaw target" replacement_result="SENTINEL"
+PASS all 3 library replay cases. OS/CUA delivery and physical keyboard behavior were not tested.
+
+EXIT 0

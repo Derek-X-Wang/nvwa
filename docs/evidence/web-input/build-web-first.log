@@ -1,0 +1,87 @@
+    Blocking waiting for file lock on artifact directory
+   Compiling web-sys v0.3.106
+   Compiling wgpu-types v29.0.4
+   Compiling winit v0.30.13
+   Compiling bevy_reflect v0.19.1
+   Compiling wgpu-naga-bridge v29.0.4
+   Compiling wgpu v29.0.4
+   Compiling bevy_ecs v0.19.1
+   Compiling bevy_app v0.19.1
+   Compiling bevy_math v0.19.1
+   Compiling bevy_time v0.19.1
+   Compiling bevy_diagnostic v0.19.1
+   Compiling bevy_input v0.19.1
+   Compiling bevy_asset v0.19.1
+   Compiling bevy_transform v0.19.1
+   Compiling bevy_mesh v0.19.1
+   Compiling bevy_window v0.19.1
+   Compiling bevy_color v0.19.1
+   Compiling bevy_log v0.19.1
+   Compiling bevy_image v0.19.1
+   Compiling bevy_camera v0.19.1
+   Compiling bevy_shader v0.19.1
+   Compiling bevy_material v0.19.1
+   Compiling bevy_light v0.19.1
+   Compiling bevy_render v0.19.1
+   Compiling bevy_core_pipeline v0.19.1
+   Compiling bevy_world_serialization v0.19.1
+   Compiling bevy_animation v0.19.1
+   Compiling bevy_input_focus v0.19.1
+   Compiling bevy_a11y v0.19.1
+   Compiling accesskit_winit v0.32.2
+   Compiling bevy_winit v0.19.1
+   Compiling bevy_gltf v0.19.1
+   Compiling bevy_pbr v0.19.1
+   Compiling bevy_scene v0.19.1
+   Compiling bevy_internal v0.19.1
+   Compiling bevy v0.19.1
+   Compiling egui v0.36.2
+   Compiling bevy_egui v0.42.0
+   Compiling nvwa-runtime v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-runtime)
+   Compiling nvwa-studio v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-studio)
+error[E0308]: mismatched types
+   --> crates/nvwa-studio/src/web_input.rs:158:55
+    |
+158 |         range.primary.index = range.primary.index.min(count);
+    |                                                   --- ^^^^^ expected `CharIndex`, found `usize`
+    |                                                   |
+    |                                                   arguments to this method are incorrect
+    |
+help: the return type of this call is `usize` due to the type of the argument passed
+   --> crates/nvwa-studio/src/web_input.rs:158:31
+    |
+158 |         range.primary.index = range.primary.index.min(count);
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^-----^
+    |                                                       |
+    |                                                       this argument influences the return type of `min`
+note: method defined here
+   --> /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/core/src/cmp.rs:1072:7
+help: try wrapping the expression in `bevy_egui::egui::text::CharIndex`
+    |
+158 |         range.primary.index = range.primary.index.min(bevy_egui::egui::text::CharIndex(count));
+    |                                                       +++++++++++++++++++++++++++++++++     +
+
+error[E0308]: mismatched types
+   --> crates/nvwa-studio/src/web_input.rs:159:59
+    |
+159 |         range.secondary.index = range.secondary.index.min(count);
+    |                                                       --- ^^^^^ expected `CharIndex`, found `usize`
+    |                                                       |
+    |                                                       arguments to this method are incorrect
+    |
+help: the return type of this call is `usize` due to the type of the argument passed
+   --> crates/nvwa-studio/src/web_input.rs:159:33
+    |
+159 |         range.secondary.index = range.secondary.index.min(count);
+    |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^-----^
+    |                                                           |
+    |                                                           this argument influences the return type of `min`
+note: method defined here
+   --> /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/core/src/cmp.rs:1072:7
+help: try wrapping the expression in `bevy_egui::egui::text::CharIndex`
+    |
+159 |         range.secondary.index = range.secondary.index.min(bevy_egui::egui::text::CharIndex(count));
+    |                                                           +++++++++++++++++++++++++++++++++     +
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `nvwa-studio` (lib) due to 2 previous errors

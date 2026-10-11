@@ -1,0 +1,139 @@
+   Compiling nvwa-studio v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-studio)
+    Finished `test` profile [optimized + debuginfo] target(s) in 4.54s
+     Running unittests src/lib.rs (target/debug/deps/nvwa_cli-178a6e79c56da010)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/nvwa_cli-07f9de60dd13f135)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/offline.rs (target/debug/deps/offline-47af5e1595c671ba)
+
+running 4 tests
+test failed_batch_does_not_overwrite_existing_output ... ok
+test fifo_without_writer_is_rejected_within_timeout ... ok
+test cli_rejects_duplicate_map_keys_and_preserves_unrelated_save_sibling ... ok
+test typed_ui_and_offline_cli_produce_equivalent_documents ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+
+     Running tests/sequence.rs (target/debug/deps/sequence-9f2bb9fb3ce7a344)
+
+running 2 tests
+test failed_cli_batch_preserves_input_and_existing_work ... ok
+test cli_applies_and_round_trips_the_m1_sequence ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/lib.rs (target/debug/deps/nvwa_core-43668bb97d448f50)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/transactions.rs (target/debug/deps/transactions-7927aca1106f84ee)
+
+running 13 tests
+test profile_ids_paths_hashes_defaults_and_references_are_strict ... ok
+test retry_is_idempotent_even_after_later_commits_and_id_reuse_conflicts ... ok
+test slider_previews_are_one_committed_transaction ... ok
+test defaults_and_json_roundtrip_preserve_document ... ok
+test failed_multi_parameter_command_has_no_partial_mutation_or_history ... ok
+test typed_and_serialized_commands_produce_identical_results ... ok
+test undo_redo_restore_content_and_monotonically_advance_revision ... ok
+test single_and_batch_command_parsers_reject_duplicate_parameter_keys ... ok
+test missing_corrupt_and_mismatched_assets_are_rejected ... ok
+test nonfinite_ranges_invalid_timeline_and_overflow_never_mutate ... ok
+test valid_timeline_command_is_undoable_and_invalid_character_is_rejected ... ok
+test batch_parser_matches_single_envelopes_and_bounds_whole_input ... ok
+test unknown_fields_duplicate_keys_oversized_json_and_schema_are_rejected ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/nvwa_runtime-2a73bbb773e87b39)
+
+running 21 tests
+test tests::chest_and_head_hotspots_accept_small_scale_centers_without_accepting_outside ... ok
+test tests::fresh_successful_gltf_completion_clears_superseded_parse_error ... ok
+test tests::current_gltf_failure_is_visible_until_a_fresh_success ... ok
+test tests::explicit_same_profile_open_changes_load_generation_but_edits_do_not ... ok
+test tests::invalid_preview_preserves_document_and_previous_valid_preview ... ok
+test tests::repeated_preview_is_one_undoable_transaction ... ok
+test tests::replacing_document_discards_transient_preview ... ok
+test tests::opening_same_profile_with_empty_timeline_stops_existing_animation ... ok
+test tests::replacement_player_initializes_already_applied_clip_and_advances ... ok
+test tests::startup_waits_for_explicit_work_without_falling_back_to_fixture ... ok
+test tests::overlap_transaction_is_rejected_without_changing_cursor_or_joint ... ok
+test tests::character_hotspot_rejects_background_stale_clicks_and_tracks_animated_joint ... ok
+test tests::gap_holds_source_endpoint_and_nonunit_speed_maps_wall_time ... ok
+test tests::character_interaction_cancels_on_open_edit_undo_and_player_loss ... ok
+test tests::character_click_wave_restores_running_sequence_cursor_and_history ... ok
+test tests::repeated_source_entries_backward_seeks_completion_and_restart_are_deterministic ... ok
+test tests::sequence_advances_real_joint_across_boundaries_and_pause_seek_holds ... ok
+test tests::m0_loop_pause_holds_rendered_joint_and_resume_advances_in_production_order ... ok
+test tests::sequence_reopen_undo_and_replacement_player_reset_and_sample_real_pose ... ok
+test tests::character_wave_restores_paused_completed_and_m0_loop_samples ... ok
+test tests::actual_async_reload_waits_for_fresh_bytes_and_recovers_hash_error ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+
+     Running unittests src/lib.rs (target/debug/deps/nvwa_studio-e3c988591ca20719)
+
+running 19 tests
+test platform::tests::static_paths_reject_external_traversal_and_encoded_escapes ... ok
+test platform::tests::browser_failure_keeps_message_bounded_without_showing_stack ... ok
+test platform::tests::streamed_work_enforces_cumulative_limit_before_copy_and_strict_utf8 ... ok
+test tests::native_launch_work_is_shared_by_studio_player_and_smoke_options ... ok
+test platform::tests::empty_open_is_an_opened_payload_and_operations_are_single_flight ... ok
+test platform::tests::oversized_and_nonregular_inputs_are_rejected_before_unbounded_read ... ok
+test platform::tests::failed_async_completion_releases_mailbox_for_recovery ... ok
+test tests::saved_completion_does_not_replace_document ... ok
+test tests::web_launch_validation_keeps_mode_separate_from_work_and_rejects_duplicates ... ok
+test tests::sequence_creation_and_reorder_are_atomic_portable_edits ... ok
+test tests::opening_empty_payload_is_an_error_and_preserves_document ... ok
+test platform::tests::save_does_not_truncate_unrelated_predictable_sibling ... ok
+test platform::tests::fifo_without_writer_is_rejected_without_blocking_ui ... ok
+test tests::current_egui_frame_guards_panels_and_overlays_but_leaves_scene_clickable ... ok
+test tests::player_ui_transport_is_read_only_and_retains_panel_input_guards ... ok
+test fonts::tests::bundled_font_parses_and_lays_out_chinese_with_both_default_families ... ok
+test tests::failed_initial_work_has_visible_error_and_manual_completion_can_recover ... ok
+test fonts::tests::fonts_install_for_each_new_context_and_do_not_reset_existing_contexts ... ok
+test tests::refocus_press_is_rejected_but_next_focused_press_reaches_scene_input ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/main.rs (target/debug/deps/nvwa_studio-f88dd01a72d44a38)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nvwa_cli
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nvwa_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nvwa_runtime
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests nvwa_studio
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

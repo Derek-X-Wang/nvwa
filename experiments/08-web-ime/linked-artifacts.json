@@ -1,0 +1,46 @@
+{
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "versions_verified_from_dep_info": {
+    "bevy_egui": [
+      "0.42.0"
+    ],
+    "bevy_ecs": [
+      "0.19.1"
+    ],
+    "bevy_input": [
+      "0.19.1"
+    ],
+    "bevy_window": [
+      "0.19.1"
+    ],
+    "egui": [
+      "0.36.2"
+    ]
+  },
+  "fingerprint": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/.fingerprint/bevy_egui-8f0c4f5d73444aef/lib-bevy_egui.json",
+  "features": "[\"arboard\", \"bevy_asset\", \"bevy_color\", \"bevy_core_pipeline\", \"bevy_image\", \"bevy_mesh\", \"bevy_render\", \"bevy_shader\", \"bevy_transform\", \"bytemuck\", \"default_fonts\", \"encase\", \"itertools\", \"manage_clipboard\", \"render\", \"smithay-clipboard\", \"thread_local\", \"wgpu-types\"]",
+  "linked_rlibs": {
+    "bevy_egui": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib",
+      "sha256": "28c6be21010bcabd3f7077fab6b06aad260f6e9d6f4de24308d125a73d84c2fa"
+    },
+    "bevy_ecs": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_ecs-11ba1378e0a8cb53.rlib",
+      "sha256": "90c9523e24f016337e39d08eb4d05097fbc77982a76418d0ca67210d512fdb53"
+    },
+    "bevy_input": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_input-90ba94b9e0d9c780.rlib",
+      "sha256": "f3ccac1cb9495d2eec57a472bf982e68dd33d7ea2fe3904fdd6f5b28e6db5b98"
+    },
+    "bevy_window": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_window-d0f39b7c95b4ef62.rlib",
+      "sha256": "19ed75040d515f72ab7495c2ead57a5fcbaec322b1815584b673cf5493f7c4a1"
+    },
+    "egui": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libegui-e9f92947873eaa49.rlib",
+      "sha256": "35f624f84f1d8956db692c17f632df0fe06c6c77733514c7df425e82d0ca5fa0"
+    }
+  },
+  "compile_command": "rustc --edition=2024 -C opt-level=0 -C debuginfo=0 /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/probe.rs -L dependency=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps -o /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/probe --extern bevy_egui=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib --extern bevy_ecs=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_ecs-11ba1378e0a8cb53.rlib --extern bevy_input=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_input-90ba94b9e0d9c780.rlib --extern bevy_window=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_window-d0f39b7c95b4ef62.rlib",
+  "run_command": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/probe"
+}

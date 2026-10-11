@@ -1,0 +1,30 @@
+
+running 6 tests
+test tests::composition_commit_and_followup_input_deliver_once ... ok
+test tests::command_selection_uses_event_modifiers_and_paste_keeps_browser_delivery ... ok
+test tests::cancellation_and_paste_do_not_duplicate_or_leave_preedit ... ok
+
+thread 'independent_rework_regressions::old_target_cancel_after_focus_change_cannot_leave_preedit_canonical' (19765584) panicked at /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:755:9:
+assertion `left == right` failed: canonical Work text must not retain abandoned preedit
+  left: "pathnv"
+ right: "path"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'independent_rework_regressions::singleline_clipboard_filters_line_breaks_through_actual_delivery' (19765585) panicked at /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:739:9:
+assertion `left == right` failed: singleline must use egui Paste semantics
+  left: "one\r\ntwo\nthree"
+ right: "onetwothree"
+test tests::delivered_composition_replaces_preedit_in_real_egui_once_and_cancel_removes_it ... ok
+test independent_rework_regressions::singleline_clipboard_filters_line_breaks_through_actual_delivery ... FAILED
+test independent_rework_regressions::old_target_cancel_after_focus_change_cannot_leave_preedit_canonical ... FAILED
+
+failures:
+
+failures:
+    independent_rework_regressions::old_target_cancel_after_focus_change_cannot_leave_preedit_canonical
+    independent_rework_regressions::singleline_clipboard_filters_line_breaks_through_actual_delivery
+
+test result: FAILED. 4 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+EXIT 101

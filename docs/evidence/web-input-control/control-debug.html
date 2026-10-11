@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nvwa · Rust Character Studio</title>
+  <style>
+    html,body { margin:0; width:100%; height:100%; background:#101721; color:#edf4ff; font:16px system-ui; overflow:hidden }
+    canvas { display:block; width:100%; height:100%; outline:none }
+    #boot-status { position:absolute; left:16px; top:16px; padding:12px; background:#172331; border-radius:8px; max-width:680px; z-index:1 }
+  </style>
+</head>
+<body>
+  <div id="boot-status" role="status">正在加载 Rust Studio…</div>
+  <canvas id="nvwa" aria-label="Nvwa 3D character editor" tabindex="0"></canvas>
+  <script type="module">
+    // Browser capability/bootstrap boundary only. All editing, animation and
+    // character business logic lives in the shared Rust application.
+    import init from './nvwa_studio.js?control=6aa960bc21a8';
+    const status = document.getElementById('boot-status');
+    try {
+      if (!navigator.gpu) throw new Error('此浏览器未提供 WebGPU。请使用支持 WebGPU 的桌面浏览器并通过 localhost 或 HTTPS 打开。');
+      const adapter = await navigator.gpu.requestAdapter();
+      if (!adapter) throw new Error('WebGPU 无法取得图形适配器。此版本没有经过验证的 WebGL2 回退。');
+      await init({module_or_path:'./nvwa_studio_bg.wasm?control=6aa960bc21a8'});
+      status.hidden = true;
+      if (new URLSearchParams(location.search).get('benchmark') === '1') {
+        // Some embedded browsers reject Bevy's automatic unattached download.
+        // This user-activated export reads the real WebGPU canvas pixels only.
+        const capture = document.createElement('button');
+        capture.textContent = 'Download actual benchmark canvas PNG';
+        capture.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:2;padding:8px';
+        capture.addEventListener('click', () => {
+          document.getElementById('nvwa').toBlob(blob => {
+            if (!blob) {
+              status.hidden = false;
+              status.textContent = 'Canvas PNG export failed';
+              return;
+            }
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'nvwa-web-canvas.png';
+            document.body.append(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+          }, 'image/png');
+        });
+        document.body.append(capture);
+      }
+    } catch (error) {
+      status.textContent = `启动失败：${error.message ?? error}`;
+      console.error(error);
+    }
+  </script>
+<script src="control-trace.js"></script></body>
+</html>

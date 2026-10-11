@@ -1,0 +1,126 @@
+{
+  "base": "96c00dedf9a4a74038edb7abf20d99d89871ae6b",
+  "parent_before_input_repair": "712a02998189877f8a94ca28a680830469d8d2ef",
+  "source_identity": "Final containing commit plus exact file hashes; earlier font/rejected snapshots retain separate logs.",
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "workspace_tests": {
+    "passed": 67,
+    "failed": 0,
+    "ignored": 0
+  },
+  "standalone_egui_probe": {
+    "passed": 12,
+    "failed": 0,
+    "ignored": 0,
+    "root_exit_code": 0
+  },
+  "fmt_exit_code": 0,
+  "native_clippy_exit_code": 0,
+  "wasm_clippy_exit_code": 0,
+  "native_release_exit_code": 0,
+  "web_release_exit_code": 0,
+  "native_package_exit_code": 0,
+  "native_actual_startup_exit_code": 0,
+  "web_actual_startup": "Observed real rig/morph/animation and revision6; no captured errors/warnings.",
+  "user_physical_web": "Derek replied 全部正常 after updated production preview; WEB-HAND-TEST.md records steps/limits.",
+  "hardware": "Apple M2 Pro, 16GiB, macOS27.0.1",
+  "browser": "Codex in-app Browser; server UA Chrome/155.0.0.0; exact installed engine/DPR not independently captured",
+  "production_web_screenshot": "1424x984 ordinary viewport; before user hand-test",
+  "native_capture": "2560x1440 pixels; smoke screenshot, not formal performance",
+  "initial_unique_gzip_bytes": 20529790,
+  "player_initial_unique_gzip_bytes": 20530313,
+  "gzip_increase_from_font_only_snapshot": 31935,
+  "performance": "NOT-RUN for current artifact; historical cadence remains separately attributed",
+  "hosted_ci": "NOT-RUN; no configured workflow",
+  "files": [
+    {
+      "path": "Cargo.toml",
+      "bytes": 1223,
+      "sha256": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7"
+    },
+    {
+      "path": "Cargo.lock",
+      "bytes": 142444,
+      "sha256": "d4f6610f830ff73d1fde4307f9c5523056ec736add2530e43860c161ba8d8ec5"
+    },
+    {
+      "path": "crates/nvwa-studio/Cargo.toml",
+      "bytes": 1138,
+      "sha256": "7532429f4e3ebf34bea8bfb5a52c99ed02bae6714ac33a59fcf897252bb74050"
+    },
+    {
+      "path": "crates/nvwa-studio/src/lib.rs",
+      "bytes": 56056,
+      "sha256": "4e00f2d61a9f44439616f31c65dfca125908f29a346aca0dcfba000b0f6b5181"
+    },
+    {
+      "path": "crates/nvwa-studio/src/web_input.rs",
+      "bytes": 31241,
+      "sha256": "58655287ca544b330ecb4f1e55a36d9fc23caaee452d2e3ea3df628c39e68824"
+    },
+    {
+      "path": "crates/nvwa-studio/src/fonts.rs",
+      "bytes": 6274,
+      "sha256": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2"
+    },
+    {
+      "path": "assets/fonts/NvwaSansSC-Regular.ttf",
+      "bytes": 10595928,
+      "sha256": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea"
+    },
+    {
+      "path": "assets/fixtures/nvwa-humanoid.glb",
+      "bytes": 3827840,
+      "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+    },
+    {
+      "path": "scripts/build-web.sh",
+      "bytes": 1249,
+      "sha256": "d63ee823d860d22673da351cb1cbc546f328c5e756741e799edcad6ab0d590e2"
+    },
+    {
+      "path": "scripts/package-native.py",
+      "bytes": 1808,
+      "sha256": "b12d993c314e5361f46ec1016bfeb538185cff29fb188d70b8a6f44010c98340"
+    },
+    {
+      "path": "web/index.html",
+      "bytes": 2690,
+      "sha256": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114"
+    },
+    {
+      "path": "target/release/nvwa-studio",
+      "bytes": 102888736,
+      "sha256": "ab32a2b1ad8ecd7efdc998b40e536bdbc01e84fdb9f47d9b72b644379aa829f3"
+    },
+    {
+      "path": "dist/Nvwa.app/Contents/MacOS/Nvwa",
+      "bytes": 102888736,
+      "sha256": "ab32a2b1ad8ecd7efdc998b40e536bdbc01e84fdb9f47d9b72b644379aa829f3"
+    },
+    {
+      "path": "dist/web/nvwa_studio_bg.wasm",
+      "bytes": 85566364,
+      "sha256": "94c808dff3494647a76ccf76313368ddba64aa6e170a32c80c6e3d5bdcd72c36"
+    },
+    {
+      "path": "dist/web/nvwa_studio.js",
+      "bytes": 123555,
+      "sha256": "54d8c465e4feabb5c37168d741c148cf6ffa5480178c5daae6a7bde93f6d3b4a"
+    },
+    {
+      "path": "docs/evidence/web-input/女娲.nvwa.json",
+      "bytes": 1953,
+      "sha256": "99092aea82ed536b30e88b7c7277da2b915655d328df12d81775457e733f57f4"
+    }
+  ],
+  "cleanup": {
+    "closed_diagnostic_tab": "5",
+    "removed_generated_probe_binaries_and_sources": true,
+    "removed_dist_diagnostic_files": true,
+    "retained_loopback_server_pid": 9569,
+    "retained_port": 9201,
+    "retained_production_tab": "3",
+    "worker_sessions": "completed; control plane has no disposal tool"
+  }
+}

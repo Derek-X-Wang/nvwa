@@ -1,0 +1,62 @@
+error[E0433]: too many leading `super` keywords
+  --> /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:85:5
+   |
+85 | pub(super) fn work_text_edit(ui: &mut egui::Ui, text: &mut String, width: f32) {
+   |     ^^^^^ there are too many leading `super` keywords
+
+error[E0433]: too many leading `super` keywords
+   --> /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:141:5
+    |
+141 | pub(super) fn finish_work_text(ctx: &egui::Context, text: &mut String) {
+    |     ^^^^^ there are too many leading `super` keywords
+
+error[E0308]: mismatched types
+   --> /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:158:55
+    |
+158 |         range.primary.index = range.primary.index.min(count);
+    |                                                   --- ^^^^^ expected `CharIndex`, found `usize`
+    |                                                   |
+    |                                                   arguments to this method are incorrect
+    |
+help: the return type of this call is `usize` due to the type of the argument passed
+   --> /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:158:31
+    |
+158 |         range.primary.index = range.primary.index.min(count);
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^-----^
+    |                                                       |
+    |                                                       this argument influences the return type of `min`
+note: method defined here
+   --> /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/core/src/cmp.rs:1072:7
+help: try wrapping the expression in `bevy_egui::egui::text::CharIndex`
+    |
+158 |         range.primary.index = range.primary.index.min(bevy_egui::egui::text::CharIndex(count));
+    |                                                       +++++++++++++++++++++++++++++++++     +
+
+error[E0308]: mismatched types
+   --> /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:159:59
+    |
+159 |         range.secondary.index = range.secondary.index.min(count);
+    |                                                       --- ^^^^^ expected `CharIndex`, found `usize`
+    |                                                       |
+    |                                                       arguments to this method are incorrect
+    |
+help: the return type of this call is `usize` due to the type of the argument passed
+   --> /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:159:33
+    |
+159 |         range.secondary.index = range.secondary.index.min(count);
+    |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^-----^
+    |                                                           |
+    |                                                           this argument influences the return type of `min`
+note: method defined here
+   --> /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/core/src/cmp.rs:1072:7
+help: try wrapping the expression in `bevy_egui::egui::text::CharIndex`
+    |
+159 |         range.secondary.index = range.secondary.index.min(bevy_egui::egui::text::CharIndex(count));
+    |                                                           +++++++++++++++++++++++++++++++++     +
+
+error: aborting due to 4 previous errors
+
+Some errors have detailed explanations: E0308, E0433.
+For more information about an error, try `rustc --explain E0308`.
+
+EXIT 1

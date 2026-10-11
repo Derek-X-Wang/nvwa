@@ -1,0 +1,31 @@
+COMPILE rustc --test --edition=2024 -C debuginfo=0 /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs -L dependency=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps --extern bevy_egui=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib -o /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-tests
+RUN /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-tests --nocapture
+
+running 11 tests
+test production::tests::command_selection_uses_event_modifiers_and_paste_keeps_browser_delivery ... ok
+test production::tests::composition_commit_and_followup_input_deliver_once ... ok
+test production::tests::cancellation_and_paste_do_not_duplicate_or_leave_preedit ... ok
+test production::independent_rework_regressions::singleline_clipboard_filters_line_breaks_through_actual_delivery ... ok
+test production::tests::work_focus_surrender_rolls_back_before_path_capture_and_restores_cursor ... ok
+test production::independent_rework_regressions::old_target_cancel_after_focus_change_cannot_leave_preedit_canonical ... ok
+test production::tests::delivered_composition_replaces_preedit_in_real_egui_once_and_cancel_removes_it ... ok
+test production::tests::work_clipboard_uses_singleline_paste_semantics_after_command_selection ... ok
+
+thread 'production::tests::work_batched_commit_then_new_preedit_preserves_intermediate_commit' (19836108) panicked at /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs:836:9:
+assertion `left == right` failed: rollback removes only the new uncommitted composition
+  left: "path女娲hao"
+ right: "path女娲"
+test production::tests::work_commit_before_focus_surrender_remains_committed ... note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+ok
+test production::tests::work_ordinary_edit_and_new_loaded_path_are_not_replaced_by_snapshot ... ok
+test production::tests::work_batched_commit_then_new_preedit_preserves_intermediate_commit ... FAILED
+
+failures:
+
+failures:
+    production::tests::work_batched_commit_then_new_preedit_preserves_intermediate_commit
+
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+EXIT 101

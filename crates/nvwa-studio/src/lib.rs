@@ -1,5 +1,8 @@
 //! Rust Studio: egui and the renderer share one Bevy event loop on both targets.
+mod fonts;
 pub mod platform;
+#[cfg(any(target_arch = "wasm32", test))]
+mod web_input;
 
 use bevy::{
     ecs::system::SystemParam,
@@ -141,6 +144,12 @@ fn build_app_for_mode(config: LaunchConfig, smoke: SmokeRun) -> App {
     )
     .insert_resource(smoke)
     .add_systems(Startup, request_initial_work)
+    .add_systems(
+        PreUpdate,
+        fonts::install_fonts
+            .after(bevy_egui::EguiPreUpdateSet::InitContexts)
+            .before(bevy_egui::EguiPreUpdateSet::BeginPass),
+    )
     .add_systems(EguiPrimaryContextPass, draw_studio)
     .add_systems(Update, poll_files)
     .add_systems(
@@ -158,6 +167,8 @@ fn build_app_for_mode(config: LaunchConfig, smoke: SmokeRun) -> App {
         // must not include that focus-dependent event-loop throttle.
         app.insert_resource(bevy::winit::WinitSettings::continuous());
     }
+    #[cfg(target_arch = "wasm32")]
+    app.add_plugins(web_input::DesktopWebInputPlugin);
     app
 }
 
@@ -543,8 +554,8 @@ fn draw_studio(
                 command = Some(Command::Redo);
             }
             ui.separator();
-            ui.label("File");
-            ui.add(egui::TextEdit::singleline(&mut state.file_path).desired_width(220.0));
+            ui.label("作品 / Work");
+            draw_work_path(ui, &mut state.file_path, 220.0);
             if ui
                 .add_enabled(!io.busy(), egui::Button::new("Open…"))
                 .clicked()
@@ -814,7 +825,7 @@ fn draw_player(
             ui.horizontal(|ui| {
                 ui.heading("Nvwa Player");
                 #[cfg(not(target_arch = "wasm32"))]
-                ui.add(egui::TextEdit::singleline(&mut state.file_path).desired_width(240.0));
+                draw_work_path(ui, &mut state.file_path, 240.0);
                 open = ui
                     .add_enabled(!io.busy(), egui::Button::new("Open…"))
                     .clicked();
@@ -873,6 +884,13 @@ fn draw_player(
             Err(error) => state.error = Some(error),
         }
     }
+}
+
+fn draw_work_path(ui: &mut egui::Ui, path: &mut String, width: f32) {
+    #[cfg(target_arch = "wasm32")]
+    web_input::work_text_edit(ui, path, width);
+    #[cfg(not(target_arch = "wasm32"))]
+    ui.add(egui::TextEdit::singleline(path).desired_width(width));
 }
 
 fn draw_transport_buttons(ui: &mut egui::Ui, playback: &mut Playback) {

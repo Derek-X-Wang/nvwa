@@ -2,6 +2,8 @@
 
 Current thin M1 evidence is recorded separately in [M1 verification](M1-VERIFICATION.md). The table below is the archived M0 acceptance: M0 was subsequently committed/pushed as `d74493d`, and the user approved bounded thin M1. The M0 build manifest describes that earlier source/artifact snapshot.
 
+The later font/input PR #18 has a separate [current acceptance](evidence/web-input/ACCEPTANCE.md) and [manifest](evidence/web-input/build-manifest.json): 67 workspace tests, strict checks, both release builds and actual native/Web runs. Repaired Web physical candidates/Space, Command+A/V and app-return editing have [Derek's acceptance](evidence/web-input/WEB-HAND-TEST.md). The earlier font-only59-test manifest remains historical. Web zoom/DPR and current-artifact performance remain unverified.
+
 ## M0 acceptance
 
 M0 snapshot: 2026-10-10 PDT / 2026-10-11 UTC. Build, execution, interaction and measurement are separate claims. All final Rust checks use pinned Rust 1.95.0 and Cargo.lock; no check was disabled to obtain a pass.

@@ -1,0 +1,81 @@
+{
+  "base": "96c00dedf9a4a74038edb7abf20d99d89871ae6b",
+  "scope": "CJK fallback, license packaging, actual GUI Unicode acceptance; containing commit identifies final published source",
+  "tests_passed": 59,
+  "files": [
+    {
+      "path": "Cargo.toml",
+      "bytes": 1223,
+      "sha256": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7"
+    },
+    {
+      "path": "Cargo.lock",
+      "bytes": 142444,
+      "sha256": "d4f6610f830ff73d1fde4307f9c5523056ec736add2530e43860c161ba8d8ec5"
+    },
+    {
+      "path": "crates/nvwa-studio/src/lib.rs",
+      "bytes": 55706,
+      "sha256": "980754fbda12e9466af6e5bec349c723c03d82bb3e0ef9c1e27d861867d5d4ec"
+    },
+    {
+      "path": "crates/nvwa-studio/src/fonts.rs",
+      "bytes": 6274,
+      "sha256": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2"
+    },
+    {
+      "path": "assets/fonts/NvwaSansSC-Regular.ttf",
+      "bytes": 10595928,
+      "sha256": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea"
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "bytes": 4388,
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+    },
+    {
+      "path": "scripts/build-web.sh",
+      "bytes": 1249,
+      "sha256": "d63ee823d860d22673da351cb1cbc546f328c5e756741e799edcad6ab0d590e2"
+    },
+    {
+      "path": "scripts/package-native.py",
+      "bytes": 1808,
+      "sha256": "b12d993c314e5361f46ec1016bfeb538185cff29fb188d70b8a6f44010c98340"
+    },
+    {
+      "path": "target/release/nvwa-studio",
+      "bytes": 102888672,
+      "sha256": "70b1918ca7e608f8d5a5b90b677677794259af6dca58cc9fb7ebb32cde4695de"
+    },
+    {
+      "path": "dist/Nvwa.app/Contents/MacOS/Nvwa",
+      "bytes": 102888672,
+      "sha256": "70b1918ca7e608f8d5a5b90b677677794259af6dca58cc9fb7ebb32cde4695de"
+    },
+    {
+      "path": "dist/web/nvwa_studio_bg.wasm",
+      "bytes": 85373362,
+      "sha256": "cca9f77671bc57cacf60ffff9bf403fca7f8ad724bc89cff4e6e2dd82d324fca"
+    },
+    {
+      "path": "dist/web/nvwa_studio.js",
+      "bytes": 119537,
+      "sha256": "459dc4c0d4b881cd9ded69eec0209973b06bfb0f3686635c60af50a429a14c4e"
+    },
+    {
+      "path": "assets/fixtures/nvwa-humanoid.glb",
+      "bytes": 3827840,
+      "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+    },
+    {
+      "path": "docs/evidence/m1/web-sequence.nvwa.json",
+      "bytes": 1953,
+      "sha256": "99092aea82ed536b30e88b7c7277da2b915655d328df12d81775457e733f57f4"
+    }
+  ],
+  "native_gui_resolution": "HiDPI 2560x1504 including titlebar, ordinary window; not a new performance measurement",
+  "new_performance": "NOT-RUN; Mac locked during remaining native input work",
+  "separate_pre_font_native_recovery_sha256": "1737b88815b0dc6edace4d78bc8b9c5ee8f0432d31216bb30bf2b75e3209d817",
+  "screenshots": "CUA returned JPEG pixels for native and Web; filenames use .jpg. Pixels were not edited."
+}

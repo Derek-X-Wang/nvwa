@@ -1,0 +1,47 @@
+rustc --edition=2024 -C opt-level=0 -C debuginfo=0 /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/probe.rs -L dependency=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps -o /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/probe --extern bevy_egui=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib --extern bevy_ecs=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_ecs-11ba1378e0a8cb53.rlib --extern bevy_input=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_input-90ba94b9e0d9c780.rlib --extern bevy_window=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_window-d0f39b7c95b4ef62.rlib
+Synthetic pinned-library replay only; browser/physical delivery is NOT-RUN.
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Text("a"), Key { key: A, physical_key: Some(A), pressed: true, repeat: false, modifiers: Modifiers::NONE }]
+PASS ascii: expected="a" actual="a"
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Text("女娲"), Key { key: A, physical_key: Some(A), pressed: true, repeat: false, modifiers: Modifiers::NONE }]
+PASS logical_unicode: expected="女娲" actual="女娲"
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Ime(Preedit { text: "nv", active_range_chars: Some(0..2) })]
+[DEBUG-ime08] boundary events=[Ime(Commit("女娲"))]
+[DEBUG-ime08] boundary events=[]
+PASS ime_complete: expected="女娲" actual="女娲"
+Diagnostic cases follow; their observed outputs are not assertions of browser behavior:
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Ime(Preedit { text: "nv", active_range_chars: Some(0..2) })]
+[DEBUG-ime08] boundary events=[]
+FAIL synthetic_missing_commit_requires_女娲: expected="女娲" actual="nv"
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Key { key: A, physical_key: Some(A), pressed: true, repeat: false, modifiers: Modifiers::NONE }]
+PASS keyboard_text_only_ignored: expected="" actual=""
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Ime(Preedit { text: "nv", active_range_chars: Some(0..2) })]
+[DEBUG-ime08] boundary events=[Ime(Commit("女娲"))]
+[DEBUG-ime08] boundary events=[Text("女娲"), Key { key: A, physical_key: Some(A), pressed: true, repeat: false, modifiers: Modifiers::NONE }]
+PASS ime_plus_keyboard_unicode_duplicate: expected="女娲女娲" actual="女娲女娲"
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Ime(Preedit { text: "nv", active_range_chars: Some(0..2) })]
+[DEBUG-ime08] boundary events=[Ime(Commit("女娲"))]
+PASS blur_before_commit_lost: expected="nv" actual="nv"
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Ime(Preedit { text: "nv", active_range_chars: Some(0..2) })]
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Ime(Commit("女娲"))]
+PASS raw_window_blur_commit_widget_focus_retained: expected="女娲" actual="女娲"
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[]
+[DEBUG-ime08] boundary events=[Ime(Preedit { text: "nv", active_range_chars: Some(0..2) })]
+[DEBUG-ime08] boundary events=[Ime(Commit("女娲"))]
+[DEBUG-ime08] boundary events=[Text(" "), Key { key: Space, physical_key: Some(A), pressed: true, repeat: false, modifiers: Modifiers::NONE }]
+PASS space_after_commit: expected="女娲 " actual="女娲 "
+PASS focused text retains egui keyboard interest after Space; production playback was not executed.

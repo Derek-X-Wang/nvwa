@@ -1,0 +1,10 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on artifact directory
+   Compiling nvwa-cli v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-cli)
+   Compiling nvwa-studio v0.1.0 (/Users/derekxwang/Development/incubator/Nvwa/nvwa/crates/nvwa-studio)
+error: could not compile `nvwa-studio` (bin "nvwa-studio")
+
+Caused by:
+  process didn't exit successfully: `/Users/derekxwang/.rustup/toolchains/1.95.0-aarch64-apple-darwin/bin/rustc --crate-name nvwa_studio --edition=2024 crates/nvwa-studio/src/main.rs --error-format=json --json=diagnostic-rendered-ansi,artifacts,future-incompat --crate-type bin --emit=dep-info,link -C opt-level=3 -C lto=thin -C codegen-units=8 --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' -C metadata=b70d41372aaf4482 -C extra-filename=-b0d3f0107e775098 --out-dir /Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps -C strip=debuginfo -L dependency=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps --extern bevy=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps/libbevy-9cce528f5916f2e4.rlib --extern bevy_egui=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps/libbevy_egui-d289c10783886786.rlib --extern libc=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps/liblibc-9e32a56200c987cd.rlib --extern nvwa_core=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps/libnvwa_core-2370bb32df520da1.rlib --extern nvwa_runtime=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps/libnvwa_runtime-d74e20450a2f5af3.rlib --extern nvwa_studio=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps/libnvwa_studio.rlib --extern serde_json=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/deps/libserde_json-cb850cdc02a47f27.rlib -L native=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/build/blake3-1754ddb7f2168d09/out` (signal: 15, SIGTERM: termination signal)

@@ -1,0 +1,23 @@
+COMPILE rustc --test --edition=2024 -C debuginfo=0 /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-source.rs -L dependency=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps --extern bevy_egui=/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/libbevy_egui-8f0c4f5d73444aef.rlib -o /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-tests
+RUN /Users/derekxwang/Development/incubator/Nvwa/nvwa/experiments/08-web-ime/rework-tests --nocapture
+
+running 12 tests
+test production::tests::composition_input_and_repeated_commits_have_one_owner ... ok
+test production::tests::command_keys_use_event_modifiers_and_browser_paste_delivery ... ok
+test production::tests::select_all_then_preedit_cancel_preserves_original_selection_and_text ... ok
+test production::tests::canceled_preedit_never_mutates_canonical_path_or_cursor ... ok
+test production::independent_rework_regressions::old_target_cancel_after_focus_change_cannot_leave_preedit_canonical ... ok
+test production::tests::commit_select_all_then_preedit_cancel_preserves_commit_and_selection ... ok
+test production::independent_rework_regressions::forced_discard_pass_consumes_one_commit_once ... ok
+test production::independent_rework_regressions::singleline_clipboard_filters_line_breaks_through_actual_delivery ... ok
+test production::tests::paste_normalizes_singleline_and_deduplicates_followup ... ok
+test production::tests::batched_commit_then_new_preedit_cancel_preserves_intermediate_commit ... ok
+test production::tests::confirmed_selected_text_replaces_once_and_space_is_ordinary_text ... ok
+horizontal passes=1 interrupt=Some(false)
+horizontal passes=1 interrupt=Some(false)
+test production::independent_rework_regressions::studio_horizontal_toolbar_consumes_one_commit_once ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+EXIT 0

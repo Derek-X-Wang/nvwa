@@ -1,0 +1,21 @@
+# Independent R2 review — desktop Web text adapter
+
+Reviewed frozen `web_input.rs` SHA-256 `208c8d71549f22f9ec0e9cf2ed482e2cd175efd20bf857a0894aa1a8e45e002a`, its wiring packet, and the relevant pinned egui 0.36.2 / bevy_egui 0.42.0 / winit 0.30.13 source. Cross-checked production `web_input.rs` SHA-256 `98689ffea662b6632de41774f94c4b55f32ee57c56c7ee46ac2466dee11d366e`; the findings below remain in that revision. Frozen line references are primary.
+
+## Findings
+
+1. **P1 — cancellation after widget focus changes cannot reach the old editor.** Frozen `web_input.rs:542–545` and `588–591` enqueue `Commit("")` for the old target in PostUpdate, after egui has already changed or surrendered widget focus. On the next frame, `web_input.rs:477–479` discards that cancellation because current focus is no longer the queued widget. When composition is still active at that transition, egui has already inserted preedit into the canonical text string. Pinned egui `text_edit/builder.rs:555–565` resets an unfocused editor's IME cursor purpose but does not remove its preedit text; events are processed only for the focused widget at lines 571 onward. Thus this fallback can leave unfinished composition text in the old Work field. The trigger is a focus change/surrender while `delivery.composing` remains true; browsers that deliver compositionend before the transition can avoid this path, but that does not make the fallback correct. Production corresponding ranges: `541–544`, `587–590`, `477–479`. Add a regression that changes focus while preedit exists and checks the old canonical string; the existing cancel test keeps the same widget focused throughout.
+
+2. **P2 — clipboard delivery bypasses egui single-line paste handling.** Frozen and production `web_input.rs:51–54` send clipboard contents as `Event::Text`. Pinned egui `text_edit/builder.rs:1129–1160` normalizes CR/LF to spaces for `Event::Paste` in a single-line editor, whereas `Event::Text` inserts a nontrivial multiline string verbatim. Command+V of e.g. `scene\n.nvwa.json` therefore puts a literal newline into the Work path, unlike the shared editor's ordinary paste behavior. Emit `Event::Paste` and cover a multiline clipboard payload through the real single-line TextEdit. Current tests only verify event count/deduplication for paste.
+
+## Unresolved browser acceptance checks
+
+- Focus recovery: frozen `548–558` hides the focused textarea when `document.has_focus()` becomes false. If the browser moves activeElement to body when it hides, returning to the tab leaves neither textarea nor canvas focused; the acceptance guard keeps the input hidden until a canvas click. No window-focus/visibility callback is installed. This requires an actual browser return-focus test; it is not claimed as a reproduced failure.
+- Clipboard coexistence: bevy_egui's existing document-level copy/cut/paste listeners remain enabled and do not filter the DOM target. Its `write_web_clipboard_events_system` likewise does not require DOM/window focus. The adapter's stopPropagation protects its own textarea only. A separate DOM input can therefore still route paste/cut into a remembered egui editor. This is inherited integration behavior, not a new isolated listener defect; test or explicitly scope external DOM focus behavior.
+- Existing helper: bevy_egui installs its mobile helper alongside this one, but its ordinary desktop composition callbacks are not installed. Touch input on desktop can still focus the old helper via `update_text_agent`; desktop touch support was not established by this review.
+
+## Evidence limits
+
+Static review only; no browser control, physical Chinese IME, clipboard access, GPU, build, or test execution by this reviewer. Root-reported passing tests and lint are not independent execution evidence. Native wiring is cfg-gated and the diff does not change the shared Rust document/command schema. The four tests cover pure delivery/key helpers and one same-widget egui IME sequence; none exercises DOM listener order, focus transitions, queue filtering, scheduling, clipboard coexistence, teardown, or caret placement/scaling.
+
+No production files changed. Only this report was created; root owns its retention.
