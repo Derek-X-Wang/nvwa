@@ -93,7 +93,7 @@ prove immediate GPU reclamation. The supported fixture is self-contained.
 No current formal startup/cadence/GPU/memory benchmark, additional browser/OS,
 physical IME retest, hosted CI, public hosting or signing was performed. Both probe
 tabs and native processes exited;9202 diagnostic server stopped. The existing9201
-production preview remains for Derek. Task caches/worktree cleanup is root-owned.
+production preview remains for Derek. Both worker checkouts are confirmed archived and their ignored build caches absent; disposable A/B copies were removed after preserving evidence. [Cleanup](cleanup.json). PR21 is published as draft, pending unlocked native visual proof.
 
 ```sh
 cargo test --workspace --locked
