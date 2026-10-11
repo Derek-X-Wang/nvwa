@@ -6,7 +6,7 @@ Verdict: **ADOPT the narrow tab/split pattern for separate integration; actual n
 
 Frozen Nvwa base `11fc789e898119e0ed2b423f8a909dacb547f772`. Only generated `crates/nvwa-studio/src/lib.rs` and new `editor_layout.rs` change. Core/runtime, command handlers, schema, original GLB/profile/fonts, and Web input adapter remain frozen. Original file hashes and overlays are recorded by `prepare.py` in `.work/m11-ui/generated-manifest.json`.
 
-Dependency: `storytold/craft-libs` git revision `5c874d51eeb3de70e735c8ce87a59a7dedd47675`, package `craft-ui`. PhotoCraft uses this actual pin. Production dependencies are egui `^0.36` (default features disabled), optional serde disabled. Current Nvwa egui is 0.36.2 through bevy_egui 0.42.0. Version overlap is source evidence; compilation still must verify a single egui instance.
+Dependency: `storytold/craft-libs` git revision `5c874d51eeb3de70e735c8ce87a59a7dedd47675`, package `craft-ui`. PhotoCraft uses this actual pin. Production dependencies are egui `^0.36` (default features disabled), optional serde disabled. Current Nvwa egui is 0.36.2 through bevy_egui 0.42.0. Version overlap initially provided source evidence; current dependency resolution and native/Wasm builds verified one egui0.36.2 instance.
 
 Source read at exact revision: root `Cargo.toml`, `crates/ui/Cargo.toml`, `crates/ui/README.md`, `crates/ui/src/lib.rs`, `crates/ui/src/tabs/mod.rs`, `crates/ui/src/layout/{mod,geometry,resize}.rs`, and `LICENSE-MIT`. Raw files and GitHub recursive tree identity are retained in `.work/m11-ui/source/`. FSKit mount was attempted once, failed with `file system extension not registered`, and no extension/security configuration changed. Source fallback used exact GitHub raw/API reads.
 
