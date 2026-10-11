@@ -1,0 +1,71 @@
+{
+  "changes": [
+    "Root path derived from Git common directory or explicit NVWA_PRIMARY_CHECKOUT",
+    "Repository path adjusted for reproduce subdirectory",
+    "Local path strings redacted; collection placeholders need explicit substitution",
+    "Protocol/collection copy notices added; no cadence or DEFER gate change",
+    "Helper-check output made optional to permit repeated verification without overwriting committed evidence; assertions unchanged"
+  ],
+  "collector_identity": "Root collector final hash retained in evidence/public/final-raw-audit-v2.json; not among five pre/post seals",
+  "copies": {
+    "COLLECTION.md": {
+      "measured_original": {
+        "bytes": 4887,
+        "sha256": "083ed7758ccd6e57ae226033c3024e4b28996e0f64c99f103510839d23f66627"
+      },
+      "published_copy": {
+        "bytes": 5083,
+        "sha256": "9ed22ebd7abbecb6e0c46442e940b4adc337cd24debd52e34184199b313997e3"
+      },
+      "same_bytes": false
+    },
+    "PROTOCOL.md": {
+      "measured_original": {
+        "bytes": 5661,
+        "sha256": "ec0cc48ac4edd7a18426f6cc76b9367f5af90e062b0e44dc9d0180d0918aaf0f"
+      },
+      "published_copy": {
+        "bytes": 5802,
+        "sha256": "aebd051f39c538de6702636bca58a41bfc5f23c6876fb4ef5e9dbad8b7ceee0b"
+      },
+      "same_bytes": false
+    },
+    "check-followup.py": {
+      "measured_original": {
+        "bytes": 5315,
+        "sha256": "c5ea6f144673924059c449d3e10e99819f07164c0281eff75d3d17f4cc54796d"
+      },
+      "published_copy": {
+        "bytes": 5504,
+        "sha256": "d3fbf57036fe9dbaf411e200f2e1c251bf0048987823252443ee0947020d32aa"
+      },
+      "same_bytes": false
+    },
+    "followup.py": {
+      "measured_original": {
+        "bytes": 20253,
+        "sha256": "d303e6b809dd5114e63b3a5da7f325bffa7263ae41e41c26469fda6fe961e743"
+      },
+      "published_copy": {
+        "bytes": 20455,
+        "sha256": "2c628bc4ea58b91cf43503211b461bc9fd42ce42a5f8b1fc31ffd9a2f6a4b85c"
+      },
+      "same_bytes": false
+    },
+    "server.py": {
+      "measured_original": {
+        "bytes": 4359,
+        "sha256": "3c38d27343e56f09257e2700977e9da6480f9e45d17b71c70e492dc18826adda"
+      },
+      "published_copy": {
+        "bytes": 4359,
+        "sha256": "3c38d27343e56f09257e2700977e9da6480f9e45d17b71c70e492dc18826adda"
+      },
+      "same_bytes": true
+    }
+  },
+  "diff_format": "Zero-context unified diff; public original local path redacted",
+  "diff_privacy": "Public diff redacts original local path; exact private diff retained by root",
+  "exact_private_diff_sha256": "ab84154943baf00b2799aef4a698f2a550247fbe8f879fcd735fc73b9d5c7f13",
+  "status": "POST-RUN REPRODUCTION COPIES; published bytes were not measured"
+}

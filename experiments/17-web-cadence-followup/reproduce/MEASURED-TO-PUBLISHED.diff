@@ -1,0 +1,33 @@
+--- measured/COLLECTION.md
++++ reproduce/COLLECTION.md
+@@ -0,0 +1,2 @@
++> Post-run path-redacted collection plan. The exact root collector is retained in ../evidence/public/root-collector.js. This copy was not measured. Replace PERF_WORKTREE and PRIMARY placeholders with approved local paths before any future run.
++
+@@ -25 +27 @@
+-let evidenceDir = '<PERF_WORKTREE>/.work/perf27/raw';
++let evidenceDir = '<PERF_WORKTREE>/.work/perf27/raw';
+--- measured/PROTOCOL.md
++++ reproduce/PROTOCOL.md
+@@ -0,0 +1,2 @@
++> Post-run reproduction copy of the measured protocol. Its original SHA256 is retained separately. These published bytes were not measured.
++
+--- measured/check-followup.py
++++ reproduce/check-followup.py
+@@ -2,0 +3 @@
++import argparse
+@@ -10,0 +12,3 @@
++parser=argparse.ArgumentParser(description=__doc__)
++parser.add_argument('--output',type=Path,help='Optional new exclusive evidence file; default stdout only')
++args=parser.parse_args()
+@@ -93 +97,2 @@
+-f.save(here / 'evidence/preflight-checks-v5.json', {'status': 'PASS', 'checks': checks, 'server_GPU': 'NOT-RUN'})
++if args.output:
++    f.save(args.output, {'status': 'PASS', 'checks': checks, 'server_GPU': 'NOT-RUN'})
+--- measured/followup.py
++++ reproduce/followup.py
+@@ -16,2 +16,3 @@
+-REPO = HERE.parent.parent
+-PRIMARY = Path('<PRIMARY>')
++EXPERIMENT = HERE.parent
++REPO = EXPERIMENT.parent.parent
++PRIMARY = Path(os.environ['NVWA_PRIMARY_CHECKOUT']).resolve() if os.environ.get('NVWA_PRIMARY_CHECKOUT') else Path(subprocess.check_output(['git','rev-parse','--path-format=absolute','--git-common-dir'],cwd=REPO,text=True).strip()).parent

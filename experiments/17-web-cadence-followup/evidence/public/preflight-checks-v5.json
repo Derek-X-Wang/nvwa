@@ -1,0 +1,59 @@
+{
+  "checks": [
+    "idle: valid report accepted; five invalid report variants rejected",
+    "finite: valid report accepted; five invalid report variants rejected",
+    {
+      "direct_child_reaped": true,
+      "group_absent": true,
+      "identity_matched": true,
+      "kill_escalated": false,
+      "lifecycle_ignore_TERM": false,
+      "mismatched_identity_rejected": true,
+      "pid": 23941,
+      "term_sent": true
+    },
+    {
+      "direct_child_reaped": true,
+      "group_absent": true,
+      "identity_matched": true,
+      "kill_escalated": true,
+      "lifecycle_ignore_TERM": true,
+      "mismatched_identity_rejected": true,
+      "pid": 23985,
+      "term_sent": true
+    },
+    "Evidence overwrite rejected",
+    "Absent PID and exited/reaped child cleanup accepted; group absence observed",
+    "Exact10% boundary accepted; larger regression rejected",
+    "Complete ordered attempt ledger accepted; reordering/missing/nonchronological rejected",
+    {
+      "descriptive_pair_preserved": {
+        "A_p95_ms": 20,
+        "B_p95_ms": 22,
+        "change_percent": 10.000000000000009,
+        "descriptive_cadence_within_10_percent": true,
+        "passes": false,
+        "valid": false
+      },
+      "unknown_document_focus": "invalid and strict gate cannot pass"
+    },
+    {
+      "attempt_retained": true,
+      "direct_child_reaped": true,
+      "exit_code": 7,
+      "group_absent": true,
+      "pid": 24013,
+      "scenario": "startup_exit"
+    },
+    {
+      "attempt_retained": true,
+      "direct_child_reaped": true,
+      "exit_code": -15,
+      "group_absent": true,
+      "pid": 24015,
+      "scenario": "metadata_failure"
+    }
+  ],
+  "server_GPU": "NOT-RUN",
+  "status": "PASS"
+}

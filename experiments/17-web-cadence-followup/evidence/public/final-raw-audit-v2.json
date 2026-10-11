@@ -1,0 +1,339 @@
+{
+  "all_numeric_pair_changes_within_10_percent": true,
+  "cleanup": {
+    "owned_server_groups_absent": 10,
+    "root_browser": {
+      "tabs": [],
+      "viewport_reset": true,
+      "visibility_restored": false
+    },
+    "root_port": {
+      "listener_absent": true,
+      "lsof_exit": 1,
+      "port": 9201
+    }
+  },
+  "collector_source_hash": {
+    "bytes": 2291,
+    "sha256": "6c05c9b685a4c7ef108a0b1045e4fff42b8e55bfd9780b19cb453c9c6e262646"
+  },
+  "failures": [],
+  "frozen_source_file_count": 45,
+  "limits": [
+    "A1idle and B5finite screenshots visually inspected; all20 JPEG headers checked",
+    "Raw screenshots have .png names but actual JPEG encoding; candidate copies .jpg names with unchanged bytes",
+    "First post-run audit assumed PNG and is retained as an audit error, not a product/run failure",
+    "Process summaries are available snapshots only, not continuous workload/GPU attribution",
+    "Finite sample includes held completed pose after9s; no motion-only claim"
+  ],
+  "matched_pairs": 10,
+  "measured_runs": 20,
+  "runs": [
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19797,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A1-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.200000762939453,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 18859,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A1-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 18.899999618530273,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19390,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B1-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 20.700000762939453,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19658,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B1-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 20.30000114440918,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 18940,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B2-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 20.600000381469727,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19717,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B2-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.5,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19195,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A2-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 20.099998474121094,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 18858,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A2-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.30000114440918,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19531,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A3-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.099998474121094,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19309,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A3-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.600000381469727,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19634,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B3-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.600000381469727,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19027,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B3-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 18.600000381469727,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19516,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B4-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 20.19999885559082,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19268,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B4-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.899999618530273,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19739,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A4-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.400001525878906,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19418,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A4-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.5,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19926,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A5-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 18.5,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19374,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "A5-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.400001525878906,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19484,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B5-idle",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.099998474121094,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    },
+    {
+      "browser_presentation": false,
+      "collection_elapsed_ms": 19385,
+      "document_focus": "unavailable",
+      "document_visibility": "visible",
+      "request_invariants_pass": true,
+      "run": "B5-finite",
+      "runtime_invariants_pass": true,
+      "runtime_p95_ms": 19.0,
+      "screenshot_dimensions": [
+        1280,
+        720
+      ],
+      "screenshot_format": "JPEG"
+    }
+  ],
+  "runtime_and_request_invariants": "PASS",
+  "size_reduction_percent": 12.196426773472535,
+  "source_base": "11fc789e898119e0ed2b423f8a909dacb547f772",
+  "status": "PASS",
+  "strict_adoption": "DEFER: required document focus unavailable and browser presentation false",
+  "strict_verdict": "DEFER"
+}

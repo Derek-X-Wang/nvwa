@@ -1,0 +1,29 @@
+> Post-run reproduction copy of the measured protocol. Its original SHA256 is retained separately. These published bytes were not measured.
+
+# Issue 27 bounded Web cadence follow-up
+
+Declared before observing any new cadence results. Frozen A and B only. No compilation, compiler/profile/features/assets/fonts change, default change, or product HTML change.
+
+## Order and bounds
+
+Run exactly the planned order, at most five matched pairs: **A1 B1 B2 A2 A3 B3 B4 A4 A5 B5**. Each arm performs idle Studio followed by finite Player using `works/m1-sequence.nvwa.json`. This means 20 planned navigations, five pairs per workload. Keep failed, interrupted, rejected, or missing runs. Do not replace runs, add pairs, or stop because a desirable result appeared. Stop for unsafe/unsupported access or resource ownership ambiguity; missing pairs make the gate DEFER.
+
+Use one Codex IAB browser id 2 and one task tab, visible during measurement, physical 1280x720 scale 1, BrowserWebGpu, origin `http://127.0.0.1:9201`, identical gzip/no-store server. Close or navigate away from the preceding renderer before starting the next. Root grants exclusive GUI/GPU/server lease; no task builds during it. Never stop unrelated workloads. Record available process workload snapshots before and after each navigation (PID/CPU/RSS/command; attribution and complete GPU load unavailable).
+
+Idle: `/?benchmark=1`. Finite: `/?benchmark=1&player=1&work=works%2Fm1-sequence.nvwa.json`. Do not interact with the editor. Focus canvas before collection and record actual AX focus state, root browser visibility capability and canvas DOM dimensions at the beginning and end. Root and worker blank-page capability probes found that the read-only DOM scope does not expose document.hasFocus; document visibilityState and activeElement are exposed, while document hasFocus must remain an explicit null field with its reason. Unknown required document focus makes strict adoption eligibility DEFER, while all planned20 runs still provide descriptive cadence evidence. No HTML/bootstrap/instrumentation is added. No arbitrary performance evaluation. The frozen runtime emits one `NVWA_EVIDENCE` report after its existing 15-second readiness warmup and capture callback. Collect that report, complete console, DOM snapshot and screenshot; allow at most 45 wall seconds for observation. No new instrumentation or diagnostic page is planned. Retain unsupported-property evidence and its reason; never infer document visibility/focus from browser presentation or AX focus.
+
+The recent 600-frame sample includes the finite sequence's held completed pose after 9 seconds. It is explicitly a mixed active/hold window, **not motion-only cadence**. No navigation/cold-cache/GPU/display/browser-memory claim.
+
+## Frozen identity
+
+A: primary `.work/m1-1/baseline/web`; B: primary `.work/m1-1/web-size/web`. Verify all decoded/encoded paths and hashes against experiment 16 manifests; verify every gzip pairing. Record complete bundle inventories and static equality before and after. Verify the 45 frozen source Git blobs against experiment 16 freeze-before source manifest before and after; these are the historical compiled inputs, not a claim that a concurrently edited checkout matches them. Record current checkout source separately. Bundle identity remains authoritative; no build performed.
+
+## Acceptance rule
+
+Every navigation must request each product resource exactly once, return 200, retain gzip/no-store, and complete the recorded server body write with its exact manifest length. Idle must omit Work; Player must request fixed Work exactly once. Retain excluded/nonproduct requests, including expected missing GLB `.meta`; server writes do not prove browser receipt. Require browser UA consistency with Chrome/155 from prior evidence, same backend, 600 samples, ready/no timeout/no runtime error/capture callback, 18 joints/9 skins/9 meshes/4 morph weights/1 player/1 morph node, physical 1280x720 scale1. Idle: Studio, timeline1/revision0, idle clip, playing and incomplete. Player: Player, timeline3/revision1, turn clip, 9.0 seconds, stopped and completed. Require an unobstructed canvas, document visibility visible and focus true at beginning/end; only endpoint observations, continuity unavailable.
+
+For each workload and every pair i, compute `100 * (B_i.p95 / A_i.p95 - 1)`. All ten pair changes must be <=10%. Medians are descriptive only. First-screen gzip reduction stays >=10% (A20,539,196; B18,034,148; reduction12.196427%). Any breached pair, invalid run, incomplete planned data, unknown required document visibility/focus, or changed identity means **DEFER**. Preserve numeric p95/change for every available pair even when validity is false; descriptive numbers cannot pass the strict gate. Only an all-pair pass makes B eligible for root's independent raw-evidence review; this experiment does not change the default.
+
+## Collection and cleanup
+
+Scripts and this protocol are hashed before and after measurements; summaries reject changed hashes. A chronological append-only attempt ledger records all20 planned navigations before UI execution; summaries reject reordered, missing, or repeated attempts and requests outside their recorded intervals. Save raw evidence under `.work/perf27/raw`, derived evidence/report under `experiments/17-web-cadence-followup/evidence`. Outputs refuse replacement. Owned server is a separate process group with a 120-second automatic lifetime; exact PID/group/start identity must match before TERM, bounded wait, KILL escalation and absence proof. Stop owned server and close task tab after each arm; reset viewport and restore original browser visibility at lease release. Preserve all logs/hashes/screenshots and cleanup records. Root owns publication and worktree archiving.
