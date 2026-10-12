@@ -1,0 +1,35 @@
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 0.041s
+
+OK
+..........................
+----------------------------------------------------------------------
+Ran 26 tests in 0.055s
+
+OK
+PASS actual collector semantic control: descendant focus/blur ignored; window focus/blur retained
+....................
+----------------------------------------------------------------------
+Ran 20 tests in 0.002s
+
+OK
+PASS — actual collector Node harness: matching event IDs/callstacks, false native return, exact this/args/throw, stop/reset/UUID boundaries, bypass UNKNOWN. Browser and physical IME NOT-RUN.
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 0.578s
+
+OK
+✔ SYNTHETIC A/B: actual-anchor adapter preserves A and attaches B, with immediate revocation (2.107334ms)
+✔ SYNTHETIC D: URL remains live and anchor attached until the separate 1000 ms revoke (0.216875ms)
+✔ SYNTHETIC C: null and thrown toBlob failures remain visible and retain original behavior (0.358584ms)
+✔ SYNTHETIC canvas classification never applies D automatic delay to explicit canvas bytes (0.133916ms)
+✔ SYNTHETIC stop cancels pending revoke, releases URL, restores adapters, and is idempotent (0.17825ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 100.415625
