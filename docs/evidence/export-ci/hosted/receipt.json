@@ -1,0 +1,55 @@
+{
+  "run_id": 38278869611,
+  "run_attempt": 1,
+  "event": "pull_request",
+  "url": "https://github.com/Derek-X-Wang/nvwa/actions/runs/38278869611",
+  "conclusion": "success",
+  "head_sha": "fef9ad3955a71a00ccc5b4266fba13a072fc335d",
+  "checked_out_pr_merge_sha": "2ead1b1ca72ebbde5e1dd959a4fda5d1cb138d62",
+  "base_main_sha": "de4ddefab91d21dc6f6d4b81a07b0434fa619273",
+  "jobs": [
+    {
+      "job_id": 114910958923,
+      "name": "Core, CLI, and diagnostic controls",
+      "conclusion": "success",
+      "duration_seconds": 37,
+      "url": "https://github.com/Derek-X-Wang/nvwa/actions/runs/38278869611/job/114910958923"
+    },
+    {
+      "job_id": 114910959128,
+      "name": "macOS CPU tests and Wasm compile check",
+      "conclusion": "success",
+      "duration_seconds": 1810,
+      "url": "https://github.com/Derek-X-Wang/nvwa/actions/runs/38278869611/job/114910959128"
+    }
+  ],
+  "rust_tests": {
+    "macos_workspace": 103,
+    "ubuntu_core_cli_subset": 27,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 0
+  },
+  "diagnostics": {
+    "python": 72,
+    "node_tests": 5,
+    "collector_controls": 2
+  },
+  "native_check": "PASS",
+  "studio_wasm_target_compile": "PASS",
+  "runtime_render_pixels_gpu_ime": "NOT-RUN",
+  "cache_restore_or_upload_steps": 0,
+  "artifact_upload_steps": 0,
+  "limits": [
+    "one successful PR run, not a merged-main run",
+    "new native/Web execution NOT-RUN",
+    "physical IME/DPR/GPU/performance NOT-RUN",
+    "Linux check covers core/CLI, not native Studio"
+  ],
+  "files_sha256": {
+    "ubuntu.log": "961e1e0b6272ee0634432a455be5ea7ee10e10e11bdca7131c2a401ce056288c",
+    "macos.log": "a648d25c6dd110116a0b8596b7c620ef76dce4e8addc77089e20fa7be38ac9b2",
+    "run.json": "2cf38dfad2a027325dde7d211c3c5e67dc35d69fda6ac92219d0a2ce47343308",
+    "api-identity.json": "3a59f26da727e0bebe68aed5939037a5231a676746e4cac453630812bc287cfc"
+  }
+}
