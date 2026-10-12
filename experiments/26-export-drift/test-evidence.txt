@@ -1,0 +1,76 @@
+Harness swallow-error mutation: check=True -> check=False. Original source restored in finally.
+
+test_comparator_failure_propagates (test_compare.HarnessFailureTests.test_comparator_failure_propagates) ... FAIL
+
+======================================================================
+FAIL: test_comparator_failure_propagates (test_compare.HarnessFailureTests.test_comparator_failure_propagates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 110, in test_comparator_failure_propagates
+    with self.assertRaises(subprocess.CalledProcessError) as raised:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CalledProcessError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.025s
+
+FAILED (failures=1)
+
+Restored source:
+test_shape_and_tail_differences_reported (test_compare.ExactnessTests.test_shape_and_tail_differences_reported) ... ok
+test_signed_zero_is_reported (test_compare.ExactnessTests.test_signed_zero_is_reported) ... ok
+test_triangle_winding_and_multiplicity_preserved (test_compare.ExactnessTests.test_triangle_winding_and_multiplicity_preserved) ... ok
+test_comparator_failure_propagates (test_compare.HarnessFailureTests.test_comparator_failure_propagates) ... ok
+test_channel_interpolation_change_detected (test_compare.RealFixtureTests.test_channel_interpolation_change_detected) ... ok
+test_material_change_detected (test_compare.RealFixtureTests.test_material_change_detected) ... ok
+test_nonfinite_animation_rejected_by_actual_validator (test_compare.RealFixtureTests.test_nonfinite_animation_rejected_by_actual_validator) ... ok
+test_one_binary_normal_change_detected (test_compare.RealFixtureTests.test_one_binary_normal_change_detected) ... ok
+test_real_pair_remains_red (test_compare.RealFixtureTests.test_real_pair_remains_red) ... ok
+test_self_control_exact (test_compare.RealFixtureTests.test_self_control_exact) ... ok
+test_skin_joint_order_change_detected (test_compare.RealFixtureTests.test_skin_joint_order_change_detected) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 15.286s
+
+OK
+
+Real exact-mode CLI checks:
+{
+  "byte_equal": {
+    "nvwa-humanoid.glb": false,
+    "nvwa-humanoid.blend": false,
+    "source-structure.json": true
+  },
+  "json_differences": 33,
+  "changed_accessors": [
+    1,
+    5,
+    8,
+    13,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    29,
+    31,
+    33,
+    35,
+    46
+  ],
+  "exact_glb_semantics_equal": false
+}
+actual-pair-red: expected=1, actual=1
+{
+  "byte_equal": {
+    "nvwa-humanoid.glb": true,
+    "nvwa-humanoid.blend": true,
+    "source-structure.json": true
+  },
+  "json_differences": 0,
+  "changed_accessors": [],
+  "exact_glb_semantics_equal": true
+}
+self-control-green: expected=0, actual=0

@@ -1,0 +1,39 @@
+{
+  "factory_startup": false,
+  "runs": [
+    {
+      "pid": 96234,
+      "argv": [
+        "/opt/homebrew/bin/blender",
+        "-b",
+        "-t",
+        "2",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/blender/generate_fixture.py"
+      ],
+      "output": ".work/export-drift/control/run-1",
+      "started_unix": 1791822087.523833,
+      "exit_code": 0,
+      "elapsed_seconds": 2.999905824661255
+    },
+    {
+      "pid": 96308,
+      "argv": [
+        "/opt/homebrew/bin/blender",
+        "-b",
+        "-t",
+        "2",
+        "--python-exit-code",
+        "1",
+        "--python",
+        "tools/blender/generate_fixture.py"
+      ],
+      "output": ".work/export-drift/control/run-2",
+      "started_unix": 1791822090.524322,
+      "exit_code": 0,
+      "elapsed_seconds": 1.8304388523101807
+    }
+  ]
+}

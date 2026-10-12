@@ -1,0 +1,193 @@
+Before byte-gate correction: expected-red CLI tests
+test_cli_rejects_blend_only_change (test_compare.RealFixtureTests.test_cli_rejects_blend_only_change) ... FAIL
+test_cli_rejects_reserialized_glb (test_compare.RealFixtureTests.test_cli_rejects_reserialized_glb) ... FAIL
+test_cli_rejects_source_proof_whitespace (test_compare.RealFixtureTests.test_cli_rejects_source_proof_whitespace) ... FAIL
+
+======================================================================
+FAIL: test_cli_rejects_blend_only_change (test_compare.RealFixtureTests.test_cli_rejects_blend_only_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 62, in test_cli_rejects_blend_only_change
+    self.assert_cli_rejects_bytes_only_change('nvwa-humanoid.blend')
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 50, in assert_cli_rejects_bytes_only_change
+    self.assertEqual(result.returncode,1,result.stdout+result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : {
+  "byte_equal": {
+    "nvwa-humanoid.glb": true,
+    "nvwa-humanoid.blend": false,
+    "source-structure.json": true
+  },
+  "json_differences": 0,
+  "changed_accessors": [],
+  "exact_glb_semantics_equal": true
+}
+
+
+======================================================================
+FAIL: test_cli_rejects_reserialized_glb (test_compare.RealFixtureTests.test_cli_rejects_reserialized_glb)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 56, in test_cli_rejects_reserialized_glb
+    self.assert_cli_rejects_bytes_only_change('nvwa-humanoid.glb')
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 50, in assert_cli_rejects_bytes_only_change
+    self.assertEqual(result.returncode,1,result.stdout+result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : {
+  "byte_equal": {
+    "nvwa-humanoid.glb": false,
+    "nvwa-humanoid.blend": true,
+    "source-structure.json": true
+  },
+  "json_differences": 0,
+  "changed_accessors": [],
+  "exact_glb_semantics_equal": true
+}
+
+
+======================================================================
+FAIL: test_cli_rejects_source_proof_whitespace (test_compare.RealFixtureTests.test_cli_rejects_source_proof_whitespace)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 66, in test_cli_rejects_source_proof_whitespace
+    self.assert_cli_rejects_bytes_only_change('source-structure.json')
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 50, in assert_cli_rejects_bytes_only_change
+    self.assertEqual(result.returncode,1,result.stdout+result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : {
+  "byte_equal": {
+    "nvwa-humanoid.glb": true,
+    "nvwa-humanoid.blend": true,
+    "source-structure.json": false
+  },
+  "json_differences": 0,
+  "changed_accessors": [],
+  "exact_glb_semantics_equal": true
+}
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 7.810s
+
+FAILED (failures=3)
+
+exit_code=1
+
+Corrected byte gate: restored-green complete suite
+test_shape_and_tail_differences_reported (test_compare.ExactnessTests.test_shape_and_tail_differences_reported) ... ok
+test_signed_zero_is_reported (test_compare.ExactnessTests.test_signed_zero_is_reported) ... ok
+test_triangle_winding_and_multiplicity_preserved (test_compare.ExactnessTests.test_triangle_winding_and_multiplicity_preserved) ... ok
+test_comparator_failure_propagates (test_compare.HarnessFailureTests.test_comparator_failure_propagates) ... ok
+test_channel_interpolation_change_detected (test_compare.RealFixtureTests.test_channel_interpolation_change_detected) ... ok
+test_cli_rejects_blend_only_change (test_compare.RealFixtureTests.test_cli_rejects_blend_only_change) ... ok
+test_cli_rejects_reserialized_glb (test_compare.RealFixtureTests.test_cli_rejects_reserialized_glb) ... ok
+test_cli_rejects_source_proof_whitespace (test_compare.RealFixtureTests.test_cli_rejects_source_proof_whitespace) ... ok
+test_material_change_detected (test_compare.RealFixtureTests.test_material_change_detected) ... ok
+test_nonfinite_animation_rejected_by_actual_validator (test_compare.RealFixtureTests.test_nonfinite_animation_rejected_by_actual_validator) ... ok
+test_one_binary_normal_change_detected (test_compare.RealFixtureTests.test_one_binary_normal_change_detected) ... ok
+test_real_pair_byte_verdict_matches_actual_files (test_compare.RealFixtureTests.test_real_pair_byte_verdict_matches_actual_files) ... ok
+test_self_control_exact (test_compare.RealFixtureTests.test_self_control_exact) ... ok
+test_skin_joint_order_change_detected (test_compare.RealFixtureTests.test_skin_joint_order_change_detected) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 22.798s
+
+OK
+
+exit_code=0
+
+Explicit gate mutation: restored prior semantic-only condition
+test_cli_rejects_blend_only_change (test_compare.RealFixtureTests.test_cli_rejects_blend_only_change) ... FAIL
+test_cli_rejects_reserialized_glb (test_compare.RealFixtureTests.test_cli_rejects_reserialized_glb) ... FAIL
+test_cli_rejects_source_proof_whitespace (test_compare.RealFixtureTests.test_cli_rejects_source_proof_whitespace) ... FAIL
+
+======================================================================
+FAIL: test_cli_rejects_blend_only_change (test_compare.RealFixtureTests.test_cli_rejects_blend_only_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 66, in test_cli_rejects_blend_only_change
+    self.assert_cli_rejects_bytes_only_change('nvwa-humanoid.blend')
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 53, in assert_cli_rejects_bytes_only_change
+    self.assertEqual(result.returncode,1,result.stdout+result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : {
+  "byte_equal": {
+    "nvwa-humanoid.glb": true,
+    "nvwa-humanoid.blend": false,
+    "source-structure.json": true
+  },
+  "all_compared_artifacts_byte_equal": false,
+  "json_differences": 0,
+  "changed_accessors": [],
+  "exact_glb_semantics_equal": true
+}
+
+
+======================================================================
+FAIL: test_cli_rejects_reserialized_glb (test_compare.RealFixtureTests.test_cli_rejects_reserialized_glb)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 60, in test_cli_rejects_reserialized_glb
+    self.assert_cli_rejects_bytes_only_change('nvwa-humanoid.glb')
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 53, in assert_cli_rejects_bytes_only_change
+    self.assertEqual(result.returncode,1,result.stdout+result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : {
+  "byte_equal": {
+    "nvwa-humanoid.glb": false,
+    "nvwa-humanoid.blend": true,
+    "source-structure.json": true
+  },
+  "all_compared_artifacts_byte_equal": false,
+  "json_differences": 0,
+  "changed_accessors": [],
+  "exact_glb_semantics_equal": true
+}
+
+
+======================================================================
+FAIL: test_cli_rejects_source_proof_whitespace (test_compare.RealFixtureTests.test_cli_rejects_source_proof_whitespace)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 70, in test_cli_rejects_source_proof_whitespace
+    self.assert_cli_rejects_bytes_only_change('source-structure.json')
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/experiments/26-export-drift/test_compare.py", line 53, in assert_cli_rejects_bytes_only_change
+    self.assertEqual(result.returncode,1,result.stdout+result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : {
+  "byte_equal": {
+    "nvwa-humanoid.glb": true,
+    "nvwa-humanoid.blend": true,
+    "source-structure.json": false
+  },
+  "all_compared_artifacts_byte_equal": false,
+  "json_differences": 0,
+  "changed_accessors": [],
+  "exact_glb_semantics_equal": true
+}
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 7.473s
+
+FAILED (failures=3)
+
+mutation_red_exit=1
+
+Restored byte-gate condition
+test_cli_rejects_blend_only_change (test_compare.RealFixtureTests.test_cli_rejects_blend_only_change) ... ok
+test_cli_rejects_reserialized_glb (test_compare.RealFixtureTests.test_cli_rejects_reserialized_glb) ... ok
+test_cli_rejects_source_proof_whitespace (test_compare.RealFixtureTests.test_cli_rejects_source_proof_whitespace) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 7.645s
+
+OK
+
+restored_green_exit=0
