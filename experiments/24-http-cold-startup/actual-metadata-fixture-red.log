@@ -1,0 +1,28 @@
+test_actual_critical_glb_404_and_unexpected_404_remain_red (test_boundary.ActualStartupTests.test_actual_critical_glb_404_and_unexpected_404_remain_red) ... ok
+test_actual_optional_metadata_fallback_is_explicit_and_critical_bodies_match (test_boundary.ActualStartupTests.test_actual_optional_metadata_fallback_is_explicit_and_critical_bodies_match) ... ERROR
+test_optional_sidecar_exception_does_not_accept_failed_or_frozen_metadata (test_boundary.ActualStartupTests.test_optional_sidecar_exception_does_not_accept_failed_or_frozen_metadata) ... ok
+test_actual_http_has_no_store_ignores_conditional_cache_and_logs_body (test_boundary.BoundaryTests.test_actual_http_has_no_store_ignores_conditional_cache_and_logs_body) ... ok
+test_cold_claim_rejects_missing_wasm_glb_cached_forged_and_failed_records (test_boundary.BoundaryTests.test_cold_claim_rejects_missing_wasm_glb_cached_forged_and_failed_records) ... ok
+test_each_startup_has_fresh_single_use_prefix_and_identical_wrapper (test_boundary.BoundaryTests.test_each_startup_has_fresh_single_use_prefix_and_identical_wrapper) ... ok
+test_frozen_gzip_and_identity_exact_bytes_and_q_zero (test_boundary.BoundaryTests.test_frozen_gzip_and_identity_exact_bytes_and_q_zero) ... ok
+test_malformed_timing_and_mixed_clock_never_pass (test_boundary.BoundaryTests.test_malformed_timing_and_mixed_clock_never_pass) ... ok
+test_reconciliation_accepts_complete_fixture_not_browser_proof (test_boundary.BoundaryTests.test_reconciliation_accepts_complete_fixture_not_browser_proof) ... ok
+test_rejects_corrupt_gzip_at_freeze_and_changed_response_after_freeze (test_boundary.BoundaryTests.test_rejects_corrupt_gzip_at_freeze_and_changed_response_after_freeze) ... ok
+test_traversal_private_files_and_directory_listing_are_unavailable (test_boundary.BoundaryTests.test_traversal_private_files_and_directory_listing_are_unavailable) ... ok
+
+======================================================================
+ERROR: test_actual_optional_metadata_fallback_is_explicit_and_critical_bodies_match (test_boundary.ActualStartupTests.test_actual_optional_metadata_fallback_is_explicit_and_critical_bodies_match)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/24-http-cold-startup/test_boundary.py", line 176, in test_actual_optional_metadata_fallback_is_explicit_and_critical_bodies_match
+    result = self.verify_actual()
+  File "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/24-http-cold-startup/test_boundary.py", line 173, in verify_actual
+    return verify(actual['capture'], actual['manifest'], actual['requests'], actual['capture']['runId'])
+  File "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/24-http-cold-startup/verify_capture.py", line 34, in verify
+    raise ValueError('failed, interrupted or cached response: ' + str(name))
+ValueError: failed, interrupted or cached response: assets/fixtures/nvwa-humanoid.glb.meta
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.563s
+
+FAILED (errors=1)

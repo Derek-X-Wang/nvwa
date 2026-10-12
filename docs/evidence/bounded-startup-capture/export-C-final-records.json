@@ -1,0 +1,236 @@
+[
+  {
+    "case": "C",
+    "phase": "start-event",
+    "isTrusted": true,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED"
+  },
+  {
+    "sequence": 1,
+    "case": "C",
+    "phase": "hooks-ready",
+    "elapsedMs": 0.10000002384185791,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "runtimeUrl": "http://127.0.0.1:9201/run/a7e4342c7955432b95338b0a7fc2abf7/index.html?benchmark=1",
+    "evidenceScope": "page-instrumented adapter; file outcome pending"
+  },
+  {
+    "sequence": 2,
+    "case": "C",
+    "phase": "blob-url-created",
+    "elapsedMs": 16080.700000047684,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "source": "runtime-encoded-blob",
+    "blobBytes": 304710,
+    "blobType": ""
+  },
+  {
+    "sequence": 3,
+    "case": "C",
+    "phase": "anchor-click-attempt",
+    "elapsedMs": 16083.600000023842,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "source": "runtime-encoded-blob",
+    "automatic": true,
+    "filename": "nvwa-web-benchmark.png",
+    "originallyAttached": false,
+    "anchorAttached": false,
+    "blobBytes": 304710,
+    "blobType": "",
+    "canvas": {
+      "width": 1280,
+      "height": 720
+    },
+    "revokePolicy": "preserve-runtime-request"
+  },
+  {
+    "sequence": 4,
+    "case": "C",
+    "phase": "revoke-request",
+    "elapsedMs": 16085.5,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-benchmark.png",
+    "anchorAttached": false
+  },
+  {
+    "sequence": 5,
+    "case": "C",
+    "phase": "blob-url-revoked",
+    "elapsedMs": 16087,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-benchmark.png",
+    "urlLifetimeMs": 6.5,
+    "delayFromRequestMs": 1.5,
+    "anchorAttached": false,
+    "cleanup": false
+  },
+  {
+    "sequence": 6,
+    "case": "C",
+    "phase": "explicit-button-event",
+    "elapsedMs": 20629.200000047684,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED",
+    "event": {
+      "isTrusted": true,
+      "activation": {
+        "isActive": true,
+        "hasBeenActive": true
+      }
+    }
+  },
+  {
+    "sequence": 7,
+    "case": "C",
+    "phase": "toBlob-request",
+    "elapsedMs": 20631.900000035763,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED",
+    "event": {
+      "isTrusted": true,
+      "activation": {
+        "isActive": true,
+        "hasBeenActive": true
+      }
+    },
+    "canvas": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  {
+    "sequence": 8,
+    "case": "C",
+    "phase": "toBlob-blob",
+    "elapsedMs": 20666,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED",
+    "event": {
+      "isTrusted": true,
+      "activation": {
+        "isActive": true,
+        "hasBeenActive": true
+      }
+    },
+    "canvas": {
+      "width": 1280,
+      "height": 720
+    },
+    "callbackActivation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "blobBytes": 325267,
+    "blobType": "image/png"
+  },
+  {
+    "sequence": 9,
+    "case": "C",
+    "phase": "blob-url-created",
+    "elapsedMs": 20667.30000001192,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED",
+    "source": "real-canvas-toBlob",
+    "blobBytes": 325267,
+    "blobType": "image/png"
+  },
+  {
+    "sequence": 10,
+    "case": "C",
+    "phase": "anchor-click-attempt",
+    "elapsedMs": 20668.100000023842,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED",
+    "source": "real-canvas-toBlob",
+    "automatic": false,
+    "filename": "nvwa-web-canvas.png",
+    "originallyAttached": true,
+    "anchorAttached": true,
+    "blobBytes": 325267,
+    "blobType": "image/png",
+    "canvas": {
+      "width": 1280,
+      "height": 720
+    },
+    "revokePolicy": "preserve-runtime-request"
+  },
+  {
+    "sequence": 11,
+    "case": "C",
+    "phase": "revoke-request",
+    "elapsedMs": 21670.900000035763,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-canvas.png",
+    "anchorAttached": false
+  },
+  {
+    "sequence": 12,
+    "case": "C",
+    "phase": "blob-url-revoked",
+    "elapsedMs": 21671.900000035763,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-canvas.png",
+    "urlLifetimeMs": 1004.6000000238419,
+    "delayFromRequestMs": 1.100000023841858,
+    "anchorAttached": false,
+    "cleanup": false
+  },
+  {
+    "sequence": 13,
+    "case": "C",
+    "phase": "probe-stopped",
+    "elapsedMs": 88503.10000002384,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED"
+  }
+]

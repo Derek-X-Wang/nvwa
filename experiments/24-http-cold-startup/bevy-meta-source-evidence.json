@@ -1,0 +1,20 @@
+{
+  "package": "bevy_asset",
+  "version": "0.19.1",
+  "source": "installed Cargo registry primary source; version matches integration Cargo.lock",
+  "files": {
+    "src/io/wasm.rs": {
+      "sha256": "df8f75281819bcead8a1f1d8dffb188e8767b4da88ceda25d9fe1602c0633918"
+    },
+    "src/server/mod.rs": {
+      "sha256": "90bfda65679fc6cfb046dda1e2e7b5795d39e73778a15d0bc1eb7ef8d3e9bd25"
+    }
+  },
+  "boundary": {
+    "src/io/wasm.rs:115": "HTTP404 maps to AssetReaderError::NotFound",
+    "src/io/wasm.rs:127-129": "read_meta constructs get_meta_path then fetches that path",
+    "src/server/mod.rs:1616-1628": "NotFound metadata selects registered loader.default_meta()",
+    "src/server/mod.rs:1645": "actual asset reader.read follows metadata selection"
+  },
+  "exception": "only assets/fixtures/nvwa-humanoid.glb.meta404 absent from frozen manifest, exact no-store28-byte missing response; actualGLB200 remains required"
+}

@@ -1,0 +1,91 @@
+[
+  {
+    "case": "A",
+    "phase": "start-event",
+    "isTrusted": true,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED"
+  },
+  {
+    "sequence": 1,
+    "case": "A",
+    "phase": "hooks-ready",
+    "elapsedMs": 0.09999996423721313,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "runtimeUrl": "http://127.0.0.1:9201/run/e7891c70cebc436899b1b24be73e3a4d/index.html?benchmark=1",
+    "evidenceScope": "page-instrumented adapter; file outcome pending"
+  },
+  {
+    "sequence": 2,
+    "case": "A",
+    "phase": "blob-url-created",
+    "elapsedMs": 15935.099999964237,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "source": "runtime-encoded-blob",
+    "blobBytes": 304792,
+    "blobType": ""
+  },
+  {
+    "sequence": 3,
+    "case": "A",
+    "phase": "anchor-click-attempt",
+    "elapsedMs": 15936.800000011921,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "source": "runtime-encoded-blob",
+    "automatic": true,
+    "filename": "nvwa-web-benchmark.png",
+    "originallyAttached": false,
+    "anchorAttached": false,
+    "blobBytes": 304792,
+    "blobType": "",
+    "canvas": {
+      "width": 1280,
+      "height": 720
+    },
+    "revokePolicy": "preserve-runtime-request"
+  },
+  {
+    "sequence": 4,
+    "case": "A",
+    "phase": "revoke-request",
+    "elapsedMs": 15937.5,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-benchmark.png",
+    "anchorAttached": false
+  },
+  {
+    "sequence": 5,
+    "case": "A",
+    "phase": "blob-url-revoked",
+    "elapsedMs": 15938.199999988079,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-benchmark.png",
+    "urlLifetimeMs": 3.100000023841858,
+    "delayFromRequestMs": 0.699999988079071,
+    "anchorAttached": false,
+    "cleanup": false
+  }
+]

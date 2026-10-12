@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "entries": 60,
+  "production_inputs": 31,
+  "http_startups": [
+    {
+      "runId": "05a91ac91b4f4a2cb0ffe49c5d627773",
+      "navigationEntries": 1,
+      "resourceEntries": 4,
+      "scope": "structure and finite timing validation only; first presentation and cold state NOT-RUN",
+      "actualGetRequests": 5,
+      "criticalAssets": [
+        "index.html",
+        "startup-diagnostics.js",
+        "nvwa_studio.js",
+        "nvwa_studio_bg.wasm",
+        "assets/fixtures/nvwa-humanoid.glb"
+      ],
+      "optionalMissingSidecars": [
+        {
+          "member": "assets/fixtures/nvwa-humanoid.glb.meta",
+          "status": 404,
+          "bodyBytesWritten": 28,
+          "cacheControl": "no-store",
+          "reason": "verified Bevy0.19.1 optional metadata NotFound selects loader default; actualGLB200 required separately",
+          "browserTiming": "no resource-timing transfer claim for optional404"
+        }
+      ],
+      "bodyBytesWritten": 20564456,
+      "claim": "fresh-prefix HTTP no-store boundary with exact frozen response bodies",
+      "exactFirstPresentation": "NOT-RUN",
+      "browserGpuOsShaderCold": "NOT-RUN"
+    },
+    {
+      "runId": "ff0e05e13bc842ebb83887eb36666a72",
+      "navigationEntries": 1,
+      "resourceEntries": 4,
+      "scope": "structure and finite timing validation only; first presentation and cold state NOT-RUN",
+      "actualGetRequests": 5,
+      "criticalAssets": [
+        "index.html",
+        "startup-diagnostics.js",
+        "nvwa_studio.js",
+        "nvwa_studio_bg.wasm",
+        "assets/fixtures/nvwa-humanoid.glb"
+      ],
+      "optionalMissingSidecars": [
+        {
+          "member": "assets/fixtures/nvwa-humanoid.glb.meta",
+          "status": 404,
+          "bodyBytesWritten": 28,
+          "cacheControl": "no-store",
+          "reason": "verified Bevy0.19.1 optional metadata NotFound selects loader default; actualGLB200 required separately",
+          "browserTiming": "no resource-timing transfer claim for optional404"
+        }
+      ],
+      "bodyBytesWritten": 20564456,
+      "claim": "fresh-prefix HTTP no-store boundary with exact frozen response bodies",
+      "exactFirstPresentation": "NOT-RUN",
+      "browserGpuOsShaderCold": "NOT-RUN"
+    }
+  ],
+  "runtime_console": {
+    "startup1": "NOT-RUN: empty captured console",
+    "startup2": {
+      "clock": "bevy_TimeReal_since_first_update",
+      "first_asset_ready_seconds": 0.4248,
+      "capture_callback_seconds": 15.4457
+    }
+  },
+  "iframe_attempts": {
+    "A": "bounded no-event observation; no global absence/causal claim",
+    "B": "bounded no-event observation; no global absence/causal claim",
+    "D": "bounded no-event observation; no global absence/causal claim",
+    "C": "bounded no-event observation; no global absence/causal claim"
+  },
+  "actual_pngs": [
+    {
+      "file": "startup-2-auto.png",
+      "bytes": 304648,
+      "width": 1280,
+      "height": 720,
+      "color": "RGB",
+      "sha256": "3b9f64d0a20d8de741f69ee05d01a9550cc99edb2252f872dba73987b2eae54d",
+      "semantic_pixels": "separately inspected by root; PNG syntax alone is not character proof"
+    },
+    {
+      "file": "export-top-explicit.png",
+      "bytes": 324903,
+      "width": 1280,
+      "height": 720,
+      "color": "RGB",
+      "sha256": "0bcbdafe5489c978a77e572080df56a76cdf264c6467456c8b5cc502c51493d8",
+      "semantic_pixels": "separately inspected by root; PNG syntax alone is not character proof"
+    }
+  ],
+  "limits": [
+    "HTTP cache boundary only",
+    "original DPR trigger NOT-RUN",
+    "exact first presentation and full cold state NOT-RUN",
+    "original top-level screenshot failure cause UNKNOWN"
+  ]
+}

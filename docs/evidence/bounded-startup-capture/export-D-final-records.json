@@ -1,0 +1,114 @@
+[
+  {
+    "case": "D",
+    "phase": "start-event",
+    "isTrusted": true,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED"
+  },
+  {
+    "sequence": 1,
+    "case": "D",
+    "phase": "hooks-ready",
+    "elapsedMs": 0.10000002384185791,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "runtimeUrl": "http://127.0.0.1:9201/run/df3bb15c483d4622a78bef6c00bb2b54/index.html?benchmark=1",
+    "evidenceScope": "page-instrumented adapter; file outcome pending"
+  },
+  {
+    "sequence": 2,
+    "case": "D",
+    "phase": "blob-url-created",
+    "elapsedMs": 15948.199999988079,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "source": "runtime-encoded-blob",
+    "blobBytes": 304732,
+    "blobType": ""
+  },
+  {
+    "sequence": 3,
+    "case": "D",
+    "phase": "probe-attached-anchor",
+    "elapsedMs": 15949.100000023842,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-benchmark.png"
+  },
+  {
+    "sequence": 4,
+    "case": "D",
+    "phase": "anchor-click-attempt",
+    "elapsedMs": 15949.400000035763,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "source": "runtime-encoded-blob",
+    "automatic": true,
+    "filename": "nvwa-web-benchmark.png",
+    "originallyAttached": false,
+    "anchorAttached": true,
+    "blobBytes": 304732,
+    "blobType": "",
+    "canvas": {
+      "width": 1280,
+      "height": 720
+    },
+    "revokePolicy": "delay-1000ms"
+  },
+  {
+    "sequence": 5,
+    "case": "D",
+    "phase": "revoke-request",
+    "elapsedMs": 15949.900000035763,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-benchmark.png",
+    "anchorAttached": true
+  },
+  {
+    "sequence": 6,
+    "case": "D",
+    "phase": "blob-url-revoked",
+    "elapsedMs": 16951.400000035763,
+    "activation": {
+      "isActive": false,
+      "hasBeenActive": false
+    },
+    "durableFile": "NOT-VERIFIED",
+    "filename": "nvwa-web-benchmark.png",
+    "urlLifetimeMs": 1003.2000000476837,
+    "delayFromRequestMs": 1001.5,
+    "anchorAttached": false,
+    "cleanup": false
+  },
+  {
+    "sequence": 7,
+    "case": "D",
+    "phase": "probe-stopped",
+    "elapsedMs": 51212.5,
+    "activation": {
+      "isActive": true,
+      "hasBeenActive": true
+    },
+    "durableFile": "NOT-VERIFIED"
+  }
+]
