@@ -1,0 +1,424 @@
+﻿2026-10-12T16:39:01.6669350Z Current runner version: '2.337.0'
+2026-10-12T16:39:01.6684103Z ##[group]Runner Image Provisioner
+2026-10-12T16:39:01.6684590Z Hosted Compute Agent
+2026-10-12T16:39:01.6684921Z Version: 20261002.596
+2026-10-12T16:39:01.6685368Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-12T16:39:01.6685780Z Build Date: 2026-10-02T22:28:27Z
+2026-10-12T16:39:01.6686367Z Worker ID: {73fe36fc-49f6-4e93-bd23-a39400212623}
+2026-10-12T16:39:01.6686766Z Region: centralus
+2026-10-12T16:39:01.6687079Z Cloud: Azure
+2026-10-12T16:39:01.6687466Z ##[endgroup]
+2026-10-12T16:39:01.6688183Z ##[group]Operating System
+2026-10-12T16:39:01.6688567Z Ubuntu
+2026-10-12T16:39:01.6688882Z 24.04.5
+2026-10-12T16:39:01.6689182Z LTS
+2026-10-12T16:39:01.6689544Z ##[endgroup]
+2026-10-12T16:39:01.6689864Z ##[group]Runner Image
+2026-10-12T16:39:01.6690256Z Image: ubuntu-24.04
+2026-10-12T16:39:01.6690598Z Version: 20261004.327.1
+2026-10-12T16:39:01.6691333Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-12T16:39:01.6692198Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-12T16:39:01.6692782Z ##[endgroup]
+2026-10-12T16:39:01.6693407Z ##[group]GITHUB_TOKEN Permissions
+2026-10-12T16:39:01.6694526Z Contents: read
+2026-10-12T16:39:01.6694896Z Metadata: read
+2026-10-12T16:39:01.6695217Z ##[endgroup]
+2026-10-12T16:39:01.6696559Z Secret source: Actions
+2026-10-12T16:39:01.6697091Z Cache mode: write
+2026-10-12T16:39:01.6697549Z Prepare workflow directory
+2026-10-12T16:39:01.6947434Z Prepare all required actions
+2026-10-12T16:39:01.6976196Z Getting action download info
+2026-10-12T16:39:01.9006872Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-12T16:39:02.0605239Z Complete job name: Core, CLI, and diagnostic controls
+2026-10-12T16:39:02.1048001Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-12T16:39:02.1048511Z with:
+2026-10-12T16:39:02.1048758Z   persist-credentials: false
+2026-10-12T16:39:02.1049046Z   repository: Derek-X-Wang/nvwa
+2026-10-12T16:39:02.1051019Z   token: ***
+2026-10-12T16:39:02.1051256Z   ssh-strict: true
+2026-10-12T16:39:02.1051494Z   ssh-user: git
+2026-10-12T16:39:02.1051726Z   clean: true
+2026-10-12T16:39:02.1051972Z   sparse-checkout-cone-mode: true
+2026-10-12T16:39:02.1052259Z   fetch-depth: 1
+2026-10-12T16:39:02.1052497Z   fetch-tags: false
+2026-10-12T16:39:02.1052740Z   show-progress: true
+2026-10-12T16:39:02.1052987Z   lfs: false
+2026-10-12T16:39:02.1053216Z   submodules: false
+2026-10-12T16:39:02.1053526Z   set-safe-directory: true
+2026-10-12T16:39:02.1053838Z   allow-unsafe-pr-checkout: false
+2026-10-12T16:39:02.1054188Z env:
+2026-10-12T16:39:02.1054416Z   CARGO_TERM_COLOR: always
+2026-10-12T16:39:02.1054678Z   CARGO_INCREMENTAL: 0
+2026-10-12T16:39:02.1054955Z   CARGO_PROFILE_DEV_DEBUG: 0
+2026-10-12T16:39:02.1055228Z   CARGO_PROFILE_TEST_DEBUG: 0
+2026-10-12T16:39:02.1055494Z   CARGO_BUILD_JOBS: 2
+2026-10-12T16:39:02.1055743Z ##[endgroup]
+2026-10-12T16:39:02.1700608Z Syncing repository: Derek-X-Wang/nvwa
+2026-10-12T16:39:02.1702226Z ##[group]Getting Git version info
+2026-10-12T16:39:02.1702750Z Working directory is '/home/runner/work/nvwa/nvwa'
+2026-10-12T16:39:02.1703537Z [command]/usr/bin/git version
+2026-10-12T16:39:02.1810241Z git version 2.55.0
+2026-10-12T16:39:02.1823037Z ##[endgroup]
+2026-10-12T16:39:02.1831888Z Temporarily overriding HOME='/home/runner/work/_temp/2a7d3380-f9b8-447d-afbc-f9fbfcf0da3f' before making global git config changes
+2026-10-12T16:39:02.1833017Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T16:39:02.1836207Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nvwa/nvwa
+2026-10-12T16:39:02.1875934Z Deleting the contents of '/home/runner/work/nvwa/nvwa'
+2026-10-12T16:39:02.1878485Z ##[group]Determining repository object format
+2026-10-12T16:39:02.1879441Z ##[endgroup]
+2026-10-12T16:39:02.1879992Z ##[group]Initializing the repository
+2026-10-12T16:39:02.1882503Z [command]/usr/bin/git init /home/runner/work/nvwa/nvwa
+2026-10-12T16:39:02.1979346Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-12T16:39:02.1980266Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-12T16:39:02.1981069Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-12T16:39:02.1981712Z hint: call:
+2026-10-12T16:39:02.1982079Z hint:
+2026-10-12T16:39:02.1982570Z hint: 	git config --global init.defaultBranch <name>
+2026-10-12T16:39:02.1983111Z hint:
+2026-10-12T16:39:02.1983606Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-12T16:39:02.1984436Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-12T16:39:02.1985101Z hint:
+2026-10-12T16:39:02.1985494Z hint: 	git branch -m <name>
+2026-10-12T16:39:02.1985879Z hint:
+2026-10-12T16:39:02.1986510Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-12T16:39:02.1987280Z Initialized empty Git repository in /home/runner/work/nvwa/nvwa/.git/
+2026-10-12T16:39:02.1993256Z [command]/usr/bin/git remote add origin https://github.com/Derek-X-Wang/nvwa
+2026-10-12T16:39:02.2041128Z ##[endgroup]
+2026-10-12T16:39:02.2041771Z ##[group]Disabling automatic garbage collection
+2026-10-12T16:39:02.2043795Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-12T16:39:02.2079458Z ##[endgroup]
+2026-10-12T16:39:02.2080290Z ##[group]Setting up auth
+2026-10-12T16:39:02.2080687Z Removing SSH command configuration
+2026-10-12T16:39:02.2082447Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T16:39:02.2114648Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T16:39:02.2426477Z Removing HTTP extra header
+2026-10-12T16:39:02.2429936Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T16:39:02.2456985Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T16:39:02.2616692Z Removing includeIf entries pointing to credentials config files
+2026-10-12T16:39:02.2619169Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T16:39:02.2645262Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T16:39:02.2842662Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-12T16:39:02.2872767Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/nvwa/nvwa/.git.path /home/runner/work/_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config
+2026-10-12T16:39:02.2900139Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/nvwa/nvwa/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config
+2026-10-12T16:39:02.2931337Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config
+2026-10-12T16:39:02.2960087Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config
+2026-10-12T16:39:02.2986228Z ##[endgroup]
+2026-10-12T16:39:02.2986838Z ##[group]Fetching the repository
+2026-10-12T16:39:02.2990929Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2ead1b1ca72ebbde5e1dd959a4fda5d1cb138d62:refs/remotes/pull/35/merge
+2026-10-12T16:39:04.4475614Z From https://github.com/Derek-X-Wang/nvwa
+2026-10-12T16:39:04.4477196Z  * [new ref]         2ead1b1ca72ebbde5e1dd959a4fda5d1cb138d62 -> pull/35/merge
+2026-10-12T16:39:04.4480211Z ##[endgroup]
+2026-10-12T16:39:04.4481367Z ##[group]Determining the checkout info
+2026-10-12T16:39:04.4482683Z ##[endgroup]
+2026-10-12T16:39:04.4484098Z [command]/usr/bin/git sparse-checkout disable
+2026-10-12T16:39:04.4529953Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-12T16:39:04.4558301Z ##[group]Checking out the ref
+2026-10-12T16:39:04.4560163Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/35/merge
+2026-10-12T16:39:04.6978987Z Note: switching to 'refs/remotes/pull/35/merge'.
+2026-10-12T16:39:04.6979676Z 
+2026-10-12T16:39:04.6980231Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-12T16:39:04.6980916Z changes and commit them, and you can discard any commits you make in this
+2026-10-12T16:39:04.6981365Z state without impacting any branches by switching back to a branch.
+2026-10-12T16:39:04.6981633Z 
+2026-10-12T16:39:04.6981835Z If you want to create a new branch to retain commits you create, you may
+2026-10-12T16:39:04.6982282Z do so (now or later) by using -c with the switch command. Example:
+2026-10-12T16:39:04.6982512Z 
+2026-10-12T16:39:04.6982630Z   git switch -c <new-branch-name>
+2026-10-12T16:39:04.6982793Z 
+2026-10-12T16:39:04.6982932Z Or undo this operation with:
+2026-10-12T16:39:04.6983091Z 
+2026-10-12T16:39:04.6983198Z   git switch -
+2026-10-12T16:39:04.6983385Z 
+2026-10-12T16:39:04.6983611Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-12T16:39:04.6983875Z 
+2026-10-12T16:39:04.6984115Z HEAD is now at 2ead1b1 Merge fef9ad3955a71a00ccc5b4266fba13a072fc335d into de4ddefab91d21dc6f6d4b81a07b0434fa619273
+2026-10-12T16:39:04.7014769Z ##[endgroup]
+2026-10-12T16:39:04.7054533Z [command]/usr/bin/git log -1 --format=%H
+2026-10-12T16:39:04.7078198Z 2ead1b1ca72ebbde5e1dd959a4fda5d1cb138d62
+2026-10-12T16:39:04.7085379Z ##[group]Removing auth
+2026-10-12T16:39:04.7085701Z Removing SSH command configuration
+2026-10-12T16:39:04.7088328Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T16:39:04.7116318Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T16:39:04.7286672Z Removing HTTP extra header
+2026-10-12T16:39:04.7289154Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T16:39:04.7317164Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T16:39:04.7486559Z Removing includeIf entries pointing to credentials config files
+2026-10-12T16:39:04.7488821Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T16:39:04.7513285Z includeif.gitdir:/home/runner/work/nvwa/nvwa/.git.path
+2026-10-12T16:39:04.7513712Z includeif.gitdir:/home/runner/work/nvwa/nvwa/.git/worktrees/*.path
+2026-10-12T16:39:04.7514009Z includeif.gitdir:/github/workspace/.git.path
+2026-10-12T16:39:04.7514247Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-12T16:39:04.7519431Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/nvwa/nvwa/.git.path
+2026-10-12T16:39:04.7541259Z /home/runner/work/_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config
+2026-10-12T16:39:04.7547540Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/nvwa/nvwa/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-23bbdbf8\-90f6\-4cb5\-b6a2\-b4f4d07fba59\.config
+2026-10-12T16:39:04.7683756Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/nvwa/nvwa/.git/worktrees/*.path
+2026-10-12T16:39:04.7704987Z /home/runner/work/_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config
+2026-10-12T16:39:04.7710049Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/nvwa/nvwa/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-23bbdbf8\-90f6\-4cb5\-b6a2\-b4f4d07fba59\.config
+2026-10-12T16:39:04.8278314Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-12T16:39:04.8304634Z /github/runner_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config
+2026-10-12T16:39:04.8310710Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-23bbdbf8\-90f6\-4cb5\-b6a2\-b4f4d07fba59\.config
+2026-10-12T16:39:04.8879975Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-12T16:39:04.8903593Z /github/runner_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config
+2026-10-12T16:39:04.8938677Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-23bbdbf8\-90f6\-4cb5\-b6a2\-b4f4d07fba59\.config
+2026-10-12T16:39:05.0087729Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T16:39:05.0286199Z Removing credentials config '/home/runner/work/_temp/git-credentials-23bbdbf8-90f6-4cb5-b6a2-b4f4d07fba59.config'
+2026-10-12T16:39:05.0293578Z ##[endgroup]
+2026-10-12T16:39:05.1278809Z ##[group]Run rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+2026-10-12T16:39:05.1279372Z [36;1mrustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown[0m
+2026-10-12T16:39:05.1793913Z shell: /usr/bin/bash -e {0}
+2026-10-12T16:39:05.1794072Z env:
+2026-10-12T16:39:05.1794209Z   CARGO_TERM_COLOR: always
+2026-10-12T16:39:05.1794351Z   CARGO_INCREMENTAL: 0
+2026-10-12T16:39:05.1794484Z   CARGO_PROFILE_DEV_DEBUG: 0
+2026-10-12T16:39:05.1794624Z   CARGO_PROFILE_TEST_DEBUG: 0
+2026-10-12T16:39:05.1794758Z   CARGO_BUILD_JOBS: 2
+2026-10-12T16:39:05.1794880Z ##[endgroup]
+2026-10-12T16:39:05.2842785Z info: syncing channel updates for 1.95.0-x86_64-unknown-linux-gnu
+2026-10-12T16:39:05.9319929Z info: latest update on 2026-04-16 for version 1.95.0 (59807616e 2026-04-14)
+2026-10-12T16:39:05.9320751Z info: downloading 6 components
+2026-10-12T16:39:15.0033603Z 
+2026-10-12T16:39:15.0093702Z   1.95.0-x86_64-unknown-linux-gnu installed - rustc 1.95.0 (59807616e 2026-04-14)
+2026-10-12T16:39:15.0094110Z 
+2026-10-12T16:39:15.0247394Z ##[group]Run bash experiments/27-ci-baseline/check.sh portable
+2026-10-12T16:39:15.0247671Z [36;1mbash experiments/27-ci-baseline/check.sh portable[0m
+2026-10-12T16:39:15.0300575Z shell: /usr/bin/bash -e {0}
+2026-10-12T16:39:15.0300711Z env:
+2026-10-12T16:39:15.0300832Z   CARGO_TERM_COLOR: always
+2026-10-12T16:39:15.0300961Z   CARGO_INCREMENTAL: 0
+2026-10-12T16:39:15.0301089Z   CARGO_PROFILE_DEV_DEBUG: 0
+2026-10-12T16:39:15.0301222Z   CARGO_PROFILE_TEST_DEBUG: 0
+2026-10-12T16:39:15.0301357Z   CARGO_BUILD_JOBS: 2
+2026-10-12T16:39:15.0301475Z ##[endgroup]
+2026-10-12T16:39:15.2645473Z [1m[92m    Updating[0m crates.io index
+2026-10-12T16:39:15.2646417Z [1m[92m    Updating[0m git repository `https://github.com/storytold/craft-libs`
+2026-10-12T16:39:16.9927456Z [1m[92m Downloading[0m crates ...
+2026-10-12T16:39:17.1192345Z [1m[92m  Downloaded[0m digest v0.10.7
+2026-10-12T16:39:17.1216663Z [1m[92m  Downloaded[0m block-buffer v0.10.4
+2026-10-12T16:39:17.1298322Z [1m[92m  Downloaded[0m crypto-common v0.1.7
+2026-10-12T16:39:17.1393220Z [1m[92m  Downloaded[0m cfg-if v1.0.5
+2026-10-12T16:39:17.1468158Z [1m[92m  Downloaded[0m cpufeatures v0.2.17
+2026-10-12T16:39:17.1485308Z [1m[92m  Downloaded[0m generic-array v0.14.7
+2026-10-12T16:39:17.1503763Z [1m[92m  Downloaded[0m itoa v1.0.18
+2026-10-12T16:39:17.1590777Z [1m[92m  Downloaded[0m version_check v0.9.5
+2026-10-12T16:39:17.1787085Z [1m[92m  Downloaded[0m zmij v1.0.23
+2026-10-12T16:39:17.1858226Z [1m[92m  Downloaded[0m thiserror-impl v2.0.21
+2026-10-12T16:39:17.1873672Z [1m[92m  Downloaded[0m thiserror v2.0.21
+2026-10-12T16:39:17.1920516Z [1m[92m  Downloaded[0m sha2 v0.10.9
+2026-10-12T16:39:17.1938775Z [1m[92m  Downloaded[0m unicode-ident v1.0.26
+2026-10-12T16:39:17.1957639Z [1m[92m  Downloaded[0m quote v1.0.47
+2026-10-12T16:39:17.1998010Z [1m[92m  Downloaded[0m memchr v2.8.3
+2026-10-12T16:39:17.2060773Z [1m[92m  Downloaded[0m serde_core v1.0.229
+2026-10-12T16:39:17.2080069Z [1m[92m  Downloaded[0m serde_derive v1.0.229
+2026-10-12T16:39:17.2101295Z [1m[92m  Downloaded[0m serde v1.0.229
+2026-10-12T16:39:17.2124851Z [1m[92m  Downloaded[0m proc-macro2 v1.0.107
+2026-10-12T16:39:17.2145380Z [1m[92m  Downloaded[0m typenum v1.20.1
+2026-10-12T16:39:17.2170083Z [1m[92m  Downloaded[0m serde_json v1.0.152
+2026-10-12T16:39:17.2289301Z [1m[92m  Downloaded[0m syn v3.0.7
+2026-10-12T16:39:17.2384512Z [1m[92m  Downloaded[0m libc v0.2.190
+2026-10-12T16:39:17.2990245Z [1m[92m   Compiling[0m proc-macro2 v1.0.107
+2026-10-12T16:39:17.2990620Z [1m[92m   Compiling[0m unicode-ident v1.0.26
+2026-10-12T16:39:17.3321161Z [1m[92m   Compiling[0m version_check v0.9.5
+2026-10-12T16:39:17.6438177Z [1m[92m   Compiling[0m quote v1.0.47
+2026-10-12T16:39:17.8504639Z [1m[92m   Compiling[0m generic-array v0.14.7
+2026-10-12T16:39:17.9055483Z [1m[92m    Checking[0m typenum v1.20.1
+2026-10-12T16:39:18.3707049Z [1m[92m   Compiling[0m syn v3.0.7
+2026-10-12T16:39:19.1257409Z [1m[92m   Compiling[0m serde_core v1.0.229
+2026-10-12T16:39:19.3436751Z [1m[92m   Compiling[0m zmij v1.0.23
+2026-10-12T16:39:20.2158948Z [1m[92m    Checking[0m block-buffer v0.10.4
+2026-10-12T16:39:20.2499316Z [1m[92m    Checking[0m crypto-common v0.1.7
+2026-10-12T16:39:20.2775518Z [1m[92m   Compiling[0m thiserror v2.0.21
+2026-10-12T16:39:20.5265346Z [1m[92m   Compiling[0m serde_json v1.0.152
+2026-10-12T16:39:20.5744790Z [1m[92m   Compiling[0m serde v1.0.229
+2026-10-12T16:39:20.8155465Z [1m[92m    Checking[0m digest v0.10.7
+2026-10-12T16:39:20.9689755Z [1m[92m    Checking[0m cfg-if v1.0.5
+2026-10-12T16:39:20.9832797Z [1m[92m    Checking[0m memchr v2.8.3
+2026-10-12T16:39:21.1320112Z [1m[92m    Checking[0m itoa v1.0.18
+2026-10-12T16:39:21.1742312Z [1m[92m    Checking[0m cpufeatures v0.2.17
+2026-10-12T16:39:21.1919240Z [1m[92m    Checking[0m sha2 v0.10.9
+2026-10-12T16:39:21.5528249Z [1m[92m   Compiling[0m libc v0.2.190
+2026-10-12T16:39:23.2561526Z [1m[92m   Compiling[0m thiserror-impl v2.0.21
+2026-10-12T16:39:23.2562102Z [1m[92m   Compiling[0m serde_derive v1.0.229
+2026-10-12T16:39:27.4300574Z [1m[92m    Checking[0m nvwa-core v0.1.0 (/home/runner/work/nvwa/nvwa/crates/nvwa-core)
+2026-10-12T16:39:27.6731776Z [1m[92m    Checking[0m nvwa-cli v0.1.0 (/home/runner/work/nvwa/nvwa/crates/nvwa-cli)
+2026-10-12T16:39:27.8583699Z [1m[92m    Finished[0m `dev` profile [optimized] target(s) in 12.61s
+2026-10-12T16:39:28.1428992Z [1m[92m   Compiling[0m typenum v1.20.1
+2026-10-12T16:39:28.1429506Z [1m[92m   Compiling[0m serde_core v1.0.229
+2026-10-12T16:39:28.4228249Z [1m[92m   Compiling[0m generic-array v0.14.7
+2026-10-12T16:39:28.6237050Z [1m[92m   Compiling[0m block-buffer v0.10.4
+2026-10-12T16:39:28.6597862Z [1m[92m   Compiling[0m crypto-common v0.1.7
+2026-10-12T16:39:28.6901203Z [1m[92m   Compiling[0m digest v0.10.7
+2026-10-12T16:39:28.7548200Z [1m[92m   Compiling[0m zmij v1.0.23
+2026-10-12T16:39:28.9042608Z [1m[92m   Compiling[0m cpufeatures v0.2.17
+2026-10-12T16:39:28.9210166Z [1m[92m   Compiling[0m memchr v2.8.3
+2026-10-12T16:39:29.0749295Z [1m[92m   Compiling[0m cfg-if v1.0.5
+2026-10-12T16:39:29.0891813Z [1m[92m   Compiling[0m itoa v1.0.18
+2026-10-12T16:39:29.1712334Z [1m[92m   Compiling[0m serde_json v1.0.152
+2026-10-12T16:39:29.5650217Z [1m[92m   Compiling[0m sha2 v0.10.9
+2026-10-12T16:39:30.0664034Z [1m[92m   Compiling[0m serde v1.0.229
+2026-10-12T16:39:30.3222481Z [1m[92m   Compiling[0m thiserror v2.0.21
+2026-10-12T16:39:30.3441352Z [1m[92m   Compiling[0m nvwa-core v0.1.0 (/home/runner/work/nvwa/nvwa/crates/nvwa-core)
+2026-10-12T16:39:30.4204148Z [1m[92m   Compiling[0m libc v0.2.190
+2026-10-12T16:39:30.8129893Z [1m[92m   Compiling[0m nvwa-cli v0.1.0 (/home/runner/work/nvwa/nvwa/crates/nvwa-cli)
+2026-10-12T16:39:34.0460493Z [1m[92m    Finished[0m `test` profile [optimized] target(s) in 6.10s
+2026-10-12T16:39:34.0534879Z [1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/nvwa_cli-7f9f37f03c2117f1)
+2026-10-12T16:39:34.0544402Z 
+2026-10-12T16:39:34.0544588Z running 0 tests
+2026-10-12T16:39:34.0546552Z [1m[92m     Running[0m unittests src/main.rs (target/debug/deps/nvwa_cli-9366d5f566834829)
+2026-10-12T16:39:34.0546901Z 
+2026-10-12T16:39:34.0547116Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-12T16:39:34.0547375Z 
+2026-10-12T16:39:34.0553698Z 
+2026-10-12T16:39:34.0553767Z running 0 tests
+2026-10-12T16:39:34.0553987Z 
+2026-10-12T16:39:34.0554405Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-12T16:39:34.0554682Z 
+2026-10-12T16:39:34.0555859Z [1m[92m     Running[0m tests/offline.rs (target/debug/deps/offline-006451c0b6ee5cfa)
+2026-10-12T16:39:34.0562970Z 
+2026-10-12T16:39:34.0563057Z running 4 tests
+2026-10-12T16:39:34.0576321Z test failed_batch_does_not_overwrite_existing_output ... ok
+2026-10-12T16:39:34.0606770Z test cli_rejects_duplicate_map_keys_and_preserves_unrelated_save_sibling ... ok
+2026-10-12T16:39:34.0635428Z test typed_ui_and_offline_cli_produce_equivalent_documents ... ok
+2026-10-12T16:39:34.0688213Z test fifo_without_writer_is_rejected_within_timeout ... ok
+2026-10-12T16:39:34.0688422Z 
+2026-10-12T16:39:34.0688622Z test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+2026-10-12T16:39:34.0688910Z 
+2026-10-12T16:39:34.0690487Z [1m[92m     Running[0m tests/sequence.rs (target/debug/deps/sequence-8f663f302793622a)
+2026-10-12T16:39:34.0697576Z 
+2026-10-12T16:39:34.0697660Z running 2 tests
+2026-10-12T16:39:34.0708726Z test failed_cli_batch_preserves_input_and_existing_work ... ok
+2026-10-12T16:39:34.0768011Z test cli_applies_and_round_trips_the_m1_sequence ... ok
+2026-10-12T16:39:34.0768232Z 
+2026-10-12T16:39:34.0768386Z test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+2026-10-12T16:39:34.0768566Z 
+2026-10-12T16:39:34.0770153Z [1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/nvwa_core-f1653a87d6a16dd7)
+2026-10-12T16:39:34.0777115Z 
+2026-10-12T16:39:34.0777231Z running 8 tests
+2026-10-12T16:39:34.0844015Z test bounded_history_tests::history_count_boundary_preserves_contiguous_undo_redo_and_branching ... ok
+2026-10-12T16:39:34.0957521Z test bounded_history_tests::exact_retry_byte_limit_overflow_and_oversized_retry_expiry ... ok
+2026-10-12T16:39:34.0966928Z test bounded_history_tests::overflow_is_atomic_and_open_starts_with_empty_session_retention ... ok
+2026-10-12T16:39:34.1307264Z test bounded_history_tests::mixed_stack_byte_eviction_removes_only_farthest_reachable_states ... ok
+2026-10-12T16:39:34.1343460Z test bounded_history_tests::oversized_adjacent_snapshot_creates_edit_and_undo_barriers ... ok
+2026-10-12T16:39:34.1355609Z test bounded_history_tests::exact_history_byte_limit_and_next_snapshot_evict_farthest_state ... ok
+2026-10-12T16:39:34.1375580Z test bounded_history_tests::retry_fifo_duplicates_conflicts_failure_and_expired_id_reuse ... ok
+2026-10-12T16:39:34.2171415Z test bounded_history_tests::long_session_fixed_workload_stays_bounded ... ok
+2026-10-12T16:39:34.2171681Z 
+2026-10-12T16:39:34.2171876Z test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.14s
+2026-10-12T16:39:34.2172136Z 
+2026-10-12T16:39:34.2184094Z [1m[92m     Running[0m tests/transactions.rs (target/debug/deps/transactions-7db622ced5257672)
+2026-10-12T16:39:34.2193683Z 
+2026-10-12T16:39:34.2193766Z running 13 tests
+2026-10-12T16:39:34.2200794Z test failed_multi_parameter_command_has_no_partial_mutation_or_history ... ok
+2026-10-12T16:39:34.2203937Z test defaults_and_json_roundtrip_preserve_document ... ok
+2026-10-12T16:39:34.2204297Z test nonfinite_ranges_invalid_timeline_and_overflow_never_mutate ... ok
+2026-10-12T16:39:34.2204717Z test profile_ids_paths_hashes_defaults_and_references_are_strict ... ok
+2026-10-12T16:39:34.2205083Z test missing_corrupt_and_mismatched_assets_are_rejected ... ok
+2026-10-12T16:39:34.2205484Z test retry_is_idempotent_even_after_later_commits_and_id_reuse_conflicts ... ok
+2026-10-12T16:39:34.2205790Z test single_and_batch_command_parsers_reject_duplicate_parameter_keys ... ok
+2026-10-12T16:39:34.2206198Z test slider_previews_are_one_committed_transaction ... ok
+2026-10-12T16:39:34.2206536Z test typed_and_serialized_commands_produce_identical_results ... ok
+2026-10-12T16:39:34.2206911Z test undo_redo_restore_content_and_monotonically_advance_revision ... ok
+2026-10-12T16:39:34.2207278Z test valid_timeline_command_is_undoable_and_invalid_character_is_rejected ... ok
+2026-10-12T16:39:34.2207548Z test batch_parser_matches_single_envelopes_and_bounds_whole_input ... ok
+2026-10-12T16:39:34.2209773Z test unknown_fields_duplicate_keys_oversized_json_and_schema_are_rejected ... ok
+2026-10-12T16:39:34.2210062Z 
+2026-10-12T16:39:34.2210275Z test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-12T16:39:34.2210549Z 
+2026-10-12T16:39:34.2211844Z [1m[92m   Doc-tests[0m nvwa_cli
+2026-10-12T16:39:34.2309832Z 
+2026-10-12T16:39:34.2310018Z running 0 tests
+2026-10-12T16:39:34.2310145Z 
+2026-10-12T16:39:34.2310352Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-12T16:39:34.2310624Z 
+2026-10-12T16:39:34.2320221Z [1m[92m   Doc-tests[0m nvwa_core
+2026-10-12T16:39:34.2650112Z 
+2026-10-12T16:39:34.2650377Z running 0 tests
+2026-10-12T16:39:34.2650521Z 
+2026-10-12T16:39:34.2650746Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+2026-10-12T16:39:34.2651025Z 
+2026-10-12T16:39:34.2860248Z ##[group]Run bash experiments/27-ci-baseline/check.sh diagnostics
+2026-10-12T16:39:34.2860523Z [36;1mbash experiments/27-ci-baseline/check.sh diagnostics[0m
+2026-10-12T16:39:34.2912300Z shell: /usr/bin/bash -e {0}
+2026-10-12T16:39:34.2912442Z env:
+2026-10-12T16:39:34.2912554Z   CARGO_TERM_COLOR: always
+2026-10-12T16:39:34.2912691Z   CARGO_INCREMENTAL: 0
+2026-10-12T16:39:34.2912821Z   CARGO_PROFILE_DEV_DEBUG: 0
+2026-10-12T16:39:34.2912953Z   CARGO_PROFILE_TEST_DEBUG: 0
+2026-10-12T16:39:34.2913083Z   CARGO_BUILD_JOBS: 2
+2026-10-12T16:39:34.2913201Z ##[endgroup]
+2026-10-12T16:39:34.4273011Z ...............
+2026-10-12T16:39:34.4273272Z ----------------------------------------------------------------------
+2026-10-12T16:39:34.4273619Z Ran 15 tests in 0.049s
+2026-10-12T16:39:34.4273754Z 
+2026-10-12T16:39:34.4273820Z OK
+2026-10-12T16:39:34.5184516Z ..........................
+2026-10-12T16:39:34.5184816Z ----------------------------------------------------------------------
+2026-10-12T16:39:34.5185157Z Ran 26 tests in 0.051s
+2026-10-12T16:39:34.5185278Z 
+2026-10-12T16:39:34.5185346Z OK
+2026-10-12T16:39:36.5111643Z PASS actual collector semantic control: descendant focus/blur ignored; window focus/blur retained
+2026-10-12T16:39:36.5534994Z ....................
+2026-10-12T16:39:36.5535286Z ----------------------------------------------------------------------
+2026-10-12T16:39:36.5535578Z Ran 20 tests in 0.002s
+2026-10-12T16:39:36.5535702Z 
+2026-10-12T16:39:36.5535776Z OK
+2026-10-12T16:39:36.6032308Z PASS — actual collector Node harness: matching event IDs/callstacks, false native return, exact this/args/throw, stop/reset/UUID boundaries, bypass UNKNOWN. Browser and physical IME NOT-RUN.
+2026-10-12T16:39:37.1898501Z ...........
+2026-10-12T16:39:37.1898725Z ----------------------------------------------------------------------
+2026-10-12T16:39:37.1899141Z Ran 11 tests in 0.532s
+2026-10-12T16:39:37.1899219Z 
+2026-10-12T16:39:37.1899268Z OK
+2026-10-12T16:39:37.2832379Z TAP version 13
+2026-10-12T16:39:37.3069673Z # Subtest: SYNTHETIC A/B: actual-anchor adapter preserves A and attaches B, with immediate revocation
+2026-10-12T16:39:37.3076175Z ok 1 - SYNTHETIC A/B: actual-anchor adapter preserves A and attaches B, with immediate revocation
+2026-10-12T16:39:37.3077537Z   ---
+2026-10-12T16:39:37.3077716Z   duration_ms: 1.354871
+2026-10-12T16:39:37.3077948Z   type: 'test'
+2026-10-12T16:39:37.3078102Z   ...
+2026-10-12T16:39:37.3082736Z # Subtest: SYNTHETIC D: URL remains live and anchor attached until the separate 1000 ms revoke
+2026-10-12T16:39:37.3084047Z ok 2 - SYNTHETIC D: URL remains live and anchor attached until the separate 1000 ms revoke
+2026-10-12T16:39:37.3084407Z   ---
+2026-10-12T16:39:37.3084566Z   duration_ms: 0.186628
+2026-10-12T16:39:37.3094664Z   type: 'test'
+2026-10-12T16:39:37.3094850Z   ...
+2026-10-12T16:39:37.3095202Z # Subtest: SYNTHETIC C: null and thrown toBlob failures remain visible and retain original behavior
+2026-10-12T16:39:37.3095771Z ok 3 - SYNTHETIC C: null and thrown toBlob failures remain visible and retain original behavior
+2026-10-12T16:39:37.3096214Z   ---
+2026-10-12T16:39:37.3096384Z   duration_ms: 0.379986
+2026-10-12T16:39:37.3096577Z   type: 'test'
+2026-10-12T16:39:37.3096751Z   ...
+2026-10-12T16:39:37.3097075Z # Subtest: SYNTHETIC canvas classification never applies D automatic delay to explicit canvas bytes
+2026-10-12T16:39:37.3097639Z ok 4 - SYNTHETIC canvas classification never applies D automatic delay to explicit canvas bytes
+2026-10-12T16:39:37.3098001Z   ---
+2026-10-12T16:39:37.3098100Z   duration_ms: 0.147766
+2026-10-12T16:39:37.3098217Z   type: 'test'
+2026-10-12T16:39:37.3098318Z   ...
+2026-10-12T16:39:37.3098532Z # Subtest: SYNTHETIC stop cancels pending revoke, releases URL, restores adapters, and is idempotent
+2026-10-12T16:39:37.3098955Z ok 5 - SYNTHETIC stop cancels pending revoke, releases URL, restores adapters, and is idempotent
+2026-10-12T16:39:37.3099313Z   ---
+2026-10-12T16:39:37.3099410Z   duration_ms: 0.603273
+2026-10-12T16:39:37.3099828Z   type: 'test'
+2026-10-12T16:39:37.3099928Z   ...
+2026-10-12T16:39:37.3135010Z 1..5
+2026-10-12T16:39:37.3135385Z # tests 5
+2026-10-12T16:39:37.3135576Z # suites 0
+2026-10-12T16:39:37.3135750Z # pass 5
+2026-10-12T16:39:37.3135982Z # fail 0
+2026-10-12T16:39:37.3136377Z # cancelled 0
+2026-10-12T16:39:37.3136628Z # skipped 0
+2026-10-12T16:39:37.3136864Z # todo 0
+2026-10-12T16:39:37.3137101Z # duration_ms 56.016665
+2026-10-12T16:39:37.3368346Z Post job cleanup.
+2026-10-12T16:39:37.3874901Z [command]/usr/bin/git version
+2026-10-12T16:39:37.3917731Z git version 2.55.0
+2026-10-12T16:39:37.3940513Z Temporarily overriding HOME='/home/runner/work/_temp/47be2006-fdb3-41bd-8f68-c49273bd1265' before making global git config changes
+2026-10-12T16:39:37.3941201Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-12T16:39:37.3943537Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nvwa/nvwa
+2026-10-12T16:39:37.3969026Z Removing SSH command configuration
+2026-10-12T16:39:37.3973276Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-12T16:39:37.3998759Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-12T16:39:37.4178593Z Removing HTTP extra header
+2026-10-12T16:39:37.4183360Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-12T16:39:37.4212948Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-12T16:39:37.4401093Z Removing includeIf entries pointing to credentials config files
+2026-10-12T16:39:37.4406798Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-12T16:39:37.4436142Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-12T16:39:37.4709506Z Cleaning up orphan processes
