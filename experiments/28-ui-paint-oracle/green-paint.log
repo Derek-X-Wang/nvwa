@@ -1,0 +1,25 @@
+
+running 2 tests
+test editor_layout::tests::ui_paint_oracle_missing_output_is_failure - should panic ... 
+thread 'editor_layout::tests::ui_paint_oracle_missing_output_is_failure' (32846844) panicked at crates/nvwa-studio/src/editor_layout.rs:338:32:
+actual control label missing: Shape
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+ok
+test editor_layout::tests::ui_paint_oracle_selected_tabs_match_independent_table ... PAINT viewport=[1280.0 720.0] stage=initial-shape tab=Shape fill=#11_3D_71_FF bounds=[[1009.0 61.0] - [1109.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1280.0 720.0] stage=initial-shape tab=Profile fill=#95_25_47_FF bounds=[[1117.0 61.0] - [1217.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1280.0 720.0] stage=clicked-profile tab=Shape fill=#95_25_47_FF bounds=[[1009.0 61.0] - [1109.0 87.0]] nearby_rects=2 inspector=Profile: nvwa-original-humanoid-v1
+PAINT viewport=[1280.0 720.0] stage=clicked-profile tab=Profile fill=#11_3D_71_FF bounds=[[1117.0 61.0] - [1217.0 87.0]] nearby_rects=2 inspector=Profile: nvwa-original-humanoid-v1
+PAINT viewport=[1280.0 720.0] stage=clicked-shape tab=Shape fill=#11_3D_71_FF bounds=[[1009.0 61.0] - [1109.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1280.0 720.0] stage=clicked-shape tab=Profile fill=#95_25_47_FF bounds=[[1117.0 61.0] - [1217.0 87.0]] nearby_rects=2 inspector=Shape parameters
+INVARIANCE viewport=[1280.0 720.0] frames=8 full_work=true full_history=true undo=true redo=true
+PAINT viewport=[1024.0 768.0] stage=initial-shape tab=Shape fill=#11_3D_71_FF bounds=[[753.0 61.0] - [853.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1024.0 768.0] stage=initial-shape tab=Profile fill=#95_25_47_FF bounds=[[861.0 61.0] - [961.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1024.0 768.0] stage=clicked-profile tab=Shape fill=#95_25_47_FF bounds=[[753.0 61.0] - [853.0 87.0]] nearby_rects=2 inspector=Profile: nvwa-original-humanoid-v1
+PAINT viewport=[1024.0 768.0] stage=clicked-profile tab=Profile fill=#11_3D_71_FF bounds=[[861.0 61.0] - [961.0 87.0]] nearby_rects=2 inspector=Profile: nvwa-original-humanoid-v1
+PAINT viewport=[1024.0 768.0] stage=clicked-shape tab=Shape fill=#11_3D_71_FF bounds=[[753.0 61.0] - [853.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1024.0 768.0] stage=clicked-shape tab=Profile fill=#95_25_47_FF bounds=[[861.0 61.0] - [961.0 87.0]] nearby_rects=2 inspector=Shape parameters
+INVARIANCE viewport=[1024.0 768.0] frames=8 full_work=true full_history=true undo=true redo=true
+ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.01s
+

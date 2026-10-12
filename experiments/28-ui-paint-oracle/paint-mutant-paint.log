@@ -1,0 +1,21 @@
+
+running 2 tests
+test editor_layout::tests::ui_paint_oracle_missing_output_is_failure - should panic ... 
+thread 'editor_layout::tests::ui_paint_oracle_missing_output_is_failure' (32847448) panicked at crates/nvwa-studio/src/editor_layout.rs:338:32:
+actual control label missing: Shape
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+ok
+test editor_layout::tests::ui_paint_oracle_selected_tabs_match_independent_table ... 
+thread 'editor_layout::tests::ui_paint_oracle_selected_tabs_match_independent_table' (32847449) panicked at crates/nvwa-studio/src/editor_layout.rs:925:21:
+assertion `left == right` failed: paint-oracle fill mismatch viewport=[1280.0 720.0] stage=initial-shape tab=Shape
+  left: #95_25_47_FF
+ right: #11_3D_71_FF
+FAILED
+
+failures:
+
+failures:
+    editor_layout::tests::ui_paint_oracle_selected_tabs_match_independent_table
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.01s
+

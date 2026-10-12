@@ -1,0 +1,9 @@
+COMPILE stage=green pid=18227
+TEST stage=green kind=paint exit=0
+TEST stage=green kind=state exit=0
+COMPILE stage=paint-mutant pid=18543
+TEST stage=paint-mutant kind=paint exit=101
+TEST stage=paint-mutant kind=state exit=0
+COMPILE stage=restored-green pid=18738
+TEST stage=restored-green kind=paint exit=0
+TEST stage=restored-green kind=state exit=0
