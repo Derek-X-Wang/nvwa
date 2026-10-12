@@ -1,0 +1,19 @@
+
+running 2 tests
+test editor_layout::tests::ui_paint_oracle_missing_output_is_failure - should panic ... 
+thread 'editor_layout::tests::ui_paint_oracle_missing_output_is_failure' (32812177) panicked at crates/nvwa-studio/src/editor_layout.rs:338:32:
+actual control label missing: Shape
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+ok
+test editor_layout::tests::ui_paint_oracle_selected_tabs_match_independent_table ... 
+thread 'editor_layout::tests::ui_paint_oracle_selected_tabs_match_independent_table' (32812178) panicked at /Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/epaint-0.36.2/src/textures.rs:337:9:
+Dropped TexturesDelta with 1 unapplied deltas. Deltas need to be handled. If you want to drop this intentionally call `clear` before dropping.
+FAILED
+
+failures:
+
+failures:
+    editor_layout::tests::ui_paint_oracle_selected_tabs_match_independent_table
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.01s
+

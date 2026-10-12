@@ -1,0 +1,40 @@
+{
+  "stage": "green",
+  "compile_command": [
+    "cargo",
+    "test",
+    "-p",
+    "nvwa-studio",
+    "--lib",
+    "--no-run",
+    "--locked",
+    "--message-format=json"
+  ],
+  "compile_seconds": 8.883750666980632,
+  "source_sha256": "731f6b4b1385b0b712a9d51b5f11a965c4395bcdb097ce6ef7b8e04f6aee160c",
+  "binary": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+  "binary_sha256": "a792f5b392106af02e8fe732c7774a1489a3957ef018d4404a020f19151c89dc",
+  "tests": [
+    {
+      "kind": "paint",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "ui_paint_oracle",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit": 101
+    },
+    {
+      "kind": "state",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "actual_studio_layout_controls_preserve_work_history_and_guard_focused_space",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit": 0
+    }
+  ],
+  "test_seconds": 0.8036577500170097
+}

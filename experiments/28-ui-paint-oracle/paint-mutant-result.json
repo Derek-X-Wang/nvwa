@@ -1,0 +1,51 @@
+{
+  "stage": "paint-mutant",
+  "compile_command": [
+    "cargo",
+    "test",
+    "-p",
+    "nvwa-studio",
+    "--lib",
+    "--no-run",
+    "--locked",
+    "--message-format=json"
+  ],
+  "compile_seconds": 2.9752503749914467,
+  "source_sha256": "58cdb9e7738fa893b853ddd3f250360ac9d9197258c9defdbe2bddeec3fa8dc5",
+  "binary": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+  "binary_sha256": "e8eb643bd946dae07269c53eb9cb5d5cbc66deb94fc7ad8160d9c86466732756",
+  "tests": [
+    {
+      "kind": "paint",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "ui_paint_oracle",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit": 101,
+      "exact_names": [
+        "editor_layout::tests::ui_paint_oracle_missing_output_is_failure",
+        "editor_layout::tests::ui_paint_oracle_selected_tabs_match_independent_table"
+      ],
+      "passed": 1,
+      "failed": 1
+    },
+    {
+      "kind": "state",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "actual_studio_layout_controls_preserve_work_history_and_guard_focused_space",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "exit": 0,
+      "exact_names": [
+        "editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space"
+      ],
+      "passed": 1,
+      "failed": 0
+    }
+  ],
+  "test_seconds": 0.8848553330171853
+}
