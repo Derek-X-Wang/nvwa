@@ -128,6 +128,154 @@
         "physicalAcceptance": "NOT-RUN by checker; requires separately attributed physical observation",
         "originLimit": "A witnessed callstack proves this JS realm called dispatchEvent; all unwitnessed origins remain UNKNOWN."
       }
+    },
+    {
+      "capture": "plain-textarea-physical-run1.json",
+      "result": {
+        "status": "PARTIAL",
+        "problems": [],
+        "incomplete": [
+          "untrusted e26 origin UNKNOWN"
+        ],
+        "events": [
+          {
+            "sequence": 18,
+            "eventId": "e7",
+            "eventType": "compositionstart",
+            "target": "ime-control",
+            "trusted": true,
+            "dataLength": 0,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 19,
+            "eventId": "e8",
+            "eventType": "compositionupdate",
+            "target": "ime-control",
+            "trusted": true,
+            "dataLength": 1,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 24,
+            "eventId": "e13",
+            "eventType": "compositionupdate",
+            "target": "ime-control",
+            "trusted": true,
+            "dataLength": 2,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 29,
+            "eventId": "e18",
+            "eventType": "compositionupdate",
+            "target": "ime-control",
+            "trusted": true,
+            "dataLength": 4,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 34,
+            "eventId": "e23",
+            "eventType": "compositionupdate",
+            "target": "ime-control",
+            "trusted": true,
+            "dataLength": 2,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 37,
+            "eventId": "e26",
+            "eventType": "compositionend",
+            "target": "ime-control",
+            "trusted": false,
+            "dataLength": 2,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          }
+        ],
+        "physicalAcceptance": "NOT-RUN by checker; requires separately attributed physical observation",
+        "originLimit": "A witnessed callstack proves this JS realm called dispatchEvent; all unwitnessed origins remain UNKNOWN."
+      }
+    },
+    {
+      "capture": "nvwa-physical-run1.json",
+      "result": {
+        "status": "PARTIAL",
+        "problems": [],
+        "incomplete": [
+          "untrusted e28 origin UNKNOWN"
+        ],
+        "events": [
+          {
+            "sequence": 14,
+            "eventId": "e9",
+            "eventType": "compositionstart",
+            "target": "nvwa_text_input",
+            "trusted": true,
+            "dataLength": 0,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 15,
+            "eventId": "e10",
+            "eventType": "compositionupdate",
+            "target": "nvwa_text_input",
+            "trusted": true,
+            "dataLength": 1,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 20,
+            "eventId": "e15",
+            "eventType": "compositionupdate",
+            "target": "nvwa_text_input",
+            "trusted": true,
+            "dataLength": 2,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 25,
+            "eventId": "e20",
+            "eventType": "compositionupdate",
+            "target": "nvwa_text_input",
+            "trusted": true,
+            "dataLength": 4,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 30,
+            "eventId": "e25",
+            "eventType": "compositionupdate",
+            "target": "nvwa_text_input",
+            "trusted": true,
+            "dataLength": 2,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          },
+          {
+            "sequence": 33,
+            "eventId": "e28",
+            "eventType": "compositionend",
+            "target": "nvwa_text_input",
+            "trusted": false,
+            "dataLength": 2,
+            "dispatchId": null,
+            "provenance": "UNKNOWN"
+          }
+        ],
+        "physicalAcceptance": "NOT-RUN by checker; requires separately attributed physical observation",
+        "originLimit": "A witnessed callstack proves this JS realm called dispatchEvent; all unwitnessed origins remain UNKNOWN."
+      }
     }
   ],
   "native": "actual2x capture; separate GUI click/Undo/zoom observations",
@@ -137,6 +285,8 @@
     "continuous slider drag in fixed-CSS wrapper",
     "other OS/browser engines",
     "fresh native/Web compilation (unchanged31-input cohort reused)",
-    "physical IME comparison pending human"
+    "Space confirming an active candidate in this pair",
+    "candidate-box placement in this pair",
+    "installed Sogou version and hidden provider/extension internals"
   ]
 }

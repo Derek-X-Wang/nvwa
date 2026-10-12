@@ -43,9 +43,39 @@ inspect the private full native log or root's shell exit attribution. No native
 whole-Work exchange or display-scale transition is claimed by this packet.
 
 The actual Chrome IME selftest proves the known local synthetic call path only.
-Physical plain/Nvwa comparison and OS input-method/provider identity remain
-pending. Original event710 stays UNKNOWN. Keep #3 open: these controls neither
+The later physical pair is reviewed separately below. Original event710 stays
+UNKNOWN. Keep #3 open: these controls neither
 reproduce the original IAB emulated-DPR failure nor establish its cause.
 
-PARTIAL — Diagnostic repairs, controls and archived evidence accepted. Physical
-IME comparison and original IAB/display-transition scope remain unverified.
+## Actual-pair rereview
+
+The same independent reviewer inspected both exact stopped raw exports and saved
+screenshots. Plain52/Nvwa42 rows have ordered chronology, intact early hooks,
+zero drops/errors, DPR2.5 and the intended focused/visible target during
+composition. Both exact checker results remain PARTIAL/exit2 without contradiction
+problems. The Nvwa hook precedes its module; each trace has trusted length
+sequence0→1→2→4→2 followed by an untrusted length2 end with no dispatch witness.
+
+Both saved surfaces show 女娲 once. Space follows composition end with
+composing:false and insertText length1; candidate selection and placement are
+NOT-RUN. Sogou identity is human-reported; version/provider internals remain
+unknown. The plain capture includes roughly114 minutes of mostly idle elapsed
+time. Generic page-state focus/blur lacks event targets and may include descendant
+focus; do not treat every such row as a window transition.
+
+The paired result supports only that the pattern is not specific to Nvwa in
+this instrumented environment. Shared instrumentation remains a possible effect;
+absence of a witness does not establish the cause. Old710 stays UNKNOWN. The
+reviewer accepts ending/closing the diagnosis-only #32 with these explicit
+limits and no further physical repeat. This does not imply a product fix or
+completion of the separate candidate/Space checks. #3 remains open.
+
+Final publication rereview checked78 inventory entries and byte-exact identities
+of the paired archives. Cleanup was observed by root, not independently by the
+reviewer. The page captured after the permission reset shows the stopped Nvwa
+page rather than the permission popover; it does not prove the setting. The
+restoration to Ask is explicitly root-observed live AX evidence in cleanup.json.
+The screenshot is named `page-after-permission-reset.jpg` to state that limit.
+
+PARTIAL — Bounded controls and actual pair reviewed; event origin and original
+IAB/display-transition scope remain unverified.

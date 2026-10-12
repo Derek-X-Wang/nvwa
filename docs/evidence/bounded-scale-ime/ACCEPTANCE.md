@@ -17,7 +17,7 @@ paid service or hosted CI was requested.
 | Whole Work editing | VERIFIED for clicks | At all three fixed-CSS phases, jaw changes by a single click, one Undo restores the entire baseline content, and revision increments once for each command. Nine exact downloaded Works are retained. This proves clicks, not continuous dragging. |
 | Attempted tool drag | PARTIAL | Actual down/up endpoints at rows51/52, no held pointermove, no parameter change. The complete321-row trace contains no held canvas pointermove. Physical continuous dragging in this wrapper remains NOT-RUN. |
 | IME hook selftest | VERIFIED for synthetic control | Actual Chrome Start→known local synthetic dispatch→Stop→Export yields three untrusted length2 composition events with exact event/dispatch IDs and witnessed callstacks. This establishes the local realm hook only. |
-| Physical plain/Nvwa IME pair | PENDING | Two prepared125% tabs use the same collector/package. Root requested one actual input/Space confirmation in each, candidate placement, once-only text result and exact OS input-method identity. A synthetic selftest never supplies this evidence. |
+| Physical plain/Nvwa IME pair | VERIFIED comparison; PARTIAL provenance | Human performed and exported both125% cases. Plain52/Nvwa42 rows have intact early hooks, no drops/errors and the same trusted start/update lengths0→1→2→4→2, followed by an untrusted length2 end without a dispatch witness. Both exact checks remain PARTIAL/exit2. Root's saved views show one 女娲 on each surface. User reports Sogou input. Space follows the end with composing:false; it did not test candidate selection. Candidate placement, installed IME version and hidden provider route remain unverified. |
 | Original #3 trigger | NOT-RUN | Current IAB viewport API has no simulated-DPR control. Ordinary Chrome zoom and the fixed wrapper do not reproduce or explain the original IAB condition. Physical display migration and other platforms remain unverified. |
 | Original #32 event710 | UNKNOWN | The prior untrusted length2 compositionend retains its original uncertainty. A new witnessed event would identify that new local dispatch; it would not retroactively identify event710. |
 
@@ -28,6 +28,24 @@ build cohort. Its103 Rust tests and dual builds are historical results, not new
 compilation/test claims. This turn reran actual apps and diagnostic controls.
 The native smoke logs contain cadence samples; this was a functional capture,
 not a formal isolated performance measurement.
+
+The actual pair narrows the result to an untrusted end that is not specific to
+Nvwa in this instrumented environment: the plain page does not load its runtime.
+It does not identify a browser/OS/provider cause, prove that Sogou created the
+events, exonerate all Nvwa paths or identify old event710. Shared instrumentation
+remains a possible observer effect. The plain case retained approximately114
+minutes of mostly idle elapsed session time, not continuous input testing.
+Generic page-state focus/blur rows omit event targets and may include descendant
+focus; only the composition-row focus snapshots support the selected input
+observation. Both cases stay PARTIAL rather than relabeling their origin.
+
+The human misunderstood the earlier Space instruction and reported an added
+space. Root's plain AX also showed 女娲 followed by a space; the Nvwa screenshot
+shows 女娲 once but does not measure trailing whitespace. No additional physical
+repeat is needed for this bounded provenance comparison. Earlier physical
+candidate/Space acceptance stays separately attributed; this pair leaves those
+checks NOT-RUN. [Physical observations](issue32/physical-observation.json) and
+the exact raw exports retain that modified procedure.
 
 ## Rejected evidence and repairs
 
@@ -96,6 +114,7 @@ observe other realms, saved native methods, browser/OS internals or providers.
 Unwitnessed origins remain UNKNOWN. Close/reload the diagnostic page to remove
 the instrumentation.
 
-PARTIAL — Current Mac/native and Chrome click/scale/Undo controls pass. Physical
-IME comparison is pending; original IAB cause, fixed-CSS continuous dragging,
-physical display migration and other platforms remain unverified.
+PARTIAL — Current Mac/native and Chrome click/scale/Undo controls pass. One actual
+plain/Nvwa IME comparison is complete with UNKNOWN provenance retained. Original
+IAB cause, fixed-CSS continuous dragging, physical display migration, candidate
+placement/Space selection in this pair and other platforms remain unverified.

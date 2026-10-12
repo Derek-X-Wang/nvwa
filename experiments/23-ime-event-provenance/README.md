@@ -92,6 +92,14 @@ labels or `printable-or-other`. No textarea value is collected. Task-text
 correctness and physical candidate UI must be observed separately. The DOM
 proxy location is not candidate acceptance.
 
+Space means confirming a candidate only while the OS candidate window is still
+open and the selected input method uses Space for that action. If the Chinese
+text has already committed through the user's normal selection method, pressing
+Space afterward inserts a space; do not repeat it to claim candidate acceptance.
+Preserve the actual procedure. The completed pair used that latter sequence,
+so provenance comparison is complete while Space candidate-selection remains
+NOT-RUN.
+
 The collector starts only through **Start case**. It records no pre-start input.
 **Stop case** adds an end checkpoint. Export requires Stop and downloads the exact
 raw capture without flattening, summarizing or trimming. **Reset trace** is

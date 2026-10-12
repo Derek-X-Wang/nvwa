@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "base_main": "8a922b39da9a83ac4735bf759babf17479f8f3f1",
-  "publication": "exact raw JSON/PNG copies; native JSON is explicitly extracted from private raw log; source association is recorded by root, not self-proven by IME checker",
+  "publication": "exact raw JSON and native JPEG screenshot bytes; historical .png screenshot filenames retained without re-encoding; native JSON explicitly extracted from private raw log; source association recorded by root, not self-proven by IME checker",
   "checker_files": {
     "experiments/22-fixed-css-dpr/check.py": "bda9cfcc4eaf40eccbe1ed68820b5f84e962e062bf719c267a3ff5fa1e5ffd23",
     "experiments/23-ime-event-provenance/check.py": "8b47b47a9409c83d6fcb170d0fff715475769df3b7d86f32d4fb0fa636f9d4ca",
@@ -10,8 +10,8 @@
   "entries": [
     {
       "file": "REVIEW.md",
-      "bytes": 3192,
-      "sha256": "9e7f4ac0a875d59544fd6e390972f719704e1b5d183250bfd2e58993a0293be4"
+      "bytes": 5015,
+      "sha256": "01d8b4284b85a6f04ef147ed9626023efde95218c1c3109585c338f2e87ff473"
     },
     {
       "file": "controls/root-ime-collector.log",
@@ -289,6 +289,26 @@
       "sha256": "dcccd8af43a8d4c9112e7eb15a89a111e6aa64a9b39740524101395ccca03f29"
     },
     {
+      "file": "issue32/cleanup.json",
+      "bytes": 1329,
+      "sha256": "4995ea531b2f0c218acaea6a782bfb55524d83165dc34bec3f58d03ecafe07d9"
+    },
+    {
+      "file": "issue32/nvwa-after.jpg",
+      "bytes": 404869,
+      "sha256": "8025bd9d14a5d27b8fbf03aedf45d98eca8bc874299394e190dec3b171de290f"
+    },
+    {
+      "file": "issue32/nvwa-physical-run1-check.json",
+      "bytes": 1756,
+      "sha256": "fb833facbebaea7bf9783fbc0a1c918c298e6d9c32ae8c1de7a195dd2729a0be"
+    },
+    {
+      "file": "issue32/nvwa-physical-run1.json",
+      "bytes": 23693,
+      "sha256": "38ac43b04dd3ca25b4e4be45c22d08016eeee342b9e1185af0550d031fadbb74"
+    },
+    {
       "file": "issue32/package/ime-nvwa.html",
       "bytes": 2867,
       "sha256": "004df0201deb1f04cd71bc83e82b9ac87ff9e9d7482532ebaf58cd6a7fd4a6f8"
@@ -312,6 +332,31 @@
       "file": "issue32/package/preparation.json",
       "bytes": 6040,
       "sha256": "29939f0334137dbcc64c23d2c6237282f3bbc3c45cb7669b11500c3cf59a7b81"
+    },
+    {
+      "file": "issue32/page-after-permission-reset.jpg",
+      "bytes": 406872,
+      "sha256": "9509522374e02ab612b9fe0cc92308f4ba30ddbd50d89d62df6e85c4b48a526f"
+    },
+    {
+      "file": "issue32/physical-observation.json",
+      "bytes": 573,
+      "sha256": "83882471a0ac0810c906409e926872241c310d56bb7fa400aabbc619adfd4292"
+    },
+    {
+      "file": "issue32/plain-after.jpg",
+      "bytes": 327260,
+      "sha256": "a198dcf0e8a6b7cf99c5846094add9e43f7c64d97439247a4dcbb1d060e56457"
+    },
+    {
+      "file": "issue32/plain-textarea-physical-run1-check.json",
+      "bytes": 1731,
+      "sha256": "46619f26e8f844582d77a93394d6a3520ebde4d0b7d5cbf28c52fb9283268f2e"
+    },
+    {
+      "file": "issue32/plain-textarea-physical-run1.json",
+      "bytes": 26737,
+      "sha256": "d96d1f4a934a5ff4773167405c09bd3258378cc9924faa27bc340bd841591367"
     },
     {
       "file": "issue32/selftest-browser.png",
@@ -345,8 +390,8 @@
     },
     {
       "file": "observations.json",
-      "bytes": 4024,
-      "sha256": "a757d0b2e34efa31a52331935d006affb823f15655df78ef8cd162cd0245160b"
+      "bytes": 6121,
+      "sha256": "6b321d8e65e4705245ef15b4225a14bd29656bfc75c7c6bf3d01d158e9fe5440"
     },
     {
       "file": "runtime-metadata.json",

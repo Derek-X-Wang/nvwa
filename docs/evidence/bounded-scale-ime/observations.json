@@ -125,16 +125,52 @@
       "package_sha256": "29939f0334137dbcc64c23d2c6237282f3bbc3c45cb7669b11500c3cf59a7b81",
       "expected_exit": 0,
       "expected_status": "PASS",
-      "attribution": "root UI Start\u2192known SYNTHETIC dispatch\u2192Stop\u2192Export; never physical proof"
+      "attribution": "root UI Start→known SYNTHETIC dispatch→Stop→Export; never physical proof"
+    },
+    {
+      "capture": "plain-textarea-physical-run1.json",
+      "runId": "07b64d4f-2e79-447f-a4e0-cb2c2888e8c8",
+      "pageKind": "plain-textarea",
+      "url": "http://127.0.0.1:9201/issue32/package-final/ime-plain.html",
+      "package_sha256": "29939f0334137dbcc64c23d2c6237282f3bbc3c45cb7669b11500c3cf59a7b81",
+      "expected_exit": 2,
+      "expected_status": "PARTIAL",
+      "attribution": "Human performed and exported in root-prepared frozen pages; root observed stopped UI and copied exact download bytes. Space followed composition end; not an active-candidate confirmation test."
+    },
+    {
+      "capture": "nvwa-physical-run1.json",
+      "runId": "72332e2c-39e7-4801-a80a-7f161fb8785e",
+      "pageKind": "nvwa",
+      "url": "http://127.0.0.1:9201/issue32/package-final/ime-nvwa.html?work=works/m1-sequence.nvwa.json",
+      "package_sha256": "29939f0334137dbcc64c23d2c6237282f3bbc3c45cb7669b11500c3cf59a7b81",
+      "expected_exit": 2,
+      "expected_status": "PARTIAL",
+      "attribution": "Human performed and exported in root-prepared frozen pages; root observed stopped UI and copied exact download bytes. Space followed composition end; not an active-candidate confirmation test."
     }
   ],
-  "physical_ime": "PENDING human plain/Nvwa pair; both prepared at125% Chrome",
+  "physical_ime": {
+    "comparison": "PERFORMED one plain/Nvwa pair with modified confirmation procedure",
+    "input_method": {
+      "name": "搜狗输入法 (Sogou)",
+      "attribution": "direct human report",
+      "installed_version": "NOT-RUN",
+      "provider_internals": "UNKNOWN"
+    },
+    "rendered_result": "root plain AX shows one 女娲 plus one space; root Nvwa screenshot shows one 女娲; no Save/Open action",
+    "candidate_placement": "NOT-RUN in this pair; human did not report",
+    "space_candidate_selection": "NOT-RUN; recorded Space is after compositionend with composing:false",
+    "end_provenance": "both untrusted length2 ends UNKNOWN; no local realm dispatch witness",
+    "historical_event710": "UNKNOWN; new cases do not retroactively identify it",
+    "cleanup": "COMPLETE; see issue32/cleanup.json"
+  },
   "not_run": [
     "original IAB simulated-DPR repro/cause",
     "physical display migration",
     "continuous slider drag in fixed-CSS wrapper",
     "other OS/browser engines",
     "fresh native/Web compilation (unchanged31-input cohort reused)",
-    "physical IME comparison pending human"
+    "Space confirming an active candidate in this pair",
+    "candidate-box placement in this pair",
+    "installed Sogou version and hidden provider/extension internals"
   ]
 }
