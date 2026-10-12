@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "scale_cases": [
+    {
+      "capture": "normal-v2-100.json",
+      "package": "web-normal-v2",
+      "pointer": 11,
+      "settled": 17,
+      "dpr": 2,
+      "css": [
+        1512,
+        806
+      ],
+      "work_rect": [
+        258,
+        3,
+        220,
+        22
+      ],
+      "screenshot": "normal-v2-100-focus.png",
+      "bounds_observation": "visible Work control estimate from saved3024x1898 native Chrome screenshot; content origin physical(0,286),2.0/2.5/2.0 pixels per CSS pixel; no Rust control-bounds API"
+    },
+    {
+      "capture": "normal-v2-125.json",
+      "package": "web-normal-v2",
+      "pointer": 44,
+      "settled": 50,
+      "dpr": 2.5,
+      "css": [
+        1209.6,
+        644.8
+      ],
+      "work_rect": [
+        258,
+        3,
+        220,
+        22
+      ],
+      "screenshot": "normal-v2-125-focus.png",
+      "bounds_observation": "visible Work control estimate from saved3024x1898 native Chrome screenshot; content origin physical(0,286),2.0/2.5/2.0 pixels per CSS pixel; no Rust control-bounds API"
+    },
+    {
+      "capture": "normal-v2-reset.json",
+      "package": "web-normal-v2",
+      "pointer": 73,
+      "settled": 79,
+      "dpr": 2,
+      "css": [
+        1512,
+        806
+      ],
+      "work_rect": [
+        258,
+        3,
+        220,
+        22
+      ],
+      "screenshot": "normal-v2-reset-focus.png",
+      "bounds_observation": "visible Work control estimate from saved3024x1898 native Chrome screenshot; content origin physical(0,286),2.0/2.5/2.0 pixels per CSS pixel; no Rust control-bounds API"
+    },
+    {
+      "capture": "fixed-100.json",
+      "package": "web-fixed-v2",
+      "pointer": 13,
+      "settled": 19,
+      "dpr": 2,
+      "css": [
+        1100,
+        640
+      ],
+      "work_rect": [
+        258,
+        3,
+        220,
+        22
+      ],
+      "screenshot": "fixed-100-focus.png",
+      "bounds_observation": "visible Work control estimate from saved3024x1898 native Chrome screenshot; content origin physical(0,286),2.0/2.5/2.0 pixels per CSS pixel; no Rust control-bounds API"
+    },
+    {
+      "capture": "fixed-125.json",
+      "package": "web-fixed-v2",
+      "pointer": 126,
+      "settled": 132,
+      "dpr": 2.5,
+      "css": [
+        1100,
+        640
+      ],
+      "work_rect": [
+        258,
+        3,
+        220,
+        22
+      ],
+      "screenshot": "fixed-125-focus.png",
+      "bounds_observation": "visible Work control estimate from saved3024x1898 native Chrome screenshot; content origin physical(0,286),2.0/2.5/2.0 pixels per CSS pixel; no Rust control-bounds API"
+    },
+    {
+      "capture": "fixed-reset.json",
+      "package": "web-fixed-v2",
+      "pointer": 229,
+      "settled": 235,
+      "dpr": 2,
+      "css": [
+        1100,
+        640
+      ],
+      "work_rect": [
+        258,
+        3,
+        220,
+        22
+      ],
+      "screenshot": "fixed-reset-focus.png",
+      "bounds_observation": "visible Work control estimate from saved3024x1898 native Chrome screenshot; content origin physical(0,286),2.0/2.5/2.0 pixels per CSS pixel; no Rust control-bounds API"
+    }
+  ],
+  "ime_cases": [
+    {
+      "capture": "browser-selftest.json",
+      "runId": "715f2932-f94d-45d8-ac5f-aa7c8e502c31",
+      "pageKind": "synthetic-selftest",
+      "url": "http://127.0.0.1:9201/issue32/package-final/ime-selftest.html",
+      "package_sha256": "29939f0334137dbcc64c23d2c6237282f3bbc3c45cb7669b11500c3cf59a7b81",
+      "expected_exit": 0,
+      "expected_status": "PASS",
+      "attribution": "root UI Start\u2192known SYNTHETIC dispatch\u2192Stop\u2192Export; never physical proof"
+    }
+  ],
+  "physical_ime": "PENDING human plain/Nvwa pair; both prepared at125% Chrome",
+  "not_run": [
+    "original IAB simulated-DPR repro/cause",
+    "physical display migration",
+    "continuous slider drag in fixed-CSS wrapper",
+    "other OS/browser engines",
+    "fresh native/Web compilation (unchanged31-input cohort reused)",
+    "physical IME comparison pending human"
+  ]
+}

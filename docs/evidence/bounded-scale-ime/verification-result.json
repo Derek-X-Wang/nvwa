@@ -1,0 +1,142 @@
+{
+  "status": "PASS",
+  "scope": "archived packet consistency; no UI simulation",
+  "production_inputs": 31,
+  "scale_intervals": [
+    {
+      "case": "normal-v2-100.json",
+      "dpr": 2,
+      "age_ms": 254.39999997615814
+    },
+    {
+      "case": "normal-v2-125.json",
+      "dpr": 2.5,
+      "age_ms": 251.59999999403954
+    },
+    {
+      "case": "normal-v2-reset.json",
+      "dpr": 2,
+      "age_ms": 251.2000000178814
+    },
+    {
+      "case": "fixed-100.json",
+      "dpr": 2,
+      "age_ms": 250.69999998807907
+    },
+    {
+      "case": "fixed-125.json",
+      "dpr": 2.5,
+      "age_ms": 251
+    },
+    {
+      "case": "fixed-reset.json",
+      "dpr": 2,
+      "age_ms": 250.89999997615814
+    }
+  ],
+  "actual_fixed_dprs": [
+    2,
+    2.5,
+    2
+  ],
+  "commands": [
+    {
+      "phase": "100",
+      "kind": "click; continuous drag NOT-RUN",
+      "result": {
+        "revisions": [
+          1,
+          2,
+          3
+        ],
+        "parameter": "jaw_width",
+        "before": 0.0,
+        "after": 0.57,
+        "whole_work_preserved": true
+      }
+    },
+    {
+      "phase": "125",
+      "kind": "click; continuous drag NOT-RUN",
+      "result": {
+        "revisions": [
+          3,
+          4,
+          5
+        ],
+        "parameter": "jaw_width",
+        "before": 0.0,
+        "after": 0.51,
+        "whole_work_preserved": true
+      }
+    },
+    {
+      "phase": "reset",
+      "kind": "click; continuous drag NOT-RUN",
+      "result": {
+        "revisions": [
+          5,
+          6,
+          7
+        ],
+        "parameter": "jaw_width",
+        "before": 0.0,
+        "after": 0.57,
+        "whole_work_preserved": true
+      }
+    }
+  ],
+  "ime": [
+    {
+      "capture": "browser-selftest.json",
+      "result": {
+        "status": "PASS",
+        "problems": [],
+        "incomplete": [],
+        "events": [
+          {
+            "sequence": 5,
+            "eventId": "e1",
+            "eventType": "compositionstart",
+            "target": "ime-control",
+            "trusted": false,
+            "dataLength": 2,
+            "dispatchId": "d1",
+            "provenance": "WITNESSED_REALM_DISPATCH"
+          },
+          {
+            "sequence": 8,
+            "eventId": "e2",
+            "eventType": "compositionupdate",
+            "target": "ime-control",
+            "trusted": false,
+            "dataLength": 2,
+            "dispatchId": "d2",
+            "provenance": "WITNESSED_REALM_DISPATCH"
+          },
+          {
+            "sequence": 11,
+            "eventId": "e3",
+            "eventType": "compositionend",
+            "target": "ime-control",
+            "trusted": false,
+            "dataLength": 2,
+            "dispatchId": "d3",
+            "provenance": "WITNESSED_REALM_DISPATCH"
+          }
+        ],
+        "physicalAcceptance": "NOT-RUN by checker; requires separately attributed physical observation",
+        "originLimit": "A witnessed callstack proves this JS realm called dispatchEvent; all unwitnessed origins remain UNKNOWN."
+      }
+    }
+  ],
+  "native": "actual2x capture; separate GUI click/Undo/zoom observations",
+  "not_run": [
+    "original IAB simulated-DPR repro/cause",
+    "physical display migration",
+    "continuous slider drag in fixed-CSS wrapper",
+    "other OS/browser engines",
+    "fresh native/Web compilation (unchanged31-input cohort reused)",
+    "physical IME comparison pending human"
+  ]
+}

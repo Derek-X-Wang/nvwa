@@ -1,0 +1,25 @@
+node:assert:149
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: descendant canvas blur was falsely labeled window-blur
+
+1 !== 0
+
+    at Object.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/22-fixed-css-dpr/test_collector.js:64:8)
+    at Module._compile (node:internal/modules/cjs/loader:1829:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1969:10)
+    at Module.load (node:internal/modules/cjs/loader:1552:32)
+    at Module._load (node:internal/modules/cjs/loader:1354:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v25.8.2
