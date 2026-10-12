@@ -1,5 +1,7 @@
 # Experiment conclusions
 
+Latest bounded update (2026-10-11 PDT): PR31 is merged at `8a922b3`. Experiments22/23 below extend its evidence without changing production code. Earlier tables retain their original acceptance date and scope.
+
 Final snapshot: 2026-10-10 PDT / 2026-10-11 UTC. Source compilation, CPU checks, native/browser execution, UI exchange and isolated cadence measurements have separate evidence. Four implementation workflows ran within the four-agent limit; reviews and optional experiments followed as slots became available. Experiment code stays outside mainline dependencies.
 
 | Experiment | Decision and actual evidence | Limit / effect on architecture |
@@ -38,3 +40,12 @@ Later acceptance update: Derek manually unlocked the Mac. The same current nativ
 | [21 完整作品检查](../experiments/21-input-scale-evidence-checks/README.md) | 保留独立离线核验 | 实际 tab-return 全文含revision相等；jaw修改/Undo全文核验通过。该检查器只要求revision递增；单次提交断言由实验20承担。数值几何一致不等于输入命中。 |
 
 复现、运行环境、精确原始JSON/截图、真人归因和清理记录统一见[验收](evidence/input-scale/ACCEPTANCE.md)。无新增 Cargo 依赖、重编译或性能测试；当前正式 Rust/资产输入31项与已验收构建保持相同。
+
+## 2026-10-11：固定画布与输入法来源对照
+
+| 实验 | 决定 | 实际证据与边界 |
+| --- | --- | --- |
+| [22 固定 CSS / DPR](../experiments/22-fixed-css-dpr/REPORT.md) | 保留通过的缩放对照；不整合产品 workaround | 实际 Chrome100%→125%→100%，固定父容器/画布1100×640，DPR2→2.5→2，buffer2200×1280→2750×1600→2200×1280；点击、整份作品修改/一次Undo通过。普通与固定画布合计六个点击区间通过。工具拖动没有连续事件，实物显示迁移与原始IAB模拟故障 NOT-RUN。 |
+| [23 IME 来源](../experiments/23-ime-event-provenance/REPORT.md) | 一次真实对照后按 UNKNOWN 退出；无产品修复 | 实际 Chrome 合成自检有15行、三次精确匹配的事件/dispatch/callstack。真人普通文本框52行/Nvwa42行、搜狗（用户报告），均有相同来源未明的长度2结束事件；两份检查均保持PARTIAL/exit2。20项检查器测试、3项准备变异控制通过。旧710仍UNKNOWN；本次候选框位置/Space选字NOT-RUN，不重复实机输入。 |
+
+独立审查发现并修复观测器把后代焦点变化误记为窗口焦点，以及两个检查器误判路径；保留失败原始文件和 red/green 证据。26项缩放控制通过。原生2x实际角色、窗口放大后的点击/一次撤销通过；不是显示迁移或性能测量。统一见[验收](evidence/bounded-scale-ime/ACCEPTANCE.md)、[独立审查](evidence/bounded-scale-ime/REVIEW.md)。

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nvwa · Rust Character Studio</title>
+  <style>
+    html,body { margin:0; width:100%; height:100%; background:#101721; color:#edf4ff; font:16px system-ui; overflow:hidden }
+    canvas { display:block; width:100%; height:100%; outline:none }
+    #boot-status { position:absolute; left:16px; top:16px; padding:12px; background:#172331; border-radius:8px; max-width:680px; z-index:1 }
+  </style>
+<style>#nvwa-fixed-parent{width:1100px;height:640px;margin:0;padding:0;border:0}#nvwa-fixed-css-export{position:absolute;right:0;bottom:0;width:90px;z-index:2}#nvwa-fixed-css-stop{position:absolute;right:0;bottom:50px;width:90px;z-index:2}</style></head>
+<body>
+  <div id="boot-status" role="status">正在加载 Rust Studio…</div>
+  <canvas id="nvwa" aria-label="Nvwa 3D character editor" tabindex="0"></canvas>
+  <script type="module">
+    // Browser capability/bootstrap boundary only. All editing, animation and
+    // character business logic lives in the shared Rust application.
+    import init from './nvwa_studio.js';
+    const status = document.getElementById('boot-status');
+    try {
+      if (!navigator.gpu) throw new Error('此浏览器未提供 WebGPU。请使用支持 WebGPU 的桌面浏览器并通过 localhost 或 HTTPS 打开。');
+      const adapter = await navigator.gpu.requestAdapter();
+      if (!adapter) throw new Error('WebGPU 无法取得图形适配器。此版本没有经过验证的 WebGL2 回退。');
+      await init();
+      status.hidden = true;
+      if (new URLSearchParams(location.search).get('benchmark') === '1') {
+        // Some embedded browsers reject Bevy's automatic unattached download.
+        // This user-activated export reads the real WebGPU canvas pixels only.
+        const capture = document.createElement('button');
+        capture.textContent = 'Download actual benchmark canvas PNG';
+        capture.style.cssText = 'position:fixed;left:16px;bottom:16px;z-index:2;padding:8px';
+        capture.addEventListener('click', () => {
+          document.getElementById('nvwa').toBlob(blob => {
+            if (!blob) {
+              status.hidden = false;
+              status.textContent = 'Canvas PNG export failed';
+              return;
+            }
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'nvwa-web-canvas.png';
+            document.body.append(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+          }, 'image/png');
+        });
+        document.body.append(capture);
+      }
+    } catch (error) {
+      status.textContent = `启动失败：${error.message ?? error}`;
+      console.error(error);
+    }
+  </script>
+<button id="nvwa-fixed-css-export">Export scale capture</button><button id="nvwa-fixed-css-stop">Stop and export</button><script type="application/json" id="nvwa-fixed-css-source">{"schema": "nvwa-fixed-css-package-v1", "productionInputs": {"assets/character.profile.json": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353", "assets/fixtures/LICENSE.txt": "b10b199096d04791fe942e0de62eb4643edbd9d289791b88715789cad87fe151", "assets/fixtures/nvwa-humanoid.glb": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6", "assets/fixtures/nvwa-humanoid.glb.gz": "3813c79f62d4e627cd296edf8b599bf985238cd9adf31cbfe91e83b99bb53de9", "assets/fixtures/provenance-manifest.json": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f", "focus-control.html": "c01abd95ebdb3b4a1d0e52f558566780b64dbe238f4ee5df5b6d90c995e07df7", "index.html": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114", "index.html.gz": "e48a092d1f61ff57ed12f2b1643e48b363f8afc0c8cfe17804c6b70227628ede", "input-scale-export.js": "5b394bc82b3a9d183ded2264389fdbd8335cd3056fd92d6a4bf3a03a54bfb4b0", "input-scale.html": "e4e260f76e3de8bd69d0cb3a9ccc55b95462322a46909298c027bcff12f0ece0", "licenses/craft-ui/LICENSE-MIT.txt": "2f42c0cafc8ad394d91373fe1f342aee5453850b151a51405c68cae9ada86d26", "licenses/fonts/NOTICE.md": "2a1118c4fd3a2939f03b2f176a5324010baec38dab1ada70c6d05cfcb574fac4", "licenses/fonts/OFL.txt": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9", "licenses/fonts/PROVENANCE.json": "1c8eb96ee0efdb5b1da79621f1b0902848fe59167c1313ce1d481739ccd084aa", "nvwa_studio.d.ts": "7320c3edef76f4a2aa061264cb51f217528e4b29efee155c2084fa8a112cc431", "nvwa_studio.js": "9ff532cbedc6a814c4b8337c4b82f436de452e7b7fbc8c9e58bfda2e90ad6c5c", "nvwa_studio.js.gz": "2b2846bd1b5770dae87ad182a84b274cb001e70aa407f2316e7179ae249ddf0d", "nvwa_studio_bg.wasm": "884134fc98d54e3476dbc799ffdd5cc6b88f69121ddfb649ed9ba9be96156dba", "nvwa_studio_bg.wasm.d.ts": "081dfdcd5b7a99169b5642365bce8e6c1b179ffd26b743303c31b23a07c74b65", "nvwa_studio_bg.wasm.gz": "d239862ff09218c1a3242f6f5b8eac6e4d9bbc585899a8a6150a90917d330a29", "recovery-capture.js": "46f42f79f840cb00b67fa649f1bbc6e2cd524306f8acb1fd0dbe9fb34a41a1c7", "scale-collector.js": "e59b135cb8b8a4dd8eefc39bfe513e6fe38fb28818c2033676710835d5c7e413", "size-report.json": "9c7d3e32e985ea083324a6624854b2ad59b919bca712c7b1ca247769d6db4eaf", "works/m1-sequence.nvwa.json": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa", "works/m1-sequence.nvwa.json.gz": "cdf3d7d0cc0a55dec1374746e2d5cb5ad1a212e2e6034149ee87d43fc93e1f76", "works/ui26-web-redo.nvwa.json": "11dd52382db288e12fe10fd319ca03b40abd608378e24786c246b23ccf0e149e"}, "observerFiles": {"fixed-css-collector.js": "8cd6a3c9fc19878acdc06f5d520c49864c7cf046c6d998f0ada71dce65802477"}, "runtime": "exact existing dist/web JS/Wasm/assets via symlinks; no rebuild", "layout": "normal", "geometryChange": "production body parent and canvas geometry unchanged", "exportEffect": "user export/stop buttons overlay bottom-right90px normal canvas; focus changes after tested interval", "dprOverrides": false, "rustChanges": false}</script><script src="fixed-css-collector.js"></script></body>
+</html>

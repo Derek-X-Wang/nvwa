@@ -1,0 +1,59 @@
+{
+  "status": "v1 actual observation limits; rejected captures preserved unchanged",
+  "work_bounds": "unknown in this worker report; not evaluated because earlier boundary checks reject",
+  "pointerup_association": "not accepted by existing checker: it requires pointerdown timer origin; switching would change claim",
+  "collector_bug": "capture-phase window handlers misclassified descendant DOM focus/blur; target was omitted, so actual event origin cannot be recovered from raw alone",
+  "cases": [
+    {
+      "capture": ".work/bounded-scale-ime/issue3/normal-100.json",
+      "sha256": "5ff40efa51f177cbab100807d02c09020d723989dfd38501cbce2e8defac6cd7",
+      "pointer": 5,
+      "settled": 12,
+      "outcome": "FAIL intervening boundary event window-blur at row6",
+      "documentFocused_at_click": true,
+      "activeElement_at_click": "nvwa",
+      "dpr": 2,
+      "css": {
+        "x": 0,
+        "y": 0,
+        "width": 1512,
+        "height": 806
+      },
+      "observed_blur_with_documentFocused_true": true
+    },
+    {
+      "capture": ".work/bounded-scale-ime/issue3/normal-125.json",
+      "sha256": "3e5f2ed593409d567b7d743bcfd114676ddae545696551542ff584bc5a537de7",
+      "pointer": 32,
+      "settled": 43,
+      "outcome": "FAIL intervening boundary event window-blur at row33",
+      "documentFocused_at_click": true,
+      "activeElement_at_click": "nvwa-fixed-css-export",
+      "dpr": 2.5,
+      "css": {
+        "x": 0,
+        "y": 0,
+        "width": 1209.5999755859375,
+        "height": 644.7999877929688
+      },
+      "observed_blur_with_documentFocused_true": true
+    },
+    {
+      "capture": ".work/bounded-scale-ime/issue3/normal-reset.json",
+      "sha256": "fb9902a5205f5ee354728d690712a0e4b3e27afc9d414af1e1fa7e893b9b6a7b",
+      "pointer": 59,
+      "settled": 70,
+      "outcome": "FAIL intervening boundary event window-blur at row60",
+      "documentFocused_at_click": true,
+      "activeElement_at_click": "nvwa-fixed-css-export",
+      "dpr": 2,
+      "css": {
+        "x": 0,
+        "y": 0,
+        "width": 1512,
+        "height": 806
+      },
+      "observed_blur_with_documentFocused_true": true
+    }
+  ]
+}
