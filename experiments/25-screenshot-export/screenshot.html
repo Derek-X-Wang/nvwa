@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nvwa screenshot export boundary experiment</title>
+<style>
+  body { margin:16px; background:#101721; color:#edf4ff; font:14px system-ui }
+  button,select { font:inherit; padding:6px; margin-right:8px }
+  iframe { display:block; width:1280px; height:720px; border:1px solid #526579; margin-top:12px }
+  pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:380px; overflow:auto; background:#172331; padding:12px }
+</style>
+<h1>Screenshot export boundary · throwaway experiment</h1>
+<p>Loads the frozen Rust runtime in one fresh same-origin frame. No character logic or pixels are supplied by this page.</p>
+<label>Case <select id="case">
+  <option value="A">A · Bevy unattached anchor / immediate revoke</option>
+  <option value="B">B · Bevy attached anchor / immediate revoke</option>
+  <option value="D">D · Bevy attached anchor / delayed revoke (1000 ms)</option>
+  <option value="C">C · original explicit canvas Download button</option>
+</select></label>
+<button id="start">Start fresh runtime</button>
+<button id="stop" disabled>Stop runtime and release probe URLs</button>
+<p id="status" role="status">NOT-RUN — select a case and Start. Real files must be inspected separately.</p>
+<p>C uses the original “Download actual benchmark canvas PNG” button inside the frame. Click it directly after the real canvas renders. A scripted event or tool click does not establish human activation.</p>
+<p>Automatic capture is fixed at 15 seconds after Rust readiness. Hook, callback, click, and revoke records are attempts only. None establish a saved file, character pixels, or AI motion.</p>
+<div id="runtime"></div>
+<h2>Observed adapter records</h2>
+<p>Root saves <code>window.nvwaExportExperiment.records</code> as JSON and independently checks downloads, PNG dimensions, and pixels. This record buffer is in memory only.</p>
+<pre id="records">[]</pre>
+<script src="export-probe.js"></script>
+</html>

@@ -1,5 +1,14 @@
 # Actual release measurements
 
+## Current bounded startup checkpoint (2026-10-12)
+
+Two actual IAB Web startups used fresh run URL prefixes and no-store responses with the unchanged accepted Rust release artifact. Each transmitted20,564,428bytes across five critical bodies (diagnostic wrapper/collector, JS, Wasm, one GLB), plus an explicit28-byte optional metadata404. Boot-hidden observations were517.5/634.4ms; GLB Resource Timing responseEnd was936.6/1100.8ms, all on the navigation clock. Actual1280×720/DPR1 character pixels and current top-level automatic/explicit PNG downloads were verified. [Raw packet and limits](evidence/bounded-startup-capture/ACCEPTANCE.md), [reproduction](../experiments/24-http-cold-startup/README.md).
+
+Startup2's actual `NVWA_EVIDENCE` records first asset readiness at0.4248s and screenshot callback at15.4457s, on `bevy_TimeReal_since_first_update`. That clock excludes HTML/Wasm initialization before the first Bevy update; the callback includes the requested15s warmup. Startup1's console capture is empty. [Attributed raw extraction](evidence/bounded-startup-capture/startup-2-runtime-evidence.json).
+
+PARTIAL — HTTP-cache resource retransmission verified; boot-hidden is not asset-ready/first presentation. Browser/GPU/OS/shader caches were not cold-proven; startup1 Bevy console timings, exact first presentation, GPU timestamps/memory, browser memory and native stall attribution remain NOT-RUN. No performance or screenshot policy change follows. All measurements below retain their older artifact/date scope.
+
+
 Recorded 2026-10-10 PDT / 2026-10-11 UTC on macOS 27.0.1 arm64, Apple M2 Pro, 16 GiB unified memory, 12 CPUs. Rust 1.95.0, Bevy 0.19.1 and bevy_egui 0.42.0. Native backend is Metal with observed adapter Apple M2 Pro. Browser is Codex IAB with HTTP User-Agent Chrome/155.0.0.0; BrowserWebGpu is observed, adapter name hidden. No other browser is inferred.
 
 Both used final release artifacts, original GLB `f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6`, one default character playing idle, physical 1280×720 with scale override 1, continuous benchmark scheduling. The scene retained 9 meshes/skins, 18 joints, 4 morph weights and 1 active animation player. Other Nvwa renderers were closed. Compilers were stopped during Web measurement; native measurements followed all builds. No competing heavy task was running.

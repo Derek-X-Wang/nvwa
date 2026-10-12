@@ -1,0 +1,28 @@
+PASS {
+  "runId": "05a91ac91b4f4a2cb0ffe49c5d627773",
+  "navigationEntries": 1,
+  "resourceEntries": 4,
+  "scope": "structure and finite timing validation only; first presentation and cold state NOT-RUN",
+  "actualGetRequests": 5,
+  "criticalAssets": [
+    "index.html",
+    "startup-diagnostics.js",
+    "nvwa_studio.js",
+    "nvwa_studio_bg.wasm",
+    "assets/fixtures/nvwa-humanoid.glb"
+  ],
+  "optionalMissingSidecars": [
+    {
+      "member": "assets/fixtures/nvwa-humanoid.glb.meta",
+      "status": 404,
+      "bodyBytesWritten": 28,
+      "cacheControl": "no-store",
+      "reason": "verified Bevy0.19.1 optional metadata NotFound selects loader default; actualGLB200 required separately",
+      "browserTiming": "no resource-timing transfer claim for optional404"
+    }
+  ],
+  "bodyBytesWritten": 20564456,
+  "claim": "fresh-prefix HTTP no-store boundary with exact frozen response bodies",
+  "exactFirstPresentation": "NOT-RUN",
+  "browserGpuOsShaderCold": "NOT-RUN"
+}

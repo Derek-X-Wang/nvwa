@@ -1,6 +1,6 @@
 # Experiment conclusions
 
-Latest bounded update (2026-10-11 PDT): PR31 is merged at `8a922b3`. Experiments22/23 below extend its evidence without changing production code. Earlier tables retain their original acceptance date and scope.
+Latest bounded update (2026-10-12 PDT): PR33 is merged at `6b5cf80`. #3 remains blocked by missing original IAB DPR emulation. [Experiment24](../experiments/24-http-cold-startup/REPORT.md) verifies two actual HTTP-cache startup boundaries; [experiment25](../experiments/25-screenshot-export/REPORT.md) records successful top-level PNGs and unresolved iframe export failures. Anchor-attachment/revocation candidates are not adopted. [Current evidence](evidence/bounded-startup-capture/ACCEPTANCE.md). Production code/dependencies unchanged; earlier tables retain their acceptance date and scope.
 
 Final snapshot: 2026-10-10 PDT / 2026-10-11 UTC. Source compilation, CPU checks, native/browser execution, UI exchange and isolated cadence measurements have separate evidence. Four implementation workflows ran within the four-agent limit; reviews and optional experiments followed as slots became available. Experiment code stays outside mainline dependencies.
 
