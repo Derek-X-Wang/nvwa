@@ -1,0 +1,78 @@
+{
+  "scope": "actual root Chrome packet replayed through checker only; mutants in memory; no GUI/GPU execution by worker",
+  "actual_capture": ".work/input-scale/chrome-tab-return-scale.json",
+  "actual_sha256": "139e7e7328085c87e736ad0e87918c586d82f7f2f9e320ec9abc28386469283d",
+  "inventory": {
+    "count": 243,
+    "first_index": 0,
+    "last_index": 242,
+    "gaps": [],
+    "duplicate_indices": [],
+    "strictly_increasing": true,
+    "prefix_truncated": false,
+    "session_end_observed": false,
+    "whole_session_proof": false
+  },
+  "review_matrix": [
+    {
+      "case": "actual-stale-pair",
+      "before": {
+        "verdict": "PASS"
+      },
+      "after": {
+        "verdict": "REJECT",
+        "message": "select the click-settled(pointerdown) row; later typing snapshots are a separate observation"
+      }
+    },
+    {
+      "case": "review-exact-click-dpr-mutant",
+      "before": {
+        "verdict": "PASS"
+      },
+      "after": {
+        "verdict": "REJECT",
+        "message": "select the click-settled(pointerdown) row; later typing snapshots are a separate observation"
+      }
+    },
+    {
+      "case": "review-exact-intervening-pointer-mutant",
+      "before": {
+        "verdict": "PASS"
+      },
+      "after": {
+        "verdict": "REJECT",
+        "message": "capture index sequence has missing/repeated/out-of-order records: {'count': 244, 'first_index': 0, 'last_index': 242, 'gaps': [{'after': 241, 'before': 999, 'missing_count': 757}], 'duplicate_indices': [], 'strictly_increasing': False, 'prefix_truncated': False, 'session_end_observed': False, 'whole_session_proof': False}"
+      }
+    }
+  ],
+  "runs": [
+    {
+      "version": "before",
+      "command": [
+        "python3",
+        "-B",
+        "experiments/20-scale-boundary/test_geometry.py"
+      ],
+      "checker_path": ".work/input-scale/issue3/check-before-rereview.py",
+      "exit": 1,
+      "log": ".work/input-scale/issue3/geometry-rereview-before.log"
+    },
+    {
+      "version": "after",
+      "command": [
+        "python3",
+        "-B",
+        "experiments/20-scale-boundary/test_geometry.py"
+      ],
+      "checker_path": null,
+      "exit": 0,
+      "log": ".work/input-scale/issue3/geometry-rereview-after.log"
+    }
+  ],
+  "age_policy_ms": [
+    249,
+    1000
+  ],
+  "collector_sha256": "e59b135cb8b8a4dd8eefc39bfe513e6fe38fb28818c2033676710835d5c7e413",
+  "frozen_package_collector_sha256": "e59b135cb8b8a4dd8eefc39bfe513e6fe38fb28818c2033676710835d5c7e413"
+}
