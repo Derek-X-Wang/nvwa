@@ -1,0 +1,50 @@
+name: Bounded CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+# No cache restore/save steps; no cache token overrides.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: '0'
+  # Smaller cold builds on standard runners; local cached validation used defaults.
+  CARGO_PROFILE_DEV_DEBUG: '0'
+  CARGO_PROFILE_TEST_DEBUG: '0'
+jobs:
+  portable:
+    name: Core, CLI, and diagnostic controls
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      CARGO_BUILD_JOBS: '2'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, official ref verified 2026-10-12
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Check portable source and real CLI paths
+        run: bash experiments/27-ci-baseline/check.sh portable
+      - name: Check bounded diagnostic controls
+        run: bash experiments/27-ci-baseline/check.sh diagnostics
+  native-and-wasm:
+    name: macOS CPU tests and Wasm compile check
+    runs-on: macos-14
+    timeout-minutes: 45
+    env:
+      CARGO_BUILD_JOBS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Run workspace CPU tests
+        run: bash experiments/27-ci-baseline/check.sh native
+      - name: Compile the actual Web target
+        run: bash experiments/27-ci-baseline/check.sh wasm
