@@ -59,3 +59,41 @@ variables affect only the test adapter.
 Results and exact fresh source/executable identities are recorded in
 `evidence.md`. Historical protected receipts
 outside this experiment are not changed.
+
+
+## Durable Web acceptance
+
+The fresh root-run picker case is archived under `web-acceptance/`. One actual
+app received startup Work01 and eleven successful GUI chooser selections02–12.
+Before release, only four distinct GLB GETs existed and four bodies remained
+held. After explicit release of all four, only latest12 fetched and rendered;
+the entire saved Work equals canonical variant12 semantically. The exact Cua
+call/completion/output transcript provides chooser provenance; identical
+screenshots are not used to infer eleven selections.
+
+```sh
+python3 -B experiments/29-stalled-loads/check_web_archive.py --self-test
+```
+
+This bounded, read-only checker validates the archive and rejects ten semantic
+tamper controls plus six repair-inventory omission/extra-entry controls. It
+requires both original manifests, both complete nine-record cohorts, and exactly
+18 canonical repair receipts. `--frozen-web /path/to/frozen-web` additionally verifies the
+actual candidate Wasm. It starts no app, server, renderer, Cargo, or GUI.
+`adapter-repair/archive-index.json` includes raw portable evidence for both
+nine-record adapter repair cohorts; original failures are retained.
+
+To reproduce the GUI recipe, register `waitForEvent('filechooser')` before the
+real canvas Open click, await the chooser, then await `setFiles` for the exact
+selected Work. Repeat inside the same `nvwaPickerTab` app binding; twelve URL
+navigations reset runtime state. The Web manual Open action ignores a typed
+path field and opens a chooser. The first path-edit attempt selected no further
+Works and remains excluded from acceptance. An actual Save/download checks the
+whole latest document, not only the displayed rig or filename.
+
+This archived case released all four roots together. One-slot recovery is CPU
+coverage. CPU timeout tests inject elapsed=31; durable actual timeout-UI proof
+and native stalled-load visual acceptance remain NOT-RUN. The actual Web case
+used hold105/watchdog120 and ended before either watchdog; real 90/105/120-second
+watchdog dwell is not claimed. See `evidence.md` for exact identities, raw event
+sequence, screenshots, console warnings and scope limits.

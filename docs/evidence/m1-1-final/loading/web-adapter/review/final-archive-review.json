@@ -1,0 +1,39 @@
+{
+  "decision": "Actual Web evidence accepted; portable checker needs one completeness repair before final archive acceptance.",
+  "checker_sha256": "0e6a8f6c4fcc23394700492dc83aa6e8d2edc6dc5f65dd39f16bfd210fec9401",
+  "findings": [
+    {
+      "severity": "P2",
+      "file": "experiments/29-stalled-loads/check_web_archive.py",
+      "start": 204,
+      "end": 225,
+      "title": "Reject missing repair cohorts rather than returning PASS with partial coverage",
+      "detail": "check_repairs validates only cohorts present in the unpinned archive-index.json. Removing new_nine is accepted and returns9; removing both cohorts is accepted and returns0. main unconditionally labels either result PASS. This lets a truncated curated index bypass the expected18-record verification.",
+      "reproduction": "Socket-free in-memory json_file override changed only archive-index cohorts: remove new_nine => check_repairs returns9; remove both=>0. Original archive files unchanged. See cohort-omission-controls.json.",
+      "fix": "Require exactly previous_nine/new_nine, exact receipt-name sets from the original manifests, and total18; add whole-cohort-omission negative controls. Verify complete declared inventory coverage rather than accepting a shortened index."
+    },
+    {
+      "severity": "P3",
+      "file": "experiments/29-stalled-loads/evidence.md",
+      "start": 130,
+      "end": 132,
+      "title": "Distinguish registering the chooser wait from awaiting it",
+      "detail": "The text says the loop awaits the chooser before Open click. Actual code registers waitForEvent, clicks, then awaits the chooser and setFiles. README describes the correct order. Align evidence.md wording."
+    }
+  ],
+  "verified": [
+    "Read-only checker --self-test --frozen-web completed exit0. Ten controls all rejected at intended validation boundaries, after actual file hashes were loaded.",
+    "Current web inventory covers41 files, with only archive-hashes.json itself outside its file map; all41 declarations exist. Full experiment independently inventoried:90 files1438737 bytes.",
+    "The current archive contains18 repair receipts with their declared portable raw links, original manifests and preserved failure logs. Current data is present and consistent; P2 concerns omitted-index fail-closed behavior.",
+    "Exact chooser trace, source line receipts, whole Work equality, fresh Wasm and first-attempt exclusion remain consistent with prior accepted raw review.",
+    "One app startup plus11 chooser selections, Work02 timestamp qualification, all-four release, native pending, and watchdog dwell NOT-RUN are retained."
+  ],
+  "limits": [
+    "No GUI/GPU/server/Cargo/Git or external writes. Source files unchanged.",
+    "No byte/task/GPU-memory bound claim; native visual acceptance remains pending."
+  ],
+  "receipts": [
+    "complete-reviewed-inventory.json",
+    "cohort-omission-controls.json"
+  ]
+}

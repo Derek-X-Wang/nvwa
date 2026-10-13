@@ -1,0 +1,67 @@
+{
+  "scope": "actual bounded read-only checker CLI against mutated private index copies; no archive/source mutation by controls",
+  "checker_sha256": "ddc7180222c539d1fc777a321011f76eda7ddebafb1a25ccf254bea1481e476d",
+  "control_count": 6,
+  "controls": [
+    {
+      "name": "missing-new-cohort",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "ValueError: Both exact repair cohorts required"
+      ]
+    },
+    {
+      "name": "missing-both-cohorts",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "ValueError: Both exact repair cohorts required"
+      ]
+    },
+    {
+      "name": "missing-one-receipt",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "ValueError: Complete exact canonical repair receipt set required"
+      ]
+    },
+    {
+      "name": "missing-original-manifest-entry",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "ValueError: Exact original repair manifest inventory required"
+      ]
+    },
+    {
+      "name": "extra-cohort",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "ValueError: Both exact repair cohorts required"
+      ]
+    },
+    {
+      "name": "extra-original-manifest-entry",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "ValueError: Exact original repair manifest inventory required"
+      ]
+    }
+  ]
+}

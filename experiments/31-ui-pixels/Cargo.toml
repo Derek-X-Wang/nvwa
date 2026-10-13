@@ -1,0 +1,26 @@
+[package]
+name = "nvwa-ui-pixels-experiment"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+
+[workspace]
+resolver = "3"
+
+[dependencies]
+# Reuse exactly the existing product feature cohort and pinned painter dependency.
+nvwa-studio = { path = "../../crates/nvwa-studio" }
+bevy = { version = "=0.19.1", default-features = false }
+bevy_egui = { version = "=0.42.0", default-features = false, features = ["render", "default_fonts", "manage_clipboard"] }
+craft-ui = { git = "https://github.com/storytold/craft-libs", rev = "5c874d51eeb3de70e735c8ce87a59a7dedd47675" }
+serde_json = "1.0"
+
+[profile.dev]
+opt-level = 1
+[profile.dev.package."*"]
+opt-level = 1
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 8

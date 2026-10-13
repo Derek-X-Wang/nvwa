@@ -1,0 +1,1063 @@
+{
+  "scope": "Read-only integration and claim R2; no Cargo/GPU/GUI/server/test reruns",
+  "findings": [],
+  "build_receipts": [
+    {
+      "name": "fmt",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exit_code": 0,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    },
+    {
+      "name": "native-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 101,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    },
+    {
+      "name": "native-clippy-fixed",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    },
+    {
+      "name": "native-release",
+      "argv": [
+        "cargo",
+        "build",
+        "-p",
+        "nvwa-studio",
+        "-p",
+        "nvwa-cli",
+        "--release",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    },
+    {
+      "name": "post-lint-rustfmt",
+      "argv": [
+        "rustfmt",
+        "--edition",
+        "2024",
+        "--check",
+        "crates/nvwa-studio/src/editor_layout_paint_tests.rs"
+      ],
+      "exit_code": 0,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    },
+    {
+      "name": "wasm-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "-p",
+        "nvwa-studio",
+        "--lib",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    },
+    {
+      "name": "web-release",
+      "argv": [
+        "bash",
+        "scripts/build-web.sh",
+        "release"
+      ],
+      "exit_code": 0,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    },
+    {
+      "name": "workspace-tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    },
+    {
+      "name": "workspace-tests-final",
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+    }
+  ],
+  "workspace_tests_raw_totals": {
+    "passed": 113,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filtered": 0
+  },
+  "ui_work_files": {
+    "docs/evidence/m1-1-final/ui-paint/actual-web/web-ui-before.nvwa.json": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa",
+    "docs/evidence/m1-1-final/ui-paint/actual-web/web-ui-after.nvwa.json": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa",
+    "examples/m1-sequence.nvwa.json": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa",
+    "dist/web/works/m1-sequence.nvwa.json": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa"
+  },
+  "ui_work_bytes_equal": true,
+  "ui_work_values_equal": true,
+  "ui_observation": {
+    "url": "http://127.0.0.1:9201/?work=works/m1-sequence.nvwa.json",
+    "profile1280": "actual tab click displayed Profile text and preserved revision1",
+    "shape1024": "actual tab click displayed Shape parameters and preserved revision1",
+    "canvas1024": {
+      "height": 768,
+      "rect": {
+        "height": 768,
+        "width": 1024
+      },
+      "width": 1024
+    },
+    "beforeDownload": "/Users/derekxwang/Downloads/m1-sequence.nvwa (8).json",
+    "afterDownload": "/Users/derekxwang/Downloads/m1-sequence.nvwa (9).json",
+    "sliderAttempt": "one track click produced no observed edit; edit/Undo acceptance NOT-RUN",
+    "scope": "actual Shape/Profile switching and Work-preservation check; no original DPR reproduction or complete narrow transport acceptance",
+    "beforeSha256": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa",
+    "afterSha256": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa",
+    "fullWorkEqual": true
+  },
+  "ui_images": {
+    "web-ui-profile-1280.jpg": {
+      "sha256": "b0b932447bcb49f91b54529ae3d4b9a45d013c19e0b31875486312814acba725",
+      "bytes": 50870
+    },
+    "web-ui-shape-1024.jpg": {
+      "sha256": "638cf26abf03542b774665be66ce681f153e01055c5e65b15e89235eda5cf183",
+      "bytes": 51800
+    }
+  },
+  "tracked_diff_from_base": [
+    "crates/nvwa-runtime/src/lib.rs",
+    "crates/nvwa-runtime/src/loading_tests.rs",
+    "crates/nvwa-runtime/src/stalled_http_tests.rs",
+    "crates/nvwa-studio/src/editor_layout.rs",
+    "crates/nvwa-studio/src/editor_layout_paint_tests.rs",
+    "docs/EXPERIMENTS.md",
+    "docs/HANDOFF.md",
+    "docs/ISSUES.md",
+    "docs/ROADMAP.md",
+    "docs/evidence/m1-1-final/build/build-inputs-after-lint-fix.json",
+    "docs/evidence/m1-1-final/build/build-inputs-before.json",
+    "docs/evidence/m1-1-final/build/fmt/output.log",
+    "docs/evidence/m1-1-final/build/fmt/result.json",
+    "docs/evidence/m1-1-final/build/native-clippy-fixed/output.log",
+    "docs/evidence/m1-1-final/build/native-clippy-fixed/result.json",
+    "docs/evidence/m1-1-final/build/native-clippy/output.log",
+    "docs/evidence/m1-1-final/build/native-clippy/result.json",
+    "docs/evidence/m1-1-final/build/ui-post-lint-review.json",
+    "docs/evidence/m1-1-final/build/wasm-clippy/output.log",
+    "docs/evidence/m1-1-final/build/wasm-clippy/result.json",
+    "docs/evidence/m1-1-final/build/workspace-tests-final/output.log",
+    "docs/evidence/m1-1-final/build/workspace-tests-final/result.json",
+    "docs/evidence/m1-1-final/build/workspace-tests/output.log",
+    "docs/evidence/m1-1-final/build/workspace-tests/result.json",
+    "docs/evidence/m1-1-final/diagnostics/REPORT.txt",
+    "docs/evidence/m1-1-final/diagnostics/diagnostics.log",
+    "docs/evidence/m1-1-final/diagnostics/receipt-sha256.json",
+    "docs/evidence/m1-1-final/diagnostics/result.json",
+    "docs/evidence/m1-1-final/diagnostics/source-after.json",
+    "docs/evidence/m1-1-final/diagnostics/source-before.json",
+    "docs/evidence/m1-1-final/diagnostics/source-checks.json",
+    "docs/evidence/m1-1-final/diagnostics/source-final.json",
+    "docs/evidence/m1-1-final/loading/before-controlled-retry.json",
+    "docs/evidence/m1-1-final/loading/candidate-final-cleanup-green-bodies.json",
+    "docs/evidence/m1-1-final/loading/candidate-final-cleanup-green.json",
+    "docs/evidence/m1-1-final/loading/candidate-final-cleanup-green.log",
+    "docs/evidence/m1-1-final/loading/candidate-final-discovery.log",
+    "docs/evidence/m1-1-final/loading/candidate-final-green.json",
+    "docs/evidence/m1-1-final/loading/candidate-final-green.log",
+    "docs/evidence/m1-1-final/loading/candidate-green-repair.json",
+    "docs/evidence/m1-1-final/loading/candidate-green-repair.log",
+    "docs/evidence/m1-1-final/loading/candidate-green.json",
+    "docs/evidence/m1-1-final/loading/candidate-green.log",
+    "docs/evidence/m1-1-final/loading/candidate-transport-mutation-red.json",
+    "docs/evidence/m1-1-final/loading/candidate-transport-mutation-red.log",
+    "docs/evidence/m1-1-final/loading/candidate-transport-positive-bodies.json",
+    "docs/evidence/m1-1-final/loading/candidate-transport-positive.json",
+    "docs/evidence/m1-1-final/loading/candidate-transport-positive.log",
+    "docs/evidence/m1-1-final/loading/pre-fix-discovery.log",
+    "docs/evidence/m1-1-final/loading/pre-fix-red-retry.json",
+    "docs/evidence/m1-1-final/loading/pre-fix-red-retry.log",
+    "docs/evidence/m1-1-final/loading/pre-fix-red.log",
+    "docs/evidence/m1-1-final/loading/raw-manifest.json",
+    "docs/evidence/m1-1-final/loading/review/independent-body-verification.json",
+    "docs/evidence/m1-1-final/loading/review/independent-negative-cleanup.json",
+    "docs/evidence/m1-1-final/loading/review/independent-negative-cleanup.log",
+    "docs/evidence/m1-1-final/loading/review/independent-replay.json",
+    "docs/evidence/m1-1-final/loading/review/independent-replay.log",
+    "docs/evidence/m1-1-final/loading/review/independent-restored-green.json",
+    "docs/evidence/m1-1-final/loading/review/independent-restored-green.log",
+    "docs/evidence/m1-1-final/loading/review/review.json",
+    "docs/evidence/m1-1-final/loading/transport-mutation-bodies.json",
+    "docs/evidence/m1-1-final/ui-paint/README.md",
+    "docs/evidence/m1-1-final/ui-paint/REVIEW.md",
+    "docs/evidence/m1-1-final/ui-paint/green-build.stderr",
+    "docs/evidence/m1-1-final/ui-paint/green-paint.exit",
+    "docs/evidence/m1-1-final/ui-paint/green-paint.list",
+    "docs/evidence/m1-1-final/ui-paint/green-paint.log",
+    "docs/evidence/m1-1-final/ui-paint/green-state.exit",
+    "docs/evidence/m1-1-final/ui-paint/green-state.list",
+    "docs/evidence/m1-1-final/ui-paint/green-state.log",
+    "docs/evidence/m1-1-final/ui-paint/identity-and-results.json",
+    "docs/evidence/m1-1-final/ui-paint/mutant-build.stderr",
+    "docs/evidence/m1-1-final/ui-paint/mutant-paint.exit",
+    "docs/evidence/m1-1-final/ui-paint/mutant-paint.list",
+    "docs/evidence/m1-1-final/ui-paint/mutant-paint.log",
+    "docs/evidence/m1-1-final/ui-paint/mutant-state.exit",
+    "docs/evidence/m1-1-final/ui-paint/mutant-state.list",
+    "docs/evidence/m1-1-final/ui-paint/mutant-state.log",
+    "docs/evidence/m1-1-final/ui-paint/paint-only-mutation.patch",
+    "docs/evidence/m1-1-final/ui-paint/post-lint/paint.list",
+    "docs/evidence/m1-1-final/ui-paint/post-lint/paint.log",
+    "docs/evidence/m1-1-final/ui-paint/post-lint/replay.json",
+    "docs/evidence/m1-1-final/ui-paint/post-lint/review.md",
+    "docs/evidence/m1-1-final/ui-paint/post-lint/state.list",
+    "docs/evidence/m1-1-final/ui-paint/post-lint/state.log",
+    "docs/evidence/m1-1-final/ui-paint/restored-build.stderr",
+    "docs/evidence/m1-1-final/ui-paint/restored-paint.exit",
+    "docs/evidence/m1-1-final/ui-paint/restored-paint.list",
+    "docs/evidence/m1-1-final/ui-paint/restored-paint.log",
+    "docs/evidence/m1-1-final/ui-paint/restored-state.exit",
+    "docs/evidence/m1-1-final/ui-paint/restored-state.list",
+    "docs/evidence/m1-1-final/ui-paint/restored-state.log",
+    "experiments/29-stalled-loads/README.md",
+    "experiments/29-stalled-loads/evidence.md",
+    "experiments/29-stalled-loads/manifests.json"
+  ],
+  "product_changes": [
+    "crates/nvwa-runtime/src/lib.rs",
+    "crates/nvwa-runtime/src/loading_tests.rs",
+    "crates/nvwa-runtime/src/stalled_http_tests.rs",
+    "crates/nvwa-studio/src/editor_layout.rs",
+    "crates/nvwa-studio/src/editor_layout_paint_tests.rs"
+  ],
+  "protected_changes": [],
+  "source_changes_since_tested_head": [],
+  "checks": [
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-cli/Cargo.toml",
+      "expected": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+      "actual": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-cli/src/lib.rs",
+      "expected": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2",
+      "actual": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-cli/src/main.rs",
+      "expected": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b",
+      "actual": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-cli/tests/offline.rs",
+      "expected": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+      "actual": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-cli/tests/sequence.rs",
+      "expected": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d",
+      "actual": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-core/Cargo.toml",
+      "expected": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+      "actual": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-core/src/asset.rs",
+      "expected": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+      "actual": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-core/src/bounded_history_tests.rs",
+      "expected": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+      "actual": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-core/src/lib.rs",
+      "expected": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797",
+      "actual": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-core/tests/transactions.rs",
+      "expected": "a09433d4f7a7f89f07d96c89f68c7871af9bd9b0a6329bda6cfec2e53bfe3e7a",
+      "actual": "a09433d4f7a7f89f07d96c89f68c7871af9bd9b0a6329bda6cfec2e53bfe3e7a",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-runtime/Cargo.toml",
+      "expected": "e598645fa5ad82d1ff8e79431b2a4c6eb0847ac4d660b75d0e68e14cbfd74dd4",
+      "actual": "e598645fa5ad82d1ff8e79431b2a4c6eb0847ac4d660b75d0e68e14cbfd74dd4",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-runtime/src/lib.rs",
+      "expected": "548e40cc7c60b6f26f214c58e8520a67477d2965de151ae04689532b21aeba73",
+      "actual": "548e40cc7c60b6f26f214c58e8520a67477d2965de151ae04689532b21aeba73",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-runtime/src/loading_tests.rs",
+      "expected": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804",
+      "actual": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-runtime/src/stalled_http_tests.rs",
+      "expected": "7fa3c0055bc39e04f47f3f3f2cb532f4d2aac9945a89c5dcc625fc3feebe9b55",
+      "actual": "7fa3c0055bc39e04f47f3f3f2cb532f4d2aac9945a89c5dcc625fc3feebe9b55",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-studio/Cargo.toml",
+      "expected": "e4625c6659d54f9d930b02ca52c49bdf9b1ec92811d180fbe7fdf054050f865b",
+      "actual": "e4625c6659d54f9d930b02ca52c49bdf9b1ec92811d180fbe7fdf054050f865b",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-studio/src/editor_layout.rs",
+      "expected": "923332b75506952c05cc2fe4a1d84ff78d4be0ba8d0f2f98d94a30c0d09025ae",
+      "actual": "923332b75506952c05cc2fe4a1d84ff78d4be0ba8d0f2f98d94a30c0d09025ae",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-studio/src/editor_layout_paint_tests.rs",
+      "expected": "15a36a3b51a5f8fe79883e39353251edf6130ec145149380567667a77d1a2f6c",
+      "actual": "15a36a3b51a5f8fe79883e39353251edf6130ec145149380567667a77d1a2f6c",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-studio/src/fonts.rs",
+      "expected": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2",
+      "actual": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-studio/src/lib.rs",
+      "expected": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+      "actual": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-studio/src/main.rs",
+      "expected": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+      "actual": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-studio/src/platform.rs",
+      "expected": "26d57f8b73020ca57d2bc97c58908c896520a61f1a4ab438b38769d089fda2b1",
+      "actual": "26d57f8b73020ca57d2bc97c58908c896520a61f1a4ab438b38769d089fda2b1",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "crates/nvwa-studio/src/web_input.rs",
+      "expected": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+      "actual": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "Cargo.toml",
+      "expected": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+      "actual": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "Cargo.lock",
+      "expected": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "actual": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "rust-toolchain.toml",
+      "expected": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+      "actual": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "web/index.html",
+      "expected": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114",
+      "actual": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "scripts/build-web.sh",
+      "expected": "3889d36ed5e6a26a476a896169aae3ded49d8f9ab34049768b4a022b7b806c82",
+      "actual": "3889d36ed5e6a26a476a896169aae3ded49d8f9ab34049768b4a022b7b806c82",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "scripts/package-native.py",
+      "expected": "b6775d75445265320b649a85dfc61a909b448b8c587d7421edbc31ecd854a61c",
+      "actual": "b6775d75445265320b649a85dfc61a909b448b8c587d7421edbc31ecd854a61c",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "assets/character.profile.json",
+      "expected": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+      "actual": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "assets/fixtures/nvwa-humanoid.glb",
+      "expected": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "actual": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "assets/fonts/NvwaSansSC-Regular.ttf",
+      "expected": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea",
+      "actual": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea",
+      "size_equal": true
+    },
+    {
+      "kind": "final_build_input",
+      "path": "examples/m1-sequence.nvwa.json",
+      "expected": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa",
+      "actual": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa",
+      "size_equal": true
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/BUILD-FREEZE-RESULT.json",
+      "expected": "67a50a81d1bb37248e772ab987195116b6afd337bea7121c4a810fa426080a37",
+      "actual": "67a50a81d1bb37248e772ab987195116b6afd337bea7121c4a810fa426080a37"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/Cargo.lock",
+      "expected": "a15abd3934b43329499506150b69725f57545a0c39a307000d5c03e8e4dd1066",
+      "actual": "a15abd3934b43329499506150b69725f57545a0c39a307000d5c03e8e4dd1066"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/Cargo.toml",
+      "expected": "93f7fce4532986e0a83bd35caacdb35d501102f3287d80a2c1252c1290354e93",
+      "actual": "93f7fce4532986e0a83bd35caacdb35d501102f3287d80a2c1252c1290354e93"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/FREEZE-PROPOSAL.json",
+      "expected": "c0ba7afe0a41fa8b2897e8b2885707bbab573bf36a74a60485a67aef505210db",
+      "actual": "c0ba7afe0a41fa8b2897e8b2885707bbab573bf36a74a60485a67aef505210db"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/LAUNCH-PLAN.md",
+      "expected": "ca3675933d19c5f39a78a6128a1a01dec6547e6f2d7c471af24142138e19b1d5",
+      "actual": "ca3675933d19c5f39a78a6128a1a01dec6547e6f2d7c471af24142138e19b1d5"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/LIFECYCLE-CONTROLS.json",
+      "expected": "120c5242ea12e2e1e9b973b7df7680959f7d68eb0f2c88adfb8328e2356857e5",
+      "actual": "120c5242ea12e2e1e9b973b7df7680959f7d68eb0f2c88adfb8328e2356857e5"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/LIFECYCLE-PROFILER-RED.json",
+      "expected": "7f46ef58b87ed6eff9324165b8b7b8b3bd0e7b704329a6864079efd11f683b41",
+      "actual": "7f46ef58b87ed6eff9324165b8b7b8b3bd0e7b704329a6864079efd11f683b41"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/NATIVE-RESULT.json",
+      "expected": "5818e732b2356cf885705de31590dcd5e9b592d9d0018c2ed15ae37b08fc58c4",
+      "actual": "5818e732b2356cf885705de31590dcd5e9b592d9d0018c2ed15ae37b08fc58c4"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/README.md",
+      "expected": "c60673fc3c049100d7e0a8ebdb7065cba301b2c5dc081489515581a17b34872d",
+      "actual": "c60673fc3c049100d7e0a8ebdb7065cba301b2c5dc081489515581a17b34872d"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/REPORT.md",
+      "expected": "2680565e8fe17a484212249bd2282006bf2a7371bba8cc3c026fb9df4a907e34",
+      "actual": "2680565e8fe17a484212249bd2282006bf2a7371bba8cc3c026fb9df4a907e34"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/RESOLVED-FEATURE-COMPARISON.json",
+      "expected": "e39176d4a3756952b56711e48de95c1929f8c792593da9b0cb8feee8df9663df",
+      "actual": "e39176d4a3756952b56711e48de95c1929f8c792593da9b0cb8feee8df9663df"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/RUN-COMMANDS.md",
+      "expected": "5a7c3a88b7289c04276f4a5622b53f111dd6cfe3280d2f881fcd9655d3172441",
+      "actual": "5a7c3a88b7289c04276f4a5622b53f111dd6cfe3280d2f881fcd9655d3172441"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/SOURCE-MANIFEST.json",
+      "expected": "56e7b867b52e6d76421d78a01ca9c5a86c0ba0886897618c41c532494d149d93",
+      "actual": "56e7b867b52e6d76421d78a01ca9c5a86c0ba0886897618c41c532494d149d93"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/STATIC-REUSE.json",
+      "expected": "8196bbed58239a9ec3cf20bf87c88e431c5ca3477ad433ba574882ae36c4fc85",
+      "actual": "8196bbed58239a9ec3cf20bf87c88e431c5ca3477ad433ba574882ae36c4fc85"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/WEB-DELIVERY-MANIFEST.json",
+      "expected": "d9642b230305f9f7846c5ff9323b7c574e43c855a2aee6a3388639b54530f616",
+      "actual": "d9642b230305f9f7846c5ff9323b7c574e43c855a2aee6a3388639b54530f616"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/WEB-RECONCILIATION-CONTROLS.json",
+      "expected": "4909748d0368449e5d507d3f9641681eacdbf945ca26162e3f808b2ebe4b8b22",
+      "actual": "4909748d0368449e5d507d3f9641681eacdbf945ca26162e3f808b2ebe4b8b22"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/WEB-REPORT.md",
+      "expected": "a401a6067d438546eb3ea5a4e667ab9f2142a9c84e4ab27aec971f0bdf20094e",
+      "actual": "a401a6067d438546eb3ea5a4e667ab9f2142a9c84e4ab27aec971f0bdf20094e"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/WEB-RESULT.json",
+      "expected": "2b8a00682e5d9bb6f4119b58f13885aa320a035dc48ed9663883b367d1b314bc",
+      "actual": "2b8a00682e5d9bb6f4119b58f13885aa320a035dc48ed9663883b367d1b314bc"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/bounded_command.py",
+      "expected": "c5df7949e740381ad41240a7ca234ef2ad2698f62db72dda0330ed5631b3d768",
+      "actual": "c5df7949e740381ad41240a7ca234ef2ad2698f62db72dda0330ed5631b3d768"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/bundle_launcher.py",
+      "expected": "d26780c09dc00bb01b30c05b2dcdb741faf344eb43142182d49124f0d0831f40",
+      "actual": "d26780c09dc00bb01b30c05b2dcdb741faf344eb43142182d49124f0d0831f40"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/lifecycle-initial/LIMIT.md",
+      "expected": "8078a8ca413e60bd0d4c42980563212116487000b5a256143e78e697fb103183",
+      "actual": "8078a8ca413e60bd0d4c42980563212116487000b5a256143e78e697fb103183"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/lifecycle-initial/bundle_launcher.py",
+      "expected": "c07745d65245e43b2d25c535281d904cf267a73471fc9d25ffa6cbcfe2dc65ce",
+      "actual": "c07745d65245e43b2d25c535281d904cf267a73471fc9d25ffa6cbcfe2dc65ce"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/lifecycle-initial/sample_owned_pid.py",
+      "expected": "577717e1aeb2c696fb0c452bb4f617859ad9b47430e2595444821a56ebd6f375",
+      "actual": "577717e1aeb2c696fb0c452bb4f617859ad9b47430e2595444821a56ebd6f375"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/lifecycle-interim-reviewed/root-fault-red-controls.json",
+      "expected": "f4cec2373b68bf3fc6c31fb038bf4457b5b9e26fe626f963f78d3ed6ca6f3856",
+      "actual": "f4cec2373b68bf3fc6c31fb038bf4457b5b9e26fe626f963f78d3ed6ca6f3856"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/lifecycle-interim-reviewed/sample_owned_pid.py",
+      "expected": "4a86cf2b43824171e2baa3c562d1d7f108555fe370f01df4ccf4241f18c12fbf",
+      "actual": "4a86cf2b43824171e2baa3c562d1d7f108555fe370f01df4ccf4241f18c12fbf"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/lifecycle_controls.py",
+      "expected": "bb38a987111dbc0324ced9dae5343a1eaf0c9dad65ac398b86faff238806bfc7",
+      "actual": "bb38a987111dbc0324ced9dae5343a1eaf0c9dad65ac398b86faff238806bfc7"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/prepare_bundles.py",
+      "expected": "cc82825bd7e76031ce185ffa4c9abfaaf9f77798151474aaa9e645ec4cb19fb0",
+      "actual": "cc82825bd7e76031ce185ffa4c9abfaaf9f77798151474aaa9e645ec4cb19fb0"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/reconcile_web_baseline.py",
+      "expected": "74dc0af4c408220c060c8703e7e7c5c3470ae24bf8529801619600a882f29351",
+      "actual": "74dc0af4c408220c060c8703e7e7c5c3470ae24bf8529801619600a882f29351"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/sample_owned_pid.py",
+      "expected": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda",
+      "actual": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/src/main.rs",
+      "expected": "96f63c8f675b3fe8341a7716d3f8590891958f90ffd7936137bcf04e0ac82bd8",
+      "actual": "96f63c8f675b3fe8341a7716d3f8590891958f90ffd7936137bcf04e0ac82bd8"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/test_web_reconciliation.py",
+      "expected": "9b1af070dad0649cc78f0ec78fe35142d7c675f78f4ba19e24530b2f57db9f81",
+      "actual": "9b1af070dad0649cc78f0ec78fe35142d7c675f78f4ba19e24530b2f57db9f81"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/verify_locked_versions.py",
+      "expected": "f2bdaa81dcdd1548c4a180403fbce79ee486cae65568833e50112a872483e046",
+      "actual": "f2bdaa81dcdd1548c4a180403fbce79ee486cae65568833e50112a872483e046"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/30-startup-profile/web_control_server.py",
+      "expected": "c95860d289873a05847b99ee227bbd2639a07607e7e95d4317dcae20ffa8b63e",
+      "actual": "c95860d289873a05847b99ee227bbd2639a07607e7e95d4317dcae20ffa8b63e"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/31-ui-pixels/Cargo.lock",
+      "expected": "cafc9df3596e6388c1e32acc9b49f9acb518d2a8f1c7cffd1326f8321bf29c2b",
+      "actual": "cafc9df3596e6388c1e32acc9b49f9acb518d2a8f1c7cffd1326f8321bf29c2b"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/31-ui-pixels/Cargo.toml",
+      "expected": "e94a1e4f04fe47224f5bd7b57e384b21dc42af8396b9e26c575d6096cfa6f2bb",
+      "actual": "e94a1e4f04fe47224f5bd7b57e384b21dc42af8396b9e26c575d6096cfa6f2bb"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/31-ui-pixels/PREPARATION-STATUS.json",
+      "expected": "727dc7f3b79a4ae76e78b868581686bc3534b8ce98ca2e453564e39da6b08baa",
+      "actual": "727dc7f3b79a4ae76e78b868581686bc3534b8ce98ca2e453564e39da6b08baa"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/31-ui-pixels/README.md",
+      "expected": "c6ca9daa3944b9b167882ddc3cd9adaa26b890d6b88aa2f66beae0c2eba5ee00",
+      "actual": "c6ca9daa3944b9b167882ddc3cd9adaa26b890d6b88aa2f66beae0c2eba5ee00"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/31-ui-pixels/REPORT.md",
+      "expected": "b40eea2c7fd00b8b41ce2c5c6700942fb77fefacce873a622bf0ddc8cee00ad9",
+      "actual": "b40eea2c7fd00b8b41ce2c5c6700942fb77fefacce873a622bf0ddc8cee00ad9"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/31-ui-pixels/src/main.rs",
+      "expected": "579bcc2bebb310e990e68c8c7fe29e1d4b2ca0b48dcd454e64b2d0319464d7a0",
+      "actual": "579bcc2bebb310e990e68c8c7fe29e1d4b2ca0b48dcd454e64b2d0319464d7a0"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "experiments/31-ui-pixels/verify_pixels.py",
+      "expected": "6156f9b5f6d95ac98728eeb8ff3489bb750f741968f9fe88b3f7342b18559753",
+      "actual": "6156f9b5f6d95ac98728eeb8ff3489bb750f741968f9fe88b3f7342b18559753"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-1/character.png",
+      "expected": "7f0fcfad3151bf17c4ba0faa396039ee753bfd086f998f751361bedcb6a3e4b4",
+      "actual": "7f0fcfad3151bf17c4ba0faa396039ee753bfd086f998f751361bedcb6a3e4b4"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-1/cua-observation.json",
+      "expected": "0a04eb064ac55329692933a5029b0f28177f35fe56c358ef666a982e52b39c5e",
+      "actual": "0a04eb064ac55329692933a5029b0f28177f35fe56c358ef666a982e52b39c5e"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-1/launcher.json",
+      "expected": "1dcd0d3d8c04c99c56d2c756e9459627b9fb5ec254211e2aeda5570a17d1b5cd",
+      "actual": "1dcd0d3d8c04c99c56d2c756e9459627b9fb5ec254211e2aeda5570a17d1b5cd"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-1/png-color-analysis.json",
+      "expected": "8a44c20fd984e79d8cad34aa7e772a8acd1615d6eb183c57155e1e25c6f8d882",
+      "actual": "8a44c20fd984e79d8cad34aa7e772a8acd1615d6eb183c57155e1e25c6f8d882"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-1/process-observations.json",
+      "expected": "c1a901bf2699db0ceacca5e4f9be14797c645fe563f6bfdcafe8dd2870d97540",
+      "actual": "c1a901bf2699db0ceacca5e4f9be14797c645fe563f6bfdcafe8dd2870d97540"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-1/readiness-and-foreground-capability.json",
+      "expected": "70f4ec471a71e611528fb838464154f8e98222331575e6850cb417f7b52057bd",
+      "actual": "70f4ec471a71e611528fb838464154f8e98222331575e6850cb417f7b52057bd"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-1/stderr.log",
+      "expected": "65832000697bb4260b88d6d306af76ebd2be2bc389c77d9bceda13cebc938484",
+      "actual": "65832000697bb4260b88d6d306af76ebd2be2bc389c77d9bceda13cebc938484"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-1/stdout.log",
+      "expected": "4ff75b3331eeb668f78aa215e219e6e64e66f5961e15169ece95bc3ccf68ef06",
+      "actual": "4ff75b3331eeb668f78aa215e219e6e64e66f5961e15169ece95bc3ccf68ef06"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/character.png",
+      "expected": "7f0fcfad3151bf17c4ba0faa396039ee753bfd086f998f751361bedcb6a3e4b4",
+      "actual": "7f0fcfad3151bf17c4ba0faa396039ee753bfd086f998f751361bedcb6a3e4b4"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/cua-observation.json",
+      "expected": "48b0cdca11878689891da9bc83f158ae34f1933ca00d445aa2fb4f180538c121",
+      "actual": "48b0cdca11878689891da9bc83f158ae34f1933ca00d445aa2fb4f180538c121"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/launcher.json",
+      "expected": "1452cb157ae8c0b01451f316dddaac098d3d6248c87f7114eb3d62cd76075c23",
+      "actual": "1452cb157ae8c0b01451f316dddaac098d3d6248c87f7114eb3d62cd76075c23"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/png-color-analysis.json",
+      "expected": "2181d51c649baaf6384a5c2b679fd5b0c61db2a01c8c189d20d2f2a7072298e1",
+      "actual": "2181d51c649baaf6384a5c2b679fd5b0c61db2a01c8c189d20d2f2a7072298e1"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/process-observations.json",
+      "expected": "e3ea89acb6b0f1ec47d73a32d3bc4e902ece896aac5121fbde6a9c91cad90dc3",
+      "actual": "e3ea89acb6b0f1ec47d73a32d3bc4e902ece896aac5121fbde6a9c91cad90dc3"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/sample-command.log",
+      "expected": "dbcae4afc332a38cca25e1659c6b594955596aadf4b142422d2611f0a715760e",
+      "actual": "dbcae4afc332a38cca25e1659c6b594955596aadf4b142422d2611f0a715760e"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/sample.txt",
+      "expected": "6445d81b2c6087757cdf94a9f3c17d8eaa14072e70e9c98b68f86762e5a8a818",
+      "actual": "6445d81b2c6087757cdf94a9f3c17d8eaa14072e70e9c98b68f86762e5a8a818"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/stderr.log",
+      "expected": "417bbca688e963452c5915ab7cf5287bbe905f56da79ac33ebd1b33fb3022553",
+      "actual": "417bbca688e963452c5915ab7cf5287bbe905f56da79ac33ebd1b33fb3022553"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/stdout.log",
+      "expected": "7a05b11a6f0514a54c6d1eb60a50d9948af0619f2161a07021cdccf4dd141275",
+      "actual": "7a05b11a6f0514a54c6d1eb60a50d9948af0619f2161a07021cdccf4dd141275"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-2/vmmap-command.log",
+      "expected": "57fbe992eefa7487c2435a46f3aa4c788ef0b32e0d1857ec92939326fb9e2e99",
+      "actual": "57fbe992eefa7487c2435a46f3aa4c788ef0b32e0d1857ec92939326fb9e2e99"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/browser.json",
+      "expected": "77691ed25a36090d4e49203ec1e6cd281146079f2b809fba98d5202c90e5c1d0",
+      "actual": "77691ed25a36090d4e49203ec1e6cd281146079f2b809fba98d5202c90e5c1d0"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/canvas-download.png",
+      "expected": "0699827d34ae7e4db3bdf159dbe174bd85f272d48b5b1fe85a59e06b16a32223",
+      "actual": "0699827d34ae7e4db3bdf159dbe174bd85f272d48b5b1fe85a59e06b16a32223"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/collector.js",
+      "expected": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+      "actual": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/console.json",
+      "expected": "623798ef3340aeb69863840a692903810ff2ce3fd3a8c2f71e0c31aca36daa92",
+      "actual": "623798ef3340aeb69863840a692903810ff2ce3fd3a8c2f71e0c31aca36daa92"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/manifest.json",
+      "expected": "5fe337a03f62c66b2be3a650f07076551b613ec78830ec6433593a4a85cbfb80",
+      "actual": "5fe337a03f62c66b2be3a650f07076551b613ec78830ec6433593a4a85cbfb80"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/observation.json",
+      "expected": "b947b4e21edb954111af43b876bd80bfc1a1e65346f3ba8ac295584436f657ee",
+      "actual": "b947b4e21edb954111af43b876bd80bfc1a1e65346f3ba8ac295584436f657ee"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/requests.jsonl",
+      "expected": "b8289baa08fa86a9df0d3d90248181a42cdaa824c16f130241aa95eb9fb5b637",
+      "actual": "b8289baa08fa86a9df0d3d90248181a42cdaa824c16f130241aa95eb9fb5b637"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/screen.jpg",
+      "expected": "1f8938f21f43890df41d18950a8ce90d0f987a4025e0d4c9f13b2c6f8a4fd385",
+      "actual": "1f8938f21f43890df41d18950a8ce90d0f987a4025e0d4c9f13b2c6f8a4fd385"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline/wrapper.html",
+      "expected": "6b4fa4c98cd3df96b1c1f2e7e5dab46b668f5e788d0d11f9a4c45810868f79fc",
+      "actual": "6b4fa4c98cd3df96b1c1f2e7e5dab46b668f5e788d0d11f9a4c45810868f79fc"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-main-observation.json",
+      "expected": "725b7568c48ba3946b3f258d95c2e6dea21f5f2376965c091a4fec037bc72e24",
+      "actual": "725b7568c48ba3946b3f258d95c2e6dea21f5f2376965c091a4fec037bc72e24"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/native-main-cleanup.json",
+      "expected": "ed9772cc5a7affce783101bceb8b20c93bcc344f2cead84ec8f8df2dc456f162",
+      "actual": "ed9772cc5a7affce783101bceb8b20c93bcc344f2cead84ec8f8df2dc456f162"
+    },
+    {
+      "kind": "copied_graphics",
+      "path": "docs/evidence/m1-1-final/graphics/web-baseline-cleanup.json",
+      "expected": "060359b5917e73791ee6bb1b382ef17c0eb4f7c3ecf3197e558c8a2cf3aa70cb",
+      "actual": "060359b5917e73791ee6bb1b382ef17c0eb4f7c3ecf3197e558c8a2cf3aa70cb"
+    },
+    {
+      "kind": "built_artifact",
+      "path": "dist/Nvwa.app/Contents/MacOS/Nvwa",
+      "expected": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a",
+      "actual": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a",
+      "size_equal": true
+    },
+    {
+      "kind": "built_artifact",
+      "path": "dist/web/index.html",
+      "expected": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114",
+      "actual": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114",
+      "size_equal": true
+    },
+    {
+      "kind": "built_artifact",
+      "path": "dist/web/nvwa_studio.js",
+      "expected": "9ff532cbedc6a814c4b8337c4b82f436de452e7b7fbc8c9e58bfda2e90ad6c5c",
+      "actual": "9ff532cbedc6a814c4b8337c4b82f436de452e7b7fbc8c9e58bfda2e90ad6c5c",
+      "size_equal": true
+    },
+    {
+      "kind": "built_artifact",
+      "path": "dist/web/nvwa_studio_bg.wasm",
+      "expected": "d890dfee73e9eeeee6ce3d82f255c79979e8c8b6bed90243c6101f8e1c1763a8",
+      "actual": "d890dfee73e9eeeee6ce3d82f255c79979e8c8b6bed90243c6101f8e1c1763a8",
+      "size_equal": true
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/fmt/output.log",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/native-clippy/output.log",
+      "expected": "45112f174a5e972a638208dabbcdebcff81e9235230533f3d141facb122b81b8",
+      "actual": "45112f174a5e972a638208dabbcdebcff81e9235230533f3d141facb122b81b8"
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/native-clippy-fixed/output.log",
+      "expected": "60c1a106107a0645cd92f3beb1ca5308af9183562d186ea57017235236baad7e",
+      "actual": "60c1a106107a0645cd92f3beb1ca5308af9183562d186ea57017235236baad7e"
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/native-release/output.log",
+      "expected": "8f3331d8c55de24914b2594ec170bec064e695e326b4610b5b0950589d113394",
+      "actual": "8f3331d8c55de24914b2594ec170bec064e695e326b4610b5b0950589d113394"
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/post-lint-rustfmt/output.log",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/wasm-clippy/output.log",
+      "expected": "91a04cd4f97bd6c6362fd3a88a05595f7c638ba60b12abe8c42ff453b3b984b7",
+      "actual": "91a04cd4f97bd6c6362fd3a88a05595f7c638ba60b12abe8c42ff453b3b984b7"
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/web-release/output.log",
+      "expected": "0dd70504651f60a432b72784d22747adeff80488ad28f6ec6744c9395706dfd1",
+      "actual": "0dd70504651f60a432b72784d22747adeff80488ad28f6ec6744c9395706dfd1"
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/workspace-tests/output.log",
+      "expected": "70a9e0fbcb6472aed606e03882b90cce0773ab1bb50b10945f2f278ecb10d4fc",
+      "actual": "70a9e0fbcb6472aed606e03882b90cce0773ab1bb50b10945f2f278ecb10d4fc"
+    },
+    {
+      "kind": "build_log",
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/build/workspace-tests-final/output.log",
+      "expected": "f3d1186aaf93f3a137948e3e6415f96cea1811ef1d0f90be562e2a0b8a4c88ee",
+      "actual": "f3d1186aaf93f3a137948e3e6415f96cea1811ef1d0f90be562e2a0b8a4c88ee"
+    }
+  ],
+  "mismatches": [],
+  "counts": {
+    "build_log": 9,
+    "final_build_input": 32,
+    "built_artifact": 4,
+    "copied_graphics": 70
+  },
+  "reviewed_doc_hashes": {
+    "docs/evidence/m1-1-final/ACCEPTANCE.md": "daf0c975e05f139c7d40e188daec70ce35c485ab9fa2aeb03cf43984c7b99c6f",
+    "docs/ROADMAP.md": "ccd4e731fe9c93e1c0ce13eaef0531efe35525aef70b2b0e4f511c160b765b93",
+    "docs/HANDOFF.md": "1d04cfe0d42f520782255170810f4c8a555233e917616de56ecbebc88fc65cb4",
+    "docs/EXPERIMENTS.md": "be042730cd12a119f20cf8007ff5fb47d9b2b063881cec1627f77d16fc63f5ea",
+    "docs/ISSUES.md": "2da7a38b02253f6f675983d89b1a58c260ea0de487f099c78745ca1963abfaed",
+    "docs/evidence/m1-1-final/ui-paint/actual-web/README.md": "c55ec2a438059b51f85be3b9c722a603da250621900efd89d181138801adfc99",
+    "docs/evidence/m1-1-final/ui-paint/actual-web/web-ui-observation.json": "5c45b8a9b59db972499883c11c1018c249b6226434a8bba240fcc71dd309e65c",
+    "docs/evidence/m1-1-final/ui-paint/actual-web/web-ui-cleanup.json": "3944260a610a042f44ea2e8ca4806840faec36d6aafb4d9291dc1ad75be64fb2"
+  },
+  "decision": "ACCEPTED PARTIAL SCOPE for reviewed integration/claims; publication acceptance is CONDITIONAL on separate R2 repair and rereview of the experiment29 archive-checker omission P2.",
+  "accepted_claims": [
+    "32 tested build input identities unchanged; five pre-reviewed Rust paths are the only product changes from 045d8abc; no dependency/root lock/assets/workflow/scripts/Web/old-archive drift",
+    "70 graphics delivery files copied with exact hashes; prior final graphics review remains applicable to their bounded historical baseline cohort",
+    "113 successful Rust tests, zero failed/ignored/filtered parsed from exact hashed raw log; strict native/Wasm and release successful receipts inspected, not rerun",
+    "Actual saved screenshots independently viewed: Profile at 1280x720 and Shape at 1024x768, authentic character visible and revision 1 shown",
+    "Before/after saved Works, canonical startup example and dist startup Work all byte-identical and semantically equal",
+    "Current acceptance and top status sections consistently keep native visual/pixel/candidate-hosted CI pending, baseline and candidate artifacts separate, and unknown physical/cold/GPU metrics explicit",
+    "Exp30 reproduction limits explicitly require retained private baseline artifacts; permanent workspace tests remain reproducible separately"
+  ],
+  "limits": [
+    "Parallel reviewer owns new #23 Web archive checker and exact runtime provenance; this review did not duplicate that lane",
+    "Native visual content failed/absent; later explicit locked state is not retrospective cause proof",
+    "Independent pixel app was not launched and actual positive/paint-only-mutant raster checks remain NOT-RUN",
+    "One attempted slider click caused no observed edit; actual edit/Undo and all narrow transport controls remain NOT-RUN in this control",
+    "Original #3 DPR condition stays blocked; candidate hosted CI and native complete-Work recovery remain pending",
+    "Physical first presentation, fully cold state, useful GPU timing and total GPU/browser memory remain NOT-RUN",
+    "Builds, test execution, GUI actions, current process inspection and cleanup were not rerun by this reviewer; saved receipts/artifacts were inspected"
+  ],
+  "resource_outcome": {
+    "created_persistent_processes": [],
+    "created_gui_server_cargo_gpu": false,
+    "writes": [
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-review/graphics/final/integration-verification.json"
+    ],
+    "retention": "private receipt retained for root integration"
+  },
+  "separate_lane_pending": {
+    "owner": "root and assigned experiment29 author/reviewer",
+    "finding": "check_repairs iterates only supplied cohorts, allowing omitted new_nine or both cohorts to pass with 9/0 controls",
+    "required_gate": "Exact two cohort names/full receipt inventories/18 total and omission-red controls, independently rereviewed, repaired experiment29 copied before commit/PR",
+    "this_reviewer": "Not duplicated; product/source/Web proof accepted scope unchanged"
+  }
+}

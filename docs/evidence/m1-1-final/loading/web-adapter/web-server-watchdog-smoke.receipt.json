@@ -1,0 +1,29 @@
+{
+  "scope": "CPU direct HTTP automatic release/cleanup only",
+  "duration_seconds": 1.1232798339915462,
+  "exit_code": 0,
+  "cleanup": {
+    "accepted": 1,
+    "active_connections": 0,
+    "asset_gets": {
+      "01": 1
+    },
+    "closed": 1,
+    "elapsed_seconds": 1.0259,
+    "event": "cleanup",
+    "held_bodies": 0,
+    "reason": "overall watchdog",
+    "response_threads": 0,
+    "work_gets": {}
+  },
+  "release": [
+    {
+      "elapsed_seconds": 0.2096,
+      "event": "released",
+      "held_bodies": 0,
+      "index": "01",
+      "reason": "hold watchdog"
+    }
+  ],
+  "script_sha256": "0b6632d45f473ec51bfedecebd8b8209e3d551c9b35b24b4eda2e06ae4a536e5"
+}

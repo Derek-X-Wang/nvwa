@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/experiments/29-stalled-loads/check_web_archive.py", line 311, in <module>
+    main()
+    ~~~~^^
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/experiments/29-stalled-loads/check_web_archive.py", line 297, in main
+    result = {"status": "PASS", "scope": "read-only durable archive consistency/provenance; not browser replay", "case": validate(bundle), "adapter_repair_records": check_repairs(args.repairs)}
+                                                                                                                                                                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/experiments/29-stalled-loads/check_web_archive.py", line 208, in check_repairs
+    require(set(index["original_manifests"]) == {
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "web-server-reason-fix-manifest.json", "web-server-monotonic-reason-manifest.json"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    }, "Exact original repair manifest inventory required")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/experiments/29-stalled-loads/check_web_archive.py", line 32, in require
+    raise ValueError(message)
+ValueError: Exact original repair manifest inventory required

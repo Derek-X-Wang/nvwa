@@ -1,0 +1,40 @@
+{
+  "decision": "ACCEPT targeted P2/P3 repair; no new actionable findings",
+  "checker_sha256": "ddc7180222c539d1fc777a321011f76eda7ddebafb1a25ccf254bea1481e476d",
+  "old_checker_sha256": "0e6a8f6c4fcc23394700492dc83aa6e8d2edc6dc5f65dd39f16bfd210fec9401",
+  "old_checker_location": "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/check_web_archive-before-completeness.py",
+  "old_checker_portably_archived": false,
+  "scope": "Source-only exact inventory mutation-family review; independent current portable checker CLI and archived before/after raw CLI records; no browser/Cargo/GPU/server/Git",
+  "verified": {
+    "full_archive_pass": true,
+    "actual_frozen_wasm_checked": true,
+    "repair_records": 18,
+    "semantic_negative_controls_rejected": 10,
+    "repair_inventory_negative_controls_rejected": 6,
+    "archived_cli_before_after_controls_checked": 12,
+    "archived_mutated_indexes_match_exact_intended_changes": true,
+    "old_false_pass_record_counts": [
+      9,
+      0,
+      18
+    ],
+    "exact_two_original_manifests": true,
+    "exact_two_cohorts": true,
+    "complete_canonical_receipt_sets": true,
+    "p3_chooser_sequence_corrected": true
+  },
+  "limits": [
+    "Archive consistency check is not browser replay",
+    "Native visual acceptance remains pending",
+    "Real 90/105/120 second watchdog dwell and blocked-log behavior NOT-RUN",
+    "Actual Web recovery released all four held bodies; single-slot release is CPU evidence only",
+    "Pre-repair checker source remains private; portable archive retains raw CLI controls and its digest"
+  ],
+  "file_inventory_count": 130,
+  "file_inventory_total_bytes": 1533291,
+  "receipt_paths": [
+    "repair-final-checker.stdout.json",
+    "repair-final-checker.stderr.txt",
+    "repair-final-inventory.json"
+  ]
+}

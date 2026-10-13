@@ -1,5 +1,21 @@
 # M0 and thin M1 handoff
 
+## Current M1.1 continuation (2026-10-13)
+
+Merged baseline is `045d8abc685760d09ba05afec0e40a811a282d1f` after PR #36 → #38 → #35. Final-main hosted run `38286368500` passed103 Rust CPU tests, native/Wasm compilation,77 diagnostic cases and two collector controls. Those results belong to that baseline, not the new candidate.
+
+The current working branch adds six permanent editor paint tests (#39) and a four-root/latest-pending admission policy (#23). Independent UI review passes; an actual paint-only mutation fails the independent color assertion while the prior state test passes. Existing workspace CI collects the permanent tests. Production-called loading controls fail at12 retained roots before the fix and pass at4 afterward;18 loading tests pass, including real loopback HTTP recovery and explicit thread/gate cleanup. The bound is a root-request count, not a byte/task/GPU budget. See [UI receipts](evidence/m1-1-final/ui-paint/README.md) and [loading experiment](../experiments/29-stalled-loads/evidence.md).
+
+Integrated checks pass113 workspace tests, strict native/Wasm lint checks, both release builds and native packaging. The actual candidate Web receives startup Work01 plus eleven completed file-chooser selections02–12 in one app. Four stalled bodies remain in flight; after explicit release, only latest Work12 starts. The recovered humanoid is visible and the full saved Work equals Work12 semantically. The original unsuccessful path-edit attempt is retained separately; manual Web Open uses a file chooser. Exact tool-call provenance is retained, not inferred from identical waiting screenshots.
+
+Startup experiments30/31 compiled with separate locks and unchanged root dependencies. Two actual baseline native launches produced entirely black images; profiler and timing data do not establish successful native content or first presentation. One actual baseline Web run displays the authentic character and reconciles eight GETs/20,565,000 response-body bytes. That baseline deliberately excludes candidate#23. Pixel app positive/mutant cases remain unlaunched. A later root desktop query explicitly reports the Mac locked; this blocks further native/pixel checks and does not establish the cause of earlier black frames. See [current acceptance](evidence/m1-1-final/ACCEPTANCE.md).
+
+The final candidate hosted CI is tracked separately by exact PR head; baseline run38286368500 is not reused. Native whole-Work recovery remains pending, #4/#40 remain open, and original IAB simulated-DPR conditions remain unavailable (#3 blocked). No M2, new rig, paid service, GPU CI or signing work is selected.
+
+PARTIAL — integrated CPU/builds and actual Web pass; native visual, pixel and candidate hosted CI acceptance remain pending.
+
+## Historical checkpoints
+
 ArtCraft testing follow-up: [PR #38](https://github.com/Derek-X-Wang/nvwa/pull/38), tracked in M1.1 issue #37, retains a production-called CPU Shape/Profile paint oracle with normal-green/paint-only-mutation-red/state-green/restored-green evidence. Fresh independent R2 full replay passes and restores all50 protected inputs; root separately verifies child-failure exception restoration. Permanent test adoption, rasterized pixels, native/Web operation and cold prototype compilation remain separate gates. The candidate/mutation are absent from production source.
 
 Latest checkpoint (2026-10-12): PR #34 is merged at `de4ddefab91d21dc6f6d4b81a07b0434fa619273`; its tree matches the reviewed head and the archive verifier passes 60 entries/31 production inputs. #3 remains OPEN/needs-info with its original condition unavailable. No new physical test or product workaround is selected. [PR #35](https://github.com/Derek-X-Wang/nvwa/pull/35) separately proposes bounded standard-runner CI and pinned-source ArtCraft testing research: local 103 Rust tests, normal native/Wasm checks and 77 diagnostic tests/two collector controls pass; first hosted execution has its own run receipt and does not establish GUI/GPU acceptance. [Experiment26](../experiments/26-export-drift/REPORT.md) documents actual Blender byte drift without replacing the frozen fixture. Earlier status/counts below are historical snapshots.

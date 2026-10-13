@@ -1,0 +1,31 @@
+{
+  "review": "Targeted P2 termination repair rereview",
+  "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+  "manifest_sha256": "df97a6eda28e0f4c44e86793683861dfdbb909d189dae160063a577711692d9e",
+  "decision": "Original controls repaired; one remaining P2 termination false-success edge must be corrected before accepting this evidence adapter.",
+  "findings": [
+    {
+      "severity": "P2",
+      "file": "experiments/29-stalled-loads/web_stall_server.py",
+      "start": 152,
+      "end": 158,
+      "title": "Always downgrade status for a later exceptional termination",
+      "detail": "terminate only calls invalidate when termination_reason is None. After terminate(stdin quit, ended), a later terminate(exception, unavailable) leaves case_status ended and invalid_reasons empty. The run loop continues processing all keys in a selected batch after control sets stopping, so a subsequent key can raise into the exception handler. Cleanup then has exception metadata but product_bound_claim_allowed=true and return code 0.",
+      "reproducer": "Exact-source socket-free method invocation: Case.__new__, initialize state, terminate(\"stdin quit\",\"ended\"), set exception metadata, terminate(\"exception\",\"unavailable\"). Observed ended, [], claim_allowed true, return formula 0. Receipt reason-repair-late-exception-counterexample.json.",
+      "fix": "Preserve the first termination_reason if useful, but apply invalidate for every non-ended termination independently of whether a reason already exists; ensure exception always produces unavailable/false/exit 2. Add a late-exception-after-quit control."
+    }
+  ],
+  "verified": [
+    "All nine receipt objects exactly match the manifest and their raw JSONL cleanup records.",
+    "Three raw pre-fix controls show the reported reason mislabels.",
+    "Final connection budget, stdin overflow, early injected exception, fifth request and watchdog controls carry false claim allowance, invalid/unavailable state and exit 2.",
+    "Fifth-request raw log reports all five complete fixture responses and accepted=closed=5.",
+    "Normal raw log has accepted=closed=17, five full fixture transfers, no invalid reasons, case_status ended; the inspected smoke harness asserts process exit 0.",
+    "No source/product change, server, browser, Cargo, renderer, or GPU execution. Only direct terminate method calls and receipt audit."
+  ],
+  "remaining_limits": [
+    "One actual Web app receiving twelve GUI Opens remains pending; current controls are direct HTTP adapter evidence only.",
+    "90/120-second real dwell not replayed; supplied watchdog controls use short configured durations.",
+    "Watchdogs remain loop-driven. Blocked stdout/log writing can prevent deadline processing; this behavior is NOT-RUN and is not a hard wall-clock guarantee."
+  ]
+}

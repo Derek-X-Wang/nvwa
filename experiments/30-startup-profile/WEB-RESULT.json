@@ -1,0 +1,169 @@
+{
+  "status": "PASS",
+  "runId": "a56982422eb74fe1997c0534723cadf4",
+  "structure": {
+    "runId": "a56982422eb74fe1997c0534723cadf4",
+    "navigationEntries": 1,
+    "resourceEntries": 6,
+    "scope": "structure and finite timing validation only; first presentation and cold state NOT-RUN"
+  },
+  "ledgerGetCount": 8,
+  "successfulRunGetCount": 6,
+  "browserTimingEntryCount": 7,
+  "successfulBodyBytesWritten": 20564953,
+  "allLedgerBodyBytesWritten": 20565000,
+  "browserEncodedBodyBytes": 20564972,
+  "browserDecodedBodyBytes": 89565995,
+  "browserReportedTransferBytes": 20567072,
+  "explicit404Dispositions": [
+    {
+      "name": "favicon.ico",
+      "target": "/favicon.ico",
+      "status": 404,
+      "bodyBytes": 19,
+      "bodySha256": "653f5a345bb652f55d72b94e1b20fc9f66c765e26fe2d5d1d0a58d0a4ca41d08",
+      "bodyAscii": "unknown run prefix\n",
+      "browserTimingPresent": true,
+      "reason": "exact retained out-of-run response"
+    },
+    {
+      "name": "assets/fixtures/nvwa-humanoid.glb.meta",
+      "target": "/run/a56982422eb74fe1997c0534723cadf4/assets/fixtures/nvwa-humanoid.glb.meta",
+      "status": 404,
+      "bodyBytes": 28,
+      "bodySha256": "ba61c833937fda50c6346acd88aea1a26bdf5b45db3561202aa16e4f91bd19a2",
+      "bodyAscii": "not a served runtime member\n",
+      "browserTimingPresent": false,
+      "reason": "exact optional Bevy metadata fallback; actual GLB200 separately required"
+    }
+  ],
+  "canonicalWorkSha256": "cacf849f0918648a1a970452d0c33f195c5ad89fd7f6d9e58669d587d0789768",
+  "canonicalWorkRevision": 3,
+  "timelineCount": 3,
+  "claim": "exact baseline fresh-prefix/no-store HTTP ledger and browser size reconciliation",
+  "limits": [
+    "server successful body writes exclude headers and are not client receipt",
+    "browser transferSize is browser-reported, not packet capture",
+    "optional metadata404 has no browser resource entry; retained ledger bytes accounted",
+    "Bevy TimeReal, browser Performance and host clocks have distinct origins",
+    "physical first presentation/cold browser/GPU memory NOT-RUN"
+  ],
+  "bevyTimeRealRawEvidence": {
+    "active_animations": 1,
+    "animation_seconds": 9.0,
+    "build_profile": "release",
+    "capture_callback": true,
+    "capture_callback_seconds": 15.416,
+    "capture_file_bytes": 0,
+    "clip": "turn",
+    "clock": "bevy_TimeReal_since_first_update",
+    "completed": true,
+    "document_revision": 3,
+    "elapsed_seconds": 15.416,
+    "error": null,
+    "first_asset_ready_seconds": 0.3908,
+    "first_visible_kind": "screenshot_callback_after_requested_warmup",
+    "first_visible_upper_bound_seconds": 15.416,
+    "frame_ms_p50": 16.600000381469727,
+    "frame_ms_p95": 18.399999618530273,
+    "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+    "frame_sample_count": 600,
+    "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+    "frames": 901,
+    "gpu": {
+      "backend": "BrowserWebGpu",
+      "name": ""
+    },
+    "interaction_busy": false,
+    "joints": 18,
+    "meshes": 9,
+    "mode": "studio",
+    "morph_nodes": 1,
+    "morph_weights": 4,
+    "paused_animations": 1,
+    "physical_window": {
+      "height": 720,
+      "scale_factor": 1.0,
+      "width": 1280
+    },
+    "players": 1,
+    "playing": false,
+    "ready": true,
+    "ready_frames": 895,
+    "skins": 9,
+    "timeline_count": 3,
+    "timeout": false
+  },
+  "clockDomains": {
+    "browser": "Performance monotonic milliseconds since navigation timeOrigin; snapshotAtMs120058.7; boot-hidden590.6; paint140 does not identify character presentation",
+    "bevy": "TimeReal since first update; assetReady0.3908 seconds and readbackCallback15.416 seconds; main-loop cadence, not GPU timestamp",
+    "host": "Cua screenshot request wall-clock epoch milliseconds1791886504221..1791886504350; later observed authentic character",
+    "crossClockConversion": "NOT-RUN; no verified origin alignment or physical presentation timestamp"
+  },
+  "actualPixels": {
+    "status": "PASS: both saved images independently viewed, authentic humanoid/editor shown with Revision3 and idle/wave/turn three rows",
+    "png": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/web-baseline/canvas-download.png",
+      "bytes": 334663,
+      "sha256": "0699827d34ae7e4db3bdf159dbe174bd85f272d48b5b1fe85a59e06b16a32223",
+      "ihdr": [
+        1280,
+        720,
+        8,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    "cuaScreenshot": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/web-baseline/screen.jpg",
+      "bytes": 58016,
+      "sha256": "1f8938f21f43890df41d18950a8ce90d0f987a4025e0d4c9f13b2c6f8a4fd385",
+      "observation": {
+        "hostEpochMsBefore": 1791886504221,
+        "hostEpochMsAfter": 1791886504350,
+        "kind": "actualCUAbrowserScreenshot; physicalfirstpresentationNOTRUN",
+        "downloadPath": "/Users/derekxwang/Downloads/nvwa-web-canvas (4).png",
+        "scope": "baseline045d8ab, exactcanonicalWork, no-store; excludes#23candidate"
+      }
+    },
+    "physicalFirstPresentation": "NOT-RUN: saved visible output is later observation, not an exact first visible frame"
+  },
+  "packetHashes": {
+    "browser.json": "77691ed25a36090d4e49203ec1e6cd281146079f2b809fba98d5202c90e5c1d0",
+    "canvas-download.png": "0699827d34ae7e4db3bdf159dbe174bd85f272d48b5b1fe85a59e06b16a32223",
+    "collector.js": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+    "console.json": "623798ef3340aeb69863840a692903810ff2ce3fd3a8c2f71e0c31aca36daa92",
+    "manifest.json": "5fe337a03f62c66b2be3a650f07076551b613ec78830ec6433593a4a85cbfb80",
+    "observation.json": "b947b4e21edb954111af43b876bd80bfc1a1e65346f3ba8ac295584436f657ee",
+    "requests.jsonl": "b8289baa08fa86a9df0d3d90248181a42cdaa824c16f130241aa95eb9fb5b637",
+    "screen.jpg": "1f8938f21f43890df41d18950a8ce90d0f987a4025e0d4c9f13b2c6f8a4fd385",
+    "wrapper.html": "6b4fa4c98cd3df96b1c1f2e7e5dab46b668f5e788d0d11f9a4c45810868f79fc"
+  },
+  "sourceHashes": {
+    "reconcile_web_baseline.py": "74dc0af4c408220c060c8703e7e7c5c3470ae24bf8529801619600a882f29351",
+    "test_web_reconciliation.py": "9b1af070dad0649cc78f0ec78fe35142d7c675f78f4ba19e24530b2f57db9f81"
+  },
+  "controls": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/WEB-RECONCILIATION-CONTROLS.json",
+    "sha256": "4909748d0368449e5d507d3f9641681eacdbf945ca26162e3f808b2ebe4b8b22",
+    "tests": 19,
+    "status": "PASS",
+    "experiment24Unchanged": true,
+    "initialReplayFixtureFailurePreserved": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/web-reconcile-initial"
+  },
+  "cohort": {
+    "baseline": "045d8abc685760d09ba05afec0e40a811a282d1f",
+    "excludes": "new23 guard and later integrated source",
+    "wasmSha256": "884134fc98d54e3476dbc799ffdd5cc6b88f69121ddfb649ed9ba9be96156dba"
+  },
+  "ownedResources": {
+    "newGUI": false,
+    "newServer": false,
+    "newRenderer": false,
+    "newCargo": false,
+    "persistentTestProcesses": [],
+    "rootServerTabCleanup": "root owned; worker does not assert completion"
+  }
+}

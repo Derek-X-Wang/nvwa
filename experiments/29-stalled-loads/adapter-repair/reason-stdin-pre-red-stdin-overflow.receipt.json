@@ -1,0 +1,21 @@
+{
+  "scope": "CPU/direct HTTP reason controls only; no browser",
+  "script_sha256": "0b6632d45f473ec51bfedecebd8b8209e3d551c9b35b24b4eda2e06ae4a536e5",
+  "mode": "stdin-overflow",
+  "duration_seconds": 0.07421937497565523,
+  "exit_code": 0,
+  "cleanup": {
+    "accepted": 0,
+    "active_connections": 0,
+    "asset_gets": {},
+    "closed": 0,
+    "elapsed_seconds": 0.0026,
+    "event": "cleanup",
+    "held_bodies": 0,
+    "reason": "stdin quit",
+    "response_threads": 0,
+    "work_gets": {}
+  },
+  "expected_reason": "stdin input budget exhausted",
+  "expected_status": "invalid"
+}

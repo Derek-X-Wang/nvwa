@@ -1,0 +1,1 @@
+Static review identified unbounded pre-schedule pixel stalls, native marker-not-found exit leaving the target alive, and SIGTERM without verified exit/escalation. These initial source bytes were never used to launch a renderer. They are retained as rejected preparation, not runtime failure proof.
