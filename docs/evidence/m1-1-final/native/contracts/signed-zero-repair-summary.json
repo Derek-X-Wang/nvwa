@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "scope": "Private comparator repair only; synthetic actual CLI JSON controls; no native product/GUI execution",
+  "preserved_originals": {
+    "compare_native_doc.pre-fix.py": "e9463f7b9fa87e8be23956db25156f5873d18da6b48996f5cb7c15cc90c52e6c",
+    "comparator-controls.receipt.json": "8139f9001bb85020e02f1672f7206c28ebc638602a7234e5f65c37a0ba5cf76d",
+    "comparator-controls.pre-fix.receipt.json": "8139f9001bb85020e02f1672f7206c28ebc638602a7234e5f65c37a0ba5cf76d"
+  },
+  "pre_fix": {
+    "helper_sha256": "e9463f7b9fa87e8be23956db25156f5873d18da6b48996f5cb7c15cc90c52e6c",
+    "actual_sha256": "cbc89ea474f02ffa585c54d00b126f34f8dea1953e6511a7968e875a8b5d3385",
+    "exit": 0,
+    "incorrect_comparator_status": "PASS",
+    "receipt": "negative-zero-cli-red.receipt.json"
+  },
+  "fixed": {
+    "helper_sha256": "35d67a4088dd63b3c2f9fa020c98a8b50c5a9b85a665745fc645dfe4a323ba4e",
+    "actual_sha256": "cbc89ea474f02ffa585c54d00b126f34f8dea1953e6511a7968e875a8b5d3385",
+    "exit": 2,
+    "correct_comparator_status": "FAIL",
+    "diffs": [
+      {
+        "pointer": "/character/parameters/smile",
+        "reason": "binary32 differs: expected 0x00000000, actual 0x80000000",
+        "expected": {
+          "type": "number",
+          "decimal": "0.0"
+        },
+        "actual": {
+          "type": "number",
+          "decimal": "-0"
+        }
+      }
+    ],
+    "receipt": "negative-zero-cli-green.receipt.json"
+  },
+  "identical_negative_input": true,
+  "controls": {
+    "total": 29,
+    "original": 24,
+    "actual_cli_json": 5,
+    "all_passed": true,
+    "receipt": "comparator-controls-v2.receipt.json"
+  },
+  "native_saved_output": "NOT-RUN: native-other-reloaded-saved.nvwa.json missing; comparator-current-output-v2.receipt.json"
+}

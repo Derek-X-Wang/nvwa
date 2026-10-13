@@ -1,0 +1,55 @@
+{
+  "scope": "synthetic direct HTTP controls; no browser/product acceptance",
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/experiments/29-stalled-loads/web_stall_server.py",
+    "--root",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen-web-baseline",
+    "--work",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/inputs/canonical-work.nvwa.json",
+    "--fixture",
+    "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/assets/fixtures/nvwa-humanoid.glb",
+    "--log",
+    "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/web-server-frozen-baseline-control-smoke.jsonl",
+    "--hold-seconds",
+    "5",
+    "--watchdog-seconds",
+    "12"
+  ],
+  "duration_seconds": 0.4467080000322312,
+  "work_variants_exact": 12,
+  "full_fixture_transfers": 5,
+  "fixture_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+  "cleanup": {
+    "accepted": 17,
+    "active_connections": 0,
+    "asset_gets": {
+      "01": 1,
+      "02": 1,
+      "03": 1,
+      "04": 1,
+      "12": 1
+    },
+    "closed": 17,
+    "elapsed_seconds": 0.3832,
+    "event": "cleanup",
+    "held_bodies": 0,
+    "reason": "stdin quit",
+    "response_threads": 0,
+    "work_gets": {
+      "01": 1,
+      "02": 1,
+      "03": 1,
+      "04": 1,
+      "05": 1,
+      "06": 1,
+      "07": 1,
+      "08": 1,
+      "09": 1,
+      "10": 1,
+      "11": 1,
+      "12": 1
+    }
+  },
+  "script_sha256": "0b6632d45f473ec51bfedecebd8b8209e3d551c9b35b24b4eda2e06ae4a536e5"
+}

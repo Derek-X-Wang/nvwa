@@ -1,0 +1,24 @@
+[package]
+name = "nvwa-startup-profile-experiment"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.95"
+publish = false
+
+[workspace]
+resolver = "3"
+
+[dependencies]
+nvwa-studio = { path = "../../crates/nvwa-studio" }
+nvwa-runtime = { path = "../../crates/nvwa-runtime" }
+bevy = { version = "=0.19.1", default-features = false }
+serde_json = "1.0"
+
+[profile.dev]
+opt-level = 1
+[profile.dev.package."*"]
+opt-level = 1
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 8

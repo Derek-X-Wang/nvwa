@@ -1,0 +1,25 @@
+{
+  "scope": "direct HTTP termination reason control; no quit command was sent",
+  "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+  "exit_code": 2,
+  "cleanup": {
+    "accepted": 129,
+    "active_connections": 0,
+    "asset_gets": {},
+    "case_status": "invalid",
+    "closed": 129,
+    "elapsed_seconds": 0.0423,
+    "event": "cleanup",
+    "exception": null,
+    "held_bodies": 0,
+    "invalid_reasons": [
+      "connection budget exhausted"
+    ],
+    "product_bound_claim_allowed": false,
+    "reason": "connection budget exhausted",
+    "response_threads": 0,
+    "work_gets": {}
+  },
+  "expected_reason": "connection budget exhausted",
+  "expected_exit_code": 2
+}

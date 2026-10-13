@@ -1,0 +1,53 @@
+
+running 6 tests
+test editor_layout::paint_tests::actual_selected_tab_paint_matches_literal_click_sequence ... PAINT viewport=[1280.0 720.0] stage=initial-shape tab=Shape fill=#11_3D_71_FF bounds=[[1009.0 61.0] - [1109.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1280.0 720.0] stage=initial-shape tab=Profile fill=#95_25_47_FF bounds=[[1117.0 61.0] - [1217.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1280.0 720.0] stage=clicked-profile tab=Shape fill=#95_25_47_FF bounds=[[1009.0 61.0] - [1109.0 87.0]] nearby_rects=2 inspector=Profile: nvwa-original-humanoid-v1
+PAINT viewport=[1280.0 720.0] stage=clicked-profile tab=Profile fill=#11_3D_71_FF bounds=[[1117.0 61.0] - [1217.0 87.0]] nearby_rects=2 inspector=Profile: nvwa-original-humanoid-v1
+PAINT viewport=[1280.0 720.0] stage=clicked-shape tab=Shape fill=#11_3D_71_FF bounds=[[1009.0 61.0] - [1109.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1280.0 720.0] stage=clicked-shape tab=Profile fill=#95_25_47_FF bounds=[[1117.0 61.0] - [1217.0 87.0]] nearby_rects=2 inspector=Shape parameters
+INVARIANCE viewport=[1280.0 720.0] frames=8 full_work=true full_history=true undo=true redo=true
+PAINT viewport=[1024.0 768.0] stage=initial-shape tab=Shape fill=#11_3D_71_FF bounds=[[753.0 61.0] - [853.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1024.0 768.0] stage=initial-shape tab=Profile fill=#95_25_47_FF bounds=[[861.0 61.0] - [961.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1024.0 768.0] stage=clicked-profile tab=Shape fill=#95_25_47_FF bounds=[[753.0 61.0] - [853.0 87.0]] nearby_rects=2 inspector=Profile: nvwa-original-humanoid-v1
+PAINT viewport=[1024.0 768.0] stage=clicked-profile tab=Profile fill=#11_3D_71_FF bounds=[[861.0 61.0] - [961.0 87.0]] nearby_rects=2 inspector=Profile: nvwa-original-humanoid-v1
+PAINT viewport=[1024.0 768.0] stage=clicked-shape tab=Shape fill=#11_3D_71_FF bounds=[[753.0 61.0] - [853.0 87.0]] nearby_rects=2 inspector=Shape parameters
+PAINT viewport=[1024.0 768.0] stage=clicked-shape tab=Profile fill=#95_25_47_FF bounds=[[861.0 61.0] - [961.0 87.0]] nearby_rects=2 inspector=Shape parameters
+INVARIANCE viewport=[1024.0 768.0] frames=8 full_work=true full_history=true undo=true redo=true
+ok
+test editor_layout::paint_tests::duplicate_tab_background_is_rejected - should panic ... ok
+test editor_layout::paint_tests::duplicate_tab_label_is_rejected - should panic ... ok
+test editor_layout::paint_tests::empty_paint_output_is_rejected - should panic ... ok
+test editor_layout::paint_tests::missing_tab_background_is_rejected - should panic ... ok
+test editor_layout::paint_tests::missing_tab_label_is_rejected - should panic ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.03s
+
+
+STDERR:
+
+thread 'editor_layout::paint_tests::duplicate_tab_background_is_rejected' (43024958) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:211:5:
+assertion `left == right` failed: paint-oracle background missing/ambiguous: Shape; candidates=[(0, [[1009.0 61.0] - [1109.0 87.0]], #37_37_37_FF), (36, [[1009.0 61.0] - [1109.0 87.0]], #37_37_37_FF)]
+  left: 2
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'editor_layout::paint_tests::duplicate_tab_label_is_rejected' (43024959) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:174:5:
+assertion `left == right` failed: paint-oracle label missing/ambiguous: Shape
+  left: 2
+ right: 1
+
+thread 'editor_layout::paint_tests::empty_paint_output_is_rejected' (43024960) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:174:5:
+assertion `left == right` failed: paint-oracle label missing/ambiguous: Shape
+  left: 0
+ right: 1
+
+thread 'editor_layout::paint_tests::missing_tab_background_is_rejected' (43024961) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:211:5:
+assertion `left == right` failed: paint-oracle background missing/ambiguous: Shape; candidates=[]
+  left: 0
+ right: 1
+
+thread 'editor_layout::paint_tests::missing_tab_label_is_rejected' (43024962) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:174:5:
+assertion `left == right` failed: paint-oracle label missing/ambiguous: Shape
+  left: 0
+ right: 1

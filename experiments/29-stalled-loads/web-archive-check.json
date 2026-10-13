@@ -1,0 +1,120 @@
+{
+  "status": "PASS",
+  "scope": "read-only durable archive consistency/provenance; not browser replay",
+  "case": {
+    "accepted_works": 12,
+    "startup_work_http_gets": 1,
+    "gui_chooser_selections": 11,
+    "pre_release_asset_gets": 4,
+    "after_release_only": "12",
+    "five_full_transfers": true,
+    "release_scope": "all four together",
+    "release_seconds": 47.7098,
+    "cleanup_seconds": 85.8951,
+    "sockets_closed": 14,
+    "whole_document_semantic_equality": true,
+    "serialized_bytes_equal": false,
+    "wasm_sha256": "d890dfee73e9eeeee6ce3d82f255c79979e8c8b6bed90243c6101f8e1c1763a8",
+    "cua_trace_sha256": "d0fc22abc235afb73f7aa58c69f9eb459d1c22dede9db97a00804cea8e250427"
+  },
+  "adapter_repair_records": 18,
+  "actual_frozen_wasm_checked": true,
+  "negative_controls": [
+    {
+      "name": "fifth-before-release",
+      "rejected": true,
+      "reason": "No fifth-before-release or intermediate fetch"
+    },
+    {
+      "name": "wrong-entire-saved-doc",
+      "rejected": true,
+      "reason": "Saved entire Doc differs from latest canonical variant"
+    },
+    {
+      "name": "missing-gui-chooser",
+      "rejected": true,
+      "reason": "Twelve accepted Work sequence"
+    },
+    {
+      "name": "unclean-sockets",
+      "rejected": true,
+      "reason": "Unclean sockets/threads"
+    },
+    {
+      "name": "failed-cua-completion",
+      "rejected": true,
+      "reason": "Cua call incomplete/error"
+    },
+    {
+      "name": "mismatched-cua-output-id",
+      "rejected": true,
+      "reason": "Cua call/output ID mismatch"
+    },
+    {
+      "name": "cua-loop-error",
+      "rejected": true,
+      "reason": "Cua call incomplete/error"
+    },
+    {
+      "name": "wrong-wasm",
+      "rejected": true,
+      "reason": "Fresh candidate Wasm identity"
+    },
+    {
+      "name": "failed-attempt-miscounted",
+      "rejected": true,
+      "reason": "Eleven actual chooser selections"
+    },
+    {
+      "name": "unawaited-file-selection",
+      "rejected": true,
+      "reason": "Exact awaited Cua call shape changed"
+    }
+  ],
+  "negative_control_count": 10,
+  "repair_inventory_negative_controls": [
+    {
+      "name": "missing-new-cohort",
+      "rejected": true,
+      "reason": "Both exact repair cohorts required"
+    },
+    {
+      "name": "missing-both-cohorts",
+      "rejected": true,
+      "reason": "Both exact repair cohorts required"
+    },
+    {
+      "name": "missing-one-receipt",
+      "rejected": true,
+      "reason": "Complete exact canonical repair receipt set required"
+    },
+    {
+      "name": "missing-original-manifest-entry",
+      "rejected": true,
+      "reason": "Exact original repair manifest inventory required"
+    },
+    {
+      "name": "extra-cohort",
+      "rejected": true,
+      "reason": "Both exact repair cohorts required"
+    },
+    {
+      "name": "extra-original-manifest-entry",
+      "rejected": true,
+      "reason": "Exact original repair manifest inventory required"
+    }
+  ],
+  "repair_inventory_negative_control_count": 6,
+  "checker_sha256": "ddc7180222c539d1fc777a321011f76eda7ddebafb1a25ccf254bea1481e476d",
+  "command": "python3 -B experiments/29-stalled-loads/check_web_archive.py --self-test --frozen-web <root-assigned frozen-web>",
+  "exit_code": 0,
+  "inventory_cli_red_receipt": "adapter-repair/inventory-controls/archive-inventory-pre-red-inventory-controls.receipt.json",
+  "inventory_cli_green_receipt": "adapter-repair/inventory-controls/archive-inventory-final-green-inventory-controls.receipt.json",
+  "limits": [
+    "archive/provenance consistency, not browser replay",
+    "successful Web case released all four together; one-slot recovery CPU-only",
+    "durable timeout-UI acceptance NOT-RUN",
+    "real watchdog dwell NOT-RUN",
+    "native visual acceptance pending unlock/root"
+  ]
+}

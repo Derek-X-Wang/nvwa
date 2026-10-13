@@ -1,0 +1,174 @@
+{
+  "source_sha256": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda",
+  "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+  "all_pass": true,
+  "controls": [
+    {
+      "case": "ordinary-real-exit",
+      "pass": true,
+      "real_owned_dummy_pid": 50979,
+      "dummy_exit_code": 0,
+      "guard_returncode": 0,
+      "marker_seen": false,
+      "guard_status": "exit_verified",
+      "cleanup_receipts": [],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    },
+    {
+      "case": "native-no-marker",
+      "pass": true,
+      "real_owned_dummy_pid": 50986,
+      "dummy_exit_code": -15,
+      "guard_returncode": 0,
+      "marker_seen": false,
+      "guard_status": "exit_verified",
+      "cleanup_receipts": [],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    },
+    {
+      "case": "pixel-pre-schedule-stall",
+      "pass": true,
+      "real_owned_dummy_pid": 50996,
+      "dummy_exit_code": -15,
+      "guard_returncode": 0,
+      "marker_seen": false,
+      "guard_status": "exit_verified",
+      "cleanup_receipts": [],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    },
+    {
+      "case": "native-no-marker-ignore-term",
+      "pass": true,
+      "real_owned_dummy_pid": 51005,
+      "dummy_exit_code": -9,
+      "guard_returncode": 0,
+      "marker_seen": false,
+      "guard_status": "exit_verified",
+      "cleanup_receipts": [],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    },
+    {
+      "case": "partial-marker-guard-continues",
+      "pass": true,
+      "real_owned_dummy_pid": 51049,
+      "dummy_exit_code": -15,
+      "guard_returncode": 0,
+      "marker_seen": false,
+      "guard_status": "exit_verified",
+      "cleanup_receipts": [],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    },
+    {
+      "case": "wrong-kernel-identity-no-signal",
+      "pass": true,
+      "real_owned_dummy_pid": 51068,
+      "dummy_exit_code": -15,
+      "guard_returncode": 1,
+      "marker_seen": false,
+      "guard_status": "blocked",
+      "cleanup_receipts": [
+        {
+          "boundary": "SIGTERM_sent_after_exact_frozen_identity_check",
+          "clock": "host_time_monotonic_ns",
+          "monotonic_ns": 360659877133166,
+          "wall_time_ns": 1791883555261219000,
+          "pid": 51068,
+          "ppid": 50969,
+          "rss_kib": 14640,
+          "kernel_start_identity": "Tue Oct 13 02:25:54 2026",
+          "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+        },
+        {
+          "boundary": "target_exit_verified_after_SIGTERM",
+          "clock": "host_time_monotonic_ns",
+          "monotonic_ns": 360659879611541,
+          "wall_time_ns": 1791883555263697000,
+          "pid": 51068
+        }
+      ],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    },
+    {
+      "case": "inspection-failure-no-false-exit",
+      "pass": true,
+      "real_owned_dummy_pid": 51081,
+      "dummy_exit_code": -15,
+      "guard_returncode": 1,
+      "marker_seen": false,
+      "guard_status": "blocked",
+      "cleanup_receipts": [
+        {
+          "boundary": "SIGTERM_sent_after_exact_frozen_identity_check",
+          "clock": "host_time_monotonic_ns",
+          "monotonic_ns": 360660367334291,
+          "wall_time_ns": 1791883555751422000,
+          "pid": 51081,
+          "ppid": 50969,
+          "rss_kib": 14800,
+          "kernel_start_identity": "Tue Oct 13 02:25:55 2026",
+          "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+        },
+        {
+          "boundary": "target_exit_verified_after_SIGTERM",
+          "clock": "host_time_monotonic_ns",
+          "monotonic_ns": 360660369810958,
+          "wall_time_ns": 1791883555753898000,
+          "pid": 51081
+        }
+      ],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    },
+    {
+      "case": "inspection-timeout-no-false-exit",
+      "pass": true,
+      "real_owned_dummy_pid": 51102,
+      "dummy_exit_code": -15,
+      "guard_returncode": 1,
+      "marker_seen": false,
+      "guard_status": "blocked",
+      "cleanup_receipts": [
+        {
+          "boundary": "SIGTERM_sent_after_exact_frozen_identity_check",
+          "clock": "host_time_monotonic_ns",
+          "monotonic_ns": 360660955433666,
+          "wall_time_ns": 1791883556339524000,
+          "pid": 51102,
+          "ppid": 50969,
+          "rss_kib": 14640,
+          "kernel_start_identity": "Tue Oct 13 02:25:55 2026",
+          "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+        },
+        {
+          "boundary": "target_exit_verified_after_SIGTERM",
+          "clock": "host_time_monotonic_ns",
+          "monotonic_ns": 360660957957041,
+          "wall_time_ns": 1791883556342047000,
+          "pid": 51102
+        }
+      ],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    },
+    {
+      "case": "partial-profiler-inspection-fault",
+      "pass": true,
+      "real_owned_dummy_pid": 51114,
+      "dummy_exit_code": -15,
+      "guard_returncode": 0,
+      "marker_seen": true,
+      "guard_status": "exit_verified",
+      "cleanup_receipts": [],
+      "dummy_and_reaper_exit_verified": true,
+      "no_renderer_or_window": true
+    }
+  ],
+  "renderer": "NOT-RUN",
+  "remaining_owned_dummy_processes": []
+}

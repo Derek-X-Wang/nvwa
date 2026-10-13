@@ -1,0 +1,64 @@
+{
+  "scope": "Independent saved-artifact review; no live browser/server/GPU/Cargo actions",
+  "verified": {
+    "http_get_order": [
+      "01",
+      "02",
+      "03",
+      "04",
+      "12"
+    ],
+    "pre_release_time": 42.7954,
+    "explicit_release_times": [
+      47.7098,
+      47.71,
+      47.71,
+      47.7101
+    ],
+    "latest_asset_get_time": 47.8476,
+    "one_html_js_wasm_load": true,
+    "five_full_fixture_response_lengths": true,
+    "cleanup_accepted_closed": 14,
+    "all_12_variants_only_asset_path_change": true,
+    "saved_work_semantically_equals_variant12": true,
+    "frozen_artifact_hashes": {
+      "index.html": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114",
+      "nvwa_studio.js": "9ff532cbedc6a814c4b8337c4b82f436de452e7b7fbc8c9e58bfda2e90ad6c5c",
+      "nvwa_studio_bg.wasm": "d890dfee73e9eeeee6ce3d82f255c79979e8c8b6bed90243c6101f8e1c1763a8"
+    },
+    "images_inspected": "picker-03 through picker-12 and recovered; initial loading, 4/4 wait with no character, then rendered Ready skin+morph+animation character",
+    "identical_screenshot_groups": {
+      "aaab5d851bee21f18c5d1fb2c23ef30b69346b74252d2f886d3a11f9e818faa7": [
+        "picker-03.jpg",
+        "picker-04.jpg"
+      ],
+      "76330a9f525d5c96919abc40c387cb9e81c5f9821626eabe26025db805d9148d": [
+        "picker-05.jpg",
+        "picker-06.jpg",
+        "picker-07.jpg",
+        "picker-08.jpg",
+        "picker-09.jpg",
+        "picker-10.jpg",
+        "picker-11.jpg",
+        "picker-12.jpg"
+      ]
+    }
+  },
+  "evidence_limit": "The supplied action JSON asserts chooser selections but contains no tool-call or picker result provenance. Screenshots retain startup Work01 in the path field; picker05-12 do not independently identify the accepted intermediate Work. Raw network demonstrates accepted loads 01-04 and 12, while 05-11 correctly cause no HTTP request. Exact eleven successful GUI file selections therefore relies on executor action attestation pending underlying chooser trace. Do not infer this solely from network and screenshots.",
+  "scope_notes": [
+    "All four bodies released together; evidence is not a one-slot-at-a-time Web recovery test.",
+    "Actual configured hold is 105 seconds and watchdog 120 seconds; no automatic release occurred in this case.",
+    "First failed path-edit attempt remains correctly NOT-RUN and excluded.",
+    "No exact retiring-root count, byte/task/GPU-memory-cap, native visual acceptance, or historical native-frame causation claim."
+  ],
+  "identities": {
+    "web-stall-picker-case.jsonl": "4d0b8d613b9c3e76a2db3a5aa2f5bff8c092d63545a7acd51d38431dda7b705b",
+    "web-stall-picker-actions.json": "bdd5453a122e67235aec6c598d521f96d105c87b084a1adea2732e24311e808e",
+    "web-stall-saved-work.nvwa.json": "8097148bd4229da93718d7e6c1d7e072e5debb2dd637c7af1b6a085a9a71eae4",
+    "web-stall-recovered.jpg": "cb4ad0c6f75de61a05fa69273046840b106c6641525296074df74b4e427d1dc0",
+    "web-stall-console.json": "b233e13073139aa94e98ed4fedb33d46cb97251a3eba173482640b2d12fbe035",
+    "web-stall-acceptance.json": "0e8dc1fb17c868a8a38255114f8af73b3275bf8318bbdcad6fc3933e8a10d2e6",
+    "web-stall-first-attempt.json": "ab5d2b096a38adbb7c9cc5ed9bd04c2fb5e77bfa2406df6b95aefc66144262f0"
+  },
+  "remaining": "Await final archive checker/tamper review separately."
+}

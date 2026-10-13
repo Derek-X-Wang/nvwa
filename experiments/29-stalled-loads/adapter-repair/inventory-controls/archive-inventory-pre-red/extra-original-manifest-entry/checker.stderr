@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/check_web_archive-before-completeness.py", line 278, in <module>
+    main()
+    ~~~~^^
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/check_web_archive-before-completeness.py", line 266, in main
+    result = {"status": "PASS", "scope": "read-only durable archive consistency/provenance; not browser replay", "case": validate(bundle), "adapter_repair_records": check_repairs(args.repairs)}
+                                                                                                                                                                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/check_web_archive-before-completeness.py", line 212, in check_repairs
+    require(sha(bounded_bytes(root / name)) == expected, "Original repair manifest digest")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/check_web_archive-before-completeness.py", line 32, in require
+    raise ValueError(message)
+ValueError: Original repair manifest digest

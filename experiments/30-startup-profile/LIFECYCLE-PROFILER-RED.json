@@ -1,0 +1,144 @@
+{
+  "status": "blocked",
+  "target_cleanup": "exit_verified",
+  "target_pid": 40841,
+  "marker_seen": true,
+  "inspection_unknown_seen": false,
+  "owned_profiler_cleanup_verified": false,
+  "observations": [
+    {
+      "boundary": "mandatory_external_guard_started",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360223529694416,
+      "wall_time_ns": 1791883118911786000,
+      "pid": 40841,
+      "case": "native-2",
+      "deadline_seconds": 0.35
+    },
+    {
+      "boundary": "rss_sample",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360223532553708,
+      "wall_time_ns": 1791883118914645000,
+      "pid": 40841,
+      "ppid": 40652,
+      "rss_kib": 14656,
+      "kernel_start_identity": "Tue Oct 13 02:18:38 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+    },
+    {
+      "boundary": "real_rust_startup_marker_verified",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360223532616333,
+      "wall_time_ns": 1791883118914708000,
+      "pid": 40841,
+      "ppid": 40652,
+      "rss_kib": 14656,
+      "kernel_start_identity": "Tue Oct 13 02:18:38 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+    },
+    {
+      "boundary": "optional_profiler_error_guard_continues",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360223534619750,
+      "wall_time_ns": 1791883118916712000,
+      "profiler": "headless-owned-control",
+      "error": "RuntimeError('deliberate inspection fault after owned child registration')"
+    },
+    {
+      "boundary": "rss_sample",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360223649936958,
+      "wall_time_ns": 1791883119032029000,
+      "pid": 40841,
+      "ppid": 40652,
+      "rss_kib": 14656,
+      "kernel_start_identity": "Tue Oct 13 02:18:38 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+    },
+    {
+      "boundary": "rss_sample",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360223769585166,
+      "wall_time_ns": 1791883119151678000,
+      "pid": 40841,
+      "ppid": 40652,
+      "rss_kib": 14656,
+      "kernel_start_identity": "Tue Oct 13 02:18:38 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+    },
+    {
+      "boundary": "rss_sample",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360223888106916,
+      "wall_time_ns": 1791883119270200000,
+      "pid": 40841,
+      "ppid": 40652,
+      "rss_kib": 14656,
+      "kernel_start_identity": "Tue Oct 13 02:18:38 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+    },
+    {
+      "boundary": "owned_run_deadline_reached",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360223998286500,
+      "wall_time_ns": 1791883119380381000,
+      "pid": 40841,
+      "marker_seen": true
+    },
+    {
+      "boundary": "SIGTERM_sent_after_exact_frozen_identity_check",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360224007084500,
+      "wall_time_ns": 1791883119389179000,
+      "pid": 40841,
+      "ppid": 40652,
+      "rss_kib": 14656,
+      "kernel_start_identity": "Tue Oct 13 02:18:38 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+    },
+    {
+      "boundary": "target_exit_verified_after_SIGTERM",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360224012113708,
+      "wall_time_ns": 1791883119394208000,
+      "pid": 40841
+    },
+    {
+      "boundary": "SIGTERM_sent_after_exact_frozen_identity_check",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360224023089833,
+      "wall_time_ns": 1791883119405184000,
+      "pid": 40844,
+      "ppid": 40652,
+      "rss_kib": 1072,
+      "kernel_start_identity": "Tue Oct 13 02:18:38 2026",
+      "comm": "/bin/sleep"
+    },
+    {
+      "boundary": "cleanup_blocked_after_signal",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360224026977666,
+      "wall_time_ns": 1791883119409072000,
+      "inspection": {
+        "state": "live",
+        "identity": {
+          "pid": 40844,
+          "ppid": 40652,
+          "rss_kib": 0,
+          "kernel_start_identity": "Tue Oct 13 02:18:38 2026",
+          "comm": "<defunct>"
+        }
+      }
+    },
+    {
+      "boundary": "profiler_exit_observation",
+      "clock": "host_time_monotonic_ns",
+      "monotonic_ns": 360224026996375,
+      "wall_time_ns": 1791883119409090000,
+      "profiler": "headless-owned-control",
+      "profiler_pid": 40844,
+      "exit_code": -15
+    }
+  ]
+}

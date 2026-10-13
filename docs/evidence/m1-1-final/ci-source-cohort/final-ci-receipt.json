@@ -1,0 +1,893 @@
+{
+  "status": "VERIFIED",
+  "issues": [],
+  "repository": "Derek-X-Wang/nvwa",
+  "pr": 41,
+  "draft": true,
+  "run": {
+    "id": 38392776461,
+    "run_attempt": 1,
+    "event": "pull_request",
+    "head_sha": "9df6d3a05296bed1b876edb81a7562ddfe98da83",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-13T11:48:31Z",
+    "run_started_at": "2026-10-13T11:48:31Z",
+    "updated_at": "2026-10-13T12:18:26Z",
+    "html_url": "https://github.com/Derek-X-Wang/nvwa/actions/runs/38392776461"
+  },
+  "actions_checkout_sha": "62cad072b5b4b3d2fbfa638b306da53bb2520641",
+  "merge_parents": [
+    "045d8abc685760d09ba05afec0e40a811a282d1f",
+    "9df6d3a05296bed1b876edb81a7562ddfe98da83"
+  ],
+  "merge_tree_sha": "116e49cfc0019b084546dae7eafeb63a27802e88",
+  "candidate_head_tree_sha": "116e49cfc0019b084546dae7eafeb63a27802e88",
+  "merge_tree_equals_candidate_head_tree": true,
+  "local_checkout": {
+    "observed_at": "2026-10-13T12:21:25.608935+00:00",
+    "cwd": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa",
+    "head": "9df6d3a05296bed1b876edb81a7562ddfe98da83",
+    "branch": "codex/m11-ui-paint-permanent",
+    "status": "?? .tools\n?? target\n"
+  },
+  "jobs": [
+    {
+      "id": 115280404429,
+      "name": "Core, CLI, and diagnostic controls",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-13T11:48:34Z",
+      "completed_at": "2026-10-13T11:49:10Z",
+      "runner_name": "GitHub Actions 1000063636",
+      "labels": [
+        "ubuntu-24.04"
+      ]
+    },
+    {
+      "id": 115280404792,
+      "name": "macOS CPU tests and Wasm compile check",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-13T11:48:38Z",
+      "completed_at": "2026-10-13T12:18:25Z",
+      "runner_name": "GitHub Actions 1000063637",
+      "labels": [
+        "macos-14"
+      ]
+    }
+  ],
+  "ubuntu": {
+    "rust_named_positive_count": 27,
+    "rust_summary_totals": {
+      "passed": 27,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    "diagnostics": {
+      "python_suite_counts": [
+        15,
+        26,
+        20,
+        11
+      ],
+      "python_total": 72,
+      "node_test_count": 5,
+      "node_pass_count": 5,
+      "node_fail_count": 0,
+      "combined_positive_count": 77,
+      "collector_controls": [
+        "2026-10-13T11:49:07.8375527Z PASS actual collector semantic control: descendant focus/blur ignored; window focus/blur retained",
+        "2026-10-13T11:49:07.9137653Z PASS \u2014 actual collector Node harness: matching event IDs/callstacks, false native return, exact this/args/throw, stop/reset/UUID boundaries, bypass UNKNOWN. Browser and physical IME NOT-RUN."
+      ],
+      "collector_control_count": 2
+    },
+    "receipt": "ubuntu-verification.json"
+  },
+  "mac": {
+    "raw_log": "job-115280404792.raw.log",
+    "raw_log_sha256": "59523bb6f3ed012a81bada56addd392505ebed64d01ddfff18f55222d1249582",
+    "named_positive_count": 113,
+    "summary_totals": {
+      "passed": 113,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    "summaries": [
+      {
+        "line": 876,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 882,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 892,
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 900,
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 913,
+        "passed": 8,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 933,
+        "passed": 13,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 977,
+        "passed": 39,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 1030,
+        "passed": 47,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 1036,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 1042,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 1048,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 1054,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      },
+      {
+        "line": 1060,
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered": 0
+      }
+    ],
+    "named_passing_tests": [
+      {
+        "name": "failed_batch_does_not_overwrite_existing_output",
+        "line": 886,
+        "expected_panic": false
+      },
+      {
+        "name": "cli_rejects_duplicate_map_keys_and_preserves_unrelated_save_sibling",
+        "line": 887,
+        "expected_panic": false
+      },
+      {
+        "name": "typed_ui_and_offline_cli_produce_equivalent_documents",
+        "line": 888,
+        "expected_panic": false
+      },
+      {
+        "name": "fifo_without_writer_is_rejected_within_timeout",
+        "line": 889,
+        "expected_panic": false
+      },
+      {
+        "name": "failed_cli_batch_preserves_input_and_existing_work",
+        "line": 896,
+        "expected_panic": false
+      },
+      {
+        "name": "cli_applies_and_round_trips_the_m1_sequence",
+        "line": 897,
+        "expected_panic": false
+      },
+      {
+        "name": "bounded_history_tests::history_count_boundary_preserves_contiguous_undo_redo_and_branching",
+        "line": 904,
+        "expected_panic": false
+      },
+      {
+        "name": "bounded_history_tests::exact_retry_byte_limit_overflow_and_oversized_retry_expiry",
+        "line": 905,
+        "expected_panic": false
+      },
+      {
+        "name": "bounded_history_tests::mixed_stack_byte_eviction_removes_only_farthest_reachable_states",
+        "line": 906,
+        "expected_panic": false
+      },
+      {
+        "name": "bounded_history_tests::overflow_is_atomic_and_open_starts_with_empty_session_retention",
+        "line": 907,
+        "expected_panic": false
+      },
+      {
+        "name": "bounded_history_tests::exact_history_byte_limit_and_next_snapshot_evict_farthest_state",
+        "line": 908,
+        "expected_panic": false
+      },
+      {
+        "name": "bounded_history_tests::retry_fifo_duplicates_conflicts_failure_and_expired_id_reuse",
+        "line": 909,
+        "expected_panic": false
+      },
+      {
+        "name": "bounded_history_tests::oversized_adjacent_snapshot_creates_edit_and_undo_barriers",
+        "line": 910,
+        "expected_panic": false
+      },
+      {
+        "name": "bounded_history_tests::long_session_fixed_workload_stays_bounded",
+        "line": 911,
+        "expected_panic": false
+      },
+      {
+        "name": "failed_multi_parameter_command_has_no_partial_mutation_or_history",
+        "line": 918,
+        "expected_panic": false
+      },
+      {
+        "name": "missing_corrupt_and_mismatched_assets_are_rejected",
+        "line": 919,
+        "expected_panic": false
+      },
+      {
+        "name": "nonfinite_ranges_invalid_timeline_and_overflow_never_mutate",
+        "line": 920,
+        "expected_panic": false
+      },
+      {
+        "name": "profile_ids_paths_hashes_defaults_and_references_are_strict",
+        "line": 921,
+        "expected_panic": false
+      },
+      {
+        "name": "retry_is_idempotent_even_after_later_commits_and_id_reuse_conflicts",
+        "line": 923,
+        "expected_panic": false
+      },
+      {
+        "name": "batch_parser_matches_single_envelopes_and_bounds_whole_input",
+        "line": 924,
+        "expected_panic": false
+      },
+      {
+        "name": "single_and_batch_command_parsers_reject_duplicate_parameter_keys",
+        "line": 925,
+        "expected_panic": false
+      },
+      {
+        "name": "defaults_and_json_roundtrip_preserve_document",
+        "line": 926,
+        "expected_panic": false
+      },
+      {
+        "name": "slider_previews_are_one_committed_transaction",
+        "line": 927,
+        "expected_panic": false
+      },
+      {
+        "name": "typed_and_serialized_commands_produce_identical_results",
+        "line": 928,
+        "expected_panic": false
+      },
+      {
+        "name": "undo_redo_restore_content_and_monotonically_advance_revision",
+        "line": 929,
+        "expected_panic": false
+      },
+      {
+        "name": "valid_timeline_command_is_undoable_and_invalid_character_is_rejected",
+        "line": 930,
+        "expected_panic": false
+      },
+      {
+        "name": "unknown_fields_duplicate_keys_oversized_json_and_schema_are_rejected",
+        "line": 931,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::asynchronous_io_failure_cannot_reuse_verified_scene_and_recovers",
+        "line": 937,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::corrupt_and_missing_sources_recover_on_same_path_work_open",
+        "line": 938,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::capacity_wait_preserves_latest_same_path_error_and_late_failures_cannot_clear_it",
+        "line": 939,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::long_lived_ready_reader_failure_preserves_specific_error_until_recovery",
+        "line": 940,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::full_distinct_path_budget_shows_wait_and_timeout_until_capacity_releases",
+        "line": 941,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::one_retrieval_supplies_hash_scene_skin_morphs_and_animations",
+        "line": 942,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::matching_hash_glb_with_gltf_parse_error_surfaces_and_recovers",
+        "line": 943,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::ready_character_replaced_by_corrupt_bytes_is_not_exposed",
+        "line": 944,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::pending_different_path_recovers_while_old_source_stays_held",
+        "line": 945,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::pending_same_path_opens_coalesce_to_latest_profile",
+        "line": 946,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::ready_scene_is_retired_immediately_before_same_path_pending_open",
+        "line": 947,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::same_path_overlapping_opens_attempt_b_first_fences_stale_scene_mesh_animation",
+        "line": 948,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::same_path_overlapping_opens_a_first_never_publish_a_to_current_work",
+        "line": 949,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::superseded_reader_failure_unblocks_latest_same_path_open",
+        "line": 950,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::switching_to_a_new_asset_path_retrieves_it_once",
+        "line": 951,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::wrong_profile_then_correct_profile_at_same_path_requires_fresh_retrieval",
+        "line": 952,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::actual_async_reload_waits_for_fresh_bytes_and_recovers_hash_error",
+        "line": 953,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::character_click_wave_restores_running_sequence_cursor_and_history",
+        "line": 954,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::character_hotspot_rejects_background_stale_clicks_and_tracks_animated_joint",
+        "line": 955,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::character_interaction_cancels_on_open_edit_undo_and_player_loss",
+        "line": 956,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::stalled_distinct_paths_keep_at_most_four_admitted_roots",
+        "line": 957,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::chest_and_head_hotspots_accept_small_scale_centers_without_accepting_outside",
+        "line": 958,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::current_gltf_failure_is_visible_until_a_fresh_success",
+        "line": 959,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::explicit_same_profile_open_changes_load_generation_but_edits_do_not",
+        "line": 960,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::fresh_successful_gltf_completion_clears_superseded_parse_error",
+        "line": 961,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::gap_holds_source_endpoint_and_nonunit_speed_maps_wall_time",
+        "line": 962,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::invalid_preview_preserves_document_and_previous_valid_preview",
+        "line": 963,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::character_wave_restores_paused_completed_and_m0_loop_samples",
+        "line": 964,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::opening_same_profile_with_empty_timeline_stops_existing_animation",
+        "line": 965,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::m0_loop_pause_holds_rendered_joint_and_resume_advances_in_production_order",
+        "line": 966,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::repeated_preview_is_one_undoable_transaction",
+        "line": 967,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::overlap_transaction_is_rejected_without_changing_cursor_or_joint",
+        "line": 968,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::replacement_player_initializes_already_applied_clip_and_advances",
+        "line": 969,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::replacing_document_discards_transient_preview",
+        "line": 970,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::repeated_source_entries_backward_seeks_completion_and_restart_are_deterministic",
+        "line": 971,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::sequence_reopen_undo_and_replacement_player_reset_and_sample_real_pose",
+        "line": 972,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::sequence_advances_real_joint_across_boundaries_and_pause_seek_holds",
+        "line": 973,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::startup_waits_for_explicit_work_without_falling_back_to_fixture",
+        "line": 974,
+        "expected_panic": false
+      },
+      {
+        "name": "loading_tests::stalled_http_tests::loopback_http_stalled_distinct_paths_bound_admission_and_recover_latest",
+        "line": 975,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::paint_tests::duplicate_tab_label_is_rejected",
+        "line": 982,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::duplicate_tab_background_is_rejected",
+        "line": 983,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::empty_paint_output_is_rejected",
+        "line": 984,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::missing_tab_label_is_rejected",
+        "line": 985,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::missing_tab_background_is_rejected",
+        "line": 986,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::tests::actual_resize_escape_cancels_and_focus_guards_keyboard",
+        "line": 987,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::actual_resize_idle_window_shrink_preserves_preferred_height",
+        "line": 988,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::paint_tests::actual_selected_tab_paint_matches_literal_click_sequence",
+        "line": 989,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::actual_tabs_are_pointer_owned_and_keyboard_focus_guards_space",
+        "line": 990,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::actual_shape_drag_is_one_command_and_undo_redo_restore_complete_work",
+        "line": 991,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space",
+        "line": 992,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::layout_reset_cancel_lock_and_tabs_preserve_full_work_and_history",
+        "line": 993,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::actual_work_path_focus_blocks_space_and_document_shortcuts",
+        "line": 994,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::reset_during_drag_prevents_subsequent_delta_and_small_window_recovers",
+        "line": 995,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::discarded_editor_pass_does_not_install_layout_or_apply_commands",
+        "line": 996,
+        "expected_panic": false
+      },
+      {
+        "name": "editor_layout::tests::real_studio_keeps_scene_and_panel_guards_and_full_work",
+        "line": 997,
+        "expected_panic": false
+      },
+      {
+        "name": "platform::tests::browser_failure_keeps_message_bounded_without_showing_stack",
+        "line": 998,
+        "expected_panic": false
+      },
+      {
+        "name": "platform::tests::empty_open_is_an_opened_payload_and_operations_are_single_flight",
+        "line": 999,
+        "expected_panic": false
+      },
+      {
+        "name": "platform::tests::failed_async_completion_releases_mailbox_for_recovery",
+        "line": 1000,
+        "expected_panic": false
+      },
+      {
+        "name": "platform::tests::fifo_without_writer_is_rejected_without_blocking_ui",
+        "line": 1001,
+        "expected_panic": false
+      },
+      {
+        "name": "platform::tests::oversized_and_nonregular_inputs_are_rejected_before_unbounded_read",
+        "line": 1002,
+        "expected_panic": false
+      },
+      {
+        "name": "fonts::tests::fonts_install_for_each_new_context_and_do_not_reset_existing_contexts",
+        "line": 1003,
+        "expected_panic": false
+      },
+      {
+        "name": "platform::tests::static_paths_reject_external_traversal_and_encoded_escapes",
+        "line": 1004,
+        "expected_panic": false
+      },
+      {
+        "name": "platform::tests::streamed_work_enforces_cumulative_limit_before_copy_and_strict_utf8",
+        "line": 1005,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::current_egui_frame_guards_panels_and_overlays_but_leaves_scene_clickable",
+        "line": 1006,
+        "expected_panic": false
+      },
+      {
+        "name": "fonts::tests::bundled_font_parses_and_lays_out_chinese_with_both_default_families",
+        "line": 1007,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::native_launch_work_is_shared_by_studio_player_and_smoke_options",
+        "line": 1008,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::opening_empty_payload_is_an_error_and_preserves_document",
+        "line": 1009,
+        "expected_panic": false
+      },
+      {
+        "name": "platform::tests::save_does_not_truncate_unrelated_predictable_sibling",
+        "line": 1010,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::failed_initial_work_has_visible_error_and_manual_completion_can_recover",
+        "line": 1011,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::saved_completion_does_not_replace_document",
+        "line": 1012,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::sequence_creation_and_reorder_are_atomic_portable_edits",
+        "line": 1013,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::web_launch_validation_keeps_mode_separate_from_work_and_rejects_duplicates",
+        "line": 1014,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::batched_commit_then_new_preedit_cancel_preserves_intermediate_commit",
+        "line": 1015,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::canceled_preedit_never_mutates_canonical_path_or_cursor",
+        "line": 1016,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::command_keys_use_event_modifiers_and_browser_paste_delivery",
+        "line": 1017,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::player_ui_transport_is_read_only_and_retains_panel_input_guards",
+        "line": 1018,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::composition_input_and_repeated_commits_have_one_owner",
+        "line": 1019,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::commit_select_all_then_preedit_cancel_preserves_commit_and_selection",
+        "line": 1020,
+        "expected_panic": false
+      },
+      {
+        "name": "tests::refocus_press_is_rejected_but_next_focused_press_reaches_scene_input",
+        "line": 1021,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::confirmed_selected_text_replaces_once_and_space_is_ordinary_text",
+        "line": 1022,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::control_repeat_release_and_command_paste_keep_editor_ownership",
+        "line": 1023,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::desktop_web_platform_metadata_preserves_unsupported_shortcuts",
+        "line": 1024,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::paste_normalizes_singleline_and_deduplicates_followup",
+        "line": 1025,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::control_navigation_moves_canonical_work_cursor_on_mac",
+        "line": 1026,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::select_all_then_preedit_cancel_preserves_original_selection_and_text",
+        "line": 1027,
+        "expected_panic": false
+      },
+      {
+        "name": "web_input::tests::control_deletion_shortcuts_edit_canonical_work",
+        "line": 1028,
+        "expected_panic": false
+      }
+    ],
+    "six_permanent_editor_layout_paint_tests": [
+      {
+        "name": "editor_layout::paint_tests::duplicate_tab_label_is_rejected",
+        "line": 982,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::duplicate_tab_background_is_rejected",
+        "line": 983,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::empty_paint_output_is_rejected",
+        "line": 984,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::missing_tab_label_is_rejected",
+        "line": 985,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::missing_tab_background_is_rejected",
+        "line": 986,
+        "expected_panic": true
+      },
+      {
+        "name": "editor_layout::paint_tests::actual_selected_tab_paint_matches_literal_click_sequence",
+        "line": 989,
+        "expected_panic": false
+      }
+    ],
+    "actual_merge_checkout_evidence": [
+      {
+        "line": 106,
+        "step": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "content": "2026-10-13T11:48:40.9884880Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +62cad072b5b4b3d2fbfa638b306da53bb2520641:refs/remotes/pull/41/merge"
+      },
+      {
+        "line": 108,
+        "step": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "content": "2026-10-13T11:48:43.6762750Z  * [new ref]         62cad072b5b4b3d2fbfa638b306da53bb2520641 -> pull/41/merge"
+      },
+      {
+        "line": 119,
+        "step": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "content": "2026-10-13T11:48:44.2272680Z 62cad072b5b4b3d2fbfa638b306da53bb2520641"
+      }
+    ],
+    "runner_image": [
+      {
+        "line": 16,
+        "step": "Set up job",
+        "content": "2026-10-13T11:48:39.3522920Z Image: macos-14-arm64"
+      }
+    ],
+    "compile_checks": {
+      "native_workspace_check": {
+        "command_from_exact_tree_script": "cargo check --workspace --locked",
+        "script": "experiments/27-ci-baseline/check.sh",
+        "script_sha256": "1734ff8ad8c1ee3def49de824978e24ce8ae2d36c70a29cd3bceec2422c9ff52",
+        "successful_step": "Run workspace CPU tests",
+        "completion": [
+          {
+            "line": 1325,
+            "step": "Run workspace CPU tests",
+            "content": "2026-10-13T12:14:56.7987240Z     Finished `dev` profile [optimized] target(s) in 2m 14s"
+          }
+        ]
+      },
+      "actual_wasm_target_compile": {
+        "command_from_exact_tree_script": "cargo check -p nvwa-studio --lib --target wasm32-unknown-unknown --locked",
+        "successful_step": "Compile the actual Web target",
+        "nvwa_studio_check": [
+          {
+            "line": 1591,
+            "step": "Compile the actual Web target",
+            "content": "2026-10-13T12:18:20.9719600Z     Checking nvwa-studio v0.1.0 (/Users/runner/work/nvwa/nvwa/crates/nvwa-studio)"
+          }
+        ],
+        "completion": [
+          {
+            "line": 1592,
+            "step": "Compile the actual Web target",
+            "content": "2026-10-13T12:18:21.6809560Z     Finished `dev` profile [optimized] target(s) in 3m 24s"
+          }
+        ]
+      }
+    },
+    "compiler_warnings": []
+  },
+  "archive": {
+    "receipt": "headless32-archive-verification.json",
+    "current_saved_archive_file_hashes_checked": 42,
+    "mismatches": [],
+    "runtime_not_repeated": true,
+    "protected_product_no_diff": "Saved publication-review evidence; no product changes by CI worker."
+  },
+  "material_warnings": [],
+  "not_run": [
+    "GUI/native-window visual acceptance",
+    "GPU or headless32 runtime repeated",
+    "Browser or physical IME acceptance",
+    "DPR, first physical presentation, cold-state, whole-Work visual recovery, performance acceptance",
+    "Post-merge main CI (PR candidate only)"
+  ],
+  "baseline_run_excluded": 38286368500,
+  "cleanup": {
+    "task_owned_poller_session": 25961,
+    "exit_code_observed": 0,
+    "synchronous_gh_subprocesses_returned": true,
+    "persistent_servers_created": [],
+    "retained_directory": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-candidate-ci",
+    "retention_owner": "root orchestrator",
+    "preexisting_untracked_local_resources_untouched": [
+      ".tools",
+      "target"
+    ]
+  },
+  "changed_scope": "Private observer receipts and logs only under .work/m11-candidate-ci; no Actions retry/dispatch, product/branch/commit/publication/UI/GPU/Cargo changes."
+}

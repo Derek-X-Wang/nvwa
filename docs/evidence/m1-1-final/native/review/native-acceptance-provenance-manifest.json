@@ -1,0 +1,1737 @@
+{
+  "status": "VERIFIED_BOUNDED_NATIVE_EVIDENCE_WITH_DECLARED_SOURCE_LIMITS",
+  "generated_at_utc": "2026-10-13T16:36:19.028396+00:00",
+  "source": {
+    "path": "/Users/derekxwang/.codex/sessions/2026/10/10/rollout-2026-10-10T19-22-48-01a128c5-1bff-70a0-bd65-0dfff0529c44.jsonl",
+    "rollout_id": "01a128c5-1bff-70a0-bd65-0dfff0529c44",
+    "cutoff": "2026-10-13T16:15:00Z",
+    "last_source_line_scanned": 25159,
+    "malformed_source_lines": [],
+    "allowed_exceptions": [
+      "call_a00afee7ffcd487e92016c330486f970",
+      "call_b085a7b6bb5c4dc385185f32d94eaa63"
+    ],
+    "failed_exception_excluded": [
+      "call_356df76c511d4ae7bf7cdc3d74794316"
+    ],
+    "not_archived": "No user, reasoning, unrelated tools, credentials or broad session transcript"
+  },
+  "traces": {
+    "success_call_and_completion": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/review/native-cua-exact-records.jsonl",
+      "records": 44,
+      "bytes": 1162261,
+      "sha256": "e630f18939842b24838882f542a97fef79ce2a4ac5d292bd096b9bb39369dfdf",
+      "source_lines": [
+        24334,
+        24336,
+        24517,
+        24519,
+        24766,
+        24768,
+        24773,
+        24775,
+        24799,
+        24801,
+        24804,
+        24806,
+        24809,
+        24811,
+        24838,
+        24840,
+        24855,
+        24857,
+        24865,
+        24867,
+        24870,
+        24872,
+        24880,
+        24882,
+        24887,
+        24889,
+        24907,
+        24909,
+        24912,
+        24914,
+        24917,
+        24919,
+        24922,
+        24924,
+        24935,
+        24937,
+        24950,
+        24952,
+        24959,
+        24961,
+        24969,
+        24971,
+        24989,
+        24991
+      ],
+      "exact_original_raw_records": true
+    },
+    "success_raw_outputs": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/review/native-cua-exact-outputs.jsonl",
+      "records": 22,
+      "bytes": 7567726,
+      "sha256": "7c52629834ef6e515a39aed3f5897cf95fe474780b8a50137e61830570966e41",
+      "source_lines": [
+        24337,
+        24520,
+        24769,
+        24776,
+        24802,
+        24807,
+        24812,
+        24841,
+        24858,
+        24868,
+        24873,
+        24883,
+        24890,
+        24910,
+        24915,
+        24920,
+        24925,
+        24938,
+        24953,
+        24962,
+        24972,
+        24992
+      ],
+      "exact_original_raw_records": true
+    },
+    "excluded_failed_calls": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/review/native-cua-excluded-failed.jsonl",
+      "records": 6,
+      "bytes": 5254,
+      "sha256": "4875a48a5268dd79832bc3677cacc6e04af120705944bf81496b5c3c8b7925b5",
+      "source_lines": [
+        24700,
+        24701,
+        24703,
+        24843,
+        24845,
+        24846
+      ],
+      "exact_original_raw_records": true
+    }
+  },
+  "successful_call_count": 22,
+  "excluded_failed_count": 2,
+  "incomplete_count": 0,
+  "calls": [
+    {
+      "call_id": "call_a00afee7ffcd487e92016c330486f970",
+      "completion_source_line": 24336,
+      "completion_timestamp": "2026-10-13T14:14:59.126Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "重新打开当前候选的原生 Nvwa",
+      "images_in_result": [],
+      "pre_cutoff_binding_exception": true,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24334,
+      "call_source_raw_line_sha256": "56233af6b3c58aa3dbc6434c62f2f48f8435a7ec1235becaeb3c4b2ff27c84d0",
+      "call_timestamp": "2026-10-13T14:14:51.243Z",
+      "completion_source_raw_line_sha256": "f82512e7f4c18875bd8eb4d830ea998c68f34117e498aee3b48b569359652fc6",
+      "output_source_line": 24337,
+      "output_source_raw_line_sha256": "4af881cda8171a6e8d1f442f06bf62814e4a2fc05c80d2fe1d1b6bed7a7a0f7d",
+      "output_timestamp": "2026-10-13T14:14:59.232Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_b085a7b6bb5c4dc385185f32d94eaa63",
+      "completion_source_line": 24519,
+      "completion_timestamp": "2026-10-13T14:31:01.525Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "重新绑定当前原生窗口",
+      "images_in_result": [],
+      "pre_cutoff_binding_exception": true,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24517,
+      "call_source_raw_line_sha256": "2c34025644c56c025363854b54948421e8b14b435b7135494ac6fdfa14e8ad13",
+      "call_timestamp": "2026-10-13T14:30:57.490Z",
+      "completion_source_raw_line_sha256": "161d793b77bdc4af297a4a39ae06a89126e4e443295fb88324dcc332602740b6",
+      "output_source_line": 24520,
+      "output_source_raw_line_sha256": "88af1eb1b3139da3309c18cb5438e756e74f1050946b5222c64698acf367768c",
+      "output_timestamp": "2026-10-13T14:31:01.688Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_164233a4a44442068389a5c419731b53",
+      "completion_source_line": 24768,
+      "completion_timestamp": "2026-10-13T16:17:53.114Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "实际设置原生私有存档路径",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 64692,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24766,
+      "call_source_raw_line_sha256": "04586cff2187b956cbebf91839320661ee1346d740742b44bebc76cc1115aebf",
+      "call_timestamp": "2026-10-13T16:17:47.990Z",
+      "completion_source_raw_line_sha256": "ec6efd1cda4f4aec0a9a19a922cd23be2e561697abc52b54e72eec42bcf47ea4",
+      "output_source_line": 24769,
+      "output_source_raw_line_sha256": "951a22d5441938d430b62d3de5c38e1fd2f7ad42cb81962cf903053413b101fe",
+      "output_timestamp": "2026-10-13T16:17:53.153Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 222165,
+          "sha256": "e63529dbb6dbb8b12f5bf686a1128904f26f4ad548c3d29efacdba14dc440ea2"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_69bfa74be8a041429b43718708226f07",
+      "completion_source_line": 24775,
+      "completion_timestamp": "2026-10-13T16:18:07.963Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "实际保存当前原生完整作品",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 64692,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24773,
+      "call_source_raw_line_sha256": "a9151e03903712f0e785954b4eca568a34dfc2619cf1164684f32240ce3c3f35",
+      "call_timestamp": "2026-10-13T16:18:05.299Z",
+      "completion_source_raw_line_sha256": "15604623a9517f916d159b63216e31d3db5595796403821cb19def3609b207f3",
+      "output_source_line": 24776,
+      "output_source_raw_line_sha256": "beb390174999a0b7265c1fa12de5949ce8309a6863fe0607a908d0cc4f72833b",
+      "output_timestamp": "2026-10-13T16:18:07.987Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 209433,
+          "sha256": "9722480749c05e7905258173f115612420f0bc50f5d3df2d118c9d2ec024927b"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_dc763354c3a845c5b66091eafa77b9ed",
+      "completion_source_line": 24801,
+      "completion_timestamp": "2026-10-13T16:21:49.866Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "核对当前原生标签与保存状态",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24799,
+      "call_source_raw_line_sha256": "92ea27d66ee56b88236e5f03735cf48db62b705afcab39f8234b53901fcb2d35",
+      "call_timestamp": "2026-10-13T16:21:48.768Z",
+      "completion_source_raw_line_sha256": "df63bc3c62db141ea5b9f4993b7ab66b4e888d990ac641d98edefd91b819e67a",
+      "output_source_line": 24802,
+      "output_source_raw_line_sha256": "f234c1dae433c30c5c37a084a3a86ee7629695adf35f82e26b75dc9bfd26de4b",
+      "output_timestamp": "2026-10-13T16:21:49.893Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 209433,
+          "sha256": "453404e5ab803f9975881c46d0f0f14a2683afaa8bea2ff232dea9104fbce802"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_34de7b5d283f47f390ea5fdebe314c57",
+      "completion_source_line": 24806,
+      "completion_timestamp": "2026-10-13T16:21:57.585Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "实际切换 Shape 并保存原生画面",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24804,
+      "call_source_raw_line_sha256": "eac122743e29f239402d5cfdbde56a8c2cf4b4c604b24bee1a934e5656a1199b",
+      "call_timestamp": "2026-10-13T16:21:55.281Z",
+      "completion_source_raw_line_sha256": "497805fcc2c585a45a42823437af4a3dcd5c103ff242fff795676b6c00c77af4",
+      "output_source_line": 24807,
+      "output_source_raw_line_sha256": "7ef4700b6359c0e6cf8e1e3ffdc72d5d51b18cfe639bc6e253f633cd85a0a4e7",
+      "output_timestamp": "2026-10-13T16:21:57.610Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 225130,
+          "sha256": "4cc3d2eae79f04bb173fb069acf6d6ac70a232b2770c89ea9b3abdd9bf38898e"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_f788dc510f034f7f9023c9c61c01bdbc",
+      "completion_source_line": 24811,
+      "completion_timestamp": "2026-10-13T16:22:12.524Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "切回 Profile 并保存完整作品对照",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 64945,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24809,
+      "call_source_raw_line_sha256": "60d3b5febe597c4f4f8eef54aa9736e9bfdc5c2688bfb8c300cf1c767b757a5f",
+      "call_timestamp": "2026-10-13T16:22:07.152Z",
+      "completion_source_raw_line_sha256": "9dfbee3955060af5f10f92d96fb39d0e5e2074ffe35650ac45d3faea18188942",
+      "output_source_line": 24812,
+      "output_source_raw_line_sha256": "9024e8fd8e4e9bc8d0379db8e9b2b729ef48b995296e8d7a3d9c50b945f9a893",
+      "output_timestamp": "2026-10-13T16:22:12.568Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 209002,
+          "sha256": "3e55a3b681789df34d9f84ad27f81c0eccfc2dddd2715572c474f600e49e5d1a"
+        },
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 209338,
+          "sha256": "0f03ea46f85376d06b76febd17d9a0532ed7e7089ad41ff58bcaee91b69cced9"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_f19261ed6f8348a6a3e47caedd9ef9ab",
+      "completion_source_line": 24840,
+      "completion_timestamp": "2026-10-13T16:22:58.143Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "读取原生窗口关闭控件",
+      "images_in_result": [],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24838,
+      "call_source_raw_line_sha256": "621cc729a3c4ca25acdb0eddeda69de74889a197a9ad4eba20b69a1ef7971056",
+      "call_timestamp": "2026-10-13T16:22:57.530Z",
+      "completion_source_raw_line_sha256": "7b79f35c72f695598d8365089de451904989c8d99e14ca00cc0cd7711adfd4fc",
+      "output_source_line": 24841,
+      "output_source_raw_line_sha256": "e5e77219ebc023609a3a8e2bf2a417ac305aba5e0d80a52afa9e9cb30d8531e1",
+      "output_timestamp": "2026-10-13T16:22:58.157Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_204d79adfdea4e70a4ff5061fe26f07e",
+      "completion_source_line": 24857,
+      "completion_timestamp": "2026-10-13T16:23:26.523Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "启动同一二进制的隔离原生副本",
+      "images_in_result": [],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24855,
+      "call_source_raw_line_sha256": "f08ec5be36d17e7c5ae9ee333655ba00fcc1760ebc659d9b15cc9e4671b2dee5",
+      "call_timestamp": "2026-10-13T16:23:17.420Z",
+      "completion_source_raw_line_sha256": "bb975f689cda16dc3e90b89e79e9a9470660700dad3f82962fe267003133c104",
+      "output_source_line": 24858,
+      "output_source_raw_line_sha256": "26cae459371557b75bbb962061320bd30695eeb4542a63e0fdb41a9f82dc5d8f",
+      "output_timestamp": "2026-10-13T16:23:26.546Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_e325d704333d482a88bba3476dbb5c19",
+      "completion_source_line": 24867,
+      "completion_timestamp": "2026-10-13T16:23:41.523Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "读取隔离实例初始原生画面",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65172,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24865,
+      "call_source_raw_line_sha256": "a9c6eb1b25efa8f3de0587c5b04fa93968905196e01e277dbd0b66b3c907647a",
+      "call_timestamp": "2026-10-13T16:23:40.460Z",
+      "completion_source_raw_line_sha256": "fde8c1fc64b662d054094d0ec71c7481ed1ab5da2cc803b7eee34cadddf7ed3f",
+      "output_source_line": 24868,
+      "output_source_raw_line_sha256": "cac06306c5b5deb10de47a2e1382e00dd69c7d833c049ccfb435f0d31bd2db93",
+      "output_timestamp": "2026-10-13T16:23:41.592Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 220720,
+          "sha256": "79a5f4968b4e4526385259be6f261c4fe94ad00218aba0445598db0c94900467"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_d0199bb89c6e45c0be945b8cfa2f9ac0",
+      "completion_source_line": 24872,
+      "completion_timestamp": "2026-10-13T16:23:51.959Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "打开真实作品并触发隔离资产缺失",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24870,
+      "call_source_raw_line_sha256": "50828c3c683d7b38a8d58b76789ac9c599a8123e33580980ab28b059de3e9438",
+      "call_timestamp": "2026-10-13T16:23:47.930Z",
+      "completion_source_raw_line_sha256": "69ad70de1bf43fd4cb07a4153f917c7f86fddfaad817cad0921c358a1db7d912",
+      "output_source_line": 24873,
+      "output_source_raw_line_sha256": "4a7214cf69958a711ca0c327e2a4a659bc737b9d96c4a0c0b13b44af0dfeb942",
+      "output_timestamp": "2026-10-13T16:23:52.060Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 282508,
+          "sha256": "4297b90b6f9e91cc84e8b5d4e3031e48fa963bfb8737e17a503b4e50463e78eb"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_e869697eda984c878b9ee0b88a9e2aae",
+      "completion_source_line": 24882,
+      "completion_timestamp": "2026-10-13T16:24:09.812Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "同一作品路径实际重开并确认角色恢复",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24880,
+      "call_source_raw_line_sha256": "31ec80bbe75c069be4c2d30005eb24d0c9adb5e8bfa4779d5df249497db306b8",
+      "call_timestamp": "2026-10-13T16:24:07.395Z",
+      "completion_source_raw_line_sha256": "79f5d8d1caa32f7d270ae1011cb735d3c8b7b39324a6917f73e01fe00190a639",
+      "output_source_line": 24883,
+      "output_source_raw_line_sha256": "c075ca7759883d3ce7dbfe99145dcff65d0809f01263c384773f32df163f96f9",
+      "output_timestamp": "2026-10-13T16:24:09.837Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258904,
+          "sha256": "8e8906e16b0e4c0cdbc4104b574b4cb527a275be8f3811831652f5ae83a1b4a9"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_a2816031ddbe48c58be0bccf3dde3bb2",
+      "completion_source_line": 24889,
+      "completion_timestamp": "2026-10-13T16:24:21.299Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "从原生界面保存恢复后的 A 作品",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24887,
+      "call_source_raw_line_sha256": "11d9712484564210a43f91654b60b3bd02aab86aaa6872554cc2643c08de88f9",
+      "call_timestamp": "2026-10-13T16:24:17.436Z",
+      "completion_source_raw_line_sha256": "4c0531044b815fa8fba250e3e0c8fe5a737b3b4119c6f48ed119344213570132",
+      "output_source_line": 24890,
+      "output_source_raw_line_sha256": "6610852b214b30cd8744fac5bb81d0e2be417fc5a8641b7e8b98c9b730e92965",
+      "output_timestamp": "2026-10-13T16:24:21.324Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 256086,
+          "sha256": "190854ed7087a387d9629dc1008d29fc641bcd09b4986596bcfafcb9b2aac62b"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_f8c4a486e2664545910f0a03b2ec1a8a",
+      "completion_source_line": 24909,
+      "completion_timestamp": "2026-10-13T16:24:49.134Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "再次重开缺失资产作品并验证旧角色移除",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24907,
+      "call_source_raw_line_sha256": "4f9e58a02c1ea8e5511727a6829b06d243e482e0747bf3565305ccb639f59ded",
+      "call_timestamp": "2026-10-13T16:24:45.335Z",
+      "completion_source_raw_line_sha256": "8ca73aea65e690be4f95c98947eb1ad1f7ccc69918f021aca96d64a6a8cac59a",
+      "output_source_line": 24910,
+      "output_source_raw_line_sha256": "3af2d2322020c17f4425028fabf3db9dd58399dc5f7bbb2ab43a892f7d294f94",
+      "output_timestamp": "2026-10-13T16:24:49.170Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 282494,
+          "sha256": "347937c64fbb5a6556bbc002d3c9385ec85364748f927056dd0ba993c186b537"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_473d43047b6e4d89a0cc8afd8118aaa0",
+      "completion_source_line": 24914,
+      "completion_timestamp": "2026-10-13T16:25:00.948Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "改开 B 作品并验证不同资产路径恢复",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24912,
+      "call_source_raw_line_sha256": "6bade48892c1a696ec44ded5857ab867d514f108646b055c0c0805e53f5a8e3a",
+      "call_timestamp": "2026-10-13T16:24:57.414Z",
+      "completion_source_raw_line_sha256": "a53bd0757a78b648f26aeb86f498fc6881d189400792365e75f7e48e5bedbf55",
+      "output_source_line": 24915,
+      "output_source_raw_line_sha256": "42ae26effcfc7e2d51c1ce6ced909b636426bfe86d0ec8adbdc961d61133f76c",
+      "output_timestamp": "2026-10-13T16:25:00.997Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258885,
+          "sha256": "01ea20cb68a4a8e5d96c7462a210e594d7acdd5f1019e4c15c16b662faa4763e"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_e7b5fcd20f2d48c2bed8a70a8d77680a",
+      "completion_source_line": 24919,
+      "completion_timestamp": "2026-10-13T16:25:15.610Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "实际保存 B 并立即重开保存产物",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 64945,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24917,
+      "call_source_raw_line_sha256": "93b77c42aeba2670099d1e33f4ce538a671fd15bd59013c1458ef5e170be8178",
+      "call_timestamp": "2026-10-13T16:25:09.503Z",
+      "completion_source_raw_line_sha256": "21e63361b7f7b4950f489cc9aa3656105c2b7d71279e0f95d612d44ffdf2509c",
+      "output_source_line": 24920,
+      "output_source_raw_line_sha256": "b4853d5ca453005f1466c63522badc7d5300b2bfb78f3831b91e78d8d3d999aa",
+      "output_timestamp": "2026-10-13T16:25:15.655Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 256111,
+          "sha256": "aa3c74d1b3548bd2e2215aca1b671d67fde4050ef72c0eaff76cd97735c6ce3d"
+        },
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 259019,
+          "sha256": "688e1876113f0def8c4590178b8b56de68c291f90924f1500e30491cc3e6d7e1"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_30ee3a3d2b0d4d6aa5f3a00974623e8a",
+      "completion_source_line": 24924,
+      "completion_timestamp": "2026-10-13T16:25:28.151Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "保存重载后的 B 作品以核对所有字段",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24922,
+      "call_source_raw_line_sha256": "d571a1f680a978d91350d16ffebf142dddacc21d6beeba07ff8934f7a99faa3c",
+      "call_timestamp": "2026-10-13T16:25:24.508Z",
+      "completion_source_raw_line_sha256": "26e0d4c08ed2a82afe47f9479c80ba39eb46e742d4219d778ebc5b718569d587",
+      "output_source_line": 24925,
+      "output_source_raw_line_sha256": "1f65426c25c744d3e50efbb7b7a00eea7ce52431cdcdb94a6e9f566d85a0902b",
+      "output_timestamp": "2026-10-13T16:25:28.183Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 256115,
+          "sha256": "187a238ec3b168362dad30e4d3133e032bcddd83aa2d1c22a8bde1b49a211254"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "completion_source_line": 24937,
+      "completion_timestamp": "2026-10-13T16:26:03.274Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "采样实际九秒编排中的 idle、wave 与 turn",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 63435,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24935,
+      "call_source_raw_line_sha256": "2a03af468ddf9cea19963acdc5ceca8b36169f2649938c3c21951e4e1b18045b",
+      "call_timestamp": "2026-10-13T16:25:57.521Z",
+      "completion_source_raw_line_sha256": "039b0451e34d64f80938a661d110e9ee93e5504788f5d19032abda115afdf9de",
+      "output_source_line": 24938,
+      "output_source_raw_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa",
+      "output_timestamp": "2026-10-13T16:26:03.377Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258424,
+          "sha256": "767fb7905112f8b2801e668571eb3be98a997a85c46c168b4a7b215455559f44"
+        },
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258489,
+          "sha256": "5374eaba4438982b423638ff6dea3867933d80392d5c12e4f774a5d27e39b4d5"
+        },
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 259079,
+          "sha256": "0a06cc8338056613cf9f167d77f34a21c743f7696623bab1def18a80d7bb52ac"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_014ce5c7283743cba0342b9901edae9b",
+      "completion_source_line": 24952,
+      "completion_timestamp": "2026-10-13T16:26:46.905Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "确认 turn 终点并暂停定位用于点击动作验证",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 64945,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24950,
+      "call_source_raw_line_sha256": "af28cdc7806d6a39b67db3c4c434cac13d5607cc65b4a92af2b22fe9be90cd64",
+      "call_timestamp": "2026-10-13T16:26:42.691Z",
+      "completion_source_raw_line_sha256": "89990bab09882707865a59663b4d29a6bee2a8bb743c8cf47e61ce3b62c0f5ae",
+      "output_source_line": 24953,
+      "output_source_raw_line_sha256": "9f23ab92282b074fe9cfcb6126980e64c81eba52c7737a12b11eaba2d2065fb0",
+      "output_timestamp": "2026-10-13T16:26:46.939Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258673,
+          "sha256": "1282185d15ef589cd99c3c88b8acb937a151eec760feb87a9c8797bc667de482"
+        },
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258151,
+          "sha256": "834cd0441d305a4e5b1c46275617de16dc469bb781b3c52333e7039279c9bc79"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_dc497fa1e4184f629010f3fd67d8d423",
+      "completion_source_line": 24961,
+      "completion_timestamp": "2026-10-13T16:26:58.343Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "点击真实角色胸部并观察临时 wave",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 65041,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24959,
+      "call_source_raw_line_sha256": "50dc8b16aabc39e740ebed8453b66a13e6dca53ae9b311da85fce74666c2c754",
+      "call_timestamp": "2026-10-13T16:26:56.341Z",
+      "completion_source_raw_line_sha256": "0ae52dda5232b7ef10d908834fce345f28b6d97def23110b480e0f92356b1916",
+      "output_source_line": 24962,
+      "output_source_raw_line_sha256": "fdd718ffde12a29c80651d95a3b2d01c6649b7dc27122416c10f9d5149b66a8b",
+      "output_timestamp": "2026-10-13T16:26:58.365Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 237163,
+          "sha256": "31e996f0079d94d0c71760e4fd7db81ad3586e3c2a66e22f3b62fa2d198fd98c"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_d1497ac7d1f44bab95696a70d82395a3",
+      "completion_source_line": 24971,
+      "completion_timestamp": "2026-10-13T16:27:21.390Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "确认点击动作回到暂停位置并保存作品",
+      "images_in_result": [
+        {
+          "mime": "image/jpeg",
+          "stored_characters": 64945,
+          "complete_decodable_base64": false,
+          "ellipsis_present": true
+        }
+      ],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24969,
+      "call_source_raw_line_sha256": "24cd45ee61328289d4aecc5a506e1b76778872ea38f7eef82c37edf43089c19d",
+      "call_timestamp": "2026-10-13T16:27:16.870Z",
+      "completion_source_raw_line_sha256": "6af6b2c7f149fe9ccf2098668016f85b0dd9f9a279f5ac1dabc01024a90e21ac",
+      "output_source_line": 24972,
+      "output_source_raw_line_sha256": "f273d5fc99a8be95dfe064425e680f55aff289f1faeac8445db80b4cb6aeadd7",
+      "output_timestamp": "2026-10-13T16:27:21.426Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258084,
+          "sha256": "c33c0b91c32bb2936d0288d155389b487864f8954d240d81cd5f71aeb4dd5706"
+        },
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 257908,
+          "sha256": "f84a3d475b24ba0e35980ee8c80b9ebd5fd396e558a43ce342cf0baa3988c2eb"
+        }
+      ],
+      "raw_output_nested_error": false
+    },
+    {
+      "call_id": "call_56df3e2810f340028191231463c45db5",
+      "completion_source_line": 24991,
+      "completion_timestamp": "2026-10-13T16:28:07.948Z",
+      "status": "completed",
+      "isError": false,
+      "nested_error": false,
+      "title": "关闭已完成验收的隔离原生实例",
+      "images_in_result": [],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24989,
+      "call_source_raw_line_sha256": "6641d2c155728b1ef25092ec95aedaaf3d485e466ff8db9bed0c1643e7d634a7",
+      "call_timestamp": "2026-10-13T16:28:06.946Z",
+      "completion_source_raw_line_sha256": "1bfa96236d25de8dc658167bf67b98cadf9d8f8409529b1a0fced75dd625fdf6",
+      "output_source_line": 24992,
+      "output_source_raw_line_sha256": "74bcf8d19236d5dfc5b4d25e33bcd567d6496f9e7c894ff3090dc69c74da1ad4",
+      "output_timestamp": "2026-10-13T16:28:07.969Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [],
+      "raw_output_nested_error": false
+    }
+  ],
+  "excluded": [
+    {
+      "call_id": "call_356df76c511d4ae7bf7cdc3d74794316",
+      "completion_source_line": 24701,
+      "completion_timestamp": "2026-10-13T16:09:25.841Z",
+      "status": "failed",
+      "isError": true,
+      "nested_error": true,
+      "title": "激活原生验收应用并重新绑定可操作窗口",
+      "images_in_result": [],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": true,
+      "call_source_line": 24700,
+      "call_source_raw_line_sha256": "ef1e9b1940683a88d3378398b678dc5269ff80d423150f75ba7c4bb5bd5ee827",
+      "call_timestamp": "2026-10-13T16:09:25.765Z",
+      "completion_source_raw_line_sha256": "65aa77bdc8bd87097f7085b3a48a7adeb26f5bba10a16622cafb233597f1e62c",
+      "output_source_line": 24703,
+      "output_source_raw_line_sha256": "a01ab29779c7343a15bed638cb9481a63037a14dbc5d4ea14c12dc0bb7f45237",
+      "output_timestamp": "2026-10-13T16:09:25.917Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [],
+      "raw_output_nested_error": false,
+      "excluded_reason": "Call did not complete successfully; never count it as accepted UI/foreground/cleanup proof"
+    },
+    {
+      "call_id": "call_de24f5aa96014b95bac95d2b6e130612",
+      "completion_source_line": 24845,
+      "completion_timestamp": "2026-10-13T16:23:02.585Z",
+      "status": "failed",
+      "isError": true,
+      "nested_error": true,
+      "title": "关闭已保存的正式验收实例",
+      "images_in_result": [],
+      "pre_cutoff_binding_exception": false,
+      "pre_cutoff_failed_exception": false,
+      "call_source_line": 24843,
+      "call_source_raw_line_sha256": "757207fbb2660be850529a3cb01b32e7082fb83c0bf4ee4085bc7ff2bb629627",
+      "call_timestamp": "2026-10-13T16:23:01.325Z",
+      "completion_source_raw_line_sha256": "e65234c7f13f74d9b1c102959407a778a28d5f3afe206520505a62095f75983f",
+      "output_source_line": 24846,
+      "output_source_raw_line_sha256": "bf67c4b08ea6030cd867f6017954bb588b196d8713c40b2717be0699810d5fb0",
+      "output_timestamp": "2026-10-13T16:23:02.591Z",
+      "call_and_completion_arguments_equal": true,
+      "raw_function_output_present": true,
+      "raw_output_images": [],
+      "raw_output_nested_error": false,
+      "excluded_reason": "Call did not complete successfully; never count it as accepted UI/foreground/cleanup proof"
+    }
+  ],
+  "incomplete": [],
+  "screenshot_bindings": [
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/private-path-set.jpg",
+      "relative_path": "ui/private-path-set.jpg",
+      "call_id": "call_164233a4a44442068389a5c419731b53",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/private-path-set.jpg",
+        "exists": true,
+        "bytes": 222165,
+        "sha256": "e63529dbb6dbb8b12f5bf686a1128904f26f4ad548c3d29efacdba14dc440ea2"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 222165,
+          "sha256": "e63529dbb6dbb8b12f5bf686a1128904f26f4ad548c3d29efacdba14dc440ea2"
+        }
+      ],
+      "raw_output_source_line": 24769,
+      "raw_output_source_line_sha256": "951a22d5441938d430b62d3de5c38e1fd2f7ad42cb81962cf903053413b101fe"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/before-tabs-saved.jpg",
+      "relative_path": "ui/before-tabs-saved.jpg",
+      "call_id": "call_69bfa74be8a041429b43718708226f07",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/before-tabs-saved.jpg",
+        "exists": true,
+        "bytes": 209433,
+        "sha256": "9722480749c05e7905258173f115612420f0bc50f5d3df2d118c9d2ec024927b"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 209433,
+          "sha256": "9722480749c05e7905258173f115612420f0bc50f5d3df2d118c9d2ec024927b"
+        }
+      ],
+      "raw_output_source_line": 24776,
+      "raw_output_source_line_sha256": "beb390174999a0b7265c1fa12de5949ce8309a6863fe0607a908d0cc4f72833b"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/native-shape-live.jpg",
+      "relative_path": "ui/native-shape-live.jpg",
+      "call_id": "call_34de7b5d283f47f390ea5fdebe314c57",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/native-shape-live.jpg",
+        "exists": true,
+        "bytes": 225130,
+        "sha256": "4cc3d2eae79f04bb173fb069acf6d6ac70a232b2770c89ea9b3abdd9bf38898e"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 225130,
+          "sha256": "4cc3d2eae79f04bb173fb069acf6d6ac70a232b2770c89ea9b3abdd9bf38898e"
+        }
+      ],
+      "raw_output_source_line": 24807,
+      "raw_output_source_line_sha256": "7ef4700b6359c0e6cf8e1e3ffdc72d5d51b18cfe639bc6e253f633cd85a0a4e7"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/native-profile-live.jpg",
+      "relative_path": "ui/native-profile-live.jpg",
+      "call_id": "call_f788dc510f034f7f9023c9c61c01bdbc",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/native-profile-live.jpg",
+        "exists": true,
+        "bytes": 209002,
+        "sha256": "3e55a3b681789df34d9f84ad27f81c0eccfc2dddd2715572c474f600e49e5d1a"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 209002,
+          "sha256": "3e55a3b681789df34d9f84ad27f81c0eccfc2dddd2715572c474f600e49e5d1a"
+        }
+      ],
+      "raw_output_source_line": 24812,
+      "raw_output_source_line_sha256": "9024e8fd8e4e9bc8d0379db8e9b2b729ef48b995296e8d7a3d9c50b945f9a893"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/after-tabs-saved.jpg",
+      "relative_path": "ui/after-tabs-saved.jpg",
+      "call_id": "call_f788dc510f034f7f9023c9c61c01bdbc",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/ui/after-tabs-saved.jpg",
+        "exists": true,
+        "bytes": 209338,
+        "sha256": "0f03ea46f85376d06b76febd17d9a0532ed7e7089ad41ff58bcaee91b69cced9"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 209338,
+          "sha256": "0f03ea46f85376d06b76febd17d9a0532ed7e7089ad41ff58bcaee91b69cced9"
+        }
+      ],
+      "raw_output_source_line": 24812,
+      "raw_output_source_line_sha256": "9024e8fd8e4e9bc8d0379db8e9b2b729ef48b995296e8d7a3d9c50b945f9a893"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/initial.jpg",
+      "relative_path": "isolated/initial.jpg",
+      "call_id": "call_e325d704333d482a88bba3476dbb5c19",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/initial.jpg",
+        "exists": true,
+        "bytes": 220720,
+        "sha256": "79a5f4968b4e4526385259be6f261c4fe94ad00218aba0445598db0c94900467"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 220720,
+          "sha256": "79a5f4968b4e4526385259be6f261c4fe94ad00218aba0445598db0c94900467"
+        }
+      ],
+      "raw_output_source_line": 24868,
+      "raw_output_source_line_sha256": "cac06306c5b5deb10de47a2e1382e00dd69c7d833c049ccfb435f0d31bd2db93"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-missing.jpg",
+      "relative_path": "isolated/a-missing.jpg",
+      "call_id": "call_d0199bb89c6e45c0be945b8cfa2f9ac0",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-missing.jpg",
+        "exists": true,
+        "bytes": 282508,
+        "sha256": "4297b90b6f9e91cc84e8b5d4e3031e48fa963bfb8737e17a503b4e50463e78eb"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 282508,
+          "sha256": "4297b90b6f9e91cc84e8b5d4e3031e48fa963bfb8737e17a503b4e50463e78eb"
+        }
+      ],
+      "raw_output_source_line": 24873,
+      "raw_output_source_line_sha256": "4a7214cf69958a711ca0c327e2a4a659bc737b9d96c4a0c0b13b44af0dfeb942"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-same-path-recovered.jpg",
+      "relative_path": "isolated/a-same-path-recovered.jpg",
+      "call_id": "call_e869697eda984c878b9ee0b88a9e2aae",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-same-path-recovered.jpg",
+        "exists": true,
+        "bytes": 258904,
+        "sha256": "8e8906e16b0e4c0cdbc4104b574b4cb527a275be8f3811831652f5ae83a1b4a9"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258904,
+          "sha256": "8e8906e16b0e4c0cdbc4104b574b4cb527a275be8f3811831652f5ae83a1b4a9"
+        }
+      ],
+      "raw_output_source_line": 24883,
+      "raw_output_source_line_sha256": "c075ca7759883d3ce7dbfe99145dcff65d0809f01263c384773f32df163f96f9"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-saved.jpg",
+      "relative_path": "isolated/a-saved.jpg",
+      "call_id": "call_a2816031ddbe48c58be0bccf3dde3bb2",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-saved.jpg",
+        "exists": true,
+        "bytes": 256086,
+        "sha256": "190854ed7087a387d9629dc1008d29fc641bcd09b4986596bcfafcb9b2aac62b"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 256086,
+          "sha256": "190854ed7087a387d9629dc1008d29fc641bcd09b4986596bcfafcb9b2aac62b"
+        }
+      ],
+      "raw_output_source_line": 24890,
+      "raw_output_source_line_sha256": "6610852b214b30cd8744fac5bb81d0e2be417fc5a8641b7e8b98c9b730e92965"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-missing-again.jpg",
+      "relative_path": "isolated/a-missing-again.jpg",
+      "call_id": "call_f8c4a486e2664545910f0a03b2ec1a8a",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-missing-again.jpg",
+        "exists": true,
+        "bytes": 282494,
+        "sha256": "347937c64fbb5a6556bbc002d3c9385ec85364748f927056dd0ba993c186b537"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 282494,
+          "sha256": "347937c64fbb5a6556bbc002d3c9385ec85364748f927056dd0ba993c186b537"
+        }
+      ],
+      "raw_output_source_line": 24910,
+      "raw_output_source_line_sha256": "3af2d2322020c17f4425028fabf3db9dd58399dc5f7bbb2ab43a892f7d294f94"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/b-other-path-recovered.jpg",
+      "relative_path": "isolated/b-other-path-recovered.jpg",
+      "call_id": "call_473d43047b6e4d89a0cc8afd8118aaa0",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/b-other-path-recovered.jpg",
+        "exists": true,
+        "bytes": 258885,
+        "sha256": "01ea20cb68a4a8e5d96c7462a210e594d7acdd5f1019e4c15c16b662faa4763e"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258885,
+          "sha256": "01ea20cb68a4a8e5d96c7462a210e594d7acdd5f1019e4c15c16b662faa4763e"
+        }
+      ],
+      "raw_output_source_line": 24915,
+      "raw_output_source_line_sha256": "42ae26effcfc7e2d51c1ce6ced909b636426bfe86d0ec8adbdc961d61133f76c"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/b-saved.jpg",
+      "relative_path": "isolated/b-saved.jpg",
+      "call_id": "call_e7b5fcd20f2d48c2bed8a70a8d77680a",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/b-saved.jpg",
+        "exists": true,
+        "bytes": 256111,
+        "sha256": "aa3c74d1b3548bd2e2215aca1b671d67fde4050ef72c0eaff76cd97735c6ce3d"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 256111,
+          "sha256": "aa3c74d1b3548bd2e2215aca1b671d67fde4050ef72c0eaff76cd97735c6ce3d"
+        }
+      ],
+      "raw_output_source_line": 24920,
+      "raw_output_source_line_sha256": "b4853d5ca453005f1466c63522badc7d5300b2bfb78f3831b91e78d8d3d999aa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/b-saved-reopened.jpg",
+      "relative_path": "isolated/b-saved-reopened.jpg",
+      "call_id": "call_e7b5fcd20f2d48c2bed8a70a8d77680a",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/b-saved-reopened.jpg",
+        "exists": true,
+        "bytes": 259019,
+        "sha256": "688e1876113f0def8c4590178b8b56de68c291f90924f1500e30491cc3e6d7e1"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 259019,
+          "sha256": "688e1876113f0def8c4590178b8b56de68c291f90924f1500e30491cc3e6d7e1"
+        }
+      ],
+      "raw_output_source_line": 24920,
+      "raw_output_source_line_sha256": "b4853d5ca453005f1466c63522badc7d5300b2bfb78f3831b91e78d8d3d999aa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/b-reloaded-saved.jpg",
+      "relative_path": "isolated/b-reloaded-saved.jpg",
+      "call_id": "call_30ee3a3d2b0d4d6aa5f3a00974623e8a",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/b-reloaded-saved.jpg",
+        "exists": true,
+        "bytes": 256115,
+        "sha256": "187a238ec3b168362dad30e4d3133e032bcddd83aa2d1c22a8bde1b49a211254"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 256115,
+          "sha256": "187a238ec3b168362dad30e4d3133e032bcddd83aa2d1c22a8bde1b49a211254"
+        }
+      ],
+      "raw_output_source_line": 24925,
+      "raw_output_source_line_sha256": "1f65426c25c744d3e50efbb7b7a00eea7ce52431cdcdb94a6e9f566d85a0902b"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-01.jpg",
+      "relative_path": "isolated/sequence-01.jpg",
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "kind": "Eight-iteration awaited screenshot/write loop; metadata path validated",
+      "capture_requested_utc": "2026-10-13T16:25:59.426Z",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-01.jpg",
+        "exists": true,
+        "bytes": 258424,
+        "sha256": "767fb7905112f8b2801e668571eb3be98a997a85c46c168b4a7b215455559f44"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258424,
+          "sha256": "767fb7905112f8b2801e668571eb3be98a997a85c46c168b4a7b215455559f44"
+        }
+      ],
+      "raw_output_source_line": 24938,
+      "raw_output_source_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-02.jpg",
+      "relative_path": "isolated/sequence-02.jpg",
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "kind": "Eight-iteration awaited screenshot/write loop; metadata path validated",
+      "capture_requested_utc": "2026-10-13T16:25:59.921Z",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-02.jpg",
+        "exists": true,
+        "bytes": 258456,
+        "sha256": "3fe417a35e7490b7a6e0c7ee5b65a4bb14aa2ac7854f6e5bfca1adf87ba8eb0c"
+      },
+      "emitted_image_full_byte_binding": false,
+      "matching_raw_output_images": [],
+      "raw_output_source_line": 24938,
+      "raw_output_source_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-03.jpg",
+      "relative_path": "isolated/sequence-03.jpg",
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "kind": "Eight-iteration awaited screenshot/write loop; metadata path validated",
+      "capture_requested_utc": "2026-10-13T16:26:00.397Z",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-03.jpg",
+        "exists": true,
+        "bytes": 258359,
+        "sha256": "c9cd21ca915b8ae4abeba2e0e542aa3708df590970c1bd1b0d636f0a84a2bdba"
+      },
+      "emitted_image_full_byte_binding": false,
+      "matching_raw_output_images": [],
+      "raw_output_source_line": 24938,
+      "raw_output_source_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-04.jpg",
+      "relative_path": "isolated/sequence-04.jpg",
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "kind": "Eight-iteration awaited screenshot/write loop; metadata path validated",
+      "capture_requested_utc": "2026-10-13T16:26:00.863Z",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-04.jpg",
+        "exists": true,
+        "bytes": 258489,
+        "sha256": "5374eaba4438982b423638ff6dea3867933d80392d5c12e4f774a5d27e39b4d5"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258489,
+          "sha256": "5374eaba4438982b423638ff6dea3867933d80392d5c12e4f774a5d27e39b4d5"
+        }
+      ],
+      "raw_output_source_line": 24938,
+      "raw_output_source_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-05.jpg",
+      "relative_path": "isolated/sequence-05.jpg",
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "kind": "Eight-iteration awaited screenshot/write loop; metadata path validated",
+      "capture_requested_utc": "2026-10-13T16:26:01.341Z",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-05.jpg",
+        "exists": true,
+        "bytes": 258497,
+        "sha256": "e42eb0686cb3afa0d82c72a4eb7eb0d2ecf3cb892364e48059b5eb902d1c03bf"
+      },
+      "emitted_image_full_byte_binding": false,
+      "matching_raw_output_images": [],
+      "raw_output_source_line": 24938,
+      "raw_output_source_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-06.jpg",
+      "relative_path": "isolated/sequence-06.jpg",
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "kind": "Eight-iteration awaited screenshot/write loop; metadata path validated",
+      "capture_requested_utc": "2026-10-13T16:26:01.800Z",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-06.jpg",
+        "exists": true,
+        "bytes": 258701,
+        "sha256": "5d759764708d87727a88705fa3b89e6457212d2c1eb0b1f194ce519bef1a349d"
+      },
+      "emitted_image_full_byte_binding": false,
+      "matching_raw_output_images": [],
+      "raw_output_source_line": 24938,
+      "raw_output_source_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-07.jpg",
+      "relative_path": "isolated/sequence-07.jpg",
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "kind": "Eight-iteration awaited screenshot/write loop; metadata path validated",
+      "capture_requested_utc": "2026-10-13T16:26:02.272Z",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-07.jpg",
+        "exists": true,
+        "bytes": 259079,
+        "sha256": "0a06cc8338056613cf9f167d77f34a21c743f7696623bab1def18a80d7bb52ac"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 259079,
+          "sha256": "0a06cc8338056613cf9f167d77f34a21c743f7696623bab1def18a80d7bb52ac"
+        }
+      ],
+      "raw_output_source_line": 24938,
+      "raw_output_source_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-08.jpg",
+      "relative_path": "isolated/sequence-08.jpg",
+      "call_id": "call_ea02f77d0171492ca4df2175598c60c8",
+      "kind": "Eight-iteration awaited screenshot/write loop; metadata path validated",
+      "capture_requested_utc": "2026-10-13T16:26:02.753Z",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-08.jpg",
+        "exists": true,
+        "bytes": 259088,
+        "sha256": "65d1989545f74c3d69388ebbc9d3df9f852c5ce55779f0bf8cd2584a87a4a742"
+      },
+      "emitted_image_full_byte_binding": false,
+      "matching_raw_output_images": [],
+      "raw_output_source_line": 24938,
+      "raw_output_source_line_sha256": "56b225ee9566f8131ea3d5c6cfbaa40ad7c4be08fc7d5b4f6906f4cde199a5fa"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-completed-turn.jpg",
+      "relative_path": "isolated/sequence-completed-turn.jpg",
+      "call_id": "call_014ce5c7283743cba0342b9901edae9b",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-completed-turn.jpg",
+        "exists": true,
+        "bytes": 258673,
+        "sha256": "1282185d15ef589cd99c3c88b8acb937a151eec760feb87a9c8797bc667de482"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258673,
+          "sha256": "1282185d15ef589cd99c3c88b8acb937a151eec760feb87a9c8797bc667de482"
+        }
+      ],
+      "raw_output_source_line": 24953,
+      "raw_output_source_line_sha256": "9f23ab92282b074fe9cfcb6126980e64c81eba52c7737a12b11eaba2d2065fb0"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/interaction-before.jpg",
+      "relative_path": "isolated/interaction-before.jpg",
+      "call_id": "call_014ce5c7283743cba0342b9901edae9b",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/interaction-before.jpg",
+        "exists": true,
+        "bytes": 258151,
+        "sha256": "834cd0441d305a4e5b1c46275617de16dc469bb781b3c52333e7039279c9bc79"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258151,
+          "sha256": "834cd0441d305a4e5b1c46275617de16dc469bb781b3c52333e7039279c9bc79"
+        }
+      ],
+      "raw_output_source_line": 24953,
+      "raw_output_source_line_sha256": "9f23ab92282b074fe9cfcb6126980e64c81eba52c7737a12b11eaba2d2065fb0"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/interaction-active.jpg",
+      "relative_path": "isolated/interaction-active.jpg",
+      "call_id": "call_dc497fa1e4184f629010f3fd67d8d423",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/interaction-active.jpg",
+        "exists": true,
+        "bytes": 237163,
+        "sha256": "31e996f0079d94d0c71760e4fd7db81ad3586e3c2a66e22f3b62fa2d198fd98c"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 237163,
+          "sha256": "31e996f0079d94d0c71760e4fd7db81ad3586e3c2a66e22f3b62fa2d198fd98c"
+        }
+      ],
+      "raw_output_source_line": 24962,
+      "raw_output_source_line_sha256": "fdd718ffde12a29c80651d95a3b2d01c6649b7dc27122416c10f9d5149b66a8b"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/interaction-restored.jpg",
+      "relative_path": "isolated/interaction-restored.jpg",
+      "call_id": "call_d1497ac7d1f44bab95696a70d82395a3",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/interaction-restored.jpg",
+        "exists": true,
+        "bytes": 258084,
+        "sha256": "c33c0b91c32bb2936d0288d155389b487864f8954d240d81cd5f71aeb4dd5706"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 258084,
+          "sha256": "c33c0b91c32bb2936d0288d155389b487864f8954d240d81cd5f71aeb4dd5706"
+        }
+      ],
+      "raw_output_source_line": 24972,
+      "raw_output_source_line_sha256": "f273d5fc99a8be95dfe064425e680f55aff289f1faeac8445db80b4cb6aeadd7"
+    },
+    {
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/interaction-after-saved.jpg",
+      "relative_path": "isolated/interaction-after-saved.jpg",
+      "call_id": "call_d1497ac7d1f44bab95696a70d82395a3",
+      "kind": "Awaited screenshot variable then awaited exact-path write; completed isError=false",
+      "file_identity": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/interaction-after-saved.jpg",
+        "exists": true,
+        "bytes": 257908,
+        "sha256": "f84a3d475b24ba0e35980ee8c80b9ebd5fd396e558a43ce342cf0baa3988c2eb"
+      },
+      "emitted_image_full_byte_binding": true,
+      "matching_raw_output_images": [
+        {
+          "format": "input_image data URL",
+          "mime": "image/jpeg",
+          "complete_decodable_base64": true,
+          "bytes": 257908,
+          "sha256": "f84a3d475b24ba0e35980ee8c80b9ebd5fd396e558a43ce342cf0baa3988c2eb"
+        }
+      ],
+      "raw_output_source_line": 24972,
+      "raw_output_source_line_sha256": "f273d5fc99a8be95dfe064425e680f55aff289f1faeac8445db80b4cb6aeadd7"
+    }
+  ],
+  "offline_visual_observations": {
+    "isolated/a-missing.jpg": "Revision 1, jaw 0.61; Load error, 0 meshes/skins/joints/morphs/players; private same.glb Path not found; character absent",
+    "isolated/a-same-path-recovered.jpg": "Revision 1, jaw 0.61; Ready with visible character; Document opened; missing error cleared",
+    "isolated/a-missing-again.jpg": "Revision 1, jaw 0.61; private same.glb Path not found again; character absent and counters zero",
+    "isolated/b-other-path-recovered.jpg": "Revision 1, jaw 0.61/nose 0.27; Ready with visible character; Document opened",
+    "isolated/b-saved-reopened.jpg": "Revision 1, jaw 0.61/nose 0.27; Ready character; Document opened after B saved and actual Open",
+    "isolated/sequence-01.jpg": "idle at 0.913 seconds; real character visible",
+    "isolated/sequence-07.jpg": "wave at 3.7831 seconds; raised arm visible",
+    "isolated/sequence-completed-turn.jpg": "turn at 9.0 seconds, Replay button; turned character; completed endpoint",
+    "isolated/interaction-before.jpg": "Play button, paused idle cursor 2.2 seconds",
+    "isolated/interaction-active.jpg": "Raised arm temporary wave; cursor 2.2 seconds; controls disabled; Wave interaction sequence cursor held; authored Active label remains idle",
+    "isolated/interaction-restored.jpg": "Play button, idle cursor 2.2 seconds, controls enabled; prior pose restored",
+    "isolated/interaction-after-saved.jpg": "Restored paused idle 2.2 seconds and Document saved; Revision 1 retained"
+  },
+  "screenshot_binding_counts": {
+    "total": 27,
+    "exact_decoded_raw_output_byte_hash_matches": 22,
+    "awaited_write_without_emitted_image": 5
+  },
+  "assets_and_receipts": {
+    "isolated/launch-receipt.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/launch-receipt.json",
+      "exists": true,
+      "bytes": 578,
+      "sha256": "a864c8d1340413ce0d0d0c7d9f83a96fe6fb7d0f30343620f7f47adb094b6d9c"
+    },
+    "isolated/preparation.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/preparation.json",
+      "exists": true,
+      "bytes": 607,
+      "sha256": "e9e97a9ac5b309d4f0366ca8f6513c2bf9efe8b4ac2bebf7456afbec05f3b5fd"
+    },
+    "isolated/a-restored-file.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-restored-file.json",
+      "exists": true,
+      "bytes": 393,
+      "sha256": "41d9234ac368f3b91d8e89bb377446e4cbf9b7951cd142ce2fbbb20acce2b252"
+    },
+    "isolated/a-removed-file.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/a-removed-file.json",
+      "exists": true,
+      "bytes": 500,
+      "sha256": "ac33cb2bb69d38cd1df34fc85c943f5b8f7f12596504b3b5d2a0c6e6f33682eb"
+    },
+    "isolated/sequence-samples.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/sequence-samples.json",
+      "exists": true,
+      "bytes": 1539,
+      "sha256": "15fb4dd4ac840412636e862a175133627be9d1e2b9f818319118202008d598b0"
+    },
+    "isolated/formal-close-receipt.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/formal-close-receipt.json",
+      "exists": true,
+      "bytes": 276,
+      "sha256": "75bc08a2bb6ae3eeee0abe720008e59fc897ac1825417c11f6660d0ac5631ccd"
+    },
+    "cleanup-receipt.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/cleanup-receipt.json",
+      "exists": true,
+      "bytes": 341,
+      "sha256": "e405bdda6dcea7ace04367f4925957ff7870f0623792e643c8469fcc5a959546"
+    },
+    "native-checkpoint.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/native-checkpoint.json",
+      "exists": true,
+      "bytes": 4217,
+      "sha256": "89e5d18606b03a708e8edf17c5f4a0a6b485746dd5866997eb70465cc64343d1"
+    },
+    "review/native-tabs-evidence-manifest.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/review/native-tabs-evidence-manifest.json",
+      "exists": true,
+      "bytes": 12459,
+      "sha256": "358ecdb2d323581ae01c6072a017a4a535e7d08931fe1fae434f5356e45d6a44"
+    },
+    "contracts/native-recovery-same.nvwa.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-recovery-same.nvwa.json",
+      "exists": true,
+      "bytes": 1951,
+      "sha256": "07af143ac16171ba6223fe46707f892f5c13bc8bb9fbefd8c886f8be3786077b"
+    },
+    "contracts/native-recovery-other.nvwa.json": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-recovery-other.nvwa.json",
+      "exists": true,
+      "bytes": 1953,
+      "sha256": "f503cdabc5fa7cc5ec7c254bb88ed4bb114682a440591135323afde134c8e39b"
+    },
+    "isolated/Nvwa.app/Contents/MacOS/Nvwa": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/Nvwa.app/Contents/MacOS/Nvwa",
+      "exists": true,
+      "bytes": 103023040,
+      "sha256": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a"
+    },
+    "isolated/Nvwa.app/Contents/Resources/assets/fixtures/native-recovery-same.glb.held": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/Nvwa.app/Contents/Resources/assets/fixtures/native-recovery-same.glb.held",
+      "exists": false
+    },
+    "isolated/Nvwa.app/Contents/Resources/assets/fixtures/native-recovery-other.glb": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/Nvwa.app/Contents/Resources/assets/fixtures/native-recovery-other.glb",
+      "exists": true,
+      "bytes": 3827840,
+      "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+    }
+  },
+  "isolated_process_binding": {
+    "getApp_call_id": "call_204d79adfdea4e70a4ff5061fe26f07e",
+    "exact_bundle_argument": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/Nvwa.app",
+    "launch_receipt": {
+      "utc": "2026-10-13T16:23:35.625952+00:00",
+      "exact_binary": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/Nvwa.app/Contents/MacOS/Nvwa",
+      "ps_identity": "98713 Tue Oct 13 09:23:17 2026     /Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/isolated/Nvwa.app/Contents/MacOS/Nvwa",
+      "binary_sha256": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a",
+      "launch_adapter": "cua.getApp exact isolated bundle",
+      "source_head": "9df6d3a05296bed1b876edb81a7562ddfe98da83"
+    },
+    "binary_hash_independently_matches": true,
+    "scope": "Completed exact-bundle Cua binding plus root kernel ps receipt; worker did not launch or re-query a live process"
+  },
+  "whole_doc_comparisons": {
+    "four_actual_outputs_pass": true,
+    "independent_receipt": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/review/native-whole-doc-independent-comparisons.json",
+      "exists": true,
+      "bytes": 5777,
+      "sha256": "fbe0a94edcca7a54db7203de42ecf2aa045a06323a13e58a1311f2f6a13fe547"
+    },
+    "B_saved_reloaded_after_interaction_byte_equal": true,
+    "B_sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+    "tabs_before_after_bytes_equal": true,
+    "tabs_sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+  },
+  "source_binding_limits": [
+    "Nested screenshot base64 in item_completed results contains ellipsis. Corresponding raw function_call_output input_image data URLs are complete and decoded/hashes matched to original JPEGs wherever emitted. Unemitted loop samples rely on the exact bounded awaited screenshot/write code and validated sample-path metadata.",
+    "Only the bounded allowed Cua records are copied. Private asset copy/rename, ps/binary identity and cleanup are root filesystem receipts; underlying non-Cua tools are deliberately not imported into this trace.",
+    "Before-cutoff formal exact-path getApp bindings are included by explicit root exception; formal kernel/PID and close verification remain root-owned receipts.",
+    "Sampled idle/wave/turn and before/active/restored screenshots establish observed states, not every frame, timing/performance, global tasks, bytes or GPU lifetimes.",
+    "Authoritative success excludes failed optional launch_app and failed formal close+AX composite calls. A failed composite may contain a side effect; it is not credited as successful closure or foreground proof.",
+    "Historical pre-human pending checkpoint, prior tabs-only manifest and earlier NOT-RUN comparator probes are preserved, not rewritten as later acceptance results."
+  ],
+  "worker_scope": "CPU/filesystem extraction, independent whole-Doc comparison and offline image inspection only. No source/Git/external/UI/GPU/Cargo changes or comparator/control modifications.",
+  "cleanup_owner": "root; selected successful close call is not independently treated as process-exit proof"
+}

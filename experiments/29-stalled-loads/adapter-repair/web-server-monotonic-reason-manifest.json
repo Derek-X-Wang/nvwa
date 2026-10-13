@@ -1,0 +1,628 @@
+{
+  "scope": "R2 monotonic failure; actual production loop and direct HTTP controls; no browser/application acceptance",
+  "final_source_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+  "previous_nine_receipt_cohort_manifest_sha256": "df97a6eda28e0f4c44e86793683861dfdbb909d189dae160063a577711692d9e",
+  "previous_nine_receipts_preserved": {
+    "reason-pre-fix-red-budget.receipt.json": {
+      "scope": "direct HTTP termination reason control; no quit command was sent",
+      "script_sha256": "0b6632d45f473ec51bfedecebd8b8209e3d551c9b35b24b4eda2e06ae4a536e5",
+      "exit_code": 0,
+      "cleanup": {
+        "accepted": 129,
+        "active_connections": 0,
+        "asset_gets": {},
+        "closed": 129,
+        "elapsed_seconds": 0.0421,
+        "event": "cleanup",
+        "held_bodies": 0,
+        "reason": "stdin quit",
+        "response_threads": 0,
+        "work_gets": {}
+      },
+      "expected_reason": "connection budget exhausted",
+      "expected_exit_code": 2
+    },
+    "reason-exception-pre-red-exception.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "0b6632d45f473ec51bfedecebd8b8209e3d551c9b35b24b4eda2e06ae4a536e5",
+      "mode": "exception",
+      "duration_seconds": 0.012407957983668894,
+      "exit_code": 1,
+      "cleanup": {
+        "accepted": 0,
+        "active_connections": 0,
+        "asset_gets": {},
+        "closed": 0,
+        "elapsed_seconds": 0.0002,
+        "event": "cleanup",
+        "held_bodies": 0,
+        "reason": "overall watchdog",
+        "response_threads": 0,
+        "work_gets": {}
+      },
+      "expected_reason": "exception",
+      "expected_status": "unavailable"
+    },
+    "reason-stdin-pre-red-stdin-overflow.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "0b6632d45f473ec51bfedecebd8b8209e3d551c9b35b24b4eda2e06ae4a536e5",
+      "mode": "stdin-overflow",
+      "duration_seconds": 0.07421937497565523,
+      "exit_code": 0,
+      "cleanup": {
+        "accepted": 0,
+        "active_connections": 0,
+        "asset_gets": {},
+        "closed": 0,
+        "elapsed_seconds": 0.0026,
+        "event": "cleanup",
+        "held_bodies": 0,
+        "reason": "stdin quit",
+        "response_threads": 0,
+        "work_gets": {}
+      },
+      "expected_reason": "stdin input budget exhausted",
+      "expected_status": "invalid"
+    },
+    "reason-final-green-v2-budget.receipt.json": {
+      "scope": "direct HTTP termination reason control; no quit command was sent",
+      "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 129,
+        "active_connections": 0,
+        "asset_gets": {},
+        "case_status": "invalid",
+        "closed": 129,
+        "elapsed_seconds": 0.0423,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "connection budget exhausted"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "connection budget exhausted",
+        "response_threads": 0,
+        "work_gets": {}
+      },
+      "expected_reason": "connection budget exhausted",
+      "expected_exit_code": 2
+    },
+    "reason-final-exception.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+      "mode": "exception",
+      "duration_seconds": 0.008168917032890022,
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 0,
+        "active_connections": 0,
+        "asset_gets": {},
+        "case_status": "unavailable",
+        "closed": 0,
+        "elapsed_seconds": 0.0002,
+        "event": "cleanup",
+        "exception": {
+          "message": "bounded direct-CPU exception control",
+          "type": "RuntimeError"
+        },
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "exception"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "exception",
+        "response_threads": 0,
+        "work_gets": {}
+      },
+      "expected_reason": "exception",
+      "expected_status": "unavailable"
+    },
+    "reason-final-stdin-overflow.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+      "mode": "stdin-overflow",
+      "duration_seconds": 0.06801716599147767,
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 0,
+        "active_connections": 0,
+        "asset_gets": {},
+        "case_status": "invalid",
+        "closed": 0,
+        "elapsed_seconds": 0.0107,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "stdin input budget exhausted"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "stdin input budget exhausted",
+        "response_threads": 0,
+        "work_gets": {}
+      },
+      "expected_reason": "stdin input budget exhausted",
+      "expected_status": "invalid"
+    },
+    "reason-final-fifth.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+      "mode": "fifth",
+      "duration_seconds": 0.0803935420117341,
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 5,
+        "active_connections": 0,
+        "asset_gets": {
+          "01": 1,
+          "02": 1,
+          "03": 1,
+          "04": 1,
+          "05": 1
+        },
+        "case_status": "invalid",
+        "closed": 5,
+        "elapsed_seconds": 0.0259,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "unexpected asset while four held"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "stdin quit",
+        "response_threads": 0,
+        "work_gets": {}
+      },
+      "expected_reason": "stdin quit",
+      "expected_status": "invalid"
+    },
+    "reason-final-watchdog.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+      "mode": "watchdog",
+      "duration_seconds": 1.1256159170297906,
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 1,
+        "active_connections": 0,
+        "asset_gets": {
+          "01": 1
+        },
+        "case_status": "unavailable",
+        "closed": 1,
+        "elapsed_seconds": 1.0469,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "automatic hold release",
+          "overall watchdog"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "overall watchdog",
+        "response_threads": 0,
+        "work_gets": {}
+      },
+      "expected_reason": "overall watchdog",
+      "expected_status": "unavailable"
+    },
+    "web-server-reason-final-normal-control-smoke.receipt.json": {
+      "scope": "synthetic direct HTTP controls; no browser/product acceptance",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/experiments/29-stalled-loads/web_stall_server.py",
+        "--root",
+        "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen-web-baseline",
+        "--work",
+        "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/inputs/canonical-work.nvwa.json",
+        "--fixture",
+        "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/assets/fixtures/nvwa-humanoid.glb",
+        "--log",
+        "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/web-server-reason-final-normal-control-smoke.jsonl",
+        "--hold-seconds",
+        "5",
+        "--watchdog-seconds",
+        "12"
+      ],
+      "duration_seconds": 0.44071220798650756,
+      "work_variants_exact": 12,
+      "full_fixture_transfers": 5,
+      "fixture_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "cleanup": {
+        "accepted": 17,
+        "active_connections": 0,
+        "asset_gets": {
+          "01": 1,
+          "02": 1,
+          "03": 1,
+          "04": 1,
+          "12": 1
+        },
+        "case_status": "ended",
+        "closed": 17,
+        "elapsed_seconds": 0.3729,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [],
+        "product_bound_claim_allowed": true,
+        "reason": "stdin quit",
+        "response_threads": 0,
+        "work_gets": {
+          "01": 1,
+          "02": 1,
+          "03": 1,
+          "04": 1,
+          "05": 1,
+          "06": 1,
+          "07": 1,
+          "08": 1,
+          "09": 1,
+          "10": 1,
+          "11": 1,
+          "12": 1
+        }
+      },
+      "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08"
+    }
+  },
+  "new_cohort": {
+    "late-exception-pre-red.receipt.json": {
+      "scope": "actual Case.run and real stdin quit; bounded injected later service failure; no app/browser",
+      "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+      "exit_code": 0,
+      "duration_seconds": 0.009300666977651417,
+      "cleanup": {
+        "accepted": 0,
+        "active_connections": 0,
+        "asset_gets": {},
+        "case_status": "ended",
+        "closed": 0,
+        "elapsed_seconds": 0.0003,
+        "event": "cleanup",
+        "exception": {
+          "message": "bounded service exception after real stdin quit",
+          "type": "RuntimeError"
+        },
+        "held_bodies": 0,
+        "invalid_reasons": [],
+        "product_bound_claim_allowed": true,
+        "reason": "stdin quit",
+        "response_threads": 0,
+        "work_gets": {}
+      }
+    },
+    "late-exception-final-green.receipt.json": {
+      "scope": "actual Case.run and real stdin quit; bounded injected later service failure; no app/browser",
+      "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+      "exit_code": 2,
+      "duration_seconds": 0.004886166017968208,
+      "cleanup": {
+        "accepted": 0,
+        "active_connections": 0,
+        "asset_gets": {},
+        "case_status": "unavailable",
+        "closed": 0,
+        "elapsed_seconds": 0.0003,
+        "event": "cleanup",
+        "exception": {
+          "message": "bounded service exception after real stdin quit",
+          "type": "RuntimeError"
+        },
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "exception"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "stdin quit",
+        "response_threads": 0,
+        "secondary_termination_reasons": [
+          "exception"
+        ],
+        "work_gets": {}
+      }
+    },
+    "monotonic-final-green-budget.receipt.json": {
+      "scope": "direct HTTP termination reason control; no quit command was sent",
+      "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 129,
+        "active_connections": 0,
+        "asset_gets": {},
+        "case_status": "invalid",
+        "closed": 129,
+        "elapsed_seconds": 0.0386,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "connection budget exhausted"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "connection budget exhausted",
+        "response_threads": 0,
+        "secondary_termination_reasons": [],
+        "work_gets": {}
+      },
+      "expected_reason": "connection budget exhausted",
+      "expected_exit_code": 2
+    },
+    "monotonic-final-exception.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+      "mode": "exception",
+      "duration_seconds": 0.0072145420126616955,
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 0,
+        "active_connections": 0,
+        "asset_gets": {},
+        "case_status": "unavailable",
+        "closed": 0,
+        "elapsed_seconds": 0.0003,
+        "event": "cleanup",
+        "exception": {
+          "message": "bounded direct-CPU exception control",
+          "type": "RuntimeError"
+        },
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "exception"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "exception",
+        "response_threads": 0,
+        "secondary_termination_reasons": [],
+        "work_gets": {}
+      },
+      "expected_reason": "exception",
+      "expected_status": "unavailable"
+    },
+    "monotonic-final-stdin-overflow.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+      "mode": "stdin-overflow",
+      "duration_seconds": 0.06471362500451505,
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 0,
+        "active_connections": 0,
+        "asset_gets": {},
+        "case_status": "invalid",
+        "closed": 0,
+        "elapsed_seconds": 0.0054,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "stdin input budget exhausted"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "stdin input budget exhausted",
+        "response_threads": 0,
+        "secondary_termination_reasons": [],
+        "work_gets": {}
+      },
+      "expected_reason": "stdin input budget exhausted",
+      "expected_status": "invalid"
+    },
+    "monotonic-final-fifth.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+      "mode": "fifth",
+      "duration_seconds": 0.09549533296376467,
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 5,
+        "active_connections": 0,
+        "asset_gets": {
+          "01": 1,
+          "02": 1,
+          "03": 1,
+          "04": 1,
+          "05": 1
+        },
+        "case_status": "invalid",
+        "closed": 5,
+        "elapsed_seconds": 0.0387,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "unexpected asset while four held"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "stdin quit",
+        "response_threads": 0,
+        "secondary_termination_reasons": [],
+        "work_gets": {}
+      },
+      "expected_reason": "stdin quit",
+      "expected_status": "invalid"
+    },
+    "monotonic-final-watchdog.receipt.json": {
+      "scope": "CPU/direct HTTP reason controls only; no browser",
+      "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+      "mode": "watchdog",
+      "duration_seconds": 1.0983952090027742,
+      "exit_code": 2,
+      "cleanup": {
+        "accepted": 1,
+        "active_connections": 0,
+        "asset_gets": {
+          "01": 1
+        },
+        "case_status": "unavailable",
+        "closed": 1,
+        "elapsed_seconds": 1.0227,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [
+          "automatic hold release",
+          "overall watchdog"
+        ],
+        "product_bound_claim_allowed": false,
+        "reason": "overall watchdog",
+        "response_threads": 0,
+        "secondary_termination_reasons": [],
+        "work_gets": {}
+      },
+      "expected_reason": "overall watchdog",
+      "expected_status": "unavailable"
+    },
+    "web-server-monotonic-final-normal-control-smoke.receipt.json": {
+      "scope": "synthetic direct HTTP controls; no browser/product acceptance",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/experiments/29-stalled-loads/web_stall_server.py",
+        "--root",
+        "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen-web-baseline",
+        "--work",
+        "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/inputs/canonical-work.nvwa.json",
+        "--fixture",
+        "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/assets/fixtures/nvwa-humanoid.glb",
+        "--log",
+        "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/web-server-monotonic-final-normal-control-smoke.jsonl",
+        "--hold-seconds",
+        "5",
+        "--watchdog-seconds",
+        "12"
+      ],
+      "duration_seconds": 0.4439687079866417,
+      "work_variants_exact": 12,
+      "full_fixture_transfers": 5,
+      "fixture_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "cleanup": {
+        "accepted": 17,
+        "active_connections": 0,
+        "asset_gets": {
+          "01": 1,
+          "02": 1,
+          "03": 1,
+          "04": 1,
+          "12": 1
+        },
+        "case_status": "ended",
+        "closed": 17,
+        "elapsed_seconds": 0.3837,
+        "event": "cleanup",
+        "exception": null,
+        "held_bodies": 0,
+        "invalid_reasons": [],
+        "product_bound_claim_allowed": true,
+        "reason": "stdin quit",
+        "response_threads": 0,
+        "secondary_termination_reasons": [],
+        "work_gets": {
+          "01": 1,
+          "02": 1,
+          "03": 1,
+          "04": 1,
+          "05": 1,
+          "06": 1,
+          "07": 1,
+          "08": 1,
+          "09": 1,
+          "10": 1,
+          "11": 1,
+          "12": 1
+        }
+      },
+      "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7"
+    },
+    "monotonic-method-family.receipt.json": {
+      "scope": "six exact production-method state transitions; socket-free",
+      "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+      "tests": [
+        {
+          "first": "ended",
+          "second": "invalid",
+          "status": "invalid",
+          "primary": "first-ended",
+          "secondary": [
+            "second-invalid"
+          ],
+          "invalid_reasons": [
+            "second-invalid"
+          ]
+        },
+        {
+          "first": "ended",
+          "second": "unavailable",
+          "status": "unavailable",
+          "primary": "first-ended",
+          "secondary": [
+            "second-unavailable"
+          ],
+          "invalid_reasons": [
+            "second-unavailable"
+          ]
+        },
+        {
+          "first": "invalid",
+          "second": "ended",
+          "status": "invalid",
+          "primary": "first-invalid",
+          "secondary": [
+            "second-ended"
+          ],
+          "invalid_reasons": [
+            "first-invalid"
+          ]
+        },
+        {
+          "first": "unavailable",
+          "second": "ended",
+          "status": "unavailable",
+          "primary": "first-unavailable",
+          "secondary": [
+            "second-ended"
+          ],
+          "invalid_reasons": [
+            "first-unavailable"
+          ]
+        },
+        {
+          "first": "invalid",
+          "second": "unavailable",
+          "status": "unavailable",
+          "primary": "first-invalid",
+          "secondary": [
+            "second-unavailable"
+          ],
+          "invalid_reasons": [
+            "first-invalid",
+            "second-unavailable"
+          ]
+        },
+        {
+          "first": "unavailable",
+          "second": "invalid",
+          "status": "unavailable",
+          "primary": "first-unavailable",
+          "secondary": [
+            "second-invalid"
+          ],
+          "invalid_reasons": [
+            "first-unavailable",
+            "second-invalid"
+          ]
+        }
+      ]
+    }
+  },
+  "accepted_runtime_sources_unchanged": true,
+  "9204": "bind free",
+  "owned_server_processes": [],
+  "limitations": [
+    "late service fault injected into actual selector batch after real stdin quit",
+    "watchdogs loop-driven; blocked logging not tested",
+    "no real browser or final Web product case",
+    "actual 90/120-second dwell not run"
+  ]
+}

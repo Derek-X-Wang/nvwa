@@ -1,0 +1,35 @@
+{
+  "source_sha256": "4a86cf2b43824171e2baa3c562d1d7f108555fe370f01df4ccf4241f18c12fbf",
+  "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+  "real_processes_launched_or_signaled": false,
+  "ps_failure": {
+    "injected_returncode": 2,
+    "result": "exit_verified",
+    "observations": [
+      {
+        "boundary": "target_exit_verified_before_cleanup",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 359588509298875,
+        "wall_time_ns": 1791882483888490000,
+        "pid": 2147483646
+      }
+    ]
+  },
+  "partial_marker": {
+    "returncode": 1,
+    "receipt": {
+      "status": "blocked",
+      "error": "JSONDecodeError('Expecting value: line 1 column 13 (char 12)')",
+      "observations": [
+        {
+          "boundary": "guard_blocked_exception_no_further_signals",
+          "clock": "host_time_monotonic_ns",
+          "monotonic_ns": 359588518162333,
+          "wall_time_ns": 1791882483897353000,
+          "error_type": "JSONDecodeError"
+        }
+      ]
+    }
+  },
+  "supersedes": "repair-review-1.json partial marker test did not exercise JSON parsing because shell Python lacked hashlib.file_digest; source also changed during that prior attempt. This fixed-source test uses pinned interpreter."
+}

@@ -1,0 +1,23 @@
+{
+  "status": "ACCEPT",
+  "scope": "Targeted independent P2 signed-zero comparator repair rereview; private CPU only",
+  "findings": [],
+  "fixed_helper_sha256": "35d67a4088dd63b3c2f9fa020c98a8b50c5a9b85a665745fc645dfe4a323ba4e",
+  "preserved_helper_sha256": "e9463f7b9fa87e8be23956db25156f5873d18da6b48996f5cb7c15cc90c52e6c",
+  "preserved_original_controls_sha256": "8139f9001bb85020e02f1672f7206c28ebc638602a7234e5f65c37a0ba5cf76d",
+  "v2_controls_sha256": "c705efe5f87fe5ac4380df4c30047dc5da5afab440098f43b74c8aeb60644dc9",
+  "evidence": "Independently repeated original helper and fixed helper against identical cbc89ea474f02ffa585c54d00b126f34f8dea1953e6511a7968e875a8b5d3385 input: original exit0/PASS, fixed exit2/FAIL with exactly /character/parameters/smile binary32 00000000 -> 80000000.",
+  "additional_cli_controls": "Repeated negative-zero decimal reject, positive integer zero accept, same-binary32 decimal accept, different-binary32 reject; all expected results.",
+  "preservation": "Original helper and both original24-control receipts retain claimed hashes. First24 control records in v2 equal original records exactly; total29 all pass in saved receipt.",
+  "ordinary_integer_types": {
+    "integer": "int",
+    "zero": "int",
+    "negative": "int",
+    "signed_zero": "Decimal"
+  },
+  "strictness": "Code diff leaves whole-document key/array/type comparisons, exact binary32 conversion, finite/duplicate checks, size bounds and receipt guards unchanged. Only lexical -0 preservation and added actual CLI controls/timeout handling added. No epsilon introduced.",
+  "actual_gui_output": "Independently called fixed comparator with native-other-reloaded-saved.nvwa.json: absent, exit2/FAIL/execution NOT-RUN, no invented actual hash.",
+  "details": "signed-zero-rereview-controls.json",
+  "native_boundary": "Human contrast remains pending per dispatch. No native responsiveness/recovery/animation/GUI result inferred; PID90585 not touched.",
+  "writes": "Only review/signed-zero-rereview-controls.json and review/signed-zero-rereview.json; no contract, product or external mutation."
+}

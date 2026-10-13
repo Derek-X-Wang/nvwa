@@ -153,6 +153,10 @@ impl EditorLayout {
 }
 
 #[cfg(test)]
+#[path = "editor_layout_paint_tests.rs"]
+mod paint_tests;
+
+#[cfg(test)]
 mod tests {
     use super::*;
     use nvwa_core::{Command, SceneDocument};
@@ -192,21 +196,23 @@ mod tests {
         editor
     }
 
-    struct StudioHarness {
-        ctx: egui::Context,
+    pub(super) struct StudioHarness {
+        pub(super) ctx: egui::Context,
         size: egui::Vec2,
-        editor: EditorState,
+        pub(super) editor: EditorState,
+        pub(super) time: Option<f64>,
         state: crate::StudioUi,
         playback: crate::Playback,
         io: crate::PlatformIo,
         guard: crate::UiInputGuard,
     }
     impl StudioHarness {
-        fn new(size: egui::Vec2) -> Self {
+        pub(super) fn new(size: egui::Vec2) -> Self {
             Self {
                 ctx: default(),
                 size,
                 editor: editor_with_both_history_directions(),
+                time: None,
                 state: default(),
                 playback: crate::Playback {
                     clip_id: "idle".into(),
@@ -216,11 +222,12 @@ mod tests {
                 guard: default(),
             }
         }
-        fn frame(&mut self, events: Vec<egui::Event>) -> egui::FullOutput {
+        pub(super) fn frame(&mut self, events: Vec<egui::Event>) -> egui::FullOutput {
             self.ctx.run_ui(
                 egui::RawInput {
                     screen_rect: Some(egui::Rect::from_min_size(egui::Pos2::ZERO, self.size)),
                     events,
+                    time: self.time,
                     ..default()
                 },
                 |ui| {
@@ -243,7 +250,7 @@ mod tests {
                 },
             )
         }
-        fn click(&mut self, position: egui::Pos2) {
+        pub(super) fn click(&mut self, position: egui::Pos2) {
             self.frame(vec![
                 egui::Event::PointerMoved(position),
                 pointer(position, true),
@@ -277,7 +284,7 @@ mod tests {
             panic!("actual control was not reached by keyboard focus traversal: {position:?}");
         }
     }
-    fn pointer(pos: egui::Pos2, pressed: bool) -> egui::Event {
+    pub(super) fn pointer(pos: egui::Pos2, pressed: bool) -> egui::Event {
         egui::Event::PointerButton {
             pos,
             button: egui::PointerButton::Primary,

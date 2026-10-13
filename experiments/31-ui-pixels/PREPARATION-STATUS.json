@@ -1,0 +1,18 @@
+{
+  "rust_compilation": "PASS after retained API failure and experiment-only repair",
+  "renderer": "NOT-RUN: held by root after two native visual failures",
+  "actual_positive_pixels": "NOT-RUN",
+  "actual_paint_mutant_negative_control": "NOT-RUN",
+  "python_ast_syntax": "PASS",
+  "missing_capture_control": {
+    "command": "python3 -B experiments/31-ui-pixels/verify_pixels.py experiments/31-ui-pixels/NOT-CREATED.png --case normal-profile",
+    "exit_code": 1,
+    "pass": false,
+    "meaning": "The checker rejects an absent actual capture. This is no renderer or pixel evidence."
+  },
+  "created_processes_remaining": [],
+  "created_apps": [],
+  "created_tabs": [],
+  "gpu_ui_lease": "returned to root after native runs; pixel app unlaunched",
+  "frozen_binary_sha256": "504c4bb90125b103df0d4d49148d0597226790ad9a18e9f663f8107b3e1e55fd"
+}

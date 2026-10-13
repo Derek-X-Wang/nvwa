@@ -1,0 +1,23 @@
+{
+  "scope": "Direct exact-source terminate method only; no Case constructor, socket, server, or event loop started",
+  "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+  "calls": [
+    [
+      "stdin quit",
+      "ended"
+    ],
+    [
+      "exception",
+      "unavailable"
+    ]
+  ],
+  "termination_reason": "stdin quit",
+  "case_status": "ended",
+  "invalid_reasons": [],
+  "exception": {
+    "type": "RuntimeError",
+    "message": "same selector batch after quit"
+  },
+  "cleanup_product_bound_claim_allowed": true,
+  "run_return_formula": 0
+}

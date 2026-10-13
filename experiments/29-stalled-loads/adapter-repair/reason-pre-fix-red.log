@@ -1,0 +1,24 @@
+{
+  "scope": "direct HTTP termination reason control; no quit command was sent",
+  "script_sha256": "0b6632d45f473ec51bfedecebd8b8209e3d551c9b35b24b4eda2e06ae4a536e5",
+  "exit_code": 0,
+  "cleanup": {
+    "accepted": 129,
+    "active_connections": 0,
+    "asset_gets": {},
+    "closed": 129,
+    "elapsed_seconds": 0.0421,
+    "event": "cleanup",
+    "held_bodies": 0,
+    "reason": "stdin quit",
+    "response_threads": 0,
+    "work_gets": {}
+  },
+  "expected_reason": "connection budget exhausted",
+  "expected_exit_code": 2
+}
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/web_server_reason_controls.py", line 23, in <module>
+    assert cleanup['reason']=='connection budget exhausted' and process.returncode==2
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

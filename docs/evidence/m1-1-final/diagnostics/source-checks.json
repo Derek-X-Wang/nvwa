@@ -1,0 +1,102 @@
+{
+  "workspace_CI_declared": true,
+  "diagnostics_CI_declared": true,
+  "studio_editor_module_declared": true,
+  "paint_module_cfg_test_declared": true,
+  "runtime_loading_cfg_test_declared": true,
+  "runtime_http_module_declared": true,
+  "python_source_test_counts": {
+    "experiments/20-scale-boundary/test_geometry.py": 15,
+    "experiments/22-fixed-css-dpr/test_controls.py": 26,
+    "experiments/23-ime-event-provenance/test_checker.py": 20,
+    "experiments/24-http-cold-startup/test_boundary.py": 11
+  },
+  "python_executed_counts": [
+    15,
+    26,
+    20,
+    11
+  ],
+  "node_executed_test_count": 5,
+  "collector_controls_executed": 2,
+  "paint_source_tests": [
+    "actual_selected_tab_paint_matches_literal_click_sequence",
+    "empty_paint_output_is_rejected",
+    "missing_tab_label_is_rejected",
+    "missing_tab_background_is_rejected",
+    "duplicate_tab_label_is_rejected",
+    "duplicate_tab_background_is_rejected"
+  ],
+  "loading_source_tests": [
+    "one_retrieval_supplies_hash_scene_skin_morphs_and_animations",
+    "wrong_profile_then_correct_profile_at_same_path_requires_fresh_retrieval",
+    "corrupt_and_missing_sources_recover_on_same_path_work_open",
+    "ready_character_replaced_by_corrupt_bytes_is_not_exposed",
+    "matching_hash_glb_with_gltf_parse_error_surfaces_and_recovers",
+    "switching_to_a_new_asset_path_retrieves_it_once",
+    "asynchronous_io_failure_cannot_reuse_verified_scene_and_recovers",
+    "same_path_overlapping_opens_a_first_never_publish_a_to_current_work",
+    "same_path_overlapping_opens_attempt_b_first_fences_stale_scene_mesh_animation",
+    "long_lived_ready_reader_failure_preserves_specific_error_until_recovery",
+    "pending_different_path_recovers_while_old_source_stays_held",
+    "superseded_reader_failure_unblocks_latest_same_path_open",
+    "pending_same_path_opens_coalesce_to_latest_profile",
+    "ready_scene_is_retired_immediately_before_same_path_pending_open",
+    "stalled_distinct_paths_keep_at_most_four_admitted_roots",
+    "capacity_wait_preserves_latest_same_path_error_and_late_failures_cannot_clear_it",
+    "full_distinct_path_budget_shows_wait_and_timeout_until_capacity_releases",
+    "loopback_http_stalled_distinct_paths_bound_admission_and_recover_latest"
+  ],
+  "protected_tracked_changed_vs_HEAD": [],
+  "historical_frozen_manifest": "docs/evidence/m1-1-ui/build/build-inputs-final-after.json",
+  "historical_manifest_current_source_mismatches": [
+    {
+      "file": "crates/nvwa-runtime/src/lib.rs",
+      "expected": "bd6da4b2212a6bec251ad8ae4ca7b8fbca1038b383a6031cec1b9c0fa1b8ce72",
+      "actual": "548e40cc7c60b6f26f214c58e8520a67477d2965de151ae04689532b21aeba73"
+    },
+    {
+      "file": "crates/nvwa-runtime/src/loading_tests.rs",
+      "expected": "9fec6b200db271117b26db45eef2758820f644a8bbc7ef4e74de4d8cc9a8c26a",
+      "actual": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804"
+    },
+    {
+      "file": "crates/nvwa-studio/src/editor_layout.rs",
+      "expected": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c",
+      "actual": "923332b75506952c05cc2fe4a1d84ff78d4be0ba8d0f2f98d94a30c0d09025ae"
+    }
+  ],
+  "historical_manifest_rebaselined": false,
+  "runtime_29_final_source_identity_matches": {
+    "crates/nvwa-runtime/src/lib.rs": true,
+    "crates/nvwa-runtime/src/loading_tests.rs": true,
+    "crates/nvwa-runtime/src/stalled_http_tests.rs": true
+  },
+  "cargo_execution": "NOT-RUN dispatch prohibits Cargo; sole build writer owned by startup worker",
+  "hosted_CI": "NOT-RUN",
+  "build": "NOT-RUN",
+  "renderer_UI": "NOT-RUN",
+  "archive_package_checks": "NOT-RUN require historical frozen build bytes and private observer package; no live-source rebaseline",
+  "diagnostic_selector_environment": {
+    "CHECKER_PATH": null,
+    "NVWA_GEOMETRY_CAPTURE": null
+  },
+  "current_branch": "codex/m11-ui-paint-permanent",
+  "head": "045d8abc685760d09ba05afec0e40a811a282d1f",
+  "current_python": "Python 3.14.7",
+  "current_node": "v25.8.2",
+  "diagnostic_inputs_sha256": {
+    "experiments/20-scale-boundary/check.py": "29d0cbf274c7b262503deeef6167ecb8dffe61a99dc5e25e75b27cc58f3d9aa5",
+    "experiments/22-fixed-css-dpr/check.py": "bda9cfcc4eaf40eccbe1ed68820b5f84e962e062bf719c267a3ff5fa1e5ffd23",
+    "experiments/22-fixed-css-dpr/collector.js": "8cd6a3c9fc19878acdc06f5d520c49864c7cf046c6d998f0ada71dce65802477",
+    "experiments/23-ime-event-provenance/check.py": "8b47b47a9409c83d6fcb170d0fff715475769df3b7d86f32d4fb0fa636f9d4ca",
+    "experiments/23-ime-event-provenance/collector.js": "d7d19b5fb5737022038bd360d7798e4c51656c809d2604ddc460ed0a728fca4b",
+    "experiments/23-ime-event-provenance/prepare.py": "3324696705722e568f4218f0fe15a058702aa2a0cd2469ef3aea01d60bdb401f",
+    "docs/evidence/input-scale/observed/chrome-tab-return-scale.json": "139e7e7328085c87e736ad0e87918c586d82f7f2f9e320ec9abc28386469283d",
+    "docs/evidence/viewport/viewport-base.nvwa.json": "99092aea82ed536b30e88b7c7277da2b915655d328df12d81775457e733f57f4",
+    "docs/evidence/viewport/viewport-drag.nvwa.json": "2af0636e21de7625fd9680daf411cfdcfd2639741aa909ca4153af67e69ea82e",
+    "docs/evidence/viewport/viewport-undo.nvwa.json": "613acb175f7b00d5df8e0f09544fbb49e8e7f1462c89987ad4ce70e9c830b119",
+    "docs/evidence/m1-1-ui/build/build-inputs-final-after.json": "657c09cf61029446b0a790966c612a45a2cfb1a1376a54f33ad7ffbebd9fefff",
+    "experiments/24-http-cold-startup/fixtures/actual-startup-1.json": "910a187106b0a8058c6403b1eec190d794beeda8bb884704e353cd948f4cd8c3"
+  }
+}

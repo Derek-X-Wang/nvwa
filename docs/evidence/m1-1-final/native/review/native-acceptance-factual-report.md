@@ -1,0 +1,13 @@
+# Bounded native acceptance evidence
+
+VERIFIED — 22 successful exact Cua js calls, 2 failed calls explicitly excluded, 0 incomplete bindings. The private raw archives preserve the selected original call/completion records and corresponding output records byte for byte, with source line and raw-line hashes. No broad transcript or non-Cua tools were copied.
+
+Offline originals show A missing private GLB → same-path Open Ready → A missing again with old character absent → B different-path Open Ready. Four actual complete Work outputs pass independent unchanged strict comparator checks against A/B, including profile metadata, revision 1, all parameters and full timeline. B Save, reloaded Save and post-interaction Save are byte-identical, SHA-256 3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55. Tabs before/after remain byte-identical ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445.
+
+Sampled sequence images show idle 0.913, wave 3.7831 and turned/completed endpoint 9.0. Interaction images show paused idle 2.2 → temporary raised-arm wave with held 2.2 cursor/disabled controls → restored paused idle 2.2/enabled controls; post-interaction Save preserves the entire B Doc. The active authored timeline label remains idle during the temporary wave, as expected for the held sequence. These are sampled functional observations, not continuous-frame or performance proof.
+
+The completed exact private-bundle getApp call and root launch receipt bind isolated PID 98713/birth 09:23:17 to the hash-verified 72d3 binary. Private B and held A fixture hashes are retained. Root owns kernel/process and cleanup confirmation; worker did not replay GUI or inspect live processes.
+
+Provenance: item_completed nested image fragments contain ellipsis, but matching raw function_call_output records preserve complete input_image data URLs. 22 of 27 screenshot files exactly match decoded raw-output byte hashes. The remaining 5 unemitted sequence samples bind through the bounded awaited capture/write loop and validated metadata. All originals are separately hashed and all successful call/output pairs match. Failed launch_app and formal close-plus-AX calls are preserved separately and excluded from accepted UI/foreground/closure proof. Root must preserve existing kernel launch/close and asset-operation receipts when curating. Old pending checkpoint and tabs-only manifest remain unchanged.
+
+Private deliverables: native-cua-exact-records.jsonl, native-cua-exact-outputs.jsonl, native-cua-excluded-failed.jsonl, native-acceptance-provenance-manifest.json and native-whole-doc-independent-comparisons.json. No signing, publishing, native HTTP storm, byte/task/GPU cap, IME/drag retest or source-cause attribution is claimed.

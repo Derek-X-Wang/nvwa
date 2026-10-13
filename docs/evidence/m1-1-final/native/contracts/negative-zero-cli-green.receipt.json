@@ -1,0 +1,33 @@
+{
+  "status": "FAIL",
+  "scope": "Whole-Doc file comparison only; native GUI behavior not established",
+  "manifest_sha256": "5219a5f85f6dd4cbd1774d9bef04b1e9bb24209c1f0034a9af99c2d859e34550",
+  "expected": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-recovery-other.nvwa.json",
+    "sha256": "f503cdabc5fa7cc5ec7c254bb88ed4bb114682a440591135323afde134c8e39b",
+    "bytes": 1953
+  },
+  "actual": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/cli-controls/negative-zero-int.nvwa.json",
+    "sha256": "cbc89ea474f02ffa585c54d00b126f34f8dea1953e6511a7968e875a8b5d3385",
+    "bytes": 1952
+  },
+  "equal": false,
+  "difference_count": 1,
+  "differences": [
+    {
+      "pointer": "/character/parameters/smile",
+      "reason": "binary32 differs: expected 0x00000000, actual 0x80000000",
+      "expected": {
+        "type": "number",
+        "decimal": "0.0"
+      },
+      "actual": {
+        "type": "number",
+        "decimal": "-0"
+      }
+    }
+  ],
+  "differences_truncated": false,
+  "comparator_sha256": "35d67a4088dd63b3c2f9fa020c98a8b50c5a9b85a665745fc645dfe4a323ba4e"
+}

@@ -1,0 +1,211 @@
+{
+  "decision": "static source and headless lifecycle controls acceptable for root freeze gate; not renderer acceptance",
+  "hashes": {
+    "sample_owned_pid.py": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda",
+    "bundle_launcher.py": "d26780c09dc00bb01b30c05b2dcdb741faf344eb43142182d49124f0d0831f40",
+    "prepare_bundles.py": "cc82825bd7e76031ce185ffa4c9abfaaf9f77798151474aaa9e645ec4cb19fb0",
+    "web_control_server.py": "c95860d289873a05847b99ee227bbd2639a07607e7e95d4317dcae20ffa8b63e",
+    "lifecycle_controls.py": "bb38a987111dbc0324ced9dae5343a1eaf0c9dad65ac398b86faff238806bfc7",
+    "LIFECYCLE-CONTROLS.json": "120c5242ea12e2e1e9b973b7df7680959f7d68eb0f2c88adfb8328e2356857e5"
+  },
+  "freeze_input_count": 42,
+  "freeze_mismatches": [],
+  "root_approved": false,
+  "lifecycle_review_accepted": false,
+  "frozen_binaries": {
+    "startup_binary": {
+      "exists": true,
+      "expected": "6a49bc165991bc6353f69074e225a8b9644aa86154f48df7055f793ef0a3605f",
+      "actual": "6a49bc165991bc6353f69074e225a8b9644aa86154f48df7055f793ef0a3605f"
+    },
+    "pixel_binary": {
+      "exists": true,
+      "expected": "504c4bb90125b103df0d4d49148d0597226790ad9a18e9f663f8107b3e1e55fd",
+      "actual": "504c4bb90125b103df0d4d49148d0597226790ad9a18e9f663f8107b3e1e55fd"
+    }
+  },
+  "independent_classification_controls": {
+    "exit2": {
+      "state": "unknown",
+      "reason": "ps_error_or_empty_output",
+      "returncode": 2,
+      "stderr": "failure"
+    },
+    "timeout": {
+      "state": "unknown",
+      "reason": "TimeoutExpired",
+      "error": "TimeoutExpired('ps', 0.3)"
+    },
+    "stop_unknown": {
+      "status": "blocked",
+      "rows": [
+        {
+          "boundary": "cleanup_blocked_inspection_unknown",
+          "clock": "host_time_monotonic_ns",
+          "monotonic_ns": 360747451524708,
+          "wall_time_ns": 1791883642836010000,
+          "pid": 2147483646,
+          "inspection": {
+            "state": "unknown",
+            "reason": "review injected"
+          }
+        }
+      ]
+    }
+  },
+  "raw_controls": [
+    {
+      "case": "ordinary-real-exit",
+      "raw_status": "exit_verified",
+      "dummy_exit_code": 0,
+      "guard_returncode": 0,
+      "elapsed_observation_seconds": 0.231724042,
+      "raw_receipt_sha256": "ba63db383db652e3ad8f6a9fcbd8117a671be4d961d0e868d939f6c7f414ce33",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "target_exit_verified"
+      ]
+    },
+    {
+      "case": "native-no-marker",
+      "raw_status": "exit_verified",
+      "dummy_exit_code": -15,
+      "guard_returncode": 0,
+      "elapsed_observation_seconds": 0.478124792,
+      "raw_receipt_sha256": "f9f36d011f0b3b70cb5c6e1c0b980db0dfc29abf83eef2bf6b73ebb5296af840",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "rss_sample",
+        "rss_sample",
+        "rss_sample",
+        "rss_sample",
+        "owned_run_deadline_reached",
+        "SIGTERM_sent_after_exact_frozen_identity_check",
+        "target_exit_verified_after_SIGTERM"
+      ]
+    },
+    {
+      "case": "pixel-pre-schedule-stall",
+      "raw_status": "exit_verified",
+      "dummy_exit_code": -15,
+      "guard_returncode": 0,
+      "elapsed_observation_seconds": 0.470797792,
+      "raw_receipt_sha256": "41da8587a78fc419baee89bbb26e2eb922561b66a74a9ab10a567adb51a77651",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "owned_run_deadline_reached",
+        "SIGTERM_sent_after_exact_frozen_identity_check",
+        "target_exit_verified_after_SIGTERM"
+      ]
+    },
+    {
+      "case": "native-no-marker-ignore-term",
+      "raw_status": "exit_verified",
+      "dummy_exit_code": -9,
+      "guard_returncode": 0,
+      "elapsed_observation_seconds": 0.75253075,
+      "raw_receipt_sha256": "358184a6812bc46f0b88dbf418626954d71b9ed3dcdc4c174e2cff84f6dc56a1",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "rss_sample",
+        "rss_sample",
+        "rss_sample",
+        "rss_sample",
+        "owned_run_deadline_reached",
+        "SIGTERM_sent_after_exact_frozen_identity_check",
+        "SIGKILL_sent_after_exact_frozen_identity_check",
+        "target_exit_verified_after_SIGKILL"
+      ]
+    },
+    {
+      "case": "partial-marker-guard-continues",
+      "raw_status": "exit_verified",
+      "dummy_exit_code": -15,
+      "guard_returncode": 0,
+      "elapsed_observation_seconds": 0.479134833,
+      "raw_receipt_sha256": "3d9b734b3f7f853dafa69e153ed307e85fe9283255f5e8abd35cd20b84b954b9",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "rss_sample",
+        "rss_sample",
+        "rss_sample",
+        "rss_sample",
+        "owned_run_deadline_reached",
+        "SIGTERM_sent_after_exact_frozen_identity_check",
+        "target_exit_verified_after_SIGTERM"
+      ]
+    },
+    {
+      "case": "wrong-kernel-identity-no-signal",
+      "raw_status": "blocked",
+      "dummy_exit_code": -15,
+      "guard_returncode": 1,
+      "elapsed_observation_seconds": 0.469436792,
+      "raw_receipt_sha256": "3ab85116359c5612c930b7c346544e8654bb8e2ecbea4912b81a8655490306e0",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "guard_blocked_kernel_identity_changed",
+        "cleanup_blocked_identity_not_proven"
+      ]
+    },
+    {
+      "case": "inspection-failure-no-false-exit",
+      "raw_status": "blocked",
+      "dummy_exit_code": -15,
+      "guard_returncode": 1,
+      "elapsed_observation_seconds": 0.453989292,
+      "raw_receipt_sha256": "779e44b6e9a3a6cc334c32589ee6e8ad9611169ab29d6603a9f9f93ee7a02346",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "inspection_unknown_guard_continues_to_deadline",
+        "owned_run_deadline_reached",
+        "cleanup_blocked_inspection_unknown"
+      ]
+    },
+    {
+      "case": "inspection-timeout-no-false-exit",
+      "raw_status": "blocked",
+      "dummy_exit_code": -15,
+      "guard_returncode": 1,
+      "elapsed_observation_seconds": 0.553372583,
+      "raw_receipt_sha256": "9c087d786b54b1f01dbc61795843ae4ec83b024a3a77a7eb9c7eba32c659e907",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "inspection_unknown_guard_continues_to_deadline",
+        "owned_run_deadline_reached",
+        "cleanup_blocked_inspection_unknown"
+      ]
+    },
+    {
+      "case": "partial-profiler-inspection-fault",
+      "raw_status": "exit_verified",
+      "dummy_exit_code": -15,
+      "guard_returncode": 0,
+      "elapsed_observation_seconds": 0.50163875,
+      "raw_receipt_sha256": "e88a4601d20cce76f73b67ffb888dcb7987dac271075c337cd1e9fb78bf6561f",
+      "boundaries": [
+        "mandatory_external_guard_started",
+        "rss_sample",
+        "real_rust_startup_marker_verified",
+        "optional_profiler_error_guard_continues",
+        "rss_sample",
+        "rss_sample",
+        "rss_sample",
+        "owned_run_deadline_reached",
+        "SIGTERM_sent_after_exact_frozen_identity_check",
+        "target_exit_verified_after_SIGTERM",
+        "SIGTERM_sent_after_exact_frozen_identity_check",
+        "cleanup_blocked_after_signal",
+        "owned_profiler_waitpid_exit_verified",
+        "profiler_exit_observation"
+      ]
+    }
+  ],
+  "limits": [
+    "Headless controls call production run_guard directly with 0.35s deadline/0.2s grace; they do not exercise LaunchServices or launcher exec.",
+    "Failure/timeout runners replace the ps command with actual false or timed-out headless Python; native ps behavior itself is exercised in ordinary owned controls.",
+    "Profiler fault control uses owned sleep, not sample/vmmap; actual profiling permission and attachment remain unverified.",
+    "Actual default50s deadline and full helper teardown latency remain unmeasured.",
+    "Root approval and lifecycle review booleans are still false in freeze.json; no GPU grant, app, raster or Web run accepted."
+  ]
+}

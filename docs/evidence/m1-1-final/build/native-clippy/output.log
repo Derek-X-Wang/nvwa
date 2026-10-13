@@ -1,0 +1,65 @@
+    Checking nvwa-runtime v0.1.0 (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-runtime)
+    Checking nvwa-studio v0.1.0 (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio)
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/editor_layout_paint_tests.rs:167:13
+    |
+167 | /             if let egui::Shape::Text(text) = shape {
+168 | |                 if text.galley.job.text == label {
+169 | |                     labels.push(text.galley.rect.translate(text.pos.to_vec2()));
+170 | |                 }
+171 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+    = note: `-D clippy::collapsible-if` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::collapsible_if)]`
+help: collapse nested if block
+    |
+167 ~             if let egui::Shape::Text(text) = shape
+168 ~                 && text.galley.job.text == label {
+169 |                     labels.push(text.galley.rect.translate(text.pos.to_vec2()));
+170 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/editor_layout_paint_tests.rs:185:13
+    |
+185 | /             if let egui::Shape::Text(text) = shape {
+186 | |                 if text.galley.job.text == label {
+187 | |                     text_index = Some(index);
+188 | |                 }
+189 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+185 ~             if let egui::Shape::Text(text) = shape
+186 ~                 && text.galley.job.text == label {
+187 |                     text_index = Some(index);
+188 ~                 }
+    |
+
+error: this `if` statement can be collapsed
+   --> crates/nvwa-studio/src/editor_layout_paint_tests.rs:190:13
+    |
+190 | /             if let egui::Shape::Rect(rect) = shape {
+191 | |                 if rect.rect.intersects(text_rect) && clipped.clip_rect.contains_rect(text_rect) {
+192 | |                     assert!(
+193 | |                         nearby.len() < 64,
+...   |
+198 | |             }
+    | |_____________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.95.0/index.html#collapsible_if
+help: collapse nested if block
+    |
+190 ~             if let egui::Shape::Rect(rect) = shape
+191 ~                 && rect.rect.intersects(text_rect) && clipped.clip_rect.contains_rect(text_rect) {
+192 |                     assert!(
+...
+196 |                     nearby.push((index, rect.rect, rect.fill));
+197 ~                 }
+    |
+
+error: could not compile `nvwa-studio` (lib test) due to 3 previous errors

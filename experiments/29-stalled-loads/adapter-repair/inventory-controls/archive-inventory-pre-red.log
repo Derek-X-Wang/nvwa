@@ -1,0 +1,66 @@
+{
+  "scope": "actual bounded read-only checker CLI against mutated private index copies; no archive/source mutation by controls",
+  "checker_sha256": "0e6a8f6c4fcc23394700492dc83aa6e8d2edc6dc5f65dd39f16bfd210fec9401",
+  "control_count": 6,
+  "controls": [
+    {
+      "name": "missing-new-cohort",
+      "exit_code": 0,
+      "rejected": false,
+      "accepted_status": "PASS",
+      "accepted_record_count": 9,
+      "error_tail": []
+    },
+    {
+      "name": "missing-both-cohorts",
+      "exit_code": 0,
+      "rejected": false,
+      "accepted_status": "PASS",
+      "accepted_record_count": 0,
+      "error_tail": []
+    },
+    {
+      "name": "missing-one-receipt",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "ValueError: Nine repair records per cohort"
+      ]
+    },
+    {
+      "name": "missing-original-manifest-entry",
+      "exit_code": 0,
+      "rejected": false,
+      "accepted_status": "PASS",
+      "accepted_record_count": 18,
+      "error_tail": []
+    },
+    {
+      "name": "extra-cohort",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "KeyError: 'unexpected'"
+      ]
+    },
+    {
+      "name": "extra-original-manifest-entry",
+      "exit_code": 1,
+      "rejected": true,
+      "accepted_status": null,
+      "accepted_record_count": null,
+      "error_tail": [
+        "ValueError: Original repair manifest digest"
+      ]
+    }
+  ]
+}
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/archive_inventory_controls.py", line 23, in <module>
+    assert all(v['rejected'] for v in results), 'Omitted repair inventory was accepted'
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Omitted repair inventory was accepted

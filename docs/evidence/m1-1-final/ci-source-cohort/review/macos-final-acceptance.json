@@ -1,0 +1,88 @@
+{
+  "review": "Independent final PR41 hosted candidate CI acceptance",
+  "run_id": 38392776461,
+  "run_attempt": 1,
+  "event": "pull_request",
+  "head_sha": "9df6d3a05296bed1b876edb81a7562ddfe98da83",
+  "actual_checkout_merge_sha": "62cad072b5b4b3d2fbfa638b306da53bb2520641",
+  "merge_parents": [
+    "045d8abc685760d09ba05afec0e40a811a282d1f",
+    "9df6d3a05296bed1b876edb81a7562ddfe98da83"
+  ],
+  "head_and_merge_tree": "116e49cfc0019b084546dae7eafeb63a27802e88",
+  "identity_verification": "Independent current GitHub run/job/Git-commit APIs and actual raw checkout log; exact head/merge tree equality confirmed.",
+  "run_conclusion": "success",
+  "job_id": 115280404792,
+  "job_conclusion": "success",
+  "started_at": "2026-10-13T11:48:38Z",
+  "completed_at": "2026-10-13T12:18:25Z",
+  "duration_seconds": 1787,
+  "timeout_seconds": 2700,
+  "cpu_step_seconds": 1561,
+  "wasm_step_seconds": 205,
+  "compile_reported": {
+    "test": "23m 44s",
+    "native_check": "2m 14s",
+    "wasm_check": "3m 24s"
+  },
+  "runner": "macos-14-arm64",
+  "rust": "1.95.0-aarch64-apple-darwin",
+  "rust_tests": {
+    "passed": 113,
+    "named_ok": 113,
+    "unique_named_ok": 113,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 0,
+    "per_nonempty_suite": [
+      4,
+      2,
+      8,
+      13,
+      39,
+      47
+    ]
+  },
+  "permanent_paint_tests_passed": [
+    "editor_layout::paint_tests::duplicate_tab_label_is_rejected - should panic",
+    "editor_layout::paint_tests::duplicate_tab_background_is_rejected - should panic",
+    "editor_layout::paint_tests::empty_paint_output_is_rejected - should panic",
+    "editor_layout::paint_tests::missing_tab_label_is_rejected - should panic",
+    "editor_layout::paint_tests::missing_tab_background_is_rejected - should panic",
+    "editor_layout::paint_tests::actual_selected_tab_paint_matches_literal_click_sequence"
+  ],
+  "paint_scope": "CPU egui paint-output assertions: one positive sequence and five expected-panic rejection controls. Actual collection/execution confirmed; no GPU/raster/window evidence implied.",
+  "commands": [
+    "cargo test --workspace --locked",
+    "cargo check --workspace --locked",
+    "cargo check -p nvwa-studio --lib --target wasm32-unknown-unknown --locked"
+  ],
+  "profiles": {
+    "CARGO_BUILD_JOBS": 1,
+    "CARGO_INCREMENTAL": 0,
+    "CARGO_PROFILE_DEV_DEBUG": 0,
+    "CARGO_PROFILE_TEST_DEBUG": 0
+  },
+  "permissions": "Contents read; Metadata read; persist-credentials false; same pinned checkout and bounded two-job workflow as reviewed.",
+  "compiler_errors_or_warnings": [],
+  "annotations": [
+    {
+      "level": "notice",
+      "message": "Due to capacity constraints, jobs targeting macOS arm64 runners may experience longer queue times."
+    }
+  ],
+  "lock_evidence": "Successful --locked commands and successful before/after lock guard; no separately printed final hash.",
+  "sha256": {
+    "independent_api_raw_log": "fd3d73fe5d6b3c912943a757d0b1b5d48249266698567889da8a57a787592168",
+    "root_cli_decorated_job_log": "59523bb6f3ed012a81bada56addd392505ebed64d01ddfff18f55222d1249582"
+  },
+  "raw_format_note": "Root job log has gh CLI job/step prefixes and escaped color sequences; independent API log preserves API bytes. Different hashes represent different formats, not an identity mismatch.",
+  "findings": [],
+  "acceptance": "VERIFIED exact PR41 candidate hosted CPU/compile CI. Ubuntu prior 27 Rust plus 77 diagnostics/two collectors accepted independently. Rust counts overlap; do not sum Ubuntu subset as unique tests.",
+  "limits": [
+    "Separate from old final-main run38286368500.",
+    "One successful run within 45 minutes; no future timing or peak RAM/disk guarantee.",
+    "Native GUI remains blocked pending unlock; no physical first-frame, GPU, IME or browser Wasm execution acceptance."
+  ],
+  "execution": "Only read APIs/files and wrote private review receipt/raw log. No tests/builds/UI/GPU, retries, remote/Git writes or processes started."
+}

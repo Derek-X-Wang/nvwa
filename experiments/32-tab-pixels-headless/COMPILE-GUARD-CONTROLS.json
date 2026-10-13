@@ -1,0 +1,769 @@
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "case": "normal",
+      "expectedStatus": "PASS",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "0.05"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209352192,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367900345155791,
+        "wall_start_ns": 1791890795758155000,
+        "storage_samples": [
+          {
+            "elapsed_seconds": 0.007989042031113058,
+            "free_bytes": 57209339904
+          },
+          {
+            "elapsed_seconds": 0.047947750019375235,
+            "free_bytes": 57209331712
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "confirmed_absent"
+            },
+            "phase": "TERM"
+          }
+        ],
+        "abort": null,
+        "errors": [],
+        "cleanup": "exit_verified",
+        "owned_pid": 51554,
+        "owned_process_group": 51554,
+        "exit_code": 0,
+        "elapsed_seconds": 0.08584554202388972,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209331712,
+        "status": "PASS"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "storage-io-failure",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "10"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209327616,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367900431873416,
+        "wall_start_ns": 1791890795844873000,
+        "storage_samples": [],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "live",
+              "members": [
+                {
+                  "pid": 51555,
+                  "ppid": 51543,
+                  "pgid": 51555,
+                  "kernel_start": "Tue Oct 13 04:26:35 2026",
+                  "binary": "/bin/sleep"
+                }
+              ]
+            },
+            "phase": "TERM"
+          },
+          {
+            "signalSent": "TERM",
+            "ownedGroup": 51555,
+            "registeredMembers": [
+              {
+                "pid": 51555,
+                "ppid": 51543,
+                "pgid": 51555,
+                "kernel_start": "Tue Oct 13 04:26:35 2026",
+                "binary": "/bin/sleep",
+                "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+              }
+            ]
+          }
+        ],
+        "abort": null,
+        "errors": [
+          "OSError('injected post-Popen storage inspection failure matching root red')"
+        ],
+        "cleanup": "exit_verified",
+        "owned_pid": 51555,
+        "owned_process_group": 51555,
+        "exit_code": -15,
+        "elapsed_seconds": 0.0613001249730587,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209323520,
+        "status": "FAIL"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "started-receipt-real-io-failure",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "10"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209319424,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367900494035541,
+        "wall_start_ns": 1791890795907035000,
+        "storage_samples": [],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "live",
+              "members": [
+                {
+                  "pid": 51557,
+                  "ppid": 51543,
+                  "pgid": 51557,
+                  "kernel_start": "Tue Oct 13 04:26:35 2026",
+                  "binary": "/bin/sleep"
+                }
+              ]
+            },
+            "phase": "TERM"
+          },
+          {
+            "signalSent": "TERM",
+            "ownedGroup": 51557,
+            "registeredMembers": [
+              {
+                "pid": 51557,
+                "ppid": 51543,
+                "pgid": 51557,
+                "kernel_start": "Tue Oct 13 04:26:35 2026",
+                "binary": "/bin/sleep",
+                "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+              }
+            ]
+          }
+        ],
+        "abort": null,
+        "errors": [
+          "IsADirectoryError(21, 'Is a directory')"
+        ],
+        "cleanup": "exit_verified",
+        "owned_pid": 51557,
+        "owned_process_group": 51557,
+        "exit_code": -15,
+        "elapsed_seconds": 0.06580937502440065,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209319424,
+        "status": "FAIL"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "log-read-real-io-failure",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "10"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209315328,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367900560935333,
+        "wall_start_ns": 1791890795973935000,
+        "storage_samples": [
+          {
+            "elapsed_seconds": 0.003306875005364418,
+            "free_bytes": 57209303040
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "live",
+              "members": [
+                {
+                  "pid": 51559,
+                  "ppid": 51543,
+                  "pgid": 51559,
+                  "kernel_start": "Tue Oct 13 04:26:35 2026",
+                  "binary": "/bin/sleep"
+                }
+              ]
+            },
+            "phase": "TERM"
+          },
+          {
+            "signalSent": "TERM",
+            "ownedGroup": 51559,
+            "registeredMembers": [
+              {
+                "pid": 51559,
+                "ppid": 51543,
+                "pgid": 51559,
+                "kernel_start": "Tue Oct 13 04:26:35 2026",
+                "binary": "/bin/sleep",
+                "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+              }
+            ]
+          }
+        ],
+        "abort": null,
+        "errors": [
+          "IsADirectoryError(21, 'Is a directory')"
+        ],
+        "cleanup": "exit_verified",
+        "owned_pid": 51559,
+        "owned_process_group": 51559,
+        "exit_code": -15,
+        "elapsed_seconds": 0.06399512500502169,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209303040,
+        "status": "FAIL"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "final-receipt-real-io-failure",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "0.05"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209298944,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367900626348375,
+        "wall_start_ns": 1791890796039348000,
+        "storage_samples": [
+          {
+            "elapsed_seconds": 0.003665833966806531,
+            "free_bytes": 57209294848
+          },
+          {
+            "elapsed_seconds": 0.04390925000188872,
+            "free_bytes": 57209294848
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "confirmed_absent"
+            },
+            "phase": "TERM"
+          }
+        ],
+        "abort": null,
+        "errors": [
+          "final_receipt_write_failed: IsADirectoryError(21, 'Is a directory')"
+        ],
+        "cleanup": "exit_verified",
+        "owned_pid": 51561,
+        "owned_process_group": 51561,
+        "exit_code": 0,
+        "elapsed_seconds": 0.08401008398504928,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209278464,
+        "status": "FAIL"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "deadline",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "10"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209274368,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367900711625750,
+        "wall_start_ns": 1791890796124626000,
+        "storage_samples": [
+          {
+            "elapsed_seconds": 0.0036328340065665543,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.04381004202878103,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.08166470902506262,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.112156875024084,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.14564229204552248,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.18168254202464595,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.21963470900664106,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.2518715840415098,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.2903858339996077,
+            "free_bytes": 57209266176
+          },
+          {
+            "elapsed_seconds": 0.3264100840315223,
+            "free_bytes": 57209266176
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "live",
+              "members": [
+                {
+                  "pid": 51562,
+                  "ppid": 51543,
+                  "pgid": 51562,
+                  "kernel_start": "Tue Oct 13 04:26:36 2026",
+                  "binary": "/bin/sleep"
+                }
+              ]
+            },
+            "phase": "TERM"
+          },
+          {
+            "signalSent": "TERM",
+            "ownedGroup": 51562,
+            "registeredMembers": [
+              {
+                "pid": 51562,
+                "ppid": 51543,
+                "pgid": 51562,
+                "kernel_start": "Tue Oct 13 04:26:36 2026",
+                "binary": "/bin/sleep",
+                "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+              }
+            ]
+          }
+        ],
+        "abort": "deadline15minutes",
+        "errors": [],
+        "cleanup": "exit_verified",
+        "owned_pid": 51562,
+        "owned_process_group": 51562,
+        "exit_code": -15,
+        "elapsed_seconds": 0.3999174589989707,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209266176,
+        "status": "FAIL"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "ignore-term-kill",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-c",
+          "import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(30)"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209262080,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367901114998666,
+        "wall_start_ns": 1791890796528001000,
+        "storage_samples": [
+          {
+            "elapsed_seconds": 0.0066231670207343996,
+            "free_bytes": 57209257984
+          },
+          {
+            "elapsed_seconds": 0.04507595801260322,
+            "free_bytes": 57209257984
+          },
+          {
+            "elapsed_seconds": 0.0851312080048956,
+            "free_bytes": 57209257984
+          },
+          {
+            "elapsed_seconds": 0.11963700002525002,
+            "free_bytes": 57209257984
+          },
+          {
+            "elapsed_seconds": 0.15068274998338893,
+            "free_bytes": 57209257984
+          },
+          {
+            "elapsed_seconds": 0.1907685420010239,
+            "free_bytes": 57209257984
+          },
+          {
+            "elapsed_seconds": 0.22847662499407306,
+            "free_bytes": 57209257984
+          },
+          {
+            "elapsed_seconds": 0.2636759579763748,
+            "free_bytes": 57209257984
+          },
+          {
+            "elapsed_seconds": 0.30336125002941117,
+            "free_bytes": 57209257984
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "live",
+              "members": [
+                {
+                  "pid": 51565,
+                  "ppid": 51543,
+                  "pgid": 51565,
+                  "kernel_start": "Tue Oct 13 04:26:36 2026",
+                  "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+                }
+              ]
+            },
+            "phase": "TERM"
+          },
+          {
+            "signalSent": "TERM",
+            "ownedGroup": 51565,
+            "registeredMembers": [
+              {
+                "pid": 51565,
+                "ppid": 51543,
+                "pgid": 51565,
+                "kernel_start": "Tue Oct 13 04:26:36 2026",
+                "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+                "binary_sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599"
+              }
+            ]
+          },
+          {
+            "cleanupInspection": {
+              "state": "live",
+              "members": [
+                {
+                  "pid": 51565,
+                  "ppid": 51543,
+                  "pgid": 51565,
+                  "kernel_start": "Tue Oct 13 04:26:36 2026",
+                  "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+                }
+              ]
+            },
+            "phase": "KILL"
+          },
+          {
+            "signalSent": "KILL",
+            "ownedGroup": 51565,
+            "registeredMembers": [
+              {
+                "pid": 51565,
+                "ppid": 51543,
+                "pgid": 51565,
+                "kernel_start": "Tue Oct 13 04:26:36 2026",
+                "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+                "binary_sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599"
+              }
+            ]
+          }
+        ],
+        "abort": "deadline15minutes",
+        "errors": [],
+        "cleanup": "exit_verified",
+        "owned_pid": 51565,
+        "owned_process_group": 51565,
+        "exit_code": -9,
+        "elapsed_seconds": 2.4403627080027945,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209364480,
+        "status": "FAIL"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "keyboardinterrupt",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "10"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209356288,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367903559070416,
+        "wall_start_ns": 1791890798972083000,
+        "storage_samples": [],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "live",
+              "members": [
+                {
+                  "pid": 51618,
+                  "ppid": 51543,
+                  "pgid": 51618,
+                  "kernel_start": "Tue Oct 13 04:26:38 2026",
+                  "binary": "/bin/sleep"
+                }
+              ]
+            },
+            "phase": "TERM"
+          },
+          {
+            "signalSent": "TERM",
+            "ownedGroup": 51618,
+            "registeredMembers": [
+              {
+                "pid": 51618,
+                "ppid": 51543,
+                "pgid": 51618,
+                "kernel_start": "Tue Oct 13 04:26:38 2026",
+                "binary": "/bin/sleep",
+                "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+              }
+            ]
+          }
+        ],
+        "abort": "KeyboardInterrupt",
+        "errors": [
+          "KeyboardInterrupt('post-Popen cancellation control')"
+        ],
+        "cleanup": "exit_verified",
+        "owned_pid": 51618,
+        "owned_process_group": 51618,
+        "exit_code": -15,
+        "elapsed_seconds": 0.0721488330163993,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209339904,
+        "status": "FAIL"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "actual-sigterm-cancel",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "10"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209335808,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367903634408333,
+        "wall_start_ns": 1791890799047420000,
+        "storage_samples": [
+          {
+            "elapsed_seconds": 0.005938166985288262,
+            "free_bytes": 57209327616
+          },
+          {
+            "elapsed_seconds": 0.03972125001018867,
+            "free_bytes": 57209327616
+          },
+          {
+            "elapsed_seconds": 0.07990787498420104,
+            "free_bytes": 57209327616
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "live",
+              "members": [
+                {
+                  "pid": 51620,
+                  "ppid": 51543,
+                  "pgid": 51620,
+                  "kernel_start": "Tue Oct 13 04:26:39 2026",
+                  "binary": "/bin/sleep"
+                }
+              ]
+            },
+            "phase": "TERM"
+          },
+          {
+            "signalSent": "TERM",
+            "ownedGroup": 51620,
+            "registeredMembers": [
+              {
+                "pid": 51620,
+                "ppid": 51543,
+                "pgid": 51620,
+                "kernel_start": "Tue Oct 13 04:26:39 2026",
+                "binary": "/bin/sleep",
+                "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+              }
+            ]
+          }
+        ],
+        "abort": "cancel_signal_15",
+        "errors": [],
+        "cleanup": "exit_verified",
+        "owned_pid": 51620,
+        "owned_process_group": 51620,
+        "exit_code": -15,
+        "elapsed_seconds": 0.18124120897846296,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209327616,
+        "status": "FAIL"
+      },
+      "ownedGroupConfirmedAbsentESRCH": true
+    },
+    {
+      "case": "unknown-no-false-success",
+      "expectedStatus": "FAIL",
+      "result": {
+        "command": [
+          "/bin/sleep",
+          "10"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+        "deadlineSeconds": 0.3,
+        "initial_free_bytes": 57209323520,
+        "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "monotonic_start_ns": 367903817364875,
+        "wall_start_ns": 1791890799230377000,
+        "storage_samples": [
+          {
+            "elapsed_seconds": 0.00387391698313877,
+            "free_bytes": 57209319424
+          },
+          {
+            "elapsed_seconds": 0.04411958297714591,
+            "free_bytes": 57209319424
+          },
+          {
+            "elapsed_seconds": 0.0832779579795897,
+            "free_bytes": 57209319424
+          },
+          {
+            "elapsed_seconds": 0.11800879199290648,
+            "free_bytes": 57209319424
+          },
+          {
+            "elapsed_seconds": 0.14815216697752476,
+            "free_bytes": 57209319424
+          },
+          {
+            "elapsed_seconds": 0.18828662496525794,
+            "free_bytes": 57209245696
+          },
+          {
+            "elapsed_seconds": 0.22691529197618365,
+            "free_bytes": 57209245696
+          },
+          {
+            "elapsed_seconds": 0.2665377919911407,
+            "free_bytes": 57209245696
+          },
+          {
+            "elapsed_seconds": 0.2998596669640392,
+            "free_bytes": 57209245696
+          },
+          {
+            "elapsed_seconds": 0.3362065419787541,
+            "free_bytes": 57209245696
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "cleanupInspection": {
+              "state": "unknown",
+              "reason": "injected bounded inspection error"
+            },
+            "phase": "TERM"
+          }
+        ],
+        "abort": "deadline15minutes",
+        "errors": [],
+        "cleanup": "blocked_group_identity_unknown",
+        "owned_pid": 51622,
+        "owned_process_group": 51622,
+        "exit_code": null,
+        "elapsed_seconds": 0.33659704198362306,
+        "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "final_free_bytes": 57209245696,
+        "status": "FAIL"
+      },
+      "noSignalWithoutProof": true,
+      "separateControlCleanup": [
+        {
+          "cleanupInspection": {
+            "state": "live",
+            "members": [
+              {
+                "pid": 51622,
+                "ppid": 51543,
+                "pgid": 51622,
+                "kernel_start": "Tue Oct 13 04:26:39 2026",
+                "binary": "/bin/sleep"
+              }
+            ]
+          },
+          "phase": "TERM"
+        },
+        {
+          "signalSent": "TERM",
+          "ownedGroup": 51622,
+          "registeredMembers": [
+            {
+              "pid": 51622,
+              "ppid": 51543,
+              "pgid": 51622,
+              "kernel_start": "Tue Oct 13 04:26:39 2026",
+              "binary": "/bin/sleep",
+              "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+            }
+          ]
+        }
+      ],
+      "ownedGroupConfirmedAbsentESRCH": true
+    }
+  ],
+  "count": 10,
+  "guardSha256": "f349ec4ecbb75e6114fef3cb3ad13ac6e8ceaeaf0abd6a162bb1129ccf8bfe8f",
+  "testSha256": "156eb106c8f2895bedb8b879b0a1b5b22e4fac0d09fa408146d8ebb2466f1f3a",
+  "cargoOrRendererStarted": false,
+  "remainingOwnedProcesses": []
+}

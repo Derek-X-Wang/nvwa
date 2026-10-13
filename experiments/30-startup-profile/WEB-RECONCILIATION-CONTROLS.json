@@ -1,0 +1,235 @@
+{
+  "status": "PASS",
+  "testCount": 19,
+  "actualRendererRunByTests": false,
+  "sourceSha256": "74dc0af4c408220c060c8703e7e7c5c3470ae24bf8529801619600a882f29351",
+  "testSourceSha256": "9b1af070dad0649cc78f0ec78fe35142d7c675f78f4ba19e24530b2f57db9f81",
+  "originalValidatorRedControls": {
+    "raw9203": {
+      "returncode": 2,
+      "stderr": "usage: verify_capture.py [-h] --capture CAPTURE --manifest MANIFEST\n                         --requests REQUESTS --run RUN\nverify_capture.py: error: navigation URL does not match run\n"
+    },
+    "normalized9201StillRejectsFavicon": {
+      "returncode": 2,
+      "stderr": "usage: verify_capture.py [-h] --capture CAPTURE --manifest MANIFEST\n                         --requests REQUESTS --run RUN\nverify_capture.py: error: timing entry outside run prefix\n",
+      "normalization": "owned temporary fixture origin/manifest port only; original source/raw records unchanged"
+    }
+  },
+  "controls": [
+    {
+      "case": "unchanged actual packet",
+      "expected": "PASS",
+      "actual": "PASS",
+      "result": {
+        "status": "PASS",
+        "runId": "a56982422eb74fe1997c0534723cadf4",
+        "structure": {
+          "runId": "a56982422eb74fe1997c0534723cadf4",
+          "navigationEntries": 1,
+          "resourceEntries": 6,
+          "scope": "structure and finite timing validation only; first presentation and cold state NOT-RUN"
+        },
+        "ledgerGetCount": 8,
+        "successfulRunGetCount": 6,
+        "browserTimingEntryCount": 7,
+        "successfulBodyBytesWritten": 20564953,
+        "allLedgerBodyBytesWritten": 20565000,
+        "browserEncodedBodyBytes": 20564972,
+        "browserDecodedBodyBytes": 89565995,
+        "browserReportedTransferBytes": 20567072,
+        "explicit404Dispositions": [
+          {
+            "name": "favicon.ico",
+            "target": "/favicon.ico",
+            "status": 404,
+            "bodyBytes": 19,
+            "bodySha256": "653f5a345bb652f55d72b94e1b20fc9f66c765e26fe2d5d1d0a58d0a4ca41d08",
+            "bodyAscii": "unknown run prefix\n",
+            "browserTimingPresent": true,
+            "reason": "exact retained out-of-run response"
+          },
+          {
+            "name": "assets/fixtures/nvwa-humanoid.glb.meta",
+            "target": "/run/a56982422eb74fe1997c0534723cadf4/assets/fixtures/nvwa-humanoid.glb.meta",
+            "status": 404,
+            "bodyBytes": 28,
+            "bodySha256": "ba61c833937fda50c6346acd88aea1a26bdf5b45db3561202aa16e4f91bd19a2",
+            "bodyAscii": "not a served runtime member\n",
+            "browserTimingPresent": false,
+            "reason": "exact optional Bevy metadata fallback; actual GLB200 separately required"
+          }
+        ],
+        "canonicalWorkSha256": "cacf849f0918648a1a970452d0c33f195c5ad89fd7f6d9e58669d587d0789768",
+        "canonicalWorkRevision": 3,
+        "timelineCount": 3,
+        "claim": "exact baseline fresh-prefix/no-store HTTP ledger and browser size reconciliation",
+        "limits": [
+          "server successful body writes exclude headers and are not client receipt",
+          "browser transferSize is browser-reported, not packet capture",
+          "optional metadata404 has no browser resource entry; retained ledger bytes accounted",
+          "Bevy TimeReal, browser Performance and host clocks have distinct origins",
+          "physical first presentation/cold browser/GPU memory NOT-RUN"
+        ]
+      }
+    },
+    {
+      "case": "browser favicon status mismatch",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "timing response status mismatch",
+      "elapsedSeconds": 0.16665987501619384
+    },
+    {
+      "case": "extra arbitrary failed response",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "unexpected or duplicated ledger row: None",
+      "elapsedSeconds": 0.16688937501749024
+    },
+    {
+      "case": "favicon404 incomplete writes",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "exact404 mismatch: favicon.ico",
+      "elapsedSeconds": 0.167210666986648
+    },
+    {
+      "case": "favicon404 wrong bytes hash",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "exact404 mismatch: favicon.ico",
+      "elapsedSeconds": 0.17299945803824812
+    },
+    {
+      "case": "favicon404 arbitrary location",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "unexpected or duplicated ledger row: None",
+      "elapsedSeconds": 0.16468591697048396
+    },
+    {
+      "case": "favicon404 assigned run",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "exact404 mismatch: favicon.ico",
+      "elapsedSeconds": 0.16623812494799495
+    },
+    {
+      "case": "favicon status500",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "exact404 mismatch: favicon.ico",
+      "elapsedSeconds": 0.16686245799064636
+    },
+    {
+      "case": "optional metadata404 hash mismatch",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "exact404 mismatch: assets/fixtures/nvwa-humanoid.glb.meta",
+      "elapsedSeconds": 0.1629058339749463
+    },
+    {
+      "case": "canonical Work browser timing missing",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "timing inventory mismatch",
+      "elapsedSeconds": 0.1666607079678215
+    },
+    {
+      "case": "wrong9201 browser origin",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "exact9203 canonical Work URL mismatch",
+      "elapsedSeconds": 1.18750031106174e-05
+    },
+    {
+      "case": "canonical Work request missing",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "missing exact ledger member",
+      "elapsedSeconds": 0.1628352920524776
+    },
+    {
+      "case": "canonical Work request target replacement",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "request target/run/status mismatch: works/canonical-work.nvwa.json",
+      "elapsedSeconds": 0.16383866599062458
+    },
+    {
+      "case": "browser run mismatch",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "exact9203 canonical Work URL mismatch",
+      "elapsedSeconds": 1.3125012628734112e-05
+    },
+    {
+      "case": "canonical Work request run mismatch",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "request target/run/status mismatch: works/canonical-work.nvwa.json",
+      "elapsedSeconds": 0.19580533303087577
+    },
+    {
+      "case": "GLB response hash mismatch",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "response hash/size mismatch: assets/fixtures/nvwa-humanoid.glb",
+      "elapsedSeconds": 0.1772034169989638
+    },
+    {
+      "case": "Wasm response status500",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "request target/run/status mismatch: nvwa_studio_bg.wasm",
+      "elapsedSeconds": 0.1805352090159431
+    },
+    {
+      "case": "canonical Work manifest hash mismatch",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "frozen bytes/hash mismatch: works/canonical-work.nvwa.json",
+      "elapsedSeconds": 0.19462345796637237
+    },
+    {
+      "case": "browser Work URL replacement",
+      "expected": "FAIL",
+      "actual": "FAIL",
+      "reason": "exact9203 canonical Work URL mismatch",
+      "elapsedSeconds": 1.6833015251904726e-05
+    }
+  ],
+  "experiment24Unchanged": true,
+  "experiment24HashesBefore": {
+    "README.md": "3374ca972953033f0b2ad5d4eab8ed97ae185a088d7d3eb386777085ffe8e2ce",
+    "REPORT.md": "1e719b92940249c54e65198ccf5db05428593711373e559e6c79c76db3e68a24",
+    "actual-metadata-fixture-red.log": "6f844bc9d7fec5a76605bd05311e4a3d399ae342fe6f86515d491c0d7070a715",
+    "actual-startup-1-verifier-green.log": "79169b49d23a1937dd7da9af967a1c62534369133ea84a8c7ca5e404e2026b57",
+    "actual-startup-1-verifier-red.log": "1625a93ff5e7878503d73f16b9016d531c9fb523a7e4528e0f76c9727186e1af",
+    "actual-startup-2-verifier-green.log": "7bdc26e5062ac971437abdd5cc5d07f3e04a4545918ad27eb0a670f022936310",
+    "bevy-meta-source-evidence.json": "098b5af5bfbdb926f4310484da8a5f9beef124ef67ac509ea7b1b65ee2a05b0b",
+    "check_capture.py": "c4a529c81ed21e10170a5cee28c598f38f33163a7f758de899a60d4a4aba5056",
+    "collector.js": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+    "cpu-tests.log": "70da95537da5a7cb1b932c02c7ce230042664c62bc0f95cbae9b5a103374cc97",
+    "fixtures/actual-startup-1.json": "910a187106b0a8058c6403b1eec190d794beeda8bb884704e353cd948f4cd8c3",
+    "server.py": "abbaedd3d2e329d2b46224b7a5c8bf468b50ee4f9a3de69d37d3992567a75820",
+    "test_boundary.py": "0f0f6343ec733cbd731c1f0908b0b565b6a9250c9cfd960907aa73df46aee0fa",
+    "verify_capture.py": "4acecd4659c3c2a37810173551e1c34a0bcc055fa7deff13207d7e660e0be31b"
+  },
+  "experiment24HashesAfter": {
+    "README.md": "3374ca972953033f0b2ad5d4eab8ed97ae185a088d7d3eb386777085ffe8e2ce",
+    "REPORT.md": "1e719b92940249c54e65198ccf5db05428593711373e559e6c79c76db3e68a24",
+    "actual-metadata-fixture-red.log": "6f844bc9d7fec5a76605bd05311e4a3d399ae342fe6f86515d491c0d7070a715",
+    "actual-startup-1-verifier-green.log": "79169b49d23a1937dd7da9af967a1c62534369133ea84a8c7ca5e404e2026b57",
+    "actual-startup-1-verifier-red.log": "1625a93ff5e7878503d73f16b9016d531c9fb523a7e4528e0f76c9727186e1af",
+    "actual-startup-2-verifier-green.log": "7bdc26e5062ac971437abdd5cc5d07f3e04a4545918ad27eb0a670f022936310",
+    "bevy-meta-source-evidence.json": "098b5af5bfbdb926f4310484da8a5f9beef124ef67ac509ea7b1b65ee2a05b0b",
+    "check_capture.py": "c4a529c81ed21e10170a5cee28c598f38f33163a7f758de899a60d4a4aba5056",
+    "collector.js": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+    "cpu-tests.log": "70da95537da5a7cb1b932c02c7ce230042664c62bc0f95cbae9b5a103374cc97",
+    "fixtures/actual-startup-1.json": "910a187106b0a8058c6403b1eec190d794beeda8bb884704e353cd948f4cd8c3",
+    "server.py": "abbaedd3d2e329d2b46224b7a5c8bf468b50ee4f9a3de69d37d3992567a75820",
+    "test_boundary.py": "0f0f6343ec733cbd731c1f0908b0b565b6a9250c9cfd960907aa73df46aee0fa",
+    "verify_capture.py": "4acecd4659c3c2a37810173551e1c34a0bcc055fa7deff13207d7e660e0be31b"
+  }
+}

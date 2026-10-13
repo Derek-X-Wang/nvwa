@@ -1,0 +1,1139 @@
+{
+  "base": "045d8abc685760d09ba05afec0e40a811a282d1f",
+  "status": "PARTIAL: actual CPU/runtime/profiler boundaries; FAIL rendered character/UI; first physical presentation NOT-RUN",
+  "source_freeze": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/freeze.json",
+    "frozen_input_count": 42
+  },
+  "identities": {
+    "startup_binary": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/nvwa-startup-profile-experiment",
+      "frozen_path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen/nvwa-startup-profile-experiment",
+      "sha256": "6a49bc165991bc6353f69074e225a8b9644aa86154f48df7055f793ef0a3605f",
+      "bytes": 103395008
+    },
+    "pixel_binary": {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/nvwa-ui-pixels-experiment",
+      "frozen_path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen/nvwa-ui-pixels-experiment",
+      "sha256": "504c4bb90125b103df0d4d49148d0597226790ad9a18e9f663f8107b3e1e55fd",
+      "bytes": 89821264
+    },
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/inputs/canonical-work.nvwa.json": "cacf849f0918648a1a970452d0c33f195c5ad89fd7f6d9e58669d587d0789768",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/Cargo.lock": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/assets/character.profile.json": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/assets/fixtures/nvwa-humanoid.glb": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/src/main.rs": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/main.rs": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/Cargo.lock": "a15abd3934b43329499506150b69725f57545a0c39a307000d5c03e8e4dd1066",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/src/main.rs": "96f63c8f675b3fe8341a7716d3f8590891958f90ffd7936137bcf04e0ac82bd8",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/Cargo.lock": "cafc9df3596e6388c1e32acc9b49f9acb518d2a8f1c7cffd1326f8321bf29c2b",
+    "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/src/main.rs": "579bcc2bebb310e990e68c8c7fe29e1d4b2ca0b48dcd454e64b2d0319464d7a0"
+  },
+  "gpu_ui_lease": "released to root; pixel app held unlaunched",
+  "runs": {
+    "native-1": {
+      "launcher": {
+        "boundary": "bundle_launcher_before_exec",
+        "pid": 85149,
+        "ppid": 1,
+        "wall_time_ns": 1791884725276813000,
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 361829886232625,
+        "binary": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen/nvwa-startup-profile-experiment",
+        "binary_sha256": "6a49bc165991bc6353f69074e225a8b9644aa86154f48df7055f793ef0a3605f",
+        "argv": [
+          "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen/nvwa-startup-profile-experiment",
+          "--work",
+          "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/inputs/canonical-work.nvwa.json",
+          "--benchmark",
+          "--smoke",
+          "--smoke-seconds",
+          "12",
+          "--timeout",
+          "55",
+          "--capture",
+          "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/character.png"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "case": "native-1",
+        "bundle": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/apps/NvwaStartup1.app",
+        "kernel_start_identity": "Tue Oct 13 02:45:24 2026",
+        "sampler_pid": 85152
+      },
+      "cua": {
+        "case": "native-1",
+        "launch_request_wall_start_ms": 1791884724680,
+        "launch_request_wall_end_ms": 1791884732631,
+        "initial_cua_state": "actual NvwaStartup1 window Nvwa Character Studio, generic window AX only",
+        "screenshot_request_wall_start_ms": 1791884740680,
+        "screenshot_request_wall_end_ms": 1791884740789,
+        "actual_cua_visible_pixels": "NOT-RUN: finite app exited before screenshot call; procNotFound error",
+        "process_checks": {
+          "85149": {
+            "returncode": 1,
+            "stdout": "",
+            "stderr": ""
+          },
+          "85152": {
+            "returncode": 1,
+            "stdout": "",
+            "stderr": ""
+          }
+        }
+      },
+      "process_instant_markers": [
+        {
+          "boundary": "before_build_app",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 6.0333e-05,
+          "fields": {
+            "physical_presentation": "NOT-RUN"
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "after_build_app",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 0.391636458,
+          "fields": {},
+          "pid": 85149
+        },
+        {
+          "boundary": "startup_system",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 1.000616417,
+          "fields": {},
+          "pid": 85149
+        },
+        {
+          "boundary": "first_render_system_returned",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 2.304977792,
+          "fields": {
+            "adapter": "Apple M2 Pro",
+            "backend": "Metal",
+            "enabled_device_features": "Features { features_wgpu: FeaturesWGPU(SHADER_FLOAT32_ATOMIC | TEXTURE_FORMAT_16BIT_NORM | TEXTURE_COMPRESSION_ASTC_HDR | TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES | TIMESTAMP_QUERY_INSIDE_ENCODERS | MAPPABLE_PRIMARY_BUFFERS | TEXTURE_BINDING_ARRAY | STORAGE_RESOURCE_BINDING_ARRAY | SAMPLED_TEXTURE_AND_STORAGE_BUFFER_ARRAY_NON_UNIFORM_INDEXING | STORAGE_TEXTURE_ARRAY_NON_UNIFORM_INDEXING | PARTIALLY_BOUND_BINDING_ARRAY | ADDRESS_MODE_CLAMP_TO_ZERO | ADDRESS_MODE_CLAMP_TO_BORDER | POLYGON_MODE_LINE | VERTEX_WRITABLE_STORAGE | CLEAR_TEXTURE | MULTIVIEW | TEXTURE_ATOMIC | EXTERNAL_TEXTURE | EXPERIMENTAL_RAY_QUERY | SHADER_INT64 | SUBGROUP | SUBGROUP_BARRIER | SHADER_INT64_ATOMIC_MIN_MAX | EXPERIMENTAL_MESH_SHADER | PASSTHROUGH_SHADERS | SHADER_BARYCENTRICS | EXPERIMENTAL_COOPERATIVE_MATRIX | MEMORY_DECORATION_COHERENT), features_webgpu: FeaturesWebGPU(DEPTH_CLIP_CONTROL | DEPTH32FLOAT_STENCIL8 | TEXTURE_COMPRESSION_BC | TEXTURE_COMPRESSION_BC_SLICED_3D | TEXTURE_COMPRESSION_ETC2 | TEXTURE_COMPRESSION_ASTC | TEXTURE_COMPRESSION_ASTC_SLICED_3D | TIMESTAMP_QUERY | INDIRECT_FIRST_INSTANCE | SHADER_F16 | RG11B10UFLOAT_RENDERABLE | BGRA8UNORM_STORAGE | FLOAT32_FILTERABLE | FLOAT32_BLENDABLE | DUAL_SOURCE_BLENDING | IMMEDIATES | PRIMITIVE_INDEX) }",
+            "physical_presentation": "NOT-RUN",
+            "timestamp_period_ns": 1.0,
+            "waiting_pipeline_count": 39
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "first_gpu_completion_callback_registered",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 2.305629625,
+          "fields": {},
+          "pid": 85149
+        },
+        {
+          "boundary": "previous_submissions_gpu_complete_callback",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 2.336112083,
+          "fields": {
+            "delivery_includes_poll_delay": true,
+            "physical_presentation": "NOT-RUN"
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "first_runtime_ready_observation",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 2.347882792,
+          "fields": {
+            "bevy_asset_ready_seconds": 1.303553958,
+            "bevy_clock": "bevy_TimeReal_since_first_update",
+            "joints": 18,
+            "meshes": 9,
+            "skins": 9
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "diagnostics_observation_after_ready_plus_2s",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 5.942363583,
+          "fields": {
+            "entries": [
+              {
+                "latest_value": 0.0014169999999999999,
+                "path": "render/bin_unpacking/elapsed_cpu",
+                "unit": "ms"
+              },
+              {
+                "latest_value": 0.00041600000000000003,
+                "path": "render/early_mesh_preprocessing/elapsed_cpu",
+                "unit": "ms"
+              },
+              {
+                "latest_value": 89.0,
+                "path": "started_load_count",
+                "unit": ""
+              }
+            ]
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 6.048841625,
+          "fields": {
+            "render_frame_count": 60,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 6.180826,
+          "fields": {
+            "render_frame_count": 120,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 6.325851583,
+          "fields": {
+            "render_frame_count": 180,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 6.450128458,
+          "fields": {
+            "render_frame_count": 240,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 6.573897083,
+          "fields": {
+            "render_frame_count": 300,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "screenshot_gpu_readback_callback",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 14.513849667,
+          "fields": {
+            "image_height": 720,
+            "image_width": 1280,
+            "physical_presentation": "NOT-RUN"
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "first_playback_completed_observation",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 14.5225815,
+          "fields": {
+            "animation_seconds": 9.0,
+            "phase_after_this_boundary": "completed_hold_not_sustained_animation",
+            "playing": false,
+            "ready_observed_at_process_seconds": 2.347881083
+          },
+          "pid": 85149
+        },
+        {
+          "boundary": "app_run_returned",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 14.570947833,
+          "fields": {
+            "exit": "Success"
+          },
+          "pid": 85149
+        }
+      ],
+      "bevy_time_real_evidence_raw": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 13.510730291,
+        "capture_file_bytes": 15057,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 3,
+        "elapsed_seconds": 13.510730291,
+        "error": null,
+        "first_asset_ready_seconds": 1.303553958,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 13.510730291,
+        "frame_ms_p50": 1.511625051498413,
+        "frame_ms_p95": 1.7595000267028809,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 5205,
+        "gpu": {
+          "backend": "Metal",
+          "name": "Apple M2 Pro"
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 5203,
+        "skins": 9,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "raw_first_visible_fields_are_invalid_visibility_claim": "black actual output; treat these fields as readback callback only",
+      "rss": {
+        "clock": "host_time_monotonic_ns",
+        "samples": 141,
+        "maximum_observed_kib": 206944,
+        "span_seconds": 15.357771292,
+        "scope": "sampled process RSS; neither physical footprint nor total GPU allocation"
+      },
+      "guard": {
+        "status": "exit_verified",
+        "target_cleanup": "exit_verified",
+        "target_pid": 85149,
+        "marker_seen": true,
+        "inspection_unknown_seen": false,
+        "owned_profiler_cleanup_verified": true
+      },
+      "raw_files": {
+        "character.png": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/character.png",
+          "bytes": 15057,
+          "sha256": "7f0fcfad3151bf17c4ba0faa396039ee753bfd086f998f751361bedcb6a3e4b4"
+        },
+        "cua-observation.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/cua-observation.json",
+          "bytes": 622,
+          "sha256": "0a04eb064ac55329692933a5029b0f28177f35fe56c358ef666a982e52b39c5e"
+        },
+        "launch-once.guard": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/launch-once.guard",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "launcher.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/launcher.json",
+          "bytes": 1188,
+          "sha256": "1dcd0d3d8c04c99c56d2c756e9459627b9fb5ec254211e2aeda5570a17d1b5cd"
+        },
+        "png-color-analysis.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/png-color-analysis.json",
+          "bytes": 318,
+          "sha256": "8a44c20fd984e79d8cad34aa7e772a8acd1615d6eb183c57155e1e25c6f8d882"
+        },
+        "process-observations.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/process-observations.json",
+          "bytes": 60508,
+          "sha256": "c1a901bf2699db0ceacca5e4f9be14797c645fe563f6bfdcafe8dd2870d97540"
+        },
+        "readiness-and-foreground-capability.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/readiness-and-foreground-capability.json",
+          "bytes": 902,
+          "sha256": "70f4ec471a71e611528fb838464154f8e98222331575e6850cb417f7b52057bd"
+        },
+        "stderr.log": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/stderr.log",
+          "bytes": 7701,
+          "sha256": "65832000697bb4260b88d6d306af76ebd2be2bc389c77d9bceda13cebc938484"
+        },
+        "stdout.log": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-1/stdout.log",
+          "bytes": 1124,
+          "sha256": "4ff75b3331eeb668f78aa215e219e6e64e66f5961e15169ece95bc3ccf68ef06"
+        }
+      },
+      "png": {
+        "unique_rgb_colors": 1,
+        "minimum_channel": 0,
+        "maximum_channel": 0,
+        "most_common_rgb": [
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            921600
+          ]
+        ],
+        "visually_rendered_character_ui": "FAIL: independently viewed black image",
+        "color_analysis_not_semantic_or_visible_acceptance": true
+      },
+      "visible_character_ui": "FAIL",
+      "physical_first_presentation": "NOT-RUN"
+    },
+    "native-2": {
+      "launcher": {
+        "boundary": "bundle_launcher_before_exec",
+        "pid": 1327,
+        "ppid": 1,
+        "wall_time_ns": 1791885171494961000,
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 362276102216166,
+        "binary": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen/nvwa-startup-profile-experiment",
+        "binary_sha256": "6a49bc165991bc6353f69074e225a8b9644aa86154f48df7055f793ef0a3605f",
+        "argv": [
+          "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen/nvwa-startup-profile-experiment",
+          "--work",
+          "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/inputs/canonical-work.nvwa.json",
+          "--benchmark",
+          "--smoke",
+          "--smoke-seconds",
+          "35",
+          "--timeout",
+          "55",
+          "--capture",
+          "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/character.png"
+        ],
+        "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+        "case": "native-2",
+        "bundle": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/apps/NvwaStartup2.app",
+        "kernel_start_identity": "Tue Oct 13 02:52:51 2026",
+        "sampler_pid": 1364
+      },
+      "cua": {
+        "case": "native-2",
+        "launch_request_wall_start_ms": 1791885170974,
+        "launch_request_wall_end_ms": 1791885176306,
+        "fresh_ax_action": "window0 Secondary Actions Raise on exact current NvwaStartup2 window",
+        "raise_wall_start_ms": 1791885184078,
+        "screenshot_wall_start_ms": 1791885185223,
+        "screenshot_wall_end_ms": 1791885185361,
+        "actual_cua_image": "window titlebar and blank dark content; no character or egui UI",
+        "physical_first_presentation": "NOT-RUN",
+        "screenshot_image_persistence": "tool image retained in conversation; no independent local Cua screenshot file API advertised",
+        "process_checks": {
+          "1327": {
+            "ps_returncode": 1,
+            "no_stdout_or_stderr": true
+          },
+          "1364": {
+            "ps_returncode": 1,
+            "no_stdout_or_stderr": true
+          },
+          "1366": {
+            "ps_returncode": 1,
+            "no_stdout_or_stderr": true
+          },
+          "1369": {
+            "ps_returncode": 1,
+            "no_stdout_or_stderr": true
+          }
+        }
+      },
+      "process_instant_markers": [
+        {
+          "boundary": "before_build_app",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 3.625e-05,
+          "fields": {
+            "physical_presentation": "NOT-RUN"
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "after_build_app",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 0.123961083,
+          "fields": {},
+          "pid": 1327
+        },
+        {
+          "boundary": "startup_system",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 2.701490375,
+          "fields": {},
+          "pid": 1327
+        },
+        {
+          "boundary": "first_render_system_returned",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 2.8379765,
+          "fields": {
+            "adapter": "Apple M2 Pro",
+            "backend": "Metal",
+            "enabled_device_features": "Features { features_wgpu: FeaturesWGPU(SHADER_FLOAT32_ATOMIC | TEXTURE_FORMAT_16BIT_NORM | TEXTURE_COMPRESSION_ASTC_HDR | TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES | TIMESTAMP_QUERY_INSIDE_ENCODERS | MAPPABLE_PRIMARY_BUFFERS | TEXTURE_BINDING_ARRAY | STORAGE_RESOURCE_BINDING_ARRAY | SAMPLED_TEXTURE_AND_STORAGE_BUFFER_ARRAY_NON_UNIFORM_INDEXING | STORAGE_TEXTURE_ARRAY_NON_UNIFORM_INDEXING | PARTIALLY_BOUND_BINDING_ARRAY | ADDRESS_MODE_CLAMP_TO_ZERO | ADDRESS_MODE_CLAMP_TO_BORDER | POLYGON_MODE_LINE | VERTEX_WRITABLE_STORAGE | CLEAR_TEXTURE | MULTIVIEW | TEXTURE_ATOMIC | EXTERNAL_TEXTURE | EXPERIMENTAL_RAY_QUERY | SHADER_INT64 | SUBGROUP | SUBGROUP_BARRIER | SHADER_INT64_ATOMIC_MIN_MAX | EXPERIMENTAL_MESH_SHADER | PASSTHROUGH_SHADERS | SHADER_BARYCENTRICS | EXPERIMENTAL_COOPERATIVE_MATRIX | MEMORY_DECORATION_COHERENT), features_webgpu: FeaturesWebGPU(DEPTH_CLIP_CONTROL | DEPTH32FLOAT_STENCIL8 | TEXTURE_COMPRESSION_BC | TEXTURE_COMPRESSION_BC_SLICED_3D | TEXTURE_COMPRESSION_ETC2 | TEXTURE_COMPRESSION_ASTC | TEXTURE_COMPRESSION_ASTC_SLICED_3D | TIMESTAMP_QUERY | INDIRECT_FIRST_INSTANCE | SHADER_F16 | RG11B10UFLOAT_RENDERABLE | BGRA8UNORM_STORAGE | FLOAT32_FILTERABLE | FLOAT32_BLENDABLE | DUAL_SOURCE_BLENDING | IMMEDIATES | PRIMITIVE_INDEX) }",
+            "physical_presentation": "NOT-RUN",
+            "timestamp_period_ns": 1.0,
+            "waiting_pipeline_count": 39
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "first_gpu_completion_callback_registered",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 2.862698292,
+          "fields": {},
+          "pid": 1327
+        },
+        {
+          "boundary": "previous_submissions_gpu_complete_callback",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 2.871238333,
+          "fields": {
+            "delivery_includes_poll_delay": true,
+            "physical_presentation": "NOT-RUN"
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "first_runtime_ready_observation",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 3.018240792,
+          "fields": {
+            "bevy_asset_ready_seconds": 0.163030125,
+            "bevy_clock": "bevy_TimeReal_since_first_update",
+            "joints": 18,
+            "meshes": 9,
+            "skins": 9
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 4.28416925,
+          "fields": {
+            "render_frame_count": 60,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 4.533829083,
+          "fields": {
+            "render_frame_count": 120,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 4.816069208,
+          "fields": {
+            "render_frame_count": 180,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "diagnostics_observation_after_ready_plus_2s",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 5.01943425,
+          "fields": {
+            "entries": [
+              {
+                "latest_value": 0.001083,
+                "path": "render/early_mesh_preprocessing/elapsed_cpu",
+                "unit": "ms"
+              },
+              {
+                "latest_value": 0.0,
+                "path": "render/clustering/elapsed_gpu",
+                "unit": "ms"
+              },
+              {
+                "latest_value": 89.0,
+                "path": "started_load_count",
+                "unit": ""
+              },
+              {
+                "latest_value": 0.016,
+                "path": "render/bin_unpacking/elapsed_cpu",
+                "unit": "ms"
+              },
+              {
+                "latest_value": 0.05625,
+                "path": "render/clustering/elapsed_cpu",
+                "unit": "ms"
+              }
+            ]
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 5.039879833,
+          "fields": {
+            "render_frame_count": 240,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "render_system_returned_sparse",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 5.17359725,
+          "fields": {
+            "render_frame_count": 300,
+            "waiting_pipeline_count": 0
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "first_playback_completed_observation",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 11.941079042,
+          "fields": {
+            "animation_seconds": 9.0,
+            "phase_after_this_boundary": "completed_hold_not_sustained_animation",
+            "playing": false,
+            "ready_observed_at_process_seconds": 3.018239042
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "screenshot_gpu_readback_callback",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 37.890566958,
+          "fields": {
+            "image_height": 720,
+            "image_width": 1280,
+            "physical_presentation": "NOT-RUN"
+          },
+          "pid": 1327
+        },
+        {
+          "boundary": "app_run_returned",
+          "clock": "process_Instant_since_before_build_app",
+          "elapsed_seconds": 37.959136125,
+          "fields": {
+            "exit": "Success"
+          },
+          "pid": 1327
+        }
+      ],
+      "bevy_time_real_evidence_raw": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "release",
+        "capture_callback": true,
+        "capture_callback_seconds": 35.18794825,
+        "capture_file_bytes": 15057,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 3,
+        "elapsed_seconds": 35.18794825,
+        "error": null,
+        "first_asset_ready_seconds": 0.163030125,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 35.18794825,
+        "frame_ms_p50": 1.5442090034484863,
+        "frame_ms_p95": 1.7470420598983765,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 20836,
+        "gpu": {
+          "backend": "Metal",
+          "name": "Apple M2 Pro"
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 20834,
+        "skins": 9,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "raw_first_visible_fields_are_invalid_visibility_claim": "black actual output; treat these fields as readback callback only",
+      "rss": {
+        "clock": "host_time_monotonic_ns",
+        "samples": 345,
+        "maximum_observed_kib": 225136,
+        "span_seconds": 37.780135791,
+        "scope": "sampled process RSS; neither physical footprint nor total GPU allocation"
+      },
+      "guard": {
+        "status": "exit_verified",
+        "target_cleanup": "exit_verified",
+        "target_pid": 1327,
+        "marker_seen": true,
+        "inspection_unknown_seen": false,
+        "owned_profiler_cleanup_verified": true
+      },
+      "raw_files": {
+        "character.png": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/character.png",
+          "bytes": 15057,
+          "sha256": "7f0fcfad3151bf17c4ba0faa396039ee753bfd086f998f751361bedcb6a3e4b4"
+        },
+        "cua-observation.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/cua-observation.json",
+          "bytes": 955,
+          "sha256": "48b0cdca11878689891da9bc83f158ae34f1933ca00d445aa2fb4f180538c121"
+        },
+        "launch-once.guard": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/launch-once.guard",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "launcher.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/launcher.json",
+          "bytes": 1186,
+          "sha256": "1452cb157ae8c0b01451f316dddaac098d3d6248c87f7114eb3d62cd76075c23"
+        },
+        "png-color-analysis.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/png-color-analysis.json",
+          "bytes": 201,
+          "sha256": "2181d51c649baaf6384a5c2b679fd5b0c61db2a01c8c189d20d2f2a7072298e1"
+        },
+        "process-observations.json": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/process-observations.json",
+          "bytes": 148395,
+          "sha256": "e3ea89acb6b0f1ec47d73a32d3bc4e902ece896aac5121fbde6a9c91cad90dc3"
+        },
+        "sample-command.log": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/sample-command.log",
+          "bytes": 279,
+          "sha256": "dbcae4afc332a38cca25e1659c6b594955596aadf4b142422d2611f0a715760e"
+        },
+        "sample.txt": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/sample.txt",
+          "bytes": 2470849,
+          "sha256": "6445d81b2c6087757cdf94a9f3c17d8eaa14072e70e9c98b68f86762e5a8a818"
+        },
+        "stderr.log": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/stderr.log",
+          "bytes": 7801,
+          "sha256": "417bbca688e963452c5915ab7cf5287bbe905f56da79ac33ebd1b33fb3022553"
+        },
+        "stdout.log": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/stdout.log",
+          "bytes": 1122,
+          "sha256": "7a05b11a6f0514a54c6d1eb60a50d9948af0619f2161a07021cdccf4dd141275"
+        },
+        "vmmap-command.log": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/captures/native-2/vmmap-command.log",
+          "bytes": 6591,
+          "sha256": "57fbe992eefa7487c2435a46f3aa4c788ef0b32e0d1857ec92939326fb9e2e99"
+        }
+      },
+      "png": {
+        "unique_rgb_colors": 1,
+        "most_common_rgb": [
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            921600
+          ]
+        ],
+        "rendered_character_ui": "FAIL: independently inspected black PNG"
+      },
+      "visible_character_ui": "FAIL",
+      "physical_first_presentation": "NOT-RUN"
+    }
+  },
+  "web_control": "PASS: separate baseline Web packet reconciled; see WEB-RESULT.json",
+  "pixel_controls": "NOT-RUN: held after actual native visual failures",
+  "native2_profiler": {
+    "sample": {
+      "target_pid": 1327,
+      "header_target_type": "live task",
+      "header_time": "2026-10-13 02:52:51.693 -0700",
+      "header_launch_time": "2026-10-13 02:52:51.105 -0700",
+      "requested_seconds": 4,
+      "interval_ms": 1,
+      "command_completed": true,
+      "waitpid_exit_code": 0,
+      "physical_footprint_provider_text": "153.5M",
+      "peak_footprint_provider_text": "157.4M",
+      "main_thread_samples": 871,
+      "selected_callgraph_observations": {
+        "NSApplication_run": {
+          "samples": 770,
+          "line": 33
+        },
+        "parking": {
+          "samples": 228,
+          "line": 52
+        },
+        "process_pipeline_queue_system": {
+          "samples": 131,
+          "line": 6043
+        },
+        "ShaderCache_get": {
+          "samples": 39,
+          "line": 6046
+        }
+      },
+      "limits": "Counts are nested stack observations, not inclusive durations or stall causation; n2 follows n1 with no cache reset and changed capture/foreground protocol."
+    },
+    "vmmap": {
+      "target_pid": 1327,
+      "header_target_type": "corpse",
+      "header_time": "2026-10-13 02:52:51.886 -0700",
+      "header_launch_time": "2026-10-13 02:52:51.105 -0700",
+      "waitpid_exit_code": 0,
+      "physical_footprint_provider_text": "27.7M",
+      "peak_footprint_provider_text": "27.8M",
+      "graphics_region_provider_text": {
+        "IOAccelerator_graphics": "virtual1024K resident176K 19regions",
+        "owned_unmapped_graphics": "virtual528K resident16K 2regions",
+        "IOSurface": "virtual16K resident0K 1region"
+      },
+      "limits": "Early snapshot/region map, not crash proof, GPU total or peak. Later live Cua observation and run-return Success preserved."
+    }
+  },
+  "final_owned_process_ps_checks": {
+    "85149": {
+      "ps_returncode": 1,
+      "stdout": "",
+      "stderr": "",
+      "confirmed_ps_no_match": true
+    },
+    "85152": {
+      "ps_returncode": 1,
+      "stdout": "",
+      "stderr": "",
+      "confirmed_ps_no_match": true
+    },
+    "1327": {
+      "ps_returncode": 1,
+      "stdout": "",
+      "stderr": "",
+      "confirmed_ps_no_match": true
+    },
+    "1364": {
+      "ps_returncode": 1,
+      "stdout": "",
+      "stderr": "",
+      "confirmed_ps_no_match": true
+    },
+    "1366": {
+      "ps_returncode": 1,
+      "stdout": "",
+      "stderr": "",
+      "confirmed_ps_no_match": true
+    },
+    "1369": {
+      "ps_returncode": 1,
+      "stdout": "",
+      "stderr": "",
+      "confirmed_ps_no_match": true
+    }
+  },
+  "post_native_freeze_reverification": {
+    "checked_count": 44,
+    "all_pass": true,
+    "checks": [
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/inputs/canonical-work.nvwa.json",
+        "expected": "cacf849f0918648a1a970452d0c33f195c5ad89fd7f6d9e58669d587d0789768",
+        "actual": "cacf849f0918648a1a970452d0c33f195c5ad89fd7f6d9e58669d587d0789768",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/Cargo.lock",
+        "expected": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "actual": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/Cargo.toml",
+        "expected": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+        "actual": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/assets/character.profile.json",
+        "expected": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+        "actual": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/assets/fixtures/nvwa-humanoid.glb",
+        "expected": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+        "actual": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/assets/fonts/NvwaSansSC-Regular.ttf",
+        "expected": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea",
+        "actual": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/Cargo.toml",
+        "expected": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+        "actual": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/src/lib.rs",
+        "expected": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2",
+        "actual": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/src/main.rs",
+        "expected": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b",
+        "actual": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/tests/offline.rs",
+        "expected": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+        "actual": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/tests/sequence.rs",
+        "expected": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d",
+        "actual": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/Cargo.toml",
+        "expected": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+        "actual": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/src/asset.rs",
+        "expected": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+        "actual": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/src/bounded_history_tests.rs",
+        "expected": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+        "actual": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/src/lib.rs",
+        "expected": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797",
+        "actual": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/tests/transactions.rs",
+        "expected": "a09433d4f7a7f89f07d96c89f68c7871af9bd9b0a6329bda6cfec2e53bfe3e7a",
+        "actual": "a09433d4f7a7f89f07d96c89f68c7871af9bd9b0a6329bda6cfec2e53bfe3e7a",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-runtime/Cargo.toml",
+        "expected": "e598645fa5ad82d1ff8e79431b2a4c6eb0847ac4d660b75d0e68e14cbfd74dd4",
+        "actual": "e598645fa5ad82d1ff8e79431b2a4c6eb0847ac4d660b75d0e68e14cbfd74dd4",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-runtime/src/lib.rs",
+        "expected": "bd6da4b2212a6bec251ad8ae4ca7b8fbca1038b383a6031cec1b9c0fa1b8ce72",
+        "actual": "bd6da4b2212a6bec251ad8ae4ca7b8fbca1038b383a6031cec1b9c0fa1b8ce72",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-runtime/src/loading_tests.rs",
+        "expected": "9fec6b200db271117b26db45eef2758820f644a8bbc7ef4e74de4d8cc9a8c26a",
+        "actual": "9fec6b200db271117b26db45eef2758820f644a8bbc7ef4e74de4d8cc9a8c26a",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/Cargo.toml",
+        "expected": "e4625c6659d54f9d930b02ca52c49bdf9b1ec92811d180fbe7fdf054050f865b",
+        "actual": "e4625c6659d54f9d930b02ca52c49bdf9b1ec92811d180fbe7fdf054050f865b",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/editor_layout.rs",
+        "expected": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c",
+        "actual": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/fonts.rs",
+        "expected": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2",
+        "actual": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/lib.rs",
+        "expected": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+        "actual": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/main.rs",
+        "expected": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+        "actual": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/platform.rs",
+        "expected": "26d57f8b73020ca57d2bc97c58908c896520a61f1a4ab438b38769d089fda2b1",
+        "actual": "26d57f8b73020ca57d2bc97c58908c896520a61f1a4ab438b38769d089fda2b1",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/web_input.rs",
+        "expected": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+        "actual": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/Cargo.lock",
+        "expected": "a15abd3934b43329499506150b69725f57545a0c39a307000d5c03e8e4dd1066",
+        "actual": "a15abd3934b43329499506150b69725f57545a0c39a307000d5c03e8e4dd1066",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/Cargo.toml",
+        "expected": "93f7fce4532986e0a83bd35caacdb35d501102f3287d80a2c1252c1290354e93",
+        "actual": "93f7fce4532986e0a83bd35caacdb35d501102f3287d80a2c1252c1290354e93",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/RESOLVED-FEATURE-COMPARISON.json",
+        "expected": "e39176d4a3756952b56711e48de95c1929f8c792593da9b0cb8feee8df9663df",
+        "actual": "e39176d4a3756952b56711e48de95c1929f8c792593da9b0cb8feee8df9663df",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/bounded_command.py",
+        "expected": "c5df7949e740381ad41240a7ca234ef2ad2698f62db72dda0330ed5631b3d768",
+        "actual": "c5df7949e740381ad41240a7ca234ef2ad2698f62db72dda0330ed5631b3d768",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/bundle_launcher.py",
+        "expected": "d26780c09dc00bb01b30c05b2dcdb741faf344eb43142182d49124f0d0831f40",
+        "actual": "d26780c09dc00bb01b30c05b2dcdb741faf344eb43142182d49124f0d0831f40",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/lifecycle_controls.py",
+        "expected": "bb38a987111dbc0324ced9dae5343a1eaf0c9dad65ac398b86faff238806bfc7",
+        "actual": "bb38a987111dbc0324ced9dae5343a1eaf0c9dad65ac398b86faff238806bfc7",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/prepare_bundles.py",
+        "expected": "cc82825bd7e76031ce185ffa4c9abfaaf9f77798151474aaa9e645ec4cb19fb0",
+        "actual": "cc82825bd7e76031ce185ffa4c9abfaaf9f77798151474aaa9e645ec4cb19fb0",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/sample_owned_pid.py",
+        "expected": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda",
+        "actual": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/src/main.rs",
+        "expected": "96f63c8f675b3fe8341a7716d3f8590891958f90ffd7936137bcf04e0ac82bd8",
+        "actual": "96f63c8f675b3fe8341a7716d3f8590891958f90ffd7936137bcf04e0ac82bd8",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/verify_locked_versions.py",
+        "expected": "f2bdaa81dcdd1548c4a180403fbce79ee486cae65568833e50112a872483e046",
+        "actual": "f2bdaa81dcdd1548c4a180403fbce79ee486cae65568833e50112a872483e046",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/web_control_server.py",
+        "expected": "c95860d289873a05847b99ee227bbd2639a07607e7e95d4317dcae20ffa8b63e",
+        "actual": "c95860d289873a05847b99ee227bbd2639a07607e7e95d4317dcae20ffa8b63e",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/Cargo.lock",
+        "expected": "cafc9df3596e6388c1e32acc9b49f9acb518d2a8f1c7cffd1326f8321bf29c2b",
+        "actual": "cafc9df3596e6388c1e32acc9b49f9acb518d2a8f1c7cffd1326f8321bf29c2b",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/Cargo.toml",
+        "expected": "e94a1e4f04fe47224f5bd7b57e384b21dc42af8396b9e26c575d6096cfa6f2bb",
+        "actual": "e94a1e4f04fe47224f5bd7b57e384b21dc42af8396b9e26c575d6096cfa6f2bb",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/src/main.rs",
+        "expected": "579bcc2bebb310e990e68c8c7fe29e1d4b2ca0b48dcd454e64b2d0319464d7a0",
+        "actual": "579bcc2bebb310e990e68c8c7fe29e1d4b2ca0b48dcd454e64b2d0319464d7a0",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/verify_pixels.py",
+        "expected": "6156f9b5f6d95ac98728eeb8ff3489bb750f741968f9fe88b3f7342b18559753",
+        "actual": "6156f9b5f6d95ac98728eeb8ff3489bb750f741968f9fe88b3f7342b18559753",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/rust-toolchain.toml",
+        "expected": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+        "actual": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen/nvwa-startup-profile-experiment",
+        "expected": "6a49bc165991bc6353f69074e225a8b9644aa86154f48df7055f793ef0a3605f",
+        "actual": "6a49bc165991bc6353f69074e225a8b9644aa86154f48df7055f793ef0a3605f",
+        "pass": true
+      },
+      {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/frozen/nvwa-ui-pixels-experiment",
+        "expected": "504c4bb90125b103df0d4d49148d0597226790ad9a18e9f663f8107b3e1e55fd",
+        "actual": "504c4bb90125b103df0d4d49148d0597226790ad9a18e9f663f8107b3e1e55fd",
+        "pass": true
+      }
+    ]
+  },
+  "subsequent_root_availability_observation": {
+    "provenance": "root worker message, later than both native measurements",
+    "root_product_control": "separate integrated noninstrumented main binary prefix72d3df; blank actual root Cua surface",
+    "later_cua_error": "The Mac is locked and automaticunlockcouldnot...",
+    "later_lock_state": "explicitly blocked",
+    "native1_native2_lock_state_at_measurement": "UNKNOWN; later evidence is not retroactive cause proof",
+    "root_product_cleanup": "root reports exact owned PID18151 kernel/binary verified, SIGTERM and ESRCH verified",
+    "pixel_gate": "held for human unlock/verified availability change"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "scope": "CPU/direct HTTP reason controls only; no browser",
+  "script_sha256": "c5cc21cec851a50833ecb32a7b05e00399c8a703e1c446602865fe278af14f08",
+  "mode": "stdin-overflow",
+  "duration_seconds": 0.06801716599147767,
+  "exit_code": 2,
+  "cleanup": {
+    "accepted": 0,
+    "active_connections": 0,
+    "asset_gets": {},
+    "case_status": "invalid",
+    "closed": 0,
+    "elapsed_seconds": 0.0107,
+    "event": "cleanup",
+    "exception": null,
+    "held_bodies": 0,
+    "invalid_reasons": [
+      "stdin input budget exhausted"
+    ],
+    "product_bound_claim_allowed": false,
+    "reason": "stdin input budget exhausted",
+    "response_threads": 0,
+    "work_gets": {}
+  },
+  "expected_reason": "stdin input budget exhausted",
+  "expected_status": "invalid"
+}

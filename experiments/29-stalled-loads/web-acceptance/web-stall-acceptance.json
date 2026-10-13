@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "scope": "one actual app, startup Work01 plus eleven successful GUI picker selections, four blocked transfers and latest Work12 recovery",
+  "pre_release": {
+    "accepted": 12,
+    "active_connections": 4,
+    "asset_gets": {
+      "01": 1,
+      "02": 1,
+      "03": 1,
+      "04": 1
+    },
+    "case_status": "running",
+    "closed": 8,
+    "elapsed_seconds": 42.7954,
+    "event": "status",
+    "exception": null,
+    "held_bodies": 4,
+    "invalid_reasons": [],
+    "product_bound_claim_allowed": true,
+    "reason": null,
+    "requests": 12,
+    "secondary_termination_reasons": [],
+    "work_gets": {
+      "01": 1
+    }
+  },
+  "asset_get_order": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "12"
+  ],
+  "final_work_semantic_equality": true,
+  "saved_work_sha256": "8097148bd4229da93718d7e6c1d7e072e5debb2dd637c7af1b6a085a9a71eae4",
+  "expected_work_sha256": "3913eb164dc758b8e3478683b83adc262379dc355c99652948f718f3da1364fa",
+  "cleanup": {
+    "accepted": 14,
+    "active_connections": 0,
+    "asset_gets": {
+      "01": 1,
+      "02": 1,
+      "03": 1,
+      "04": 1,
+      "12": 1
+    },
+    "case_status": "ended",
+    "closed": 14,
+    "elapsed_seconds": 85.8951,
+    "event": "cleanup",
+    "exception": null,
+    "held_bodies": 0,
+    "invalid_reasons": [],
+    "product_bound_claim_allowed": true,
+    "reason": "stdin quit",
+    "response_threads": 0,
+    "secondary_termination_reasons": [],
+    "work_gets": {
+      "01": 1
+    }
+  },
+  "not_claimed": [
+    "12 Work HTTP GETs",
+    "exact retiring-root count from browser",
+    "byte/task/GPU-memory cap",
+    "90/120 s watchdog dwell",
+    "native visual acceptance"
+  ]
+}

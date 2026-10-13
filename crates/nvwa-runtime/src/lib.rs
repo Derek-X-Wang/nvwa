@@ -241,6 +241,11 @@ struct CharacterAsset {
     playback_generation: u64,
 }
 
+// Bound roots admitted by load_character, including retired roots until their
+// AssetServer IDs are purged. This is a request/retention count, not a byte,
+// dependency-task, or GPU-memory budget. Keep one latest pending open only.
+const MAX_ADMITTED_CHARACTER_LOADS: usize = 4;
+
 // Retain a superseded request until its publication and dependencies settle.
 // Then drop the root and wait for Bevy to purge its path cache before another
 // request can publish into the shared GLTF subasset labels.
@@ -669,11 +674,27 @@ fn advance_character_request(
         .iter()
         .any(|retiring| retiring.path == asset.path)
     {
-        // Only same-path labels can alias the current self-contained fixture.
-        // Another path can load while a superseded request remains pending.
+        // Same-path publication fencing applies even when capacity is free.
+        status.phase = "Waiting for previous character load…".into();
         if asset.elapsed > 30.0 && status.error.is_none() {
             status.error = Some("Previous character load exceeded 30 seconds".into());
         }
+        return true;
+    }
+    let admitted = asset.retiring.len() + usize::from(asset.bytes.is_some());
+    if admitted >= MAX_ADMITTED_CHARACTER_LOADS {
+        status.ready = false;
+        status.phase = format!(
+            "Waiting for earlier character loads ({admitted}/{MAX_ADMITTED_CHARACTER_LOADS})…"
+        );
+        if asset.elapsed > 30.0 && status.error.is_none() {
+            status.error = Some(format!(
+                "Character load capacity reached ({admitted}/{MAX_ADMITTED_CHARACTER_LOADS}); waiting for earlier loads to finish"
+            ));
+        }
+        // Do not cancel, drop an unfinished root, or start another retrieval.
+        // A later open replaces this pending document; terminal retirement and
+        // asset tracking must free a slot before the latest request can start.
         return true;
     }
     asset.bytes = Some(server.load(asset.path.clone()));

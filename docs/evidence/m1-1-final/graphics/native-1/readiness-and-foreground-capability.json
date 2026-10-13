@@ -1,0 +1,22 @@
+{
+  "inventory_errors": [],
+  "native_inventory": [
+    {
+      "id": "dev.nvwa.studio",
+      "isRunning": false
+    }
+  ],
+  "private_native1_process_and_guard": "confirmed absent after finite exit",
+  "explicit_lock_state": "NOT-EXPOSED by current inventory; no explicit locked/unavailable error observed",
+  "black_png_does_not_establish_lock": true,
+  "native_api": [
+    "cua.getApp(exact absolute app path), launches in background",
+    "app.performSecondaryAction(elementIndex, action)",
+    "app.getAXState()",
+    "app.getScreenshot()"
+  ],
+  "actual_native1_window_action": "0 standard window Nvwa Character Studio, Secondary Actions: Raise",
+  "eligible_foreground_step": "use fresh remaining-case AX window index exposing Raise, app.performSecondaryAction(index, Raise); then fresh AX and screenshot",
+  "explicit_app_activate_method": "not advertised",
+  "next_case_not_launched": true
+}

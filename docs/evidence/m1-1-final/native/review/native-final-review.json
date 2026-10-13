@@ -1,0 +1,133 @@
+{
+  "status": "ACCEPT_SCOPED_NATIVE_EVIDENCE",
+  "scope": "Independent bounded native recovery, save/reload and temporary-wave evidence review; no live UI/GPU/Cargo",
+  "source_head": "9df6d3a05296bed1b876edb81a7562ddfe98da83",
+  "comparator_sha256": "35d67a4088dd63b3c2f9fa020c98a8b50c5a9b85a665745fc645dfe4a323ba4e",
+  "actual_doc_results_file": "actual-doc-independent-comparisons.json",
+  "actual_docs": "Four actual file comparisons independently pass with zero differences; all revision1, three timeline entries, four parameter specs and three clip specs. All three B outputs byte-identical.",
+  "visual_observations": {
+    "a-missing": "Load error and empty character viewport; 0 meshes/joints/morphs; error names private Resources/assets/fixtures/native-recovery-same.glb. Revision1/jaw0.61 show Work loaded.",
+    "a-same-path-recovered": "Real character Ready,18 joints/4 morphs,jaw0.61,Document opened and no prior error.",
+    "a-missing-again": "Character absent again,Load error with same private asset path; no retained old character.",
+    "b-other-path-recovered": "Ready real character,jaw0.61/nose0.27,Revision1,Document opened.",
+    "b-saved": "Document saved,Revision1 and B parameters visible.",
+    "b-saved-reopened": "Document opened and Ready B character,Revision1.",
+    "b-reloaded-saved": "Document saved,Ready B character,Revision1.",
+    "sequence-01": "Playing idle at0.913 with real front-facing character.",
+    "sequence-07": "Playing wave at3.783 with raised arm.",
+    "sequence-completed-turn": "Replay at9.0,turn label and turned character.",
+    "interaction-before": "Paused Play button,2.2,idle,normal pose.",
+    "interaction-active": "Raised arm,Wave interaction - sequence cursor held,2.2 and disabled controls.",
+    "interaction-restored": "Normal idle pose,Play button and cursor2.2,interaction message cleared.",
+    "interaction-after-saved": "Document saved,still paused idle2.2,Revision1.",
+    "formal_tabs": "Independently viewed native-shape-live.jpg and native-profile-live.jpg: actual Shape controls then Profile metadata with visible character; original JPEG hashes match raw tool outputs."
+  },
+  "tabs_separate_cohort": {
+    "before_after_bytes": 1624,
+    "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+    "scope": "Default Doc tabs Save invariance, not A/B three-segment recovery Docs."
+  },
+  "pending": null,
+  "identity_cleanup": {
+    "launch_receipt": "isolated/launch-receipt.json records PID98713 exact isolated binary72d3df8c...; screenshots error path supports private asset namespace.",
+    "current_verified": "Formal/isolated binary hashes72d3...,canonical/privateA/privateB asset hashesf13e...,both90585/98713 absent from read-only exact ps query.",
+    "limits": "Cannot independently observe historical exit order; cleanup-receipt records A restored after consumer exit."
+  },
+  "historical_preservation": {
+    "prior_evidence_hashes_unchanged": {
+      "contracts/expected-manifest.json": true,
+      "ui/profile-after-click.png": true,
+      "ui/rebound-window.png": true,
+      "diagnosis/sample-command.json": true,
+      "diagnosis/native-input-stall.sample.txt": true
+    },
+    "original_helper_sha256": "e9463f7b9fa87e8be23956db25156f5873d18da6b48996f5cb7c15cc90c52e6c",
+    "original24_controls_sha256": "8139f9001bb85020e02f1672f7206c28ebc638602a7234e5f65c37a0ba5cf76d",
+    "rule": "Keep earlier pending/NOT-RUN receipts as historical records; new actual outputs supersede only their unavailable-at-that-time scope. Historical stall cause remains UNKNOWN."
+  },
+  "not_established": [
+    "physical first frame",
+    "FPS/performance or memory benchmark",
+    "IME",
+    "native exact1024 width",
+    "continuous frame-by-frame timing",
+    "broad platform acceptance"
+  ],
+  "writes": "Only own review receipts; no history/product/external edits, UI, GPU or Cargo. No processes started.",
+  "reviewed_at_utc": "2026-10-13T16:41:12.011128+00:00",
+  "provenance": {
+    "status": "PASS",
+    "original_source_lines_verified": 72,
+    "successful_calls": 22,
+    "matching_call_completion_output_ids_and_arguments": true,
+    "namespace_and_selection_bounds_verified": true,
+    "failed_calls_excluded": 2,
+    "raw_image_exact_hash_matches": 22,
+    "awaited_write_only_images": [
+      "isolated/sequence-02.jpg",
+      "isolated/sequence-03.jpg",
+      "isolated/sequence-05.jpg",
+      "isolated/sequence-06.jpg",
+      "isolated/sequence-08.jpg"
+    ],
+    "public_initial_files_exact": 78,
+    "public_provenance_files_exact": 5,
+    "raw_trace_hashes": {
+      "success_call_and_completion": "e630f18939842b24838882f542a97fef79ce2a4ac5d292bd096b9bb39369dfdf",
+      "success_raw_outputs": "7c52629834ef6e515a39aed3f5897cf95fe474780b8a50137e61830570966e41",
+      "excluded_failed_calls": "4875a48a5268dd79832bc3677cacc6e04af120705944bf81496b5c3c8b7925b5"
+    },
+    "provenance_manifest_sha256": "9d69e57bb0bc9b10118f0aae9d33f3812a154a1c21739e54f35b8e7bc2c659b7",
+    "text_outputs_contain_no_unrelated_session_payloads": true,
+    "independent_scope": "Bounded exact selected original lines only; no broad transcript imported. Successful raw outputs only AX/screenshot metadata/images/sequence path metadata. Five un-emitted sequence captures depend on completed awaited-write loop, not output pixel hash."
+  },
+  "action_order_verified": [
+    "Formal exact dist getApp binding then actual Shape/Profile and separate default-Doc saves",
+    "Isolated exact bundle getApp; A Open missing → root copy receipt → same-path Open Ready → A Save",
+    "Root private A rename receipt → A Open missing/old character absent → B different Work path Open Ready",
+    "B actual Save path → same path actual Open → new reloaded Save path",
+    "Saved B authored sequence restart; sampled idle/wave/completed turn",
+    "Pause/seek2.2 → chest click → temporary wave held2.2 → restored pausedidle2.2 → postinteraction Save",
+    "Completed isolated window-close call; process exits/restoration recorded in separate root receipts, not inferred from Cua alone"
+  ],
+  "docs_review": {
+    "files": [
+      "docs/evidence/m1-1-final/native/README.md",
+      "docs/evidence/m1-1-final/ACCEPTANCE.md",
+      "docs/HANDOFF.md",
+      "docs/ROADMAP.md",
+      "docs/EXPERIMENTS.md",
+      "docs/ISSUES.md",
+      "docs/TEST-MATRIX.md"
+    ],
+    "accepted_facts": "Native recovery, whole Doc and paused interaction observations match images/exact call history. Counts and boundaries distinguish current113 source CI from baseline103, source head from final archive/postmerge head, native GUI from headless experiments/physical first frame/IME. Historical cause stays UNKNOWN and #3/M2 remain bounded.",
+    "minor_editorial_pending": null,
+    "editorial_resolution": "Root corrected final paragraphs to pending PR41 integration/final-head CI; retained review/reproduction artifacts; native continuation complete and both processes exited. Independently reread.",
+    "acceptance_sha256": "4a0f7258c97a7be180f657cb3ee5612e1309a992845dfc93fdf1c4a7869e6721"
+  },
+  "review_limits": [
+    "No new UI/GPU/Cargo/test suite execution; images inspected offline and existing comparator actual-output replay only.",
+    "Exact source call/output records prove actions and snapshots; five un-emitted loop files have awaited-write binding only.",
+    "Process IDs/launch times/file operation chronology derive from separately preserved root kernel/filesystem receipts; independent current hash and process absence checks do not reconstruct historical kernel state.",
+    "This is scoped functional acceptance, not continuous frame timing, every-frame cursor proof, first presentation, exact native1024, new physicalIME/drag/DPI, nativeHTTPstorm, byte/task/GPU resource cap, signing or cross-platform acceptance.",
+    "Final archive-head/postmerge CI and any portable-replay helper remain separate gates."
+  ],
+  "resolved_findings": [
+    {
+      "severity": "P3",
+      "file": "docs/evidence/m1-1-final/ACCEPTANCE.md",
+      "evidence": "Final decisions paragraphs retain native remainder of #23 stay open and retained ... unlocked follow-up after earlier paragraphs accept the completed native continuation.",
+      "invariant": "Current acceptance gate must distinguish completed scoped native evidence from pending PR integration/final CI.",
+      "requested_change": "Describe #23/#39 as awaiting integration/final-head CI and retain artifacts for review, without an unlocked follow-up gate.",
+      "scope": "Editorial; does not block actual scoped native evidence acceptance."
+    }
+  ],
+  "findings": [],
+  "portable_replay_followup": {
+    "status": "ACCEPT_PORTABLE_OFFLINE_REPLAY",
+    "receipt": "native-portable-replay-review.json",
+    "receipt_sha256": "931966a8702c60271465773e4884503d43fe068c9b13c97f1e36109904b582c9",
+    "wrapper_sha256": "9799b6320c599b8b2669241e365f861e087e5ba9295c47e0f2376f525197bc00",
+    "independent_exit": 0
+  }
+}

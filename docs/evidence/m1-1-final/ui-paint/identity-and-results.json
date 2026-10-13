@@ -1,0 +1,230 @@
+{
+  "green": {
+    "compile_command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "nvwa-studio",
+      "--lib",
+      "editor_layout::paint_tests::",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "CARGO_BUILD_JOBS": "1",
+    "artifact": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio#0.1.0",
+      "manifest_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio/Cargo.toml",
+      "target": {
+        "kind": [
+          "cdylib",
+          "rlib"
+        ],
+        "crate_types": [
+          "cdylib",
+          "rlib"
+        ],
+        "name": "nvwa_studio",
+        "src_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": 2,
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [],
+      "filenames": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b"
+      ],
+      "executable": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+      "fresh": false
+    },
+    "executable_sha256": "d702602e5b8be312f2d215a980f4823cdf477998b0d184180ec2976f74c5e9c1",
+    "executable_resolved_path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+    "editor_layout_sha256": "923332b75506952c05cc2fe4a1d84ff78d4be0ba8d0f2f98d94a30c0d09025ae",
+    "paint_test_module_sha256": "7d082009fad2548e0e4cc88b274847776ad7a51e95dd0e2ac0f6c9ebc634e1db",
+    "paint_test_count": 6,
+    "state_test_count": 1,
+    "paint": {
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "editor_layout::paint_tests::",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0
+    },
+    "state": {
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space",
+        "--exact",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0
+    },
+    "cargo_build_finished_success": true,
+    "compile_process_exit": null,
+    "initial_shell_wrapper_exit": 1,
+    "initial_shell_wrapper_error": "Cargo compilation succeeded; following shell assignment failed: zsh read-only variable status. Fresh executable identity was read from successful Cargo artifact output before tests."
+  },
+  "mutant": {
+    "compile_command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "nvwa-studio",
+      "--lib",
+      "editor_layout::paint_tests::",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "CARGO_BUILD_JOBS": "1",
+    "artifact": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio#0.1.0",
+      "manifest_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio/Cargo.toml",
+      "target": {
+        "kind": [
+          "cdylib",
+          "rlib"
+        ],
+        "crate_types": [
+          "cdylib",
+          "rlib"
+        ],
+        "name": "nvwa_studio",
+        "src_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": 2,
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [],
+      "filenames": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b"
+      ],
+      "executable": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+      "fresh": false
+    },
+    "executable_sha256": "6a0c1857f1a34a44e4a08a01549a9acbb42cf140c3762810c624e5cd620d37b2",
+    "executable_resolved_path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+    "editor_layout_sha256": "cb867af683ef5180cbf31924e2d8bc373cd9a3adaa6fff29fbeafd4670d42446",
+    "paint_test_module_sha256": "7d082009fad2548e0e4cc88b274847776ad7a51e95dd0e2ac0f6c9ebc634e1db",
+    "paint_test_count": 6,
+    "state_test_count": 1,
+    "paint": {
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "editor_layout::paint_tests::",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 101
+    },
+    "state": {
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space",
+        "--exact",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0
+    },
+    "cargo_build_finished_success": true,
+    "compile_process_exit": 0
+  },
+  "restored": {
+    "compile_command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "nvwa-studio",
+      "--lib",
+      "editor_layout::paint_tests::",
+      "--no-run",
+      "--message-format=json"
+    ],
+    "CARGO_BUILD_JOBS": "1",
+    "artifact": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio#0.1.0",
+      "manifest_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio/Cargo.toml",
+      "target": {
+        "kind": [
+          "cdylib",
+          "rlib"
+        ],
+        "crate_types": [
+          "cdylib",
+          "rlib"
+        ],
+        "name": "nvwa_studio",
+        "src_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio/src/lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "1",
+        "debuginfo": 2,
+        "debug_assertions": true,
+        "overflow_checks": true,
+        "test": true
+      },
+      "features": [],
+      "filenames": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b"
+      ],
+      "executable": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+      "fresh": false
+    },
+    "executable_sha256": "8b971a64dd89199a50ea6c36a29a31abf69f81e8df8d0665a0ced903b9d6d702",
+    "executable_resolved_path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+    "editor_layout_sha256": "923332b75506952c05cc2fe4a1d84ff78d4be0ba8d0f2f98d94a30c0d09025ae",
+    "paint_test_module_sha256": "7d082009fad2548e0e4cc88b274847776ad7a51e95dd0e2ac0f6c9ebc634e1db",
+    "paint_test_count": 6,
+    "state_test_count": 1,
+    "paint": {
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "editor_layout::paint_tests::",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0
+    },
+    "state": {
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/target/debug/deps/nvwa_studio-ce1f91218472297b",
+        "editor_layout::tests::actual_studio_layout_controls_preserve_work_history_and_guard_focused_space",
+        "--exact",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "exit": 0
+    },
+    "cargo_build_finished_success": true,
+    "compile_process_exit": 0
+  },
+  "source_restored_exactly": true
+}

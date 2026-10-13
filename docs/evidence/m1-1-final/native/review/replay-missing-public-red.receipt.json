@@ -1,0 +1,21 @@
+{
+  "scope": "Preserved actual first public-archive CLI execution, before root added missing original JPEG",
+  "source_tool_chunk_id": "ccbfa5",
+  "actual_exit_code": 2,
+  "stdout": "{\n  \"status\": \"FAIL\",\n  \"reason\": \"Missing archive file: ui/private-path-set.jpg\",\n  \"scope\": \"Offline archive replay failure; no GUI claim\"\n}\n",
+  "stdout_sha256": "806e2703661868e0fa9cd08138ded6fc0901a6079859530e768c7303154b861f",
+  "parsed_result": {
+    "status": "FAIL",
+    "reason": "Missing archive file: ui/private-path-set.jpg",
+    "scope": "Offline archive replay failure; no GUI claim"
+  },
+  "command": [
+    "python3",
+    "-B",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/review/replay_native_archive.py",
+    "--root",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/native"
+  ],
+  "comparator_wrapper_sha256": "9799b6320c599b8b2669241e365f861e087e5ba9295c47e0f2376f525197bc00",
+  "not_synthetic_reproduction": true
+}

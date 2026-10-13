@@ -1,0 +1,351 @@
+{
+  "status": "PASS",
+  "releaseBuilds": [
+    {
+      "attempt": 1,
+      "elapsedSeconds": 431.58,
+      "guardSha256": "7c689c59ef30ca7629863fab25a518ebd23c79c250ad0de8b29cec05a8a4920f",
+      "result": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/compile/headless32-release-build-1/result.json",
+      "inheritedIOLimitPreserved": true
+    },
+    {
+      "attempt": 2,
+      "elapsedSeconds": 2.01,
+      "guardSha256": "f349ec4ecbb75e6114fef3cb3ad13ac6e8ceaeaf0abd6a162bb1129ccf8bfe8f",
+      "result": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/compile/headless32-release-build-2/result.json",
+      "mandatoryFinallyCleanup": "exit_verified"
+    }
+  ],
+  "binary": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/headless32/frozen/nvwa-tab-pixels-headless-experiment",
+    "sha256": "c4934df0bf0fc6fb8ded00e5e9d2248b26de2cb64906dea41cd3e7cee6ef1bff",
+    "bytes": 89862992,
+    "equalsActualSecondBuild": true
+  },
+  "rustSourceSha256": "28b71bf651092a672c97e14a845d12eced950afd210065b3a896579c6a469159",
+  "rootLockSha256": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+  "candidateLockSha256": "0bd31552b03b5ef673d6a22c744ce678eaa91ddb05ca528df7752d06ef7ed6c9",
+  "resolvedParity": {
+    "status": "PASS",
+    "rootCurrentCheckout": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa",
+    "rootLockSha256": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+    "baselineLockSha256": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+    "candidateLockSha256": "0bd31552b03b5ef673d6a22c744ce678eaa91ddb05ca528df7752d06ef7ed6c9",
+    "packageIdentitiesChecked": 524,
+    "packageDifferences": [],
+    "externalResolvedFeatureCounts": {
+      "root": 521,
+      "candidate": 521
+    },
+    "featureDifferences": [],
+    "drawTabsMethod": {
+      "baselinePath": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/editor_layout.rs",
+      "rootCurrentPath": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio/src/editor_layout.rs",
+      "exactByteEquality": true,
+      "byteCount": 1393,
+      "sha256": "8f68b6617dbbf8bba64c389c320ea48e62dbf33c60f9e7db1e34c7ecf1abad5b"
+    },
+    "compilation": "NOT-RUN",
+    "GPU": "NOT-RUN"
+  },
+  "newFreezeInputRechecks": [
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/inputs/canonical-work.nvwa.json",
+      "expected": "cacf849f0918648a1a970452d0c33f195c5ad89fd7f6d9e58669d587d0789768",
+      "actual": "cacf849f0918648a1a970452d0c33f195c5ad89fd7f6d9e58669d587d0789768",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/Cargo.lock",
+      "expected": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "actual": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/Cargo.toml",
+      "expected": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+      "actual": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/assets/character.profile.json",
+      "expected": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+      "actual": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/assets/fixtures/nvwa-humanoid.glb",
+      "expected": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "actual": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/assets/fonts/NvwaSansSC-Regular.ttf",
+      "expected": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea",
+      "actual": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/Cargo.toml",
+      "expected": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+      "actual": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/src/lib.rs",
+      "expected": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2",
+      "actual": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/src/main.rs",
+      "expected": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b",
+      "actual": "8ddf575e24de088b319aed601214055ce2fa3abba916e3effb04e612d9b0700b",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/tests/offline.rs",
+      "expected": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+      "actual": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-cli/tests/sequence.rs",
+      "expected": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d",
+      "actual": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/Cargo.toml",
+      "expected": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+      "actual": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/src/asset.rs",
+      "expected": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+      "actual": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/src/bounded_history_tests.rs",
+      "expected": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+      "actual": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/src/lib.rs",
+      "expected": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797",
+      "actual": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-core/tests/transactions.rs",
+      "expected": "a09433d4f7a7f89f07d96c89f68c7871af9bd9b0a6329bda6cfec2e53bfe3e7a",
+      "actual": "a09433d4f7a7f89f07d96c89f68c7871af9bd9b0a6329bda6cfec2e53bfe3e7a",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-runtime/Cargo.toml",
+      "expected": "e598645fa5ad82d1ff8e79431b2a4c6eb0847ac4d660b75d0e68e14cbfd74dd4",
+      "actual": "e598645fa5ad82d1ff8e79431b2a4c6eb0847ac4d660b75d0e68e14cbfd74dd4",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-runtime/src/lib.rs",
+      "expected": "bd6da4b2212a6bec251ad8ae4ca7b8fbca1038b383a6031cec1b9c0fa1b8ce72",
+      "actual": "bd6da4b2212a6bec251ad8ae4ca7b8fbca1038b383a6031cec1b9c0fa1b8ce72",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-runtime/src/loading_tests.rs",
+      "expected": "9fec6b200db271117b26db45eef2758820f644a8bbc7ef4e74de4d8cc9a8c26a",
+      "actual": "9fec6b200db271117b26db45eef2758820f644a8bbc7ef4e74de4d8cc9a8c26a",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/Cargo.toml",
+      "expected": "e4625c6659d54f9d930b02ca52c49bdf9b1ec92811d180fbe7fdf054050f865b",
+      "actual": "e4625c6659d54f9d930b02ca52c49bdf9b1ec92811d180fbe7fdf054050f865b",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/editor_layout.rs",
+      "expected": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c",
+      "actual": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/fonts.rs",
+      "expected": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2",
+      "actual": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/lib.rs",
+      "expected": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+      "actual": "876329eb625aed45ce4229ea0277c8949a1337d2ff147e5caa25e17e48981f8e",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/main.rs",
+      "expected": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+      "actual": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/platform.rs",
+      "expected": "26d57f8b73020ca57d2bc97c58908c896520a61f1a4ab438b38769d089fda2b1",
+      "actual": "26d57f8b73020ca57d2bc97c58908c896520a61f1a4ab438b38769d089fda2b1",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/web_input.rs",
+      "expected": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+      "actual": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/rust-toolchain.toml",
+      "expected": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+      "actual": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/32-tab-pixels-headless/src/main.rs",
+      "expected": "28b71bf651092a672c97e14a845d12eced950afd210065b3a896579c6a469159",
+      "actual": "28b71bf651092a672c97e14a845d12eced950afd210065b3a896579c6a469159",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/32-tab-pixels-headless/Cargo.toml",
+      "expected": "a212f0f017967129627cccbf2c091831959e9c799efb321f0d92c0a9879dd0f9",
+      "actual": "a212f0f017967129627cccbf2c091831959e9c799efb321f0d92c0a9879dd0f9",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/32-tab-pixels-headless/Cargo.lock",
+      "expected": "0bd31552b03b5ef673d6a22c744ce678eaa91ddb05ca528df7752d06ef7ed6c9",
+      "actual": "0bd31552b03b5ef673d6a22c744ce678eaa91ddb05ca528df7752d06ef7ed6c9",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/32-tab-pixels-headless/run_owned.py",
+      "expected": "f3bc5d742f3e803b331b6fb54fbf8cf439ac9f899451c15d4742c323f7b4565a",
+      "actual": "f3bc5d742f3e803b331b6fb54fbf8cf439ac9f899451c15d4742c323f7b4565a",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/32-tab-pixels-headless/SOURCE-MANIFEST.json",
+      "expected": "dc7df605042819393594319fc6d901e51a4d296557c35430e92394013dd9b63d",
+      "actual": "dc7df605042819393594319fc6d901e51a4d296557c35430e92394013dd9b63d",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/verify_pixels.py",
+      "expected": "6156f9b5f6d95ac98728eeb8ff3489bb750f741968f9fe88b3f7342b18559753",
+      "actual": "6156f9b5f6d95ac98728eeb8ff3489bb750f741968f9fe88b3f7342b18559753",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/sample_owned_pid.py",
+      "expected": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda",
+      "actual": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/32-tab-pixels-headless/compile_guard.py",
+      "expected": "f349ec4ecbb75e6114fef3cb3ad13ac6e8ceaeaf0abd6a162bb1129ccf8bfe8f",
+      "actual": "f349ec4ecbb75e6114fef3cb3ad13ac6e8ceaeaf0abd6a162bb1129ccf8bfe8f",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/32-tab-pixels-headless/test_compile_guard.py",
+      "expected": "156eb106c8f2895bedb8b879b0a1b5b22e4fac0d09fa408146d8ebb2466f1f3a",
+      "actual": "156eb106c8f2895bedb8b879b0a1b5b22e4fac0d09fa408146d8ebb2466f1f3a",
+      "pass": true
+    }
+  ],
+  "old30_31FrozenInputRechecks": [
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/Cargo.lock",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/Cargo.toml",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/RESOLVED-FEATURE-COMPARISON.json",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/bounded_command.py",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/bundle_launcher.py",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/lifecycle_controls.py",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/prepare_bundles.py",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/sample_owned_pid.py",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/src/main.rs",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/verify_locked_versions.py",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/web_control_server.py",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/Cargo.lock",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/Cargo.toml",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/src/main.rs",
+      "pass": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/31-ui-pixels/verify_pixels.py",
+      "pass": true
+    }
+  ],
+  "compileGroupCleanup": {
+    "32139": "confirmed_absent_ESRCH",
+    "52262": "confirmed_absent_ESRCH"
+  },
+  "finalTargetPs": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "realCPUControls": {
+    "count": 10,
+    "path": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/32-tab-pixels-headless/COMPILE-GUARD-CONTROLS.json",
+    "sha256": "0309487ca7660975cf3b9f180ccf79caba034231bbb62dde8c49ae25f6fb5ae5",
+    "status": "PASS",
+    "remainingOwnedProcesses": []
+  },
+  "compileLease": "returned to root",
+  "GPU": "NOT-GRANTED; renderer/native Window/tab/server unlaunched",
+  "rootFinalFreeze": "pending final approval/R2 review",
+  "finalStorageFreeBytes": 57198751744
+}

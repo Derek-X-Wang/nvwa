@@ -1,0 +1,61 @@
+{
+  "scope": "Actual public-archive CLI after root added original private-path-set JPEG",
+  "actual_exit_code": 0,
+  "stdout": "{\n  \"status\": \"PASS\",\n  \"scope\": \"Portable offline archive replay only; no native GUI or product execution\",\n  \"initial_copy_records_checked\": 78,\n  \"initial_copy_is_not_final_directory_inventory\": true,\n  \"provenance_copy_records_checked\": 5,\n  \"successful_calls\": 22,\n  \"excluded_failed_calls\": 2,\n  \"screenshots_checked\": 27,\n  \"exact_raw_output_pixel_byte_matches\": 22,\n  \"unemitted_sequence_samples_with_completed_loop_binding\": 5,\n  \"whole_documents\": [\n    {\n      \"path\": \"native-same-saved.nvwa.json\",\n      \"sha256\": \"2b7c549c0ffe8244c9fccac9f17b232b806f6e584b154184efa24d3e98d399e8\",\n      \"bytes\": 1950,\n      \"whole_document_equal\": true\n    },\n    {\n      \"path\": \"native-other-saved.nvwa.json\",\n      \"sha256\": \"3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55\",\n      \"bytes\": 1952,\n      \"whole_document_equal\": true\n    },\n    {\n      \"path\": \"native-other-reloaded-saved.nvwa.json\",\n      \"sha256\": \"3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55\",\n      \"bytes\": 1952,\n      \"whole_document_equal\": true\n    },\n    {\n      \"path\": \"native-other-after-interaction.nvwa.json\",\n      \"sha256\": \"3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55\",\n      \"bytes\": 1952,\n      \"whole_document_equal\": true\n    }\n  ],\n  \"tabs_byte_equal\": true,\n  \"B_saved_reloaded_interaction_byte_equal\": true,\n  \"bounded_bytes_read_and_expanded\": 20643905,\n  \"limits\": [\n    \"No GUI replay, frame/performance proof or process/cleanup re-query.\",\n    \"Private app bundle/binaries are intentionally absent from the portable archive; original identity receipts are retained.\",\n    \"Root owns the final archive inventory and any later additions.\"\n  ]\n}\n",
+  "stderr": "",
+  "stdout_sha256": "5b3eacfd28c5b4d191792547a1c5ac0eeec4200b15693c7cd6268a8eb916c649",
+  "parsed_result": {
+    "status": "PASS",
+    "scope": "Portable offline archive replay only; no native GUI or product execution",
+    "initial_copy_records_checked": 78,
+    "initial_copy_is_not_final_directory_inventory": true,
+    "provenance_copy_records_checked": 5,
+    "successful_calls": 22,
+    "excluded_failed_calls": 2,
+    "screenshots_checked": 27,
+    "exact_raw_output_pixel_byte_matches": 22,
+    "unemitted_sequence_samples_with_completed_loop_binding": 5,
+    "whole_documents": [
+      {
+        "path": "native-same-saved.nvwa.json",
+        "sha256": "2b7c549c0ffe8244c9fccac9f17b232b806f6e584b154184efa24d3e98d399e8",
+        "bytes": 1950,
+        "whole_document_equal": true
+      },
+      {
+        "path": "native-other-saved.nvwa.json",
+        "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+        "bytes": 1952,
+        "whole_document_equal": true
+      },
+      {
+        "path": "native-other-reloaded-saved.nvwa.json",
+        "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+        "bytes": 1952,
+        "whole_document_equal": true
+      },
+      {
+        "path": "native-other-after-interaction.nvwa.json",
+        "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+        "bytes": 1952,
+        "whole_document_equal": true
+      }
+    ],
+    "tabs_byte_equal": true,
+    "B_saved_reloaded_interaction_byte_equal": true,
+    "bounded_bytes_read_and_expanded": 20643905,
+    "limits": [
+      "No GUI replay, frame/performance proof or process/cleanup re-query.",
+      "Private app bundle/binaries are intentionally absent from the portable archive; original identity receipts are retained.",
+      "Root owns the final archive inventory and any later additions."
+    ]
+  },
+  "command": [
+    "python3",
+    "-B",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/review/replay_native_archive.py",
+    "--root",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/m1-1-final/native"
+  ],
+  "wrapper_sha256": "9799b6320c599b8b2669241e365f861e087e5ba9295c47e0f2376f525197bc00"
+}

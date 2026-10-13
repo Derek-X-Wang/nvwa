@@ -1,0 +1,32 @@
+{
+  "status": "ACCEPT_PORTABLE_OFFLINE_REPLAY",
+  "reviewed_at_utc": "2026-10-13T16:45:52.389721+00:00",
+  "findings": [],
+  "wrapper_sha256": "9799b6320c599b8b2669241e365f861e087e5ba9295c47e0f2376f525197bc00",
+  "independent_public_cli_receipt": "replay-public-independent.receipt.json",
+  "independent_public_cli_receipt_sha256": "b2ff016ac3754922f65f34b559f59a6b54472d2e86f990eea16389e84cd445f1",
+  "independent_public_exit": 0,
+  "checks": {
+    "root_path": "Root resolved once; absolute/traversal/backslash member paths rejected; resolved member target must stay inside root, including symlinks. Frozen import and gzip paths use the same containment guard.",
+    "frozen_identity": "Five SHA-pinned inputs including unchanged comparator, expected manifest, provenance and inventories verified before use. All 78 initial entries and five provenance files hashed; later private-path-set.jpg checked through pinned screenshot binding.",
+    "bounds": "8 MiB per input and gzip expansion via read(MAX_FILE+1), 64 MiB aggregate reads plus expansions; actual20643905 bytes. Bounded lengths and raw SHA checked before JSONL parsing. No gzip bomb run performed; bounded read inspected.",
+    "raw_trace": "Compressed hash and deterministic gzip mtime checked; expanded bytes match both inventory and pinned provenance. Exact source-line SHA,22 calls/completions/outputs,2 excluded failures checked.",
+    "images": "27 JPEGs require pinned identity;22 exact decoded output-byte matches;5 other captures explicitly described as completed-loop binding. Frozen call bodies had already been manually reviewed; this wrapper validates their exact byte identity and does not infer new GUI action.",
+    "whole_document": "Hash-pinned module imported with dont_write_bytecode; calls parse/validate_expected/compare directly using archive-root bytes. It never calls historical absolute-path load_inputs/CLI/self_test. Strict integer, field/array/revision and exact binary32/signed-zero contract remains unchanged. Four comparisons and tabs/B exact byte equality passed.",
+    "error_preservation": "Observed missing ui/private-path-set.jpg public failure remains retained separately. Current public rerun succeeds after original JPEG added; original78 inventory remains frozen and explicitly not a complete final-directory inventory."
+  },
+  "controls_review": {
+    "receipt": "replay-private-cli-controls.receipt.json",
+    "sha256": "1e38d1cab3c0e5636e7bee07240f5dee88014a601a1364132f6489fca6fe63e8",
+    "five_controls": "Relocated positive, missing actual Doc, actual Doc integrity tamper, gzip-byte tamper, identical-byte symlink escape; restored green. Reviewed existing helper CLI receipts; negative runs not repeated by R2.",
+    "important_boundary": "Signed-zero tamper fails byte-count integrity before compare; not an additional direct float-semantic control. Earlier accepted frozen-comparator29 controls retain semantic coverage."
+  },
+  "limits": [
+    "Offline archive validation only; no UI/GPU/Cargo or product execution.",
+    "Tool/control counts are separate from113 product tests.",
+    "Not a final-directory completeness inventory; root owns later archive additions.",
+    "No live process/cleanup re-query; historical receipts remain historical.",
+    "Does not prove continuous frames, performance, first presentation, new physicalIME or1024-native acceptance."
+  ],
+  "scope_writes": "Own independent run/review receipts only."
+}

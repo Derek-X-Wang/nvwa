@@ -1,5 +1,31 @@
 # Actual verification matrix
 
+## M1.1 source cohort and actual continuation — 2026-10-13
+
+Source cohort `9df6d3a` has113 passing Rust workspace tests and successful
+native/Web release builds, packaging, format and strict native/actual-Wasm
+checks. Hosted run38392776461 attempt1 passes113 named Mac tests, including
+all six permanent production-called paint checks, native/actual-Wasm compilation,
+Ubuntu27 overlapping Rust tests and77 diagnostics/two collectors. Final
+evidence-only head and post-merge main require their own ordinary CI receipts;
+the earlier baseline run38286368500 is not reused.
+
+| Boundary | Actual evidence | Limit |
+| --- | --- | --- |
+| Permanent UI paint | Six CPU tests at1280×720/1024×768; independent colors/content/geometry and full Work/history; paint-only mutation red while state test green; hosted discovery | CPU painter output, not rasterized GPU coverage |
+| Stalled root loading | Production real-HTTP controls retain12 roots before/four after;18 controls; actual one-app Web accepts12 Works and recovers only latest12 after four bodies release | Root-request count only; not byte/task/GPU caps or one-slot Web release |
+| Native tabs | Actual Shape/Profile clicks; two complete saved default Works byte-identical | Current native logical1280×720; no new native exact1024×768 claim |
+| Native asset recovery | Real missing-GLB error removes old character; same/different-path recovery; actual Save/Open; all four whole Docs match inputs | Private bundle, same released binary; no native request storm inferred |
+| Native authored playback/click | Sampled idle/wave/turn; pausedidle2.2→temporarywave/cursorheld→pausedidle2.2; saved Doc unchanged | Sampled functional states; no continuous frame timing or physical-input retest |
+| Headless GPU pixels | Actual Metal/Image normal Shape/Profile green and wrong-color Profile red; independent checker0/0/1 and three PNGs reviewed | One adapter/two regions; native-window experiment31 NOT-RUN; no permanent GPU CI |
+| Startup measurement | Two baseline native launches with black readbacks; real baseline Web with eight requests/20,565,000 body bytes | Exact physical first presentation, fully cold state, GPU timing/memory and blank-capture cause NOT-RUN |
+
+See [current acceptance/commands](evidence/m1-1-final/ACCEPTANCE.md),
+[native evidence](evidence/m1-1-final/native/README.md) and
+[source-cohort hosted receipts](evidence/m1-1-final/ci-source-cohort/final-ci-receipt.json).
+Earlier matrices below preserve their original cohorts. #3 remains blocked;
+actual ordinary native/Web checks do not replace its original reproduction.
+
 2026-10-12 checkpoint: merged PR #34 is main `de4ddef`; its archive verifier passes 60 entries and 31 production inputs. Separate [PR #35](https://github.com/Derek-X-Wang/nvwa/pull/35) records a fresh local 103-test Rust workspace result, normal native/Wasm compile checks, format, strict core/CLI Clippy and 77 diagnostic tests/two collector controls. These are CPU/compilation checks against the unchanged product inputs, not new native/Web startup, rendered pixels, physical input, GPU or performance measurements. Its first hosted trial must be assessed by exact run/head separately. [Experiment26](../experiments/26-export-drift/REPORT.md) adds real Blender export/validator comparisons; no renderer was started. #3 remains blocked. The matrices below preserve earlier actual acceptance cohorts.
 
 Current thin M1 evidence is recorded separately in [M1 verification](M1-VERIFICATION.md). The table below is the archived M0 acceptance: M0 was subsequently committed/pushed as `d74493d`, and the user approved bounded thin M1. The M0 build manifest describes that earlier source/artifact snapshot.

@@ -1,0 +1,44 @@
+{
+  "scope": "Source-only HTTP adapter review; no server/browser/Cargo/GPU/renderer execution.",
+  "findings": [
+    {
+      "severity": "P2",
+      "file": "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/experiments/29-stalled-loads/web_stall_server.py",
+      "start_line": 333,
+      "end_line": 335,
+      "title": "Record the actual termination reason in the cleanup receipt",
+      "detail": "The cleanup receipt chooses stdin quit for every self.stopping exit, but connection-budget exhaustion (304-309), request-budget exhaustion (186-188), and control-input overflow (277-280) also set that flag. An exception in the try block instead reports overall watchdog even if no deadline expired. This loses the final invalid/unavailable reason for an incomplete browser trial.",
+      "source_reproducer": "Without sending quit, accept a 129th connection or provide more than 4096 buffered stdin bytes. The explicit branches set stopping and finally labels the exit stdin quit. No runtime replay performed.",
+      "recommendation": "Keep an explicit stop_reason, record exception/invalid or unavailable outcomes truthfully, and include the terminal reason in status/cleanup rather than deriving it from the stopping boolean."
+    }
+  ],
+  "source_checks": [
+    "Fixture must be 3827840 bytes with exact f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6 digest.",
+    "Twelve Work variants deep-copy the canonical Work and change only profile.asset_path. Asset routes return the unmodified fixture.",
+    "Single selector loop, no response threads; active connection cap 20, total accepted/request budget 128, bounded headers/input/chunks/static file size, loopback-only 9204.",
+    "First four held GETs do not block admission observation: an extra GET while four remain held and none released emits product_bound_claim_allowed=false and is served rather than held.",
+    "Default body hold 90 seconds and overall loop deadline 120 seconds; holds and sockets close in finally; accepted must equal closed. These are loop-driven deadlines, not proof against a process blocked writing its log/stdout.",
+    "Client closures, automatic hold releases, budget rejections and all request counts are observable in the raw event log."
+  ],
+  "proof_preconditions": [
+    "The adapter alone cannot establish twelve GUI Opens in one running Web App or count CharacterAsset.retiring; do not infer these from twelve Work GETs.",
+    "Root must retain one-document-instance GUI evidence, final frozen Web artifact identity, all twelve requested paths, visible wait/error, and latest-document recovery. Twelve navigations are invalid for this test.",
+    "During the full-capacity observation window require asset GETs exactly once for four distinct paths, four simultaneously held bodies, and no prior release/connection closure/watchdog/budget rejection. A fifth asset GET before a real release invalidates the bound claim; held_bodies alone is capped by the adapter and cannot prove the product cap.",
+    "Releases and later GETs need sequence checking: after one explicit release only latest pending stall-12 may start. Automatic release or premature disconnection makes the intended hold trial unavailable/incomplete.",
+    "Current baseline/control receipts are direct HTTP adapter-only evidence. They do not establish browser behavior or final-candidate behavior."
+  ],
+  "receipt_checks": [
+    "Frozen-baseline control raw log has 12 distinct Work GETs, first four held, explicit release of 01, GET 12, five 3827840-byte transfers, then accepted=closed=17 with zero active/held connections.",
+    "Watchdog raw log has hold release at 0.2096 seconds and overall cleanup at 1.0259 seconds, accepted=closed=1; this tests short configured watchdogs, not actual 90/120 second dwell.",
+    "Neither supplied control receipt exercises unexpected fifth fetch before release, connection budget, oversized stdin, or exceptional-exit labeling."
+  ],
+  "identities": {
+    "experiments/29-stalled-loads/web_stall_server.py": "0b6632d45f473ec51bfedecebd8b8209e3d551c9b35b24b4eda2e06ae4a536e5",
+    ".work/m11-asset/web-server-frozen-baseline-control-smoke.receipt.json": "3ddcb2d1f4612d33c43edda29eb12e31dcca43a46dc8a694e5d3b30372c18673",
+    ".work/m11-asset/web-server-watchdog-smoke.receipt.json": "373d049cc42998f3810831d5b592f0c2836cf30a1e72bdb6a1b8be8049f78d68",
+    ".work/m11-asset/web-server-frozen-baseline-control-smoke.jsonl": "5a1ca6370825e23dad895f6e81ecca2279b0078177bdc239cf2f636e87fb5d91",
+    ".work/m11-asset/web-server-watchdog-smoke.jsonl": "5494c4b066c5709edb3c781e626bac4d0f30f190cdde3905f8575fc0c90207be"
+  },
+  "source_syntax": "Python AST parse passed; no server started.",
+  "changed_scope": "Review receipts only in assigned web-adapter directory."
+}

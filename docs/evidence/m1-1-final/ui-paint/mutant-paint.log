@@ -1,0 +1,47 @@
+
+running 6 tests
+test editor_layout::paint_tests::actual_selected_tab_paint_matches_literal_click_sequence ... FAILED
+test editor_layout::paint_tests::duplicate_tab_background_is_rejected - should panic ... ok
+test editor_layout::paint_tests::duplicate_tab_label_is_rejected - should panic ... ok
+test editor_layout::paint_tests::empty_paint_output_is_rejected - should panic ... ok
+test editor_layout::paint_tests::missing_tab_background_is_rejected - should panic ... ok
+test editor_layout::paint_tests::missing_tab_label_is_rejected - should panic ... ok
+
+failures:
+
+failures:
+    editor_layout::paint_tests::actual_selected_tab_paint_matches_literal_click_sequence
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 41 filtered out; finished in 0.02s
+
+
+thread 'editor_layout::paint_tests::actual_selected_tab_paint_matches_literal_click_sequence' (40856963) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:109:17:
+assertion `left == right` failed: paint-oracle fill mismatch viewport=[1280.0 720.0] stage=initial-shape tab=Shape
+  left: #95_25_47_FF
+ right: #11_3D_71_FF
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'editor_layout::paint_tests::duplicate_tab_background_is_rejected' (40856979) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:210:5:
+assertion `left == right` failed: paint-oracle background missing/ambiguous: Shape; candidates=[(0, [[1009.0 61.0] - [1109.0 87.0]], #3C_3C_3C_FF), (36, [[1009.0 61.0] - [1109.0 87.0]], #3C_3C_3C_FF)]
+  left: 2
+ right: 1
+
+thread 'editor_layout::paint_tests::duplicate_tab_label_is_rejected' (40856982) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:174:5:
+assertion `left == right` failed: paint-oracle label missing/ambiguous: Shape
+  left: 2
+ right: 1
+
+thread 'editor_layout::paint_tests::empty_paint_output_is_rejected' (40856988) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:174:5:
+assertion `left == right` failed: paint-oracle label missing/ambiguous: Shape
+  left: 0
+ right: 1
+
+thread 'editor_layout::paint_tests::missing_tab_background_is_rejected' (40856989) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:210:5:
+assertion `left == right` failed: paint-oracle background missing/ambiguous: Shape; candidates=[]
+  left: 0
+ right: 1
+
+thread 'editor_layout::paint_tests::missing_tab_label_is_rejected' (40856992) panicked at crates/nvwa-studio/src/editor_layout_paint_tests.rs:174:5:
+assertion `left == right` failed: paint-oracle label missing/ambiguous: Shape
+  left: 0
+ right: 1

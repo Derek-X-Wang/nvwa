@@ -1,0 +1,431 @@
+{
+  "status": "PASS",
+  "scope": "Comparator-only synthetic CPU controls; no product or GUI execution",
+  "manifest_sha256": "5219a5f85f6dd4cbd1774d9bef04b1e9bb24209c1f0034a9af99c2d859e34550",
+  "expected": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-recovery-other.nvwa.json",
+    "sha256": "f503cdabc5fa7cc5ec7c254bb88ed4bb114682a440591135323afde134c8e39b",
+    "bytes": 1953
+  },
+  "controls": [
+    {
+      "name": "unchanged",
+      "control_passed": true,
+      "expected_equal": true,
+      "equal": true,
+      "difference_count": 0,
+      "differences": [],
+      "differences_truncated": false
+    },
+    {
+      "name": "revision",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/revision",
+          "reason": "Integer differs",
+          "expected": {
+            "type": "int",
+            "value": 1
+          },
+          "actual": {
+            "type": "int",
+            "value": 2
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "extra_field",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/profile/extra",
+          "reason": "Extra field",
+          "expected": {
+            "type": "NoneType",
+            "value": null
+          },
+          "actual": {
+            "type": "str",
+            "value": "forbidden"
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "missing_field",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/profile/license",
+          "reason": "Missing field",
+          "expected": {
+            "type": "str",
+            "value": "CC0-1.0 (original Nvwa test fixture only)"
+          },
+          "actual": {
+            "type": "NoneType",
+            "value": null
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "array_reorder",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 6,
+      "differences": [
+        {
+          "pointer": "/timeline/0/clip_id",
+          "reason": "Value differs",
+          "expected": {
+            "type": "str",
+            "value": "idle"
+          },
+          "actual": {
+            "type": "str",
+            "value": "turn"
+          }
+        },
+        {
+          "pointer": "/timeline/0/id",
+          "reason": "Value differs",
+          "expected": {
+            "type": "str",
+            "value": "m1-idle"
+          },
+          "actual": {
+            "type": "str",
+            "value": "m1-turn"
+          }
+        },
+        {
+          "pointer": "/timeline/0/start_seconds",
+          "reason": "binary32 differs: expected 0x00000000, actual 0x40c00000",
+          "expected": {
+            "type": "number",
+            "decimal": "0.0"
+          },
+          "actual": {
+            "type": "number",
+            "decimal": "6.0"
+          }
+        },
+        {
+          "pointer": "/timeline/2/clip_id",
+          "reason": "Value differs",
+          "expected": {
+            "type": "str",
+            "value": "turn"
+          },
+          "actual": {
+            "type": "str",
+            "value": "idle"
+          }
+        },
+        {
+          "pointer": "/timeline/2/id",
+          "reason": "Value differs",
+          "expected": {
+            "type": "str",
+            "value": "m1-turn"
+          },
+          "actual": {
+            "type": "str",
+            "value": "m1-idle"
+          }
+        },
+        {
+          "pointer": "/timeline/2/start_seconds",
+          "reason": "binary32 differs: expected 0x40c00000, actual 0x00000000",
+          "expected": {
+            "type": "number",
+            "decimal": "6.0"
+          },
+          "actual": {
+            "type": "number",
+            "decimal": "0.0"
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "bool_number",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/timeline/0/looping",
+          "reason": "JSON type differs",
+          "expected": {
+            "type": "bool",
+            "value": false
+          },
+          "actual": {
+            "type": "int",
+            "value": 0
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "bool_as_f32",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/character/scale",
+          "reason": "Expected a finite JSON number, excluding bool",
+          "expected": {
+            "type": "number",
+            "decimal": "1.0"
+          },
+          "actual": {
+            "type": "bool",
+            "value": true
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "bool_as_int",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/revision",
+          "reason": "JSON type differs",
+          "expected": {
+            "type": "int",
+            "value": 1
+          },
+          "actual": {
+            "type": "bool",
+            "value": true
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "float_as_int",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/revision",
+          "reason": "JSON type differs",
+          "expected": {
+            "type": "int",
+            "value": 1
+          },
+          "actual": {
+            "type": "number",
+            "decimal": "1.0"
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "clip_change",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/profile/clips/0/duration_seconds",
+          "reason": "binary32 differs: expected 0x4042aaab, actual 0x40466666",
+          "expected": {
+            "type": "number",
+            "decimal": "3.0416667"
+          },
+          "actual": {
+            "type": "number",
+            "decimal": "3.1"
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "parameter_change",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/character/parameters/jaw_width",
+          "reason": "binary32 differs: expected 0x3f1c28f6, actual 0x3f1eb852",
+          "expected": {
+            "type": "number",
+            "decimal": "0.61"
+          },
+          "actual": {
+            "type": "number",
+            "decimal": "0.62"
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "tiny_change_no_epsilon",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/character/parameters/jaw_width",
+          "reason": "binary32 differs: expected 0x3f1c28f6, actual 0x3f1c2907",
+          "expected": {
+            "type": "number",
+            "decimal": "0.61"
+          },
+          "actual": {
+            "type": "number",
+            "decimal": "0.610001"
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "string_change",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/character/id",
+          "reason": "Value differs",
+          "expected": {
+            "type": "str",
+            "value": "character-1"
+          },
+          "actual": {
+            "type": "str",
+            "value": "different-character"
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "same_binary32_decimal",
+      "control_passed": true,
+      "expected_equal": true,
+      "equal": true,
+      "difference_count": 0,
+      "differences": [],
+      "differences_truncated": false
+    },
+    {
+      "name": "zero_integer_at_f32",
+      "control_passed": true,
+      "expected_equal": true,
+      "equal": true,
+      "difference_count": 0,
+      "differences": [],
+      "differences_truncated": false
+    },
+    {
+      "name": "finite_binary32_overflow",
+      "control_passed": true,
+      "expected_equal": false,
+      "equal": false,
+      "difference_count": 1,
+      "differences": [
+        {
+          "pointer": "/character/scale",
+          "reason": "Number overflows finite binary32",
+          "expected": {
+            "type": "number",
+            "decimal": "1.0"
+          },
+          "actual": {
+            "type": "number",
+            "decimal": "1E+39"
+          }
+        }
+      ],
+      "differences_truncated": false
+    },
+    {
+      "name": "nan",
+      "control_passed": true,
+      "expected_parse_failure": true
+    },
+    {
+      "name": "duplicate_key",
+      "control_passed": true,
+      "expected_parse_failure": true
+    },
+    {
+      "name": "invalid_utf8",
+      "control_passed": true,
+      "expected_parse_failure": true
+    },
+    {
+      "name": "conversion_one",
+      "control_passed": true,
+      "expected_bits": "0x3f800000",
+      "actual_bits": "0x3f800000"
+    },
+    {
+      "name": "conversion_halfway_even_down",
+      "control_passed": true,
+      "expected_bits": "0x3f800000",
+      "actual_bits": "0x3f800000"
+    },
+    {
+      "name": "conversion_halfway_even_up",
+      "control_passed": true,
+      "expected_bits": "0x3f800002",
+      "actual_bits": "0x3f800002"
+    },
+    {
+      "name": "conversion_underflow",
+      "control_passed": true,
+      "expected_bits": "0x00000000",
+      "actual_bits": "0x00000000"
+    },
+    {
+      "name": "conversion_negative_zero",
+      "control_passed": true,
+      "expected_bits": "0x80000000",
+      "actual_bits": "0x80000000"
+    }
+  ],
+  "comparator_sha256": "e9463f7b9fa87e8be23956db25156f5873d18da6b48996f5cb7c15cc90c52e6c"
+}

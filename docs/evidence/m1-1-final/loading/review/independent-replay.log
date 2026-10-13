@@ -1,0 +1,37 @@
+
+running 18 tests
+test loading_tests::asynchronous_io_failure_cannot_reuse_verified_scene_and_recovers ... ok
+test loading_tests::capacity_wait_preserves_latest_same_path_error_and_late_failures_cannot_clear_it ... ok
+test loading_tests::corrupt_and_missing_sources_recover_on_same_path_work_open ... ok
+test loading_tests::full_distinct_path_budget_shows_wait_and_timeout_until_capacity_releases ... ok
+test loading_tests::long_lived_ready_reader_failure_preserves_specific_error_until_recovery ... ok
+test loading_tests::matching_hash_glb_with_gltf_parse_error_surfaces_and_recovers ... ok
+test loading_tests::one_retrieval_supplies_hash_scene_skin_morphs_and_animations ... ok
+test loading_tests::pending_different_path_recovers_while_old_source_stays_held ... ok
+test loading_tests::pending_same_path_opens_coalesce_to_latest_profile ... ok
+test loading_tests::ready_character_replaced_by_corrupt_bytes_is_not_exposed ... ok
+test loading_tests::ready_scene_is_retired_immediately_before_same_path_pending_open ... ok
+test loading_tests::same_path_overlapping_opens_a_first_never_publish_a_to_current_work ... ok
+test loading_tests::same_path_overlapping_opens_attempt_b_first_fences_stale_scene_mesh_animation ... ok
+test loading_tests::stalled_distinct_paths_keep_at_most_four_admitted_roots ... STALLED_ROOTS attempted=12 retained=4 root_loading=4 source_reads=4 held_readers=4 raw_roots=0 gltf_dependencies=0
+ok
+test loading_tests::stalled_http_tests::loopback_http_stalled_distinct_paths_bound_admission_and_recover_latest ... HTTP_STALLED attempted=12 retained=4 loading_roots=4 held_responses=4 source_reads=4 loaded_roots=0 loaded_gltf_dependencies=0
+HTTP_SENT read=1 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=1 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_SENT read=5 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=5 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_SENT read=4 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_SENT read=3 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=4 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_SENT read=2 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=3 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_RECEIVED read=2 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_RECOVERY reads=5 retiring=0 ready=true loaded_roots=1 loaded_gltf_dependencies=4
+HTTP_CLEANUP server_joined=1 response_threads_joined=5 reader_threads_joined=5 held_gates=0 panics=0
+ok
+test loading_tests::superseded_reader_failure_unblocks_latest_same_path_open ... ok
+test loading_tests::switching_to_a_new_asset_path_retrieves_it_once ... ok
+test loading_tests::wrong_profile_then_correct_profile_at_same_path_requires_fresh_retrieval ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 2.16s
+

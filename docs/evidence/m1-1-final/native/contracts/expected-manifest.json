@@ -1,0 +1,157 @@
+{
+  "status": "CONTRACT_ONLY_GUI_NOT_RUN_BY_WORKER",
+  "checkout": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa",
+  "dispatch_head": "9df6d3a05296bed1b876edb81a7562ddfe98da83",
+  "expected_binary_sha256": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a",
+  "binary_identity_source": "experiments/29-stalled-loads/web-acceptance/artifact-identities.json (archived identity, live isolated binary must be rehashed by root)",
+  "base_work": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/examples/m1-sequence.nvwa.json",
+    "sha256": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa"
+  },
+  "fixture": {
+    "source": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/assets/fixtures/nvwa-humanoid.glb",
+    "expected_bytes": 3827840,
+    "expected_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "hash_source": "base Work plus experiments/29-stalled-loads/evidence.md; root must verify copied bytes"
+  },
+  "inputs": {
+    "same": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-recovery-same.nvwa.json",
+      "sha256": "07af143ac16171ba6223fe46707f892f5c13bc8bb9fbefd8c886f8be3786077b",
+      "bytes": 1951,
+      "asset_path": "fixtures/native-recovery-same.glb",
+      "expected_revision": 1,
+      "jaw_width": 0.61,
+      "nose_width": 0.0
+    },
+    "other": {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-recovery-other.nvwa.json",
+      "sha256": "f503cdabc5fa7cc5ec7c254bb88ed4bb114682a440591135323afde134c8e39b",
+      "bytes": 1953,
+      "asset_path": "fixtures/native-recovery-other.glb",
+      "expected_revision": 1,
+      "jaw_width": 0.61,
+      "nose_width": 0.27
+    }
+  },
+  "minimum_changes": {
+    "same": [
+      "/profile/asset_path",
+      "/character/parameters/jaw_width"
+    ],
+    "other": [
+      "/profile/asset_path",
+      "/character/parameters/jaw_width",
+      "/character/parameters/nose_width"
+    ]
+  },
+  "output_paths": {
+    "same_saved": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-same-saved.nvwa.json",
+    "other_saved": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-other-saved.nvwa.json",
+    "other_reloaded_saved": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-other-reloaded-saved.nvwa.json",
+    "other_after_interaction": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/native-other-after-interaction.nvwa.json"
+  },
+  "comparison": {
+    "entire_document_required": true,
+    "strict_top_level_keys": [
+      "schema_version",
+      "revision",
+      "profile",
+      "character",
+      "timeline"
+    ],
+    "strict_profile_keys": [
+      "id",
+      "asset_path",
+      "asset_sha256",
+      "license",
+      "parameters",
+      "clips"
+    ],
+    "strict_parameter_spec_keys": [
+      "id",
+      "morph_index",
+      "min",
+      "max",
+      "default"
+    ],
+    "strict_clip_spec_keys": [
+      "id",
+      "animation_index",
+      "duration_seconds"
+    ],
+    "strict_character_keys": [
+      "id",
+      "profile_id",
+      "parameters",
+      "scale"
+    ],
+    "strict_timeline_clip_keys": [
+      "id",
+      "clip_id",
+      "start_seconds",
+      "duration_seconds",
+      "speed",
+      "looping"
+    ],
+    "allowed_serialization_differences": [
+      "whitespace",
+      "object key order",
+      "equivalent JSON number spelling such as 0 versus 0.0",
+      "finite decimal spelling mapping to the exact same IEEE-754 binary32 only at f32 paths"
+    ],
+    "f32_paths": [
+      "/profile/parameters/*/min",
+      "/profile/parameters/*/max",
+      "/profile/parameters/*/default",
+      "/profile/clips/*/duration_seconds",
+      "/character/parameters/*",
+      "/character/scale",
+      "/timeline/*/start_seconds",
+      "/timeline/*/duration_seconds",
+      "/timeline/*/speed"
+    ],
+    "not_allowed": [
+      "missing or extra fields",
+      "array reorder",
+      "revision change",
+      "string change",
+      "bool-number conflation",
+      "arbitrary numeric epsilon",
+      "changed integer identities"
+    ],
+    "pairs": [
+      [
+        "same_saved",
+        "same"
+      ],
+      [
+        "other_saved",
+        "other"
+      ],
+      [
+        "other_reloaded_saved",
+        "other"
+      ],
+      [
+        "other_after_interaction",
+        "other"
+      ]
+    ],
+    "integer_fields": [
+      "/schema_version",
+      "/revision",
+      "/profile/parameters/*/morph_index",
+      "/profile/clips/*/animation_index"
+    ],
+    "saved_document_contains_runtime_transport_or_interaction": false,
+    "interaction_contract": "Keep original profile.id, asset_sha256, clip specifications and GLB bytes; native real click chest/head invokes temporary wave and restores prior Playback without applying document edit."
+  },
+  "claims_not_established": [
+    "native GUI/GPU outcome",
+    "binary live hash",
+    "capacity storm",
+    "global tasks or byte/GPU lifetime caps",
+    "signature or publication"
+  ]
+}

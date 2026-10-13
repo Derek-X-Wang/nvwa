@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/check_web_archive-before-completeness.py", line 278, in <module>
+    main()
+    ~~~~^^
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/check_web_archive-before-completeness.py", line 266, in main
+    result = {"status": "PASS", "scope": "read-only durable archive consistency/provenance; not browser replay", "case": validate(bundle), "adapter_repair_records": check_repairs(args.repairs)}
+                                                                                                                                                                     ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/.work/m11-asset/check_web_archive-before-completeness.py", line 217, in check_repairs
+    require(receipt == original_cohorts[cohort][name], "Original manifest/curated receipt mismatch")
+                       ~~~~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'unexpected'

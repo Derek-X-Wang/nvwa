@@ -1,0 +1,140 @@
+{
+  "decision": "Accept final adapter repair. Both P2 findings resolved; no remaining actionable finding in targeted scope.",
+  "findings": [],
+  "script_sha256": "f2724fd7d667c4511835e3d4235de055d0505219d583a7f5ea321e228c6128f7",
+  "manifest_sha256": "4fd6f37c861dad632559837564797895fe30a2a64bdacb7c892fe38d5ee8c2df",
+  "new_cohort_raw_audit": [
+    {
+      "receipt": "late-exception-pre-red.receipt.json",
+      "sha256": "1a127474a0908a0626e67c39fac585f836d7b79ef973f4d0896a2acb3fa0c291",
+      "raw_sha256": "d8179a21e4579d5a132c83f34141da703d06b0b5f576a4ee5a2c4aa2b3c90b03",
+      "exit_code": 0,
+      "case_status": "ended",
+      "full_fixture_transfers": 0
+    },
+    {
+      "receipt": "late-exception-final-green.receipt.json",
+      "sha256": "0098a0cd66817165e1fb87ebf15cb37021d5bb0d7b1af79361111a52b6b19718",
+      "raw_sha256": "fbf5612dda8aa92a89e2d1d8a87fda47abad20182922a4cfc382fc40a24367c9",
+      "exit_code": 2,
+      "case_status": "unavailable",
+      "full_fixture_transfers": 0
+    },
+    {
+      "receipt": "monotonic-final-green-budget.receipt.json",
+      "sha256": "a7b17e2ee5b1f11334402746a08ddea09dae5c98f56557e578be11835b7297c0",
+      "raw_sha256": "7b495a5ea5dbc2a7dc59208e32799d9c70e1f653a979f8cd2a5dfa58265b7f10",
+      "exit_code": 2,
+      "case_status": "invalid",
+      "full_fixture_transfers": 0
+    },
+    {
+      "receipt": "monotonic-final-exception.receipt.json",
+      "sha256": "820f19b036f8e7e0d8543faf8b0c55b41d9e520055b2f5d35c2d9c69d6682953",
+      "raw_sha256": "209738e0408ce734459ddf830498350c69cca26c4771ebf7f7da0d8d92370044",
+      "exit_code": 2,
+      "case_status": "unavailable",
+      "full_fixture_transfers": 0
+    },
+    {
+      "receipt": "monotonic-final-stdin-overflow.receipt.json",
+      "sha256": "dd358a4f71239be285055843c22aba8ff5d52ee87c1fe15d88c90fd097e02cee",
+      "raw_sha256": "9d5a4d25f22b7734dc16abae8d69e11658a6138bd75de4d86717642680c796de",
+      "exit_code": 2,
+      "case_status": "invalid",
+      "full_fixture_transfers": 0
+    },
+    {
+      "receipt": "monotonic-final-fifth.receipt.json",
+      "sha256": "73eb0455379ab86b069f3e48df2663d2d1ca78ec757cfc3d51b24e22d4295fd7",
+      "raw_sha256": "5ccfc2bd5ebc17008e0ec80cde3f10323a7a42d25f5445b271c54ee29a293521",
+      "exit_code": 2,
+      "case_status": "invalid",
+      "full_fixture_transfers": 5
+    },
+    {
+      "receipt": "monotonic-final-watchdog.receipt.json",
+      "sha256": "435ea6817aeb29bd9d4227714bb09c155274f18ac3b9957bd258822aa4e2eb6c",
+      "raw_sha256": "ebd9c4df11989e20edc0338bbe3a3ecac6c7845dcd21277e4fd3a178a66b5ba8",
+      "exit_code": 2,
+      "case_status": "unavailable",
+      "full_fixture_transfers": 1
+    },
+    {
+      "receipt": "web-server-monotonic-final-normal-control-smoke.receipt.json",
+      "sha256": "80615a3635e62c802c51594f675e1cfc00e80cb70b61c0d685232f338f5b0b5f",
+      "raw_sha256": "72f3baa812392e582cc6aeef126c9b81397eafd89c0cac2b3d10768627d77be8",
+      "exit_code": null,
+      "case_status": "ended",
+      "full_fixture_transfers": 5
+    },
+    {
+      "receipt": "monotonic-method-family.receipt.json",
+      "sha256": "d246c99e9ddf272cf4c8a1aa6a43a01ecf324a5c20a6a53b2eb448702cbf31f6"
+    }
+  ],
+  "previous_nine_receipts_unchanged": true,
+  "independent_socket_free_transitions": [
+    {
+      "first": "ended",
+      "second": "invalid",
+      "status": "invalid",
+      "secondary": [
+        "second-invalid"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "first": "ended",
+      "second": "unavailable",
+      "status": "unavailable",
+      "secondary": [
+        "second-unavailable"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "first": "invalid",
+      "second": "ended",
+      "status": "invalid",
+      "secondary": [
+        "second-ended"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "first": "unavailable",
+      "second": "ended",
+      "status": "unavailable",
+      "secondary": [
+        "second-ended"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "first": "invalid",
+      "second": "unavailable",
+      "status": "unavailable",
+      "secondary": [
+        "second-unavailable"
+      ],
+      "claim_allowed": false
+    },
+    {
+      "first": "unavailable",
+      "second": "invalid",
+      "status": "unavailable",
+      "secondary": [
+        "second-invalid"
+      ],
+      "claim_allowed": false
+    }
+  ],
+  "loop_evidence": "Actual Case.run and Case.control with real pipe-delivered quit; bounded later service event injected into same selector batch. Raw old receipt incorrectly ended/true/0; raw final unavailable/false/2 with primary quit and secondary exception. Injection scope disclosed.",
+  "limits": [
+    "Adapter approval is not real Web product acceptance: one app, twelve GUI Opens and latest recovery remain pending.",
+    "Product claim allowance is an invalidation gate only; it does not prove GUI actions or root counts.",
+    "Watchdog short controls verified from records; real 90/120-second dwell and blocked log/stdout behavior remain NOT-RUN. Deadlines are loop-driven."
+  ],
+  "review_activity": "Read exact source, test harness, manifest and raw logs; independently called six terminate transitions without Case construction or sockets. No server/browser/Cargo/GPU/renderer or source changes."
+}
