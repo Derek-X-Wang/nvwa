@@ -1,0 +1,46 @@
+{
+  "initialRootRejection": {
+    "recordedAt": "2026-10-13T21:12:47.726426+00:00",
+    "capture": "1c1f52dcadf5449ba40195226e16f287-attempt1-browser.json",
+    "source_packet": "0c5f1c0f6396a176463f3e120d50f77a5fd9e1dadccd5def5445635e8927a9eb",
+    "exit_code": 2,
+    "stderr": "check_metrics.py: error: timing entry outside run prefix",
+    "cause_observation": "Actual same-origin optional /favicon.ico GET404,19bodybytes, unknown run prefix newline; must reconcile explicitly, not hide arbitrary outside URLs",
+    "raw_capture_unchanged": true
+  },
+  "actualDatasetHashes": {
+    ".work/m11-perf/web/baseline-http/manifest.json": "41fcbd803d45322c0bae04c8f5b2e71cebf7cb63dd6b1a2baaa3f462fb065ed8",
+    ".work/m11-perf/web/baseline-http/requests.jsonl": "8ebb45cd210416229058a4e84fb2e370605035353e1dc5cce0f06e07882d7bc7",
+    ".work/m11-perf/web/baseline-http/1c1f52dcadf5449ba40195226e16f287-attempt1-browser.json": "b034614e3ebc3775b247e29890fc2ef240ba72afddaffe8d148522e3a51034af",
+    ".work/m11-perf/web/baseline-http/check-attempt1.initial-rejected.json": "79db0de6204f33be74303b25c7a1d8cfb0bbf45b62099d4ffdcc97e10def2620"
+  },
+  "mutations": [
+    {
+      "mutation": "favicon500",
+      "status": "REJECTED_RED",
+      "reason": "optional favicon404 response identity/status/body mismatch"
+    },
+    {
+      "mutation": "faviconBodyHash",
+      "status": "REJECTED_RED",
+      "reason": "optional favicon404 response identity/status/body mismatch"
+    },
+    {
+      "mutation": "faviconBrowserSize",
+      "status": "REJECTED_RED",
+      "reason": "optional favicon exact resource size mismatch"
+    },
+    {
+      "mutation": "faviconWrongOrigin",
+      "status": "REJECTED_RED",
+      "reason": "optional favicon requires one actual timing and matching server record"
+    },
+    {
+      "mutation": "faviconWrongSource",
+      "status": "REJECTED_RED",
+      "reason": "favicon response source identity mismatch"
+    }
+  ],
+  "restored": "PASS_BOUNDED",
+  "inclusiveBodyBytes": 20571754
+}

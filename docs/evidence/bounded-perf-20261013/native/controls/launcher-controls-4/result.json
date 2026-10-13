@@ -1,0 +1,58 @@
+{
+  "status": "VERIFIED CPU CLI controls; native/GPU NOT-RUN",
+  "results": [
+    {
+      "name": "empty",
+      "status": "EXIT-VERIFIED",
+      "pid": 62399,
+      "exit_code": 0,
+      "elapsed_seconds": 0.30000495800049976
+    },
+    {
+      "name": "failed",
+      "status": "EXIT-VERIFIED",
+      "pid": 62403,
+      "exit_code": 7,
+      "elapsed_seconds": 0.31890258396742865
+    },
+    {
+      "name": "large-output",
+      "status": "EXIT-VERIFIED",
+      "pid": 62417,
+      "exit_code": 0,
+      "elapsed_seconds": 0.3441674580099061
+    },
+    {
+      "name": "stubborn-hang",
+      "status": "EXIT-VERIFIED",
+      "pid": 62421,
+      "exit_code": -9,
+      "elapsed_seconds": 1.7830712080467492
+    },
+    {
+      "name": "actual-CLOCK_MONOTONIC-C-Python-bracket",
+      "status": "VERIFIED",
+      "before_ns": 429064467220000,
+      "sample": {
+        "schema": 1,
+        "pid": 62387,
+        "birth_sec": 1791925411,
+        "birth_usec": 297382,
+        "expected_birth_checked": false,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 429064470145000,
+        "sample_end_ns": 429064470148000,
+        "rss_bytes": 19169280,
+        "physical_footprint_bytes": 11715064,
+        "kernel_lifetime_max_physical_footprint_bytes": 11796984,
+        "rusage_proc_start_mach_abstime_ticks": 9660377687931
+      },
+      "after_ns": 429064470458000
+    },
+    {
+      "name": "actual-self-birth-mismatch",
+      "status": "REJECTED"
+    }
+  ],
+  "background_helpers_remaining": false
+}

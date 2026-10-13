@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-13T20:36:01.760519+00:00",
+  "source_commit": "d832ef3e044017bddb5a0681ff5ca99256ebaef4",
+  "scene_input": {
+    "source": "examples/default.nvwa.json",
+    "frozen": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/input/character-loop.nvwa.json",
+    "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+    "bytes": 1624,
+    "document": {
+      "schema_version": 1,
+      "revision": 0,
+      "profile": {
+        "id": "nvwa-original-humanoid-v1",
+        "asset_path": "fixtures/nvwa-humanoid.glb",
+        "asset_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+        "license": "CC0-1.0 (original Nvwa test fixture only)",
+        "parameters": [
+          {
+            "id": "jaw_width",
+            "morph_index": 0,
+            "min": 0.0,
+            "max": 1.0,
+            "default": 0.0
+          },
+          {
+            "id": "nose_width",
+            "morph_index": 1,
+            "min": 0.0,
+            "max": 1.0,
+            "default": 0.0
+          },
+          {
+            "id": "smile",
+            "morph_index": 2,
+            "min": 0.0,
+            "max": 1.0,
+            "default": 0.0
+          },
+          {
+            "id": "shoulder_width",
+            "morph_index": 3,
+            "min": 0.0,
+            "max": 1.0,
+            "default": 0.0
+          }
+        ],
+        "clips": [
+          {
+            "id": "idle",
+            "animation_index": 0,
+            "duration_seconds": 3.0416667
+          },
+          {
+            "id": "turn",
+            "animation_index": 1,
+            "duration_seconds": 4.0416665
+          },
+          {
+            "id": "wave",
+            "animation_index": 2,
+            "duration_seconds": 3.0416667
+          }
+        ]
+      },
+      "character": {
+        "id": "character-1",
+        "profile_id": "nvwa-original-humanoid-v1",
+        "parameters": {
+          "jaw_width": 0.0,
+          "nose_width": 0.0,
+          "shoulder_width": 0.0,
+          "smile": 0.0
+        },
+        "scale": 1.0
+      },
+      "timeline": [
+        {
+          "id": "timeline-1",
+          "clip_id": "idle",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.0416667,
+          "speed": 1.0,
+          "looping": true
+        }
+      ]
+    }
+  },
+  "physical_viewport": {
+    "width": 1280,
+    "height": 720,
+    "scale_factor": 1
+  },
+  "max_runs": {
+    "native": 3,
+    "web": 3
+  },
+  "concurrency": {
+    "heavy_builds_max": 2,
+    "formal_gpu_runs_max": 1,
+    "formal_measurement_builds": 0
+  },
+  "milestones": [
+    "process_spawn_or_navigation_start",
+    "runtime_ready",
+    "first_actual_surface_display_if_supported",
+    "first_observed_real_character_pixels",
+    "actual_completed_gpu_command_or_pass_duration",
+    "exact_pid_rss_physical_footprint_or_supported_browser_subset"
+  ],
+  "cold_domains": [
+    "fresh_process_or_navigation",
+    "HTTP_cache",
+    "Wasm_compilation",
+    "shader_pipeline_cache",
+    "driver_GPU_state",
+    "OS_file_cache"
+  ],
+  "rules": [
+    "Each cold domain requires actual evidence; unknown is NOT-RUN.",
+    "Do not compare CPU callbacks as GPU duration or assetReady as first visible frame.",
+    "Clocks remain separate unless measured calibration and uncertainty establish conversion.",
+    "Baseline unchanged and diagnostic instrumentation variants identified separately.",
+    "User apps remain uncontrolled; only task-owned compilers/renderers/servers may be stopped."
+  ]
+}

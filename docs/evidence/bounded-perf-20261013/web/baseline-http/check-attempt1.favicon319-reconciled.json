@@ -1,0 +1,372 @@
+{
+  "status": "PASS_BOUNDED",
+  "cpuBoundaries": [
+    {
+      "name": "production-device-resolved-observed",
+      "atMs": 699.8999999761581,
+      "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+      "meaning": "promise reaction CPU observation; no GPU execution/display claim"
+    },
+    {
+      "name": "first-production-canvas-texture-return",
+      "atMs": 893.1999999880791,
+      "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+      "meaning": "CPU texture acquisition returned; not submit, present, compositor or visible pixels"
+    },
+    {
+      "name": "first-production-queue-submit-return",
+      "atMs": 956,
+      "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+      "meaning": "CPU API returned after a production submit; commands may be uploads or offscreen; not GPU duration or display"
+    }
+  ],
+  "actualEnabledDeviceFeatures": [
+    {
+      "enabledFeatures": [
+        "bgra8unorm-storage",
+        "clip-distances",
+        "core-features-and-limits",
+        "depth-clip-control",
+        "depth32float-stencil8",
+        "dual-source-blending",
+        "float32-blendable",
+        "float32-filterable",
+        "indirect-first-instance",
+        "rg11b10ufloat-renderable",
+        "shader-f16",
+        "texture-compression-astc",
+        "texture-compression-astc-sliced-3d",
+        "texture-compression-bc",
+        "texture-compression-bc-sliced-3d",
+        "texture-compression-etc2",
+        "timestamp-query"
+      ],
+      "observedAtMs": 699.8999999761581,
+      "clock": "Performance monotonic milliseconds since navigation timeOrigin"
+    }
+  ],
+  "gpuTimestampFeatureEnabled": true,
+  "claims": {
+    "firstPhysicalPresentation": "NOT-RUN",
+    "gpuTimestampDuration": "NOT-RUN",
+    "gpuMemory": "NOT-RUN",
+    "browserProcessMemory": "NOT-RUN",
+    "fullyCold": "NOT-RUN"
+  },
+  "jsHeap": {
+    "status": "OBSERVED_SUBSET",
+    "samples": [
+      {
+        "atMs": 118.09999996423721,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 10516084,
+        "totalJSHeapSize": 13773684,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 1149.199999988079,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 12689988,
+        "totalJSHeapSize": 21224568,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 2119.2999999523163,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 14725574,
+        "totalJSHeapSize": 21326042,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 3120.599999964237,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 17609798,
+        "totalJSHeapSize": 24209626,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 4118.599999964237,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 13936818,
+        "totalJSHeapSize": 25520346,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 5119.599999964237,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 16686206,
+        "totalJSHeapSize": 26568922,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 6123.199999988079,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 13165238,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 7119.399999976158,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 15842270,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 8118.299999952316,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 18504054,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 9118.5,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 15004286,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 10118.299999952316,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 17670238,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 11118.899999976158,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 14024642,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 12120.799999952316,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 16696718,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 13118.799999952316,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 19292318,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 14118.5,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 15678934,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 15119.199999988079,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 18314998,
+        "totalJSHeapSize": 28403930,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 16119.299999952316,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 14730062,
+        "totalJSHeapSize": 28666074,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 17118.599999964237,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 14693458,
+        "totalJSHeapSize": 27926754,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 18119,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 17331058,
+        "totalJSHeapSize": 27926754,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 19119.399999976158,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 13581806,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 20119.19999998808,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 16257650,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 21119.099999964237,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 18936370,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 22118.899999976158,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 15476830,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 23118.799999952316,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 18157486,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 24119.19999998808,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 14560546,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 25118.899999976158,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 17275330,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 26118.899999976158,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 13750462,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 27119.399999976158,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 16444950,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 28118.599999964237,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 19125374,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      },
+      {
+        "atMs": 29119.599999964237,
+        "clock": "Performance monotonic milliseconds since navigation timeOrigin",
+        "usedJSHeapSize": 15583510,
+        "totalJSHeapSize": 28188898,
+        "jsHeapSizeLimit": 4395630592,
+        "meaning": "browser-exposed JS heap only; may be coarse/shared; excludes process RSS, GPU and complete Wasm memory"
+      }
+    ]
+  },
+  "http": {
+    "runId": "1c1f52dcadf5449ba40195226e16f287",
+    "navigationEntries": 1,
+    "resourceEntries": 5,
+    "scope": "structure and finite timing validation only; first presentation and cold state NOT-RUN",
+    "actualGetRequests": 6,
+    "criticalAssets": [
+      "index.html",
+      "startup-diagnostics.js",
+      "nvwa_studio.js",
+      "nvwa_studio_bg.wasm",
+      "assets/fixtures/nvwa-humanoid.glb"
+    ],
+    "optionalMissingSidecars": [
+      {
+        "member": "assets/fixtures/nvwa-humanoid.glb.meta",
+        "status": 404,
+        "bodyBytesWritten": 28,
+        "cacheControl": "no-store",
+        "reason": "verified Bevy0.19.1 optional metadata NotFound selects loader default; actualGLB200 required separately",
+        "browserTiming": "no resource-timing transfer claim for optional404"
+      }
+    ],
+    "bodyBytesWritten": 20571735,
+    "claim": "fresh-prefix HTTP no-store boundary with exact frozen response bodies",
+    "exactFirstPresentation": "NOT-RUN",
+    "browserGpuOsShaderCold": "NOT-RUN",
+    "bodyBytesWrittenIncludingOptionalFavicon": 20571754,
+    "optionalFaviconRequests": 1
+  },
+  "actualPort": 9205,
+  "attempt": 1,
+  "optionalFavicon": {
+    "member": "/favicon.ico",
+    "status": 404,
+    "bodyBytesWritten": 19,
+    "responseBodySha256": "653f5a345bb652f55d72b94e1b20fc9f66c765e26fe2d5d1d0a58d0a4ca41d08",
+    "responseSourceSha256": "abbaedd3d2e329d2b46224b7a5c8bf468b50ee4f9a3de69d37d3992567a75820",
+    "cacheControl": "no-store",
+    "resourceTiming": {
+      "name": "http://127.0.0.1:9205/favicon.ico",
+      "entryType": "resource",
+      "initiatorType": "other",
+      "nextHopProtocol": "http/1.0",
+      "deliveryType": "",
+      "responseStatus": 404,
+      "startTime": 212.19999998807907,
+      "duration": 5.099999964237213,
+      "fetchStart": 212.19999998807907,
+      "domainLookupStart": 215.39999997615814,
+      "domainLookupEnd": 215.39999997615814,
+      "connectStart": 215.39999997615814,
+      "connectEnd": 215.5999999642372,
+      "secureConnectionStart": 0,
+      "requestStart": 215.69999998807907,
+      "responseStart": 216.69999998807907,
+      "responseEnd": 217.29999995231628,
+      "transferSize": 319,
+      "encodedBodySize": 19,
+      "decodedBodySize": 19
+    },
+    "producerUserAgentObserved": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "transferSizeMeaning": "exact observed IAB Chrome155 browser estimate319 =19 body +300 overhead estimate; not wire-header measurement or universal browser rule",
+    "serverLogScope": "after this navigation-index record and before the next navigation-index record",
+    "meaning": "one exact same-origin ordinary browser favicon404; separate optional response, included in totals"
+  },
+  "timestampVariant": {
+    "status": "NOT-RUN",
+    "reason": "unchanged-device baseline"
+  },
+  "scope": "HTTP no-store exact-body reconciliation plus CPU production-call observations; no physical presentation or fully cold claim"
+}

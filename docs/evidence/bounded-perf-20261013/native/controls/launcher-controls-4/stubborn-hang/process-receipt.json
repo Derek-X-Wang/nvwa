@@ -1,0 +1,227 @@
+{
+  "status": "EXIT-VERIFIED",
+  "error": null,
+  "exit_code": -9,
+  "pid": 62421,
+  "elapsed_seconds": 1.7830712080467492,
+  "deadline_seconds": 0.4,
+  "registered_members": [
+    {
+      "pid": 62421,
+      "ppid": 62387,
+      "pgid": 62421,
+      "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+      "birth_sec": 1791925412,
+      "birth_usec": 505368
+    }
+  ],
+  "observations": [
+    {
+      "event": "before_launch",
+      "CLOCK_MONOTONIC_ns": 429062683282000,
+      "wall_UTC_ISO": "2026-10-13T21:03:32.504422+00:00",
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+        "-c",
+        "import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(10)"
+      ],
+      "environment_override_names": [],
+      "heavy_inventory": {
+        "status": "OBSERVED",
+        "rows": [
+          {
+            "pid": 10972,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4384,
+            "executable_basename": "Google Chrome Helper (Renderer)"
+          },
+          {
+            "pid": 39916,
+            "ppid": 39858,
+            "cpu_percent": 0.0,
+            "rss_KiB": 11760,
+            "executable_basename": "Google Chrome"
+          },
+          {
+            "pid": 40222,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 8784,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40223,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 3216,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40225,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 2816,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40332,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 5664,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 81508,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 7408,
+            "executable_basename": "Google Chrome Helper"
+          }
+        ],
+        "scope": "selected names or CPU>=50; no proof of all GPU contention"
+      }
+    },
+    {
+      "event": "popen_returned",
+      "CLOCK_MONOTONIC_ns": 429062686149000,
+      "wall_UTC_ISO": "2026-10-13T21:03:32.507287+00:00",
+      "pid": 62421,
+      "ppid": 62387,
+      "pgid": 62421,
+      "launch_before_monotonic_ns": 429062683944000,
+      "launch_after_monotonic_ns": 429062686145000
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 429062743537000,
+      "wall_UTC_ISO": "2026-10-13T21:03:32.564676+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 62421,
+        "birth_sec": 1791925412,
+        "birth_usec": 505368,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 429062743237000,
+        "sample_end_ns": 429062743240000,
+        "rss_bytes": 15089664,
+        "physical_footprint_bytes": 7340488,
+        "kernel_lifetime_max_physical_footprint_bytes": 7340488,
+        "rusage_proc_start_mach_abstime_ticks": 9660406679461
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 429063009691000,
+      "wall_UTC_ISO": "2026-10-13T21:03:32.830831+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 62421,
+        "birth_sec": 1791925412,
+        "birth_usec": 505368,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 429063009352000,
+        "sample_end_ns": 429063009355000,
+        "rss_bytes": 15089664,
+        "physical_footprint_bytes": 7340488,
+        "kernel_lifetime_max_physical_footprint_bytes": 7340488,
+        "rusage_proc_start_mach_abstime_ticks": 9660406679461
+      }
+    },
+    {
+      "event": "owned_group_signal",
+      "CLOCK_MONOTONIC_ns": 429063309347000,
+      "wall_UTC_ISO": "2026-10-13T21:03:33.130489+00:00",
+      "signal": "TERM",
+      "pgid": 62421,
+      "members": [
+        {
+          "pid": 62421,
+          "ppid": 62387,
+          "pgid": 62421,
+          "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+        }
+      ]
+    },
+    {
+      "event": "owned_group_signal",
+      "CLOCK_MONOTONIC_ns": 429064372019000,
+      "wall_UTC_ISO": "2026-10-13T21:03:34.193158+00:00",
+      "signal": "KILL",
+      "pgid": 62421,
+      "members": [
+        {
+          "pid": 62421,
+          "ppid": 62387,
+          "pgid": 62421,
+          "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+        }
+      ]
+    },
+    {
+      "event": "after_cleanup",
+      "CLOCK_MONOTONIC_ns": 429064466816000,
+      "wall_UTC_ISO": "2026-10-13T21:03:34.287956+00:00",
+      "status": "EXIT-VERIFIED",
+      "exit_code": -9,
+      "heavy_inventory": {
+        "status": "OBSERVED",
+        "rows": [
+          {
+            "pid": 10972,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4448,
+            "executable_basename": "Google Chrome Helper (Renderer)"
+          },
+          {
+            "pid": 39916,
+            "ppid": 39858,
+            "cpu_percent": 0.0,
+            "rss_KiB": 10960,
+            "executable_basename": "Google Chrome"
+          },
+          {
+            "pid": 40222,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4688,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40223,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 3216,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40225,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 2640,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40332,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 5344,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 81508,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 6416,
+            "executable_basename": "Google Chrome Helper"
+          }
+        ],
+        "scope": "selected names or CPU>=50; no proof of all GPU contention"
+      }
+    }
+  ],
+  "GPU_result": "NOT-VALIDATED by launcher; inspect actual callbacks and pixels separately"
+}

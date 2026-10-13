@@ -1,0 +1,1475 @@
+{
+  "status": "PARTIAL actual native display/GPU/memory and real-character pixels; fully cold/stall cause/CPU cadence remain NOT-RUN",
+  "root_lifecycle": {
+    "wall_utc": "2026-10-13T21:31:49.912617+00:00",
+    "all_exact_owned_absent": true,
+    "exact_pid_checks": [
+      {
+        "pid": 68805,
+        "ps_exit": 1,
+        "absent": true
+      },
+      {
+        "pid": 70636,
+        "ps_exit": 1,
+        "absent": true
+      },
+      {
+        "pid": 72779,
+        "ps_exit": 1,
+        "absent": true
+      },
+      {
+        "pid": 66834,
+        "ps_exit": 1,
+        "absent": true
+      },
+      {
+        "pid": 62645,
+        "ps_exit": 1,
+        "absent": true
+      }
+    ],
+    "9205_no_listener": true,
+    "native_actual_launches": 3,
+    "web_actual_navigations": 3,
+    "native_exit_verified": [
+      "EXIT-VERIFIED",
+      "EXIT-VERIFIED",
+      "EXIT-VERIFIED"
+    ]
+  },
+  "root_lifecycle_sha256": "1fa75fff580e8cf6a00fe4c33d6874d03d818f46b443039af958036eeb0f0896",
+  "candidate_freeze_sha256": "e0c8a42f724123d6bca04507e9c23a3b7d41d686686d8de02c93a0429d6b9851",
+  "CLOCK_MONOTONIC_reported_resolution_ns": 1000.0000000000001,
+  "clock_limit": "Calibration and launch brackets plus conservative2CLOCK_MONOTONIC ticks+2ns logged-double quantization allowance; not a bound on undocumented driver/CA timestamp accuracy",
+  "runs": {
+    "baseline-1": {
+      "pid": 68805,
+      "identity": {
+        "pid": 68805,
+        "ppid": 68704,
+        "pgid": 68805,
+        "binary": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/Nvwa.app/Contents/MacOS/Nvwa",
+        "birth_sec": 1791926957,
+        "birth_usec": 968594
+      },
+      "exit_status": "EXIT-VERIFIED",
+      "exit_code": 0,
+      "elapsed_wrapper_seconds": 31.8829017499811,
+      "launch_CLOCK_MONOTONIC_bracket_ns": [
+        430608147148000,
+        430608151015000
+      ],
+      "launch_bracket_width_ns": 3867000,
+      "variant": "accepted unchanged release",
+      "binary_sha256": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a",
+      "memory": {
+        "sample_count": 115,
+        "scope": "exact PID/birth snapshots; RSS and footprint overlap; separate kernel reported lifetime maximum; do not add GPU allocation",
+        "sampled_RSS_bytes": {
+          "count": 115,
+          "min": 32768,
+          "median": 86753280,
+          "p95_nearest_rank": 166330368,
+          "max": 209977344
+        },
+        "sampled_physical_footprint_bytes": {
+          "count": 115,
+          "min": 81992,
+          "median": 273925296,
+          "p95_nearest_rank": 279970992,
+          "max": 295781552
+        },
+        "kernel_reported_lifetime_max_physical_footprint_bytes": 296813744,
+        "first_sample_monotonic_ns": 430608245917000,
+        "last_sample_monotonic_ns": 430639783680000
+      },
+      "start_end_inventory": [
+        {
+          "event": "before_launch",
+          "CLOCK_MONOTONIC_ns": 430608146198000,
+          "wall_UTC_ISO": "2026-10-13T21:29:17.967338+00:00",
+          "argv": [
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/Nvwa.app/Contents/MacOS/Nvwa",
+            "--work",
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/input/character-loop.nvwa.json",
+            "--benchmark",
+            "--smoke",
+            "--smoke-seconds",
+            "30.0",
+            "--timeout",
+            "38.0",
+            "--capture",
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/baseline-1/production-final.png"
+          ],
+          "environment_override_names": [
+            "NVWA_METAL_PROBE",
+            "NVWA_PROBE_CAPTURE_DIR"
+          ],
+          "heavy_inventory": {
+            "status": "OBSERVED",
+            "rows": [
+              {
+                "pid": 10972,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3728,
+                "executable_basename": "Google Chrome Helper (Renderer)"
+              },
+              {
+                "pid": 39916,
+                "ppid": 39858,
+                "cpu_percent": 0.0,
+                "rss_KiB": 12256,
+                "executable_basename": "Google Chrome"
+              },
+              {
+                "pid": 40222,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5904,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40223,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 4368,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40225,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3072,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40332,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5712,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 68704,
+                "ppid": 65495,
+                "cpu_percent": 52.9,
+                "rss_KiB": 160832,
+                "executable_basename": "Python"
+              },
+              {
+                "pid": 81508,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5296,
+                "executable_basename": "Google Chrome Helper"
+              }
+            ],
+            "scope": "selected names or CPU>=50; no proof of all GPU contention"
+          }
+        },
+        {
+          "event": "after_cleanup",
+          "CLOCK_MONOTONIC_ns": 430640030028000,
+          "wall_UTC_ISO": "2026-10-13T21:29:49.851168+00:00",
+          "status": "EXIT-VERIFIED",
+          "exit_code": 0,
+          "heavy_inventory": {
+            "status": "OBSERVED",
+            "rows": [
+              {
+                "pid": 425,
+                "ppid": 1,
+                "cpu_percent": 50.8,
+                "rss_KiB": 70208,
+                "executable_basename": "WindowServer"
+              },
+              {
+                "pid": 10972,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5392,
+                "executable_basename": "Google Chrome Helper (Renderer)"
+              },
+              {
+                "pid": 39916,
+                "ppid": 39858,
+                "cpu_percent": 0.0,
+                "rss_KiB": 18704,
+                "executable_basename": "Google Chrome"
+              },
+              {
+                "pid": 40222,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 7856,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40223,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5792,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40225,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3792,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40332,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 6240,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 81508,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 7392,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 46355,
+                "ppid": 46325,
+                "cpu_percent": 71.6,
+                "rss_KiB": 596720,
+                "executable_basename": "claude bg-spare"
+              }
+            ],
+            "scope": "selected names or CPU>=50; no proof of all GPU contention"
+          }
+        }
+      ],
+      "production_CPU_cadence": "NOT-RUN: NVWA_EVIDENCE INFO record absent from captured stdout/stderr",
+      "captures": {
+        "production-final": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/baseline-1/production-final.png",
+          "sha256": "0b4ab42eccc312e8939a802bc09ff66df2a9a47742cb9cd0bf67136f1a096d9a",
+          "bytes": 307096,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791926989712299925,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": null,
+          "content_observation": "actual real humanoid and studio UI; status Ready skin +morph +animation",
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        }
+      },
+      "first_valid_reported_surface_display": "NOT-RUN accepted baseline has no observer",
+      "GPU_command_duration_ms_by_kind": "NOT-RUN accepted baseline has no observer",
+      "Metal_device_current_allocated_bytes": "NOT-RUN accepted baseline has no observer",
+      "host_window_capture": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-baseline-1-original.jpg",
+        "sha256": "0b5adcfcb51bd1b5d943050b367b76a3fd11cdb9c2398dafda55bd76843d0311",
+        "dimensions": [
+          1280,
+          784
+        ],
+        "observed_content": "actual real humanoid and studio UI Ready;64px host title chrome above1280x720canvas",
+        "source_call_id": "call_3f39973c1f1443079c7e6361e595df77",
+        "UTC_capture_bracket": {
+          "outputBlockIndex": 2,
+          "rawText": "{\n  case: 'native-baseline-1',\n  ownedPid: 68805,\n  screenshotBeforeUtc: '2026-10-13T21:29:38.297Z'\n}{\n  case: 'native-baseline-1',\n  screenshotAfterUtc: '2026-10-13T21:29:38.948Z'\n}",
+          "screenshotBeforeUtc": "2026-10-13T21:29:38.297Z",
+          "screenshotAfterUtc": "2026-10-13T21:29:38.948Z",
+          "captureBracketSeconds": 0.651
+        },
+        "provenance_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-baseline-1-provenance.json",
+        "provenance_sha256": "1995cad4ee74cd8d2a92de20f4f2854bc88a80e1ada02d740f7e8779407bd401",
+        "trace_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-baseline-1-exact-cua.jsonl.gz",
+        "trace_gzip_sha256": "d4ad702362a916efacb52855009c94abf1cabff6b9d947c404915cb30c620338",
+        "scope": "exact emitted host-window JPEG; clock UTC observation bracket; not first presentation or separately proved keyboard focus"
+      }
+    },
+    "diagnostic-1": {
+      "pid": 70636,
+      "identity": {
+        "pid": 70636,
+        "ppid": 70603,
+        "pgid": 70636,
+        "binary": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa",
+        "birth_sec": 1791926993,
+        "birth_usec": 910844
+      },
+      "exit_status": "EXIT-VERIFIED",
+      "exit_code": 0,
+      "elapsed_wrapper_seconds": 34.718063374981284,
+      "launch_CLOCK_MONOTONIC_bracket_ns": [
+        430644089443000,
+        430644092941000
+      ],
+      "launch_bracket_width_ns": 3498000,
+      "variant": "diagnostic wrapper/local wgpu-hal patch/3readbacks",
+      "binary_sha256": "31999ece7a4b74875ac254eb15ebb8fad08e73e8880ca8a3fbd68c5026af8a6c",
+      "memory": {
+        "sample_count": 126,
+        "scope": "exact PID/birth snapshots; RSS and footprint overlap; separate kernel reported lifetime maximum; do not add GPU allocation",
+        "sampled_RSS_bytes": {
+          "count": 126,
+          "min": 32768,
+          "median": 98131968.0,
+          "p95_nearest_rank": 143622144,
+          "max": 197361664
+        },
+        "sampled_physical_footprint_bytes": {
+          "count": 126,
+          "min": 81992,
+          "median": 292455600.0,
+          "p95_nearest_rank": 310068400,
+          "max": 317179056
+        },
+        "kernel_reported_lifetime_max_physical_footprint_bytes": 327238832,
+        "first_sample_monotonic_ns": 430644151802000,
+        "last_sample_monotonic_ns": 430678265635000
+      },
+      "start_end_inventory": [
+        {
+          "event": "before_launch",
+          "CLOCK_MONOTONIC_ns": 430644088829000,
+          "wall_UTC_ISO": "2026-10-13T21:29:53.909970+00:00",
+          "argv": [
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa",
+            "--work",
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/input/character-loop.nvwa.json",
+            "--benchmark",
+            "--smoke",
+            "--smoke-seconds",
+            "30.0",
+            "--timeout",
+            "38.0",
+            "--capture",
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/production-final.png"
+          ],
+          "environment_override_names": [
+            "NVWA_METAL_PROBE",
+            "NVWA_PROBE_CAPTURE_DIR"
+          ],
+          "heavy_inventory": {
+            "status": "OBSERVED",
+            "rows": [
+              {
+                "pid": 10972,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5392,
+                "executable_basename": "Google Chrome Helper (Renderer)"
+              },
+              {
+                "pid": 39916,
+                "ppid": 39858,
+                "cpu_percent": 0.0,
+                "rss_KiB": 16256,
+                "executable_basename": "Google Chrome"
+              },
+              {
+                "pid": 40222,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 8016,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40223,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5280,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40225,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3536,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40332,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 6144,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 59010,
+                "ppid": 684,
+                "cpu_percent": 101.9,
+                "rss_KiB": 303280,
+                "executable_basename": "Browser Helper (Renderer)"
+              },
+              {
+                "pid": 70603,
+                "ppid": 65495,
+                "cpu_percent": 55.1,
+                "rss_KiB": 261472,
+                "executable_basename": "Python"
+              },
+              {
+                "pid": 81508,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 6496,
+                "executable_basename": "Google Chrome Helper"
+              }
+            ],
+            "scope": "selected names or CPU>=50; no proof of all GPU contention"
+          }
+        },
+        {
+          "event": "after_cleanup",
+          "CLOCK_MONOTONIC_ns": 430678807480000,
+          "wall_UTC_ISO": "2026-10-13T21:30:28.628623+00:00",
+          "status": "EXIT-VERIFIED",
+          "exit_code": 0,
+          "heavy_inventory": {
+            "status": "OBSERVED",
+            "rows": [
+              {
+                "pid": 10972,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3600,
+                "executable_basename": "Google Chrome Helper (Renderer)"
+              },
+              {
+                "pid": 39916,
+                "ppid": 39858,
+                "cpu_percent": 0.1,
+                "rss_KiB": 17072,
+                "executable_basename": "Google Chrome"
+              },
+              {
+                "pid": 40222,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 8304,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40223,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 7248,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40225,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3792,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40332,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 6560,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 65492,
+                "ppid": 62582,
+                "cpu_percent": 151.4,
+                "rss_KiB": 513248,
+                "executable_basename": "Codex (Renderer)"
+              },
+              {
+                "pid": 71530,
+                "ppid": 1,
+                "cpu_percent": 57.5,
+                "rss_KiB": 45328,
+                "executable_basename": "BackgroundShortcutRunner"
+              },
+              {
+                "pid": 81508,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 8640,
+                "executable_basename": "Google Chrome Helper"
+              }
+            ],
+            "scope": "selected names or CPU>=50; no proof of all GPU contention"
+          }
+        }
+      ],
+      "production_CPU_cadence": "NOT-RUN: NVWA_EVIDENCE INFO record absent from captured stdout/stderr",
+      "captures": {
+        "first-main-update": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/first-main-update.png",
+          "sha256": "884bbd063da21627bd2711ec5a9e2abcc8f55b174b02ca146f830c4cf1f25c89",
+          "bytes": 15060,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791927003171991020,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": {
+            "event": "screenshot_gpu_readback_callback",
+            "fields": {
+              "height": 720,
+              "scope": "GPU readback observation; requires pixel inspection; not compositor display time",
+              "tag": "first-main-update",
+              "width": 1280
+            },
+            "monotonic_after_ns": 430653346817000,
+            "monotonic_before_ns": 430653346817000,
+            "pid": 70636,
+            "process_Instant_elapsed_seconds": 8.197092375
+          },
+          "content_observation": "blank dark image; no UI or character",
+          "readback_callback_since_external_launch_interval_seconds": [
+            9.253874,
+            9.257376
+          ],
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        },
+        "first-runtime-ready": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/first-runtime-ready.png",
+          "sha256": "d9d0cf76935ab0c363be997bc54dda95e73d558df2fd03a3dcfd08b3f042e40b",
+          "bytes": 306688,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791927003861747456,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": {
+            "event": "screenshot_gpu_readback_callback",
+            "fields": {
+              "height": 720,
+              "scope": "GPU readback observation; requires pixel inspection; not compositor display time",
+              "tag": "first-runtime-ready",
+              "width": 1280
+            },
+            "monotonic_after_ns": 430654040901000,
+            "monotonic_before_ns": 430654040901000,
+            "pid": 70636,
+            "process_Instant_elapsed_seconds": 8.891172459
+          },
+          "content_observation": "actual real humanoid and studio UI; status Preparing skin and animation",
+          "readback_callback_since_external_launch_interval_seconds": [
+            9.947958,
+            9.95146
+          ],
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        },
+        "production-final": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/production-final.png",
+          "sha256": "c638b61d2414b068ba2dfaee09c2b1f99b1edd6cd47f5a101fe1e8abd22e36f4",
+          "bytes": 307013,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791927028243900630,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": null,
+          "content_observation": "actual real humanoid and studio UI; status Ready skin +morph +animation",
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        },
+        "ready-plus-2s": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/ready-plus-2s.png",
+          "sha256": "a7e7689ed34f294b5a8b625eb1180d1100b936ef45a2be6ac7e83aa0ccfddc51",
+          "bytes": 307128,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791927005210536414,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": {
+            "event": "screenshot_gpu_readback_callback",
+            "fields": {
+              "height": 720,
+              "scope": "GPU readback observation; requires pixel inspection; not compositor display time",
+              "tag": "ready-plus-2s",
+              "width": 1280
+            },
+            "monotonic_after_ns": 430655385150000,
+            "monotonic_before_ns": 430655385149000,
+            "pid": 70636,
+            "process_Instant_elapsed_seconds": 10.235413875
+          },
+          "content_observation": "actual real humanoid and studio UI; status Ready skin +morph +animation",
+          "readback_callback_since_external_launch_interval_seconds": [
+            11.292206,
+            11.295709
+          ],
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        }
+      },
+      "first_valid_reported_surface_display": {
+        "callback": {
+          "event": "drawable_presented_callback",
+          "pid": 70636,
+          "index": 5,
+          "drawable_id": 4,
+          "presented_host_seconds": 404108.305537458,
+          "valid_presented_time": true,
+          "callback_monotonic_before_ns": 430654057078000,
+          "ca_host_seconds": 404108.305789792,
+          "callback_monotonic_after_ns": 430654057078000,
+          "converted_CLOCK_MONOTONIC_interval_ns": [
+            430654056825666.0,
+            430654056825666.0
+          ]
+        },
+        "prior_dense_callback_indices_zero_time": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "CLOCK_MONOTONIC_interval_ns": [
+          430654056825666.0,
+          430654056825666.0
+        ],
+        "since_external_launch_bracket_seconds": [
+          9.963884666,
+          9.967382666
+        ],
+        "since_external_launch_interval_with_reported_clock_resolution_allowance_seconds": [
+          9.963882664,
+          9.967384668
+        ],
+        "scope": "actual Metal drawable reported onscreen time; skipped prior callbacks; no assertion about displayed content",
+        "valid_display_callback_count": 134,
+        "zero_time_display_callback_count": 4
+      },
+      "GPU_command_duration_ms_by_kind": {
+        "internal_present": {
+          "count": 4,
+          "min": 0.0,
+          "median": 2.0983861759305e-05,
+          "p95_nearest_rank": 8.300412446260452e-05,
+          "max": 8.300412446260452e-05
+        },
+        "submitted": {
+          "count": 134,
+          "min": 0.0,
+          "median": 0.008895498467609286,
+          "p95_nearest_rank": 0.5377500201575458,
+          "max": 14.777833013795316
+        }
+      },
+      "GPU_samples": {
+        "valid_count": 138,
+        "invalid_count": 0,
+        "zero_duration_count": 23,
+        "scope": "bounded selected existing completed Metal command buffers, not frame/pass durations; zero durations retained; no sum or frame-latency inference"
+      },
+      "Metal_device_current_allocated_bytes": {
+        "count": 276,
+        "min": 98615296,
+        "median": 119586816.0,
+        "p95_nearest_rank": 130416640,
+        "max": 133971968
+      },
+      "observed_CA_to_CLOCK_MONOTONIC_midpoint_offset_ns": {
+        "count": 276,
+        "min": 26545751258042.0,
+        "median": 26545751288937.5,
+        "p95_nearest_rank": 26545751308417.0,
+        "max": 26545751344000.0
+      },
+      "main_CPU_markers": [
+        {
+          "event": "before_build_app",
+          "fields": {
+            "metal_probe_enabled": true,
+            "variant": "diagnostic_wgpu_hal_patch"
+          },
+          "monotonic_after_ns": 430645149706000,
+          "monotonic_before_ns": 430645149706000,
+          "pid": 70636,
+          "process_Instant_elapsed_seconds": 2.4917e-05
+        },
+        {
+          "event": "after_build_app",
+          "fields": {},
+          "monotonic_after_ns": 430645662079000,
+          "monotonic_before_ns": 430645662079000,
+          "pid": 70636,
+          "process_Instant_elapsed_seconds": 0.512395709
+        },
+        {
+          "event": "first_main_post_update",
+          "fields": {},
+          "monotonic_after_ns": 430646535073000,
+          "monotonic_before_ns": 430646535072000,
+          "pid": 70636,
+          "process_Instant_elapsed_seconds": 1.385384125
+        },
+        {
+          "event": "first_render_system_returned",
+          "fields": {
+            "adapter": "Apple M2 Pro",
+            "adapter_supported_features": "Features { features_wgpu: FeaturesWGPU(SHADER_FLOAT32_ATOMIC | TEXTURE_FORMAT_16BIT_NORM | TEXTURE_COMPRESSION_ASTC_HDR | TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES | TIMESTAMP_QUERY_INSIDE_ENCODERS | MAPPABLE_PRIMARY_BUFFERS | TEXTURE_BINDING_ARRAY | STORAGE_RESOURCE_BINDING_ARRAY | SAMPLED_TEXTURE_AND_STORAGE_BUFFER_ARRAY_NON_UNIFORM_INDEXING | STORAGE_TEXTURE_ARRAY_NON_UNIFORM_INDEXING | PARTIALLY_BOUND_BINDING_ARRAY | ADDRESS_MODE_CLAMP_TO_ZERO | ADDRESS_MODE_CLAMP_TO_BORDER | POLYGON_MODE_LINE | VERTEX_WRITABLE_STORAGE | CLEAR_TEXTURE | MULTIVIEW | TEXTURE_ATOMIC | EXTERNAL_TEXTURE | EXPERIMENTAL_RAY_QUERY | SHADER_INT64 | SUBGROUP | SUBGROUP_BARRIER | SHADER_INT64_ATOMIC_MIN_MAX | EXPERIMENTAL_MESH_SHADER | PASSTHROUGH_SHADERS | SHADER_BARYCENTRICS | EXPERIMENTAL_COOPERATIVE_MATRIX | MEMORY_DECORATION_COHERENT), features_webgpu: FeaturesWebGPU(DEPTH_CLIP_CONTROL | DEPTH32FLOAT_STENCIL8 | TEXTURE_COMPRESSION_BC | TEXTURE_COMPRESSION_BC_SLICED_3D | TEXTURE_COMPRESSION_ETC2 | TEXTURE_COMPRESSION_ASTC | TEXTURE_COMPRESSION_ASTC_SLICED_3D | TIMESTAMP_QUERY | INDIRECT_FIRST_INSTANCE | SHADER_F16 | RG11B10UFLOAT_RENDERABLE | BGRA8UNORM_STORAGE | FLOAT32_FILTERABLE | FLOAT32_BLENDABLE | DUAL_SOURCE_BLENDING | IMMEDIATES | PRIMITIVE_INDEX) }",
+            "backend": "Metal",
+            "device_enabled_features": "Features { features_wgpu: FeaturesWGPU(SHADER_FLOAT32_ATOMIC | TEXTURE_FORMAT_16BIT_NORM | TEXTURE_COMPRESSION_ASTC_HDR | TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES | TIMESTAMP_QUERY_INSIDE_ENCODERS | MAPPABLE_PRIMARY_BUFFERS | TEXTURE_BINDING_ARRAY | STORAGE_RESOURCE_BINDING_ARRAY | SAMPLED_TEXTURE_AND_STORAGE_BUFFER_ARRAY_NON_UNIFORM_INDEXING | STORAGE_TEXTURE_ARRAY_NON_UNIFORM_INDEXING | PARTIALLY_BOUND_BINDING_ARRAY | ADDRESS_MODE_CLAMP_TO_ZERO | ADDRESS_MODE_CLAMP_TO_BORDER | POLYGON_MODE_LINE | VERTEX_WRITABLE_STORAGE | CLEAR_TEXTURE | MULTIVIEW | TEXTURE_ATOMIC | EXTERNAL_TEXTURE | EXPERIMENTAL_RAY_QUERY | SHADER_INT64 | SUBGROUP | SUBGROUP_BARRIER | SHADER_INT64_ATOMIC_MIN_MAX | EXPERIMENTAL_MESH_SHADER | PASSTHROUGH_SHADERS | SHADER_BARYCENTRICS | EXPERIMENTAL_COOPERATIVE_MATRIX | MEMORY_DECORATION_COHERENT), features_webgpu: FeaturesWebGPU(DEPTH_CLIP_CONTROL | DEPTH32FLOAT_STENCIL8 | TEXTURE_COMPRESSION_BC | TEXTURE_COMPRESSION_BC_SLICED_3D | TEXTURE_COMPRESSION_ETC2 | TEXTURE_COMPRESSION_ASTC | TEXTURE_COMPRESSION_ASTC_SLICED_3D | TIMESTAMP_QUERY | INDIRECT_FIRST_INSTANCE | SHADER_F16 | RG11B10UFLOAT_RENDERABLE | BGRA8UNORM_STORAGE | FLOAT32_FILTERABLE | FLOAT32_BLENDABLE | DUAL_SOURCE_BLENDING | IMMEDIATES | PRIMITIVE_INDEX) }",
+            "primary_window": "62v0",
+            "scope": "CPU return; exact actual display supplied separately by Metal callback",
+            "timestamp_period_ns": 1.0,
+            "waiting_pipelines": 34,
+            "window_dimensions": [
+              [
+                1280,
+                720
+              ]
+            ]
+          },
+          "monotonic_after_ns": 430648363064000,
+          "monotonic_before_ns": 430648363063000,
+          "pid": 70636,
+          "process_Instant_elapsed_seconds": 3.21336525
+        },
+        {
+          "event": "first_runtime_ready_observation",
+          "fields": {
+            "animation_position_seconds": 0.25,
+            "bevy_TimeReal_first_ready_seconds": 1.838827209,
+            "joints": 18,
+            "meshes": 9,
+            "morph_nodes": 1,
+            "morph_weights": 4,
+            "playing": true,
+            "scope": "runtime readiness only; no character-pixel claim"
+          },
+          "monotonic_after_ns": 430653357080000,
+          "monotonic_before_ns": 430653357080000,
+          "pid": 70636,
+          "process_Instant_elapsed_seconds": 8.207355
+        },
+        {
+          "event": "animation_observation_after_ready_plus_2s",
+          "fields": {
+            "animation_position_seconds": 2.1063132286071777,
+            "completed": false,
+            "playing": true
+          },
+          "monotonic_after_ns": 430655361262000,
+          "monotonic_before_ns": 430655361262000,
+          "pid": 70636,
+          "process_Instant_elapsed_seconds": 10.211526375
+        },
+        {
+          "event": "app_run_returned",
+          "fields": {
+            "exit": "Success"
+          },
+          "monotonic_after_ns": 430678497337000,
+          "monotonic_before_ns": 430678497336000,
+          "pid": 70636,
+          "process_Instant_elapsed_seconds": 33.347477584
+        }
+      ],
+      "reconciler_output_sha256": "377fc41f4bb3de3d314a5fbfbae6e8e6f82a2767c20d660640de0cd62a0d2c2e",
+      "host_window_capture": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-1-original.jpg",
+        "sha256": "3c1f321c54052b1abc2682b5dac6b4c0b5874e1f4cbecf194aa270fd01dde4d6",
+        "dimensions": [
+          1280,
+          784
+        ],
+        "observed_content": "actual real humanoid and studio UI Ready;64px host title chrome above1280x720canvas",
+        "source_call_id": "call_f310191cf40640c88ee66d8a9789d2c3",
+        "UTC_capture_bracket": {
+          "outputBlockIndex": 2,
+          "rawText": "{\n  case: 'native-diagnostic-1',\n  ownedPid: 70636,\n  screenshotBeforeUtc: '2026-10-13T21:30:05.390Z'\n}{\n  case: 'native-diagnostic-1',\n  screenshotAfterUtc: '2026-10-13T21:30:06.407Z'\n}",
+          "screenshotBeforeUtc": "2026-10-13T21:30:05.390Z",
+          "screenshotAfterUtc": "2026-10-13T21:30:06.407Z",
+          "captureBracketSeconds": 1.017
+        },
+        "provenance_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-1-provenance.json",
+        "provenance_sha256": "a3c39c06ed367539219250b29aa235d2566661ec8956249965e890849540d0a3",
+        "trace_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-1-exact-cua.jsonl.gz",
+        "trace_gzip_sha256": "045bf6f601665bc6612b1fc342f886bab46f6f34b674cf5a346f17b830487857",
+        "scope": "exact emitted host-window JPEG; clock UTC observation bracket; not first presentation or separately proved keyboard focus"
+      }
+    },
+    "diagnostic-warm": {
+      "pid": 72779,
+      "identity": {
+        "pid": 72779,
+        "ppid": 72734,
+        "pgid": 72779,
+        "binary": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa",
+        "birth_sec": 1791927038,
+        "birth_usec": 332810
+      },
+      "exit_status": "EXIT-VERIFIED",
+      "exit_code": 0,
+      "elapsed_wrapper_seconds": 32.12799195799744,
+      "launch_CLOCK_MONOTONIC_bracket_ns": [
+        430688511371000,
+        430688515389000
+      ],
+      "launch_bracket_width_ns": 4018000,
+      "variant": "diagnostic wrapper/local wgpu-hal patch/3readbacks",
+      "binary_sha256": "31999ece7a4b74875ac254eb15ebb8fad08e73e8880ca8a3fbd68c5026af8a6c",
+      "memory": {
+        "sample_count": 104,
+        "scope": "exact PID/birth snapshots; RSS and footprint overlap; separate kernel reported lifetime maximum; do not add GPU allocation",
+        "sampled_RSS_bytes": {
+          "count": 104,
+          "min": 31735808,
+          "median": 153141248.0,
+          "p95_nearest_rank": 212893696,
+          "max": 227704832
+        },
+        "sampled_physical_footprint_bytes": {
+          "count": 104,
+          "min": 10388128,
+          "median": 290227400.0,
+          "p95_nearest_rank": 313492680,
+          "max": 317998280
+        },
+        "kernel_reported_lifetime_max_physical_footprint_bytes": 327386312,
+        "first_sample_monotonic_ns": 430688597660000,
+        "last_sample_monotonic_ns": 430720102731000
+      },
+      "start_end_inventory": [
+        {
+          "event": "before_launch",
+          "CLOCK_MONOTONIC_ns": 430688510061000,
+          "wall_UTC_ISO": "2026-10-13T21:30:38.331204+00:00",
+          "argv": [
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa",
+            "--work",
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/input/character-loop.nvwa.json",
+            "--benchmark",
+            "--smoke",
+            "--smoke-seconds",
+            "30.0",
+            "--timeout",
+            "38.0",
+            "--capture",
+            "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/production-final.png"
+          ],
+          "environment_override_names": [
+            "NVWA_METAL_PROBE",
+            "NVWA_PROBE_CAPTURE_DIR"
+          ],
+          "heavy_inventory": {
+            "status": "OBSERVED",
+            "rows": [
+              {
+                "pid": 10972,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 4256,
+                "executable_basename": "Google Chrome Helper (Renderer)"
+              },
+              {
+                "pid": 39916,
+                "ppid": 39858,
+                "cpu_percent": 0.0,
+                "rss_KiB": 11456,
+                "executable_basename": "Google Chrome"
+              },
+              {
+                "pid": 40222,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 4080,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40223,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 4192,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40225,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 2416,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40332,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3872,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 65493,
+                "ppid": 62582,
+                "cpu_percent": 68.9,
+                "rss_KiB": 685184,
+                "executable_basename": "Codex (Renderer)"
+              },
+              {
+                "pid": 72734,
+                "ppid": 65495,
+                "cpu_percent": 50.3,
+                "rss_KiB": 154464,
+                "executable_basename": "Python"
+              },
+              {
+                "pid": 81508,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5392,
+                "executable_basename": "Google Chrome Helper"
+              }
+            ],
+            "scope": "selected names or CPU>=50; no proof of all GPU contention"
+          }
+        },
+        {
+          "event": "after_cleanup",
+          "CLOCK_MONOTONIC_ns": 430720639290000,
+          "wall_UTC_ISO": "2026-10-13T21:31:10.460430+00:00",
+          "status": "EXIT-VERIFIED",
+          "exit_code": 0,
+          "heavy_inventory": {
+            "status": "OBSERVED",
+            "rows": [
+              {
+                "pid": 10972,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3632,
+                "executable_basename": "Google Chrome Helper (Renderer)"
+              },
+              {
+                "pid": 39916,
+                "ppid": 39858,
+                "cpu_percent": 0.0,
+                "rss_KiB": 13296,
+                "executable_basename": "Google Chrome"
+              },
+              {
+                "pid": 40222,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 6048,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40223,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 6512,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40225,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 3104,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 40332,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 4576,
+                "executable_basename": "Google Chrome Helper"
+              },
+              {
+                "pid": 74926,
+                "ppid": 74924,
+                "cpu_percent": 135.3,
+                "rss_KiB": 287072,
+                "executable_basename": "node"
+              },
+              {
+                "pid": 81508,
+                "ppid": 39916,
+                "cpu_percent": 0.0,
+                "rss_KiB": 5376,
+                "executable_basename": "Google Chrome Helper"
+              }
+            ],
+            "scope": "selected names or CPU>=50; no proof of all GPU contention"
+          }
+        }
+      ],
+      "production_CPU_cadence": "NOT-RUN: NVWA_EVIDENCE INFO record absent from captured stdout/stderr",
+      "captures": {
+        "first-main-update": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/first-main-update.png",
+          "sha256": "884bbd063da21627bd2711ec5a9e2abcc8f55b174b02ca146f830c4cf1f25c89",
+          "bytes": 15060,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791927040077381993,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": {
+            "event": "screenshot_gpu_readback_callback",
+            "fields": {
+              "height": 720,
+              "scope": "GPU readback observation; requires pixel inspection; not compositor display time",
+              "tag": "first-main-update",
+              "width": 1280
+            },
+            "monotonic_after_ns": 430690254341000,
+            "monotonic_before_ns": 430690254341000,
+            "pid": 72779,
+            "process_Instant_elapsed_seconds": 1.723449375
+          },
+          "content_observation": "blank dark image; no UI or character",
+          "readback_callback_since_external_launch_interval_seconds": [
+            1.73895,
+            1.742972
+          ],
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        },
+        "first-runtime-ready": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/first-runtime-ready.png",
+          "sha256": "27d70097974252b1f493e67d6be22b498a2f140591ea1b7317653088f4341ea0",
+          "bytes": 306591,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791927040123045237,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": {
+            "event": "screenshot_gpu_readback_callback",
+            "fields": {
+              "height": 720,
+              "scope": "GPU readback observation; requires pixel inspection; not compositor display time",
+              "tag": "first-runtime-ready",
+              "width": 1280
+            },
+            "monotonic_after_ns": 430690301979000,
+            "monotonic_before_ns": 430690301979000,
+            "pid": 72779,
+            "process_Instant_elapsed_seconds": 1.771086834
+          },
+          "content_observation": "actual real humanoid and studio UI; status Preparing skin and animation",
+          "readback_callback_since_external_launch_interval_seconds": [
+            1.786588,
+            1.79061
+          ],
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        },
+        "production-final": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/production-final.png",
+          "sha256": "00b94646a55f7e2109e64bbc6eb6be45817b4aeacbe87924881f9c2df1839126",
+          "bytes": 307088,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791927069903746552,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": null,
+          "content_observation": "actual real humanoid and studio UI; status Ready skin +morph +animation",
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        },
+        "ready-plus-2s": {
+          "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/ready-plus-2s.png",
+          "sha256": "3422a3fbfb0776db5b11c17c381a51bf4a5d6e104e8516723f2829237a6d104b",
+          "bytes": 307205,
+          "width": 1280,
+          "height": 720,
+          "filesystem_mtime_ns": 1791927042109527353,
+          "mtime_scope": "filesystem wall metadata only; not screenshot/display boundary",
+          "callback": {
+            "event": "screenshot_gpu_readback_callback",
+            "fields": {
+              "height": 720,
+              "scope": "GPU readback observation; requires pixel inspection; not compositor display time",
+              "tag": "ready-plus-2s",
+              "width": 1280
+            },
+            "monotonic_after_ns": 430692284497000,
+            "monotonic_before_ns": 430692284497000,
+            "pid": 72779,
+            "process_Instant_elapsed_seconds": 3.753594792
+          },
+          "content_observation": "actual real humanoid and studio UI; status Ready skin +morph +animation",
+          "readback_callback_since_external_launch_interval_seconds": [
+            3.769106,
+            3.773128
+          ],
+          "inspection_method": "post-run tools.view_image; retained hash-bound observation receipt"
+        }
+      },
+      "first_valid_reported_surface_display": {
+        "callback": {
+          "event": "drawable_presented_callback",
+          "pid": 72779,
+          "index": 2,
+          "drawable_id": 1,
+          "presented_host_seconds": 404144.509429875,
+          "valid_presented_time": true,
+          "callback_monotonic_before_ns": 430690261396000,
+          "ca_host_seconds": 404144.509913792,
+          "callback_monotonic_after_ns": 430690261396000,
+          "converted_CLOCK_MONOTONIC_interval_ns": [
+            430690260912083.0,
+            430690260912083.0
+          ]
+        },
+        "prior_dense_callback_indices_zero_time": [
+          1
+        ],
+        "CLOCK_MONOTONIC_interval_ns": [
+          430690260912083.0,
+          430690260912083.0
+        ],
+        "since_external_launch_bracket_seconds": [
+          1.745523083,
+          1.749541083
+        ],
+        "since_external_launch_interval_with_reported_clock_resolution_allowance_seconds": [
+          1.745521081,
+          1.749543085
+        ],
+        "scope": "actual Metal drawable reported onscreen time; skipped prior callbacks; no assertion about displayed content",
+        "valid_display_callback_count": 137,
+        "zero_time_display_callback_count": 1
+      },
+      "GPU_command_duration_ms_by_kind": {
+        "internal_present": {
+          "count": 4,
+          "min": 0.0,
+          "median": 2.0983861759305e-05,
+          "p95_nearest_rank": 4.202593117952347e-05,
+          "max": 4.202593117952347e-05
+        },
+        "submitted": {
+          "count": 134,
+          "min": 0.0,
+          "median": 0.00825000461190939,
+          "p95_nearest_rank": 0.38174999644979835,
+          "max": 9.128875040914863
+        }
+      },
+      "GPU_samples": {
+        "valid_count": 138,
+        "invalid_count": 0,
+        "zero_duration_count": 28,
+        "scope": "bounded selected existing completed Metal command buffers, not frame/pass durations; zero durations retained; no sum or frame-latency inference"
+      },
+      "Metal_device_current_allocated_bytes": {
+        "count": 276,
+        "min": 98615296,
+        "median": 119586816.0,
+        "p95_nearest_rank": 130678784,
+        "max": 130678784
+      },
+      "observed_CA_to_CLOCK_MONOTONIC_midpoint_offset_ns": {
+        "count": 276,
+        "min": 26545751480542.0,
+        "median": 26545751482708.0,
+        "p95_nearest_rank": 26545751501083.0,
+        "max": 26545751535750.0
+      },
+      "main_CPU_markers": [
+        {
+          "event": "before_build_app",
+          "fields": {
+            "metal_probe_enabled": true,
+            "variant": "diagnostic_wgpu_hal_patch"
+          },
+          "monotonic_after_ns": 430688530907000,
+          "monotonic_before_ns": 430688530907000,
+          "pid": 72779,
+          "process_Instant_elapsed_seconds": 2.4459e-05
+        },
+        {
+          "event": "after_build_app",
+          "fields": {},
+          "monotonic_after_ns": 430688882633000,
+          "monotonic_before_ns": 430688882632000,
+          "pid": 72779,
+          "process_Instant_elapsed_seconds": 0.351747917
+        },
+        {
+          "event": "first_main_post_update",
+          "fields": {},
+          "monotonic_after_ns": 430689826511000,
+          "monotonic_before_ns": 430689826510000,
+          "pid": 72779,
+          "process_Instant_elapsed_seconds": 1.295621042
+        },
+        {
+          "event": "first_render_system_returned",
+          "fields": {
+            "adapter": "Apple M2 Pro",
+            "adapter_supported_features": "Features { features_wgpu: FeaturesWGPU(SHADER_FLOAT32_ATOMIC | TEXTURE_FORMAT_16BIT_NORM | TEXTURE_COMPRESSION_ASTC_HDR | TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES | TIMESTAMP_QUERY_INSIDE_ENCODERS | MAPPABLE_PRIMARY_BUFFERS | TEXTURE_BINDING_ARRAY | STORAGE_RESOURCE_BINDING_ARRAY | SAMPLED_TEXTURE_AND_STORAGE_BUFFER_ARRAY_NON_UNIFORM_INDEXING | STORAGE_TEXTURE_ARRAY_NON_UNIFORM_INDEXING | PARTIALLY_BOUND_BINDING_ARRAY | ADDRESS_MODE_CLAMP_TO_ZERO | ADDRESS_MODE_CLAMP_TO_BORDER | POLYGON_MODE_LINE | VERTEX_WRITABLE_STORAGE | CLEAR_TEXTURE | MULTIVIEW | TEXTURE_ATOMIC | EXTERNAL_TEXTURE | EXPERIMENTAL_RAY_QUERY | SHADER_INT64 | SUBGROUP | SUBGROUP_BARRIER | SHADER_INT64_ATOMIC_MIN_MAX | EXPERIMENTAL_MESH_SHADER | PASSTHROUGH_SHADERS | SHADER_BARYCENTRICS | EXPERIMENTAL_COOPERATIVE_MATRIX | MEMORY_DECORATION_COHERENT), features_webgpu: FeaturesWebGPU(DEPTH_CLIP_CONTROL | DEPTH32FLOAT_STENCIL8 | TEXTURE_COMPRESSION_BC | TEXTURE_COMPRESSION_BC_SLICED_3D | TEXTURE_COMPRESSION_ETC2 | TEXTURE_COMPRESSION_ASTC | TEXTURE_COMPRESSION_ASTC_SLICED_3D | TIMESTAMP_QUERY | INDIRECT_FIRST_INSTANCE | SHADER_F16 | RG11B10UFLOAT_RENDERABLE | BGRA8UNORM_STORAGE | FLOAT32_FILTERABLE | FLOAT32_BLENDABLE | DUAL_SOURCE_BLENDING | IMMEDIATES | PRIMITIVE_INDEX) }",
+            "backend": "Metal",
+            "device_enabled_features": "Features { features_wgpu: FeaturesWGPU(SHADER_FLOAT32_ATOMIC | TEXTURE_FORMAT_16BIT_NORM | TEXTURE_COMPRESSION_ASTC_HDR | TEXTURE_ADAPTER_SPECIFIC_FORMAT_FEATURES | TIMESTAMP_QUERY_INSIDE_ENCODERS | MAPPABLE_PRIMARY_BUFFERS | TEXTURE_BINDING_ARRAY | STORAGE_RESOURCE_BINDING_ARRAY | SAMPLED_TEXTURE_AND_STORAGE_BUFFER_ARRAY_NON_UNIFORM_INDEXING | STORAGE_TEXTURE_ARRAY_NON_UNIFORM_INDEXING | PARTIALLY_BOUND_BINDING_ARRAY | ADDRESS_MODE_CLAMP_TO_ZERO | ADDRESS_MODE_CLAMP_TO_BORDER | POLYGON_MODE_LINE | VERTEX_WRITABLE_STORAGE | CLEAR_TEXTURE | MULTIVIEW | TEXTURE_ATOMIC | EXTERNAL_TEXTURE | EXPERIMENTAL_RAY_QUERY | SHADER_INT64 | SUBGROUP | SUBGROUP_BARRIER | SHADER_INT64_ATOMIC_MIN_MAX | EXPERIMENTAL_MESH_SHADER | PASSTHROUGH_SHADERS | SHADER_BARYCENTRICS | EXPERIMENTAL_COOPERATIVE_MATRIX | MEMORY_DECORATION_COHERENT), features_webgpu: FeaturesWebGPU(DEPTH_CLIP_CONTROL | DEPTH32FLOAT_STENCIL8 | TEXTURE_COMPRESSION_BC | TEXTURE_COMPRESSION_BC_SLICED_3D | TEXTURE_COMPRESSION_ETC2 | TEXTURE_COMPRESSION_ASTC | TEXTURE_COMPRESSION_ASTC_SLICED_3D | TIMESTAMP_QUERY | INDIRECT_FIRST_INSTANCE | SHADER_F16 | RG11B10UFLOAT_RENDERABLE | BGRA8UNORM_STORAGE | FLOAT32_FILTERABLE | FLOAT32_BLENDABLE | DUAL_SOURCE_BLENDING | IMMEDIATES | PRIMITIVE_INDEX) }",
+            "primary_window": "62v0",
+            "scope": "CPU return; exact actual display supplied separately by Metal callback",
+            "timestamp_period_ns": 1.0,
+            "waiting_pipelines": 34,
+            "window_dimensions": [
+              [
+                1280,
+                720
+              ]
+            ]
+          },
+          "monotonic_after_ns": 430690026647000,
+          "monotonic_before_ns": 430690026647000,
+          "pid": 72779,
+          "process_Instant_elapsed_seconds": 1.495756292
+        },
+        {
+          "event": "first_runtime_ready_observation",
+          "fields": {
+            "animation_position_seconds": 0.1717052459716797,
+            "bevy_TimeReal_first_ready_seconds": 0.207402959,
+            "joints": 18,
+            "meshes": 9,
+            "morph_nodes": 1,
+            "morph_weights": 4,
+            "playing": true,
+            "scope": "runtime readiness only; no character-pixel claim"
+          },
+          "monotonic_after_ns": 430690256409000,
+          "monotonic_before_ns": 430690256409000,
+          "pid": 72779,
+          "process_Instant_elapsed_seconds": 1.7255167089999999
+        },
+        {
+          "event": "animation_observation_after_ready_plus_2s",
+          "fields": {
+            "animation_position_seconds": 2.3947997093200684,
+            "completed": false,
+            "playing": true
+          },
+          "monotonic_after_ns": 430692263441000,
+          "monotonic_before_ns": 430692263441000,
+          "pid": 72779,
+          "process_Instant_elapsed_seconds": 3.73253875
+        },
+        {
+          "event": "app_run_returned",
+          "fields": {
+            "exit": "Success"
+          },
+          "monotonic_after_ns": 430720308877000,
+          "monotonic_before_ns": 430720308876000,
+          "pid": 72779,
+          "process_Instant_elapsed_seconds": 31.777824042
+        }
+      ],
+      "reconciler_output_sha256": "6c451c11efd919f0903506d38fd2c13b9f1fa4a710c0fccf578d0329b2a359f9",
+      "host_window_capture": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-warm-original.jpg",
+        "sha256": "8ca7ada083b77fea0725efefd3201ce16a46e7b744435ac424683a5d01627980",
+        "dimensions": [
+          1280,
+          784
+        ],
+        "observed_content": "actual real humanoid and studio UI Ready;64px host title chrome above1280x720canvas",
+        "source_call_id": "call_ef197b671bc7400e9b168438fc316810",
+        "UTC_capture_bracket": {
+          "outputBlockIndex": 2,
+          "rawText": "{\n  case: 'native-diagnostic-warm',\n  ownedPid: 72779,\n  screenshotBeforeUtc: '2026-10-13T21:30:47.025Z'\n}{\n  case: 'native-diagnostic-warm',\n  screenshotAfterUtc: '2026-10-13T21:30:47.566Z'\n}",
+          "screenshotBeforeUtc": "2026-10-13T21:30:47.025Z",
+          "screenshotAfterUtc": "2026-10-13T21:30:47.566Z",
+          "captureBracketSeconds": 0.541
+        },
+        "provenance_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-warm-provenance.json",
+        "provenance_sha256": "d1f344492150787188e212106056d8d38b8e851b903357757bdf56b3acfbfaa1",
+        "trace_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-warm-exact-cua.jsonl.gz",
+        "trace_gzip_sha256": "fc3236e1e3e4e3fda3dc54f9ca65626250c194b503957da07c9ac0e98bfe5a2a",
+        "scope": "exact emitted host-window JPEG; clock UTC observation bracket; not first presentation or separately proved keyboard focus"
+      }
+    }
+  },
+  "raw_artifacts_sha256": {
+    ".work/m11-perf/native/runs/baseline-1/identity.json": "a83695769e74765a84b9f5a8a020218f174c8ba5f68bdc32e659edc330b87bed",
+    ".work/m11-perf/native/runs/baseline-1/launch.json": "ab3e53f41689e960253783e4ba941d3d3d2edab7006e112666595f3919586642",
+    ".work/m11-perf/native/runs/baseline-1/pid.json": "6e8c479d2d1d57ead15eec053312d9ad95df2482d8799595dd724afeb864e39a",
+    ".work/m11-perf/native/runs/baseline-1/process-receipt.json": "eab6137dfcb546a5872342ebda89e749d76079391ce873dc4f58d73304833ab5",
+    ".work/m11-perf/native/runs/baseline-1/stderr.log": "77835bf696fc9d4003bfdf090572a274aef76b517cf08a53133d24b3c82cc24c",
+    ".work/m11-perf/native/runs/baseline-1/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".work/m11-perf/native/captures/baseline-1/prelaunch.json": "f5ce4f4cbb337a8db1a36b21ba4c0b3fc3ab71cf8a29a9c7c905a02413f0499b",
+    ".work/m11-perf/native/captures/baseline-1/production-final.png": "0b4ab42eccc312e8939a802bc09ff66df2a9a47742cb9cd0bf67136f1a096d9a",
+    ".work/m11-perf/native/runs/diagnostic-1/identity.json": "f4f0af7d1fe3fddce0292b344cc984ed09feaa283283fa3b2f8ae3c37f2735dd",
+    ".work/m11-perf/native/runs/diagnostic-1/launch.json": "1c7c590cb7e91da086c98eeac4007548fdd2976be5c8b2018be4cf91ed20a830",
+    ".work/m11-perf/native/runs/diagnostic-1/pid.json": "07e10f5d19ce272ad1559828db3e364ac302e4137f221380968b95ea7f7470d9",
+    ".work/m11-perf/native/runs/diagnostic-1/process-receipt.json": "5fd290d18148dcac0434d807b610afe9c3fcd98c1ed5b043c122230478b8dc24",
+    ".work/m11-perf/native/runs/diagnostic-1/stderr.log": "5dc8857302a3c15f9461ea9103ccb229eafb5551e1f99a1a429004b82c22900c",
+    ".work/m11-perf/native/runs/diagnostic-1/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".work/m11-perf/native/captures/diagnostic-1/first-main-update.png": "884bbd063da21627bd2711ec5a9e2abcc8f55b174b02ca146f830c4cf1f25c89",
+    ".work/m11-perf/native/captures/diagnostic-1/first-runtime-ready.png": "d9d0cf76935ab0c363be997bc54dda95e73d558df2fd03a3dcfd08b3f042e40b",
+    ".work/m11-perf/native/captures/diagnostic-1/prelaunch.json": "6336dfadd6cb5721152940b96aa93e01eebed401de491bda486583c68b544a33",
+    ".work/m11-perf/native/captures/diagnostic-1/production-final.png": "c638b61d2414b068ba2dfaee09c2b1f99b1edd6cd47f5a101fe1e8abd22e36f4",
+    ".work/m11-perf/native/captures/diagnostic-1/ready-plus-2s.png": "a7e7689ed34f294b5a8b625eb1180d1100b936ef45a2be6ac7e83aa0ccfddc51",
+    ".work/m11-perf/native/runs/diagnostic-warm/identity.json": "2f46b3f2037ec16adf693068877fe05db971d020c82359604ab900907bb3cb1a",
+    ".work/m11-perf/native/runs/diagnostic-warm/launch.json": "f26dd79cb6347b82f2c7b40b05f7e8c9d9233340597df80de693d96220110417",
+    ".work/m11-perf/native/runs/diagnostic-warm/pid.json": "306cf675ad31b0a2bf1124fca1bff2fcf468daee6e689a449a196e153d5a230c",
+    ".work/m11-perf/native/runs/diagnostic-warm/process-receipt.json": "b0f47d6004c9271ec6bff166ad7c6305aaa3557b08677ace95c965d1ea28242f",
+    ".work/m11-perf/native/runs/diagnostic-warm/stderr.log": "4fd29df1da32ef2984715a4e0d8676bb9be00b110d5ff0eb3e5e95bfb8017c42",
+    ".work/m11-perf/native/runs/diagnostic-warm/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".work/m11-perf/native/captures/diagnostic-warm/first-main-update.png": "884bbd063da21627bd2711ec5a9e2abcc8f55b174b02ca146f830c4cf1f25c89",
+    ".work/m11-perf/native/captures/diagnostic-warm/first-runtime-ready.png": "27d70097974252b1f493e67d6be22b498a2f140591ea1b7317653088f4341ea0",
+    ".work/m11-perf/native/captures/diagnostic-warm/prelaunch.json": "6336dfadd6cb5721152940b96aa93e01eebed401de491bda486583c68b544a33",
+    ".work/m11-perf/native/captures/diagnostic-warm/production-final.png": "00b94646a55f7e2109e64bbc6eb6be45817b4aeacbe87924881f9c2df1839126",
+    ".work/m11-perf/native/captures/diagnostic-warm/ready-plus-2s.png": "3422a3fbfb0776db5b11c17c381a51bf4a5d6e104e8516723f2829237a6d104b"
+  },
+  "limits": [
+    "No more native launches:3-run budget exhausted",
+    "Fully cold OS/file/Metal/shader state NOT-RUN",
+    "Process-warm contrast only; no causal attribution for startup difference",
+    "First surface content NOT-RUN; readback and foreground content separate",
+    "Production CPU cadence NOT-RUN; INFO records absent",
+    "No continuous RSS/device allocation peak claim; kernel reported lifetime footprint maximum separately labeled",
+    "Accepted baseline and diagnostic variants have different instrumentation overhead"
+  ],
+  "post_run_image_inspections": {
+    "receipt_recorded_UTC": "2026-10-13T21:39:51.677006+00:00",
+    "method": "post-run tools.view_image of all9PNG and3original hostJPEG artifacts; no UI/GPU launch",
+    "captures": {
+      "baseline-1/production-final.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/baseline-1/production-final.png",
+        "sha256": "0b4ab42eccc312e8939a802bc09ff66df2a9a47742cb9cd0bf67136f1a096d9a",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "actual real humanoid and studio UI; status Ready skin +morph +animation"
+      },
+      "diagnostic-1/first-main-update.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/first-main-update.png",
+        "sha256": "884bbd063da21627bd2711ec5a9e2abcc8f55b174b02ca146f830c4cf1f25c89",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "blank dark image; no UI or character"
+      },
+      "diagnostic-1/first-runtime-ready.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/first-runtime-ready.png",
+        "sha256": "d9d0cf76935ab0c363be997bc54dda95e73d558df2fd03a3dcfd08b3f042e40b",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "actual real humanoid and studio UI; status Preparing skin and animation"
+      },
+      "diagnostic-1/production-final.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/production-final.png",
+        "sha256": "c638b61d2414b068ba2dfaee09c2b1f99b1edd6cd47f5a101fe1e8abd22e36f4",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "actual real humanoid and studio UI; status Ready skin +morph +animation"
+      },
+      "diagnostic-1/ready-plus-2s.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/ready-plus-2s.png",
+        "sha256": "a7e7689ed34f294b5a8b625eb1180d1100b936ef45a2be6ac7e83aa0ccfddc51",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "actual real humanoid and studio UI; status Ready skin +morph +animation"
+      },
+      "diagnostic-warm/first-main-update.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/first-main-update.png",
+        "sha256": "884bbd063da21627bd2711ec5a9e2abcc8f55b174b02ca146f830c4cf1f25c89",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "blank dark image; no UI or character"
+      },
+      "diagnostic-warm/first-runtime-ready.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/first-runtime-ready.png",
+        "sha256": "27d70097974252b1f493e67d6be22b498a2f140591ea1b7317653088f4341ea0",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "actual real humanoid and studio UI; status Preparing skin and animation"
+      },
+      "diagnostic-warm/production-final.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/production-final.png",
+        "sha256": "00b94646a55f7e2109e64bbc6eb6be45817b4aeacbe87924881f9c2df1839126",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "actual real humanoid and studio UI; status Ready skin +morph +animation"
+      },
+      "diagnostic-warm/ready-plus-2s.png": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/ready-plus-2s.png",
+        "sha256": "3422a3fbfb0776db5b11c17c381a51bf4a5d6e104e8516723f2829237a6d104b",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "observed_content": "actual real humanoid and studio UI; status Ready skin +morph +animation"
+      }
+    },
+    "host_window_captures": {
+      "baseline-1": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-baseline-1-original.jpg",
+        "sha256": "0b5adcfcb51bd1b5d943050b367b76a3fd11cdb9c2398dafda55bd76843d0311",
+        "dimensions": [
+          1280,
+          784
+        ],
+        "observed_content": "actual real humanoid and studio UI Ready;64px host title chrome above1280x720canvas",
+        "source_call_id": "call_3f39973c1f1443079c7e6361e595df77",
+        "UTC_capture_bracket": {
+          "outputBlockIndex": 2,
+          "rawText": "{\n  case: 'native-baseline-1',\n  ownedPid: 68805,\n  screenshotBeforeUtc: '2026-10-13T21:29:38.297Z'\n}{\n  case: 'native-baseline-1',\n  screenshotAfterUtc: '2026-10-13T21:29:38.948Z'\n}",
+          "screenshotBeforeUtc": "2026-10-13T21:29:38.297Z",
+          "screenshotAfterUtc": "2026-10-13T21:29:38.948Z",
+          "captureBracketSeconds": 0.651
+        },
+        "provenance_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-baseline-1-provenance.json",
+        "provenance_sha256": "1995cad4ee74cd8d2a92de20f4f2854bc88a80e1ada02d740f7e8779407bd401",
+        "trace_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-baseline-1-exact-cua.jsonl.gz",
+        "trace_gzip_sha256": "d4ad702362a916efacb52855009c94abf1cabff6b9d947c404915cb30c620338",
+        "scope": "exact emitted host-window JPEG; clock UTC observation bracket; not first presentation or separately proved keyboard focus"
+      },
+      "diagnostic-1": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-1-original.jpg",
+        "sha256": "3c1f321c54052b1abc2682b5dac6b4c0b5874e1f4cbecf194aa270fd01dde4d6",
+        "dimensions": [
+          1280,
+          784
+        ],
+        "observed_content": "actual real humanoid and studio UI Ready;64px host title chrome above1280x720canvas",
+        "source_call_id": "call_f310191cf40640c88ee66d8a9789d2c3",
+        "UTC_capture_bracket": {
+          "outputBlockIndex": 2,
+          "rawText": "{\n  case: 'native-diagnostic-1',\n  ownedPid: 70636,\n  screenshotBeforeUtc: '2026-10-13T21:30:05.390Z'\n}{\n  case: 'native-diagnostic-1',\n  screenshotAfterUtc: '2026-10-13T21:30:06.407Z'\n}",
+          "screenshotBeforeUtc": "2026-10-13T21:30:05.390Z",
+          "screenshotAfterUtc": "2026-10-13T21:30:06.407Z",
+          "captureBracketSeconds": 1.017
+        },
+        "provenance_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-1-provenance.json",
+        "provenance_sha256": "a3c39c06ed367539219250b29aa235d2566661ec8956249965e890849540d0a3",
+        "trace_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-1-exact-cua.jsonl.gz",
+        "trace_gzip_sha256": "045bf6f601665bc6612b1fc342f886bab46f6f34b674cf5a346f17b830487857",
+        "scope": "exact emitted host-window JPEG; clock UTC observation bracket; not first presentation or separately proved keyboard focus"
+      },
+      "diagnostic-warm": {
+        "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-warm-original.jpg",
+        "sha256": "8ca7ada083b77fea0725efefd3201ce16a46e7b744435ac424683a5d01627980",
+        "dimensions": [
+          1280,
+          784
+        ],
+        "observed_content": "actual real humanoid and studio UI Ready;64px host title chrome above1280x720canvas",
+        "source_call_id": "call_ef197b671bc7400e9b168438fc316810",
+        "UTC_capture_bracket": {
+          "outputBlockIndex": 2,
+          "rawText": "{\n  case: 'native-diagnostic-warm',\n  ownedPid: 72779,\n  screenshotBeforeUtc: '2026-10-13T21:30:47.025Z'\n}{\n  case: 'native-diagnostic-warm',\n  screenshotAfterUtc: '2026-10-13T21:30:47.566Z'\n}",
+          "screenshotBeforeUtc": "2026-10-13T21:30:47.025Z",
+          "screenshotAfterUtc": "2026-10-13T21:30:47.566Z",
+          "captureBracketSeconds": 0.541
+        },
+        "provenance_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-warm-provenance.json",
+        "provenance_sha256": "d1f344492150787188e212106056d8d38b8e851b903357757bdf56b3acfbfaa1",
+        "trace_path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-warm-exact-cua.jsonl.gz",
+        "trace_gzip_sha256": "fc3236e1e3e4e3fda3dc54f9ca65626250c194b503957da07c9ac0e98bfe5a2a",
+        "scope": "exact emitted host-window JPEG; clock UTC observation bracket; not first presentation or separately proved keyboard focus"
+      }
+    },
+    "scope": "content observation only; no first-pixel/display/focus timestamp claim"
+  }
+}

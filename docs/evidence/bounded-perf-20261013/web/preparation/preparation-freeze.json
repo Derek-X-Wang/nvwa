@@ -1,0 +1,66 @@
+{
+  "status": "PREPARED_NOT_RUNTIME",
+  "sourceFiles": {
+    "experiments/34-web-cold-metrics/README.md": {
+      "sha256": "c692adf9a8bd4fa73186cef47825d7c5b3274c6fd58886ec2d65283532935d14",
+      "bytes": 8201
+    },
+    "experiments/34-web-cold-metrics/check_metrics.py": {
+      "sha256": "63229105c914ae6d1b2bd4b6b10c1c384566f9266dad21fcf10eeaf0f0783bb5",
+      "bytes": 10799
+    },
+    "experiments/34-web-cold-metrics/collector.js": {
+      "sha256": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+      "bytes": 4756
+    },
+    "experiments/34-web-cold-metrics/gpu-boundaries.js": {
+      "sha256": "0dbe942109ae593e4910468e6f3c91dab339b668428d5f25cbaa5ee09873377b",
+      "bytes": 4861
+    },
+    "experiments/34-web-cold-metrics/server.py": {
+      "sha256": "55afb5e9f385d4e0f91e98b8f59d9d241ca99cd3dc90a690b901d70229e2c16f",
+      "bytes": 7724
+    },
+    "experiments/34-web-cold-metrics/test_metrics.py": {
+      "sha256": "17c0288a3b66aae63ba84f80af0a55e077469d1314a2292a279c10086d8a9de4",
+      "bytes": 7195
+    },
+    "experiments/34-web-cold-metrics/test_wrappers.mjs": {
+      "sha256": "99f6ed2458652deb017f8b79590132ad34b3ef329adefd9ca956281581d2442a",
+      "bytes": 6361
+    },
+    "experiments/34-web-cold-metrics/timestamp-variant.js": {
+      "sha256": "a99b727ff9bc7ce778882df27a9eeaaf4e457b3316354e6a551407a561d134f6",
+      "bytes": 6679
+    }
+  },
+  "cpuControls": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/34-web-cold-metrics",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "test_baseline_cannot_hide_variant (test_metrics.Controls.test_baseline_cannot_hide_variant) ... ok\ntest_claiming_display_from_submit_red (test_metrics.Controls.test_claiming_display_from_submit_red) ... ok\ntest_future_timestamp_red (test_metrics.Controls.test_future_timestamp_red) ... ok\ntest_missing_milestone_red (test_metrics.Controls.test_missing_milestone_red) ... ok\ntest_mixed_clock_red (test_metrics.Controls.test_mixed_clock_red) ... ok\ntest_outside_origin_red (test_metrics.Controls.test_outside_origin_red) ... ok\ntest_resource_byte_mismatch_red (test_metrics.Controls.test_resource_byte_mismatch_red) ... ok\ntest_same_url_contrast_only_once (test_metrics.Controls.test_same_url_contrast_only_once) ... ok\ntest_uninstalled_hook_red (test_metrics.Controls.test_uninstalled_hook_red) ... ok\ntest_unknown_collector_source_red (test_metrics.Controls.test_unknown_collector_source_red) ... ok\ntest_valid_synthetic_body_reconciliation (test_metrics.Controls.test_valid_synthetic_body_reconciliation) ... ok\ntest_variant_missing_rejected (test_metrics.Controls.test_variant_missing_rejected) ... ok\ntest_wrong_glb_size_red (test_metrics.Controls.test_wrong_glb_size_red) ... ok\ntest_wrong_physical_geometry_red (test_metrics.Controls.test_wrong_physical_geometry_red) ... ok\ntest_wrong_wasm_source_red (test_metrics.Controls.test_wrong_wasm_source_red) ... ok\ntest_wrong_work_body_red (test_metrics.Controls.test_wrong_work_body_red) ... ok\ntest_wrong_work_query_red (test_metrics.Controls.test_wrong_work_query_red) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 0.484s\n\nOK\n"
+    },
+    {
+      "argv": [
+        "node",
+        "experiments/34-web-cold-metrics/test_wrappers.mjs"
+      ],
+      "exit": 0,
+      "stdout": "PASS CPU wrapper preservation, unavailable-feature path, fake tick arithmetic, lifecycle and boundedness; GPU NOT-RUN\n",
+      "stderr": ""
+    }
+  ],
+  "runtime": "NOT-RUN: no server/browser/GPU lease",
+  "lifecycle": "read-only Cua inventory lease returned; no created tab/listener/process"
+}

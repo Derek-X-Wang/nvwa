@@ -1,0 +1,60 @@
+{
+  "status": "BUILD-VERIFIED; RUNTIME-NOT-RUN",
+  "baseline": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/Nvwa.app/Contents/MacOS/Nvwa",
+    "sha256": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a"
+  },
+  "candidate": {
+    "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/release/nvwa-native-present-metrics",
+    "frozen": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/frozen/nvwa-native-present-metrics",
+    "bundle": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app",
+    "bundle_executable": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa",
+    "sha256": "31999ece7a4b74875ac254eb15ebb8fad08e73e8880ca8a3fbd68c5026af8a6c",
+    "bytes": 103446288
+  },
+  "source_inputs_sha256": {
+    "experiments/33-native-present-metrics/Cargo.lock": "95209820915da83a393057006bfc2ab637839fd354586350082153651900c59d",
+    "experiments/33-native-present-metrics/Cargo.toml": "95d3c5d6c4b850331b7797c1b3623dbc3c2c0bc248ee815e902be1f2a4264df1",
+    "experiments/33-native-present-metrics/README.md": "16a6ca1d5a34bd4f774364cb6912d4abd53434e4db71204a172efcb2308e66cf",
+    "experiments/33-native-present-metrics/freeze_candidate.py": "8acb4b6c400aa97cec06aa9048888ed6a7f264b3961d8fbf5f1afbca319951c8",
+    "experiments/33-native-present-metrics/nvwa_probe.rs": "dd1c1bc34351f92ddb018bf7848c2df138dc51ece5544f9fd5884457ce99e4c9",
+    "experiments/33-native-present-metrics/prepare_vendor.py": "b4b49beddefbca9509f5b61070c484b73c0fcea09b30d7e1268aa5eb5b110a1a",
+    "experiments/33-native-present-metrics/proc_memory.c": "a8c28b8c34a3bfdae4e6869c28a9d8e76c2753dc2bfb5e47a0126e317e2c0f2f",
+    "experiments/33-native-present-metrics/reconcile_native.py": "d26d5d170edf79155276f0b1cb2bfe8a9ada0c5f17683bb5639c537c9a8d2835",
+    "experiments/33-native-present-metrics/src/main.rs": "b878f51f6e166fcc8a947b6171a4db5f1e25396d8003ad40d21e9f221a26f382",
+    "experiments/33-native-present-metrics/test_proc_memory.py": "3a012f6ea99edca26062858fe074b10166f791fb688b0a9688d9708da4ef592b",
+    "experiments/33-native-present-metrics/test_reconcile_native.py": "6c97f2c5b505040ac35adf1d9c4b3e79b48165fa85346a030a752b03061bdace",
+    "experiments/33-native-present-metrics/wgpu-hal-metal-probe.patch": "201da53fdcba8dfb4aec64c23b014b3635f589c70b20a88f44e1289490d66d82",
+    "Cargo.toml": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+    "Cargo.lock": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+    "rust-toolchain.toml": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+    ".work/m11-perf/measurement-contract.json": "040d4f94c5ca6c9efca793e71dbf42c7dc4ec524979ae62b9d57bae5803d7799",
+    ".work/m11-perf/input/character-loop.nvwa.json": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+    ".work/m11-perf/native/vendor-manifest.json": "ae13339e709024306ec220d611c1ce87bc0fa93e3f94daffce67edff80166cd0",
+    ".work/m11-perf/native/dependency-comparison.json": "d55f75d9295073807ef528ee8cd9dd10c93239eebe2a9737b1a2b18b03c1449b"
+  },
+  "helper": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/proc-memory",
+    "sha256": "94c9af359f3675588cc924f7f49337c19122b4af7ac55726494fb39dd8140c40"
+  },
+  "bundle_assets_sha256": {
+    "Contents/Resources/assets/character.profile.json": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+    "Contents/Resources/assets/fixtures/LICENSE.txt": "b10b199096d04791fe942e0de62eb4643edbd9d289791b88715789cad87fe151",
+    "Contents/Resources/assets/fixtures/nvwa-humanoid.glb": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "Contents/Resources/assets/fixtures/provenance-manifest.json": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f",
+    "Contents/Resources/licenses/craft-ui/LICENSE-MIT.txt": "2f42c0cafc8ad394d91373fe1f342aee5453850b151a51405c68cae9ada86d26",
+    "Contents/Resources/licenses/fonts/NOTICE.md": "2a1118c4fd3a2939f03b2f176a5324010baec38dab1ada70c6d05cfcb574fac4",
+    "Contents/Resources/licenses/fonts/OFL.txt": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+    "Contents/Resources/licenses/fonts/PROVENANCE.json": "1c8eb96ee0efdb5b1da79621f1b0902848fe59167c1313ce1d481739ccd084aa",
+    "Contents/Resources/works/m1-sequence.nvwa.json": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa"
+  },
+  "launches": 0,
+  "sole_Cargo_writer_lease": "returned after successful build; no GPU launches",
+  "clock_domains": [
+    "process_Instant",
+    "host_CLOCK_MONOTONIC_ns",
+    "Metal/CA_host_seconds",
+    "kernel_birth_unix_sec_usec",
+    "rusage_start_mach_abstime_ticks"
+  ]
+}

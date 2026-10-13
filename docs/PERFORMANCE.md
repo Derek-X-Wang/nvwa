@@ -1,5 +1,23 @@
 # Actual release measurements
 
+## 2026-10-13：首帧、GPU 与内存的有界补测（#4）
+
+同一份 revision0 idle 作品、真实18关节/4形变角色、1280×720/DPR1。已验收 main 为 `d832ef3e044017bddb5a0681ff5ca99256ebaef4`。三个桌面进程与三个 Web 页面依次运行；正式测量期间只有一个任务渲染器，未运行重编译。原生基线与 Web 使用原有 release 产物；独立 Metal 诊断产物另行编译，不进入产品依赖。用户应用和系统缓存未控制。
+
+| 实测边界 | 桌面 Metal | Web IAB / Chrome155 |
+| --- | --- | --- |
+| 呈现 | 两次诊断的首个有效已记录 surface 呈现约为进程启动后9.963883–9.967385s、1.745521–1.749544s。前面的零值回调全部保留；这些不是角色首帧。 | 三次真实角色画面已观察；没有精确物理呈现接口。首次 submit 返回956.0/1192.1/1188.3ms，均早于 GLB 下载结束，不能作为角色首帧。 |
+| 角色像素 | 首个主更新截图为空白；诊断1的实际角色 GPU 读回回调为9.947958–9.951460s。GPU 读回与屏幕显示不同。 | GLB responseEnd 为1158.2/1399.0/2124.3ms；Ready 日志使用独立 Bevy 时钟，页面截图使用独立主机 UTC。 |
+| GPU | 两次诊断各134个实际 submitted 命令样本，p95 为0.537750/0.381750ms。零耗时样本保留；不求和，不代表每帧耗时或持续角色渲染预算。 | 时间戳实验实际执行：四个 compute 零值、两条 UI 65,536ns、两个倒序错误。结果不接受，状态仍为 NOT-RUN。 |
+| 内存 | 未修改基线的115次 PID/出生时间核对样本：最大 RSS209,977,344bytes；最大 physical footprint295,781,552bytes。两者重叠，不能相加。Metal 资源分配量另记。 | 每次30个 JS heap 估计样本，最大19,292,318 /21,151,025 /20,179,465bytes；不包含完整 Wasm、浏览器 RSS 或 GPU 内存。 |
+| 完全冷启动 | 新进程成立；OS 文件、Metal 驱动和 shader 缓存未证明冷态，未重启或清缓存。 | 新导航、完整 no-store HTTP 响应成立；浏览器进程、Wasm 编译器、shader、驱动和 OS 缓存未证明冷态。 |
+
+两次桌面诊断不能归因启动差异。新增读回和观察器会干扰被测程序；不得将诊断值当作未修改产品基线的性能。原生本轮捕获日志缺少 `NVWA_EVIDENCE`，因此本轮原生主循环 cadence 未验证；保留历史结果的原有产物和日期。
+
+[本轮验收与原始数据](evidence/bounded-perf-20261013/ACCEPTANCE.md)、[桌面复现](../experiments/33-native-present-metrics/RESULTS.md)、[Web 复现](../experiments/34-web-cold-metrics/RESULTS.md)。
+
+PARTIAL — 双端实际运行、桌面有效 surface 时间/命令 GPU 样本/PID 内存、Web HTTP/CPU 边界与 JS heap 子集已测。角色首次物理显示、完全冷启动、启动停顿原因、Web 有效角色 GPU 耗时和总 GPU 内存仍未验证；#4 保持开放，#3 保持阻塞。下方旧结果只描述对应历史产物。
+
 ## Current bounded startup checkpoint (2026-10-12)
 
 Two actual IAB Web startups used fresh run URL prefixes and no-store responses with the unchanged accepted Rust release artifact. Each transmitted20,564,428bytes across five critical bodies (diagnostic wrapper/collector, JS, Wasm, one GLB), plus an explicit28-byte optional metadata404. Boot-hidden observations were517.5/634.4ms; GLB Resource Timing responseEnd was936.6/1100.8ms, all on the navigation clock. Actual1280×720/DPR1 character pixels and current top-level automatic/explicit PNG downloads were verified. [Raw packet and limits](evidence/bounded-startup-capture/ACCEPTANCE.md), [reproduction](../experiments/24-http-cold-startup/README.md).

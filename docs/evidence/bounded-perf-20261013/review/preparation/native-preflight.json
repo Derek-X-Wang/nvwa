@@ -1,0 +1,32 @@
+{
+  "phase": "pre-runtime immutable native probe review",
+  "status": "GO for bounded diagnostic acquisition; launcher and post-runtime evidence remain pending",
+  "material_findings": [],
+  "evidence": {
+    "identities": "independent-native-identities.json",
+    "dependencies": "independent-dependencies.json",
+    "native_reconciliation_controls": "independently rerun 5 tests; all passed",
+    "ABI": "installed Metal MTLCommandBuffer.h/MTLDrawable.h and QuartzCore CABase.h; matching objc2-metal0.3.2 signatures"
+  },
+  "reviewed_invariants": [
+    "existing commit/present order, fence ownership and return paths retained",
+    "callback captures are scalar and static; borrowed API callback objects are used only during invocation",
+    "observer registration bounded to138 command indices and138 drawable indices; no new GPU query/device/submission in Metal patch",
+    "CPU/Instant/Metal clocks remain labeled; display conversion uses per-callback CA/monotonic calibration",
+    "valid GPU samples require Completed status and ordered nonzero times",
+    "zero skipped drawable never proves display; screenshot is separately inspected GPU readback upper bound",
+    "libproc memory read brackets exact PID birth; RSS and physical footprint and kernel maximum remain separate"
+  ],
+  "conditions": [
+    "root separately freezes/reviews launch/sampler before app start",
+    "stderr remains an open regular file through process exit; synchronous eprintln callbacks can perturb run and abort on logging failure",
+    "first display claim needs complete first-index drawable sequence and plausible calibrated timestamp within spawn/callback bounds",
+    "character claim needs exact capture identity and inspected real character pixels plus production Work/readiness evidence",
+    "report diagnostic command samples separately by kind and startup/ready phase; no overlapping-duration sum or frame-latency inference",
+    "first main screenshot and two later GPU readbacks are intrusive; do not substitute these timings for unchanged baseline",
+    "signing verification failure remains explicit; no signing or system permission mutation authorized",
+    "native actual callbacks/GPU/performance remain NOT-RUN until root runtime packet review"
+  ],
+  "web": "HOLD final approval pending corrected preparation-freeze identity; initial code review in progress",
+  "cleanup": "Only synchronous read/hash/test CLI children were created and exited; no app, GPU, server, browser or agent created. Retain receipts under review/ for root."
+}

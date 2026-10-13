@@ -1,0 +1,49 @@
+{
+  "final_freeze_sha256": "a23e3c4db7b6c4bdb969c2351b4058e9ce2c4cef9307947990ae79c4fa1d9111",
+  "files": {
+    "experiments/33-native-present-metrics/launch_owned_native.py": "cd5f988671a6f21921091a1a1a9a258f4b98629e4763557049227efa56d40372",
+    "experiments/33-native-present-metrics/test_launch_owned_native.py": "e50be05f2bd422c4b204a1a72365dcb9ea1f8527f714646187ddedad01264ae8",
+    "experiments/33-native-present-metrics/LAUNCHER.md": "e39274e20c22ea3cbcc7cb6ff71c634fa400ccab922871a976cb791942e3a589"
+  },
+  "source_mismatches": [],
+  "bundle_mismatches": [],
+  "controls": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/33-native-present-metrics/test_launch_owned_native.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/review/native-launcher-final-controls"
+      ],
+      "exit": 0,
+      "stdout": "NVWA_LAUNCH_PID {\"event\": \"popen_returned\", \"CLOCK_MONOTONIC_ns\": 429175700612000, \"wall_UTC_ISO\": \"2026-10-13T21:05:25.521750+00:00\", \"pid\": 66331, \"ppid\": 66328, \"pgid\": 66331, \"launch_before_monotonic_ns\": 429175699195000, \"launch_after_monotonic_ns\": 429175700607000}\nNVWA_LAUNCH_PID {\"event\": \"popen_returned\", \"CLOCK_MONOTONIC_ns\": 429176070902000, \"wall_UTC_ISO\": \"2026-10-13T21:05:25.892040+00:00\", \"pid\": 66355, \"ppid\": 66328, \"pgid\": 66355, \"launch_before_monotonic_ns\": 429176069302000, \"launch_after_monotonic_ns\": 429176070898000}\nNVWA_LAUNCH_PID {\"event\": \"popen_returned\", \"CLOCK_MONOTONIC_ns\": 429176423821000, \"wall_UTC_ISO\": \"2026-10-13T21:05:26.244959+00:00\", \"pid\": 66359, \"ppid\": 66328, \"pgid\": 66359, \"launch_before_monotonic_ns\": 429176422232000, \"launch_after_monotonic_ns\": 429176423817000}\nNVWA_LAUNCH_PID {\"event\": \"popen_returned\", \"CLOCK_MONOTONIC_ns\": 429176747107000, \"wall_UTC_ISO\": \"2026-10-13T21:05:26.568246+00:00\", \"pid\": 66364, \"ppid\": 66328, \"pgid\": 66364, \"launch_before_monotonic_ns\": 429176745177000, \"launch_after_monotonic_ns\": 429176747103000}\n{\n  \"status\": \"VERIFIED CPU CLI controls; native/GPU NOT-RUN\",\n  \"results\": [\n    {\n      \"name\": \"empty\",\n      \"status\": \"EXIT-VERIFIED\",\n      \"pid\": 66331,\n      \"exit_code\": 0,\n      \"elapsed_seconds\": 0.307027000002563\n    },\n    {\n      \"name\": \"failed\",\n      \"status\": \"EXIT-VERIFIED\",\n      \"pid\": 66355,\n      \"exit_code\": 7,\n      \"elapsed_seconds\": 0.3169729160144925\n    },\n    {\n      \"name\": \"large-output\",\n      \"status\": \"EXIT-VERIFIED\",\n      \"pid\": 66359,\n      \"exit_code\": 0,\n      \"elapsed_seconds\": 0.2799333340371959\n    },\n    {\n      \"name\": \"stubborn-hang\",\n      \"status\": \"EXIT-VERIFIED\",\n      \"pid\": 66364,\n      \"exit_code\": -9,\n      \"elapsed_seconds\": 1.7181340000242926\n    },\n    {\n      \"name\": \"actual-CLOCK_MONOTONIC-C-Python-bracket\",\n      \"status\": \"VERIFIED\",\n      \"before_ns\": 429178463550000,\n      \"sample\": {\n        \"schema\": 1,\n        \"pid\": 66328,\n        \"birth_sec\": 1791925525,\n        \"birth_usec\": 449517,\n        \"expected_birth_checked\": false,\n        \"clock\": \"host_CLOCK_MONOTONIC_ns\",\n        \"sample_begin_ns\": 429178465938000,\n        \"sample_end_ns\": 429178465942000,\n        \"rss_bytes\": 18808832,\n        \"physical_footprint_bytes\": 11305416,\n        \"kernel_lifetime_max_physical_footprint_bytes\": 11534792,\n        \"rusage_proc_start_mach_abstime_ticks\": 9663117327471\n      },\n      \"after_ns\": 429178466252000\n    },\n    {\n      \"name\": \"actual-self-birth-mismatch\",\n      \"status\": \"REJECTED\"\n    }\n  ],\n  \"background_helpers_remaining\": false\n}\n",
+      "stderr": ""
+    }
+  ],
+  "fresh_cleanup": [
+    {
+      "pid": 66331,
+      "ps_exit": 1,
+      "ps_stdout": "",
+      "group_absent": true
+    },
+    {
+      "pid": 66355,
+      "ps_exit": 1,
+      "ps_stdout": "",
+      "group_absent": true
+    },
+    {
+      "pid": 66359,
+      "ps_exit": 1,
+      "ps_stdout": "",
+      "group_absent": true
+    },
+    {
+      "pid": 66364,
+      "ps_exit": 1,
+      "ps_stdout": "",
+      "group_absent": true
+    }
+  ]
+}

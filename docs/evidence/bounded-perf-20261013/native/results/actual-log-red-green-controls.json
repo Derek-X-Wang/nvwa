@@ -1,0 +1,85 @@
+{
+  "status": "VERIFIED10actual-log verifier mutation red/restored-green controls",
+  "controls": [
+    {
+      "case": "diagnostic-1",
+      "control": "GPU_completed_status_raw_mismatch",
+      "mutant": "REJECTED",
+      "reason": "raw GPU validity disagreement",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-1",
+      "control": "GPU_zero_start_raw_mismatch",
+      "mutant": "REJECTED",
+      "reason": "raw GPU validity disagreement",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-1",
+      "control": "display_zero_time_raw_mismatch",
+      "mutant": "REJECTED",
+      "reason": "raw display validity disagreement",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-1",
+      "control": "display_calibration_reversed",
+      "mutant": "REJECTED",
+      "reason": "",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-1",
+      "control": "mixed_PID",
+      "mutant": "REJECTED",
+      "reason": "mixed process identities",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-warm",
+      "control": "GPU_completed_status_raw_mismatch",
+      "mutant": "REJECTED",
+      "reason": "raw GPU validity disagreement",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-warm",
+      "control": "GPU_zero_start_raw_mismatch",
+      "mutant": "REJECTED",
+      "reason": "raw GPU validity disagreement",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-warm",
+      "control": "display_zero_time_raw_mismatch",
+      "mutant": "REJECTED",
+      "reason": "raw display validity disagreement",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-warm",
+      "control": "display_calibration_reversed",
+      "mutant": "REJECTED",
+      "reason": "",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    },
+    {
+      "case": "diagnostic-warm",
+      "control": "mixed_PID",
+      "mutant": "REJECTED",
+      "reason": "mixed process identities",
+      "scope": "CPU mutation of actual raw row, not GPU execution",
+      "restored_actual_raw": "ACCEPTED"
+    }
+  ]
+}

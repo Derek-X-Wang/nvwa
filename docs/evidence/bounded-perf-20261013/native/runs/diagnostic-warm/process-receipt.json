@@ -1,0 +1,2173 @@
+{
+  "status": "EXIT-VERIFIED",
+  "error": null,
+  "exit_code": 0,
+  "pid": 72779,
+  "elapsed_seconds": 32.12799195799744,
+  "deadline_seconds": 40.0,
+  "registered_members": [
+    {
+      "pid": 72779,
+      "ppid": 72734,
+      "pgid": 72779,
+      "binary": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa",
+      "birth_sec": 1791927038,
+      "birth_usec": 332810
+    }
+  ],
+  "observations": [
+    {
+      "event": "before_launch",
+      "CLOCK_MONOTONIC_ns": 430688510061000,
+      "wall_UTC_ISO": "2026-10-13T21:30:38.331204+00:00",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa",
+        "--work",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/input/character-loop.nvwa.json",
+        "--benchmark",
+        "--smoke",
+        "--smoke-seconds",
+        "30.0",
+        "--timeout",
+        "38.0",
+        "--capture",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-warm/production-final.png"
+      ],
+      "environment_override_names": [
+        "NVWA_METAL_PROBE",
+        "NVWA_PROBE_CAPTURE_DIR"
+      ],
+      "heavy_inventory": {
+        "status": "OBSERVED",
+        "rows": [
+          {
+            "pid": 10972,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4256,
+            "executable_basename": "Google Chrome Helper (Renderer)"
+          },
+          {
+            "pid": 39916,
+            "ppid": 39858,
+            "cpu_percent": 0.0,
+            "rss_KiB": 11456,
+            "executable_basename": "Google Chrome"
+          },
+          {
+            "pid": 40222,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4080,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40223,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4192,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40225,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 2416,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40332,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 3872,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 65493,
+            "ppid": 62582,
+            "cpu_percent": 68.9,
+            "rss_KiB": 685184,
+            "executable_basename": "Codex (Renderer)"
+          },
+          {
+            "pid": 72734,
+            "ppid": 65495,
+            "cpu_percent": 50.3,
+            "rss_KiB": 154464,
+            "executable_basename": "Python"
+          },
+          {
+            "pid": 81508,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 5392,
+            "executable_basename": "Google Chrome Helper"
+          }
+        ],
+        "scope": "selected names or CPU>=50; no proof of all GPU contention"
+      }
+    },
+    {
+      "event": "popen_returned",
+      "CLOCK_MONOTONIC_ns": 430688515414000,
+      "wall_UTC_ISO": "2026-10-13T21:30:38.336554+00:00",
+      "pid": 72779,
+      "ppid": 72734,
+      "pgid": 72779,
+      "launch_before_monotonic_ns": 430688511371000,
+      "launch_after_monotonic_ns": 430688515389000
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430688598120000,
+      "wall_UTC_ISO": "2026-10-13T21:30:38.419259+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430688597660000,
+        "sample_end_ns": 430688597668000,
+        "rss_bytes": 31735808,
+        "physical_footprint_bytes": 10388128,
+        "kernel_lifetime_max_physical_footprint_bytes": 10388128,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430688875366000,
+      "wall_UTC_ISO": "2026-10-13T21:30:38.696505+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430688874670000,
+        "sample_end_ns": 430688874678000,
+        "rss_bytes": 69533696,
+        "physical_footprint_bytes": 22365072,
+        "kernel_lifetime_max_physical_footprint_bytes": 22365072,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430689146446000,
+      "wall_UTC_ISO": "2026-10-13T21:30:38.967585+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430689146080000,
+        "sample_end_ns": 430689146098000,
+        "rss_bytes": 93569024,
+        "physical_footprint_bytes": 29852560,
+        "kernel_lifetime_max_physical_footprint_bytes": 29868944,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430689404043000,
+      "wall_UTC_ISO": "2026-10-13T21:30:39.225187+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430689403706000,
+        "sample_end_ns": 430689403713000,
+        "rss_bytes": 109805568,
+        "physical_footprint_bytes": 33080328,
+        "kernel_lifetime_max_physical_footprint_bytes": 33080328,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430689825590000,
+      "wall_UTC_ISO": "2026-10-13T21:30:39.646778+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430689824377000,
+        "sample_end_ns": 430689824391000,
+        "rss_bytes": 129384448,
+        "physical_footprint_bytes": 44237880,
+        "kernel_lifetime_max_physical_footprint_bytes": 44237880,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430690170429000,
+      "wall_UTC_ISO": "2026-10-13T21:30:39.991568+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430690169403000,
+        "sample_end_ns": 430690169416000,
+        "rss_bytes": 213876736,
+        "physical_footprint_bytes": 181634200,
+        "kernel_lifetime_max_physical_footprint_bytes": 181634200,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430690449280000,
+      "wall_UTC_ISO": "2026-10-13T21:30:40.270420+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430690448863000,
+        "sample_end_ns": 430690448872000,
+        "rss_bytes": 227328000,
+        "physical_footprint_bytes": 316966088,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430690706696000,
+      "wall_UTC_ISO": "2026-10-13T21:30:40.527836+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430690705257000,
+        "sample_end_ns": 430690705291000,
+        "rss_bytes": 227704832,
+        "physical_footprint_bytes": 317998280,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430690958703000,
+      "wall_UTC_ISO": "2026-10-13T21:30:40.779845+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430690958274000,
+        "sample_end_ns": 430690958281000,
+        "rss_bytes": 213630976,
+        "physical_footprint_bytes": 317506760,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430691226177000,
+      "wall_UTC_ISO": "2026-10-13T21:30:41.047316+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430691225836000,
+        "sample_end_ns": 430691225844000,
+        "rss_bytes": 212959232,
+        "physical_footprint_bytes": 317654216,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430691492980000,
+      "wall_UTC_ISO": "2026-10-13T21:30:41.314119+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430691492603000,
+        "sample_end_ns": 430691492619000,
+        "rss_bytes": 212893696,
+        "physical_footprint_bytes": 313492680,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430691765579000,
+      "wall_UTC_ISO": "2026-10-13T21:30:41.586719+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430691764813000,
+        "sample_end_ns": 430691764821000,
+        "rss_bytes": 211140608,
+        "physical_footprint_bytes": 313083080,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430692025575000,
+      "wall_UTC_ISO": "2026-10-13T21:30:41.846718+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430692025165000,
+        "sample_end_ns": 430692025174000,
+        "rss_bytes": 208289792,
+        "physical_footprint_bytes": 313623752,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430692344911000,
+      "wall_UTC_ISO": "2026-10-13T21:30:42.166050+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430692344536000,
+        "sample_end_ns": 430692344546000,
+        "rss_bytes": 208617472,
+        "physical_footprint_bytes": 297256136,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430692597196000,
+      "wall_UTC_ISO": "2026-10-13T21:30:42.418336+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430692596637000,
+        "sample_end_ns": 430692596652000,
+        "rss_bytes": 209534976,
+        "physical_footprint_bytes": 298665160,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430692902253000,
+      "wall_UTC_ISO": "2026-10-13T21:30:42.723393+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430692901919000,
+        "sample_end_ns": 430692901929000,
+        "rss_bytes": 203784192,
+        "physical_footprint_bytes": 298648776,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430693155851000,
+      "wall_UTC_ISO": "2026-10-13T21:30:42.976990+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430693154970000,
+        "sample_end_ns": 430693154979000,
+        "rss_bytes": 202260480,
+        "physical_footprint_bytes": 298042568,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430693416933000,
+      "wall_UTC_ISO": "2026-10-13T21:30:43.238074+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430693416601000,
+        "sample_end_ns": 430693416608000,
+        "rss_bytes": 201703424,
+        "physical_footprint_bytes": 293831880,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430693685823000,
+      "wall_UTC_ISO": "2026-10-13T21:30:43.506962+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430693685505000,
+        "sample_end_ns": 430693685515000,
+        "rss_bytes": 170786816,
+        "physical_footprint_bytes": 293897416,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430693942331000,
+      "wall_UTC_ISO": "2026-10-13T21:30:43.763470+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430693941996000,
+        "sample_end_ns": 430693942003000,
+        "rss_bytes": 152961024,
+        "physical_footprint_bytes": 293913800,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430694201055000,
+      "wall_UTC_ISO": "2026-10-13T21:30:44.022195+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430694200667000,
+        "sample_end_ns": 430694200673000,
+        "rss_bytes": 152961024,
+        "physical_footprint_bytes": 293307592,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430694459495000,
+      "wall_UTC_ISO": "2026-10-13T21:30:44.280634+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430694459146000,
+        "sample_end_ns": 430694459154000,
+        "rss_bytes": 153731072,
+        "physical_footprint_bytes": 294044872,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430694747138000,
+      "wall_UTC_ISO": "2026-10-13T21:30:44.568279+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430694746605000,
+        "sample_end_ns": 430694746612000,
+        "rss_bytes": 153960448,
+        "physical_footprint_bytes": 294094024,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430695021645000,
+      "wall_UTC_ISO": "2026-10-13T21:30:44.842785+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430695020706000,
+        "sample_end_ns": 430695020719000,
+        "rss_bytes": 153763840,
+        "physical_footprint_bytes": 293635272,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430695283536000,
+      "wall_UTC_ISO": "2026-10-13T21:30:45.104675+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430695283165000,
+        "sample_end_ns": 430695283182000,
+        "rss_bytes": 153354240,
+        "physical_footprint_bytes": 293176520,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430695549711000,
+      "wall_UTC_ISO": "2026-10-13T21:30:45.370851+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430695549317000,
+        "sample_end_ns": 430695549326000,
+        "rss_bytes": 153337856,
+        "physical_footprint_bytes": 293586120,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430695814316000,
+      "wall_UTC_ISO": "2026-10-13T21:30:45.635455+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430695813828000,
+        "sample_end_ns": 430695813842000,
+        "rss_bytes": 153387008,
+        "physical_footprint_bytes": 293733576,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430696071533000,
+      "wall_UTC_ISO": "2026-10-13T21:30:45.892674+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430696071209000,
+        "sample_end_ns": 430696071216000,
+        "rss_bytes": 153812992,
+        "physical_footprint_bytes": 293749960,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430696334753000,
+      "wall_UTC_ISO": "2026-10-13T21:30:46.155891+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430696334393000,
+        "sample_end_ns": 430696334402000,
+        "rss_bytes": 153255936,
+        "physical_footprint_bytes": 293733576,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430696589303000,
+      "wall_UTC_ISO": "2026-10-13T21:30:46.410444+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430696588864000,
+        "sample_end_ns": 430696588873000,
+        "rss_bytes": 156041216,
+        "physical_footprint_bytes": 296518856,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430696872340000,
+      "wall_UTC_ISO": "2026-10-13T21:30:46.693480+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430696871434000,
+        "sample_end_ns": 430696871445000,
+        "rss_bytes": 156319744,
+        "physical_footprint_bytes": 295568584,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430697158244000,
+      "wall_UTC_ISO": "2026-10-13T21:30:46.979384+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430697157816000,
+        "sample_end_ns": 430697157825000,
+        "rss_bytes": 158072832,
+        "physical_footprint_bytes": 295879880,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430697425205000,
+      "wall_UTC_ISO": "2026-10-13T21:30:47.246349+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430697424809000,
+        "sample_end_ns": 430697424817000,
+        "rss_bytes": 155975680,
+        "physical_footprint_bytes": 296273096,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430697685665000,
+      "wall_UTC_ISO": "2026-10-13T21:30:47.506803+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430697685322000,
+        "sample_end_ns": 430697685335000,
+        "rss_bytes": 155926528,
+        "physical_footprint_bytes": 296273096,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430697995630000,
+      "wall_UTC_ISO": "2026-10-13T21:30:47.816770+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430697995200000,
+        "sample_end_ns": 430697995207000,
+        "rss_bytes": 155713536,
+        "physical_footprint_bytes": 295896264,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430698247801000,
+      "wall_UTC_ISO": "2026-10-13T21:30:48.068942+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430698247347000,
+        "sample_end_ns": 430698247361000,
+        "rss_bytes": 155713536,
+        "physical_footprint_bytes": 293848264,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430698497173000,
+      "wall_UTC_ISO": "2026-10-13T21:30:48.318313+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430698496787000,
+        "sample_end_ns": 430698496794000,
+        "rss_bytes": 156155904,
+        "physical_footprint_bytes": 294814920,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430698746370000,
+      "wall_UTC_ISO": "2026-10-13T21:30:48.567509+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430698745973000,
+        "sample_end_ns": 430698745982000,
+        "rss_bytes": 156270592,
+        "physical_footprint_bytes": 288441544,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430699003124000,
+      "wall_UTC_ISO": "2026-10-13T21:30:48.824263+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430699002739000,
+        "sample_end_ns": 430699002746000,
+        "rss_bytes": 155713536,
+        "physical_footprint_bytes": 287769800,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430699262409000,
+      "wall_UTC_ISO": "2026-10-13T21:30:49.083548+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430699261744000,
+        "sample_end_ns": 430699261752000,
+        "rss_bytes": 155549696,
+        "physical_footprint_bytes": 287376584,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430699515997000,
+      "wall_UTC_ISO": "2026-10-13T21:30:49.337136+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430699515673000,
+        "sample_end_ns": 430699515679000,
+        "rss_bytes": 156106752,
+        "physical_footprint_bytes": 288441544,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430699774997000,
+      "wall_UTC_ISO": "2026-10-13T21:30:49.596135+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430699774581000,
+        "sample_end_ns": 430699774595000,
+        "rss_bytes": 155549696,
+        "physical_footprint_bytes": 287769800,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430700028541000,
+      "wall_UTC_ISO": "2026-10-13T21:30:49.849681+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430700028171000,
+        "sample_end_ns": 430700028176000,
+        "rss_bytes": 155418624,
+        "physical_footprint_bytes": 287900872,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430700311106000,
+      "wall_UTC_ISO": "2026-10-13T21:30:50.132245+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430700310721000,
+        "sample_end_ns": 430700310731000,
+        "rss_bytes": 155418624,
+        "physical_footprint_bytes": 287769800,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430700652731000,
+      "wall_UTC_ISO": "2026-10-13T21:30:50.473872+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430700652271000,
+        "sample_end_ns": 430700652286000,
+        "rss_bytes": 156270592,
+        "physical_footprint_bytes": 287507656,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430700965377000,
+      "wall_UTC_ISO": "2026-10-13T21:30:50.786519+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430700964211000,
+        "sample_end_ns": 430700964236000,
+        "rss_bytes": 155467776,
+        "physical_footprint_bytes": 288572616,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430701217472000,
+      "wall_UTC_ISO": "2026-10-13T21:30:51.038611+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430701217076000,
+        "sample_end_ns": 430701217083000,
+        "rss_bytes": 154386432,
+        "physical_footprint_bytes": 288425160,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430701479847000,
+      "wall_UTC_ISO": "2026-10-13T21:30:51.300987+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430701479178000,
+        "sample_end_ns": 430701479189000,
+        "rss_bytes": 154894336,
+        "physical_footprint_bytes": 288474312,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430701744634000,
+      "wall_UTC_ISO": "2026-10-13T21:30:51.565773+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430701744239000,
+        "sample_end_ns": 430701744253000,
+        "rss_bytes": 153305088,
+        "physical_footprint_bytes": 287540424,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430702032926000,
+      "wall_UTC_ISO": "2026-10-13T21:30:51.854065+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430702032556000,
+        "sample_end_ns": 430702032563000,
+        "rss_bytes": 154451968,
+        "physical_footprint_bytes": 288998600,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430702291844000,
+      "wall_UTC_ISO": "2026-10-13T21:30:52.112983+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430702291456000,
+        "sample_end_ns": 430702291463000,
+        "rss_bytes": 153960448,
+        "physical_footprint_bytes": 288605384,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430702548935000,
+      "wall_UTC_ISO": "2026-10-13T21:30:52.370074+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430702548565000,
+        "sample_end_ns": 430702548573000,
+        "rss_bytes": 154550272,
+        "physical_footprint_bytes": 288998600,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430702943815000,
+      "wall_UTC_ISO": "2026-10-13T21:30:52.764956+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430702943199000,
+        "sample_end_ns": 430702943210000,
+        "rss_bytes": 158302208,
+        "physical_footprint_bytes": 290079944,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430703226284000,
+      "wall_UTC_ISO": "2026-10-13T21:30:53.047426+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430703223363000,
+        "sample_end_ns": 430703223379000,
+        "rss_bytes": 158269440,
+        "physical_footprint_bytes": 290489544,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430703502728000,
+      "wall_UTC_ISO": "2026-10-13T21:30:53.323869+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430703502297000,
+        "sample_end_ns": 430703502307000,
+        "rss_bytes": 157466624,
+        "physical_footprint_bytes": 289719496,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430703797990000,
+      "wall_UTC_ISO": "2026-10-13T21:30:53.619131+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430703796036000,
+        "sample_end_ns": 430703796108000,
+        "rss_bytes": 157335552,
+        "physical_footprint_bytes": 289588424,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430704141675000,
+      "wall_UTC_ISO": "2026-10-13T21:30:53.962816+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430704141221000,
+        "sample_end_ns": 430704141235000,
+        "rss_bytes": 156450816,
+        "physical_footprint_bytes": 289195208,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430704570385000,
+      "wall_UTC_ISO": "2026-10-13T21:30:54.391528+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430704568364000,
+        "sample_end_ns": 430704568448000,
+        "rss_bytes": 156385280,
+        "physical_footprint_bytes": 290112712,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430704989849000,
+      "wall_UTC_ISO": "2026-10-13T21:30:54.810992+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430704988712000,
+        "sample_end_ns": 430704988730000,
+        "rss_bytes": 154075136,
+        "physical_footprint_bytes": 289326280,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430705428734000,
+      "wall_UTC_ISO": "2026-10-13T21:30:55.249874+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430705428281000,
+        "sample_end_ns": 430705428289000,
+        "rss_bytes": 152977408,
+        "physical_footprint_bytes": 288867528,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430705864420000,
+      "wall_UTC_ISO": "2026-10-13T21:30:55.685601+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430705862767000,
+        "sample_end_ns": 430705862787000,
+        "rss_bytes": 153026560,
+        "physical_footprint_bytes": 289326280,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430706194956000,
+      "wall_UTC_ISO": "2026-10-13T21:30:56.016094+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430706194595000,
+        "sample_end_ns": 430706194603000,
+        "rss_bytes": 147161088,
+        "physical_footprint_bytes": 289850568,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430706508505000,
+      "wall_UTC_ISO": "2026-10-13T21:30:56.329644+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430706508094000,
+        "sample_end_ns": 430706508103000,
+        "rss_bytes": 142376960,
+        "physical_footprint_bytes": 289326280,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430706880911000,
+      "wall_UTC_ISO": "2026-10-13T21:30:56.702050+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430706880216000,
+        "sample_end_ns": 430706880229000,
+        "rss_bytes": 141983744,
+        "physical_footprint_bytes": 289326280,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430707245552000,
+      "wall_UTC_ISO": "2026-10-13T21:30:57.066693+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430707243880000,
+        "sample_end_ns": 430707243933000,
+        "rss_bytes": 142376960,
+        "physical_footprint_bytes": 290391240,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430707651647000,
+      "wall_UTC_ISO": "2026-10-13T21:30:57.472825+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430707650521000,
+        "sample_end_ns": 430707650533000,
+        "rss_bytes": 126091264,
+        "physical_footprint_bytes": 289703112,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430708029402000,
+      "wall_UTC_ISO": "2026-10-13T21:30:57.850541+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430708028977000,
+        "sample_end_ns": 430708028984000,
+        "rss_bytes": 123879424,
+        "physical_footprint_bytes": 290211016,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430708484109000,
+      "wall_UTC_ISO": "2026-10-13T21:30:58.305250+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430708482876000,
+        "sample_end_ns": 430708482916000,
+        "rss_bytes": 122880000,
+        "physical_footprint_bytes": 289309896,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430708845990000,
+      "wall_UTC_ISO": "2026-10-13T21:30:58.667130+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430708845503000,
+        "sample_end_ns": 430708845510000,
+        "rss_bytes": 122994688,
+        "physical_footprint_bytes": 289555656,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430709152385000,
+      "wall_UTC_ISO": "2026-10-13T21:30:58.973530+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430709151375000,
+        "sample_end_ns": 430709151386000,
+        "rss_bytes": 122126336,
+        "physical_footprint_bytes": 289834184,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430709456509000,
+      "wall_UTC_ISO": "2026-10-13T21:30:59.277649+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430709455714000,
+        "sample_end_ns": 430709455725000,
+        "rss_bytes": 121913344,
+        "physical_footprint_bytes": 290358472,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430709962518000,
+      "wall_UTC_ISO": "2026-10-13T21:30:59.783657+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430709961122000,
+        "sample_end_ns": 430709961164000,
+        "rss_bytes": 121274368,
+        "physical_footprint_bytes": 289817800,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430710253120000,
+      "wall_UTC_ISO": "2026-10-13T21:31:00.074259+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430710252716000,
+        "sample_end_ns": 430710252725000,
+        "rss_bytes": 120799232,
+        "physical_footprint_bytes": 289293512,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430710541956000,
+      "wall_UTC_ISO": "2026-10-13T21:31:00.363096+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430710541545000,
+        "sample_end_ns": 430710541552000,
+        "rss_bytes": 118243328,
+        "physical_footprint_bytes": 289686728,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430710892694000,
+      "wall_UTC_ISO": "2026-10-13T21:31:00.713851+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430710889200000,
+        "sample_end_ns": 430710889211000,
+        "rss_bytes": 118161408,
+        "physical_footprint_bytes": 289834184,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430711305295000,
+      "wall_UTC_ISO": "2026-10-13T21:31:01.126435+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430711303142000,
+        "sample_end_ns": 430711303164000,
+        "rss_bytes": 117653504,
+        "physical_footprint_bytes": 289293512,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430711572385000,
+      "wall_UTC_ISO": "2026-10-13T21:31:01.393524+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430711571911000,
+        "sample_end_ns": 430711571921000,
+        "rss_bytes": 116817920,
+        "physical_footprint_bytes": 290227400,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430711869607000,
+      "wall_UTC_ISO": "2026-10-13T21:31:01.690746+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430711868426000,
+        "sample_end_ns": 430711868435000,
+        "rss_bytes": 116326400,
+        "physical_footprint_bytes": 289817800,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430712146388000,
+      "wall_UTC_ISO": "2026-10-13T21:31:01.967527+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430712145898000,
+        "sample_end_ns": 430712145908000,
+        "rss_bytes": 116883456,
+        "physical_footprint_bytes": 290358472,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430712399248000,
+      "wall_UTC_ISO": "2026-10-13T21:31:02.220388+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430712398878000,
+        "sample_end_ns": 430712398887000,
+        "rss_bytes": 118620160,
+        "physical_footprint_bytes": 290227400,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430712648618000,
+      "wall_UTC_ISO": "2026-10-13T21:31:02.469758+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430712648125000,
+        "sample_end_ns": 430712648133000,
+        "rss_bytes": 118685696,
+        "physical_footprint_bytes": 289834184,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430713001263000,
+      "wall_UTC_ISO": "2026-10-13T21:31:02.822407+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430713000539000,
+        "sample_end_ns": 430713000552000,
+        "rss_bytes": 109019136,
+        "physical_footprint_bytes": 290145480,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430713253734000,
+      "wall_UTC_ISO": "2026-10-13T21:31:03.074873+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430713253371000,
+        "sample_end_ns": 430713253382000,
+        "rss_bytes": 109019136,
+        "physical_footprint_bytes": 290276552,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430713554410000,
+      "wall_UTC_ISO": "2026-10-13T21:31:03.375548+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430713553970000,
+        "sample_end_ns": 430713553981000,
+        "rss_bytes": 84557824,
+        "physical_footprint_bytes": 290292936,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430713829030000,
+      "wall_UTC_ISO": "2026-10-13T21:31:03.650168+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430713828627000,
+        "sample_end_ns": 430713828635000,
+        "rss_bytes": 83574784,
+        "physical_footprint_bytes": 290276552,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430714105104000,
+      "wall_UTC_ISO": "2026-10-13T21:31:03.926244+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430714104599000,
+        "sample_end_ns": 430714104609000,
+        "rss_bytes": 83804160,
+        "physical_footprint_bytes": 290817224,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430714394115000,
+      "wall_UTC_ISO": "2026-10-13T21:31:04.215255+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430714393663000,
+        "sample_end_ns": 430714393670000,
+        "rss_bytes": 83197952,
+        "physical_footprint_bytes": 289752264,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430714772146000,
+      "wall_UTC_ISO": "2026-10-13T21:31:04.593287+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430714771387000,
+        "sample_end_ns": 430714771401000,
+        "rss_bytes": 83197952,
+        "physical_footprint_bytes": 289768648,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430715040265000,
+      "wall_UTC_ISO": "2026-10-13T21:31:04.861404+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430715039811000,
+        "sample_end_ns": 430715039820000,
+        "rss_bytes": 82755584,
+        "physical_footprint_bytes": 290309320,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430715302221000,
+      "wall_UTC_ISO": "2026-10-13T21:31:05.123360+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430715301820000,
+        "sample_end_ns": 430715301828000,
+        "rss_bytes": 82886656,
+        "physical_footprint_bytes": 290718920,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430715572734000,
+      "wall_UTC_ISO": "2026-10-13T21:31:05.393873+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430715572259000,
+        "sample_end_ns": 430715572266000,
+        "rss_bytes": 82362368,
+        "physical_footprint_bytes": 289785032,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430715901516000,
+      "wall_UTC_ISO": "2026-10-13T21:31:05.722656+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430715901030000,
+        "sample_end_ns": 430715901038000,
+        "rss_bytes": 83509248,
+        "physical_footprint_bytes": 290718920,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430716606841000,
+      "wall_UTC_ISO": "2026-10-13T21:31:06.427986+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430716595048000,
+        "sample_end_ns": 430716595059000,
+        "rss_bytes": 83165184,
+        "physical_footprint_bytes": 290849992,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430717176916000,
+      "wall_UTC_ISO": "2026-10-13T21:31:06.998056+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430717175775000,
+        "sample_end_ns": 430717175788000,
+        "rss_bytes": 82935808,
+        "physical_footprint_bytes": 294831304,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430717507143000,
+      "wall_UTC_ISO": "2026-10-13T21:31:07.328282+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430717506625000,
+        "sample_end_ns": 430717506634000,
+        "rss_bytes": 82870272,
+        "physical_footprint_bytes": 294945992,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430717804399000,
+      "wall_UTC_ISO": "2026-10-13T21:31:07.625539+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430717804030000,
+        "sample_end_ns": 430717804037000,
+        "rss_bytes": 82116608,
+        "physical_footprint_bytes": 294814920,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430718094697000,
+      "wall_UTC_ISO": "2026-10-13T21:31:07.915839+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430718094335000,
+        "sample_end_ns": 430718094342000,
+        "rss_bytes": 82460672,
+        "physical_footprint_bytes": 294667464,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430718349420000,
+      "wall_UTC_ISO": "2026-10-13T21:31:08.170559+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430718349057000,
+        "sample_end_ns": 430718349064000,
+        "rss_bytes": 82214912,
+        "physical_footprint_bytes": 289785032,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430718610798000,
+      "wall_UTC_ISO": "2026-10-13T21:31:08.431937+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430718610288000,
+        "sample_end_ns": 430718610301000,
+        "rss_bytes": 82296832,
+        "physical_footprint_bytes": 290849992,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430718914639000,
+      "wall_UTC_ISO": "2026-10-13T21:31:08.735779+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430718914160000,
+        "sample_end_ns": 430718914168000,
+        "rss_bytes": 82345984,
+        "physical_footprint_bytes": 290178248,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430719195926000,
+      "wall_UTC_ISO": "2026-10-13T21:31:09.017066+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430719195499000,
+        "sample_end_ns": 430719195506000,
+        "rss_bytes": 81444864,
+        "physical_footprint_bytes": 290178248,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430719492046000,
+      "wall_UTC_ISO": "2026-10-13T21:31:09.313186+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430719491590000,
+        "sample_end_ns": 430719491599000,
+        "rss_bytes": 81657856,
+        "physical_footprint_bytes": 291275976,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430719814048000,
+      "wall_UTC_ISO": "2026-10-13T21:31:09.635192+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430719813608000,
+        "sample_end_ns": 430719813616000,
+        "rss_bytes": 80527360,
+        "physical_footprint_bytes": 290325704,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "memory_sample",
+      "CLOCK_MONOTONIC_ns": 430720103053000,
+      "wall_UTC_ISO": "2026-10-13T21:31:09.924193+00:00",
+      "sample": {
+        "schema": 1,
+        "pid": 72779,
+        "birth_sec": 1791927038,
+        "birth_usec": 332810,
+        "expected_birth_checked": true,
+        "clock": "host_CLOCK_MONOTONIC_ns",
+        "sample_begin_ns": 430720102723000,
+        "sample_end_ns": 430720102731000,
+        "rss_bytes": 93782016,
+        "physical_footprint_bytes": 291259592,
+        "kernel_lifetime_max_physical_footprint_bytes": 327386312,
+        "rusage_proc_start_mach_abstime_ticks": 9699426244828
+      }
+    },
+    {
+      "event": "inspection_unknown_guard_continues",
+      "CLOCK_MONOTONIC_ns": 430720351582000,
+      "wall_UTC_ISO": "2026-10-13T21:31:10.172722+00:00",
+      "error": "[Errno 3] No such process"
+    },
+    {
+      "event": "after_cleanup",
+      "CLOCK_MONOTONIC_ns": 430720639290000,
+      "wall_UTC_ISO": "2026-10-13T21:31:10.460430+00:00",
+      "status": "EXIT-VERIFIED",
+      "exit_code": 0,
+      "heavy_inventory": {
+        "status": "OBSERVED",
+        "rows": [
+          {
+            "pid": 10972,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 3632,
+            "executable_basename": "Google Chrome Helper (Renderer)"
+          },
+          {
+            "pid": 39916,
+            "ppid": 39858,
+            "cpu_percent": 0.0,
+            "rss_KiB": 13296,
+            "executable_basename": "Google Chrome"
+          },
+          {
+            "pid": 40222,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 6048,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40223,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 6512,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40225,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 3104,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40332,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4576,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 74926,
+            "ppid": 74924,
+            "cpu_percent": 135.3,
+            "rss_KiB": 287072,
+            "executable_basename": "node"
+          },
+          {
+            "pid": 81508,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 5376,
+            "executable_basename": "Google Chrome Helper"
+          }
+        ],
+        "scope": "selected names or CPU>=50; no proof of all GPU contention"
+      }
+    }
+  ],
+  "GPU_result": "NOT-VALIDATED by launcher; inspect actual callbacks and pixels separately"
+}

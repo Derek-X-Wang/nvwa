@@ -1,5 +1,13 @@
 # Nvwa 路线图
 
+## 2026-10-13：#4 有界测量补充
+
+已合并 main 为 `d832ef3e044017bddb5a0681ff5ca99256ebaef4`（PR #41），最终自然 main CI run38441179644 成功；113项 Rust 测试、原生/Wasm 编译与77项诊断控制分别记录。#39/#23/#40 已关闭。这是已完成的历史基线，本轮未重复主线编译。
+
+本轮在独立实验33/34完成三个原生进程、三个 Web 加载的实际测量，全部看到真实角色。桌面首次有效已记录 surface 呈现约9.966s/1.748s，角色 GPU 读回、命令完成和 PID 内存另记；Web 的 HTTP/CPU 边界及 JS heap 子集通过核对，GPU 时间戳实验出现无效值，保留失败。无产品代码、根依赖、Cargo.lock 或 CI 配置变化，观察器不整合进主线。
+
+PARTIAL — [测量验收](evidence/bounded-perf-20261013/ACCEPTANCE.md)与[性能边界](PERFORMANCE.md)保留实际结果。#4 开放：完全冷启动、精确角色物理首帧、停顿归因、Web 进程/GPU 内存及有效角色 GPU 耗时仍未验证。#3 继续按原始 IAB DPR 复现入口缺失保持阻塞。后续性能工作需要可控制的隔离浏览器/缓存或系统 profiler；这项实验不启动 M2，也不授权系统清缓存、重启或付费资源。下方保留既有阶段快照。
+
 > 范围依据：[启动任务](specs/Nvwa_Codex_Kickoff_Parallel_Spikes.md)、[Rust-first 原型任务书](specs/Nvwa_Codex_Prototype_Brief_Rust_First_v2.md)、[实验登记](EXPERIMENTS.md)、[M1 验收](M1-VERIFICATION.md)、[问题索引](ISSUES.md)、[交接](HANDOFF.md)及各实验 `REPORT.md`。这是一份状态与证据登记，不授权后续功能实现。
 
 ## 当前状态（2026-10-13）

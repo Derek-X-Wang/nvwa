@@ -1,0 +1,113 @@
+{
+  "schema": "nvwa-http-startup-manifest-v1",
+  "root": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/web",
+  "bind": "127.0.0.1",
+  "port": 9205,
+  "runLimit": 1,
+  "runIds": [
+    "73223af7968848068eb57b2768c478eb"
+  ],
+  "cacheControl": "no-store",
+  "frozenFiles": {
+    "assets/character.profile.json": {
+      "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+      "bytes": 1064
+    },
+    "assets/fixtures/LICENSE.txt": {
+      "sha256": "b10b199096d04791fe942e0de62eb4643edbd9d289791b88715789cad87fe151",
+      "bytes": 1069
+    },
+    "assets/fixtures/nvwa-humanoid.glb": {
+      "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "bytes": 3827840
+    },
+    "assets/fixtures/nvwa-humanoid.glb.gz": {
+      "sha256": "3813c79f62d4e627cd296edf8b599bf985238cd9adf31cbfe91e83b99bb53de9",
+      "bytes": 1129081
+    },
+    "assets/fixtures/provenance-manifest.json": {
+      "sha256": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f",
+      "bytes": 3579
+    },
+    "index.html": {
+      "sha256": "73ea243ebc795ec5d405489e8aaeaca4ebe18b537e4b90fa433f5bbe0e2f5114",
+      "bytes": 2690
+    },
+    "index.html.gz": {
+      "sha256": "e48a092d1f61ff57ed12f2b1643e48b363f8afc0c8cfe17804c6b70227628ede",
+      "bytes": 1438
+    },
+    "licenses/craft-ui/LICENSE-MIT.txt": {
+      "sha256": "2f42c0cafc8ad394d91373fe1f342aee5453850b151a51405c68cae9ada86d26",
+      "bytes": 1102
+    },
+    "licenses/fonts/NOTICE.md": {
+      "sha256": "2a1118c4fd3a2939f03b2f176a5324010baec38dab1ada70c6d05cfcb574fac4",
+      "bytes": 948
+    },
+    "licenses/fonts/OFL.txt": {
+      "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+      "bytes": 4388
+    },
+    "licenses/fonts/PROVENANCE.json": {
+      "sha256": "1c8eb96ee0efdb5b1da79621f1b0902848fe59167c1313ce1d481739ccd084aa",
+      "bytes": 2687
+    },
+    "nvwa_studio.js": {
+      "sha256": "9ff532cbedc6a814c4b8337c4b82f436de452e7b7fbc8c9e58bfda2e90ad6c5c",
+      "bytes": 123623
+    },
+    "nvwa_studio.js.gz": {
+      "sha256": "2b2846bd1b5770dae87ad182a84b274cb001e70aa407f2316e7179ae249ddf0d",
+      "bytes": 19076
+    },
+    "nvwa_studio_bg.wasm": {
+      "sha256": "d890dfee73e9eeeee6ce3d82f255c79979e8c8b6bed90243c6101f8e1c1763a8",
+      "bytes": 85605719
+    },
+    "nvwa_studio_bg.wasm.gz": {
+      "sha256": "d4b7eb90f1d280d10df84cfc04063830a3eb9c3b6d9ccb7861ea56bb46e8536c",
+      "bytes": 19409567
+    },
+    "works/m1-sequence.nvwa.json": {
+      "sha256": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa",
+      "bytes": 1942
+    },
+    "works/m1-sequence.nvwa.json.gz": {
+      "sha256": "cdf3d7d0cc0a55dec1374746e2d5cb5ad1a212e2e6034149ee87d43fc93e1f76",
+      "bytes": 523
+    },
+    "works/ui26-web-redo.nvwa.json": {
+      "sha256": "11dd52382db288e12fe10fd319ca03b40abd608378e24786c246b23ccf0e149e",
+      "bytes": 1942
+    },
+    "works/perf-character-loop.nvwa.json": {
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+      "bytes": 1624
+    }
+  },
+  "diagnostics": {
+    "wrapperSha256": "6b4fa4c98cd3df96b1c1f2e7e5dab46b668f5e788d0d11f9a4c45810868f79fc",
+    "collectorSha256": "db5a04ddc482df7520f38961392df515f4eda1c3aabd5066f6c243457591af11",
+    "serverSourceSha256": "abbaedd3d2e329d2b46224b7a5c8bf468b50ee4f9a3de69d37d3992567a75820",
+    "exportDiagnostics": {}
+  },
+  "wrapperChange": "classic read-only collector inserted into head; production module unchanged",
+  "scope": "fresh URL prefix plus no-store HTTP responses; no browser/GPU/OS/shader cold claim",
+  "commonWork": {
+    "member": "works/perf-character-loop.nvwa.json",
+    "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+    "bytes": 1624,
+    "revision": 0,
+    "timeline": "natural idle loop; same exact frozen document as native"
+  },
+  "adapter": {
+    "sourceSha256": "114d407f5c5ff91dc21bba6b238851b60f31594a4135dd5bafb908d454343133",
+    "gpuBoundariesSha256": "0dbe942109ae593e4910468e6f3c91dab339b668428d5f25cbaa5ee09873377b",
+    "baseServerSha256": "abbaedd3d2e329d2b46224b7a5c8bf468b50ee4f9a3de69d37d3992567a75820",
+    "baseCollectorSha256": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+    "change": "same production bytes; append bounded production-call WebGPU/JS-heap observations",
+    "runProtocol": "at most2 HTTP-cold attempts plus1 same-process contrast; no full-cold claim",
+    "timestampVariant": true
+  }
+}

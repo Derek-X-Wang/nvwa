@@ -1,0 +1,45 @@
+{
+  "common": 524,
+  "differing": [
+    {
+      "package": [
+        "wgpu-hal",
+        "29.0.4"
+      ],
+      "a": {
+        "features": [
+          "dx12",
+          "fragile-send-sync-non-atomic-wasm",
+          "metal",
+          "portable-atomic",
+          "renderdoc",
+          "vulkan"
+        ],
+        "source": "registry+https://github.com/rust-lang/crates.io-index"
+      },
+      "b": {
+        "features": [
+          "dx12",
+          "fragile-send-sync-non-atomic-wasm",
+          "metal",
+          "portable-atomic",
+          "renderdoc",
+          "vulkan"
+        ],
+        "source": null
+      }
+    }
+  ],
+  "a_only": [
+    [
+      "nvwa-cli",
+      "0.1.0"
+    ]
+  ],
+  "b_only": [
+    [
+      "nvwa-native-present-metrics",
+      "0.1.0"
+    ]
+  ]
+}

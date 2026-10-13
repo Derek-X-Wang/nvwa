@@ -1,0 +1,66 @@
+{
+  "event": "before_launch",
+  "CLOCK_MONOTONIC_ns": 429062683282000,
+  "wall_UTC_ISO": "2026-10-13T21:03:32.504422+00:00",
+  "argv": [
+    "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+    "-c",
+    "import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(10)"
+  ],
+  "environment_override_names": [],
+  "heavy_inventory": {
+    "status": "OBSERVED",
+    "rows": [
+      {
+        "pid": 10972,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 4384,
+        "executable_basename": "Google Chrome Helper (Renderer)"
+      },
+      {
+        "pid": 39916,
+        "ppid": 39858,
+        "cpu_percent": 0.0,
+        "rss_KiB": 11760,
+        "executable_basename": "Google Chrome"
+      },
+      {
+        "pid": 40222,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 8784,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40223,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 3216,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40225,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 2816,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40332,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 5664,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 81508,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 7408,
+        "executable_basename": "Google Chrome Helper"
+      }
+    ],
+    "scope": "selected names or CPU>=50; no proof of all GPU contention"
+  }
+}

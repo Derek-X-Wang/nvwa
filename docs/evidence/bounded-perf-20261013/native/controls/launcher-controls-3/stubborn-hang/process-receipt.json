@@ -1,0 +1,175 @@
+{
+  "status": "BLOCKED",
+  "error": "RuntimeError('direct child executable mismatch')",
+  "exit_code": null,
+  "pid": 60959,
+  "elapsed_seconds": 0.6210034170071594,
+  "deadline_seconds": 0.4,
+  "registered_members": [],
+  "observations": [
+    {
+      "event": "before_launch",
+      "CLOCK_MONOTONIC_ns": 429011742276000,
+      "wall_UTC_ISO": "2026-10-13T21:02:41.563416+00:00",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-c",
+        "import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(10)"
+      ],
+      "environment_override_names": [],
+      "heavy_inventory": {
+        "status": "OBSERVED",
+        "rows": [
+          {
+            "pid": 10972,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 3040,
+            "executable_basename": "Google Chrome Helper (Renderer)"
+          },
+          {
+            "pid": 39916,
+            "ppid": 39858,
+            "cpu_percent": 0.3,
+            "rss_KiB": 14976,
+            "executable_basename": "Google Chrome"
+          },
+          {
+            "pid": 40222,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4992,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40223,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 5248,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40225,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 2544,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40332,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4960,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 65493,
+            "ppid": 62582,
+            "cpu_percent": 167.5,
+            "rss_KiB": 1339696,
+            "executable_basename": "Codex (Renderer)"
+          },
+          {
+            "pid": 81508,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4464,
+            "executable_basename": "Google Chrome Helper"
+          }
+        ],
+        "scope": "selected names or CPU>=50; no proof of all GPU contention"
+      }
+    },
+    {
+      "event": "popen_returned",
+      "CLOCK_MONOTONIC_ns": 429011746031000,
+      "wall_UTC_ISO": "2026-10-13T21:02:41.567171+00:00",
+      "pid": 60959,
+      "ppid": 60895,
+      "pgid": 60959,
+      "launch_before_monotonic_ns": 429011742911000,
+      "launch_after_monotonic_ns": 429011746024000
+    },
+    {
+      "event": "inspection_unknown_guard_continues",
+      "CLOCK_MONOTONIC_ns": 429011806541000,
+      "wall_UTC_ISO": "2026-10-13T21:02:41.627680+00:00",
+      "error": "direct child executable mismatch"
+    },
+    {
+      "event": "inspection_unknown_guard_continues",
+      "CLOCK_MONOTONIC_ns": 429012058098000,
+      "wall_UTC_ISO": "2026-10-13T21:02:41.879236+00:00",
+      "error": "direct child executable mismatch"
+    },
+    {
+      "event": "cleanup_blocked_no_signal",
+      "CLOCK_MONOTONIC_ns": 429012313509000,
+      "wall_UTC_ISO": "2026-10-13T21:02:42.134651+00:00",
+      "error": "RuntimeError('direct child executable mismatch')"
+    },
+    {
+      "event": "after_cleanup",
+      "CLOCK_MONOTONIC_ns": 429012363739000,
+      "wall_UTC_ISO": "2026-10-13T21:02:42.184879+00:00",
+      "status": "BLOCKED",
+      "exit_code": null,
+      "heavy_inventory": {
+        "status": "OBSERVED",
+        "rows": [
+          {
+            "pid": 10972,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 3040,
+            "executable_basename": "Google Chrome Helper (Renderer)"
+          },
+          {
+            "pid": 39916,
+            "ppid": 39858,
+            "cpu_percent": 0.0,
+            "rss_KiB": 13312,
+            "executable_basename": "Google Chrome"
+          },
+          {
+            "pid": 40222,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4672,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40223,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 3488,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40225,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 2560,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 40332,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4000,
+            "executable_basename": "Google Chrome Helper"
+          },
+          {
+            "pid": 81508,
+            "ppid": 39916,
+            "cpu_percent": 0.0,
+            "rss_KiB": 4480,
+            "executable_basename": "Google Chrome Helper"
+          }
+        ],
+        "scope": "selected names or CPU>=50; no proof of all GPU contention"
+      }
+    }
+  ],
+  "GPU_result": "NOT-VALIDATED by launcher; inspect actual callbacks and pixels separately"
+}

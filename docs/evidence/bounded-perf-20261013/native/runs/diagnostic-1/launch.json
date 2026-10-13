@@ -1,0 +1,91 @@
+{
+  "event": "before_launch",
+  "CLOCK_MONOTONIC_ns": 430644088829000,
+  "wall_UTC_ISO": "2026-10-13T21:29:53.909970+00:00",
+  "argv": [
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa",
+    "--work",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/input/character-loop.nvwa.json",
+    "--benchmark",
+    "--smoke",
+    "--smoke-seconds",
+    "30.0",
+    "--timeout",
+    "38.0",
+    "--capture",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/captures/diagnostic-1/production-final.png"
+  ],
+  "environment_override_names": [
+    "NVWA_METAL_PROBE",
+    "NVWA_PROBE_CAPTURE_DIR"
+  ],
+  "heavy_inventory": {
+    "status": "OBSERVED",
+    "rows": [
+      {
+        "pid": 10972,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 5392,
+        "executable_basename": "Google Chrome Helper (Renderer)"
+      },
+      {
+        "pid": 39916,
+        "ppid": 39858,
+        "cpu_percent": 0.0,
+        "rss_KiB": 16256,
+        "executable_basename": "Google Chrome"
+      },
+      {
+        "pid": 40222,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 8016,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40223,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 5280,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40225,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 3536,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40332,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 6144,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 59010,
+        "ppid": 684,
+        "cpu_percent": 101.9,
+        "rss_KiB": 303280,
+        "executable_basename": "Browser Helper (Renderer)"
+      },
+      {
+        "pid": 70603,
+        "ppid": 65495,
+        "cpu_percent": 55.1,
+        "rss_KiB": 261472,
+        "executable_basename": "Python"
+      },
+      {
+        "pid": 81508,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 6496,
+        "executable_basename": "Google Chrome Helper"
+      }
+    ],
+    "scope": "selected names or CPU>=50; no proof of all GPU contention"
+  }
+}

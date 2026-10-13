@@ -1,0 +1,78 @@
+{
+  "kind": "actual ephemeral TCP receiver control; not browser/GPU",
+  "ownedPid": 85838,
+  "bind": "127.0.0.1",
+  "ephemeralPort": 54913,
+  "acceptedRequests": 6,
+  "receiverRows": [
+    {
+      "status": 409,
+      "runId": "b93fb7ebf24649fd8ff33169ab543061",
+      "member": "capture.json",
+      "attempt": 1,
+      "declaredBytes": 512001,
+      "reason": "bounded Content-Length required",
+      "disconnected": null,
+      "elapsedMs": 0.7618750096298754,
+      "socketReadTimeoutSeconds": 5
+    },
+    {
+      "status": 409,
+      "runId": "b93fb7ebf24649fd8ff33169ab543061",
+      "member": "capture.json",
+      "attempt": 1,
+      "declaredBytes": null,
+      "reason": "same-origin browser capture required",
+      "disconnected": null,
+      "elapsedMs": 0.10195799404755235,
+      "socketReadTimeoutSeconds": 5
+    },
+    {
+      "status": 409,
+      "runId": "b93fb7ebf24649fd8ff33169ab543061",
+      "member": "capture.json",
+      "attempt": 1,
+      "declaredBytes": 0,
+      "reason": "bounded Content-Length required",
+      "disconnected": null,
+      "elapsedMs": 0.09433302329853177,
+      "socketReadTimeoutSeconds": 5
+    },
+    {
+      "status": 408,
+      "runId": "b93fb7ebf24649fd8ff33169ab543061",
+      "member": "capture.json",
+      "attempt": 1,
+      "declaredBytes": 100,
+      "reason": "five-second socket-read deadline",
+      "disconnected": null,
+      "elapsedMs": 5001.34416599758,
+      "socketReadTimeoutSeconds": 5
+    },
+    {
+      "status": 409,
+      "runId": "b93fb7ebf24649fd8ff33169ab543061",
+      "member": "capture.json",
+      "attempt": 1,
+      "declaredBytes": 100,
+      "reason": "incomplete capture",
+      "disconnected": null,
+      "elapsedMs": 0.2033329801633954,
+      "socketReadTimeoutSeconds": 5
+    },
+    {
+      "status": 201,
+      "runId": "b93fb7ebf24649fd8ff33169ab543061",
+      "member": "capture.json",
+      "attempt": 1,
+      "declaredBytes": 96,
+      "reason": null,
+      "disconnected": null,
+      "elapsedMs": 0.7206249865703285,
+      "socketReadTimeoutSeconds": 5
+    }
+  ],
+  "validPayloadSha256": "34a2e74ed85e9552540b6063cdb1a7836d47acde132f7810e5e69ba50c349f71",
+  "validPayloadBytes": 96,
+  "lifecycle": "listener closed; server, handler and deadline threads joined"
+}

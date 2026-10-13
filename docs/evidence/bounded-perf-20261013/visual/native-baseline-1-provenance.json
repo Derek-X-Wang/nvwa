@@ -1,0 +1,121 @@
+{
+  "status": "VERIFIED",
+  "case": "native-baseline-1",
+  "callId": "call_3f39973c1f1443079c7e6361e595df77",
+  "callTimestamp": "2026-10-13T21:29:35.458Z",
+  "completionTimestamp": "2026-10-13T21:29:38.962Z",
+  "completionStatus": "completed",
+  "completionIsError": false,
+  "runtimeThreadId": "01a128c5-1bff-70a0-bd65-0dfff0529c44",
+  "sourceFile": {
+    "path": "/Users/derekxwang/.codex/sessions/2026/10/10/rollout-2026-10-10T19-22-48-01a128c5-1bff-70a0-bd65-0dfff0529c44.jsonl",
+    "dev": 16777232,
+    "ino": 461798785,
+    "snapshotBytes": 195469625,
+    "snapshotMtimeNs": 1791927452051100861,
+    "requestedTailStart": 187081017,
+    "actualTailStart": 187081491,
+    "droppedInitialPartialLineBytes": 474,
+    "bytesRead": 8388134,
+    "maxInitialTailBytes": 8388608,
+    "noOlderHistoryScan": true
+  },
+  "arguments": {
+    "code": "let nvPerfNativeBaselineApp=await cua.getApp('/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/Nvwa.app'); nodeRepl.write({case:'native-baseline-1',ownedPid:68805,screenshotBeforeUtc:new Date().toISOString()}); await nvPerfNativeBaselineApp.getScreenshot(); nodeRepl.write({case:'native-baseline-1',screenshotAfterUtc:new Date().toISOString()});",
+    "title": "选取精确测量构建的原生窗口"
+  },
+  "ownedPidReportedInActualClockOutput": 68805,
+  "pidScope": "Root emitted ownedPid and exact getApp target; process identity/lifetime not re-queried by this extractor",
+  "image": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-baseline-1-original.jpg",
+    "mime": "image/jpeg",
+    "bytes": 90120,
+    "sha256": "0b5adcfcb51bd1b5d943050b367b76a3fd11cdb9c2398dafda55bd76843d0311",
+    "width": 1280,
+    "height": 784,
+    "outputBlockIndex": 3,
+    "rawDataUrlUtf8Sha256": "cf0353208c7e5d4b46fd109959bdcdd91a16b9f52d6d9884c0fa778732c6d7f7",
+    "originalDecodedEmittedBytes": true,
+    "reencoded": false,
+    "converted": false,
+    "edited": false,
+    "fileEqualsDecodedOutputImageBytes": true
+  },
+  "clockOutput": {
+    "outputBlockIndex": 2,
+    "rawText": "{\n  case: 'native-baseline-1',\n  ownedPid: 68805,\n  screenshotBeforeUtc: '2026-10-13T21:29:38.297Z'\n}{\n  case: 'native-baseline-1',\n  screenshotAfterUtc: '2026-10-13T21:29:38.948Z'\n}",
+    "screenshotBeforeUtc": "2026-10-13T21:29:38.297Z",
+    "screenshotAfterUtc": "2026-10-13T21:29:38.948Z",
+    "captureBracketSeconds": 0.651
+  },
+  "trace": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-baseline-1-exact-cua.jsonl.gz",
+    "records": 3,
+    "encoding": "gzip mtime=0; original exact selected call/completion/output rows",
+    "gzipBytes": 112306,
+    "gzipSha256": "d4ad702362a916efacb52855009c94abf1cabff6b9d947c404915cb30c620338",
+    "decodedBytes": 188715,
+    "decodedSha256": "a9dfca6c7baf1be2a5a1c1f32370f86d0701a534ab03bdac488b3c864bae066a",
+    "rows": [
+      {
+        "sourceByteOffset": 193884891,
+        "sourceBytes": 898,
+        "rawRowSha256": "5380480b943d576d9526400340225c2468afd4bd8ec64ad5f426ca6dfcaa34b1",
+        "timestamp": "2026-10-13T21:29:35.458Z",
+        "recordType": "response_item",
+        "payloadType": "function_call"
+      },
+      {
+        "sourceByteOffset": 193886695,
+        "sourceBytes": 66491,
+        "rawRowSha256": "67251cedcd63b6eaff9604dd4477169569c7c7ff5cdcb293add729a21f3555a7",
+        "timestamp": "2026-10-13T21:29:38.962Z",
+        "recordType": "event_msg",
+        "payloadType": "item_completed"
+      },
+      {
+        "sourceByteOffset": 193953186,
+        "sourceBytes": 121326,
+        "rawRowSha256": "64545db5de0e30fccb5a1c887401aa7384b1f5a756c766420dc8321ae8ff8ffb",
+        "timestamp": "2026-10-13T21:29:39.007Z",
+        "recordType": "response_item",
+        "payloadType": "function_call_output"
+      }
+    ]
+  },
+  "excludedAttempts": [
+    {
+      "callId": "call_d46666dd568e461f8904afd4ca20ce31",
+      "status": "failed",
+      "reason": "Failed/ambiguous attempt has no accepted image; excluded",
+      "call": {
+        "sourceByteOffset": 193879976,
+        "sourceBytes": 843,
+        "rawRowSha256": "8518820bbf5f029b65c8772f0ea4ab42c16fa79346e90c613b4f4f745c5a394d",
+        "timestamp": "2026-10-13T21:29:30.870Z",
+        "recordType": "response_item",
+        "payloadType": "function_call"
+      },
+      "completion": {
+        "sourceByteOffset": 193881725,
+        "sourceBytes": 1426,
+        "rawRowSha256": "39e30405bb606690805319105ab221c6c7c609de5c1f1d1cc1c7edb7433787f6",
+        "timestamp": "2026-10-13T21:29:31.082Z",
+        "recordType": "event_msg",
+        "payloadType": "item_completed"
+      }
+    }
+  ],
+  "baseline1And2ProtectedUnchanged": {
+    "web-baseline-attempt1-original.jpg": "58f7918f95e3edffd61ea4c46bc8d54d3afa309b44b17e6d8acc9251b10c0188",
+    "web-baseline-attempt1-exact-cua.jsonl.gz": "47f87ea67024f2879bc1d43d6eeb72830617a102bebcbe7301415a20b081bccd",
+    "web-baseline-attempt1-provenance.json": "f6d56e9b1960d79d2a3bf54f83821a18eecec292b1988d3cd6222c295cc47632",
+    "web-baseline-attempt2-original.jpg": "4431364f4cd484591bb2091957fddf46a812ae4c8638b68934a436e8e0f53511",
+    "web-baseline-attempt2-exact-cua.jsonl.gz": "de0394e6e9e29c12aafbbfdae5c883398a9e5ee001506a01e77bed4eac60deb9",
+    "web-baseline-attempt2-provenance.json": "c52f284198a4c1b97d5c7619b5f6dafd88632e5dfd8c6eea1741dc5dc7e66348"
+  },
+  "limits": [
+    "Host capture bracket is an observation bound, not exact first presentation or calibrated browser/Bevy/GPU clock conversion.",
+    "No new UI/GPU capture, tests, builds, private Downloads work or other browser UI retained."
+  ]
+}

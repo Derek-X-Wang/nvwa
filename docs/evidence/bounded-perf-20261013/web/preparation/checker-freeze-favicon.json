@@ -1,0 +1,80 @@
+{
+  "status": "FAVICON_RECONCILIATION_READY_R2",
+  "lineage": {
+    "packet": ".work/m11-perf/web/preparation-freeze-r2-doc.json",
+    "sha256": "0c5f1c0f6396a176463f3e120d50f77a5fd9e1dadccd5def5445635e8927a9eb"
+  },
+  "sourceFiles": {
+    "experiments/34-web-cold-metrics/README.md": {
+      "sha256": "c4fd126681e7ec480c51b9960030b85bd4b7b4413e25eeef861f908ae0ea9a9f",
+      "bytes": 9203
+    },
+    "experiments/34-web-cold-metrics/check_metrics.py": {
+      "sha256": "083015380acc33cbdfd646c5012288b7e396d89d137414d23955152af24f8ab5",
+      "bytes": 15350
+    },
+    "experiments/34-web-cold-metrics/collector.js": {
+      "sha256": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+      "bytes": 4756
+    },
+    "experiments/34-web-cold-metrics/gpu-boundaries.js": {
+      "sha256": "0dbe942109ae593e4910468e6f3c91dab339b668428d5f25cbaa5ee09873377b",
+      "bytes": 4861
+    },
+    "experiments/34-web-cold-metrics/server.py": {
+      "sha256": "114d407f5c5ff91dc21bba6b238851b60f31594a4135dd5bafb908d454343133",
+      "bytes": 11865
+    },
+    "experiments/34-web-cold-metrics/test_metrics.py": {
+      "sha256": "636de8d694eba6075a2d7bd3f89ac85fd401a21974e28c156415c90d111e17e3",
+      "bytes": 16291
+    },
+    "experiments/34-web-cold-metrics/test_wrappers.mjs": {
+      "sha256": "99f6ed2458652deb017f8b79590132ad34b3ef329adefd9ca956281581d2442a",
+      "bytes": 6361
+    },
+    "experiments/34-web-cold-metrics/timestamp-variant.js": {
+      "sha256": "a99b727ff9bc7ce778882df27a9eeaaf4e457b3316354e6a551407a561d134f6",
+      "bytes": 6679
+    }
+  },
+  "exactTwoFileDelta": {
+    "experiments/34-web-cold-metrics/check_metrics.py": {
+      "before": {
+        "sha256": "63229105c914ae6d1b2bd4b6b10c1c384566f9266dad21fcf10eeaf0f0783bb5",
+        "bytes": 10799
+      },
+      "after": {
+        "sha256": "083015380acc33cbdfd646c5012288b7e396d89d137414d23955152af24f8ab5",
+        "bytes": 15350
+      }
+    },
+    "experiments/34-web-cold-metrics/test_metrics.py": {
+      "before": {
+        "sha256": "926aeca1d8e7ae5a122cac8005fa702f6036f51d148b5056b55b3030ac5a2d87",
+        "bytes": 12247
+      },
+      "after": {
+        "sha256": "636de8d694eba6075a2d7bd3f89ac85fd401a21974e28c156415c90d111e17e3",
+        "bytes": 16291
+      }
+    }
+  },
+  "actualDatasetHashesUnchanged": {
+    ".work/m11-perf/web/baseline-http/manifest.json": "41fcbd803d45322c0bae04c8f5b2e71cebf7cb63dd6b1a2baaa3f462fb065ed8",
+    ".work/m11-perf/web/baseline-http/requests.jsonl": "8ebb45cd210416229058a4e84fb2e370605035353e1dc5cce0f06e07882d7bc7",
+    ".work/m11-perf/web/baseline-http/1c1f52dcadf5449ba40195226e16f287-attempt1-browser.json": "b034614e3ebc3775b247e29890fc2ef240ba72afddaffe8d148522e3a51034af",
+    ".work/m11-perf/web/baseline-http/check-attempt1.initial-rejected.json": "79db0de6204f33be74303b25c7a1d8cfb0bbf45b62099d4ffdcc97e10def2620"
+  },
+  "initialFailureRetained": ".work/m11-perf/web/baseline-http/check-attempt1.initial-rejected.json",
+  "actualResult": ".work/m11-perf/web/baseline-http/check-attempt1.favicon-reconciled.json",
+  "mutationReceipt": ".work/m11-perf/web/favicon-mutation-controls.json",
+  "cpuControls": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": "test_actual_favicon_restored_green (test_metrics.ActualFaviconControls.test_actual_favicon_restored_green) ... ok\ntest_favicon_browser_size_red (test_metrics.ActualFaviconControls.test_favicon_browser_size_red) ... ok\ntest_favicon_cache_control_red (test_metrics.ActualFaviconControls.test_favicon_cache_control_red) ... ok\ntest_favicon_duplicate_timing_red (test_metrics.ActualFaviconControls.test_favicon_duplicate_timing_red) ... ok\ntest_favicon_hash_red (test_metrics.ActualFaviconControls.test_favicon_hash_red) ... ok\ntest_favicon_missing_response_red (test_metrics.ActualFaviconControls.test_favicon_missing_response_red) ... ok\ntest_favicon_origin_red (test_metrics.ActualFaviconControls.test_favicon_origin_red) ... ok\ntest_favicon_other_path_red (test_metrics.ActualFaviconControls.test_favicon_other_path_red) ... ok\ntest_favicon_server_size_red (test_metrics.ActualFaviconControls.test_favicon_server_size_red) ... ok\ntest_favicon_source_red (test_metrics.ActualFaviconControls.test_favicon_source_red) ... ok\ntest_favicon_status_red (test_metrics.ActualFaviconControls.test_favicon_status_red) ... ok\ntest_favicon_timing_status_red (test_metrics.ActualFaviconControls.test_favicon_timing_status_red) ... ok\ntest_favicon_zero_transfer_red (test_metrics.ActualFaviconControls.test_favicon_zero_transfer_red) ... ok\ntest_unexplained_outside_resource_red (test_metrics.ActualFaviconControls.test_unexplained_outside_resource_red) ... ok\ntest_unexplained_outside_response_red (test_metrics.ActualFaviconControls.test_unexplained_outside_response_red) ... ok\ntest_baseline_cannot_hide_variant (test_metrics.Controls.test_baseline_cannot_hide_variant) ... ok\ntest_claiming_display_from_submit_red (test_metrics.Controls.test_claiming_display_from_submit_red) ... ok\ntest_future_timestamp_red (test_metrics.Controls.test_future_timestamp_red) ... ok\ntest_missing_milestone_red (test_metrics.Controls.test_missing_milestone_red) ... ok\ntest_mixed_clock_red (test_metrics.Controls.test_mixed_clock_red) ... ok\ntest_outside_origin_red (test_metrics.Controls.test_outside_origin_red) ... ok\ntest_resource_byte_mismatch_red (test_metrics.Controls.test_resource_byte_mismatch_red) ... ok\ntest_same_url_contrast_only_once (test_metrics.Controls.test_same_url_contrast_only_once) ... ok\ntest_uninstalled_hook_red (test_metrics.Controls.test_uninstalled_hook_red) ... ok\ntest_unknown_collector_source_red (test_metrics.Controls.test_unknown_collector_source_red) ... ok\ntest_valid_synthetic_body_reconciliation (test_metrics.Controls.test_valid_synthetic_body_reconciliation) ... ok\ntest_variant_missing_rejected (test_metrics.Controls.test_variant_missing_rejected) ... ok\ntest_wrong_glb_size_red (test_metrics.Controls.test_wrong_glb_size_red) ... ok\ntest_wrong_physical_geometry_red (test_metrics.Controls.test_wrong_physical_geometry_red) ... ok\ntest_wrong_wasm_source_red (test_metrics.Controls.test_wrong_wasm_source_red) ... ok\ntest_wrong_work_body_red (test_metrics.Controls.test_wrong_work_body_red) ... ok\ntest_wrong_work_query_red (test_metrics.Controls.test_wrong_work_query_red) ... ok\ntest_actual_http_partial_timeout_then_valid_and_rejects (test_metrics.ReceiverControls.test_actual_http_partial_timeout_then_valid_and_rejects)\nReal ephemeral TCP boundary. No app/browser/GPU; all threads joined. ... ok\n\n----------------------------------------------------------------------\nRan 33 tests in 6.063s\n\nOK\n"
+  },
+  "nodeControls": "unchanged wrapper source; reuse prior verifiedNode receipt",
+  "runtimeProtocolDelta": "contrast is same IAB tab54/URL after intervening about:blank quiescence, not literal reload; max3Nvwa loads unchanged",
+  "lifecycle": "no app/server/GPU created or changed by worker; ephemeral CPU receiver control closed/joined"
+}

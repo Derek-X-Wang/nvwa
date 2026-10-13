@@ -1,0 +1,56 @@
+{
+  "status": "ADDITIONAL SOURCE FROZEN; actual native launch NOT-RUN",
+  "candidate_freeze_sha256": "e0c8a42f724123d6bca04507e9c23a3b7d41d686686d8de02c93a0429d6b9851",
+  "files": {
+    "experiments/33-native-present-metrics/launch_owned_native.py": "cd5f988671a6f21921091a1a1a9a258f4b98629e4763557049227efa56d40372",
+    "experiments/33-native-present-metrics/test_launch_owned_native.py": "66b3e7f25810c70a840d0792c1cb839847e21ee2250e783892676051f0ef405b",
+    "experiments/33-native-present-metrics/LAUNCHER.md": "e39274e20c22ea3cbcc7cb6ff71c634fa400ccab922871a976cb791942e3a589"
+  },
+  "preflight_receipts": {
+    "baseline-preflight.json": "f5ce4f4cbb337a8db1a36b21ba4c0b3fc3ab71cf8a29a9c7c905a02413f0499b",
+    "diagnostic-preflight.json": "6336dfadd6cb5721152940b96aa93e01eebed401de491bda486583c68b544a33"
+  },
+  "CPU_controls_corrected": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/launcher-controls-2/result.json",
+  "CPU_control_status": "passed before final executable-match and8-member bound additions; final rerun paused for root Web GPU lease",
+  "retained_clock_error_controls": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/launcher-controls/result.json",
+  "bundles": [
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/Nvwa.app",
+      "id": "dev.nvwa.studio",
+      "Info_plist_sha256": "5fde8e504b4aa78d69949c86a5a169c06c80619780efaaebdeaddda815786f55",
+      "executable_sha256": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a"
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app",
+      "id": "dev.nvwa.perf.native-diagnostic",
+      "Info_plist_sha256": "1fd679f73fbc92a2759a28091811f27356f7a279ee3e0dfc723e7ad6691671dd",
+      "executable_sha256": "31999ece7a4b74875ac254eb15ebb8fad08e73e8880ca8a3fbd68c5026af8a6c"
+    }
+  ],
+  "root_commands": [
+    [
+      "python3",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/33-native-present-metrics/launch_owned_native.py",
+      "--variant",
+      "baseline",
+      "--run-name",
+      "baseline-1",
+      "--hold-seconds",
+      "30",
+      "--deadline",
+      "40"
+    ],
+    [
+      "python3",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/33-native-present-metrics/launch_owned_native.py",
+      "--variant",
+      "diagnostic",
+      "--run-name",
+      "diagnostic-1",
+      "--hold-seconds",
+      "30",
+      "--deadline",
+      "40"
+    ]
+  ]
+}

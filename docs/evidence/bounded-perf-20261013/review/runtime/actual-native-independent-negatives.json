@@ -1,0 +1,66 @@
+{
+  "actual_log_controls": [
+    {
+      "case": "diagnostic-1",
+      "mutation": "failed_gpu_status",
+      "rejected": true,
+      "reason": "raw GPU validity disagreement"
+    },
+    {
+      "case": "diagnostic-1",
+      "mutation": "zero_gpu_start",
+      "rejected": true,
+      "reason": "raw GPU validity disagreement"
+    },
+    {
+      "case": "diagnostic-1",
+      "mutation": "zero_display_time",
+      "rejected": true,
+      "reason": "raw display validity disagreement"
+    },
+    {
+      "case": "diagnostic-1",
+      "mutation": "reversed_calibration",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "diagnostic-1",
+      "mutation": "mixed_pid",
+      "rejected": true,
+      "reason": "mixed process identities"
+    },
+    {
+      "case": "diagnostic-warm",
+      "mutation": "failed_gpu_status",
+      "rejected": true,
+      "reason": "raw GPU validity disagreement"
+    },
+    {
+      "case": "diagnostic-warm",
+      "mutation": "zero_gpu_start",
+      "rejected": true,
+      "reason": "raw GPU validity disagreement"
+    },
+    {
+      "case": "diagnostic-warm",
+      "mutation": "zero_display_time",
+      "rejected": true,
+      "reason": "raw display validity disagreement"
+    },
+    {
+      "case": "diagnostic-warm",
+      "mutation": "reversed_calibration",
+      "rejected": true,
+      "reason": ""
+    },
+    {
+      "case": "diagnostic-warm",
+      "mutation": "mixed_pid",
+      "rejected": true,
+      "reason": "mixed process identities"
+    }
+  ],
+  "restored": "PASS",
+  "source": "archived actual stderr; no app/GPU execution"
+}

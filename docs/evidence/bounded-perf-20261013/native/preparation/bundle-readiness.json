@@ -1,0 +1,32 @@
+{
+  "status": "PARTIAL; actual UI launch NOT-RUN",
+  "rows": [
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/Nvwa.app",
+      "command": [
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "dist/Nvwa.app"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "dist/Nvwa.app: code has no resources but signature indicates they must be present\n"
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app",
+      "command": [
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        ".work/m11-perf/native/NvwaPresentMetrics.app"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ".work/m11-perf/native/NvwaPresentMetrics.app: code has no resources but signature indicates they must be present\n"
+    }
+  ],
+  "mutations": "none; no signing or permission changes"
+}

@@ -1,0 +1,70 @@
+//! Experiment-only observers on existing Metal submit/present calls.
+//! No waits, queries, allocations on the GPU, or changes to command ownership.
+use super::*;
+use std::sync::OnceLock;
+
+static ENABLED: OnceLock<bool> = OnceLock::new();
+static COMMANDS: atomic::AtomicU64 = atomic::AtomicU64::new(0);
+static PRESENTS: atomic::AtomicU64 = atomic::AtomicU64::new(0);
+
+fn enabled() -> bool {
+    *ENABLED.get_or_init(|| std::env::var("NVWA_METAL_PROBE").as_deref() == Ok("1"))
+}
+fn selected(index: u64) -> bool {
+    index <= 120 || (index <= 1200 && index % 60 == 0)
+}
+fn monotonic_ns() -> u64 {
+    let mut ts = libc::timespec { tv_sec: 0, tv_nsec: 0 };
+    // Read-only valid stack pointer, CLOCK_MONOTONIC supported on this host.
+    if unsafe { libc::clock_gettime(libc::CLOCK_MONOTONIC, &mut ts) } != 0 { return 0; }
+    ts.tv_sec as u64 * 1_000_000_000 + ts.tv_nsec as u64
+}
+#[link(name = "QuartzCore", kind = "framework")]
+unsafe extern "C" { fn CACurrentMediaTime() -> f64; }
+
+fn calibration() -> (u64, f64, u64) {
+    let before = monotonic_ns();
+    // QuartzCore host-time read; no retained state or GPU operation.
+    let ca_seconds = unsafe { CACurrentMediaTime() };
+    (before, ca_seconds, monotonic_ns())
+}
+
+pub(super) fn command(raw: &ProtocolObject<dyn MTLCommandBuffer>, kind: &'static str) {
+    if !enabled() { return; }
+    let index = COMMANDS.fetch_add(1, atomic::Ordering::Relaxed) + 1;
+    if !selected(index) { return; }
+    let registration_ns = monotonic_ns();
+    let block = block2::RcBlock::new(move |pointer: NonNull<ProtocolObject<dyn MTLCommandBuffer>>| {
+        // Metal passes a live command buffer to its completion handler. Borrow only.
+        let command = unsafe { pointer.as_ref() };
+        // These selectors have exact f64 return ABI in the SDK. Using msg_send
+        // avoids enabling new objc2-metal/core-foundation Cargo features.
+        let start: f64 = unsafe { objc2::msg_send![command, GPUStartTime] };
+        let end: f64 = unsafe { objc2::msg_send![command, GPUEndTime] };
+        let status = command.status().0;
+        let allocated = command.device().currentAllocatedSize();
+        let (before, ca, after) = calibration();
+        std::eprintln!("NVWA_METAL_PROBE {{\"event\":\"command_completed\",\"pid\":{},\"index\":{},\"kind\":\"{}\",\"registration_monotonic_ns\":{},\"callback_monotonic_before_ns\":{},\"ca_host_seconds\":{:.9},\"callback_monotonic_after_ns\":{},\"gpu_start_host_seconds\":{:.9},\"gpu_end_host_seconds\":{:.9},\"status_raw\":{},\"valid_completed_gpu_span\":{},\"metal_device_current_allocated_bytes\":{}}}",
+            std::process::id(), index, kind, registration_ns, before, ca, after,
+            start, end, status, status == MTLCommandBufferStatus::Completed.0 && start > 0.0 && end >= start, allocated);
+    });
+    // Metal copies/retains this block until delivery. Original handlers unchanged.
+    unsafe { raw.addCompletedHandler(block2::RcBlock::as_ptr(&block)); }
+}
+
+pub(super) fn present(drawable: &ProtocolObject<dyn MTLDrawable>, allocated: usize) {
+    if !enabled() { return; }
+    let index = PRESENTS.fetch_add(1, atomic::Ordering::Relaxed) + 1;
+    if !selected(index) { return; }
+    let id = drawable.drawableID();
+    let (before, ca, after) = calibration();
+    std::eprintln!("NVWA_METAL_PROBE {{\"event\":\"present_registered\",\"pid\":{},\"index\":{},\"drawable_id\":{},\"monotonic_before_ns\":{},\"ca_host_seconds\":{:.9},\"monotonic_after_ns\":{},\"metal_device_current_allocated_bytes\":{}}}", std::process::id(), index, id, before, ca, after, allocated);
+    let block = block2::RcBlock::new(move |pointer: NonNull<ProtocolObject<dyn MTLDrawable>>| {
+        // Metal passes its live presented drawable. Do not retain/destroy it.
+        let drawable = unsafe { pointer.as_ref() };
+        let time: f64 = unsafe { objc2::msg_send![drawable, presentedTime] };
+        let (before, ca, after) = calibration();
+        std::eprintln!("NVWA_METAL_PROBE {{\"event\":\"drawable_presented_callback\",\"pid\":{},\"index\":{},\"drawable_id\":{},\"presented_host_seconds\":{:.9},\"valid_presented_time\":{},\"callback_monotonic_before_ns\":{},\"ca_host_seconds\":{:.9},\"callback_monotonic_after_ns\":{}}}", std::process::id(), index, id, time, time > 0.0, before, ca, after);
+    });
+    unsafe { drawable.addPresentedHandler(block2::RcBlock::as_ptr(&block)); }
+}
