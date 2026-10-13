@@ -2,8 +2,9 @@
 
 PARTIAL — permanent CPU paint checks, the four-root loading policy, complete
 workspace checks and actual candidate Web recovery pass. Native visual
-acceptance, real tab raster positive/mutant cases and candidate hosted CI remain
-pending. Baseline hosted run38286368500 is not evidence for this candidate.
+acceptance and candidate hosted CI remain pending. The separate headless GPU
+pixel experiment passes its actual normal/mutant controls. Baseline hosted
+run38286368500 is not evidence for this candidate.
 
 ## Mainline changes
 
@@ -44,7 +45,8 @@ See [UI evidence](ui-paint/README.md) and
 | Candidate native |Actually launched; observed blank content; later explicit Mac-lock blocker; visual acceptance not passed |
 | Separate baseline native experiment |Two actual launches, all-black readbacks; profile/timing only |
 | Separate baseline Web experiment |Actual humanoid/timeline and exact HTTP ledger reconciliation;19 new controls passed |
-| Independent pixel experiment |Compiled after retained egui API error; actual raster cases NOT-RUN |
+| Independent headless pixel experiment32 |Actual Metal/Image readback: two normal cases pass, paint-only mutant fails; unchanged literal checker exits0/0/1; Profile state held |
+| Native-window pixel experiment31 |Compiled after retained egui API error; actual window raster cases NOT-RUN |
 
 Native executable SHA256:
 `72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a`.
@@ -78,6 +80,21 @@ measure physical first presentation or GPU pass time. See
 [Web report](../../../experiments/30-startup-profile/WEB-REPORT.md) and
 [native failure report](../../../experiments/30-startup-profile/REPORT.md).
 
+[Experiment32](../../../experiments/32-tab-pixels-headless/REPORT.md) renders the
+unchanged production tab painter to an offscreen GPU Image with zero native
+windows. On one Apple M2 Pro/Metal adapter, independent literal references
+accept both normal images and reject the wrong-color Profile image while its
+selected state stays Profile. The unchanged checker, all three PNGs and the
+owned-process cleanup receipts are retained. Independent review replays0/0/1
+and inspects every image. This establishes a scoped raster check; it does not
+establish full application/native-window acceptance or support GPU CI adoption.
+
+During this experiment, a real post-Popen I/O fault exposed an inherited
+cleanup gap in experiment30's compile guard. Both historical builds had exited
+normally. Their original bytes and receipts are preserved. Only new32's guard
+was repaired, with ten real lifecycle controls and a successful cached build.
+For a future build, use the repaired32 guard rather than the historical30 guard.
+
 ## Reproduce current local checks
 
 From the candidate checkout:
@@ -104,8 +121,8 @@ its retained private baseline artifacts; it is not a fresh-checkout CI test.
 ## Decisions and remaining gates
 
 Adopt permanent CPU paint checks and the finite root-request policy after
-candidate acceptance. Keep independent pixel checking as an experiment; there
-is no actual raster control result supporting permanent CI adoption. Preserve
+candidate acceptance. Keep the verified independent pixel check as an experiment;
+one adapter and two interior regions do not establish permanent CI coverage. Preserve
 native visibility failures and unavailable physical metrics rather than deriving
 a shader or lock-screen cause from them. #3 remains blocked under its original
 unavailable conditions. #4/#40 and the native remainder of#23 stay open.

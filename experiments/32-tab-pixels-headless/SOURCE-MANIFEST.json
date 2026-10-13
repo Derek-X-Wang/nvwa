@@ -1,0 +1,117 @@
+{
+  "status": "Release Rust attempt1 PASS; repaired compile guard actual10 CPU controls PASS; GPU NOT-RUN",
+  "baseline": "045d8abc685760d09ba05afec0e40a811a282d1f",
+  "primarySources": [
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy-0.19.1/examples/app/headless_renderer.rs",
+      "sha256": "903011044ad7669e0f98d0c1a4549ecad795714f39671d18948e955e932d2a9a",
+      "boundary": "85-109: no Window, disable Winit, ScheduleRunner"
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy-0.19.1/examples/app/externally_driven_headless_renderer.rs",
+      "sha256": "a6eac80e4d6c4784b31143aa4b874c0add521693dc59ad95a5986a6af7a60c62",
+      "boundary": "39-68,75-93,120-127: Image target and Screenshot::image"
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_image-0.19.1/src/image.rs",
+      "sha256": "92666f8786981b9bcb90be80e1a0caaf6e055af99fe71080a600f29c0c876d3f",
+      "boundary": "1213-1278: supported target texture format/usages"
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_render-0.19.1/src/view/window/screenshot.rs",
+      "sha256": "f49e4ca4f0929fc51a5c55fc002294c6009ae7a4c1c07dc6ef6c8ff737df0c5b",
+      "boundary": "102-105,137-157,309-326,532-550: image screenshot, actual readback and PNG helper"
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_egui-0.42.0/examples/render_egui_to_image.rs",
+      "sha256": "e8bdb5f84bfd43c3dfaaf53cc112af0ae84717bb953408ed758475271841ecce",
+      "boundary": "97-117: camera Image target/EguiSchedule"
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_egui-0.42.0/src/lib.rs",
+      "sha256": "29a32048c646f3da0c8b6707079d95c3b05e951b892d6fe08b6ea89592b9402e",
+      "boundary": "249-255,466-467,1777-1796: manual primary context and camera screen size"
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_egui-0.42.0/src/render/systems.rs",
+      "sha256": "168dc70ffe4c48bc50f8907581460e97e44f4ba7fb2eafcfbb888f61e22fbfac",
+      "boundary": "125-145: actual camera target size/pixels per point"
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_camera-0.19.1/src/camera.rs",
+      "sha256": "c1994ad01318588e5d61bdb8c33439189d62873c4a7142b5017d6042c048bfff",
+      "boundary": "1032,1087: target scale1"
+    },
+    {
+      "path": "/Users/derekxwang/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/bevy_render-0.19.1/src/settings.rs",
+      "sha256": "43f11fef2be79d7f34043849db8ef49c460da0534b96baa2abc8b816e68525cf",
+      "boundary": "160: fallback adapter defaultfalse"
+    }
+  ],
+  "experimentSource": {
+    "experiments/32-tab-pixels-headless/src/main.rs": "28b71bf651092a672c97e14a845d12eced950afd210065b3a896579c6a469159",
+    "experiments/32-tab-pixels-headless/Cargo.toml": "a212f0f017967129627cccbf2c091831959e9c799efb321f0d92c0a9879dd0f9",
+    "experiments/32-tab-pixels-headless/Cargo.lock": "0bd31552b03b5ef673d6a22c744ce678eaa91ddb05ca528df7752d06ef7ed6c9",
+    "experiments/32-tab-pixels-headless/run_owned.py": "f3bc5d742f3e803b331b6fb54fbf8cf439ac9f899451c15d4742c323f7b4565a",
+    "experiments/32-tab-pixels-headless/compile_guard.py": "f349ec4ecbb75e6114fef3cb3ad13ac6e8ceaeaf0abd6a162bb1129ccf8bfe8f",
+    "experiments/32-tab-pixels-headless/test_compile_guard.py": "156eb106c8f2895bedb8b879b0a1b5b22e4fac0d09fa408146d8ebb2466f1f3a"
+  },
+  "unchangedReuse": {
+    "experiments/31-ui-pixels/verify_pixels.py": "6156f9b5f6d95ac98728eeb8ff3489bb750f741968f9fe88b3f7342b18559753",
+    "experiments/30-startup-profile/sample_owned_pid.py": "83185b1713123a203b38de42477d10b44d6a440a8cd93a14498842cabe6cafda",
+    "crates/nvwa-studio/src/editor_layout.rs": "da45cb7183d28e80cf8b15d1f08f8aa06463e0c5fe4af2b9067fbf8737878b5c",
+    "Cargo.lock": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73"
+  },
+  "fixtureReferencesOnly": {
+    "assets/fixtures/nvwa-humanoid.glb": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "assets/character.profile.json": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+    ".work/m11-startup/inputs/canonical-work.nvwa.json": "cacf849f0918648a1a970452d0c33f195c5ad89fd7f6d9e58669d587d0789768"
+  },
+  "parity": {
+    "status": "PASS",
+    "rootCurrentCheckout": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa",
+    "rootLockSha256": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+    "baselineLockSha256": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+    "candidateLockSha256": "0bd31552b03b5ef673d6a22c744ce678eaa91ddb05ca528df7752d06ef7ed6c9",
+    "packageIdentitiesChecked": 524,
+    "packageDifferences": [],
+    "externalResolvedFeatureCounts": {
+      "root": 521,
+      "candidate": 521
+    },
+    "featureDifferences": [],
+    "drawTabsMethod": {
+      "baselinePath": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/crates/nvwa-studio/src/editor_layout.rs",
+      "rootCurrentPath": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/crates/nvwa-studio/src/editor_layout.rs",
+      "exactByteEquality": true,
+      "byteCount": 1393,
+      "sha256": "8f68b6617dbbf8bba64c389c320ea48e62dbf33c60f9e7db1e34c7ecf1abad5b"
+    },
+    "compilation": "NOT-RUN",
+    "GPU": "NOT-RUN"
+  },
+  "createdResources": {
+    "metadataProcesses": "completed CPU-only; no compiler",
+    "guardGateProcess": "completed with rejection; no child renderer",
+    "apps": [],
+    "tabs": [],
+    "servers": [],
+    "renderer": []
+  },
+  "compileGuardReuse": {
+    "original": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/experiments/30-startup-profile/bounded_command.py",
+    "originalSha256": "c5df7949e740381ad41240a7ca234ef2ad2698f62db72dda0330ed5631b3d768",
+    "changes": [
+      "docstring name/15-minute description",
+      "1800 seconds ->900 seconds",
+      "abort label deadline30minutes ->deadline15minutes"
+    ],
+    "reviewedLifecycleUnchanged": false,
+    "changesAfterR2": [
+      "mandatory post-Popen finally across all IO/KeyboardInterrupt/cancel paths",
+      "bounded exact new-session/PG/kernel/binary TERM/KILL and waitpid cleanup",
+      "unknown inspection remains blocked; receipt IO errors retained without abandonment"
+    ],
+    "inheritedLimitationPreservedAt": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa/.work/m11-startup/headless32/compile-guard-initial"
+  }
+}

@@ -1,0 +1,355 @@
+[
+  {
+    "status": "exit_verified",
+    "error": null,
+    "pid": 37723,
+    "exit_code": 0,
+    "identity": {
+      "pid": 37723,
+      "ppid": 37713,
+      "rss_kib": 464,
+      "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "binary_sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+    },
+    "elapsedSeconds": 0.11510729201836511,
+    "guardDeadlineSeconds": 50,
+    "gpu_result": "NOT-VALIDATED: independently run unchanged literal checker and inspect images",
+    "observations": [
+      {
+        "boundary": "before_owned_popen",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278115428583,
+        "wall_time_ns": 1791890173526182000,
+        "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "binary_sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+      },
+      {
+        "boundary": "owned_popen_spawned",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278117514458,
+        "wall_time_ns": 1791890173528268000,
+        "pid": 37723,
+        "parent_pid": 37713
+      },
+      {
+        "boundary": "initial_owned_inspection",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278120761833,
+        "wall_time_ns": 1791890173531515000,
+        "inspection": {
+          "state": "live",
+          "identity": {
+            "pid": 37723,
+            "ppid": 37713,
+            "rss_kib": 464,
+            "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+            "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14"
+          }
+        }
+      },
+      {
+        "boundary": "owned_child_waitpid_exit_verified",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278230531916,
+        "wall_time_ns": 1791890173641286000,
+        "pid": 37723,
+        "exit_code": 0
+      }
+    ],
+    "case": "ordinary-exit",
+    "runner_exit": 0,
+    "child_live_after_runner": false,
+    "control_limit": "50-second guard clock accelerated only in CPU control; no actual renderer",
+    "actualGPU": false,
+    "review_cleanup_exit": [
+      0
+    ]
+  },
+  {
+    "status": "blocked",
+    "error": null,
+    "pid": 37755,
+    "exit_code": null,
+    "identity": {
+      "pid": 37755,
+      "ppid": 37713,
+      "rss_kib": 1440,
+      "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "binary_sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+    },
+    "elapsedSeconds": 110.13457988156006,
+    "guardDeadlineSeconds": 50,
+    "gpu_result": "NOT-VALIDATED: independently run unchanged literal checker and inspect images",
+    "observations": [
+      {
+        "boundary": "before_owned_popen",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278235730291,
+        "wall_time_ns": 1791890173646484000,
+        "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "binary_sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+      },
+      {
+        "boundary": "owned_popen_spawned",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278237677625,
+        "wall_time_ns": 1791890173648432000,
+        "pid": 37755,
+        "parent_pid": 37713
+      },
+      {
+        "boundary": "initial_owned_inspection",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278241232916,
+        "wall_time_ns": 1791890173651986000,
+        "inspection": {
+          "state": "live",
+          "identity": {
+            "pid": 37755,
+            "ppid": 37713,
+            "rss_kib": 1440,
+            "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+            "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14"
+          }
+        }
+      },
+      {
+        "boundary": "cleanup_blocked_identity_not_proven",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278257748791,
+        "wall_time_ns": 1791890173668502000,
+        "observed": {
+          "pid": 37755,
+          "ppid": 37713,
+          "rss_kib": 14608,
+          "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+          "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+        }
+      }
+    ],
+    "case": "deadline-stall",
+    "runner_exit": 1,
+    "child_live_after_runner": true,
+    "control_limit": "50-second guard clock accelerated only in CPU control; no actual renderer",
+    "actualGPU": false,
+    "review_cleanup_exit": [
+      -15
+    ]
+  },
+  {
+    "status": "blocked",
+    "error": "OSError('review injected inspect exception')",
+    "pid": 37758,
+    "exit_code": null,
+    "identity": {
+      "pid": 37758,
+      "ppid": 37713,
+      "rss_kib": 208,
+      "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+      "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "binary_sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+    },
+    "elapsedSeconds": 39.47041492210701,
+    "guardDeadlineSeconds": 50,
+    "gpu_result": "NOT-VALIDATED: independently run unchanged literal checker and inspect images",
+    "observations": [
+      {
+        "boundary": "before_owned_popen",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278264155041,
+        "wall_time_ns": 1791890173674909000,
+        "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "binary_sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+      },
+      {
+        "boundary": "owned_popen_spawned",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278266054125,
+        "wall_time_ns": 1791890173676808000,
+        "pid": 37758,
+        "parent_pid": 37713
+      },
+      {
+        "boundary": "exception_mandatory_cleanup_follows",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278266068041,
+        "wall_time_ns": 1791890173676821000,
+        "error": "OSError('review injected inspect exception')"
+      },
+      {
+        "boundary": "cleanup_identity_reinspection",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278268990541,
+        "wall_time_ns": 1791890173679744000,
+        "inspection": {
+          "state": "live",
+          "identity": {
+            "pid": 37758,
+            "ppid": 37713,
+            "rss_kib": 208,
+            "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+            "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14"
+          }
+        }
+      },
+      {
+        "boundary": "cleanup_blocked_identity_not_proven",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278272038958,
+        "wall_time_ns": 1791890173682792000,
+        "observed": {
+          "pid": 37758,
+          "ppid": 37713,
+          "rss_kib": 672,
+          "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+          "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+        }
+      }
+    ],
+    "case": "initial-inspection-exception",
+    "runner_exit": 1,
+    "child_live_after_runner": true,
+    "control_limit": "50-second guard clock accelerated only in CPU control; no actual renderer",
+    "actualGPU": false,
+    "review_cleanup_exit": [
+      -15
+    ]
+  },
+  {
+    "status": "blocked",
+    "error": null,
+    "pid": 37761,
+    "exit_code": null,
+    "identity": null,
+    "elapsedSeconds": 81.06312510790303,
+    "guardDeadlineSeconds": 50,
+    "gpu_result": "NOT-VALIDATED: independently run unchanged literal checker and inspect images",
+    "observations": [
+      {
+        "boundary": "before_owned_popen",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278277824875,
+        "wall_time_ns": 1791890173688579000,
+        "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "binary_sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+      },
+      {
+        "boundary": "owned_popen_spawned",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278279536083,
+        "wall_time_ns": 1791890173690290000,
+        "pid": 37761,
+        "parent_pid": 37713
+      },
+      {
+        "boundary": "initial_owned_inspection",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278279542416,
+        "wall_time_ns": 1791890173690296000,
+        "inspection": {
+          "state": "unknown",
+          "reason": "review injected unknown"
+        }
+      },
+      {
+        "boundary": "cleanup_identity_reinspection",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278293925500,
+        "wall_time_ns": 1791890173704679000,
+        "inspection": {
+          "state": "live",
+          "identity": {
+            "pid": 37761,
+            "ppid": 37713,
+            "rss_kib": 12656,
+            "kernel_start_identity": "Tue Oct 13 04:16:13 2026",
+            "comm": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+          }
+        }
+      },
+      {
+        "boundary": "cleanup_blocked_identity_unknown",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278294034250,
+        "wall_time_ns": 1791890173704788000,
+        "pid": 37761
+      }
+    ],
+    "case": "initial-inspection-unknown",
+    "runner_exit": 1,
+    "child_live_after_runner": true,
+    "control_limit": "50-second guard clock accelerated only in CPU control; no actual renderer",
+    "actualGPU": false,
+    "review_cleanup_exit": [
+      -15
+    ]
+  },
+  {
+    "status": "blocked",
+    "error": null,
+    "pid": 37763,
+    "exit_code": null,
+    "identity": null,
+    "elapsedSeconds": 83.61562504433095,
+    "guardDeadlineSeconds": 50,
+    "gpu_result": "NOT-VALIDATED: independently run unchanged literal checker and inspect images",
+    "observations": [
+      {
+        "boundary": "before_owned_popen",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278299914166,
+        "wall_time_ns": 1791890173710668000,
+        "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "binary_sha256": "87d4df53fd91304be5bac391fb204643c36b7df2023c04a0953bcbc7d4fdf634"
+      },
+      {
+        "boundary": "owned_popen_spawned",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278301569916,
+        "wall_time_ns": 1791890173712324000,
+        "pid": 37763,
+        "parent_pid": 37713
+      },
+      {
+        "boundary": "initial_owned_inspection",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278301577125,
+        "wall_time_ns": 1791890173712331000,
+        "inspection": {
+          "state": "unknown",
+          "reason": "review injected unknown"
+        }
+      },
+      {
+        "boundary": "cleanup_identity_reinspection",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278316632333,
+        "wall_time_ns": 1791890173727386000,
+        "inspection": {
+          "state": "unknown",
+          "reason": "review injected unknown"
+        }
+      },
+      {
+        "boundary": "cleanup_blocked_identity_unknown",
+        "clock": "host_time_monotonic_ns",
+        "monotonic_ns": 367278316634041,
+        "wall_time_ns": 1791890173727388000,
+        "pid": 37763
+      }
+    ],
+    "case": "persistent-inspection-unknown",
+    "runner_exit": 1,
+    "child_live_after_runner": true,
+    "control_limit": "50-second guard clock accelerated only in CPU control; no actual renderer",
+    "actualGPU": false,
+    "review_cleanup_exit": [
+      -15
+    ]
+  }
+]

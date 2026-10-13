@@ -1,0 +1,299 @@
+[
+  {
+    "case": "repaired-normal",
+    "result": {
+      "command": [
+        "/bin/sleep",
+        "0.05"
+      ],
+      "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+      "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+      "deadlineSeconds": 0.3,
+      "initial_free_bytes": 57195425792,
+      "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "monotonic_start_ns": 368053867207791,
+      "wall_start_ns": 1791890949280761000,
+      "storage_samples": [
+        {
+          "elapsed_seconds": 0.0020522919949144125,
+          "free_bytes": 57195417600
+        },
+        {
+          "elapsed_seconds": 0.042155792005360126,
+          "free_bytes": 57195417600
+        }
+      ],
+      "cleanup_observations": [
+        {
+          "cleanupInspection": {
+            "state": "confirmed_absent"
+          },
+          "phase": "TERM"
+        }
+      ],
+      "abort": null,
+      "errors": [],
+      "cleanup": "exit_verified",
+      "owned_pid": 54553,
+      "owned_process_group": 54553,
+      "exit_code": 0,
+      "elapsed_seconds": 0.08082600001944229,
+      "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "final_free_bytes": 57195417600,
+      "status": "PASS"
+    },
+    "freshGroupAbsent": true
+  },
+  {
+    "case": "repaired-storage-fault",
+    "result": {
+      "command": [
+        "/bin/sleep",
+        "10"
+      ],
+      "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+      "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+      "deadlineSeconds": 0.3,
+      "initial_free_bytes": 57195413504,
+      "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "monotonic_start_ns": 368053949096291,
+      "wall_start_ns": 1791890949362649000,
+      "storage_samples": [],
+      "cleanup_observations": [
+        {
+          "cleanupInspection": {
+            "state": "live",
+            "members": [
+              {
+                "pid": 54554,
+                "ppid": 54543,
+                "pgid": 54554,
+                "kernel_start": "Tue Oct 13 04:29:09 2026",
+                "binary": "/bin/sleep"
+              }
+            ]
+          },
+          "phase": "TERM"
+        },
+        {
+          "signalSent": "TERM",
+          "ownedGroup": 54554,
+          "registeredMembers": [
+            {
+              "pid": 54554,
+              "ppid": 54543,
+              "pgid": 54554,
+              "kernel_start": "Tue Oct 13 04:29:09 2026",
+              "binary": "/bin/sleep",
+              "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+            }
+          ]
+        }
+      ],
+      "abort": null,
+      "errors": [
+        "OSError('review injected post-Popen storage failure')"
+      ],
+      "cleanup": "exit_verified",
+      "owned_pid": 54554,
+      "owned_process_group": 54554,
+      "exit_code": -15,
+      "elapsed_seconds": 0.06059374997857958,
+      "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "final_free_bytes": 57195409408,
+      "status": "FAIL"
+    },
+    "freshGroupAbsent": true
+  },
+  {
+    "case": "repaired-started-receipt-fault",
+    "result": {
+      "command": [
+        "/bin/sleep",
+        "10"
+      ],
+      "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+      "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+      "deadlineSeconds": 0.3,
+      "initial_free_bytes": 57195397120,
+      "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "monotonic_start_ns": 368054010534833,
+      "wall_start_ns": 1791890949424088000,
+      "storage_samples": [],
+      "cleanup_observations": [
+        {
+          "cleanupInspection": {
+            "state": "live",
+            "members": [
+              {
+                "pid": 54556,
+                "ppid": 54543,
+                "pgid": 54556,
+                "kernel_start": "Tue Oct 13 04:29:09 2026",
+                "binary": "/bin/sleep"
+              }
+            ]
+          },
+          "phase": "TERM"
+        },
+        {
+          "signalSent": "TERM",
+          "ownedGroup": 54556,
+          "registeredMembers": [
+            {
+              "pid": 54556,
+              "ppid": 54543,
+              "pgid": 54556,
+              "kernel_start": "Tue Oct 13 04:29:09 2026",
+              "binary": "/bin/sleep",
+              "binary_sha256": "38d6b9431656a92cfa223d1325cbea4dc3f56ef29833eb2a3ff7f6ab21f95b5b"
+            }
+          ]
+        }
+      ],
+      "abort": null,
+      "errors": [
+        "IsADirectoryError(21, 'Is a directory')"
+      ],
+      "cleanup": "exit_verified",
+      "owned_pid": 54556,
+      "owned_process_group": 54556,
+      "exit_code": -15,
+      "elapsed_seconds": 0.0667849580058828,
+      "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "final_free_bytes": 57195446272,
+      "status": "FAIL"
+    },
+    "freshGroupAbsent": true
+  },
+  {
+    "case": "repaired-ignore-term",
+    "result": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-c",
+        "import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(20)"
+      ],
+      "cwd": "/Users/derekxwang/.codex/worktrees/m11-startup-pixels/nvwa",
+      "target": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target",
+      "deadlineSeconds": 0.3,
+      "initial_free_bytes": 57195429888,
+      "root_lock_before": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "monotonic_start_ns": 368054078729041,
+      "wall_start_ns": 1791890949492282000,
+      "storage_samples": [
+        {
+          "elapsed_seconds": 0.003005333011969924,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.035928042023442686,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.07143537502270192,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.10575954202795401,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.13874445797409862,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.1788053329801187,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.21703008300391957,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.25518866698257625,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.29221212497213855,
+          "free_bytes": 57195421696
+        },
+        {
+          "elapsed_seconds": 0.3273827080265619,
+          "free_bytes": 57195421696
+        }
+      ],
+      "cleanup_observations": [
+        {
+          "cleanupInspection": {
+            "state": "live",
+            "members": [
+              {
+                "pid": 54558,
+                "ppid": 54543,
+                "pgid": 54558,
+                "kernel_start": "Tue Oct 13 04:29:09 2026",
+                "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+              }
+            ]
+          },
+          "phase": "TERM"
+        },
+        {
+          "signalSent": "TERM",
+          "ownedGroup": 54558,
+          "registeredMembers": [
+            {
+              "pid": 54558,
+              "ppid": 54543,
+              "pgid": 54558,
+              "kernel_start": "Tue Oct 13 04:29:09 2026",
+              "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+              "binary_sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599"
+            }
+          ]
+        },
+        {
+          "cleanupInspection": {
+            "state": "live",
+            "members": [
+              {
+                "pid": 54558,
+                "ppid": 54543,
+                "pgid": 54558,
+                "kernel_start": "Tue Oct 13 04:29:09 2026",
+                "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python"
+              }
+            ]
+          },
+          "phase": "KILL"
+        },
+        {
+          "signalSent": "KILL",
+          "ownedGroup": 54558,
+          "registeredMembers": [
+            {
+              "pid": 54558,
+              "ppid": 54543,
+              "pgid": 54558,
+              "kernel_start": "Tue Oct 13 04:29:09 2026",
+              "binary": "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python",
+              "binary_sha256": "e89d60f8ccee9db684801330198797723db2ac378cd53e5cfe523128feb76599"
+            }
+          ]
+        }
+      ],
+      "abort": "deadline15minutes",
+      "errors": [],
+      "cleanup": "exit_verified",
+      "owned_pid": 54558,
+      "owned_process_group": 54558,
+      "exit_code": -9,
+      "elapsed_seconds": 2.4652306669740938,
+      "root_lock_after": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+      "final_free_bytes": 57195360256,
+      "status": "FAIL"
+    },
+    "freshGroupAbsent": true
+  }
+]
