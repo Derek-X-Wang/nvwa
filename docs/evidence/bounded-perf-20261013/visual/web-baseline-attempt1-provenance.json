@@ -1,0 +1,98 @@
+{
+  "status": "VERIFIED",
+  "scope": "First Web baseline attempt screenshot original emitted JPEG and minimal exact completed Cua provenance only; no fresh screenshot or pixel edits",
+  "case": "web-baseline-attempt1",
+  "callId": "call_60bc282db8f742e0a5a9a59a135904b1",
+  "callTimestamp": "2026-10-13T21:07:29.910Z",
+  "completionTimestamp": "2026-10-13T21:07:30.096Z",
+  "outputTimestamp": "2026-10-13T21:07:30.855Z",
+  "completionStatus": "completed",
+  "completionIsError": false,
+  "completionServer": "cua_repl",
+  "completionTool": "js",
+  "runtimeThreadId": "01a128c5-1bff-70a0-bd65-0dfff0529c44",
+  "sourceRolloutId": "01a128c5-1bff-70a0-bd65-0dfff0529c44",
+  "sourceFile": {
+    "path": "/Users/derekxwang/.codex/sessions/2026/10/10/rollout-2026-10-10T19-22-48-01a128c5-1bff-70a0-bd65-0dfff0529c44.jsonl",
+    "dev": 16777232,
+    "ino": 461798785,
+    "snapshotBytes": 192658813,
+    "snapshotMtimeNs": 1791926178561795337,
+    "afterBytes": 192658813,
+    "afterMtimeNs": 1791926178561795337,
+    "requestedTailStart": 184270205,
+    "droppedInitialPartialLineBytes": 857904,
+    "actualTailStart": 185128109,
+    "bytesRead": 7530704,
+    "maxInitialTailBytes": 8388608,
+    "readScope": "Seek-only last 8 MiB snapshot; drop initial partial row; exact selected rows re-read for identity. No earlier/user/unrelated records retained."
+  },
+  "selectedRows": [
+    {
+      "sourceByteOffset": 192226794,
+      "sourceBytes": 769,
+      "rawRowSha256": "5ef7ff04fab640e85ffc312a14ed6c5b65c167d8dbba1a713d93366f07adaf28",
+      "timestamp": "2026-10-13T21:07:29.910Z",
+      "recordType": "response_item",
+      "payloadType": "function_call"
+    },
+    {
+      "sourceByteOffset": 192227563,
+      "sourceBytes": 66360,
+      "rawRowSha256": "c806eaf8065a02977f66ef10dabf0751b8bd4ee3f063d6f972d4cb6eb9053751",
+      "timestamp": "2026-10-13T21:07:30.096Z",
+      "recordType": "event_msg",
+      "payloadType": "item_completed"
+    },
+    {
+      "sourceByteOffset": 192294831,
+      "sourceBytes": 69572,
+      "rawRowSha256": "ea93f68f6566003a5a04a433ad56e09da9ea157e0788157b699ba598fa4a5e8e",
+      "timestamp": "2026-10-13T21:07:30.855Z",
+      "recordType": "response_item",
+      "payloadType": "function_call_output"
+    }
+  ],
+  "arguments": {
+    "code": "nodeRepl.write({case:'web-baseline-attempt1',capture_before_utc:new Date().toISOString()}); await nvPerfWebTab.getScreenshot(); nodeRepl.write({case:'web-baseline-attempt1',capture_after_utc:new Date().toISOString()});",
+    "title": "记录 Web 首次实际角色画面及观察时间"
+  },
+  "clockOutput": {
+    "outputBlockIndex": 1,
+    "rawText": "{\n  case: 'web-baseline-attempt1',\n  capture_before_utc: '2026-10-13T21:07:29.934Z'\n}{\n  case: 'web-baseline-attempt1',\n  capture_after_utc: '2026-10-13T21:07:30.090Z'\n}",
+    "captureBeforeUtc": "2026-10-13T21:07:29.934Z",
+    "captureAfterUtc": "2026-10-13T21:07:30.090Z",
+    "captureBracketSeconds": 0.156
+  },
+  "image": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/web-baseline-attempt1-original.jpg",
+    "mime": "image/jpeg",
+    "bytes": 51587,
+    "sha256": "58f7918f95e3edffd61ea4c46bc8d54d3afa309b44b17e6d8acc9251b10c0188",
+    "width": 1280,
+    "height": 720,
+    "outputImageBlockIndex": 2,
+    "rawDataUrlUtf8Sha256": "6e4848585f3bb9b5060e3c6f439852abe6cf8024be08acea4787b4b398fa534a",
+    "rawBase64AsciiSha256": "2ef49e909a969b2abf4e677bcd256af76931fcd22c48814eda4737ff729ab5bd",
+    "originalDecodedEmittedBytes": true,
+    "reencoded": false,
+    "edited": false,
+    "converted": false,
+    "fileEqualsDecodedOutputImageBytes": true
+  },
+  "trace": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/web-baseline-attempt1-exact-cua.jsonl.gz",
+    "records": 3,
+    "encoding": "gzip mtime=0; exact original call/completion/output source-row bytes",
+    "gzipBytes": 83791,
+    "gzipSha256": "47f87ea67024f2879bc1d43d6eeb72830617a102bebcbe7301415a20b081bccd",
+    "decodedBytes": 136701,
+    "decodedSha256": "51a7d08a885934ab5b5a4e3f8c35db8c92e5cfbe38904be249d27efc52221281"
+  },
+  "limits": [
+    "Capture bracket is a host screenshot observation interval, not first presented-frame time or a performance threshold result.",
+    "Current-case completed getScreenshot output is archived; no other browser UI, user messages, rollout or Downloads JSON retained.",
+    "Source session ID supplied by root and completion thread ID recorded; no older session_meta scan.",
+    "No UI/GPU/Cargo/Git/product edits or future-case polling performed."
+  ]
+}

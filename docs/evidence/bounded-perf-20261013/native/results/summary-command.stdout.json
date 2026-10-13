@@ -1,0 +1,92 @@
+{
+  "output": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/actual-native-summary.json",
+  "sha256": "bbfe72c2f43d852cd8a5951e11544ae78e88e43d0199cae361c6d62d598a51e3",
+  "runs": {
+    "baseline-1": {
+      "pid": 68805,
+      "memory_samples": 115,
+      "first_display": "NOT-RUN accepted baseline has no observer"
+    },
+    "diagnostic-1": {
+      "pid": 70636,
+      "memory_samples": 126,
+      "first_display": {
+        "callback": {
+          "event": "drawable_presented_callback",
+          "pid": 70636,
+          "index": 5,
+          "drawable_id": 4,
+          "presented_host_seconds": 404108.305537458,
+          "valid_presented_time": true,
+          "callback_monotonic_before_ns": 430654057078000,
+          "ca_host_seconds": 404108.305789792,
+          "callback_monotonic_after_ns": 430654057078000,
+          "converted_CLOCK_MONOTONIC_interval_ns": [
+            430654056825666.0,
+            430654056825666.0
+          ]
+        },
+        "prior_dense_callback_indices_zero_time": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "CLOCK_MONOTONIC_interval_ns": [
+          430654056825666.0,
+          430654056825666.0
+        ],
+        "since_external_launch_bracket_seconds": [
+          9.963884666,
+          9.967382666
+        ],
+        "since_external_launch_interval_with_reported_clock_resolution_allowance_seconds": [
+          9.963882664,
+          9.967384668
+        ],
+        "scope": "actual Metal drawable reported onscreen time; skipped prior callbacks; no assertion about displayed content",
+        "valid_display_callback_count": 134,
+        "zero_time_display_callback_count": 4
+      }
+    },
+    "diagnostic-warm": {
+      "pid": 72779,
+      "memory_samples": 104,
+      "first_display": {
+        "callback": {
+          "event": "drawable_presented_callback",
+          "pid": 72779,
+          "index": 2,
+          "drawable_id": 1,
+          "presented_host_seconds": 404144.509429875,
+          "valid_presented_time": true,
+          "callback_monotonic_before_ns": 430690261396000,
+          "ca_host_seconds": 404144.509913792,
+          "callback_monotonic_after_ns": 430690261396000,
+          "converted_CLOCK_MONOTONIC_interval_ns": [
+            430690260912083.0,
+            430690260912083.0
+          ]
+        },
+        "prior_dense_callback_indices_zero_time": [
+          1
+        ],
+        "CLOCK_MONOTONIC_interval_ns": [
+          430690260912083.0,
+          430690260912083.0
+        ],
+        "since_external_launch_bracket_seconds": [
+          1.745523083,
+          1.749541083
+        ],
+        "since_external_launch_interval_with_reported_clock_resolution_allowance_seconds": [
+          1.745521081,
+          1.749543085
+        ],
+        "scope": "actual Metal drawable reported onscreen time; skipped prior callbacks; no assertion about displayed content",
+        "valid_display_callback_count": 137,
+        "zero_time_display_callback_count": 1
+      }
+    }
+  }
+}

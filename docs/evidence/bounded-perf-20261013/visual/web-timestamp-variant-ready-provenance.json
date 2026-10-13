@@ -1,0 +1,99 @@
+{
+  "status": "VERIFIED",
+  "case": "web-timestamp-variant-ready",
+  "callId": "call_5630b3fddb1d4cc284cf54a1b201ce29",
+  "callTimestamp": "2026-10-13T21:28:10.867Z",
+  "completionTimestamp": "2026-10-13T21:28:13.617Z",
+  "completionStatus": "completed",
+  "completionIsError": false,
+  "runtimeThreadId": "01a128c5-1bff-70a0-bd65-0dfff0529c44",
+  "sourceFile": {
+    "path": "/Users/derekxwang/.codex/sessions/2026/10/10/rollout-2026-10-10T19-22-48-01a128c5-1bff-70a0-bd65-0dfff0529c44.jsonl",
+    "dev": 16777232,
+    "ino": 461798785,
+    "snapshotBytes": 195469625,
+    "snapshotMtimeNs": 1791927452051100861,
+    "requestedTailStart": 187081017,
+    "actualTailStart": 187081491,
+    "droppedInitialPartialLineBytes": 474,
+    "bytesRead": 8388134,
+    "maxInitialTailBytes": 8388608,
+    "noOlderHistoryScan": true
+  },
+  "arguments": {
+    "code": "nodeRepl.write({case:'web-timestamp-variant-ready', screenshotBeforeUtc:new Date().toISOString()}); await nvPerfWebTab.getScreenshot(); nodeRepl.write({case:'web-timestamp-variant-ready', screenshotAfterUtc:new Date().toISOString()});",
+    "title": "记录 GPU 对照的真实角色画面"
+  },
+  "ownedPidReportedInActualClockOutput": null,
+  "pidScope": "Root emitted ownedPid and exact getApp target; process identity/lifetime not re-queried by this extractor",
+  "image": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/web-timestamp-variant-ready-original.jpg",
+    "mime": "image/jpeg",
+    "bytes": 51569,
+    "sha256": "35d17805e8858da00fbd764147fd2d7de0f3d91ddd1a75df371c1b0936960851",
+    "width": 1280,
+    "height": 720,
+    "outputBlockIndex": 2,
+    "rawDataUrlUtf8Sha256": "4b2e5f9d9a6d845e861d3549f62333ab7d6f01e8217acf579c9768a7f46923cd",
+    "originalDecodedEmittedBytes": true,
+    "reencoded": false,
+    "converted": false,
+    "edited": false,
+    "fileEqualsDecodedOutputImageBytes": true
+  },
+  "clockOutput": {
+    "outputBlockIndex": 1,
+    "rawText": "{\n  case: 'web-timestamp-variant-ready',\n  screenshotBeforeUtc: '2026-10-13T21:28:12.185Z'\n}{\n  case: 'web-timestamp-variant-ready',\n  screenshotAfterUtc: '2026-10-13T21:28:13.435Z'\n}",
+    "screenshotBeforeUtc": "2026-10-13T21:28:12.185Z",
+    "screenshotAfterUtc": "2026-10-13T21:28:13.435Z",
+    "captureBracketSeconds": 1.25
+  },
+  "trace": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/web-timestamp-variant-ready-exact-cua.jsonl.gz",
+    "records": 3,
+    "encoding": "gzip mtime=0; original exact selected call/completion/output rows",
+    "gzipBytes": 83727,
+    "gzipSha256": "ae599062868658631f088ac28c7a4c18e4d8cc1184605839adefc38e5fb8eaa5",
+    "decodedBytes": 136699,
+    "decodedSha256": "c0605b91803e40750b13957328e27c6adc207f26e687847001c8213020358bfb",
+    "rows": [
+      {
+        "sourceByteOffset": 193635612,
+        "sourceBytes": 773,
+        "rawRowSha256": "e5ac8a71bb790ecb9a833b3660e689c6734ebe8262a541e2510b6a6b4b8e728b",
+        "timestamp": "2026-10-13T21:28:10.867Z",
+        "recordType": "response_item",
+        "payloadType": "function_call"
+      },
+      {
+        "sourceByteOffset": 193637290,
+        "sourceBytes": 66364,
+        "rawRowSha256": "f356a46768f5f5545ed618642f66d3534601633f8a3f99579d27753495829829",
+        "timestamp": "2026-10-13T21:28:13.617Z",
+        "recordType": "event_msg",
+        "payloadType": "item_completed"
+      },
+      {
+        "sourceByteOffset": 193703654,
+        "sourceBytes": 69562,
+        "rawRowSha256": "58505f4f4b66764388f3f0012ebddc8190f8d7bc06a5a6402e4db84867b27c6f",
+        "timestamp": "2026-10-13T21:28:13.773Z",
+        "recordType": "response_item",
+        "payloadType": "function_call_output"
+      }
+    ]
+  },
+  "excludedAttempts": [],
+  "baseline1And2ProtectedUnchanged": {
+    "web-baseline-attempt1-original.jpg": "58f7918f95e3edffd61ea4c46bc8d54d3afa309b44b17e6d8acc9251b10c0188",
+    "web-baseline-attempt1-exact-cua.jsonl.gz": "47f87ea67024f2879bc1d43d6eeb72830617a102bebcbe7301415a20b081bccd",
+    "web-baseline-attempt1-provenance.json": "f6d56e9b1960d79d2a3bf54f83821a18eecec292b1988d3cd6222c295cc47632",
+    "web-baseline-attempt2-original.jpg": "4431364f4cd484591bb2091957fddf46a812ae4c8638b68934a436e8e0f53511",
+    "web-baseline-attempt2-exact-cua.jsonl.gz": "de0394e6e9e29c12aafbbfdae5c883398a9e5ee001506a01e77bed4eac60deb9",
+    "web-baseline-attempt2-provenance.json": "c52f284198a4c1b97d5c7619b5f6dafd88632e5dfd8c6eea1741dc5dc7e66348"
+  },
+  "limits": [
+    "Host capture bracket is an observation bound, not exact first presentation or calibrated browser/Bevy/GPU clock conversion.",
+    "No new UI/GPU capture, tests, builds, private Downloads work or other browser UI retained."
+  ]
+}

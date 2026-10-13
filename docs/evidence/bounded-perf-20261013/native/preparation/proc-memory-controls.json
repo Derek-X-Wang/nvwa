@@ -1,0 +1,39 @@
+{
+  "status": "VERIFIED",
+  "controls": [
+    "real-self-PID-birth",
+    "expected-birth-mismatch-refuses-output",
+    "pid1-rejected",
+    "32MiB-real-page-touch-increases-RSS-and-footprint",
+    "raw-monotonic-bracket",
+    "kernel-reported-lifetime-max"
+  ],
+  "before": {
+    "schema": 1,
+    "pid": 54501,
+    "birth_sec": 1791924198,
+    "birth_usec": 399801,
+    "expected_birth_checked": false,
+    "clock": "host_CLOCK_MONOTONIC_ns",
+    "sample_begin_ns": 427848673307000,
+    "sample_end_ns": 427848673312000,
+    "rss_bytes": 17612800,
+    "physical_footprint_bytes": 9585144,
+    "kernel_lifetime_max_physical_footprint_bytes": 9585144,
+    "rusage_proc_start_mach_abstime_ticks": 9631268270427
+  },
+  "after": {
+    "schema": 1,
+    "pid": 54501,
+    "birth_sec": 1791924198,
+    "birth_usec": 399801,
+    "expected_birth_checked": true,
+    "clock": "host_CLOCK_MONOTONIC_ns",
+    "sample_begin_ns": 427848689411000,
+    "sample_end_ns": 427848689416000,
+    "rss_bytes": 51281920,
+    "physical_footprint_bytes": 43270672,
+    "kernel_lifetime_max_physical_footprint_bytes": 43270672,
+    "rusage_proc_start_mach_abstime_ticks": 9631268270427
+  }
+}

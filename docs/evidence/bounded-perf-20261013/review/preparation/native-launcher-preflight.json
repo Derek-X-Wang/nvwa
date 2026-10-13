@@ -1,0 +1,30 @@
+{
+  "phase": "native launcher targeted final R2 review",
+  "status": "GO for root-controlled bounded native acquisition; actual native GPU/runtime NOT-RUN",
+  "final_freeze_sha256": "a23e3c4db7b6c4bdb969c2351b4058e9ce2c4cef9307947990ae79c4fa1d9111",
+  "launcher_sha256": "cd5f988671a6f21921091a1a1a9a258f4b98629e4763557049227efa56d40372",
+  "resolved_finding": "CPU control now selects actual ps-observed framework Python binary; production exact-executable/birth/session/group guard unchanged. Independent rerun of all6 real CPU controls passed.",
+  "material_findings_remaining": [],
+  "evidence": {
+    "independent-native-launcher-final-controls.json": "063ab0a3dfb1a3000d27f639efb21355763cd5a4773928cac1ba030efae88862",
+    "native-launcher-independent-preflights.json": "14c3527d5de7237420bf719b29e74bd6bf097884d627bbf443d72903e305425d"
+  },
+  "invariants_reviewed": [
+    "explicit Python CLOCK_MONOTONIC matches real C helper bracket; time.monotonic only governs local deadlines and is not used as cross-process anchor",
+    "real direct Popen child in new session/group; PID/executable/birth-qualified registration; unexpected identity blocks signaling",
+    "persistent regular stdout/stderr; actual4MiB per-stream control does not block",
+    "TERM-ignoring real CPU child needs TERM thenKILL; waitpid return and group absence verified",
+    "baseline/candidate binary and resource hashes plus524 accepted inputs independently pass preflight-only path",
+    "at most3 unique native run receipts; original work, benchmark and finite smoke arguments; no signing/Gatekeeper/settings mutation"
+  ],
+  "runtime_conditions": [
+    "root remains sole GUI/GPU controller and rechecks quiescence; native/Web formal runs never overlap",
+    "verify actual app foreground pixels and callback sequence; launch eligibility does not prove UI availability or signature acceptance",
+    "Popen before/after CLOCK_MONOTONIC is a launch interval; retain interval uncertainty when comparing calibrated Metal times",
+    "40s is the guard deadline that initiates cleanup, not a promise of exact process-exit time; helper latency or unknown identity can yield BLOCKED cleanup",
+    "report memory helper sampling and screenshot/log overhead; allocation metrics remain separate",
+    "any actual identity/cleanup error must remain visible and block subsequent formal runs until resolved",
+    "source/binary cohort must remain frozen; final raw timing/capture/process receipt needs post-runtime review"
+  ],
+  "cleanup": "All reviewer-controlled CLI children exited. Fresh exact PIDs/groups66331,66355,66359,66364 absent. Earlier failed-control group62213 also verified absent. No Nvwa/browser/GPU launched; review receipts retained for root."
+}

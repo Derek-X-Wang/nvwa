@@ -1,0 +1,99 @@
+{
+  "status": "VERIFIED",
+  "case": "native-diagnostic-warm",
+  "callId": "call_ef197b671bc7400e9b168438fc316810",
+  "callTimestamp": "2026-10-13T21:30:46.166Z",
+  "completionTimestamp": "2026-10-13T21:30:47.573Z",
+  "completionStatus": "completed",
+  "completionIsError": false,
+  "runtimeThreadId": "01a128c5-1bff-70a0-bd65-0dfff0529c44",
+  "sourceFile": {
+    "path": "/Users/derekxwang/.codex/sessions/2026/10/10/rollout-2026-10-10T19-22-48-01a128c5-1bff-70a0-bd65-0dfff0529c44.jsonl",
+    "dev": 16777232,
+    "ino": 461798785,
+    "snapshotBytes": 195469625,
+    "snapshotMtimeNs": 1791927452051100861,
+    "requestedTailStart": 187081017,
+    "actualTailStart": 187081491,
+    "droppedInitialPartialLineBytes": 474,
+    "bytesRead": 8388134,
+    "maxInitialTailBytes": 8388608,
+    "noOlderHistoryScan": true
+  },
+  "arguments": {
+    "code": "nvPerfNativeDiagnosticApp=await cua.getApp('/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app'); nodeRepl.write({case:'native-diagnostic-warm',ownedPid:72779,screenshotBeforeUtc:new Date().toISOString()}); await nvPerfNativeDiagnosticApp.getScreenshot(); nodeRepl.write({case:'native-diagnostic-warm',screenshotAfterUtc:new Date().toISOString()});",
+    "title": "记录重复原生启动的真实画面"
+  },
+  "ownedPidReportedInActualClockOutput": 72779,
+  "pidScope": "Root emitted ownedPid and exact getApp target; process identity/lifetime not re-queried by this extractor",
+  "image": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-warm-original.jpg",
+    "mime": "image/jpeg",
+    "bytes": 92142,
+    "sha256": "8ca7ada083b77fea0725efefd3201ce16a46e7b744435ac424683a5d01627980",
+    "width": 1280,
+    "height": 784,
+    "outputBlockIndex": 3,
+    "rawDataUrlUtf8Sha256": "9dd792d077584d2a2ac3db4243c0defbbe4455aa254098ece5b1aefd063404ae",
+    "originalDecodedEmittedBytes": true,
+    "reencoded": false,
+    "converted": false,
+    "edited": false,
+    "fileEqualsDecodedOutputImageBytes": true
+  },
+  "clockOutput": {
+    "outputBlockIndex": 2,
+    "rawText": "{\n  case: 'native-diagnostic-warm',\n  ownedPid: 72779,\n  screenshotBeforeUtc: '2026-10-13T21:30:47.025Z'\n}{\n  case: 'native-diagnostic-warm',\n  screenshotAfterUtc: '2026-10-13T21:30:47.566Z'\n}",
+    "screenshotBeforeUtc": "2026-10-13T21:30:47.025Z",
+    "screenshotAfterUtc": "2026-10-13T21:30:47.566Z",
+    "captureBracketSeconds": 0.541
+  },
+  "trace": {
+    "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/visual-provenance/native-diagnostic-warm-exact-cua.jsonl.gz",
+    "records": 3,
+    "encoding": "gzip mtime=0; original exact selected call/completion/output rows",
+    "gzipBytes": 114794,
+    "gzipSha256": "fc3236e1e3e4e3fda3dc54f9ca65626250c194b503957da07c9ac0e98bfe5a2a",
+    "decodedBytes": 191533,
+    "decodedSha256": "73932fead01ae9010812625aa86a8165352989e3ee3b1793e1060ba17a4e17f8",
+    "rows": [
+      {
+        "sourceByteOffset": 194767926,
+        "sourceBytes": 941,
+        "rawRowSha256": "7c0e0eeeeae533d010668ccc1090bdb9361450bd2865a29edaae9eb19eec0ff8",
+        "timestamp": "2026-10-13T21:30:46.166Z",
+        "recordType": "response_item",
+        "payloadType": "function_call"
+      },
+      {
+        "sourceByteOffset": 194769773,
+        "sourceBytes": 66532,
+        "rawRowSha256": "1b5e77976d6c7a31d48c0a2e67134a28b4beacef3c9cd5f823bf6959edff03f4",
+        "timestamp": "2026-10-13T21:30:47.573Z",
+        "recordType": "event_msg",
+        "payloadType": "item_completed"
+      },
+      {
+        "sourceByteOffset": 194836305,
+        "sourceBytes": 124060,
+        "rawRowSha256": "55eee49119c2c2c2cbf952c9307c35e504a8d1022186bc6398169298c1845875",
+        "timestamp": "2026-10-13T21:30:47.636Z",
+        "recordType": "response_item",
+        "payloadType": "function_call_output"
+      }
+    ]
+  },
+  "excludedAttempts": [],
+  "baseline1And2ProtectedUnchanged": {
+    "web-baseline-attempt1-original.jpg": "58f7918f95e3edffd61ea4c46bc8d54d3afa309b44b17e6d8acc9251b10c0188",
+    "web-baseline-attempt1-exact-cua.jsonl.gz": "47f87ea67024f2879bc1d43d6eeb72830617a102bebcbe7301415a20b081bccd",
+    "web-baseline-attempt1-provenance.json": "f6d56e9b1960d79d2a3bf54f83821a18eecec292b1988d3cd6222c295cc47632",
+    "web-baseline-attempt2-original.jpg": "4431364f4cd484591bb2091957fddf46a812ae4c8638b68934a436e8e0f53511",
+    "web-baseline-attempt2-exact-cua.jsonl.gz": "de0394e6e9e29c12aafbbfdae5c883398a9e5ee001506a01e77bed4eac60deb9",
+    "web-baseline-attempt2-provenance.json": "c52f284198a4c1b97d5c7619b5f6dafd88632e5dfd8c6eea1741dc5dc7e66348"
+  },
+  "limits": [
+    "Host capture bracket is an observation bound, not exact first presentation or calibrated browser/Bevy/GPU clock conversion.",
+    "No new UI/GPU capture, tests, builds, private Downloads work or other browser UI retained."
+  ]
+}

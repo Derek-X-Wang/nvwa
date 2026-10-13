@@ -1,0 +1,18 @@
+{
+  "phase": "native launcher preflight",
+  "status": "HOLD pending corrected actual-process controls on final source",
+  "severity": "P2",
+  "finding": "Final executable guard rejects the CPU control Python launcher shim; stubborn child is left BLOCKED until its natural10s exit. Current final-source lifecycle controls therefore fail.",
+  "source": "experiments/33-native-present-metrics/launch_owned_native.py:77",
+  "control": "experiments/33-native-present-metrics/test_launch_owned_native.py:18",
+  "invariant": "Do not claim bounded TERM/KILL cleanup verified unless the actual final guarded process path completes the control. Preserve exact native executable, birth, session and process group checks.",
+  "counterexample": "Python argv executable resolves to Frameworks/Python.framework/Versions/3.14/bin/python3.14, but ps comm identifies Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python.",
+  "required_action": "Original implementer should correct control executable selection or otherwise account for the proven shim, preserving exact production executable guard; rerun bounded controls and freeze changes.",
+  "limits": "Failure does not prove direct Nvwa bundle binary would mismatch. Immutable Rust/Metal probe GO and Web preflight GO remain unchanged. No native app/GPU launched.",
+  "cleanup": "All4 review CPU child PIDs/groups absent after natural exit; no signal workaround applied.",
+  "evidence": {
+    "independent-native-launcher-controls.json": "2ec79a8971834d5d7b1fa68728092286723ce165cd2996720f2222b83f7a99a3",
+    "native-executable-guard-counterexample.json": "70b8ccc43374677d17a7e1874c015530a109113c807f94d518c67085614fbf8b",
+    "native-launcher-control-cleanup.json": "ca53e1805c16f31e03096371e29c3c5b600b69d9b3f02411a500de095017a315"
+  }
+}

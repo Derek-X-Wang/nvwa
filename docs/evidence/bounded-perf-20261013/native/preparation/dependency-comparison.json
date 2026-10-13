@@ -1,0 +1,65 @@
+{
+  "common_package_count": 524,
+  "differences": [
+    {
+      "name": "wgpu-hal",
+      "version": "29.0.4",
+      "baseline": {
+        "features": [
+          "dx12",
+          "fragile-send-sync-non-atomic-wasm",
+          "metal",
+          "portable-atomic",
+          "renderdoc",
+          "vulkan"
+        ],
+        "source": "registry+https://github.com/rust-lang/crates.io-index"
+      },
+      "candidate": {
+        "features": [
+          "dx12",
+          "fragile-send-sync-non-atomic-wasm",
+          "metal",
+          "portable-atomic",
+          "renderdoc",
+          "vulkan"
+        ],
+        "source": null
+      }
+    }
+  ],
+  "versions": {
+    "bevy": [
+      "0.19.1"
+    ],
+    "bevy_render": [
+      "0.19.1"
+    ],
+    "wgpu": [
+      "29.0.4"
+    ],
+    "wgpu-hal": [
+      "29.0.4"
+    ],
+    "objc2-metal": [
+      "0.2.2",
+      "0.3.2"
+    ],
+    "objc2-quartz-core": [
+      "0.2.2",
+      "0.3.2"
+    ]
+  },
+  "candidate_extra_packages": [
+    [
+      "nvwa-native-present-metrics",
+      "0.1.0"
+    ]
+  ],
+  "baseline_only_packages": [
+    [
+      "nvwa-cli",
+      "0.1.0"
+    ]
+  ]
+}

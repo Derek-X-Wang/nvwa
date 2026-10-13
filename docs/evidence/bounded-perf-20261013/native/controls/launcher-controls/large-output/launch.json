@@ -1,0 +1,87 @@
+{
+  "event": "before_launch",
+  "CLOCK_MONOTONIC_ns": 402258417025875,
+  "wall_UTC_ISO": "2026-10-13T20:59:13.976314+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-c",
+    "import sys; sys.stdout.write(\"A\"*4194304); sys.stderr.write(\"B\"*4194304)"
+  ],
+  "environment_override_names": [],
+  "heavy_inventory": {
+    "status": "OBSERVED",
+    "rows": [
+      {
+        "pid": 10972,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 4496,
+        "executable_basename": "Google Chrome Helper (Renderer)"
+      },
+      {
+        "pid": 22981,
+        "ppid": 22980,
+        "cpu_percent": 19.0,
+        "rss_KiB": 161280,
+        "executable_basename": "cargo"
+      },
+      {
+        "pid": 23040,
+        "ppid": 22981,
+        "cpu_percent": 31.9,
+        "rss_KiB": 159872,
+        "executable_basename": "rustc"
+      },
+      {
+        "pid": 23041,
+        "ppid": 22981,
+        "cpu_percent": 31.6,
+        "rss_KiB": 173760,
+        "executable_basename": "rustc"
+      },
+      {
+        "pid": 39916,
+        "ppid": 39858,
+        "cpu_percent": 0.0,
+        "rss_KiB": 22400,
+        "executable_basename": "Google Chrome"
+      },
+      {
+        "pid": 40222,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 11808,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40223,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 7728,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40225,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 4192,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 40332,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 6224,
+        "executable_basename": "Google Chrome Helper"
+      },
+      {
+        "pid": 81508,
+        "ppid": 39916,
+        "cpu_percent": 0.0,
+        "rss_KiB": 7872,
+        "executable_basename": "Google Chrome Helper"
+      }
+    ],
+    "scope": "selected names or CPU>=50; no proof of all GPU contention"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "phase": "Web pre-runtime independent R2 review",
+  "status": "GO for root-controlled bounded Web acquisition; actual browser/GPU runtime NOT-RUN",
+  "material_findings": [],
+  "freeze": ".work/m11-perf/web/preparation-freeze-r2-doc.json",
+  "freeze_sha256": "0c5f1c0f6396a176463f3e120d50f77a5fd9e1dadccd5def5445635e8927a9eb",
+  "functional_parent": ".work/m11-perf/web/preparation-freeze-r2.json",
+  "functional_parent_sha256": "78a2c3cc19e6cdf31ec44cc2e068d1fd21bc1504dbd6d5852c93a7bda24cc1a2",
+  "source_count": 8,
+  "source_mismatches": [],
+  "doc_only_changed": [
+    "experiments/34-web-cold-metrics/README.md"
+  ],
+  "readme_sha256": "c4fd126681e7ec480c51b9960030b85bd4b7b4413e25eeef861f908ae0ea9a9f",
+  "doc_review": "README now correctly separates completed ephemeral CPU listener from unrun formal9201/9205 listener and browser/GPU runs.",
+  "independent_controls": {
+    "receipt": ".work/m11-perf/review/independent-web-r2-controls.json",
+    "sha256": "6938ae68388c7804d7da7d0361fae10741a76b5a3a347c2ac2629fe4956f3a03",
+    "Python": "18 tests PASS, including real partial-body408 after5s and following valid201; joined listener/handler/timer threads",
+    "Node": "wrapper forwarding, fake tick arithmetic, unavailable feature and bounded lifecycle PASS; no GPU"
+  },
+  "invariants_reviewed": [
+    "same-origin exact capture route, exclusive evidence file and bounded Content-Length",
+    "5s socket and total read deadline; max16 handlers and256 accepted requests; shutdown joins handlers",
+    "baseline preserves production arguments/receiver/promise/throw semantics; no extra device or submit",
+    "variant uses actual production pass timestampWrites plus resolve/copy/map; max32 passes/8 encoders; no extra submit",
+    "raw source/artifact/Work/HTTP body identity reconciliation; wrong geometry/clock/milestone/display claims reject",
+    "doc lineage reuses unchanged CPU receipts without pretending a repeated runtime test"
+  ],
+  "limits": [
+    "root controls maximum3 combined navigations across both servers and ensures one formal GPU run at a time",
+    "timestamp variant is separately identified intrusive startup-pass sampling; no steady idle or whole-frame claim",
+    "HTTP no-store/fresh prefix is only HTTP boundary; Wasm/shader/driver/OS/process cold and physical first display unproven",
+    "actual feature/device/validation/map results, captured character pixels, production NVWA_EVIDENCE and final raw packet require post-runtime review",
+    "JS heap is optional browser-exposed subset, not browser RSS/complete Wasm/GPU memory",
+    "keep canonical30s posted snapshot; later snapshots include the diagnostic POST and cannot silently replace HTTP reconciliation input"
+  ],
+  "cleanup": "Independent CPU suite process and ephemeral listener/handler/timer threads exited; Node process exited. No formal server/browser/GPU created; retained review receipts owned by root."
+}

@@ -1,0 +1,206 @@
+{
+  "baseline": {
+    "status": "PASS",
+    "archive_files": 186,
+    "accepted_product_inputs": 524,
+    "experiment_sources": 29,
+    "scope": "exact archived bytes/source cohort; measurement meaning reviewed separately"
+  },
+  "mutations": [
+    {
+      "case": "wrong_archived_sha256",
+      "rejected": true,
+      "exception": "AssertionError",
+      "message": "common/baseline-identities.json"
+    },
+    {
+      "case": "missing_inventory_member",
+      "rejected": true,
+      "exception": "AssertionError",
+      "message": "unlisted or missing archive file"
+    },
+    {
+      "case": "duplicate_archived_path",
+      "rejected": true,
+      "exception": "AssertionError",
+      "message": "duplicate archived paths"
+    },
+    {
+      "case": "wrong_accepted_product_blob",
+      "rejected": true,
+      "exception": "AssertionError",
+      "message": ".github/workflows/ci.yml"
+    },
+    {
+      "case": "missing_524th_product_input",
+      "rejected": true,
+      "exception": "AssertionError",
+      "message": ""
+    },
+    {
+      "case": "escaping_experiment_path",
+      "rejected": true,
+      "exception": "AssertionError",
+      "message": "experiments/33-native-present-metrics/../../Cargo.toml"
+    },
+    {
+      "case": "unsafe_path_../manifest.json",
+      "rejected": true
+    },
+    {
+      "case": "unsafe_path_/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/docs/evidence/bounded-perf-20261013/manifest.json",
+      "rejected": true
+    }
+  ],
+  "restored": {
+    "status": "PASS",
+    "archive_files": 186,
+    "accepted_product_inputs": 524,
+    "experiment_sources": 29,
+    "scope": "exact archived bytes/source cohort; measurement meaning reviewed separately"
+  },
+  "mutation_method": "Injected only manifest bytes into actual verifier file_bytes seam in this interpreter; all artifact/source reads genuine; no disk edits outside review/",
+  "protected_unique_paths": 524,
+  "reviewed_files": {
+    "docs/evidence/bounded-perf-20261013/manifest.json": {
+      "sha256": "08c5de19ac1151ab59f98144dc6c8cbcaf84fb1ae9220cf571f434d0b6b2ea17",
+      "bytes": 122507
+    },
+    "docs/evidence/bounded-perf-20261013/verify.py": {
+      "sha256": "e756e1b31dc6fd8dd4e05ccb1d7b64606173bf66956463185a00d323e802b706",
+      "bytes": 2274
+    },
+    "docs/evidence/bounded-perf-20261013/ACCEPTANCE.md": {
+      "sha256": "0746c55eaf94399e57bee25eca42b31600fd0c95bf6027aad69416b5490dd489",
+      "bytes": 8429
+    },
+    "docs/PERFORMANCE.md": {
+      "sha256": "a9417d424b1a220157231fb8fca0e80a6a2b35b50a8997727921b540e466ea96",
+      "bytes": 14092
+    },
+    "docs/ROADMAP.md": {
+      "sha256": "3cec575a8eb9d457ca3b8a301f6df36a0e17d97a5c509aca34b6314ef653b2ac",
+      "bytes": 28164
+    },
+    "docs/EXPERIMENTS.md": {
+      "sha256": "a8af8721ca6f8c808a6b378e296295f8cb901b7415d101d1bb7895a4138826ce",
+      "bytes": 16159
+    },
+    "experiments/33-native-present-metrics/ACTUAL-RESULTS.json": {
+      "sha256": "bbfe72c2f43d852cd8a5951e11544ae78e88e43d0199cae361c6d62d598a51e3",
+      "bytes": 68246
+    },
+    "experiments/33-native-present-metrics/Cargo.lock": {
+      "sha256": "95209820915da83a393057006bfc2ab637839fd354586350082153651900c59d",
+      "bytes": 142579
+    },
+    "experiments/33-native-present-metrics/Cargo.toml": {
+      "sha256": "95d3c5d6c4b850331b7797c1b3623dbc3c2c0bc248ee815e902be1f2a4264df1",
+      "bytes": 517
+    },
+    "experiments/33-native-present-metrics/LAUNCHER.md": {
+      "sha256": "e39274e20c22ea3cbcc7cb6ff71c634fa400ccab922871a976cb791942e3a589",
+      "bytes": 4969
+    },
+    "experiments/33-native-present-metrics/README.md": {
+      "sha256": "16a6ca1d5a34bd4f774364cb6912d4abd53434e4db71204a172efcb2308e66cf",
+      "bytes": 7264
+    },
+    "experiments/33-native-present-metrics/RESULTS.md": {
+      "sha256": "36ca31a6db58863d4182e793d951ba867956f9203a1972fb69878f402a871cad",
+      "bytes": 10372
+    },
+    "experiments/33-native-present-metrics/actual_log_controls.py": {
+      "sha256": "7a4a0e6c94d2132ac2fcda452ee538bf90aa41322b1b41d4481e04a923515000",
+      "bytes": 1923
+    },
+    "experiments/33-native-present-metrics/freeze_candidate.py": {
+      "sha256": "8acb4b6c400aa97cec06aa9048888ed6a7f264b3961d8fbf5f1afbca319951c8",
+      "bytes": 2827
+    },
+    "experiments/33-native-present-metrics/launch_owned_native.py": {
+      "sha256": "cd5f988671a6f21921091a1a1a9a258f4b98629e4763557049227efa56d40372",
+      "bytes": 11979
+    },
+    "experiments/33-native-present-metrics/nvwa_probe.rs": {
+      "sha256": "dd1c1bc34351f92ddb018bf7848c2df138dc51ece5544f9fd5884457ce99e4c9",
+      "bytes": 4375
+    },
+    "experiments/33-native-present-metrics/prepare_vendor.py": {
+      "sha256": "b4b49beddefbca9509f5b61070c484b73c0fcea09b30d7e1268aa5eb5b110a1a",
+      "bytes": 3190
+    },
+    "experiments/33-native-present-metrics/proc_memory.c": {
+      "sha256": "a8c28b8c34a3bfdae4e6869c28a9d8e76c2753dc2bfb5e47a0126e317e2c0f2f",
+      "bytes": 2745
+    },
+    "experiments/33-native-present-metrics/reconcile_native.py": {
+      "sha256": "d26d5d170edf79155276f0b1cb2bfe8a9ada0c5f17683bb5639c537c9a8d2835",
+      "bytes": 3480
+    },
+    "experiments/33-native-present-metrics/src/main.rs": {
+      "sha256": "b878f51f6e166fcc8a947b6171a4db5f1e25396d8003ad40d21e9f221a26f382",
+      "bytes": 5698
+    },
+    "experiments/33-native-present-metrics/summarize_native_results.py": {
+      "sha256": "87ae97d0bc2502a87199fe1d7dd0994561f55082965ae61d7385fa5455ca65c6",
+      "bytes": 10171
+    },
+    "experiments/33-native-present-metrics/test_launch_owned_native.py": {
+      "sha256": "e50be05f2bd422c4b204a1a72365dcb9ea1f8527f714646187ddedad01264ae8",
+      "bytes": 2426
+    },
+    "experiments/33-native-present-metrics/test_proc_memory.py": {
+      "sha256": "3a012f6ea99edca26062858fe074b10166f791fb688b0a9688d9708da4ef592b",
+      "bytes": 1721
+    },
+    "experiments/33-native-present-metrics/test_reconcile_native.py": {
+      "sha256": "6c97f2c5b505040ac35adf1d9c4b3e79b48165fa85346a030a752b03061bdace",
+      "bytes": 2562
+    },
+    "experiments/33-native-present-metrics/wgpu-hal-metal-probe.patch": {
+      "sha256": "201da53fdcba8dfb4aec64c23b014b3635f589c70b20a88f44e1289490d66d82",
+      "bytes": 5856
+    },
+    "experiments/34-web-cold-metrics/ACTUAL-WEB-RESULT.json": {
+      "sha256": "8a15d40eb644697336b2f8f5b994fef0e2eb4c43af5940ff21df938006ad1d8b",
+      "bytes": 63965
+    },
+    "experiments/34-web-cold-metrics/README.md": {
+      "sha256": "c4fd126681e7ec480c51b9960030b85bd4b7b4413e25eeef861f908ae0ea9a9f",
+      "bytes": 9203
+    },
+    "experiments/34-web-cold-metrics/RESULTS.md": {
+      "sha256": "ecbd23df0129a2e77e99b5cf9af0f9f2cd96cedf6f7c8d45ade396999f80e2dd",
+      "bytes": 11056
+    },
+    "experiments/34-web-cold-metrics/check_metrics.py": {
+      "sha256": "c855581cb2d00394e003303341d3dce1cf10a10ecc4ee413a3438a5c033c29c2",
+      "bytes": 15993
+    },
+    "experiments/34-web-cold-metrics/collector.js": {
+      "sha256": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+      "bytes": 4756
+    },
+    "experiments/34-web-cold-metrics/gpu-boundaries.js": {
+      "sha256": "0dbe942109ae593e4910468e6f3c91dab339b668428d5f25cbaa5ee09873377b",
+      "bytes": 4861
+    },
+    "experiments/34-web-cold-metrics/server.py": {
+      "sha256": "114d407f5c5ff91dc21bba6b238851b60f31594a4135dd5bafb908d454343133",
+      "bytes": 11865
+    },
+    "experiments/34-web-cold-metrics/test_metrics.py": {
+      "sha256": "a93eb17dd79fcc9c1807b586a9d64c2560ff282950dce4452a08a21061afb194",
+      "bytes": 16984
+    },
+    "experiments/34-web-cold-metrics/test_wrappers.mjs": {
+      "sha256": "99f6ed2458652deb017f8b79590132ad34b3ef329adefd9ca956281581d2442a",
+      "bytes": 6361
+    },
+    "experiments/34-web-cold-metrics/timestamp-variant.js": {
+      "sha256": "a99b727ff9bc7ce778882df27a9eeaaf4e457b3316354e6a551407a561d134f6",
+      "bytes": 6679
+    }
+  }
+}

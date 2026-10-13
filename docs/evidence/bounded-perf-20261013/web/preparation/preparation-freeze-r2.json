@@ -1,0 +1,149 @@
+{
+  "status": "PREPARED_NOT_RUNTIME",
+  "lineage": {
+    "path": ".work/m11-perf/web/preparation-freeze.json",
+    "sha256": "56af60196f8600435cfee1632774ba46991b4d6e7ace3c9b23f964b42a755d20",
+    "change": "root-requested real HTTP receiver5s deadline/caps/negativecontrols"
+  },
+  "sourceFiles": {
+    "experiments/34-web-cold-metrics/README.md": {
+      "sha256": "aadd817538e0021bde3beec138d1bb18eed057f162eb8fa99d1a24f919e44d24",
+      "bytes": 9092
+    },
+    "experiments/34-web-cold-metrics/check_metrics.py": {
+      "sha256": "63229105c914ae6d1b2bd4b6b10c1c384566f9266dad21fcf10eeaf0f0783bb5",
+      "bytes": 10799
+    },
+    "experiments/34-web-cold-metrics/collector.js": {
+      "sha256": "86b0dcd5d4d52584964b76f7f646cdc31fe30b00e52e151d863660005675b9b0",
+      "bytes": 4756
+    },
+    "experiments/34-web-cold-metrics/gpu-boundaries.js": {
+      "sha256": "0dbe942109ae593e4910468e6f3c91dab339b668428d5f25cbaa5ee09873377b",
+      "bytes": 4861
+    },
+    "experiments/34-web-cold-metrics/server.py": {
+      "sha256": "114d407f5c5ff91dc21bba6b238851b60f31594a4135dd5bafb908d454343133",
+      "bytes": 11865
+    },
+    "experiments/34-web-cold-metrics/test_metrics.py": {
+      "sha256": "926aeca1d8e7ae5a122cac8005fa702f6036f51d148b5056b55b3030ac5a2d87",
+      "bytes": 12247
+    },
+    "experiments/34-web-cold-metrics/test_wrappers.mjs": {
+      "sha256": "99f6ed2458652deb017f8b79590132ad34b3ef329adefd9ca956281581d2442a",
+      "bytes": 6361
+    },
+    "experiments/34-web-cold-metrics/timestamp-variant.js": {
+      "sha256": "a99b727ff9bc7ce778882df27a9eeaaf4e457b3316354e6a551407a561d134f6",
+      "bytes": 6679
+    }
+  },
+  "cpuControls": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/34-web-cold-metrics",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "test_baseline_cannot_hide_variant (test_metrics.Controls.test_baseline_cannot_hide_variant) ... ok\ntest_claiming_display_from_submit_red (test_metrics.Controls.test_claiming_display_from_submit_red) ... ok\ntest_future_timestamp_red (test_metrics.Controls.test_future_timestamp_red) ... ok\ntest_missing_milestone_red (test_metrics.Controls.test_missing_milestone_red) ... ok\ntest_mixed_clock_red (test_metrics.Controls.test_mixed_clock_red) ... ok\ntest_outside_origin_red (test_metrics.Controls.test_outside_origin_red) ... ok\ntest_resource_byte_mismatch_red (test_metrics.Controls.test_resource_byte_mismatch_red) ... ok\ntest_same_url_contrast_only_once (test_metrics.Controls.test_same_url_contrast_only_once) ... ok\ntest_uninstalled_hook_red (test_metrics.Controls.test_uninstalled_hook_red) ... ok\ntest_unknown_collector_source_red (test_metrics.Controls.test_unknown_collector_source_red) ... ok\ntest_valid_synthetic_body_reconciliation (test_metrics.Controls.test_valid_synthetic_body_reconciliation) ... ok\ntest_variant_missing_rejected (test_metrics.Controls.test_variant_missing_rejected) ... ok\ntest_wrong_glb_size_red (test_metrics.Controls.test_wrong_glb_size_red) ... ok\ntest_wrong_physical_geometry_red (test_metrics.Controls.test_wrong_physical_geometry_red) ... ok\ntest_wrong_wasm_source_red (test_metrics.Controls.test_wrong_wasm_source_red) ... ok\ntest_wrong_work_body_red (test_metrics.Controls.test_wrong_work_body_red) ... ok\ntest_wrong_work_query_red (test_metrics.Controls.test_wrong_work_query_red) ... ok\ntest_actual_http_partial_timeout_then_valid_and_rejects (test_metrics.ReceiverControls.test_actual_http_partial_timeout_then_valid_and_rejects)\nReal ephemeral TCP boundary. No app/browser/GPU; all threads joined. ... ok\n\n----------------------------------------------------------------------\nRan 18 tests in 6.274s\n\nOK\n"
+    },
+    {
+      "argv": [
+        "node",
+        "experiments/34-web-cold-metrics/test_wrappers.mjs"
+      ],
+      "exit": 0,
+      "stdout": "PASS CPU wrapper preservation, unavailable-feature path, fake tick arithmetic, lifecycle and boundedness; GPU NOT-RUN\n",
+      "stderr": ""
+    }
+  ],
+  "receiverControls": {
+    "kind": "actual ephemeral TCP receiver control; not browser/GPU",
+    "ownedPid": 85838,
+    "bind": "127.0.0.1",
+    "ephemeralPort": 54913,
+    "acceptedRequests": 6,
+    "receiverRows": [
+      {
+        "status": 409,
+        "runId": "b93fb7ebf24649fd8ff33169ab543061",
+        "member": "capture.json",
+        "attempt": 1,
+        "declaredBytes": 512001,
+        "reason": "bounded Content-Length required",
+        "disconnected": null,
+        "elapsedMs": 0.7618750096298754,
+        "socketReadTimeoutSeconds": 5
+      },
+      {
+        "status": 409,
+        "runId": "b93fb7ebf24649fd8ff33169ab543061",
+        "member": "capture.json",
+        "attempt": 1,
+        "declaredBytes": null,
+        "reason": "same-origin browser capture required",
+        "disconnected": null,
+        "elapsedMs": 0.10195799404755235,
+        "socketReadTimeoutSeconds": 5
+      },
+      {
+        "status": 409,
+        "runId": "b93fb7ebf24649fd8ff33169ab543061",
+        "member": "capture.json",
+        "attempt": 1,
+        "declaredBytes": 0,
+        "reason": "bounded Content-Length required",
+        "disconnected": null,
+        "elapsedMs": 0.09433302329853177,
+        "socketReadTimeoutSeconds": 5
+      },
+      {
+        "status": 408,
+        "runId": "b93fb7ebf24649fd8ff33169ab543061",
+        "member": "capture.json",
+        "attempt": 1,
+        "declaredBytes": 100,
+        "reason": "five-second socket-read deadline",
+        "disconnected": null,
+        "elapsedMs": 5001.34416599758,
+        "socketReadTimeoutSeconds": 5
+      },
+      {
+        "status": 409,
+        "runId": "b93fb7ebf24649fd8ff33169ab543061",
+        "member": "capture.json",
+        "attempt": 1,
+        "declaredBytes": 100,
+        "reason": "incomplete capture",
+        "disconnected": null,
+        "elapsedMs": 0.2033329801633954,
+        "socketReadTimeoutSeconds": 5
+      },
+      {
+        "status": 201,
+        "runId": "b93fb7ebf24649fd8ff33169ab543061",
+        "member": "capture.json",
+        "attempt": 1,
+        "declaredBytes": 96,
+        "reason": null,
+        "disconnected": null,
+        "elapsedMs": 0.7206249865703285,
+        "socketReadTimeoutSeconds": 5
+      }
+    ],
+    "validPayloadSha256": "34a2e74ed85e9552540b6063cdb1a7836d47acde132f7810e5e69ba50c349f71",
+    "validPayloadBytes": 96,
+    "lifecycle": "listener closed; server, handler and deadline threads joined"
+  },
+  "runtime": "NOT-RUN: no formal server/browser/GPU lease",
+  "lifecycle": "read-only Cua inventory lease returned; ephemeral CPU HTTP listener and all owned threads closed/joined"
+}

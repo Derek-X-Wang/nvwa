@@ -1,0 +1,40 @@
+[
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "experiments/33-native-present-metrics/launch_owned_native.py",
+      "--variant",
+      "baseline",
+      "--run-name",
+      "review-preflight-baseline",
+      "--hold-seconds",
+      "30",
+      "--deadline",
+      "40",
+      "--preflight-only"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"variant\": \"baseline\",\n  \"bundle\": \"/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/Nvwa.app\",\n  \"bundle_id\": \"dev.nvwa.studio\",\n  \"Info_plist_sha256\": \"5fde8e504b4aa78d69949c86a5a169c06c80619780efaaebdeaddda815786f55\",\n  \"executable\": \"/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/dist/Nvwa.app/Contents/MacOS/Nvwa\",\n  \"binary_sha256\": \"72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a\",\n  \"proc_memory\": {\n    \"path\": \"/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/proc-memory\",\n    \"sha256\": \"94c9af359f3675588cc924f7f49337c19122b4af7ac55726494fb39dd8140c40\"\n  },\n  \"work\": \"/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/input/character-loop.nvwa.json\",\n  \"work_sha256\": \"ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445\",\n  \"source_freeze_sha256\": \"e0c8a42f724123d6bca04507e9c23a3b7d41d686686d8de02c93a0429d6b9851\",\n  \"source_inputs_compared\": 19,\n  \"accepted_main_inputs_compared\": 524,\n  \"assets_compared\": 9\n}\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "experiments/33-native-present-metrics/launch_owned_native.py",
+      "--variant",
+      "diagnostic",
+      "--run-name",
+      "review-preflight-diagnostic",
+      "--hold-seconds",
+      "30",
+      "--deadline",
+      "40",
+      "--preflight-only"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"variant\": \"diagnostic\",\n  \"bundle\": \"/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app\",\n  \"bundle_id\": \"dev.nvwa.perf.native-diagnostic\",\n  \"Info_plist_sha256\": \"1fd679f73fbc92a2759a28091811f27356f7a279ee3e0dfc723e7ad6691671dd\",\n  \"executable\": \"/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/NvwaPresentMetrics.app/Contents/MacOS/Nvwa\",\n  \"binary_sha256\": \"31999ece7a4b74875ac254eb15ebb8fad08e73e8880ca8a3fbd68c5026af8a6c\",\n  \"proc_memory\": {\n    \"path\": \"/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/native/proc-memory\",\n    \"sha256\": \"94c9af359f3675588cc924f7f49337c19122b4af7ac55726494fb39dd8140c40\"\n  },\n  \"work\": \"/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-perf/input/character-loop.nvwa.json\",\n  \"work_sha256\": \"ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445\",\n  \"source_freeze_sha256\": \"e0c8a42f724123d6bca04507e9c23a3b7d41d686686d8de02c93a0429d6b9851\",\n  \"source_inputs_compared\": 19,\n  \"accepted_main_inputs_compared\": 524,\n  \"assets_compared\": 9\n}\n",
+    "stderr": ""
+  }
+]

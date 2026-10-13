@@ -1,0 +1,79 @@
+{
+  "native": {
+    "baseline-1": {
+      "memory_samples": 115,
+      "PID_birth_exact": true,
+      "exit_status": "EXIT-VERIFIED",
+      "exit_code": 0,
+      "no_inspection_errors": true
+    },
+    "diagnostic-1": {
+      "memory_samples": 126,
+      "PID_birth_exact": true,
+      "exit_status": "EXIT-VERIFIED",
+      "exit_code": 0,
+      "no_inspection_errors": false,
+      "first_valid_index": 5,
+      "prior_zero_indices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "display_after_launch_seconds": [
+        9.963882664,
+        9.967384668
+      ],
+      "submitted_gpu_ms": {
+        "count": 134,
+        "min": 0.0,
+        "median": 0.008895498467609286,
+        "p95_nearest_rank": 0.5377500201575458,
+        "max": 14.777833013795316
+      }
+    },
+    "diagnostic-warm": {
+      "memory_samples": 104,
+      "PID_birth_exact": true,
+      "exit_status": "EXIT-VERIFIED",
+      "exit_code": 0,
+      "no_inspection_errors": false,
+      "first_valid_index": 2,
+      "prior_zero_indices": [
+        1
+      ],
+      "display_after_launch_seconds": [
+        1.745521081,
+        1.749543085
+      ],
+      "submitted_gpu_ms": {
+        "count": 134,
+        "min": 0.0,
+        "median": 0.00825000461190939,
+        "p95_nearest_rank": 0.38174999644979835,
+        "max": 9.128875040914863
+      }
+    }
+  },
+  "web": [
+    {
+      "case": "baseline-http-first",
+      "total_body_bytes": 20571754,
+      "gpu_timestamp_status": "NOT-RUN",
+      "heap_samples": 30
+    },
+    {
+      "case": "same-browser-tab-url-contrast-after-blank",
+      "total_body_bytes": 20571735,
+      "gpu_timestamp_status": "NOT-RUN",
+      "heap_samples": 30
+    },
+    {
+      "case": "timestamp-diagnostic-variant",
+      "total_body_bytes": 20578415,
+      "gpu_timestamp_status": "NOT-RUN",
+      "heap_samples": 30
+    }
+  ],
+  "mismatches": []
+}

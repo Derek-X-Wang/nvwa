@@ -1,0 +1,16 @@
+{
+  "scope": "STATIC ONLY; callbacks/GPU/native display NOT-RUN",
+  "checks": {
+    "modified_existing_files_exact": true,
+    "new_files_exact": true,
+    "original_crate_hashes_match": true,
+    "vendor_patch_hashes_match": true,
+    "observer_source_copy_exact": true
+  },
+  "modified_existing_files": [
+    "src/metal/mod.rs"
+  ],
+  "new_files": [
+    "src/metal/nvwa_probe.rs"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "status": "VERIFIED CPU CLI controls; native/GPU NOT-RUN",
+  "results": [
+    {
+      "name": "empty",
+      "status": "EXIT-VERIFIED",
+      "pid": 23036,
+      "exit_code": 0,
+      "elapsed_seconds": 0.2887805830105208
+    },
+    {
+      "name": "failed",
+      "status": "EXIT-VERIFIED",
+      "pid": 23042,
+      "exit_code": 7,
+      "elapsed_seconds": 0.31067666702438146
+    },
+    {
+      "name": "large-output",
+      "status": "EXIT-VERIFIED",
+      "pid": 23073,
+      "exit_code": 0,
+      "elapsed_seconds": 0.3288707089959644
+    },
+    {
+      "name": "stubborn-hang",
+      "status": "EXIT-VERIFIED",
+      "pid": 23079,
+      "exit_code": -9,
+      "elapsed_seconds": 1.7753207079949789
+    },
+    {
+      "name": "actual-self-birth-mismatch",
+      "status": "REJECTED"
+    }
+  ],
+  "background_helpers_remaining": false
+}
