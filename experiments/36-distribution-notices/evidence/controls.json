@@ -1,0 +1,242 @@
+{
+  "status": "VERIFIED",
+  "controls": [
+    {
+      "name": "baseline-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "missing-font-OFL-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/controls-primary-final/missing-font-OFL"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "missing required file",
+      "passed": true,
+      "stdout_sha256": "a334a0661ff225dcc003998bca7202260bacc7937c1283069a13c70dcace9feb"
+    },
+    {
+      "name": "missing-font-OFL-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "altered-craft-notice-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/controls-primary-final/altered-craft-notice"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "altered required file",
+      "passed": true,
+      "stdout_sha256": "633a0c7a50c7dd0bf9ed7c9c2862144620a94f41ea9be825ca27d729f818e4c1"
+    },
+    {
+      "name": "altered-craft-notice-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "unknown-expression-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/controls-primary-final/unknown-expression"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "unknown license expression",
+      "passed": true,
+      "stdout_sha256": "9d4eb0408d13df2a907a0fdd9e2ef30fa0a65dcaf72c50c2b65e89cb579a3934"
+    },
+    {
+      "name": "unknown-expression-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "malformed-expression-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/controls-primary-final/malformed-expression"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "malformed license expression",
+      "passed": true,
+      "stdout_sha256": "28251f67a7a5d4e67d1c0048326819ae0f18a7755d9a2a8d05df055d818cda39"
+    },
+    {
+      "name": "malformed-expression-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "omitted-required-reference-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/controls-primary-final/omitted-required-reference"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "required package file omitted",
+      "passed": true,
+      "stdout_sha256": "b21270482007fc0f776e929c813f605b4a62d9080752bc5934bfe21fd30f88e6"
+    },
+    {
+      "name": "omitted-required-reference-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "unsupported-target-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/controls-primary-final/unsupported-target"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "unsupported or missing target",
+      "passed": true,
+      "stdout_sha256": "2732e3b9e801377822b97993095c932de7c6f2a0ae1de1d436100cc77bb7a780"
+    },
+    {
+      "name": "unsupported-target-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "changed-feature-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/controls-primary-final/changed-feature"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "target features changed",
+      "passed": true,
+      "stdout_sha256": "56bd1203af4fd571baece1c4f45378c226da3d0c5562117fb22403c9d6ee34b0"
+    },
+    {
+      "name": "changed-feature-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "altered-identity-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/controls-primary-final/altered-identity"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "frozen production identity changed",
+      "passed": true,
+      "stdout_sha256": "a7ca494c81cd968202851151e51f766ba30d7bbc7ec0a10c656996e3c282fa8d"
+    },
+    {
+      "name": "altered-identity-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit_code": 0,
+      "expected_exit_code": 0,
+      "expected_error_contains": null,
+      "passed": true,
+      "stdout_sha256": "c5d9f0958435762f9f3d2ada694dfd2d4372a6d010b485075422113e42af147b"
+    },
+    {
+      "name": "completeness-blocked-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack",
+        "--require-complete"
+      ],
+      "actual_exit_code": 1,
+      "expected_exit_code": 1,
+      "expected_error_contains": "redistribution completeness BLOCKED",
+      "passed": true,
+      "stdout_sha256": "f7335d6c371294f6d9313d22bf27d817a92d39b2dde0305b66acf6e328f9ea88"
+    }
+  ],
+  "retained_pack_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+  "temporary_pack_copies_removed": true
+}

@@ -1,0 +1,143 @@
+{
+  "status": "VERIFIED",
+  "scope": "Root final targeted CPU and old-archive checks; no GUI/GPU/build",
+  "node_tests": 6,
+  "python_tests": 7,
+  "expected_completeness": "BLOCKED/exit1",
+  "old_archive": "190/29/524 PASS",
+  "rows": [
+    {
+      "name": "observer-node",
+      "argv": [
+        "node",
+        "--test",
+        "experiments/35-web-export-followup/observer.test.cjs"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/final-controls/observer-node.stdout",
+          "sha256": "90c3f7d578610fd5be0ffa5cb55f2485780af2936967c4d8d0f71bd22efb8c84"
+        },
+        "stderr": {
+          "path": ".work/m11-next/final-controls/observer-node.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "export-python",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/35-web-export-followup",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/final-controls/export-python.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": ".work/m11-next/final-controls/export-python.stderr",
+          "sha256": "7cb7af5170ba43a9f3ffded5ed9925cb6fd3e5474b8bcde3175f40e9c7968029"
+        }
+      }
+    },
+    {
+      "name": "export-packet",
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/35-web-export-followup/verify.py"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/final-controls/export-packet.stdout",
+          "sha256": "7e7e1dd63161b92609091dd0c8099ceacd8ce463416ccf05988e525e43ef0120"
+        },
+        "stderr": {
+          "path": ".work/m11-next/final-controls/export-packet.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "notice-live",
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack",
+        "--source-root",
+        "."
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/final-controls/notice-live.stdout",
+          "sha256": "11ef608f28788a2b86ab21e5984078985bfd7ae960625dd137d51e3eb4fed45f"
+        },
+        "stderr": {
+          "path": ".work/m11-next/final-controls/notice-live.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "notice-completeness-red",
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack",
+        "--require-complete"
+      ],
+      "actual_exit": 1,
+      "expected_exit": 1,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/final-controls/notice-completeness-red.stdout",
+          "sha256": "98ded628a3b6bc8650363d05f610c351021283f0a62ddd9239d4b6ad85c844f1"
+        },
+        "stderr": {
+          "path": ".work/m11-next/final-controls/notice-completeness-red.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "old-perf-archive",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/evidence/bounded-perf-20261013/verify.py"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/final-controls/old-perf-archive.stdout",
+          "sha256": "dac1212cbceb5752e85d40ea28b14e7dd014126d37c5115df5fb5bb559fca3d7"
+        },
+        "stderr": {
+          "path": ".work/m11-next/final-controls/old-perf-archive.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "finite_subprocesses_reaped": true
+}

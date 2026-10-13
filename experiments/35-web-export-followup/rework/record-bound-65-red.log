@@ -1,0 +1,100 @@
+✔ forwards exact arguments, receiver, return value and original exception (4.851125ms)
+✖ supported DOM journal initializes once and publishes each bounded overflow while forwarding originals (88.316ms)
+✖ DOM write failures preserve forwarding and subsequent successful update exposes failure and overflow counts (1.644375ms)
+✖ DOM initialization failure leaves original console behavior and bounded in-memory records intact (0.611125ms)
+✔ original console exception survives a failed DOM write (0.597583ms)
+✖ bounded journal retains errors without swallowing or fabricating callback (0.8975ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 2
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 211.826208
+
+✖ failing tests:
+
+test at .work/issue5-export-followup/rework/mutants/record-bound-65/observer.test.cjs:51:1
+✖ supported DOM journal initializes once and publishes each bounded overflow while forwarding originals (88.316ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  65 !== 64
+  
+      at TestContext.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/record-bound-65/observer.test.cjs:63:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 65,
+    expected: 64,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .work/issue5-export-followup/rework/mutants/record-bound-65/observer.test.cjs:75:1
+✖ DOM write failures preserve forwarding and subsequent successful update exposes failure and overflow counts (1.644375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  65 !== 64
+  
+      at TestContext.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/record-bound-65/observer.test.cjs:81:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 65,
+    expected: 64,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .work/issue5-export-followup/rework/mutants/record-bound-65/observer.test.cjs:92:1
+✖ DOM initialization failure leaves original console behavior and bounded in-memory records intact (0.611125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  65 !== 64
+  
+      at TestContext.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/record-bound-65/observer.test.cjs:100:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 65,
+    expected: 64,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .work/issue5-export-followup/rework/mutants/record-bound-65/observer.test.cjs:116:1
+✖ bounded journal retains errors without swallowing or fabricating callback (0.8975ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  65 !== 64
+  
+      at TestContext.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/record-bound-65/observer.test.cjs:121:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 65,
+    expected: 64,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,58 @@
+✔ forwards exact arguments, receiver, return value and original exception (10.033ms)
+✖ supported DOM journal initializes once and publishes each bounded overflow while forwarding originals (50.042209ms)
+✖ DOM write failures preserve forwarding and subsequent successful update exposes failure and overflow counts (0.938084ms)
+✔ DOM initialization failure leaves original console behavior and bounded in-memory records intact (1.042541ms)
+✔ original console exception survives a failed DOM write (0.526333ms)
+✔ bounded journal retains errors without swallowing or fabricating callback (1.262458ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 160.818458
+
+✖ failing tests:
+
+test at .work/issue5-export-followup/rework/mutants/overflow-dom-stale/observer.test.cjs:51:1
+✖ supported DOM journal initializes once and publishes each bounded overflow while forwarding originals (50.042209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/overflow-dom-stale/observer.test.cjs:64:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at .work/issue5-export-followup/rework/mutants/overflow-dom-stale/observer.test.cjs:75:1
+✖ DOM write failures preserve forwarding and subsequent successful update exposes failure and overflow counts (0.938084ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 38
+  
+      at TestContext.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/overflow-dom-stale/observer.test.cjs:83:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 38,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

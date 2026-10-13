@@ -1,0 +1,73 @@
+{
+  "status": "QUIESCENT",
+  "conclusion": "INCONCLUSIVE cause; current automatic/explicit exports pass; no product fix",
+  "at": "2026-10-13T22:40:17.622214+00:00",
+  "scope": "experiments/35-web-export-followup/ and .work/issue5-export-followup/ only",
+  "headAtIntake": "7851c2e74f757f93774f2d5fa05151562c393012",
+  "loads": 2,
+  "downloadTriggers": 3,
+  "actualCallbacks": 2,
+  "durableActualPNGs": 2,
+  "cpuControls": {
+    "node": 2,
+    "python": 7
+  },
+  "manifestSHA256": "a2ecc9c09b260ec74fedd596da3f8131080c5ec1b31efe26a5ce46c7cf8c3017",
+  "packetVerification": "evidence/verification.json",
+  "rawClockContext": [
+    "evidence/case-1-context.raw.json",
+    "evidence/case-2-context.raw.json"
+  ],
+  "rawDownloadEvents": [
+    "evidence/case-1-auto-wait.raw.json",
+    "evidence/case-1-explicit-wait.raw.json",
+    "evidence/case-2-auto-wait.raw.json"
+  ],
+  "cleanupEvidence": [
+    "evidence/cleanup.json",
+    "evidence/downloads-cleanup.json"
+  ],
+  "originalScreenshots": "evidence/screenshot-provenance.json",
+  "originalPNGHashes": {
+    "case-1-explicit.png": "1c7cb42f5b606f5c201161e9f675c79e226180952a7bbe80197bc73b6357342b",
+    "case-2-auto.png": "e62a9bb7ca0de1332ed84b8ea0624af53561d9252f44aa1b132955ee505fe581"
+  },
+  "reviewScope": [
+    "observer exact forwarding/bounds",
+    "exact-file server origin/host/no-traversal/no-receiver",
+    "accepted cohort/network hashes",
+    "raw supported event and exact-file receipt distinction",
+    "actual original screenshot provenance and inspected PNG pixels",
+    "separate clocks and confounds",
+    "scoped cleanup and no product-fix claim"
+  ],
+  "externalWrites": false,
+  "remainingOwnedResources": [],
+  "downloadsRemoved": "only2exactprovenfreshpaths after verified durable copies; evidence/downloads-cleanup.json",
+  "nextOwner": "root for R2, public evidence archive and integration",
+  "futureHelperHardening": {
+    "status": "QUIESCENT",
+    "at": "2026-10-13T22:52:48.686616+00:00",
+    "futureObserverSHA256": "309eeb47f4ca5279e23cbb16189c010e50ad770a472211621236b2bc7f320d7a",
+    "historicalCase2ObserverSHA256": "08b34dec576254dc8e67255c6f5ee047990cf82b84fec01cad1bc2e5a283ef06",
+    "protectedHistoricalFiles": 36,
+    "allHistoricalHashesUnchanged": true,
+    "controls": {
+      "node": 6,
+      "python": 7,
+      "mutantRedRestoredGreenPairs": 3
+    },
+    "offlineVerifier": "PASS",
+    "newUIBrowserGPUDownloadServerBuildRuns": 0,
+    "mutantReceipts": ".work/issue5-export-followup/rework/mutant-controls.json",
+    "limits": [
+      "Future hardened helper not actual-browser-run",
+      "Persistently failing DOM writes leave last successful snapshot stale",
+      "Failed journal creation has no supported DOM surface",
+      "Original issue5cause remainsunknown"
+    ],
+    "ownedPersistentProcessesCreated": 0,
+    "originalPortAbsent": true,
+    "externalWrites": false
+  }
+}

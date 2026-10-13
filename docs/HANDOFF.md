@@ -1,5 +1,17 @@
 # M0 and thin M1 handoff
 
+## 最新交接：PR #42 后的有界独立验证（2026-10-13）
+
+PR42 已合并至 `7851c2e74f757f93774f2d5fa05151562c393012`，树与最终通过 CI/审查的 `ff7c592` 相同。PR CI [38473292259](https://github.com/Derek-X-Wang/nvwa/actions/runs/38473292259) 通过113项独立Rust测试、77项诊断控制及原生/真实Wasm编译，两个采集器对照另计。最终自然 main CI [38477675464](https://github.com/Derek-X-Wang/nvwa/actions/runs/38477675464) 已通过最终日志验收，确认相同113项独立Rust、77项诊断及双目标编译。
+
+后续工作分支是 `codex/m11-export-notices`，仅保存两个独立实验、证据与状态文档。实验35已实际运行两个Web加载、三个截图触发，当前页面自动导出及原有按钮各取得真实1280×720 RGB角色PNG；跨导航监听未观察到事件，原因仍未知。实验36按真实生产命令及目标筛选保留323个正常/构建依赖候选和1039个文件；它不是最终二进制成员清单或发行许可批准。完整性BLOCKED，21项许可文本缺失、三个第一方许可未知、45个缺口记录保留。
+
+[实验35复现](../experiments/35-web-export-followup/README.md)与[实验36复现](../experiments/36-distribution-notices/REPORT.md)包含可执行CPU检查/采集命令。独立审查发现的三个证据工具问题已由原所有者修复并通过复审；原始浏览器记录、图片、候选与失败对照保留。13项实验单元控制、90次许可检查及独立93次复核分别记录，见[本轮验收](evidence/export-notices-20261013/ACCEPTANCE.md)。没有新的桌面启动、产品补丁、根依赖/锁文件、CI、模型或打包变更。
+
+#3继续阻塞；#4所有未验证性能项保留；#5原因未知、#10发行完整性不足，均保持开放。后续候选是可取得环境下的原始条件/下载对照或剩余许可来源核对；签名、发行和第一方许可选择是独立边界。不依据CPU成功推断GUI/物理输入/GPU/完全冷态成功。下方记录保留其历史时间点。
+
+VERIFIED — PR42最终PR CI、合并身份及最终main CI通过；新实验复审有独立记录，未验证项不变。
+
 ## Current M1.1 continuation (2026-10-13)
 
 Merged baseline is `045d8abc685760d09ba05afec0e40a811a282d1f` after PR #36 → #38 → #35. Final-main hosted run `38286368500` passed103 Rust CPU tests, native/Wasm compilation,77 diagnostic cases and two collector controls. Those results belong to that baseline, not the new candidate.
