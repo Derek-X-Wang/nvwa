@@ -1,0 +1,51 @@
+{
+  "scope": "Independent bounded native evidence and private whole-document comparator review; no new UI/GPU/Cargo or renderer control",
+  "dispatch_head": "9df6d3a05296bed1b876edb81a7562ddfe98da83",
+  "findings": [
+    {
+      "severity": "P2",
+      "file": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m11-native-acceptance/contracts/compare_native_doc.py",
+      "lines": [
+        38,
+        39
+      ],
+      "title": "Preserve lexical negative zero before typed f32 comparison",
+      "invariant": "Comparator usage promises negative zero remains distinct from positive zero at f32 paths.",
+      "reproduction": "Starting from prepared B, replace only character.parameters.smile JSON token 0.0 with -0. Actual comparator CLI returns exit0/PASS/equal=true. The same replacement with -0.0 is correctly rejected. Default json.loads parse_int erases the sign before binary32 sees the value.",
+      "expected": "Both negative-zero spellings reject equality with expected positive zero.",
+      "fix": "Use a parse_int handler preserving token -0 as signed Decimal while keeping other integer tokens as int; add parse-plus-whole-document and CLI rejection controls for -0, retain positive 0 acceptance and strict integer field handling.",
+      "evidence": [
+        "synthetic-negative-zero.nvwa.json",
+        "negative-zero-cli-receipt.json",
+        "comparator-control-review.json"
+      ]
+    }
+  ],
+  "comparator_verified": "Existing 24 controls passed. Exact object key sets, ordered arrays, strict integer/bool/string types, enumerated f32 paths and exact binary32 rounding inspected against current core schema. New negative-zero control demonstrates a gap; helper unchanged.",
+  "screenshot_observations": {
+    "inspected": [
+      "ui/profile-after-click.png",
+      "ui/rebound-window.png"
+    ],
+    "visible": "Native editor and rendered humanoid; Ready skin/morph/animation status, 18 joints/4 morphs, scene.nvwa.json Work path, Revision0, Shape tab contents, transport1.7384.",
+    "limit": "Two static captures do not establish new input processing, animation progression, recovery, physical first-frame or the cause of unchanged content. Tool adapter failure remains separate from product failure."
+  },
+  "diagnosis_limit": "Recorded sample identifies PID90585, launch2026-10-13 07:14:54 and live task/update stack at sample time. It does not establish GUI responsiveness or assign cause to product, lock state, shader or capture adapter. No new sample/process inspection performed.",
+  "prepared_bundle_checks": {
+    "binary_sha256": "72d3df8cfdeea062282c8731b0a95cb971f90976fe881772f3e3c24afe76973a",
+    "B_asset_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "A_asset_absent": true,
+    "status": "Verified private bytes only; isolated app not launched by reviewer."
+  },
+  "actual_doc_outputs": "All four expected actual saved files absent at review. Recovery/Save/Open/interaction whole-Doc comparison remains NOT-RUN. Self-comparisons and synthetic controls cannot substitute.",
+  "acceptance": "PARTIAL: static native scene evidence exists; requested recovery/input/animation evidence unestablished. Comparator has one reproducible P2 and should be repaired before accepting whole-Doc results. Human contrast remains pending per dispatch.",
+  "evidence_sha256": {
+    "contracts/compare_native_doc.py": "e9463f7b9fa87e8be23956db25156f5873d18da6b48996f5cb7c15cc90c52e6c",
+    "contracts/expected-manifest.json": "5219a5f85f6dd4cbd1774d9bef04b1e9bb24209c1f0034a9af99c2d859e34550",
+    "ui/profile-after-click.png": "5894b4962e58160c79ef36e5ab765088ab7f5b54bdb9011073d4e1558cf47159",
+    "ui/rebound-window.png": "b30d150956176290740dbbe84f64c517ff7dc08a737a8b29d183cda93d69da6d",
+    "diagnosis/sample-command.json": "9e4760c9549ae5e6b0a5aea1ad0e7430c49536dfafa946d4429cdb4676ca0a8d",
+    "diagnosis/native-input-stall.sample.txt": "68d937b5c4f67e8614070f5e67a3d4ac2b132c0097bcbcd331b370e9aee66027"
+  },
+  "ownership": "Only review directory written. PID90585 retained untouched for root/human contrast. No renderer, UI session, test product process, build, Git or remote mutation performed."
+}

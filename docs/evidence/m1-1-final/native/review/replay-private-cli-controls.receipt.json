@@ -1,0 +1,167 @@
+{
+  "status": "PASS",
+  "scope": "Five private scratch CLI replay controls and restored aggregate green; no product tests or GUI execution",
+  "controls_count": 5,
+  "controls": [
+    {
+      "name": "relocated_archive_positive",
+      "scope": "Private scratch CLI archive control; not product/native execution",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "expected_reason_fragment": "",
+      "control_passed": true,
+      "result": {
+        "status": "PASS",
+        "scope": "Portable offline archive replay only; no native GUI or product execution",
+        "initial_copy_records_checked": 78,
+        "initial_copy_is_not_final_directory_inventory": true,
+        "provenance_copy_records_checked": 5,
+        "successful_calls": 22,
+        "excluded_failed_calls": 2,
+        "screenshots_checked": 27,
+        "exact_raw_output_pixel_byte_matches": 22,
+        "unemitted_sequence_samples_with_completed_loop_binding": 5,
+        "whole_documents": [
+          {
+            "path": "native-same-saved.nvwa.json",
+            "sha256": "2b7c549c0ffe8244c9fccac9f17b232b806f6e584b154184efa24d3e98d399e8",
+            "bytes": 1950,
+            "whole_document_equal": true
+          },
+          {
+            "path": "native-other-saved.nvwa.json",
+            "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+            "bytes": 1952,
+            "whole_document_equal": true
+          },
+          {
+            "path": "native-other-reloaded-saved.nvwa.json",
+            "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+            "bytes": 1952,
+            "whole_document_equal": true
+          },
+          {
+            "path": "native-other-after-interaction.nvwa.json",
+            "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+            "bytes": 1952,
+            "whole_document_equal": true
+          }
+        ],
+        "tabs_byte_equal": true,
+        "B_saved_reloaded_interaction_byte_equal": true,
+        "bounded_bytes_read_and_expanded": 20643905,
+        "limits": [
+          "No GUI replay, frame/performance proof or process/cleanup re-query.",
+          "Private app bundle/binaries are intentionally absent from the portable archive; original identity receipts are retained.",
+          "Root owns the final archive inventory and any later additions."
+        ]
+      },
+      "stdout_sha256": "5b3eacfd28c5b4d191792547a1c5ac0eeec4200b15693c7cd6268a8eb916c649"
+    },
+    {
+      "name": "missing_actual_doc",
+      "scope": "Private scratch CLI archive control; not product/native execution",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "expected_reason_fragment": "Missing archive file: native-other-after-interaction.nvwa.json",
+      "control_passed": true,
+      "result": {
+        "status": "FAIL",
+        "reason": "Missing archive file: native-other-after-interaction.nvwa.json",
+        "scope": "Offline archive replay failure; no GUI claim"
+      },
+      "stdout_sha256": "9cba0663d43fa92a40203787944f38bb8d61e97b11456b899291f0b953757b3a"
+    },
+    {
+      "name": "actual_doc_integrity_tamper_signed_zero",
+      "scope": "Private scratch CLI archive control; not product/native execution",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "expected_reason_fragment": "Byte count differs: native-other-saved.nvwa.json",
+      "control_passed": true,
+      "result": {
+        "status": "FAIL",
+        "reason": "Byte count differs: native-other-saved.nvwa.json",
+        "scope": "Offline archive replay failure; no GUI claim"
+      },
+      "stdout_sha256": "68f14a95a2fa04e74f689d357faf7f315556fb6c8d535cf32c18f8ddc9b44d87"
+    },
+    {
+      "name": "gzip_byte_tamper",
+      "scope": "Private scratch CLI archive control; not product/native execution",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "expected_reason_fragment": "SHA-256 differs: review/native-cua-exact-records.jsonl.gz",
+      "control_passed": true,
+      "result": {
+        "status": "FAIL",
+        "reason": "SHA-256 differs: review/native-cua-exact-records.jsonl.gz",
+        "scope": "Offline archive replay failure; no GUI claim"
+      },
+      "stdout_sha256": "d0780881f7d8b8baa46bc724dca6e811e251421ebe0e6b954704cd3a44995d98"
+    },
+    {
+      "name": "symlink_escape_with_identical_bytes",
+      "scope": "Private scratch CLI archive control; not product/native execution",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "expected_reason_fragment": "Archive path escapes root: native-other-saved.nvwa.json",
+      "control_passed": true,
+      "result": {
+        "status": "FAIL",
+        "reason": "Archive path escapes root: native-other-saved.nvwa.json",
+        "scope": "Offline archive replay failure; no GUI claim"
+      },
+      "stdout_sha256": "18c5283050da67049b11591646313fabd09cb6cb23aac2ef510968f84078b750"
+    }
+  ],
+  "restored_exit": 0,
+  "restored_result": {
+    "status": "PASS",
+    "scope": "Portable offline archive replay only; no native GUI or product execution",
+    "initial_copy_records_checked": 78,
+    "initial_copy_is_not_final_directory_inventory": true,
+    "provenance_copy_records_checked": 5,
+    "successful_calls": 22,
+    "excluded_failed_calls": 2,
+    "screenshots_checked": 27,
+    "exact_raw_output_pixel_byte_matches": 22,
+    "unemitted_sequence_samples_with_completed_loop_binding": 5,
+    "whole_documents": [
+      {
+        "path": "native-same-saved.nvwa.json",
+        "sha256": "2b7c549c0ffe8244c9fccac9f17b232b806f6e584b154184efa24d3e98d399e8",
+        "bytes": 1950,
+        "whole_document_equal": true
+      },
+      {
+        "path": "native-other-saved.nvwa.json",
+        "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+        "bytes": 1952,
+        "whole_document_equal": true
+      },
+      {
+        "path": "native-other-reloaded-saved.nvwa.json",
+        "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+        "bytes": 1952,
+        "whole_document_equal": true
+      },
+      {
+        "path": "native-other-after-interaction.nvwa.json",
+        "sha256": "3c1cc94efa5cb869bcdc0075ef14e062ad1a0c391a3e40c68083c2f749e8cf55",
+        "bytes": 1952,
+        "whole_document_equal": true
+      }
+    ],
+    "tabs_byte_equal": true,
+    "B_saved_reloaded_interaction_byte_equal": true,
+    "bounded_bytes_read_and_expanded": 20643905,
+    "limits": [
+      "No GUI replay, frame/performance proof or process/cleanup re-query.",
+      "Private app bundle/binaries are intentionally absent from the portable archive; original identity receipts are retained.",
+      "Root owns the final archive inventory and any later additions."
+    ]
+  },
+  "wrapper_sha256": "9799b6320c599b8b2669241e365f861e087e5ba9295c47e0f2376f525197bc00",
+  "scratch_retention": "Retained private evidence only; no binaries/bundle copied; root owns later retention cleanup"
+}

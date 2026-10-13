@@ -1,10 +1,11 @@
 # M1.1 bounded candidate — 2026-10-13
 
-PARTIAL — permanent CPU paint checks, the four-root loading policy, complete
-workspace checks and actual candidate Web recovery pass. Native visual
-acceptance and candidate hosted CI remain pending. The separate headless GPU
-pixel experiment passes its actual normal/mutant controls. Baseline hosted
-run38286368500 is not evidence for this candidate.
+VERIFIED — permanent CPU paint checks, the four-root loading policy, complete
+workspace checks, actual candidate Web/native recovery and the source-cohort
+hosted CI pass. The separate headless GPU pixel experiment passes its actual
+normal/mutant controls. Baseline hosted run38286368500 is not evidence for this
+candidate. New evidence-only commits have their own final-head CI gate on
+[PR41](https://github.com/Derek-X-Wang/nvwa/pull/41).
 
 ## Mainline changes
 
@@ -25,8 +26,8 @@ HTTP test adapter's initial incomplete-body failure, exact transport mutation
 and repaired full-body controls are retained.
 
 This bounds root-request count. It does not bound content bytes, dependent
-asset count, loader tasks or GPU memory. Native GUI whole-Work recovery remains
-pending; headless runtime controls are not relabelled as native GUI acceptance.
+asset count, loader tasks or GPU memory. Actual native GUI whole-Work recovery
+now passes separately; headless controls are not relabelled as that acceptance.
 
 See [UI evidence](ui-paint/README.md) and
 [loading experiment](../../../experiments/29-stalled-loads/README.md).
@@ -42,7 +43,8 @@ See [UI evidence](ui-paint/README.md) and
 | Web release |Passed; actual Wasm build |
 | Existing diagnostic controls |77 tests and two collector controls passed |
 | Candidate Web |One real app,12 accepted Works, four stalled transfers, latest12 recovery and full saved-Work equality; separate real Shape/Profile clicks and unchanged complete Work at1280×720/1024×768 |
-| Candidate native |Actually launched; observed blank content; later explicit Mac-lock blocker; visual acceptance not passed |
+| Candidate native |Same release binary actually renders the character; real tab Save invariance, same/different-path missing-GLB recovery, whole-Doc Save/Open and paused click-action restoration pass; earlier blocked captures retained |
+| Source-cohort hosted CI |Run38392776461 attempt1 passes113 named Mac tests including all six paint checks, native/actual-Wasm compilation and Ubuntu27 subset plus77 diagnostics/two collectors |
 | Separate baseline native experiment |Two actual launches, all-black readbacks; profile/timing only |
 | Separate baseline Web experiment |Actual humanoid/timeline and exact HTTP ledger reconciliation;19 new controls passed |
 | Independent headless pixel experiment32 |Actual Metal/Image readback: two normal cases pass, paint-only mutant fails; unchanged literal checker exits0/0/1; Profile state held |
@@ -70,6 +72,25 @@ at1280×720 and Shape at1024×768, with recorded actual canvas backing/CSS dimen
 and identical downloaded full Works. One attempted slider track click produced
 no observed edit; this control does not establish edit/Undo or all narrow
 transport controls. It does not reopen or solve the original blocked#3 case.
+
+The later [actual native continuation](native/README.md) uses the same release
+binary after the user's foreground handoff. Both real tabs change the panel;
+before/after saved Works are byte-identical. A private complete app copy opens
+valid three-row Works with a deliberately missing GLB, visibly removes the old
+character, then recovers after same-path and different-path Open. All four real
+Save outputs preserve the complete input Doc. A paused2.2-second idle state
+temporarily plays a chest-click wave, holds the cursor, then restores Play/idle2.2;
+the saved Doc stays unchanged. This is a functional check, not first-presentation
+or frame/GPU timing. Both owned native processes exit and private assets are
+restored. Original lock/black/input-failure observations remain historical.
+
+Hosted run38392776461 executed on source head9df6d3a and actual merge checkout
+62cad072b5b4b3d2fbfa638b306da53bb2520641, whose tree exactly matches that head.
+Independent review confirms positive test counts, no ignored/filtered cases and
+real Wasm compilation. The27 Ubuntu Rust tests overlap the113 Mac tests. The
+Mac job took29m47s within45 minutes. An evidence-only follow-up does not change
+the tested product source, but its final head still requires the ordinary PR CI;
+final/post-merge run identities belong to the PR receipts, not baseline38286368500.
 
 Baseline Web performance uses Wasm884134fc… from045d8abc, deliberately excluding
 the new policy. Its eight GETs total20,565,000 response-body bytes, including an
@@ -125,9 +146,13 @@ candidate acceptance. Keep the verified independent pixel check as an experiment
 one adapter and two interior regions do not establish permanent CI coverage. Preserve
 native visibility failures and unavailable physical metrics rather than deriving
 a shader or lock-screen cause from them. #3 remains blocked under its original
-unavailable conditions. #4/#40 and the native remainder of#23 stay open.
+unavailable conditions. #23/#39 await PR41 integration and final-head CI;
+#40 has its scoped experimental result ready for that integration. #4 retains
+the physical presentation/cold-state/GPU-memory gaps and stays open.
 
 Only task-owned renderers, tabs and servers were used, with competing heavy
 tasks stopped during measurements. Their processes exited and task tabs closed;
 browser viewport override reset. Worktrees, artifacts and raw receipts remain
-retained for review and the unlocked follow-up. No new main merge has occurred.
+retained for review and reproduction. The native continuation is complete and
+both owned native processes exited; no unlocked follow-up is pending for these
+cases. No new main merge has occurred.
