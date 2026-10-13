@@ -1,0 +1,11 @@
+--- a/crates/nvwa-studio/src/editor_layout.rs
++++ b/crates/nvwa-studio/src/editor_layout.rs
+@@ -90,7 +90,7 @@
+                     ui,
+                     rect,
+                     |ui, response| {
+-                        let visuals = if selected {
++                        let visuals = if !selected {
+                             &ui.visuals().widgets.active
+                         } else {
+                             ui.style().interact(response)
