@@ -1,18 +1,19 @@
-"""Version-2 audit invariants for the independently reviewed, frozen v1 cohort.
+"""Version-3 audit invariants for the corrected cohort pending fresh R2 review.
 
 The trust root is this checker code and the external SHA-pinned original record,
 not any path/hash supplied by the candidate manifest. This is not a signature.
 """
 import hashlib, json, re, tomllib
 from pathlib import Path
+from notice_types import classify_document
 
-COHORT_SHA256 = 'ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2'
-TOOLING_VERSION = 2
+COHORT_SHA256 = '2b551ed8c7fa22b347424c1056a3b6e5c935baaf7f4df7ebae4eb3e44ccb24fd'
+TOOLING_VERSION = 3
 
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def frozen():
-    path=Path(__file__).with_name('anchors')/'cohort-v1-manifest.json'
+    path=Path(__file__).with_name('anchors')/'cohort-v3-manifest.json'
     if sha(path)!=COHORT_SHA256:raise ValueError('independent cohort anchor hash mismatch')
     return json.loads(path.read_text())
 def production_source(name):
@@ -26,6 +27,15 @@ def semantic_errors(pack,m,source_root=None):
     need(set(m)==set(anchor),'frozen schema fields missing or unexpected')
     for field,expected in anchor.items():
         need(m.get(field)==expected,'independent frozen cohort field differs: '+field)
+    # Independently recompute document roles from trusted original-byte paths,
+    # even if candidate classification/count fields were edited consistently.
+    for key,record in anchor['packages'].items():
+        calculated={}
+        for path in record['notice_files']:
+            if (pack/path).is_file():calculated[path]=classify_document(path,(pack/path).read_bytes())
+        supplied=m.get('packages',{}).get(key,{})
+        need(supplied.get('notice_documents')==calculated,'content-derived document roles differ: '+key)
+        need(supplied.get('license_text_candidate_files')==[path for path in record['notice_files'] if path in calculated and calculated[path]['full_license_text_candidate']],'content-derived full-text candidate coverage differs: '+key)
     # Reject changed record schema before following any untrusted source paths.
     # Further joins operate only after all captured facts match the independent
     # anchor; actual copied bytes are still checked independently below.
@@ -73,6 +83,7 @@ def semantic_errors(pack,m,source_root=None):
         expected_supplements=[x for x in supplements if x['repository']==repo and x['commit']==commit]
         need(p['supplement_receipts']==expected_supplements,'package supplement join differs: '+key)
         copyright_lines=[];local=[];supplement_files=[];license_candidates=[]
+        need(set(p['notice_documents'])==set(p['notice_files']),'document classification inventory differs: '+key)
         for path in p['notice_files']:
             entry=m['files'][path];source=entry['source'];prefix='texts/packages/'+key+'/'
             need(path.startswith(prefix),'notice package path differs: '+key)
@@ -83,7 +94,7 @@ def semantic_errors(pack,m,source_root=None):
                 if receipt is None:continue
                 need(entry['sha256']==receipt['sha256'],'notice supplemental hash differs: '+path)
                 supplement_files.append(path)
-                if receipt['coverage']=='license-text-candidate':license_candidates.append(path)
+                if classify_document(path,(pack/path).read_bytes())['full_license_text_candidate']:license_candidates.append(path)
                 if receipt['kind']=='pinned-public-primary-exact-bytes':
                     url='https://raw.githubusercontent.com/'+repo.removeprefix('https://github.com/')+'/'+commit+'/'+receipt['path']
                     record=by_url.get(url,{})
@@ -95,14 +106,27 @@ def semantic_errors(pack,m,source_root=None):
             else:
                 expected_source={'kind':'exact-local-pinned-source','package':key,'relative_path':relative,**origin}
                 need(source==expected_source,'notice source path/hash join differs: '+path)
-                local.append(path);license_candidates.append(path)
+                local.append(path)
+                if classify_document(path,(pack/path).read_bytes())['full_license_text_candidate']:license_candidates.append(path)
+            classification=classify_document(path,(pack/path).read_bytes())
+            need(p['notice_documents'][path]==classification,'notice content classification differs: '+path)
+            need(classification['kind']!='source-code-not-license-document','source code promoted to notice: '+path)
             for line in (pack/path).read_text(errors='replace').splitlines():
                 if re.search(r'copyright|©',line,re.I):copyright_lines.append({'source':relative,'line':line})
         need(supplement_files==[prefix+'upstream-root/'+r['path'] for r in expected_supplements],'required supplemental notice inventory differs: '+key)
+        for excluded in p['excluded_source_documents']:
+            original=pack/excluded['evidence_path']
+            need(excluded['evidence_path']=='inputs/excluded-source-documents/'+key+'/'+excluded['relative_path'],'excluded source evidence path join differs: '+key)
+            need(m['files'][excluded['evidence_path']]['source']=={'kind':'excluded-source-not-notice','package':key,'relative_path':excluded['relative_path'],**p['origin']},'excluded source evidence provenance join differs: '+key)
+            need(original.is_file(),'excluded source original evidence unavailable: '+key+' '+excluded['relative_path'])
+            if original.is_file():need(classify_document(original,original.read_bytes())==excluded['classification'] and excluded['classification']['kind']=='source-code-not-license-document','excluded source classification/hash differs: '+key)
         need(p['license_text_candidate_files']==license_candidates,'notice-only/full-text candidate distinction differs: '+key)
         need(p['copyright_lines_in_collected_texts']==copyright_lines,'collected copyright lines differ: '+key)
         coverage='candidate-texts-found-needs-applicability-review' if license_candidates else 'notice-only-license-text-MISSING' if p['notice_files'] else 'MISSING'
         need(p['text_coverage']==coverage,'unknown text coverage changed: '+key)
+    audit=json.loads((pack/'inputs/document-audit.json').read_text())
+    expected_audit={k:{'notice_documents':v['notice_documents'],'excluded_source_documents':v['excluded_source_documents'],'full_text_candidate_files':v['license_text_candidate_files'],'text_coverage':v['text_coverage']} for k,v in m['packages'].items()}
+    need(audit==expected_audit,'content audit index differs from actual package classifications')
     # Fixed distinct assets and font payload records are indexed by the external
     # reviewed anchor; provenance files independently join their declared hashes.
     need(m['assets']==anchor['assets'],'required distinct asset inventory differs')

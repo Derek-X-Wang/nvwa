@@ -1,3 +1,5 @@
+Historical v2 stage — superseded by the corrected [v3 content-role capture](V3-FIXES.md). The unchanged v2 packet/tools/receipts described below are preserved under `baseline-v2/`; their 21 missing count was subsequently found incomplete. Current counts and review status are in `evidence-v3/summary.json`.
+
 # R2 fixes for notice tooling
 
 The notice candidate stays unchanged at SHA-256 `ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2`, manifest schema 1. Tooling version 2 hardens validation of those captured facts. This is not a new license selection or a new production artifact build.

@@ -1,0 +1,90 @@
+{
+  "status": "VERIFIED",
+  "runs": 6,
+  "original_candidate_manifest_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+  "production_classifier_sha256": "ebe09bf64343b4dc33064e2edd63dd56f26e5d9ca72953e7ba7c3c2225a59a64",
+  "controls": [
+    {
+      "name": "original-production-source-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/classification_fixture.py",
+        "--legacy"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "passed": true,
+      "stdout_sha256": "4e88ba62ed33101ef99e26978f2db7d7dd110b3d0e62f7a9b85d09c09f8685a5"
+    },
+    {
+      "name": "current-production-source-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/classification_fixture.py"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "stdout_sha256": "8e7425fb07d4b73082508b00f4cb1757808ddcd28c78c2baa7d32231f6d31831"
+    },
+    {
+      "name": "mutated-production-classifier-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/classification_fixture.py",
+        "--module",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue10-notices/v3-classification-controls-sealed/notice_types_mutant.py"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "passed": true,
+      "stdout_sha256": "fabc1b24e593e769f5d7c5b944f1a71e3ef8bfd518c43fc50ea7c005678ba31d"
+    },
+    {
+      "name": "restored-production-classifier-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/classification_fixture.py",
+        "--module",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue10-notices/v3-classification-controls-sealed/notice_types_mutant.py"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "stdout_sha256": "8e7425fb07d4b73082508b00f4cb1757808ddcd28c78c2baa7d32231f6d31831"
+    },
+    {
+      "name": "mutated-production-classifier-false-negative-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/classification_fixture.py",
+        "--module",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue10-notices/v3-classification-controls-sealed/notice_types_mutant.py"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "passed": true,
+      "stdout_sha256": "a376e6dc080616219fb9e0a7f994e17d8b411401ede5c43b23daa5173e863d6a"
+    },
+    {
+      "name": "restored-production-classifier-positive-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/classification_fixture.py",
+        "--module",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue10-notices/v3-classification-controls-sealed/notice_types_mutant.py"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "passed": true,
+      "stdout_sha256": "8e7425fb07d4b73082508b00f4cb1757808ddcd28c78c2baa7d32231f6d31831"
+    }
+  ],
+  "mutant_removed": true
+}

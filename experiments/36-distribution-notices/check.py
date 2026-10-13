@@ -29,7 +29,7 @@ def check(pack,require_complete=False,source_root=None):
         need(set(anchor)==set(m['packages']),'package coverage differs from metadata anchor')
         for key,p in m['packages'].items():
             source=anchor[key]
-            for field in ['package_id','license_expression','authors','notice_files','license_text_candidate_files']:need(p[field]==source[field],'package metadata altered: '+key+' '+field)
+            for field in ['package_id','license_expression','authors','notice_files','license_text_candidate_files','notice_documents','excluded_source_documents']:need(p[field]==source[field],'package metadata altered: '+key+' '+field)
             try:need(p['expression_status']==expression_status(p['license_expression']),'expression status differs: '+key)
             except ValueError as e:errors.append(str(e))
             for path in [p['manifest'],*p['notice_files']]:need(path in m['files'],'required package file omitted: '+path)

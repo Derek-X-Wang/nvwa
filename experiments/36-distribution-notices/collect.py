@@ -2,6 +2,7 @@
 """Read-only Cargo/cache audit. Writes only the explicitly supplied experiment output."""
 import argparse, hashlib, json, re, shutil, subprocess
 from pathlib import Path
+from notice_types import classify_document, select_documents, CLASSIFICATION_VERSION
 
 TARGETS = {'native': 'aarch64-apple-darwin', 'web': 'wasm32-unknown-unknown'}
 EXPECTED = {'Cargo.lock': '457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73',
@@ -50,7 +51,7 @@ def expression_status(value):
     return 'legacy-slash-needs-review' if '/' in value else 'declared-expression-not-legally-adjudicated'
 def text_files(root):
     return sorted(p for p in root.rglob('*') if p.is_file() and not any(x in {'.git','target'} for x in p.relative_to(root).parts) and (re.match(r'^(license|licence|copying|copyright|notice|authors|attribution)([._-]|$)',p.name,re.I) or 'license' in p.name.lower()))
-def collect(root,output,scratch,supplements_path=None):
+def collect(root,output,scratch,supplements_path=None,prepare_unreviewed=False):
     output.mkdir(parents=True,exist_ok=False); (output/'texts').mkdir(); (output/'inputs').mkdir(); scratch.mkdir(parents=True,exist_ok=True)
     files={}; pkgs={}; targets={}; raw={}
     supplements=json.loads(supplements_path.read_text()) if supplements_path else []
@@ -78,10 +79,17 @@ def collect(root,output,scratch,supplements_path=None):
             vcs=srcroot/'.cargo_vcs_info.json'
             if vcs.is_file():origin['cargo_vcs_info']=json.loads(vcs.read_text())
             manifest=copy(srcroot/'Cargo.toml','inputs/manifests/'+key+'/Cargo.toml',origin)
-            copied=[]
+            copied=[];notice_documents={}
+            included_documents,excluded_documents=select_documents(licensefiles)
+            licensefiles=[f for f,r in included_documents]
             base=srcroot.parent.parent if p['name']=='craft-ui' else srcroot
-            for f in licensefiles:copied.append(copy(f,'texts/packages/'+key+'/'+str(f.relative_to(base)),{'kind':'exact-local-pinned-source','package':key,'relative_path':str(f.relative_to(base)),**origin}))
-            license_candidates=list(copied);supplement_receipts=[]
+            for f,classification in included_documents:
+                dest=copy(f,'texts/packages/'+key+'/'+str(f.relative_to(base)),{'kind':'exact-local-pinned-source','package':key,'relative_path':str(f.relative_to(base)),**origin});copied.append(dest);notice_documents[dest]=classification
+            excluded_records=[]
+            for f,r in excluded_documents:
+                relative=str(f.relative_to(base));evidence=copy(f,'inputs/excluded-source-documents/'+key+'/'+relative,{'kind':'excluded-source-not-notice','package':key,'relative_path':relative,**origin})
+                excluded_records.append({'relative_path':relative,'source_path':str(f),'evidence_path':evidence,'classification':r,'origin':origin})
+            license_candidates=[path for path in copied if notice_documents[path]['full_license_text_candidate']];supplement_receipts=[]
             package_repo=(p['repository'] or '').split('/tree/')[0]
             package_commit=origin.get('cargo_vcs_info',{}).get('git',{}).get('sha1')
             for extra in supplements:
@@ -90,7 +98,8 @@ def collect(root,output,scratch,supplements_path=None):
                 if digest(source)!=extra['sha256']:raise ValueError('supplement hash mismatch')
                 if extra['kind']=='pinned-public-primary-exact-bytes' and extra['url']!='https://raw.githubusercontent.com/'+package_repo.removeprefix('https://github.com/')+'/'+package_commit+'/'+extra['path']:raise ValueError('unpinned supplement URL')
                 dest=copy(source,'texts/packages/'+key+'/upstream-root/'+extra['path'],extra);copied.append(dest);supplement_receipts.append(extra)
-                if extra['coverage']=='license-text-candidate':license_candidates.append(dest)
+                notice_documents[dest]=classify_document(source,source.read_bytes())
+                if notice_documents[dest]['full_license_text_candidate']:license_candidates.append(dest)
             copyrights=[]
             for f in licensefiles:
                 for line in f.read_text(errors='replace').splitlines():
@@ -98,7 +107,7 @@ def collect(root,output,scratch,supplements_path=None):
             for extra in supplement_receipts:
                 for line in Path(extra['file']).read_text(errors='replace').splitlines():
                     if re.search(r'copyright|©',line,re.I):copyrights.append({'source':'upstream-root/'+extra['path'],'line':line})
-            pkgs[key]={'name':p['name'],'version':p['version'],'package_id':p['id'],'license_expression':p['license'],'expression_status':expression_status(p['license']),'license_file_metadata':p['license_file'],'authors':p['authors'],'repository':p['repository'],'source':p['source'],'manifest':manifest,'origin':origin,'notice_files':copied,'license_text_candidate_files':license_candidates,'supplement_receipts':supplement_receipts,'copyright_lines_in_collected_texts':copyrights,'text_coverage':'candidate-texts-found-needs-applicability-review' if license_candidates else 'notice-only-license-text-MISSING' if copied else 'MISSING'}
+            pkgs[key]={'name':p['name'],'version':p['version'],'package_id':p['id'],'license_expression':p['license'],'expression_status':expression_status(p['license']),'license_file_metadata':p['license_file'],'authors':p['authors'],'repository':p['repository'],'source':p['source'],'manifest':manifest,'origin':origin,'notice_files':copied,'notice_documents':notice_documents,'excluded_source_documents':excluded_records,'license_text_candidate_files':license_candidates,'supplement_receipts':supplement_receipts,'copyright_lines_in_collected_texts':copyrights,'text_coverage':'candidate-texts-found-needs-applicability-review' if license_candidates else 'notice-only-license-text-MISSING' if copied else 'MISSING'}
     native_build_argv=['cargo','tree','--locked','--offline','-p','nvwa-studio','-p','nvwa-cli','--target',TARGETS['native'],'--edges','normal,build','--prefix','none','--format','{p}|{f}']
     native_actual_tree=subprocess.run(native_build_argv,cwd=root,check=True,capture_output=True).stdout
     (scratch/'native-production-command-tree.txt').write_bytes(native_actual_tree)
@@ -130,7 +139,7 @@ def collect(root,output,scratch,supplements_path=None):
     copy(root/'Cargo.lock','inputs/Cargo.lock',{'kind':'frozen-lockfile'})
     for f in ['scripts/build-web.sh','scripts/package-native.py','.work/m11-final/artifact-identities.json','.work/m11-final/build-inputs-after-lint-fix.json','.work/m11-final/native-release/result.json','.work/m11-final/web-release/result.json']:
         copy(root/f,'inputs/'+f.replace('.work/m11-final/','retained-build/'),{'kind':'retained-production-evidence','path':f})
-    save(output/'inputs/package-metadata.json',{k:{'package_id':v['package_id'],'license_expression':v['license_expression'],'authors':v['authors'],'notice_files':v['notice_files'],'license_text_candidate_files':v['license_text_candidate_files']} for k,v in pkgs.items()})
+    save(output/'inputs/package-metadata.json',{k:{'package_id':v['package_id'],'license_expression':v['license_expression'],'authors':v['authors'],'notice_files':v['notice_files'],'license_text_candidate_files':v['license_text_candidate_files'],'notice_documents':v['notice_documents'],'excluded_source_documents':v['excluded_source_documents']} for k,v in pkgs.items()})
     files['inputs/package-metadata.json']={'path':'inputs/package-metadata.json','sha256':digest(output/'inputs/package-metadata.json'),'bytes':(output/'inputs/package-metadata.json').stat().st_size,'source':{'kind':'target-filtered-cargo-metadata-extracted-no-license-normalization'}}
     gaps=[{'kind':'missing-license-text','package':k} for k,v in sorted(pkgs.items()) if not v['license_text_candidate_files']]
     gaps += [{'kind':'first-party-owner-license-decision','package':k} for k,v in sorted(pkgs.items()) if v['license_expression'] is None]
@@ -141,12 +150,15 @@ def collect(root,output,scratch,supplements_path=None):
         if (supplements_path.parent/'requests.json').is_file():copy(supplements_path.parent/'requests.json','inputs/primary-requests.json',{'kind':'bounded-public-retrieval-success-and-failure-log'})
     gaps += [{'kind':'objc2-pinned-root-notice-SDK-provenance-implications-unresolved'}] if any(x['coverage']=='notice-only' for x in supplements) else []
     gaps += [{'kind':x} for x in ['applicable-text-and-copyright-header-review-incomplete','rust-stdlib-compiler-builtins-not-in-cargo-metadata','native-system-frameworks-and-dynamic-link-inventory-not-audited','wasm-bindgen-generated-javascript-runtime-license-not-separately-audited','CC0-repository-statement-is-not-full-legal-instrument','no-model-weights-or-vam-imports-source-scope-only','signing-notarization-clean-machine-public-distribution-NOT-RUN']]
-    manifest={'schema':1,'cohort_commit':'7851c2e74f757f93774f2d5fa05151562c393012','issue':'https://github.com/Derek-X-Wang/nvwa/issues/10','identity':identity,'source_comparisons':comparisons,'targets':targets,'packages':pkgs,'assets':assets,'embedded_default_font_candidates':fonts,'files':files,'gaps':gaps,'redistribution_completeness':'BLOCKED','legal_approval':'NOT-RUN','root_first_party_license':'UNKNOWN; no root LICENSE; no license selected or assigned','models':'Separate optional model research licenses remain experiments/05-ai-motion; no weights/runtime bundled; no VaM assets imported'}
+    audit={k:{'notice_documents':v['notice_documents'],'excluded_source_documents':v['excluded_source_documents'],'full_text_candidate_files':v['license_text_candidate_files'],'text_coverage':v['text_coverage']} for k,v in pkgs.items()}
+    save(output/'inputs/document-audit.json',audit)
+    files['inputs/document-audit.json']={'path':'inputs/document-audit.json','sha256':digest(output/'inputs/document-audit.json'),'bytes':(output/'inputs/document-audit.json').stat().st_size,'source':{'kind':'production-called-content-classification','version':CLASSIFICATION_VERSION,'legal_approval':'NOT-RUN'}}
+    manifest={'schema':1,'audit_revision':3,'document_classification_version':CLASSIFICATION_VERSION,'review_status':'PENDING independent Astra R2 for corrected capture','cohort_commit':'7851c2e74f757f93774f2d5fa05151562c393012','issue':'https://github.com/Derek-X-Wang/nvwa/issues/10','identity':identity,'source_comparisons':comparisons,'targets':targets,'packages':pkgs,'assets':assets,'embedded_default_font_candidates':fonts,'files':files,'gaps':gaps,'redistribution_completeness':'BLOCKED','legal_approval':'NOT-RUN','root_first_party_license':'UNKNOWN; no root LICENSE; no license selected or assigned','models':'Separate optional model research licenses remain experiments/05-ai-motion; no weights/runtime bundled; no VaM assets imported'}
     from cohort import frozen
     if any(p.is_file() for p in root.iterdir() if p.name.upper().startswith(('LICENSE','COPYING'))):raise ValueError('root first-party license no longer UNKNOWN; explicit new owner audit required')
-    if manifest!=frozen():raise ValueError('capture differs from independent frozen production cohort; explicit new audit required')
+    if not prepare_unreviewed and manifest!=frozen():raise ValueError('capture differs from independent frozen production cohort; explicit new audit required')
     save(output/'manifest.json',manifest)
     print(json.dumps({'output':str(output),'manifest_sha256':digest(output/'manifest.json'),'packages':len(pkgs),'files':len(files),'gaps':len(gaps),'target_counts':{k:len(v['normal_build_packages']) for k,v in targets.items()}}))
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[2]);parser.add_argument('--output',type=Path,required=True);parser.add_argument('--scratch',type=Path,required=True);parser.add_argument('--supplements',type=Path);a=parser.parse_args();collect(a.root.resolve(),a.output.resolve(),a.scratch.resolve(),a.supplements.resolve() if a.supplements else None)
+    parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[2]);parser.add_argument('--output',type=Path,required=True);parser.add_argument('--scratch',type=Path,required=True);parser.add_argument('--supplements',type=Path);parser.add_argument('--prepare-unreviewed-cohort',action='store_true');a=parser.parse_args();collect(a.root.resolve(),a.output.resolve(),a.scratch.resolve(),a.supplements.resolve() if a.supplements else None,a.prepare_unreviewed_cohort)

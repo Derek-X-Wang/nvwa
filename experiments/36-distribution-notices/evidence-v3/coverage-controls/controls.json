@@ -1,0 +1,359 @@
+{
+  "status": "VERIFIED",
+  "runs": 25,
+  "mutations": 12,
+  "all_passed": true,
+  "controls": [
+    {
+      "name": "baseline-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promote-AUTHORS-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/promote-AUTHORS"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "c330467e43662a7241276047dcd2a011e2f715f67e70e404cb9ce9d379d4585f"
+    },
+    {
+      "name": "promote-AUTHORS-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promote-declaration-LICENSE-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/promote-declaration-LICENSE"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "e3828e976db5b62c69add913b261e9c880689b685fcc92211aaffd327bf3c60d"
+    },
+    {
+      "name": "promote-declaration-LICENSE-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promote-short-Apache-notice-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/promote-short-Apache-notice"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "db01be80e55bc53ff3aeb2c5d46b98324ca1cf6c4f03092e73b69dc8ad903b21"
+    },
+    {
+      "name": "promote-short-Apache-notice-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promote-craft-NOTICE-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/promote-craft-NOTICE"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "995836d496c99fc998eb1aee6f58b9b6c5e7236cdb1cce84d871143d219f7c0a"
+    },
+    {
+      "name": "promote-craft-NOTICE-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promote-ATTRIBUTION-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/promote-ATTRIBUTION"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "6e7f1efe2c1c076372ca93763cb54f7324971a109a848597d847a557dcc5549b"
+    },
+    {
+      "name": "promote-ATTRIBUTION-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promote-COPYRIGHT-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/promote-COPYRIGHT"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "6aa9bd071489c366743023fa833e3f2c60f6207883a6b796a1eae34715bf7e2e"
+    },
+    {
+      "name": "promote-COPYRIGHT-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promote-COPYING-choice-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/promote-COPYING-choice"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "58504a0ff3b60973943a2a02a0d308a89080685aff430d17f4efc3a63440e62e"
+    },
+    {
+      "name": "promote-COPYING-choice-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promote-framework-provenance-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/promote-framework-provenance"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "1d7d935e3c11d53c98f85e1fae4ee8d7a38197732c0c2ea94dc5fb5e33cb170d"
+    },
+    {
+      "name": "promote-framework-provenance-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "demote-short-0BSD-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/demote-short-0BSD"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "0ac55f7cccd1a5414de699dde7a6760b8d20d4a515ac0493aec0cf2fd619cd5d"
+    },
+    {
+      "name": "demote-short-0BSD-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "demote-mixed-license-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/demote-mixed-license"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "8b1965aca5b8c948119b8f270a7cf0477875bcae93fa1912306cc88ba54c7512"
+    },
+    {
+      "name": "demote-mixed-license-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "demote-substantive-ATTRIBUTION-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/demote-substantive-ATTRIBUTION"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived document roles differ",
+      "passed": true,
+      "stdout_sha256": "d7e917a710bdb69fd485344123ade5869452b0e86963f80f0689b4680c44e976"
+    },
+    {
+      "name": "demote-substantive-ATTRIBUTION-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "restore-source-code-and-old-missing-count-self-consistent-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-coverage-controls/restore-source-code-and-old-missing-count"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "content-derived full-text candidate coverage differs",
+      "passed": true,
+      "stdout_sha256": "0fe5361af04549d13663225b503c624f074e432e2967badf0015f4709353da38"
+    },
+    {
+      "name": "restore-source-code-and-old-missing-count-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    }
+  ],
+  "temporary_mutation_copies_removed": true
+}

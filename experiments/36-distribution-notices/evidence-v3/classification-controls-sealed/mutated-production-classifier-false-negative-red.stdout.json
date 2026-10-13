@@ -1,0 +1,248 @@
+{
+  "status": "FAIL",
+  "mode": "current production select_documents/classify_document",
+  "fixtures": [
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "objc2-foundation@0.2.2/src/copying.rs",
+      "sha256": "6ef40ce213364039bb992742f8ca4ee2660f9f32669707f403cdd0f0b035a098",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "objc2-foundation@0.3.2/src/tests/copying.rs",
+      "sha256": "23d608079a47693a26dfc8a5cb01894ad0136a50714d46221d9380aa4a4b4423",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "aho-corasick@1.1.5/COPYING",
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "craft-ui@0.1.0/NOTICE",
+      "sha256": "0690a5182986ea6706896673ccf615b0f0d9764f7c5cbba84569f4033673f8d1",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "craft-ui@0.1.0/ATTRIBUTION.md",
+      "sha256": "6ecfa0fbde362c42f6e89c05ae753bd2fa4fe12ddd8c6565be857fe4e03173f3",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "linebender_resource_handle@0.1.1/AUTHORS",
+      "sha256": "91029dd59a52bfbb49595d445d3a6cd855c080bbcbb2cd55ddfa5da8ae87530a",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "typenum@1.20.1/LICENSE",
+      "sha256": "db11fec9946737df39ca3898d9cd8c10ec6f6c3a884a6802b0ad0b81b4e8f23a",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "guillotiere@0.7.0/LICENSE-APACHE",
+      "sha256": "644d05561bc2dc5993f19d6602894315d925744d854a0413876e203f86c35830",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "shlex@2.0.1/LICENSE-APACHE",
+      "sha256": "553fffcd9b1cb158bc3e9edc35da85ca5c3b3d7d2e61c883ebcfa8a65814b583",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "petgraph@0.8.3/assets/images/LICENSE.md",
+      "sha256": "608fdcbb7daea2541c57228f21fc97deec310b19dafde70b2f4b84a96bf779f8",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "winit@0.30.13/docs/res/ATTRIBUTION.md",
+      "sha256": "cce791f4d42357649754427331e9a0e0d4ff21f7e49919708991c71a70b7b132",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "tiff@0.11.3/tests/COPYRIGHT",
+      "sha256": "c6d1d56bb6e2fe4f0aed4aa8553261dd65247db6db50c87c9e9f3fbe095e2202",
+      "expected_full_text_candidate": false,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "craft-ui@0.1.0/LICENSE-MIT",
+      "sha256": "2f42c0cafc8ad394d91373fe1f342aee5453850b151a51405c68cae9ada86d26",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "craft-ui@0.1.0/LICENSE-APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "epaint_default_fonts@0.36.2/fonts/OFL.txt",
+      "sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "blake3@1.8.7/LICENSE_CC0",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "unicode-ident@1.0.26/LICENSE-UNICODE",
+      "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "glam@0.32.1/ATTRIBUTION.md",
+      "sha256": "9f0738ead3dcc72bac87afc652c2466e1bc130d235db7798f98da4d4ef013639",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "adler2@2.0.1/LICENSE-0BSD",
+      "sha256": "861399f8c21c042b110517e76dc6b63a2b334276c8cf17412fc3c8908ca8dc17",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "atomic-waker@1.1.2/LICENSE-THIRD-PARTY",
+      "sha256": "6226d0632e2e1a80c23597e964da9812ae193c535fe058154afb034e94167aa5",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "futures-lite@2.6.1/LICENSE-THIRD-PARTY",
+      "sha256": "6226d0632e2e1a80c23597e964da9812ae193c535fe058154afb034e94167aa5",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    }
+  ],
+  "failures": [
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "craft-ui@0.1.0/LICENSE-MIT",
+      "sha256": "2f42c0cafc8ad394d91373fe1f342aee5453850b151a51405c68cae9ada86d26",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "craft-ui@0.1.0/LICENSE-APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "epaint_default_fonts@0.36.2/fonts/OFL.txt",
+      "sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "blake3@1.8.7/LICENSE_CC0",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "unicode-ident@1.0.26/LICENSE-UNICODE",
+      "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "glam@0.32.1/ATTRIBUTION.md",
+      "sha256": "9f0738ead3dcc72bac87afc652c2466e1bc130d235db7798f98da4d4ef013639",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "adler2@2.0.1/LICENSE-0BSD",
+      "sha256": "861399f8c21c042b110517e76dc6b63a2b334276c8cf17412fc3c8908ca8dc17",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "atomic-waker@1.1.2/LICENSE-THIRD-PARTY",
+      "sha256": "6226d0632e2e1a80c23597e964da9812ae193c535fe058154afb034e94167aa5",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    },
+    {
+      "misleading_license_filename_promoted": false,
+      "fixture": "futures-lite@2.6.1/LICENSE-THIRD-PARTY",
+      "sha256": "6226d0632e2e1a80c23597e964da9812ae193c535fe058154afb034e94167aa5",
+      "expected_full_text_candidate": true,
+      "actual_full_text_candidate": false,
+      "kind": "license-reference-or-provenance-notice"
+    }
+  ]
+}

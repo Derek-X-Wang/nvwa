@@ -1,0 +1,55 @@
+{
+  "font": "NvwaSansSC-Regular.ttf",
+  "family": "Nvwa Sans SC",
+  "style": "Regular",
+  "weight": 400,
+  "sha256": "902150f57c7bdd221323aad3697d0f78edd015a5fe1af39675e918a8959d51ea",
+  "bytes": 10595928,
+  "license": "SIL Open Font License 1.1",
+  "license_file": "OFL.txt",
+  "notice_file": "NOTICE.md",
+  "license_sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9",
+  "source": {
+    "repository": "https://github.com/google/fonts",
+    "commit": "a85815a42757630ce188fdad368c2dfc444d4773",
+    "path": "ofl/notosanssc/NotoSansSC[wght].ttf",
+    "url": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf",
+    "sha256": "a3041811a78c361b1de50f953c805e0244951c21c5bd412f7232ef0d899af0da",
+    "license_url": "https://raw.githubusercontent.com/google/fonts/a85815a42757630ce188fdad368c2dfc444d4773/ofl/notosanssc/OFL.txt"
+  },
+  "verified_upstream": {
+    "repository": "https://github.com/notofonts/noto-cjk",
+    "commit": "523d033d6cb47f4a80c58a35753646f5c3608a78",
+    "path": "Sans/Variable/TTF/Subset/NotoSansSC-VF.ttf",
+    "url": "https://raw.githubusercontent.com/notofonts/noto-cjk/523d033d6cb47f4a80c58a35753646f5c3608a78/Sans/Variable/TTF/Subset/NotoSansSC-VF.ttf",
+    "sha256": "d68bafcb48a2707749396aa12bbbd833cb70401f3a9a689fd2902c7e0d295964",
+    "cmap_semantics_and_glyph_order_match_source": true
+  },
+  "derivation": {
+    "tool": "fontTools",
+    "version": "4.60.2",
+    "python_version": "3.9.5",
+    "axis_limits": {"wght": 400},
+    "renamed_derivative": true,
+    "additional_character_subset": false,
+    "all_cmap_subtables_and_glyph_order_preserved": true,
+    "cmap_semantics_sha256": "07791f2e477d11c70f51ba432c4ae2610d2551415916d244ec4d25b27cb2c128",
+    "script": "experiments/06-cjk-fonts/compare_fonts.py",
+    "reproduction": "PYTHONDONTWRITEBYTECODE=1 python3 experiments/06-cjk-fonts/compare_fonts.py --download --rebuild",
+    "application_runtime_requires_fonttools": false
+  },
+  "coverage": {
+    "unicode_cmap_codepoints": 30890,
+    "glyphs": 31036,
+    "cjk_basic_mapped": 20976,
+    "cjk_basic_missing_range": "U+9FF0–U+9FFF",
+    "cjk_extension_a_mapped": 6582,
+    "cjk_extension_a_missing_range": "U+4DB6–U+4DBF",
+    "cjk_punctuation_range_complete": "U+3000–U+303F",
+    "cjk_supplementary_coverage": "Partial: most Extension B–J and compatibility supplement characters are absent",
+    "example_unsupported_chinese": ["U+20000 𠀀", "U+20BB7 𠮷"],
+    "hangul_syllables_coverage": "None",
+    "regional_glyph_forms": "Simplified Chinese",
+    "detailed_measurements": "experiments/06-cjk-fonts/measurements.json"
+  }
+}

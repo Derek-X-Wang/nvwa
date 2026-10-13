@@ -1,0 +1,97 @@
+{
+  "status": "VERIFIED",
+  "controls": [
+    {
+      "name": "unindexed-file-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-sealed-boundary-controls/extra-file"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "independent indexed file inventory differs",
+      "passed": true,
+      "stdout_sha256": "da426a998a99bc66f6dc6d6bb65f39f025c4a864a80268b08cd6dba693ac2539"
+    },
+    {
+      "name": "unindexed-file-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-sealed-boundary-controls/extra-file"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "b4b6ed42870051985d3a1b884e6ab9d12c60744c95c5983d9bad95616e535bce"
+    },
+    {
+      "name": "tampered-independent-anchor-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        ".work/issue10-notices/v3-sealed-boundary-controls/checker-bundle/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "independent cohort anchor hash mismatch",
+      "passed": true,
+      "stdout_sha256": "f710b751a8fb12e086fb1d990fdca7f8eaa9c57b8c84567cfa8cb98d3b68199e"
+    },
+    {
+      "name": "tampered-independent-anchor-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        ".work/issue10-notices/v3-sealed-boundary-controls/checker-bundle/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "b4b6ed42870051985d3a1b884e6ab9d12c60744c95c5983d9bad95616e535bce"
+    },
+    {
+      "name": "missing-live-sources-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack",
+        "--source-root",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue10-notices/v3-sealed-boundary-controls/empty-source-root"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_message": "live source path/hash differs",
+      "passed": true,
+      "stdout_sha256": "1cf6e45a68305e7b9a313f9b936c8e411f99ad21373a27c59d0e2eb8291c2c91"
+    },
+    {
+      "name": "actual-live-sources-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack",
+        "--source-root",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_message": null,
+      "passed": true,
+      "stdout_sha256": "ce628cd895c9a3269850189d2f97d10072a7a778b1e8ea97d3f8b37df21bd4f7"
+    }
+  ],
+  "runs": 6,
+  "all_passed": true,
+  "candidate_manifest_sha256": "2b551ed8c7fa22b347424c1056a3b6e5c935baaf7f4df7ebae4eb3e44ccb24fd",
+  "temporary_copy_and_checker_bundle_removed": true
+}

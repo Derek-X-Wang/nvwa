@@ -1,0 +1,94 @@
+{
+  "status": "VERIFIED",
+  "scope": "Root v3 candidate live/portable, exact completeness rejection and unchanged previous performance archive",
+  "rows": [
+    {
+      "name": "notice-live",
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack",
+        "--source-root",
+        "."
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/v3-root-controls/notice-live.stdout",
+          "sha256": "ce628cd895c9a3269850189d2f97d10072a7a778b1e8ea97d3f8b37df21bd4f7"
+        },
+        "stderr": {
+          "path": ".work/m11-next/v3-root-controls/notice-live.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "notice-portable",
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/v3-root-controls/notice-portable.stdout",
+          "sha256": "b4b6ed42870051985d3a1b884e6ab9d12c60744c95c5983d9bad95616e535bce"
+        },
+        "stderr": {
+          "path": ".work/m11-next/v3-root-controls/notice-portable.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "notice-completeness-red",
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack",
+        "--require-complete"
+      ],
+      "actual_exit": 1,
+      "expected_exit": 1,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/v3-root-controls/notice-completeness-red.stdout",
+          "sha256": "dfcf2c57aff674395f78001e0ba03d210a1054b88ead614ae775f374031a9492"
+        },
+        "stderr": {
+          "path": ".work/m11-next/v3-root-controls/notice-completeness-red.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "name": "old-perf-archive",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/evidence/bounded-perf-20261013/verify.py"
+      ],
+      "actual_exit": 0,
+      "expected_exit": 0,
+      "outputs": {
+        "stdout": {
+          "path": ".work/m11-next/v3-root-controls/old-perf-archive.stdout",
+          "sha256": "dac1212cbceb5752e85d40ea28b14e7dd014126d37c5115df5fb5bb559fca3d7"
+        },
+        "stderr": {
+          "path": ".work/m11-next/v3-root-controls/old-perf-archive.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "source35": "unchanged reviewed 13unit tests and actual-packet verifier; no new source35 replay required",
+  "finite_children_reaped": true
+}

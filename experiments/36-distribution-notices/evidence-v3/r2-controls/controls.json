@@ -1,0 +1,870 @@
+{
+  "status": "VERIFIED",
+  "mutations": 32,
+  "runs": 66,
+  "all_passed": true,
+  "original_candidate_sha256": "45ad84f8713e44aa6fcae70228a679f3d5469a5d93f7576db7f183d9370fa021",
+  "candidate_bytes_unchanged": true,
+  "temporary_mutation_copies_removed": true,
+  "controls": [
+    {
+      "name": "baseline-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "empty-source-comparisons-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/empty-source-comparisons"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "55e2ded4bfecdfd3e7e837c2b69b50515334512cd510f6f27a10a5ad9de8dcd2"
+    },
+    {
+      "name": "empty-source-comparisons-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "false-source-hashes-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/false-source-hashes"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "b72ecf269d7e2f81955a542bb464e3ebeffab43024eeaeabd30d4b5a289a5cb4"
+    },
+    {
+      "name": "false-source-hashes-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "false-notice-source-path-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/false-notice-source-path"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "faa85be843ca92cf03a7779852df1fa55a507367e1df55b89cb11dc4f17815e3"
+    },
+    {
+      "name": "false-notice-source-path-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "drop-font-inventory-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/drop-font-inventory"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "c557232a52d144e5c190641488fb7278ea6b187f64434f9ef8089a09accd7f82"
+    },
+    {
+      "name": "drop-font-inventory-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "drop-distinct-asset-inventory-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/drop-distinct-asset-inventory"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "d8a30509207ea662376cc21a9d885091e425f0a5740248a6d40ce36a2c5af792"
+    },
+    {
+      "name": "drop-distinct-asset-inventory-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "drop-sdk-signing-system-gaps-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/drop-sdk-signing-system-gaps"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "c4db9d2e44d5dd827616d851d3ab79f77122f970776cf6c477933e1804e19f79"
+    },
+    {
+      "name": "drop-sdk-signing-system-gaps-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "claim-first-party-license-chosen-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/claim-first-party-license-chosen"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "86db3c3e05f6796987f052474bd6b56e853f6ba6819b177dc28993440e79722a"
+    },
+    {
+      "name": "claim-first-party-license-chosen-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-required-source-path-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-required-source-path"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "c50549d139b799ba65175b023a056624f3e9a0bc33b63c3bd4a71377ec7ac829"
+    },
+    {
+      "name": "changed-required-source-path-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "duplicate-source-comparison-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/duplicate-source-comparison"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "30ec23e3599fa54b665508452c5b44423fe24c28f5f492e9db207b962b5dab52"
+    },
+    {
+      "name": "duplicate-source-comparison-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-observed-source-hash-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-observed-source-hash"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "4c19db7e773e174d2514b810475080af4ad6867163308ef5a6e580139a40b4c3"
+    },
+    {
+      "name": "changed-observed-source-hash-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-notice-origin-manifest-hash-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-notice-origin-manifest-hash"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "6e783778d872bac2326e7f7014c11445b8918c3a9c7c95ceb79c4fcacc768971"
+    },
+    {
+      "name": "changed-notice-origin-manifest-hash-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-package-origin-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-package-origin"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "4d69221b084e6997602c7a2970142c7300425a764446f62faefd6d64d13c9fab"
+    },
+    {
+      "name": "changed-package-origin-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-package-repository-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-package-repository"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "d33d1fc9bf813715d52d00803d0d073b9341884a02fbf567a126dae836e5dc02"
+    },
+    {
+      "name": "changed-package-repository-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-package-authors-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-package-authors"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "81d02c48865339f7301379fd77f3ecc19ee9898c48a4b4087809ee3ffd937cec"
+    },
+    {
+      "name": "changed-package-authors-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "erased-copyright-lines-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/erased-copyright-lines"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "a0eda4dacd3730a1ce01de607fa072ca3ec676e3138672a6567a26c565f9807e"
+    },
+    {
+      "name": "erased-copyright-lines-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-supplement-url-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-supplement-url"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "3c5bb73585ae9195af44581a3be0af2f3d560c23f6e64aca4d9abe0e4c70603b"
+    },
+    {
+      "name": "changed-supplement-url-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "dropped-supplement-record-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/dropped-supplement-record"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "a2a5656f6ea20c3555d81537e96c947f7edc983ab849baf081f689489a780a45"
+    },
+    {
+      "name": "dropped-supplement-record-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "promoted-notice-only-text-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/promoted-notice-only-text"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "37c85b16c9edac16f1cccbc42dd6eefa912eee9315864f59cfa647aa9cc4c11b"
+    },
+    {
+      "name": "promoted-notice-only-text-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-asset-payload-hash-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-asset-payload-hash"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "747ae05008e1da8a70809e6cd8e7ba7658845cb078da7720cf3da1423f71d55a"
+    },
+    {
+      "name": "changed-asset-payload-hash-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-asset-license-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-asset-license"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "3d2df1c62316423de778e354b3c6510b36e99d42b4f57d227f13a1fa30ce3a1a"
+    },
+    {
+      "name": "changed-asset-license-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-asset-notice-reference-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-asset-notice-reference"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "a9ed0618d52eca5f77679007a751aee315117db052e70259da1449b3f2280820"
+    },
+    {
+      "name": "changed-asset-notice-reference-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-default-font-payload-hash-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-default-font-payload-hash"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "28901f18963cfef92c0aea2ff16f2f34ce8f9f8a92ba329ac554dfa90b25d8f4"
+    },
+    {
+      "name": "changed-default-font-payload-hash-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-default-font-notice-reference-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-default-font-notice-reference"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "49dd970a5100a07fbbb8cf398c596fb8deaf5c396ac6d643a5a89a4aba11616f"
+    },
+    {
+      "name": "changed-default-font-notice-reference-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "dropped-legacy-gap-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/dropped-legacy-gap"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "d8024764013824e22f13cc28d7749fc1ee0f73ee3efcc96234131b6e9f6db606"
+    },
+    {
+      "name": "dropped-legacy-gap-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-required-gap-record-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-required-gap-record"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "491c09b36a80da543e2a2429ff4608aa4c37b7d901ad6daa5b54e11fbab14169"
+    },
+    {
+      "name": "changed-required-gap-record-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-target-resolver-count-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-target-resolver-count"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "862a38e118b2ca1db2c172b9eae868c042dc0a27ebb5f4f5b777747e96958a67"
+    },
+    {
+      "name": "changed-target-resolver-count-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-target-command-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-target-command"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "448a2257b0b55246397cc898cc4444c5618e7af9b3d914cb965c647020270824"
+    },
+    {
+      "name": "changed-target-command-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "changed-inventory-byte-count-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/changed-inventory-byte-count"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "ce4133585d09362409682b726cd705e5376fa60e8ec19a15060cd90dcad04129"
+    },
+    {
+      "name": "changed-inventory-byte-count-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "dropped-unreferenced-indexed-input-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/dropped-unreferenced-indexed-input"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "7ffff8a38cd698e0689d3e37d23f8a1c1438451d341aba957b149ee404b4c761"
+    },
+    {
+      "name": "dropped-unreferenced-indexed-input-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "added-unknown-schema-field-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/added-unknown-schema-field"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "0ce1b06da921eadba18d6c4d438ecd8d1bffbbad114764a33b83f60298b1bac0"
+    },
+    {
+      "name": "added-unknown-schema-field-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "self-consistent-altered-retained-input-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/self-consistent-altered-retained-input"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "567dd9b09c32c9f116c3469b355b7b79b3e301edfcb61216f2ca3b7af2f5e5fd"
+    },
+    {
+      "name": "self-consistent-altered-retained-input-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "self-consistent-altered-package-anchor-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        ".work/issue10-notices/v3-r2-controls/self-consistent-altered-package-anchor"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "fbce2d5995d474b4a1e11dee71cd351800a4fc54c97769e5892434a3dd9a7087"
+    },
+    {
+      "name": "self-consistent-altered-package-anchor-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "passed": true,
+      "stdout_sha256": "943dbde671895faa7bbf2e2b7b6f3f7f7fc3b56928ed2649c220a1f42d871e1a"
+    },
+    {
+      "name": "completeness-blocked-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+        "experiments/36-distribution-notices/sample-production-pack",
+        "--require-complete"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "passed": true,
+      "stdout_sha256": "c349273d81b8b1bb085108517c6f8cd967e6d336a230bbb60ca332d6025a4045"
+    }
+  ]
+}

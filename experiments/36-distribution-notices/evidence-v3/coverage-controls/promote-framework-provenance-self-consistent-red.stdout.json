@@ -1,0 +1,27 @@
+{
+  "status": "FAIL",
+  "errors": [
+    "altered required file: inputs/document-audit.json",
+    "byte count mismatch: inputs/document-audit.json",
+    "altered required file: inputs/package-metadata.json",
+    "byte count mismatch: inputs/package-metadata.json",
+    "independent frozen cohort field differs: files",
+    "independent frozen cohort field differs: gaps",
+    "independent frozen cohort field differs: packages",
+    "content-derived document roles differ: objc2-foundation@0.3.2",
+    "content-derived full-text candidate coverage differs: objc2-foundation@0.3.2"
+  ],
+  "package_count": 323,
+  "file_count": 1036,
+  "missing_text_packages": 22,
+  "unknown_license_packages": 3,
+  "target_counts": {
+    "aarch64-apple-darwin": 307,
+    "wasm32-unknown-unknown": 278
+  },
+  "completeness": "BLOCKED",
+  "manifest_sha256": "ca622995d98d4bf11698bfe6087f7ee38f784af9ec6a1a381f9d64a5a5d0d37d",
+  "tooling_version": 3,
+  "independent_cohort_anchor_sha256": "45ad84f8713e44aa6fcae70228a679f3d5469a5d93f7576db7f183d9370fa021",
+  "live_source_check": "NOT-RUN"
+}

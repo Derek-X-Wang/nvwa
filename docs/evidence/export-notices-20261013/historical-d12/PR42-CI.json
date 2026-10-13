@@ -1,0 +1,133 @@
+{
+  "actual_checkout": "9e25ed550972386f795c514ba4574a81d4aa07d4",
+  "archive": {
+    "accepted_product_inputs": 524,
+    "archive_files": 190,
+    "experiment_sources": 29,
+    "scope": "exact archived bytes/source cohort; measurement meaning reviewed separately",
+    "status": "PASS"
+  },
+  "attempt": 1,
+  "base": "d832ef3e044017bddb5a0681ff5ca99256ebaef4",
+  "checkout_tree_matches_head": "c0f13c3f96177e99c7e9b0e060447644f9b6deb8",
+  "compile": {
+    "native_test_build": "PASS",
+    "native_workspace_check": "PASS",
+    "portable_fmt_clippy": "PASS",
+    "studio_wasm_target_check": "PASS"
+  },
+  "diagnostics": {
+    "additional_collector_harnesses": 2,
+    "node_test_runner": 5,
+    "python": 72,
+    "python_suite_counts": [
+      15,
+      26,
+      20,
+      11
+    ]
+  },
+  "event": "pull_request",
+  "head": "ff7c59266092e85c558fd5955cd75de5e9927e8b",
+  "jobs": [
+    {
+      "api_steps_without_final_conclusion": [],
+      "final_log_completion_verified": true,
+      "id": 115557594592,
+      "job_conclusion": "success",
+      "name": "Core, CLI, and diagnostic controls",
+      "seconds": 47.0,
+      "timeout_seconds": 900
+    },
+    {
+      "api_steps_without_final_conclusion": [
+        "Run workspace CPU tests",
+        "Compile the actual Web target",
+        "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1"
+      ],
+      "final_log_completion_verified": true,
+      "id": 115557594833,
+      "job_conclusion": "success",
+      "name": "macOS CPU tests and Wasm compile check",
+      "seconds": 1939.0,
+      "timeout_seconds": 2700
+    }
+  ],
+  "limits": [
+    "CI is CPU/build/synthetic controls, no new GUI/GPU/IME performance acceptance",
+    "PR checkout is synthetic merge commit with exact head tree",
+    "Nested macOS step statuses remained null in API after final job success; final raw log independently proves all expected test/native/Wasm completions",
+    "Exact merged main push CI and retained product-byte archive verification remain separate post-merge followup"
+  ],
+  "matched_failure_lines": [],
+  "receipt_sha256": {
+    "archive-verifier.stdout": "dac1212cbceb5752e85d40ea28b14e7dd014126d37c5115df5fb5bb559fca3d7",
+    "archive-verifier.stdout.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "checks-01.json": "0737a306041e106b53b6514376a33a98a44171a37a6fd4e0aeb2692414b8ce96",
+    "checks-01.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "exact-main-contract.json": "79b6b1786627426868acc315e33b851e6d91ef2b50660d3cea46fc6f9dc8c9bf",
+    "first-parser-verification.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "first-parser-verification.stdout.stderr": "60b83aaea0193c5f3a6978916af094dfd8cecf197e20990dd3c19f54b64cb04e",
+    "fourth-parser-verification.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fourth-parser-verification.stdout.stderr": "46513c6c4872fd06766c3816df8c533fd5d25a8f09f599f6dfadb7ca7dcbf6b7",
+    "head-tree.txt": "5dd5ff5e76f56ef30c3461fc04bb1e1908a13e8968915f78003d4b9f2723ba83",
+    "head-tree.txt.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "jobs-01.json": "f28262327cecfc12250ed632c7c78a8a186e6332c14d9e934d640212d05f5147",
+    "jobs-01.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "jobs-02.json": "f28262327cecfc12250ed632c7c78a8a186e6332c14d9e934d640212d05f5147",
+    "jobs-02.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "jobs-03.json": "f28262327cecfc12250ed632c7c78a8a186e6332c14d9e934d640212d05f5147",
+    "jobs-03.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "macos-job-final.json": "fa1717f420280981c751574a842b087d82d7d8061576d6626d119b5a828ac742",
+    "macos-job-final.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pr-01.json": "ab2483adf077091ae1954478c48a2dfe2f800cc25e41b4fd61d8d37b29277432",
+    "pr-01.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "pr-merge-commit.json": "69072cdbd162c5b9d97c48588cc772a2a17c2b3e41adcd39e6e3f716461e0cc0",
+    "pr-merge-commit.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run-01.json": "b63051333a96119d95597e92653e68a6f76de65f9dd4c81c2b3e516901bf6d30",
+    "run-01.json.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "run.log": "167a763585cda5e65a319c49ab9e1eb73abbda60fee187197549ac442326d8ed",
+    "run.log.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "second-parser-verification.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "second-parser-verification.stdout.stderr": "89ac620cdef9f02621a663b6190bff11590a509b99f53d7ac830603f74ec314b",
+    "third-parser-verification.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "third-parser-verification.stdout.stderr": "c82e2b5c4ff8abe0b815e513848fbca2b67e89d05fa51881c42ead5912c7b998",
+    "verify-ci.py": "0237e67de4e4b9b7cc2e80b724d0bdfaa29aae811b91e2fba2bef52fec54fbb1"
+  },
+  "run_id": 38473292259,
+  "rust": {
+    "executions": 140,
+    "native": 113,
+    "native_suite_counts": [
+      0,
+      0,
+      4,
+      2,
+      8,
+      13,
+      39,
+      47,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "overlap": 27,
+    "portable": 27,
+    "portable_suite_counts": [
+      0,
+      0,
+      4,
+      2,
+      8,
+      13,
+      0,
+      0
+    ],
+    "unique": 113
+  },
+  "scope": "Natural final PR42 CI; no main merge/audit performed",
+  "status": "VERIFIED",
+  "status_polls": 3
+}
