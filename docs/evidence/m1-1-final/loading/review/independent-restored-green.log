@@ -1,0 +1,19 @@
+
+running 1 test
+test loading_tests::stalled_http_tests::loopback_http_stalled_distinct_paths_bound_admission_and_recover_latest ... HTTP_STALLED attempted=12 retained=4 loading_roots=4 held_responses=4 source_reads=4 loaded_roots=0 loaded_gltf_dependencies=0
+HTTP_SENT read=1 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=1 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_SENT read=5 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=5 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_SENT read=4 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=4 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_SENT read=2 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=2 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_SENT read=3 attempted=3827840 accepted=3827840 mutation=false failure=None
+HTTP_RECEIVED read=3 bytes=3827840 expected=3827840 exact_fixture=true
+HTTP_RECOVERY reads=5 retiring=0 ready=true loaded_roots=1 loaded_gltf_dependencies=4
+HTTP_CLEANUP server_joined=1 response_threads_joined=5 reader_threads_joined=5 held_gates=0 panics=0
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.37s
+

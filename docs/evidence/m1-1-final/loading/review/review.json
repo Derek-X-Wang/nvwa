@@ -1,0 +1,56 @@
+{
+  "review": "R2 independent stalled-asset admission review",
+  "base": "045d8abc685760d09ba05afec0e40a811a282d1f",
+  "checkout": "/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa",
+  "findings": [],
+  "decision": "Accept bounded CPU/runtime slice; issue 23 acceptance remains partial pending native/Web whole-document checks.",
+  "boundaries_checked": [
+    {
+      "file": "crates/nvwa-runtime/src/lib.rs",
+      "lines": "438-507",
+      "result": "Events drain before new generation. Current scene is despawned; the active root moves into retirement without changing the total. Pending replacement creates no handle and resets generation-scoped verification/error/playback."
+    },
+    {
+      "file": "crates/nvwa-runtime/src/lib.rs",
+      "lines": "645-668",
+      "result": "Retirement retains roots until completion and terminal state, then retains their IDs until AssetServer removal. Cleanup precedes admission on every call, including while a current root loads."
+    },
+    {
+      "file": "crates/nvwa-runtime/src/lib.rs",
+      "lines": "669-706",
+      "result": "Only pending requests reach admission; same-path fence precedes the count check. The sole production server.load call admits only below four. Wait timeout does not drop/cancel roots; capacity release resumes the latest request."
+    },
+    {
+      "file": "crates/nvwa-runtime/src/lib.rs",
+      "lines": "519-632,731-792,1185-1259",
+      "result": "Current-ID completion and integrity verification remain intact; stale events are retirement-only. Readiness requires current scene state and no error."
+    },
+    {
+      "file": "crates/nvwa-runtime/src/stalled_http_tests.rs",
+      "lines": "25-93,119-196,210-245",
+      "result": "Loopback-only bounded adapter, exact Content-Length guard, gate release and accept/response/client joins. Positive and negative direct replay both report zero held gates and worker panics."
+    }
+  ],
+  "verified": [
+    "Independent direct executable replay: 18/18 loading tests, 21 filtered, 2.16 seconds; no Cargo/build.",
+    "Independent final-executable transport mutation: expected failure, 1 matched test/38 filtered, incomplete body after WouldBlock; failure cleanup joined 1 server, 5 response and 5 reader threads with held_gates=0 and panics=0.",
+    "Independent same-executable restored transport: 1 passed/38 filtered, 0.37 seconds.",
+    "Raw pre-fix log: exactly two named capacity tests failed, both retained 12 Loading roots/readers after 12 attempted opens. Base production file bytes independently hash to the recorded bd6da4... identity. The memory test source is identical to final; the final HTTP adapter has disclosed transport and cleanup repairs after its baseline red.",
+    "Raw initial candidate failure and named transport-mutation records inspected. Archived mutation sent-5 and received-5 bodies independently equal the fixture 327149-byte prefix. All 11 bodies in each archived positive/final run match the full 3827840-byte fixture.",
+    "git diff --check passed; candidate source identities unchanged after replay."
+  ],
+  "limits": [
+    "No Cargo, renderer, native/Web whole-document run, global byte/task/GPU lifetime claim, or production transport acceptance.",
+    "Four indefinitely stalled tracked roots can intentionally prevent later admission indefinitely.",
+    "Timeout branch uses injected elapsed=31; real 30-second native/Web dwell not independently tested.",
+    "Transport mutation truncation length is scheduling-dependent: fresh replay read 5 received 327182 bytes, versus archived 327149; both reject incomplete body. Do not claim a deterministic truncation byte count.",
+    "Historical pre-fix executable was not rerun or rebuilt; raw retained logs and recorded source identities were inspected."
+  ],
+  "source_sha256": {
+    "lib.rs": "548e40cc7c60b6f26f214c58e8520a67477d2965de151ae04689532b21aeba73",
+    "loading_tests.rs": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804",
+    "stalled_http_tests.rs": "7fa3c0055bc39e04f47f3f3f2cb532f4d2aac9945a89c5dcc625fc3feebe9b55"
+  },
+  "executable_sha256": "f496d231b39951ab01dcdc252b62f25cd0e05a68c10cc1354bdcd8adc5396e73",
+  "changed_scope": "Only review receipts under the assigned .work/m11-review/asset directory."
+}

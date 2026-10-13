@@ -1,0 +1,39 @@
+{
+  "mode": "candidate-final-cleanup-green",
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "nvwa-runtime",
+    "loading_tests",
+    "--",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "initial_free_gib": 57.38807678222656,
+  "started": 1791881273.290103,
+  "sources": {
+    "crates/nvwa-runtime/src/lib.rs": "548e40cc7c60b6f26f214c58e8520a67477d2965de151ae04689532b21aeba73",
+    "crates/nvwa-runtime/src/loading_tests.rs": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804",
+    "crates/nvwa-runtime/src/stalled_http_tests.rs": "7fa3c0055bc39e04f47f3f3f2cb532f4d2aac9945a89c5dcc625fc3feebe9b55"
+  },
+  "exit_code": 0,
+  "minimum_free_gib": 57.32868957519531,
+  "enospc": false,
+  "executable": {
+    "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/target/debug/deps/nvwa_runtime-74980f9e59502172",
+    "sha256": "f496d231b39951ab01dcdc252b62f25cd0e05a68c10cc1354bdcd8adc5396e73",
+    "size": 96149840
+  },
+  "test_result_lines": [
+    "test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 2.16s"
+  ],
+  "counter_lines": [
+    "test loading_tests::stalled_distinct_paths_keep_at_most_four_admitted_roots ... STALLED_ROOTS attempted=12 retained=4 root_loading=4 source_reads=4 held_readers=4 raw_roots=0 gltf_dependencies=0",
+    "test loading_tests::stalled_http_tests::loopback_http_stalled_distinct_paths_bound_admission_and_recover_latest ... HTTP_STALLED attempted=12 retained=4 loading_roots=4 held_responses=4 source_reads=4 loaded_roots=0 loaded_gltf_dependencies=0",
+    "HTTP_RECOVERY reads=5 retiring=0 ready=true loaded_roots=1 loaded_gltf_dependencies=4"
+  ],
+  "restored_candidate_sha256": "548e40cc7c60b6f26f214c58e8520a67477d2965de151ae04689532b21aeba73",
+  "finished": 1791881293.417645
+}

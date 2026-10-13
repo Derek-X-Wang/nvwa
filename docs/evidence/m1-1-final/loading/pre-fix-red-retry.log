@@ -1,0 +1,72 @@
+   Compiling bevy_asset v0.19.1
+   Compiling naga v29.0.4
+   Compiling objc2-foundation v0.3.2
+   Compiling wgpu-naga-bridge v29.0.4
+   Compiling bevy_transform v0.19.1
+   Compiling bevy_input v0.19.1
+   Compiling bevy_encase_derive v0.19.1
+   Compiling bevy_mesh v0.19.1
+   Compiling bevy_window v0.19.1
+   Compiling objc2-metal v0.3.2
+   Compiling bevy_color v0.19.1
+   Compiling image v0.25.10
+   Compiling objc2-quartz-core v0.3.2
+   Compiling bevy_image v0.19.1
+   Compiling raw-window-metal v1.1.0
+   Compiling bevy_log v0.19.1
+   Compiling naga_oil v0.22.0
+   Compiling wgpu-hal v29.0.4
+   Compiling bevy_camera v0.19.1
+   Compiling wgpu-core-deps-apple v29.0.4
+   Compiling bevy_shader v0.19.1
+   Compiling bevy_material_macros v0.19.1
+   Compiling bevy_material v0.19.1
+   Compiling wgpu-core v29.0.4
+   Compiling winit v0.30.13
+   Compiling wgpu v29.0.4
+   Compiling bevy_light v0.19.1
+   Compiling bevy_render_macros v0.19.1
+   Compiling bevy_animation_macros v0.19.1
+   Compiling bevy_render v0.19.1
+   Compiling bevy_animation v0.19.1
+   Compiling bevy_world_serialization v0.19.1
+   Compiling bevy_gltf v0.19.1
+   Compiling accesskit_winit v0.32.2
+   Compiling bevy_core_pipeline v0.19.1
+   Compiling bevy_a11y v0.19.1
+   Compiling bevy_input_focus v0.19.1
+   Compiling bevy_scene_macros v0.19.1
+   Compiling bevy_winit v0.19.1
+   Compiling bevy_scene v0.19.1
+   Compiling bevy_pbr v0.19.1
+   Compiling bevy_internal v0.19.1
+   Compiling bevy v0.19.1
+   Compiling nvwa-core v0.1.0 (/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/crates/nvwa-core)
+   Compiling nvwa-runtime v0.1.0 (/Users/derekxwang/.codex/worktrees/m11-stalled-loads/nvwa/crates/nvwa-runtime)
+    Finished `test` profile [optimized + debuginfo] target(s) in 16m 25s
+     Running unittests src/lib.rs (target/debug/deps/nvwa_runtime-74980f9e59502172)
+
+running 2 tests
+test loading_tests::stalled_distinct_paths_keep_at_most_four_admitted_roots ... STALLED_ROOTS attempted=12 retained=12 root_loading=12 source_reads=12 held_readers=12 raw_roots=0 gltf_dependencies=0
+
+thread 'loading_tests::stalled_distinct_paths_keep_at_most_four_admitted_roots' (41595798) panicked at crates/nvwa-runtime/src/loading_tests.rs:731:5:
+Retained 12 roots for 12 distinct-path opens
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+FAILED
+test loading_tests::stalled_http_tests::loopback_http_stalled_distinct_paths_bound_admission_and_recover_latest ... HTTP_STALLED attempted=12 retained=12 loading_roots=12 held_responses=12 source_reads=12 loaded_roots=0 loaded_gltf_dependencies=0
+
+thread 'loading_tests::stalled_http_tests::loopback_http_stalled_distinct_paths_bound_admission_and_recover_latest' (41595941) panicked at crates/nvwa-runtime/src/stalled_http_tests.rs:204:5:
+assertion `left == right` failed
+  left: 12
+ right: 4
+FAILED
+
+failures:
+
+failures:
+    loading_tests::stalled_distinct_paths_keep_at_most_four_admitted_roots
+    loading_tests::stalled_http_tests::loopback_http_stalled_distinct_paths_bound_admission_and_recover_latest
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 37 filtered out; finished in 0.69s
+
+error: test failed, to rerun pass `-p nvwa-runtime --lib`

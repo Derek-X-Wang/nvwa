@@ -83,6 +83,14 @@ impl Harness {
             replace_after_read,
             gates,
         };
+        Self::with_reader(profile, dir, reads, reader)
+    }
+    fn with_reader<R: AssetReader + Clone + 'static>(
+        profile: CharacterProfile,
+        dir: Dir,
+        reads: Arc<AtomicUsize>,
+        reader: R,
+    ) -> Self {
         let mut app = App::new();
         app.register_asset_source(
             AssetSourceId::Default,
@@ -685,3 +693,203 @@ fn ready_scene_is_retired_immediately_before_same_path_pending_open() {
     test.ready();
     assert_eq!(test.reads(), 3);
 }
+
+/// Bounded reproduction: actual production-called requests retain the snapshots
+/// of distinct source paths. Counters do not claim byte or GPU ownership.
+#[test]
+fn stalled_distinct_paths_keep_at_most_four_admitted_roots() {
+    let gates = Arc::new(ReadGates::default());
+    let _release = ReleaseReadGates(gates.clone());
+    let mut test = Harness::with_gates(Some(FIXTURE), false, Some(gates.clone()));
+    test.until(|_| gates.entered() == 1);
+    for index in 1..12 {
+        let mut profile = test.profile.clone();
+        profile.asset_path = format!("fixtures/stalled-{index}.glb");
+        test.dir
+            .insert_asset(Path::new(&profile.asset_path), FIXTURE.to_vec());
+        test.open(profile);
+        // The source-supported risk is bounded here to twelve attempts.
+        drive_for(&mut test, std::time::Duration::from_millis(30));
+    }
+    let asset = test.app.world().resource::<CharacterAsset>();
+    let retained = asset.retiring.len() + usize::from(asset.bytes.is_some());
+    let server = test.app.world().resource::<AssetServer>();
+    let root_loading = asset
+        .retiring
+        .iter()
+        .map(|load| load.id)
+        .chain(asset.bytes.iter().map(Handle::id))
+        .filter(|id| matches!(server.get_load_state(*id), Some(LoadState::Loading)))
+        .count();
+    let raw_roots = test.app.world().resource::<Assets<CharacterGlb>>().len();
+    let gltf_dependencies = test.app.world().resource::<Assets<Gltf>>().len();
+    eprintln!(
+        "STALLED_ROOTS attempted=12 retained={retained} root_loading={root_loading} source_reads={} held_readers={} raw_roots={raw_roots} gltf_dependencies={gltf_dependencies}",
+        test.reads(),
+        gates.entered()
+    );
+    assert!(
+        retained <= 4,
+        "Retained {retained} roots for 12 distinct-path opens"
+    );
+    assert_eq!(test.reads(), 4);
+    assert_eq!(gates.entered(), 4);
+    assert_eq!(root_loading, 4);
+    assert_eq!(raw_roots, 0);
+    assert_eq!(gltf_dependencies, 0);
+    assert!(asset.pending_open && asset.bytes.is_none());
+    assert!(
+        test.app
+            .world()
+            .resource::<RuntimeStatus>()
+            .phase
+            .contains("Waiting")
+    );
+    // Release one slot as failure: the latest queued path must be the only
+    // additional source read, with no stale failure on the current document.
+    gates.fail(0);
+    test.until(|_| gates.entered() == 5);
+    assert_eq!(
+        test.app.world().resource::<CharacterAsset>().path,
+        "fixtures/stalled-11.glb"
+    );
+    assert!(test.app.world().resource::<RuntimeStatus>().error.is_none());
+    gates.release(4);
+    test.ready();
+    let accepted = fingerprint(&mut test.app);
+    for index in 1..4 {
+        gates.release(index);
+    }
+    test.until(|world| world.resource::<CharacterAsset>().retiring.is_empty());
+    drive_for(&mut test, std::time::Duration::from_millis(50));
+    assert_eq!(fingerprint(&mut test.app), accepted);
+    assert_eq!(test.reads(), 5);
+}
+
+#[test]
+fn capacity_wait_preserves_latest_same_path_error_and_late_failures_cannot_clear_it() {
+    let gates = Arc::new(ReadGates::default());
+    let _release = ReleaseReadGates(gates.clone());
+    let mut test = Harness::with_gates(Some(FIXTURE), false, Some(gates.clone()));
+    test.until(|_| gates.entered() == 1);
+    let mut latest = test.profile.clone();
+    for index in 1..4 {
+        latest.asset_path = format!("fixtures/capacity-{index}.glb");
+        test.dir
+            .insert_asset(Path::new(&latest.asset_path), FIXTURE.to_vec());
+        test.open(latest.clone());
+        test.until(|_| gates.entered() == index + 1);
+    }
+    // A full-budget same-path open cannot start early, even when another path
+    // releases a capacity slot. Its own publication fence still applies.
+    test.open(latest.clone());
+    test.app
+        .world_mut()
+        .resource_mut::<CharacterAsset>()
+        .elapsed = 31.0;
+    test.app.update();
+    let waiting_error = test
+        .app
+        .world()
+        .resource::<RuntimeStatus>()
+        .error
+        .clone()
+        .unwrap();
+    assert!(waiting_error.contains("Previous character load exceeded 30 seconds"));
+    gates.release(0);
+    test.until(|world| world.resource::<CharacterAsset>().retiring.len() == 3);
+    assert_eq!(gates.entered(), 4);
+    assert_eq!(
+        test.app.world().resource::<RuntimeStatus>().error.as_ref(),
+        Some(&waiting_error)
+    );
+    gates.fail(1);
+    test.until(|world| world.resource::<CharacterAsset>().retiring.len() == 2);
+    assert_eq!(
+        test.app.world().resource::<RuntimeStatus>().error.as_ref(),
+        Some(&waiting_error)
+    );
+    assert!(test.app.world().resource::<CharacterAsset>().root.is_none());
+    gates.release(3);
+    test.until(|_| gates.entered() == 5);
+    assert!(test.app.world().resource::<RuntimeStatus>().error.is_none());
+    gates.fail(4);
+    test.error("Asset byte load failed");
+    let current_error = test
+        .app
+        .world()
+        .resource::<RuntimeStatus>()
+        .error
+        .clone()
+        .unwrap();
+    // Last unrelated stale success cannot publish a scene or clear this error.
+    gates.release(2);
+    test.until(|world| world.resource::<CharacterAsset>().retiring.is_empty());
+    assert_eq!(
+        test.app.world().resource::<RuntimeStatus>().error.as_ref(),
+        Some(&current_error)
+    );
+    assert!(test.app.world().resource::<CharacterAsset>().root.is_none());
+    test.open(latest);
+    test.until(|_| gates.entered() == 6);
+    gates.release(5);
+    test.ready();
+    assert_eq!(test.reads(), 6);
+}
+
+#[test]
+fn full_distinct_path_budget_shows_wait_and_timeout_until_capacity_releases() {
+    let gates = Arc::new(ReadGates::default());
+    let _release = ReleaseReadGates(gates.clone());
+    let mut test = Harness::with_gates(Some(FIXTURE), false, Some(gates.clone()));
+    test.until(|_| gates.entered() == 1);
+    for index in 1..5 {
+        let mut profile = test.profile.clone();
+        profile.asset_path = format!("fixtures/timeout-{index}.glb");
+        test.dir
+            .insert_asset(Path::new(&profile.asset_path), FIXTURE.to_vec());
+        test.open(profile);
+        if index < 4 {
+            test.until(|_| gates.entered() == index + 1);
+        }
+    }
+    assert!(
+        test.app
+            .world()
+            .resource::<RuntimeStatus>()
+            .phase
+            .contains("Waiting")
+    );
+    test.app
+        .world_mut()
+        .resource_mut::<CharacterAsset>()
+        .elapsed = 31.0;
+    test.app.update();
+    let waiting_error = test
+        .app
+        .world()
+        .resource::<RuntimeStatus>()
+        .error
+        .clone()
+        .unwrap();
+    assert!(waiting_error.contains("Character load capacity reached (4/4)"));
+    drive_for(&mut test, std::time::Duration::from_millis(30));
+    assert_eq!(gates.entered(), 4);
+    assert_eq!(
+        test.app.world().resource::<RuntimeStatus>().error.as_ref(),
+        Some(&waiting_error)
+    );
+    gates.fail(0);
+    test.until(|_| gates.entered() == 5);
+    assert!(test.app.world().resource::<RuntimeStatus>().error.is_none());
+    gates.release(4);
+    test.ready();
+    assert_eq!(test.reads(), 5);
+    for index in 1..4 {
+        gates.release(index);
+    }
+    test.until(|world| world.resource::<CharacterAsset>().retiring.is_empty());
+}
+
+#[path = "stalled_http_tests.rs"]
+mod stalled_http_tests;
