@@ -82,6 +82,24 @@ exact test discovery, `rustfmt --check`, and source `git diff --check`.
 Raw test logs preserve their original blank line at EOF; the publication check
 disables only Git's `blank-at-eof` diagnostic for those unchanged receipts.
 
+## Integration follow-up
+
+The original green/mutation-red/restored-green records above retain the
+pre-lint source identity. Strict native clippy found three nested `if` clauses;
+integration collapsed only those clauses into equivalent Rust2024 let chains.
+No assertion, condition order, observation or production painter changed.
+The failure and repair logs are retained in [fresh build evidence](../build/).
+
+The final module SHA-256 is
+`15a36a3b51a5f8fe79883e39353251edf6130ec145149380567667a77d1a2f6c`.
+The final integrated workspace passes113 tests, zero failed/ignored/filtered;
+strict native and actual Wasm clippy pass. A [fresh targeted independent review](post-lint/review.md)
+accepts clause equivalence and independently replays all6 paint tests plus the
+exact state/history control from the final executable. Its SHA-256 is
+`2466193b055464984b7502f837803b4bf7c201124f10f246517db2c35538746f`.
+Fresh mutation reenactment for the formatting-only change was NOT-RUN; the
+historical mutation receipt is not relabeled as a new-source execution.
+
 NOT-RUN — whole workspace, hosted CI, Web compile, native window, browser,
 raster pixels, GPU presentation, and later dual-end acceptance. The root
 orchestrator owns integration and those later checks.

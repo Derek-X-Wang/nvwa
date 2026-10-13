@@ -1,0 +1,18 @@
+Worker verification result: VERIFIED diagnostic lane; PARTIAL CI/source declarations.
+
+Checkout: /Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa
+Branch: codex/m11-ui-paint-permanent
+HEAD: 045d8abc685760d09ba05afec0e40a811a282d1f
+Command: bash experiments/27-ci-baseline/check.sh diagnostics
+Exit: 0; duration: 1.404 seconds; timeout: 300 seconds
+Actual cases: 15 + 26 + 20 + 11 Python = 72; Node test cases = 5; total = 77. Two separate actual-source collector semantic controls passed.
+Python/Node: Python 3.14.7; v25.8.2
+Selectors CHECKER_PATH and NVWA_GEOMETRY_CAPTURE: unset.
+Cargo.lock SHA-256 before/after/final: 457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73
+All 16 source/input identities in run snapshot identical before/after/final.
+
+Current .github/workflows/ci.yml declares diagnostic lane and native --workspace --locked tests. Studio library declares editor_layout; editor_layout declares cfg(test) path editor_layout_paint_tests.rs with six test declarations. Runtime library declares cfg(test) loading_tests; loading_tests declares stalled_http_tests.rs, for 18 source test declarations total. Rust discovery here is declarative source inspection only; Cargo runner collection/execution NOT-RUN.
+
+Tracked historical docs/evidence, diagnostics validators/fixtures, CI/script, root manifest and lock show zero diff against HEAD. Frozen accepted build manifest still identifies old source and differs from current runtime lib/loading and editor layout. No manifest or protected validator rebaseline. Experiment23 preparation tests excluded from current diagnostic lane because they require frozen accepted build bytes and private parent directory. Historical package validation NOT-RUN; new source is not acceptance proof for old archive. Runtime experiment29 final source hashes match all three current runtime files; its prior executable/mutation outcomes were not rerun.
+
+Hosted CI, Cargo, build, renderer, UI: NOT-RUN under bounded dispatch. No product/docs/deps/lock/assets/settings/git commits/publication edits. Only .work/m11-review/diagnostics receipts written; all receipts retained for root. No continuing owned processes or external resources.

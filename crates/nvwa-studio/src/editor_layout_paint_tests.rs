@@ -164,10 +164,10 @@ fn paint_oracle_tab(output: &egui::FullOutput, label: &str) -> (egui::Rect, egui
     let mut labels = Vec::new();
     for clipped in &output.shapes {
         paint_oracle_visit(&clipped.shape, &mut |shape| {
-            if let egui::Shape::Text(text) = shape {
-                if text.galley.job.text == label {
-                    labels.push(text.galley.rect.translate(text.pos.to_vec2()));
-                }
+            if let egui::Shape::Text(text) = shape
+                && text.galley.job.text == label
+            {
+                labels.push(text.galley.rect.translate(text.pos.to_vec2()));
             }
         });
     }
@@ -182,19 +182,20 @@ fn paint_oracle_tab(output: &egui::FullOutput, label: &str) -> (egui::Rect, egui
     let mut nearby = Vec::new();
     for clipped in &output.shapes {
         paint_oracle_visit(&clipped.shape, &mut |shape| {
-            if let egui::Shape::Text(text) = shape {
-                if text.galley.job.text == label {
-                    text_index = Some(index);
-                }
+            if let egui::Shape::Text(text) = shape
+                && text.galley.job.text == label
+            {
+                text_index = Some(index);
             }
-            if let egui::Shape::Rect(rect) = shape {
-                if rect.rect.intersects(text_rect) && clipped.clip_rect.contains_rect(text_rect) {
-                    assert!(
-                        nearby.len() < 64,
-                        "paint-oracle observation exceeded 64 shapes: {label}"
-                    );
-                    nearby.push((index, rect.rect, rect.fill));
-                }
+            if let egui::Shape::Rect(rect) = shape
+                && rect.rect.intersects(text_rect)
+                && clipped.clip_rect.contains_rect(text_rect)
+            {
+                assert!(
+                    nearby.len() < 64,
+                    "paint-oracle observation exceeded 64 shapes: {label}"
+                );
+                nearby.push((index, rect.rect, rect.fill));
             }
             index += 1;
         });
