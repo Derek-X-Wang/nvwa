@@ -1,0 +1,26 @@
+{
+  "status": "FAIL",
+  "errors": [
+    "altered required file: inputs/document-audit.json",
+    "byte count mismatch: inputs/document-audit.json",
+    "altered required file: inputs/package-metadata.json",
+    "byte count mismatch: inputs/package-metadata.json",
+    "independent frozen cohort field differs: files",
+    "independent frozen cohort field differs: packages",
+    "content-derived document roles differ: adler2@2.0.1",
+    "content-derived full-text candidate coverage differs: adler2@2.0.1"
+  ],
+  "package_count": 323,
+  "file_count": 1040,
+  "missing_text_packages": 23,
+  "unknown_license_packages": 3,
+  "target_counts": {
+    "aarch64-apple-darwin": 307,
+    "wasm32-unknown-unknown": 278
+  },
+  "completeness": "BLOCKED",
+  "manifest_sha256": "d1e2a32065eacb0b59a22b7362539daedf71d02f50111babfa2c01812e2ebe51",
+  "tooling_version": 3,
+  "independent_cohort_anchor_sha256": "2b551ed8c7fa22b347424c1056a3b6e5c935baaf7f4df7ebae4eb3e44ccb24fd",
+  "live_source_check": "NOT-RUN"
+}

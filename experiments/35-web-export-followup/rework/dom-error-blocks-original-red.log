@@ -1,0 +1,52 @@
+✔ forwards exact arguments, receiver, return value and original exception (3.018167ms)
+✔ supported DOM journal initializes once and publishes each bounded overflow while forwarding originals (105.816042ms)
+✖ DOM write failures preserve forwarding and subsequent successful update exposes failure and overflow counts (1.247916ms)
+✔ DOM initialization failure leaves original console behavior and bounded in-memory records intact (1.137542ms)
+✖ original console exception survives a failed DOM write (0.491667ms)
+✔ bounded journal retains errors without swallowing or fabricating callback (0.992375ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 209.0135
+
+✖ failing tests:
+
+test at .work/issue5-export-followup/rework/mutants/dom-error-blocks-original/observer.test.cjs:75:1
+✖ DOM write failures preserve forwarding and subsequent successful update exposes failure and overflow counts (1.247916ms)
+  evalmachine.<anonymous>:25
+        throw error;
+        ^
+  
+  Error: journal write rejected
+      at set textContent (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/dom-error-blocks-original/observer.test.cjs:33:36)
+      at publishJournal (evalmachine.<anonymous>:23:27)
+      at record (evalmachine.<anonymous>:36:5)
+      at install (evalmachine.<anonymous>:55:3)
+      at evalmachine.<anonymous>:56:3
+      at Script.runInContext (node:vm:149:12)
+      at Script.runInNewContext (node:vm:154:17)
+      at Object.runInNewContext (node:vm:310:38)
+      at setup (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/dom-error-blocks-original/observer.test.cjs:9:6)
+      at TestContext.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/dom-error-blocks-original/observer.test.cjs:78:17)
+
+test at .work/issue5-export-followup/rework/mutants/dom-error-blocks-original/observer.test.cjs:107:1
+✖ original console exception survives a failed DOM write (0.491667ms)
+  evalmachine.<anonymous>:25
+        throw error;
+        ^
+  
+  Error: journal write rejected
+      at set textContent (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/dom-error-blocks-original/observer.test.cjs:33:36)
+      at publishJournal (evalmachine.<anonymous>:23:27)
+      at record (evalmachine.<anonymous>:36:5)
+      at install (evalmachine.<anonymous>:55:3)
+      at evalmachine.<anonymous>:56:3
+      at Script.runInContext (node:vm:149:12)
+      at Script.runInNewContext (node:vm:154:17)
+      at Object.runInNewContext (node:vm:310:38)
+      at setup (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/dom-error-blocks-original/observer.test.cjs:9:6)
+      at TestContext.<anonymous> (/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/issue5-export-followup/rework/mutants/dom-error-blocks-original/observer.test.cjs:111:17)

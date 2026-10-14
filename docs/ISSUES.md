@@ -1,5 +1,14 @@
 # GitHub work index
 
+## 最新状态：PR #42 合并与独立缺口复查（2026-10-13）
+
+PR42已合并main `7851c2e74f757f93774f2d5fa05151562c393012`，最终PR CI38473292259通过；合并后main CI38477675464单独核验通过113项独立Rust、77项诊断及双目标编译。#3保持OPEN/needs-info及原始IAB DPR入口缺失的阻塞；#4保持OPEN及所有未验证性能项。
+
+- #5：实验35实际取得当前页面自动和原有按钮导出的真实角色PNG，但跨导航事件观察不同，原因仍未知；原始条件、iframe及物理用户/更广浏览器未补齐。不采用产品修复，保持开放。
+- #10：实验36保留323个生产目标依赖候选及不同字体/资产许可；23项无实质性条款候选、三个第一方许可未知、47个缺口。未签名、未发行、未安装候选文本，保持开放。
+
+证据工具修复及独立复审见[本轮验收](evidence/export-notices-20261013/ACCEPTANCE.md)。这里的新状态优先；下方条目保留旧时间点，不将历史待合并/旧测试数视为当前状态。
+
 Current checkpoint (2026-10-13): merged main045d8abc after PR36/38/35 passes final hosted CI. Candidate[#39](https://github.com/Derek-X-Wang/nvwa/issues/39) adds permanent CPU UI paint tests;[#23](https://github.com/Derek-X-Wang/nvwa/issues/23) adds and verifies a finite root-request policy, including actual Web latest-Work recovery. Integrated113 tests, both release builds and source-head9df6d3a hosted CI run38392776461 pass. [Actual native recovery](evidence/m1-1-final/native/README.md) now passes real tabs/whole-Work invariance, missing-asset removal, same/different-path Open recovery, complete-Doc Save/Open and paused click-action restoration. #23/#39 remain open pending PR41 integration/final-head CI. [#4](https://github.com/Derek-X-Wang/nvwa/issues/4) retains actual profiling and matching baseline Web evidence, with first presentation/cold-state/GPU-memory gaps open. [#40](https://github.com/Derek-X-Wang/nvwa/issues/40)'s separate headless GPU experiment32 actually passes independent normal/mutant checks0/0/1; native-window experiment31 remains NOT-RUN, and the pixel check stays experimental. #3 stays blocked under its unavailable original conditions. No new main merge or M2 scope is implied. [Current evidence](evidence/m1-1-final/ACCEPTANCE.md). Earlier issue states below are historical snapshots.
 
 Latest checkpoint (2026-10-12): main is `de4ddef` after merged [PR #34](https://github.com/Derek-X-Wang/nvwa/pull/34). #3 remains blocked; #4/#5 retain their unresolved boundaries. [#7](https://github.com/Derek-X-Wang/nvwa/issues/7)'s documentation alternative now has two actual export measurements and unchanged frozen hashes in [experiment26](../experiments/26-export-drift/REPORT.md); it awaits this evidence PR's merge. Separate [PR #35](https://github.com/Derek-X-Wang/nvwa/pull/35) introduces a bounded CI trial and ArtCraft testing research. Neither publication changes M2 authorization or closes platform/GPU/physical-input gaps. Earlier issue states below are historical snapshots.

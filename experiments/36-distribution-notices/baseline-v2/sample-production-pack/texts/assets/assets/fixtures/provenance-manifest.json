@@ -1,0 +1,91 @@
+{
+  "fixture_id": "nvwa-original-humanoid-v1",
+  "license": "CC0-1.0",
+  "scope": "Original fixture, generation/validation sources, previews, and their metadata only; no license assigned to the repository.",
+  "provenance": "Original agent-authored geometry coordinates, voxel-union topology, numeric morph displacement functions, smooth skin weights, opaque material colors, and manually authored skeletal presets. User authorized original distributable M0 test fixture. No third-party character, texture, mocap, AI motion, or purchased asset.",
+  "generation_command": "/opt/homebrew/bin/blender -b -t 2 --python tools/blender/generate_fixture.py",
+  "validation_command": "python3 tools/blender/validate_fixture.py --publish",
+  "generator_version": "Blender 3.3.1 arm64; exporter bundled with Blender",
+  "files": [
+    {
+      "path": "assets/fixtures/nvwa-humanoid.glb",
+      "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "bytes": 3827840
+    },
+    {
+      "path": "assets/fixtures/nvwa-humanoid.blend",
+      "sha256": "ab76175ba9c3fe64823cb3e3872a495ddd0b3abf82ccfeb31f2051a00a231b66",
+      "bytes": 6436028
+    },
+    {
+      "path": "assets/fixtures/source-structure.json",
+      "sha256": "acd23cb37f1d315dd0b371014365b0a8c254532b4971390fcf7a3be89f1e1b1d",
+      "bytes": 732
+    },
+    {
+      "path": "assets/character.profile.json",
+      "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+      "bytes": 1064
+    },
+    {
+      "path": "tools/blender/generate_fixture.py",
+      "sha256": "bc54eec314ccba2ca2a77499b03d96b1ec9afb8c38cfbb9ac9e1fb04f5736f0e",
+      "bytes": 14987
+    },
+    {
+      "path": "tools/blender/validate_fixture.py",
+      "sha256": "5d6e7c9b3104bb9b15904ae9c558d8442bdbaa0f3d69b665dcf465b54d7ec68c",
+      "bytes": 11773
+    },
+    {
+      "path": "tools/blender/check_reproducibility.py",
+      "sha256": "6e0a7c3ab641b05ef2efb7f56c87ab4bd2f0cb30f7b4d2848f9693191d007e78",
+      "bytes": 2515
+    },
+    {
+      "path": "assets/fixtures/LICENSE.txt",
+      "sha256": "b10b199096d04791fe942e0de62eb4643edbd9d289791b88715789cad87fe151",
+      "bytes": 1069
+    },
+    {
+      "path": "experiments/01-character/structural-validation.json",
+      "sha256": "d0ba40b8daf4e3626d3f9065dd4324a8e4d5bcac0dfe2afbf5281f22cd8ad747",
+      "bytes": 2782
+    },
+    {
+      "path": "assets/fixtures/preview-base.png",
+      "sha256": "605b1b212ee58eeb552561f33d5afb094ed88aced527a14aad3d05951dcc5ad6",
+      "bytes": 365169
+    },
+    {
+      "path": "assets/fixtures/preview-jaw_width.png",
+      "sha256": "8aaf8da928119453edc79276d5cf60994ab1c4545d7ebed71ec879f10f2098ad",
+      "bytes": 366167
+    },
+    {
+      "path": "assets/fixtures/preview-nose_width.png",
+      "sha256": "03ddbce74275aaa388b3e12d87e663b9103414e6e2b346ad06554393099243ba",
+      "bytes": 365206
+    },
+    {
+      "path": "assets/fixtures/preview-shoulder_width.png",
+      "sha256": "8917258e11a0d3320d7b91c18f06f622c27ef0295690c27fed41fba7ac686b3b",
+      "bytes": 365949
+    },
+    {
+      "path": "assets/fixtures/preview-smile.png",
+      "sha256": "e041cd52090471a3ac23ccf29e93a9b8bd9bd8f473699d2f6b623471c55b99c7",
+      "bytes": 365369
+    },
+    {
+      "path": "assets/fixtures/preview-wave.png",
+      "sha256": "88b5425b2704a10a1d4902f3ee32cc6b490e05552ec674ba3029761c22daa25b",
+      "bytes": 365698
+    },
+    {
+      "path": "experiments/01-character/reproducibility.json",
+      "sha256": "860089e4ed9e74c79ce18cffa99221d2e56d704766983f5800852c068ce56e82",
+      "bytes": 7097
+    }
+  ]
+}

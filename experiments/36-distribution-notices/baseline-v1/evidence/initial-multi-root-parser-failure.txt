@@ -1,0 +1,4 @@
+Captured tool error before fix:
+ValueError: unrecognized cargo-tree row: 
+
+Cause: cargo tree separates multiple package roots with a blank line. Parser initially rejected it. Parser now skips blank separators; native two-root feature comparison passes.

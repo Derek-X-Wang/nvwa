@@ -1,0 +1,258 @@
+[
+  {
+    "name": "external-anchor-red",
+    "argv": [
+      "python3",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/export-notices-r2/stage-b/checker-bundle/check.py",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/sample-production-pack"
+    ],
+    "exit": 1,
+    "stdout": {
+      "status": "FAIL",
+      "errors": [
+        "independent cohort anchor hash mismatch"
+      ]
+    },
+    "stderr": ""
+  },
+  {
+    "name": "external-anchor-restored",
+    "argv": [
+      "python3",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/export-notices-r2/stage-b/checker-bundle/check.py",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/sample-production-pack"
+    ],
+    "exit": 0,
+    "stdout": {
+      "status": "VERIFIED-INTEGRITY/PARTIAL-COVERAGE",
+      "errors": [],
+      "package_count": 323,
+      "file_count": 1039,
+      "missing_text_packages": 21,
+      "unknown_license_packages": 3,
+      "target_counts": {
+        "aarch64-apple-darwin": 307,
+        "wasm32-unknown-unknown": 278
+      },
+      "completeness": "BLOCKED",
+      "manifest_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "tooling_version": 2,
+      "independent_cohort_anchor_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "live_source_check": "NOT-RUN"
+    },
+    "stderr": ""
+  },
+  {
+    "name": "unindexed-red",
+    "argv": [
+      "python3",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/export-notices-r2/stage-b/boundary-pack"
+    ],
+    "exit": 1,
+    "stdout": {
+      "status": "FAIL",
+      "errors": [
+        "independent indexed file inventory differs"
+      ],
+      "package_count": 323,
+      "file_count": 1039,
+      "missing_text_packages": 21,
+      "unknown_license_packages": 3,
+      "target_counts": {
+        "aarch64-apple-darwin": 307,
+        "wasm32-unknown-unknown": 278
+      },
+      "completeness": "BLOCKED",
+      "manifest_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "tooling_version": 2,
+      "independent_cohort_anchor_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "live_source_check": "NOT-RUN"
+    },
+    "stderr": ""
+  },
+  {
+    "name": "unindexed-restored",
+    "argv": [
+      "python3",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/export-notices-r2/stage-b/boundary-pack"
+    ],
+    "exit": 0,
+    "stdout": {
+      "status": "VERIFIED-INTEGRITY/PARTIAL-COVERAGE",
+      "errors": [],
+      "package_count": 323,
+      "file_count": 1039,
+      "missing_text_packages": 21,
+      "unknown_license_packages": 3,
+      "target_counts": {
+        "aarch64-apple-darwin": 307,
+        "wasm32-unknown-unknown": 278
+      },
+      "completeness": "BLOCKED",
+      "manifest_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "tooling_version": 2,
+      "independent_cohort_anchor_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "live_source_check": "NOT-RUN"
+    },
+    "stderr": ""
+  },
+  {
+    "name": "missing-live-sources-red",
+    "argv": [
+      "python3",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/sample-production-pack",
+      "--source-root",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/export-notices-r2/stage-b/empty-root"
+    ],
+    "exit": 1,
+    "stdout": {
+      "status": "FAIL",
+      "errors": [
+        "live source path/hash differs: crates/nvwa-cli/Cargo.toml",
+        "live source path/hash differs: crates/nvwa-cli/src/lib.rs",
+        "live source path/hash differs: crates/nvwa-cli/src/main.rs",
+        "live source path/hash differs: crates/nvwa-cli/tests/offline.rs",
+        "live source path/hash differs: crates/nvwa-cli/tests/sequence.rs",
+        "live source path/hash differs: crates/nvwa-core/Cargo.toml",
+        "live source path/hash differs: crates/nvwa-core/src/asset.rs",
+        "live source path/hash differs: crates/nvwa-core/src/bounded_history_tests.rs",
+        "live source path/hash differs: crates/nvwa-core/src/lib.rs",
+        "live source path/hash differs: crates/nvwa-core/tests/transactions.rs",
+        "live source path/hash differs: crates/nvwa-runtime/Cargo.toml",
+        "live source path/hash differs: crates/nvwa-runtime/src/lib.rs",
+        "live source path/hash differs: crates/nvwa-runtime/src/loading_tests.rs",
+        "live source path/hash differs: crates/nvwa-runtime/src/stalled_http_tests.rs",
+        "live source path/hash differs: crates/nvwa-studio/Cargo.toml",
+        "live source path/hash differs: crates/nvwa-studio/src/editor_layout.rs",
+        "live source path/hash differs: crates/nvwa-studio/src/editor_layout_paint_tests.rs",
+        "live source path/hash differs: crates/nvwa-studio/src/fonts.rs",
+        "live source path/hash differs: crates/nvwa-studio/src/lib.rs",
+        "live source path/hash differs: crates/nvwa-studio/src/main.rs",
+        "live source path/hash differs: crates/nvwa-studio/src/platform.rs",
+        "live source path/hash differs: crates/nvwa-studio/src/web_input.rs",
+        "live source path/hash differs: Cargo.toml",
+        "live source path/hash differs: Cargo.lock",
+        "live source path/hash differs: rust-toolchain.toml",
+        "live source path/hash differs: web/index.html",
+        "live source path/hash differs: scripts/build-web.sh",
+        "live source path/hash differs: scripts/package-native.py",
+        "live source path/hash differs: assets/character.profile.json",
+        "live source path/hash differs: assets/fixtures/nvwa-humanoid.glb",
+        "live source path/hash differs: assets/fonts/NvwaSansSC-Regular.ttf",
+        "live source path/hash differs: examples/m1-sequence.nvwa.json"
+      ],
+      "package_count": 323,
+      "file_count": 1039,
+      "missing_text_packages": 21,
+      "unknown_license_packages": 3,
+      "target_counts": {
+        "aarch64-apple-darwin": 307,
+        "wasm32-unknown-unknown": 278
+      },
+      "completeness": "BLOCKED",
+      "manifest_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "tooling_version": 2,
+      "independent_cohort_anchor_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "live_source_check": "FAIL"
+    },
+    "stderr": ""
+  },
+  {
+    "name": "portable-no-live-source-green",
+    "argv": [
+      "python3",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/sample-production-pack"
+    ],
+    "exit": 0,
+    "stdout": {
+      "status": "VERIFIED-INTEGRITY/PARTIAL-COVERAGE",
+      "errors": [],
+      "package_count": 323,
+      "file_count": 1039,
+      "missing_text_packages": 21,
+      "unknown_license_packages": 3,
+      "target_counts": {
+        "aarch64-apple-darwin": 307,
+        "wasm32-unknown-unknown": 278
+      },
+      "completeness": "BLOCKED",
+      "manifest_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "tooling_version": 2,
+      "independent_cohort_anchor_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "live_source_check": "NOT-RUN"
+    },
+    "stderr": ""
+  },
+  {
+    "name": "new-root-license-red",
+    "argv": [
+      "python3",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/sample-production-pack",
+      "--source-root",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/export-notices-r2/stage-b/source-root"
+    ],
+    "exit": 1,
+    "stdout": {
+      "status": "FAIL",
+      "errors": [
+        "root first-party license no longer UNKNOWN: explicit owner review required"
+      ],
+      "package_count": 323,
+      "file_count": 1039,
+      "missing_text_packages": 21,
+      "unknown_license_packages": 3,
+      "target_counts": {
+        "aarch64-apple-darwin": 307,
+        "wasm32-unknown-unknown": 278
+      },
+      "completeness": "BLOCKED",
+      "manifest_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "tooling_version": 2,
+      "independent_cohort_anchor_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "live_source_check": "FAIL"
+    },
+    "stderr": ""
+  },
+  {
+    "name": "live-sources-restored",
+    "argv": [
+      "python3",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/check.py",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/36-distribution-notices/sample-production-pack",
+      "--source-root",
+      "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/export-notices-r2/stage-b/source-root"
+    ],
+    "exit": 0,
+    "stdout": {
+      "status": "VERIFIED-INTEGRITY/PARTIAL-COVERAGE",
+      "errors": [],
+      "package_count": 323,
+      "file_count": 1039,
+      "missing_text_packages": 21,
+      "unknown_license_packages": 3,
+      "target_counts": {
+        "aarch64-apple-darwin": 307,
+        "wasm32-unknown-unknown": 278
+      },
+      "completeness": "BLOCKED",
+      "manifest_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "tooling_version": 2,
+      "independent_cohort_anchor_sha256": "ab92b4816b18191e0d24d063e43a9e183cd3204114a4321da5d478455a403bf2",
+      "live_source_check": "VERIFIED"
+    },
+    "stderr": ""
+  }
+]

@@ -1,0 +1,14 @@
+✔ forwards exact arguments, receiver, return value and original exception (2.727291ms)
+✔ supported DOM journal initializes once and publishes each bounded overflow while forwarding originals (103.251541ms)
+✔ DOM write failures preserve forwarding and subsequent successful update exposes failure and overflow counts (1.465916ms)
+✔ DOM initialization failure leaves original console behavior and bounded in-memory records intact (1.112541ms)
+✔ original console exception survives a failed DOM write (0.46875ms)
+✔ bounded journal retains errors without swallowing or fabricating callback (0.969916ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 202.172375
