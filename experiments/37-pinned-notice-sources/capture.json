@@ -1,0 +1,831 @@
+{
+  "baseline": {
+    "action": "UNCHANGED; no gap closure or packet amendment",
+    "gap_records": 47,
+    "manifest_path": "inputs/baseline-v3-manifest.json",
+    "missing_text_packages": 23,
+    "other_300_packages": "terms-bearing presence does not establish complete/applicable coverage",
+    "sha256": "2b551ed8c7fa22b347424c1056a3b6e5c935baaf7f4df7ebae4eb3e44ccb24fd"
+  },
+  "control_source_fixture": {
+    "acquisition": "existing public local crate bytes; Git blob matches acquired exact source tree; HTTP body NOT-RUN",
+    "bytes": 89,
+    "git_blob_sha1": "77f41f81f2dc75b9578a9324eab1b07c5ecd12b9",
+    "original_source_path": "svg_fmt/src/lib.rs",
+    "package": "svg_fmt@0.4.5",
+    "path": "inputs/svg_fmt@0.4.5/source-fixture.rs",
+    "purpose": "negative code-as-terms control only, not notice candidate",
+    "sha256": "b891c7958cb7d4afcea8bd214987bf784bd44decc24981934e19f4416c3c8720"
+  },
+  "integration_context": {
+    "checkout_head_observed": "b7d2263abee0511f162886e25af61dcc22bac42b",
+    "merged_main_supplied_by_root": "159289c91673227928553a04f6a150520543022b",
+    "scope": "evidence-only isolated experiment; no Git mutation"
+  },
+  "inventory": {
+    "http/hexf-parse-0.2.1-commit.json": {
+      "bytes": 1091,
+      "sha256": "2fe791511840624979f716297f390783033c580cef3ad4773694c585b1448484"
+    },
+    "http/hexf-parse-0.2.1-tree.json": {
+      "bytes": 3394,
+      "sha256": "8657f76fb2c43f7b44a2be2869fe43c2c709303700d884444148d119f79e2e1f"
+    },
+    "http/profiling-1.0.18-LICENSE-APACHE": {
+      "bytes": 10818,
+      "sha256": "10d30a673cd5e9349bdc02aeb48f14b3386d27d0da32df8f0a555d4aa16aa551"
+    },
+    "http/profiling-1.0.18-LICENSE-MIT": {
+      "bytes": 1093,
+      "sha256": "c8167fdeeed46d3f244d3f85c5bf998ce889343691c32be2c61a8bc4b5c08333"
+    },
+    "http/profiling-1.0.18-commit.json": {
+      "bytes": 1092,
+      "sha256": "d6de5abc052dac0072915aee4de712e477e2ff31bef06462c9254c9c7c6a68cf"
+    },
+    "http/profiling-1.0.18-tree.json": {
+      "bytes": 9723,
+      "sha256": "78c820bd06add0472110c75633dd49c56ee80bebe663e0b4ed6dee461ec08d2f"
+    },
+    "http/svg_fmt-0.4.5-LICENSE": {
+      "bytes": 1070,
+      "sha256": "7e98bed7f100747aaae7d82ab94fbe6b76fd6b84b09a3aaa413bff8196d0fbb1"
+    },
+    "http/svg_fmt-0.4.5-commit.json": {
+      "bytes": 1086,
+      "sha256": "0f407fc819d22d66584a6a4ce8a7e8f9c558d9b492d40b9d6fe485bc04d245c8"
+    },
+    "http/svg_fmt-0.4.5-tree.json": {
+      "bytes": 9578,
+      "sha256": "aeefc843e2a4858ed41a11c514447bd0ac4eee777de19f7fbe5e7ad568e1dcdc"
+    },
+    "inputs/baseline-v3-manifest.json": {
+      "bytes": 2554169,
+      "sha256": "2b551ed8c7fa22b347424c1056a3b6e5c935baaf7f4df7ebae4eb3e44ccb24fd"
+    },
+    "inputs/hexf-parse@0.2.1/.cargo_vcs_info.json": {
+      "bytes": 74,
+      "sha256": "7c5579b3abe5e2dcdcba1c845849b7d2f20f028de49fb27437227fd32545aae7"
+    },
+    "inputs/hexf-parse@0.2.1/Cargo.toml": {
+      "bytes": 868,
+      "sha256": "dd7274968556f3f3309df5615d94437ec4e4823777cc440f91177b2170cbe2a7"
+    },
+    "inputs/hexf-parse@0.2.1/Cargo.toml.orig": {
+      "bytes": 344,
+      "sha256": "4a56dbdbc12054fd33b7a2634a45cbbe6fe12f5e6f4081002cbfa527f7220c70"
+    },
+    "inputs/profiling@1.0.18/.cargo_vcs_info.json": {
+      "bytes": 103,
+      "sha256": "15498e60d175e3e5a4a1c4d30a3a4c836c130c79a93b5dd27944d5ae9a3b3b82"
+    },
+    "inputs/profiling@1.0.18/Cargo.toml": {
+      "bytes": 2185,
+      "sha256": "00c84a390cdb283f2fea80bb6ccbfef8af8cd2005e79309057af1b5030d3e6a5"
+    },
+    "inputs/profiling@1.0.18/Cargo.toml.orig": {
+      "bytes": 1582,
+      "sha256": "5c2cc51af406c9e636730400d7fd1293c3cc3ef294421113c6af826bb2d47c1b"
+    },
+    "inputs/source-after-phase1.json": {
+      "bytes": 7190,
+      "sha256": "c8ced8fcb09e0a41a95e242c8ef7861fb3f50386e7d81d5d3645aaab81761d6b"
+    },
+    "inputs/source-after.json": {
+      "bytes": 7190,
+      "sha256": "c8ced8fcb09e0a41a95e242c8ef7861fb3f50386e7d81d5d3645aaab81761d6b"
+    },
+    "inputs/source-before.json": {
+      "bytes": 7190,
+      "sha256": "c8ced8fcb09e0a41a95e242c8ef7861fb3f50386e7d81d5d3645aaab81761d6b"
+    },
+    "inputs/svg_fmt@0.4.5/.cargo_vcs_info.json": {
+      "bytes": 101,
+      "sha256": "559575e2ad0bb3d09cde0aac106e9ad2021efad87259da068bffe440e1b4138f"
+    },
+    "inputs/svg_fmt@0.4.5/Cargo.toml": {
+      "bytes": 1069,
+      "sha256": "84650d018d4259c31ab944439b642665668367ed4312a64a735ee2654d1056e5"
+    },
+    "inputs/svg_fmt@0.4.5/Cargo.toml.orig": {
+      "bytes": 363,
+      "sha256": "1ec9c98196c4e873d78f2e07c0803679266835efb6ecd223f0bc67a4ae39ed29"
+    },
+    "inputs/svg_fmt@0.4.5/source-fixture.rs": {
+      "bytes": 89,
+      "sha256": "b891c7958cb7d4afcea8bd214987bf784bd44decc24981934e19f4416c3c8720"
+    },
+    "requests.json": {
+      "bytes": 19345,
+      "sha256": "e5ab409f8295a39ab3aa05dd55fc4a5c23b71a0388c453f41e7d8023830e22a0"
+    }
+  },
+  "limits": {
+    "automatic_retry": false,
+    "http_actual_requests": 9,
+    "http_failed_requests": 0,
+    "http_max_requests": 20,
+    "max_response_bytes": 262144,
+    "redirect_following": false,
+    "timeout_seconds": 10
+  },
+  "packages": [
+    {
+      "absence_scope": "Tree filenames inspected recursively; legal files sought only at resolved package directory and ancestors. README/code/header bodies and other nested document scopes NOT-RUN.",
+      "captured_files": [
+        {
+          "body_path": "http/profiling-1.0.18-LICENSE-APACHE",
+          "bytes": 10818,
+          "copyright_lines": [
+            "   \"Licensor\" shall mean the copyright owner or entity authorized by",
+            "   the copyright owner that is granting the License.",
+            "   copyright notice that is included in or attached to the work",
+            "   submitted to Licensor for inclusion in the Work by the copyright owner",
+            "   the copyright owner. For the purposes of this definition, \"submitted\"",
+            "   designated in writing by the copyright owner as \"Not a Contribution.\"",
+            "2. Grant of Copyright License. Subject to the terms and conditions of",
+            "   copyright license to reproduce, prepare Derivative Works of,",
+            "       that You distribute, all copyright, patent, trademark, and",
+            "   You may add Your own copyright statement to Your modifications and",
+            "   same \"printed page\" as the copyright notice for easier",
+            "Copyright [yyyy] [name of copyright owner]"
+          ],
+          "document_role": {
+            "bytes": 10818,
+            "classification_version": 1,
+            "content_signatures": [
+              "apache-numbered-license-text"
+            ],
+            "full_license_text_candidate": true,
+            "kind": "full-license-text-candidate",
+            "scope": "content screening only; original bytes retained; legal/applicability/expression coverage NOT-RUN",
+            "sha256": "10d30a673cd5e9349bdc02aeb48f14b3386d27d0da32df8f0a555d4aa16aa551"
+          },
+          "git_blob_sha1": "139dce95d473c201a8561ef17536314d8b8cda65",
+          "location_scope": "repository/package ancestor source; applicability UNKNOWN",
+          "request_ordinal": 7,
+          "sha256": "10d30a673cd5e9349bdc02aeb48f14b3386d27d0da32df8f0a555d4aa16aa551",
+          "source_path": "LICENSE-APACHE",
+          "tree_blob_sha1": "139dce95d473c201a8561ef17536314d8b8cda65"
+        },
+        {
+          "body_path": "http/profiling-1.0.18-LICENSE-MIT",
+          "bytes": 1093,
+          "copyright_lines": [
+            "Copyright (c) 2020 Philip Degarmo and other contributors",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ],
+          "document_role": {
+            "bytes": 1093,
+            "classification_version": 1,
+            "content_signatures": [
+              "permission-grant-and-warranty-text"
+            ],
+            "full_license_text_candidate": true,
+            "kind": "full-license-text-candidate",
+            "scope": "content screening only; original bytes retained; legal/applicability/expression coverage NOT-RUN",
+            "sha256": "c8167fdeeed46d3f244d3f85c5bf998ce889343691c32be2c61a8bc4b5c08333"
+          },
+          "git_blob_sha1": "6a84e059ad8b43e03c2b06bc2af4dc1d8442808d",
+          "location_scope": "repository/package ancestor source; applicability UNKNOWN",
+          "request_ordinal": 8,
+          "sha256": "c8167fdeeed46d3f244d3f85c5bf998ce889343691c32be2c61a8bc4b5c08333",
+          "source_path": "LICENSE-MIT",
+          "tree_blob_sha1": "6a84e059ad8b43e03c2b06bc2af4dc1d8442808d"
+        }
+      ],
+      "commit": "8271551172eb6fa4cba47369aedd93790c623df9",
+      "commit_request": 1,
+      "coverage_unknowns": {
+        "copyright_and_subasset_completeness": "UNKNOWN",
+        "distribution_permission": "UNKNOWN",
+        "entire_license_instrument": "UNKNOWN",
+        "every_declared_expression_branch": "UNKNOWN",
+        "final_binary_membership": "UNKNOWN",
+        "first_party_licensing": "UNKNOWN",
+        "licensing_applicability": "UNKNOWN",
+        "whole_package_scope": "UNKNOWN"
+      },
+      "expression": "MIT OR Apache-2.0",
+      "legal_entries": [
+        {
+          "mode": "100644",
+          "path": "LICENSE-APACHE",
+          "sha": "139dce95d473c201a8561ef17536314d8b8cda65",
+          "size": 10818,
+          "type": "blob",
+          "url": "https://api.github.com/repos/aclysma/profiling/git/blobs/139dce95d473c201a8561ef17536314d8b8cda65"
+        },
+        {
+          "mode": "100644",
+          "path": "LICENSE-MIT",
+          "sha": "6a84e059ad8b43e03c2b06bc2af4dc1d8442808d",
+          "size": 1093,
+          "type": "blob",
+          "url": "https://api.github.com/repos/aclysma/profiling/git/blobs/6a84e059ad8b43e03c2b06bc2af4dc1d8442808d"
+        }
+      ],
+      "local_inputs": {
+        ".cargo_vcs_info.json": {
+          "bytes": 103,
+          "path": "inputs/profiling@1.0.18/.cargo_vcs_info.json",
+          "sha256": "15498e60d175e3e5a4a1c4d30a3a4c836c130c79a93b5dd27944d5ae9a3b3b82"
+        },
+        "Cargo.toml": {
+          "bytes": 2185,
+          "path": "inputs/profiling@1.0.18/Cargo.toml",
+          "sha256": "00c84a390cdb283f2fea80bb6ccbfef8af8cd2005e79309057af1b5030d3e6a5"
+        },
+        "Cargo.toml.orig": {
+          "bytes": 1582,
+          "path": "inputs/profiling@1.0.18/Cargo.toml.orig",
+          "sha256": "5c2cc51af406c9e636730400d7fd1293c3cc3ef294421113c6af826bb2d47c1b"
+        }
+      },
+      "manifest_tree_matches": [
+        "profiling/Cargo.toml"
+      ],
+      "observed_scope": "original legal files at resolved package directory and repository ancestors only; not whole-package coverage",
+      "original_manifest_git_blob_sha1": "f1a1a97cfa6e3b1bcafc6f53c91671cecf319f43",
+      "package": "profiling@1.0.18",
+      "package_id": "registry+https://github.com/rust-lang/crates.io-index#profiling@1.0.18",
+      "path_resolution_method": "unique original Cargo.toml Git blob in exact recursive tree; published VCS path retained verbatim",
+      "repository": "https://github.com/aclysma/profiling",
+      "request_ordinals": [
+        1,
+        2,
+        7,
+        8
+      ],
+      "resolved_manifest_path": "profiling/Cargo.toml",
+      "resolved_package_path": "profiling",
+      "review_acceptance": "PENDING separate fresh review",
+      "root_tree_sha1": "09fcac6c87b5d809c4460ed61b49cfc1e37d65aa",
+      "sealed_v3_gap_action": "NONE; baseline unchanged",
+      "state": "original terms candidates captured",
+      "tree_request": 2,
+      "vcs_path_in_vcs": "profiling",
+      "vcs_path_state": "declared by published .cargo_vcs_info.json"
+    },
+    {
+      "absence_scope": "Tree filenames inspected recursively; legal files sought only at resolved package directory and ancestors. README/code/header bodies and other nested document scopes NOT-RUN.",
+      "captured_files": [
+        {
+          "body_path": "http/svg_fmt-0.4.5-LICENSE",
+          "bytes": 1070,
+          "copyright_lines": [
+            "Copyright (c) 2019 Nicolas Silva",
+            "The above copyright notice and this permission notice shall be included in all",
+            "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          ],
+          "document_role": {
+            "bytes": 1070,
+            "classification_version": 1,
+            "content_signatures": [
+              "permission-grant-and-warranty-text"
+            ],
+            "full_license_text_candidate": true,
+            "kind": "full-license-text-candidate",
+            "scope": "content screening only; original bytes retained; legal/applicability/expression coverage NOT-RUN",
+            "sha256": "7e98bed7f100747aaae7d82ab94fbe6b76fd6b84b09a3aaa413bff8196d0fbb1"
+          },
+          "git_blob_sha1": "9ad7b40bcf7bb89a9866e5e2e8fdb370fb528e36",
+          "location_scope": "repository/package ancestor source; applicability UNKNOWN",
+          "request_ordinal": 9,
+          "sha256": "7e98bed7f100747aaae7d82ab94fbe6b76fd6b84b09a3aaa413bff8196d0fbb1",
+          "source_path": "LICENSE",
+          "tree_blob_sha1": "9ad7b40bcf7bb89a9866e5e2e8fdb370fb528e36"
+        }
+      ],
+      "commit": "93f414cd572b5c2781df93dbdc068ed13443d05a",
+      "commit_request": 3,
+      "coverage_unknowns": {
+        "copyright_and_subasset_completeness": "UNKNOWN",
+        "distribution_permission": "UNKNOWN",
+        "entire_license_instrument": "UNKNOWN",
+        "every_declared_expression_branch": "UNKNOWN",
+        "final_binary_membership": "UNKNOWN",
+        "first_party_licensing": "UNKNOWN",
+        "licensing_applicability": "UNKNOWN",
+        "whole_package_scope": "UNKNOWN"
+      },
+      "expression": "MIT/Apache-2.0",
+      "legal_entries": [
+        {
+          "mode": "100644",
+          "path": "LICENSE",
+          "sha": "9ad7b40bcf7bb89a9866e5e2e8fdb370fb528e36",
+          "size": 1070,
+          "type": "blob",
+          "url": "https://api.github.com/repos/nical/rust_debug/git/blobs/9ad7b40bcf7bb89a9866e5e2e8fdb370fb528e36"
+        }
+      ],
+      "local_inputs": {
+        ".cargo_vcs_info.json": {
+          "bytes": 101,
+          "path": "inputs/svg_fmt@0.4.5/.cargo_vcs_info.json",
+          "sha256": "559575e2ad0bb3d09cde0aac106e9ad2021efad87259da068bffe440e1b4138f"
+        },
+        "Cargo.toml": {
+          "bytes": 1069,
+          "path": "inputs/svg_fmt@0.4.5/Cargo.toml",
+          "sha256": "84650d018d4259c31ab944439b642665668367ed4312a64a735ee2654d1056e5"
+        },
+        "Cargo.toml.orig": {
+          "bytes": 363,
+          "path": "inputs/svg_fmt@0.4.5/Cargo.toml.orig",
+          "sha256": "1ec9c98196c4e873d78f2e07c0803679266835efb6ecd223f0bc67a4ae39ed29"
+        }
+      },
+      "manifest_tree_matches": [
+        "svg_fmt/Cargo.toml"
+      ],
+      "observed_scope": "original legal files at resolved package directory and repository ancestors only; not whole-package coverage",
+      "original_manifest_git_blob_sha1": "a73a5830cc6cd883569ab17cee2a066ce5eb9ed8",
+      "package": "svg_fmt@0.4.5",
+      "package_id": "registry+https://github.com/rust-lang/crates.io-index#svg_fmt@0.4.5",
+      "path_resolution_method": "unique original Cargo.toml Git blob in exact recursive tree; published VCS path retained verbatim",
+      "repository": "https://github.com/nical/rust_debug",
+      "request_ordinals": [
+        3,
+        4,
+        9
+      ],
+      "resolved_manifest_path": "svg_fmt/Cargo.toml",
+      "resolved_package_path": "svg_fmt",
+      "review_acceptance": "PENDING separate fresh review",
+      "root_tree_sha1": "db29c95a22ef973d637a0df790f14194a037dad8",
+      "sealed_v3_gap_action": "NONE; baseline unchanged",
+      "state": "original terms candidates captured",
+      "tree_request": 4,
+      "vcs_path_in_vcs": "svg_fmt",
+      "vcs_path_state": "declared by published .cargo_vcs_info.json"
+    },
+    {
+      "absence_scope": "Tree filenames inspected recursively; legal files sought only at resolved package directory and ancestors. README/code/header bodies and other nested document scopes NOT-RUN.",
+      "captured_files": [],
+      "commit": "4225763d744183d720f575ae96d04161b4d08ea0",
+      "commit_request": 5,
+      "coverage_unknowns": {
+        "copyright_and_subasset_completeness": "UNKNOWN",
+        "distribution_permission": "UNKNOWN",
+        "entire_license_instrument": "UNKNOWN",
+        "every_declared_expression_branch": "UNKNOWN",
+        "final_binary_membership": "UNKNOWN",
+        "first_party_licensing": "UNKNOWN",
+        "licensing_applicability": "UNKNOWN",
+        "whole_package_scope": "UNKNOWN"
+      },
+      "expression": "CC0-1.0",
+      "legal_entries": [],
+      "local_inputs": {
+        ".cargo_vcs_info.json": {
+          "bytes": 74,
+          "path": "inputs/hexf-parse@0.2.1/.cargo_vcs_info.json",
+          "sha256": "7c5579b3abe5e2dcdcba1c845849b7d2f20f028de49fb27437227fd32545aae7"
+        },
+        "Cargo.toml": {
+          "bytes": 868,
+          "path": "inputs/hexf-parse@0.2.1/Cargo.toml",
+          "sha256": "dd7274968556f3f3309df5615d94437ec4e4823777cc440f91177b2170cbe2a7"
+        },
+        "Cargo.toml.orig": {
+          "bytes": 344,
+          "path": "inputs/hexf-parse@0.2.1/Cargo.toml.orig",
+          "sha256": "4a56dbdbc12054fd33b7a2634a45cbbe6fe12f5e6f4081002cbfa527f7220c70"
+        }
+      },
+      "manifest_tree_matches": [
+        "parse/Cargo.toml"
+      ],
+      "observed_scope": "original legal files at resolved package directory and repository ancestors only; not whole-package coverage",
+      "original_manifest_git_blob_sha1": "2833f557b25322ab20cc78254e057f132c6e6a0e",
+      "package": "hexf-parse@0.2.1",
+      "package_id": "registry+https://github.com/rust-lang/crates.io-index#hexf-parse@0.2.1",
+      "path_resolution_method": "unique original Cargo.toml Git blob in exact recursive tree; published VCS path retained verbatim",
+      "repository": "https://github.com/lifthrasiir/hexf",
+      "request_ordinals": [
+        5,
+        6
+      ],
+      "resolved_manifest_path": "parse/Cargo.toml",
+      "resolved_package_path": "parse",
+      "review_acceptance": "PENDING separate fresh review",
+      "root_tree_sha1": "1b8ce25c30e5a111acdd7ca390bb452af1e796e9",
+      "sealed_v3_gap_action": "NONE; baseline unchanged",
+      "state": "UNKNOWN no legal file at package/ancestor roots",
+      "tree_request": 6,
+      "vcs_path_in_vcs": null,
+      "vcs_path_state": "ABSENT/UNKNOWN"
+    }
+  ],
+  "requests": [
+    {
+      "authentication": "none",
+      "body_path": "http/profiling-1.0.18-commit.json",
+      "bytes": 1092,
+      "completed_utc": "2026-10-14T05:27:52.051100+00:00",
+      "final_url": "https://api.github.com/repos/aclysma/profiling/git/commits/8271551172eb6fa4cba47369aedd93790c623df9",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Content-Length": "1092",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Oct 2026 05:27:52 GMT",
+        "ETag": "W/\"e866d9e363310090794d75bd5a371120d44a41dd2b5e4acf066d6bdf34689237\"",
+        "Last-Modified": "Mon, 04 May 2026 03:12:21 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Server": "github.com",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-GitHub-Request-Id": "FF7E:1FA7AE:548C56:5AA097:6ACF12D7",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "58",
+        "X-RateLimit-Reset": "1791958580",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Used": "2",
+        "X-XSS-Protection": "0",
+        "connection": "close",
+        "x-github-api-version-selected": "2022-11-28",
+        "x-github-edge-region": "westus3"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 1,
+      "redirect_policy": "no follow",
+      "sha256": "d6de5abc052dac0072915aee4de712e477e2ff31bef06462c9254c9c7c6a68cf",
+      "started_utc": "2026-10-14T05:27:51.797893+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://api.github.com/repos/aclysma/profiling/git/commits/8271551172eb6fa4cba47369aedd93790c623df9"
+    },
+    {
+      "authentication": "none",
+      "body_path": "http/profiling-1.0.18-tree.json",
+      "bytes": 9723,
+      "completed_utc": "2026-10-14T05:27:52.377185+00:00",
+      "final_url": "https://api.github.com/repos/aclysma/profiling/git/trees/09fcac6c87b5d809c4460ed61b49cfc1e37d65aa?recursive=1",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400",
+        "Content-Length": "9723",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Oct 2026 05:27:52 GMT",
+        "ETag": "W/\"c5c678a074c1dc971aee27d2c5c1b902f9787165cf1f2bc71044089ff1ac8540\"",
+        "Last-Modified": "Mon, 12 Oct 2026 04:20:49 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Server": "github.com",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-GitHub-Request-Id": "FF80:8A8D8:58C1F8:5ED864:6ACF12D8",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "57",
+        "X-RateLimit-Reset": "1791958580",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Used": "3",
+        "X-XSS-Protection": "0",
+        "connection": "close",
+        "x-github-api-version-selected": "2022-11-28",
+        "x-github-edge-region": "westus3"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 2,
+      "redirect_policy": "no follow",
+      "sha256": "78c820bd06add0472110c75633dd49c56ee80bebe663e0b4ed6dee461ec08d2f",
+      "started_utc": "2026-10-14T05:27:52.051706+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://api.github.com/repos/aclysma/profiling/git/trees/09fcac6c87b5d809c4460ed61b49cfc1e37d65aa?recursive=1"
+    },
+    {
+      "authentication": "none",
+      "body_path": "http/svg_fmt-0.4.5-commit.json",
+      "bytes": 1086,
+      "completed_utc": "2026-10-14T05:27:52.687956+00:00",
+      "final_url": "https://api.github.com/repos/nical/rust_debug/git/commits/93f414cd572b5c2781df93dbdc068ed13443d05a",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Content-Length": "1086",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Oct 2026 05:27:52 GMT",
+        "ETag": "W/\"337a82d9eed3d77763bee4381a2ac0612313f332e3891e892604ad2ce23d6c52\"",
+        "Last-Modified": "Thu, 17 Apr 2025 13:51:52 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Server": "github.com",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-GitHub-Request-Id": "FF81:59914:56A2A9:5CB3CD:6ACF12D8",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "56",
+        "X-RateLimit-Reset": "1791958580",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Used": "4",
+        "X-XSS-Protection": "0",
+        "connection": "close",
+        "x-github-api-version-selected": "2022-11-28",
+        "x-github-edge-region": "westus3"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 3,
+      "redirect_policy": "no follow",
+      "sha256": "0f407fc819d22d66584a6a4ce8a7e8f9c558d9b492d40b9d6fe485bc04d245c8",
+      "started_utc": "2026-10-14T05:27:52.390451+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://api.github.com/repos/nical/rust_debug/git/commits/93f414cd572b5c2781df93dbdc068ed13443d05a"
+    },
+    {
+      "authentication": "none",
+      "body_path": "http/svg_fmt-0.4.5-tree.json",
+      "bytes": 9578,
+      "completed_utc": "2026-10-14T05:27:52.973477+00:00",
+      "final_url": "https://api.github.com/repos/nical/rust_debug/git/trees/db29c95a22ef973d637a0df790f14194a037dad8?recursive=1",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400",
+        "Content-Length": "9578",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Oct 2026 05:27:52 GMT",
+        "ETag": "W/\"ffd88e2a2e99a67be0154248612a49c28c018a19bc1681bde1ba04259b7041a4\"",
+        "Last-Modified": "Wed, 16 Sep 2026 11:13:42 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Server": "github.com",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-GitHub-Request-Id": "FF82:1F37E9:55A7F1:5BB83E:6ACF12D8",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "55",
+        "X-RateLimit-Reset": "1791958580",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Used": "5",
+        "X-XSS-Protection": "0",
+        "connection": "close",
+        "x-github-api-version-selected": "2022-11-28",
+        "x-github-edge-region": "westus3"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 4,
+      "redirect_policy": "no follow",
+      "sha256": "aeefc843e2a4858ed41a11c514447bd0ac4eee777de19f7fbe5e7ad568e1dcdc",
+      "started_utc": "2026-10-14T05:27:52.688308+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://api.github.com/repos/nical/rust_debug/git/trees/db29c95a22ef973d637a0df790f14194a037dad8?recursive=1"
+    },
+    {
+      "authentication": "none",
+      "body_path": "http/hexf-parse-0.2.1-commit.json",
+      "bytes": 1091,
+      "completed_utc": "2026-10-14T05:27:53.338465+00:00",
+      "final_url": "https://api.github.com/repos/lifthrasiir/hexf/git/commits/4225763d744183d720f575ae96d04161b4d08ea0",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=60, s-maxage=60",
+        "Content-Length": "1091",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Oct 2026 05:27:53 GMT",
+        "ETag": "W/\"06ee5e631af05059d80223624258efa30504c6a42c08fe576c10909792090b46\"",
+        "Last-Modified": "Mon, 29 Mar 2021 22:13:04 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Server": "github.com",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-GitHub-Request-Id": "FF83:3D090D:5C902F:62A573:6ACF12D9",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "54",
+        "X-RateLimit-Reset": "1791958580",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Used": "6",
+        "X-XSS-Protection": "0",
+        "connection": "close",
+        "x-github-api-version-selected": "2022-11-28",
+        "x-github-edge-region": "westus3"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 5,
+      "redirect_policy": "no follow",
+      "sha256": "2fe791511840624979f716297f390783033c580cef3ad4773694c585b1448484",
+      "started_utc": "2026-10-14T05:27:52.989869+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://api.github.com/repos/lifthrasiir/hexf/git/commits/4225763d744183d720f575ae96d04161b4d08ea0"
+    },
+    {
+      "authentication": "none",
+      "body_path": "http/hexf-parse-0.2.1-tree.json",
+      "bytes": 3394,
+      "completed_utc": "2026-10-14T05:27:53.592536+00:00",
+      "final_url": "https://api.github.com/repos/lifthrasiir/hexf/git/trees/1b8ce25c30e5a111acdd7ca390bb452af1e796e9?recursive=1",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+        "Cache-Control": "public, max-age=86400, s-maxage=86400",
+        "Content-Length": "3394",
+        "Content-Security-Policy": "default-src 'none'",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 14 Oct 2026 05:27:53 GMT",
+        "ETag": "W/\"2ae4a6349911a87bfcaf76d87b25411ee6e617a5e1899524ddf6cafd91348939\"",
+        "Last-Modified": "Sun, 30 Aug 2026 19:37:50 GMT",
+        "Referrer-Policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+        "Server": "github.com",
+        "Strict-Transport-Security": "max-age=31536000; includeSubdomains; preload",
+        "Vary": "Accept,Accept-Encoding, Accept, X-Requested-With",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Media-Type": "github.v3; format=json",
+        "X-GitHub-Request-Id": "FF84:96075:5A2A3F:6037A0:6ACF12D9",
+        "X-RateLimit-Limit": "60",
+        "X-RateLimit-Remaining": "53",
+        "X-RateLimit-Reset": "1791958580",
+        "X-RateLimit-Resource": "core",
+        "X-RateLimit-Used": "7",
+        "X-XSS-Protection": "0",
+        "connection": "close",
+        "x-github-api-version-selected": "2022-11-28",
+        "x-github-edge-region": "westus3"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 6,
+      "redirect_policy": "no follow",
+      "sha256": "8657f76fb2c43f7b44a2be2869fe43c2c709303700d884444148d119f79e2e1f",
+      "started_utc": "2026-10-14T05:27:53.338805+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://api.github.com/repos/lifthrasiir/hexf/git/trees/1b8ce25c30e5a111acdd7ca390bb452af1e796e9?recursive=1"
+    },
+    {
+      "authentication": "none",
+      "body_path": "http/profiling-1.0.18-LICENSE-APACHE",
+      "bytes": 10818,
+      "completed_utc": "2026-10-14T05:28:59.423924+00:00",
+      "final_url": "https://raw.githubusercontent.com/aclysma/profiling/8271551172eb6fa4cba47369aedd93790c623df9/LICENSE-APACHE",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "max-age=300",
+        "Connection": "close",
+        "Content-Length": "10818",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Date": "Wed, 14 Oct 2026 05:28:59 GMT",
+        "ETag": "\"4e3c9b952521bee3d0fa7096645e95cc3e9fd0e5b262865128e4964b6c169ee5\"",
+        "Expires": "Wed, 14 Oct 2026 05:33:59 GMT",
+        "Source-Age": "0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Vary": "Authorization,Accept-Encoding",
+        "Via": "1.1 varnish",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Fastly-Request-ID": "8528b099c63134a8fb7fcbbf7b0ce6ef293a2386",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Request-Id": "47DA:3320DF:56877:98313:6ACF131B",
+        "X-Served-By": "cache-bur-kbur8200034-BUR",
+        "X-Timer": "S1791955739.309918,VS0,VE102",
+        "X-XSS-Protection": "1; mode=block",
+        "x-github-edge-region": "westus3"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 7,
+      "redirect_policy": "no follow",
+      "sha256": "10d30a673cd5e9349bdc02aeb48f14b3386d27d0da32df8f0a555d4aa16aa551",
+      "started_utc": "2026-10-14T05:28:59.142215+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://raw.githubusercontent.com/aclysma/profiling/8271551172eb6fa4cba47369aedd93790c623df9/LICENSE-APACHE"
+    },
+    {
+      "authentication": "none",
+      "body_path": "http/profiling-1.0.18-LICENSE-MIT",
+      "bytes": 1093,
+      "completed_utc": "2026-10-14T05:28:59.789686+00:00",
+      "final_url": "https://raw.githubusercontent.com/aclysma/profiling/8271551172eb6fa4cba47369aedd93790c623df9/LICENSE-MIT",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "max-age=300",
+        "Connection": "close",
+        "Content-Length": "1093",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Date": "Wed, 14 Oct 2026 05:28:59 GMT",
+        "ETag": "\"58267725a41305a23a3d8ac0d8dcff5cb036ea6b8ca3855a4de53a9a57d7986e\"",
+        "Expires": "Wed, 14 Oct 2026 05:33:59 GMT",
+        "Source-Age": "0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Vary": "Authorization,Accept-Encoding",
+        "Via": "1.1 varnish",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Fastly-Request-ID": "576ea93f405120e3a37fe42114820b39b9b7c31c",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Request-Id": "7D3A:16373:BB770:FE30A:6ACF131B",
+        "X-Served-By": "cache-hhr-khhr2060030-HHR",
+        "X-Timer": "S1791955739.484467,VS0,VE273",
+        "X-XSS-Protection": "1; mode=block",
+        "x-github-edge-region": "uksouth"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 8,
+      "redirect_policy": "no follow",
+      "sha256": "c8167fdeeed46d3f244d3f85c5bf998ce889343691c32be2c61a8bc4b5c08333",
+      "started_utc": "2026-10-14T05:28:59.427004+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://raw.githubusercontent.com/aclysma/profiling/8271551172eb6fa4cba47369aedd93790c623df9/LICENSE-MIT"
+    },
+    {
+      "authentication": "none",
+      "body_path": "http/svg_fmt-0.4.5-LICENSE",
+      "bytes": 1070,
+      "completed_utc": "2026-10-14T05:29:00.157444+00:00",
+      "final_url": "https://raw.githubusercontent.com/nical/rust_debug/93f414cd572b5c2781df93dbdc068ed13443d05a/LICENSE",
+      "headers": {
+        "Accept-Ranges": "bytes",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "max-age=300",
+        "Connection": "close",
+        "Content-Length": "1070",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "Date": "Wed, 14 Oct 2026 05:29:00 GMT",
+        "ETag": "\"376860a70aeb4ed1d2d8d5ca810f2a0500290217cabf57cf061acd57ea2d1f89\"",
+        "Expires": "Wed, 14 Oct 2026 05:34:00 GMT",
+        "Source-Age": "0",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Vary": "Authorization,Accept-Encoding",
+        "Via": "1.1 varnish",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Content-Type-Options": "nosniff",
+        "X-Fastly-Request-ID": "eecfc9ac1372d72c695e5786da54e55c8d8b154c",
+        "X-Frame-Options": "deny",
+        "X-GitHub-Request-Id": "7FE0:1F2501:C1D94:10499B:6ACF131A",
+        "X-Served-By": "cache-hhr-khhr2060049-HHR",
+        "X-Timer": "S1791955740.869712,VS0,VE284",
+        "X-XSS-Protection": "1; mode=block",
+        "x-github-edge-region": "uksouth"
+      },
+      "limit_bytes": 262144,
+      "ordinal": 9,
+      "redirect_policy": "no follow",
+      "sha256": "7e98bed7f100747aaae7d82ab94fbe6b76fd6b84b09a3aaa413bff8196d0fbb1",
+      "started_utc": "2026-10-14T05:28:59.790091+00:00",
+      "status": 200,
+      "timeout_seconds": 10,
+      "url": "https://raw.githubusercontent.com/nical/rust_debug/93f414cd572b5c2781df93dbdc068ed13443d05a/LICENSE"
+    }
+  ],
+  "schema": 1,
+  "source_snapshots": {
+    "after": "inputs/source-after.json",
+    "all_unchanged": true,
+    "before": "inputs/source-before.json",
+    "paths": 43
+  },
+  "unknown_policy": {
+    "distribution_permission": "UNKNOWN",
+    "entire_instrument": "UNKNOWN",
+    "final_binary_membership": "UNKNOWN",
+    "first_party_license": "UNKNOWN",
+    "licensing_applicability": "UNKNOWN",
+    "review_acceptance": "PENDING separate fresh reviewer",
+    "whole_expression_coverage": "UNKNOWN"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "status": "VERIFIED-SOURCE-INTEGRITY/UNAPPROVED-COVERAGE",
+  "baseline_sha256": "2b551ed8c7fa22b347424c1056a3b6e5c935baaf7f4df7ebae4eb3e44ccb24fd",
+  "capture_sha256": "5b3bef8b98e9d54b31909ff3f8b46beebd2f1f4e8a0a84e3af8154d710135313",
+  "http_requests": 9,
+  "http_failures": 0,
+  "legal_files": 3,
+  "packages": 3,
+  "baseline_missing_packages_unchanged": 23,
+  "baseline_gap_records_unchanged": 47,
+  "control_versions": {
+    "3.14": {
+      "status": "VERIFIED",
+      "runs": 33,
+      "mutations": 16,
+      "all_passed": true,
+      "temporary_mutation_copies_removed": true
+    },
+    "3.11": {
+      "status": "VERIFIED",
+      "runs": 33,
+      "mutations": 16,
+      "all_passed": true,
+      "temporary_mutation_copies_removed": true
+    },
+    "3.12": {
+      "status": "VERIFIED",
+      "runs": 33,
+      "mutations": 16,
+      "all_passed": true,
+      "temporary_mutation_copies_removed": true
+    }
+  },
+  "control_subprocess_runs_total": 99,
+  "portable_tests": {
+    "3.11": {
+      "status": "VERIFIED",
+      "production_verifier_called": true,
+      "read_operations": 68,
+      "source_cache_and_old_packet_reads": 0,
+      "network_and_process_access": "guarded forbidden",
+      "temporary_packet_removed_on_exit": true,
+      "coverage": "UNKNOWN; integrity only"
+    },
+    "3.12": {
+      "status": "VERIFIED",
+      "production_verifier_called": true,
+      "read_operations": 68,
+      "source_cache_and_old_packet_reads": 0,
+      "network_and_process_access": "guarded forbidden",
+      "temporary_packet_removed_on_exit": true,
+      "coverage": "UNKNOWN; integrity only"
+    }
+  },
+  "live_source_inputs": 43,
+  "live_source_result": "VERIFIED",
+  "hosted_ci": "NOT-RUN",
+  "independent_review": "PENDING",
+  "coverage": "UNKNOWN",
+  "workflow_sha256": "38921541475cb14e922e79159eee2d4d2c03a25826d00a32a8f20d4b9d30bc86",
+  "cleanup": {
+    "directories": {
+      "controls": "empty; mutation/portable copies removed",
+      "controls-3.11": "empty; mutation/portable copies removed",
+      "controls-3.12": "empty; mutation/portable copies removed",
+      "portable-311": "empty; mutation/portable copies removed",
+      "portable-312": "empty; mutation/portable copies removed"
+    },
+    "verification_session_ids_reaped": [
+      18998,
+      86384,
+      85804
+    ],
+    "os_pids": "not retained by command tool; no persistent helper started",
+    "persistent_helpers_started": 0
+  }
+}
