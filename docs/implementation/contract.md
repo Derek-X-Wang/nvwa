@@ -39,9 +39,15 @@ limits come from the core constants; profile ranges and source clip durations
 remain authoritative for the loaded character.
 
 CLI editing remains offline. Each `apply` starts a fresh editor and saves only
-after every envelope succeeds. Failure leaves the input and existing output
-unchanged and does not create an absent output. Revision checks compare to
-the loaded input document only; there is no cross-file or cross-process
+after every envelope succeeds. Input, command, validation and persistence
+failures before successful save leave the input and existing output unchanged
+and do not create an absent output. Response delivery is separate: a handled
+stdout write failure exits 1 with `stdout_write`, and structured stderr is best
+effort when writable. The output may already be saved and stdout may be partial;
+inspect the actual output before retrying a mutation. No rollback or atomicity
+between filesystem persistence and response transport is promised.
+Revision checks compare to the loaded input document only; there is no
+cross-file or cross-process
 compare-and-swap, persistent idempotency or cross-invocation undo/redo history.
 Discovery does not introduce live Studio control or generated motion. See the
 [CLI authoring guide](../agents/cli-authoring.md) for recovery and file exchange.

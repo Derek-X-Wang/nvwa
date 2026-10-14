@@ -29,10 +29,19 @@ Save an envelope or array in a JSON file. Run
 `nvwa-cli apply input.nvwa.json commands.json output.nvwa.json`.
 Each successful nonduplicate command advances revision by one. A later envelope
 in a batch must use the revision after preceding envelopes. The full batch must
-succeed before the output is saved. Failed batches leave the input and existing
-output unchanged and do not create an absent output. Success emits JSON on
-stdout with exit code 0. Errors emit `{ "code": "...", "message": "..." }`
-on stderr with exit code 1 and empty stdout. Help emits text.
+succeed before the output is saved. Input, command, validation and persistence
+failures before successful save leave the input and existing output unchanged
+and do not create an absent output. Success emits JSON on stdout with exit
+code 0. Handled errors exit with code 1 and emit
+`{ "code": "...", "message": "..." }` if stderr is writable. Help emits text.
+
+Saving a file and delivering its response are separate operations. A closed
+stdout consumer or another response write error produces `stdout_write` rather
+than a panic. A mutating command may already have saved its output, and stdout
+may contain a partial response. Inspect the actual output work before retrying
+the mutation. Do not infer that exit code 1 means no file was saved. Errors
+before response delivery have empty stdout; unavailable stderr cannot carry a
+diagnostic. The CLI does not roll back a saved work after transport failure.
 
 After `revision_conflict`, run `inspect` on the actual input file. Reconsider
 the intended edit against that state, then build a corrected request. A failed

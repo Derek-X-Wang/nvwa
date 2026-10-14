@@ -2,6 +2,21 @@
 use nvwa_core::{CharacterProfile, Command, CommandEnvelope, CoreError, Editor, SceneDocument};
 use std::path::{Path, PathBuf};
 
+fn respond(response: impl std::fmt::Display) -> Result<(), CoreError> {
+    use std::io::Write;
+    let mut stdout = std::io::stdout().lock();
+    writeln!(stdout, "{response}")
+        .and_then(|()| stdout.flush())
+        .map_err(|error| {
+            CoreError::new(
+                "stdout_write",
+                format!(
+                    "Response delivery failed: {error}; a mutating operation may already be saved; inspect the output work before retrying"
+                ),
+            )
+        })
+}
+
 fn read(path: &Path) -> Result<String, CoreError> {
     use std::io::Read;
     let mut options = std::fs::OpenOptions::new();
@@ -147,7 +162,9 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         },
         "apply": {
             "atomicity": "save_only_after_entire_batch_succeeds",
-            "failure": "input_and_existing_output_unchanged_no_new_output",
+            "failure": "before_successful_save_input_and_existing_output_unchanged_no_new_output",
+            "failure_scope": "input_command_validation_and_persistence_errors_before_successful_save",
+            "response_transport_failure": "stdout_write_may_follow_successful_save_inspect_output_before_retry",
             "output": "array_of_revision_summary_duplicate_results_in_input_order",
             "session": "fresh_editor_per_invocation",
             "history": "undo_redo_and_successful_retry_ids_only_within_same_apply_invocation",
@@ -158,7 +175,9 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "error_exit_code": 1,
             "success_stdout": "json_except_help_text",
             "error_stderr": {"code": "string", "message": "string"},
-            "error_stdout": "empty"
+            "stderr_delivery": "best_effort_when_stderr_writable",
+            "error_stdout": "empty_before_response_delivery_may_be_partial_on_stdout_write",
+            "filesystem_and_response_delivery_atomic": false
         },
         "error_recovery": {
             "revision_conflict": "inspect_actual_input_then_rebuild_request_with_current_revision_and_reconsider_intent",
@@ -168,7 +187,8 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "command_id_conflict": "use_a_new_id_for_changed_payload_in_same_invocation",
             "nothing_to_undo": "history_does_not_cross_apply_invocations",
             "nothing_to_redo": "redo_requires_undo_in_same_invocation",
-            "other_errors": "read_code_and_message_no_output_was_committed"
+            "stdout_write": "output_may_already_be_saved_inspect_actual_output_before_retrying_mutation",
+            "other_errors": "read_code_and_message_input_command_validation_and_persistence_failures_before_save_do_not_commit_output"
         },
         "asset_validation": "validate_with_asset_root_checks_profile_asset_hash_and_structure",
         "studio_control": false
@@ -187,15 +207,12 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             let profile = CharacterProfile::from_json(&read(&arg(1)?)?)?;
             let document = SceneDocument::from_profile(profile)?;
             save(&document, &arg(2)?)?;
-            println!(
-                "{}",
-                serde_json::json!({"revision":document.revision,"saved":args[2]})
-            );
+            respond(serde_json::json!({"revision":document.revision,"saved":args[2]}))?;
         }
         "inspect" | "describe-capabilities" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
             if command == "inspect" {
-                println!("{}", document.to_json()?);
+                respond(document.to_json()?)?;
             } else {
                 // Preserve the profile's existing f32 JSON representation;
                 // to_value would widen floats to f64 before output encoding.
@@ -224,11 +241,10 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                         "excludes": ["live_document", "temporary_candidates", "allocation_overhead"]
                     }
                 });
-                println!(
-                    "{}",
+                respond(
                     serde_json::to_string_pretty(&capabilities)
-                        .map_err(|e| CoreError::new("serialize", e.to_string()))?
-                );
+                        .map_err(|e| CoreError::new("serialize", e.to_string()))?,
+                )?;
             }
         }
         "validate" => {
@@ -241,10 +257,9 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                 })?;
                 document.profile.validate_asset_bytes(&bytes)?;
             }
-            println!(
-                "{}",
-                serde_json::json!({"valid":true,"revision":document.revision,"asset_checked":args.len()>2})
-            );
+            respond(
+                serde_json::json!({"valid":true,"revision":document.revision,"asset_checked":args.len()>2}),
+            )?;
         }
         "apply" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
@@ -259,25 +274,20 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             for envelope in commands {
                 results.push(editor.apply(envelope)?);
             }
-            // Persist only after the full batch succeeds. No partial output on failure.
+            // Persistence is atomic for the batch. Response delivery is separate.
+            let response = serde_json::to_string(&results)
+                .map_err(|e| CoreError::new("serialize", e.to_string()))?;
             save(editor.document(), &arg(3)?)?;
-            println!(
-                "{}",
-                serde_json::to_string(&results)
-                    .map_err(|e| CoreError::new("serialize", e.to_string()))?
-            );
+            respond(response)?;
         }
         "save" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
             save(&document, &arg(2)?)?;
-            println!(
-                "{}",
-                serde_json::json!({"revision":document.revision,"saved":args[2]})
-            );
+            respond(serde_json::json!({"revision":document.revision,"saved":args[2]}))?;
         }
-        "help" | "--help" | "-h" => println!(
-            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, undo, redo.\nThis edits files; it does not control a running Studio."
-        ),
+        "help" | "--help" | "-h" => respond(
+            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, undo, redo.\nThis edits files; it does not control a running Studio.",
+        )?,
         _ => {
             return Err(CoreError::new(
                 "unknown_command",
@@ -293,9 +303,12 @@ fn main() -> std::process::ExitCode {
     match run(&args) {
         Ok(()) => std::process::ExitCode::SUCCESS,
         Err(error) => {
-            match serde_json::to_string(&error) {
-                Ok(json) => eprintln!("{json}"),
-                Err(_) => eprintln!("{error}"),
+            use std::io::Write;
+            // A closed stderr must not turn a handled failure into a panic.
+            // Delivery of the structured diagnostic is necessarily best effort.
+            if let Ok(json) = serde_json::to_string(&error) {
+                let mut stderr = std::io::stderr().lock();
+                let _ = writeln!(stderr, "{json}").and_then(|()| stderr.flush());
             }
             std::process::ExitCode::FAILURE
         }

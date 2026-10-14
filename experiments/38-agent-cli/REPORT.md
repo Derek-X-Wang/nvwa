@@ -1,5 +1,11 @@
 # M1.2 actual agent CLI authoring
 
+This report and its nine raw process receipts describe the original authoring
+run. Independent review later found a response-transport error boundary in that
+binary. The [review response](review-response/REPORT.md) records red/green proof
+and the correction. The original binary, receipts and exact saved work remain
+unchanged. Current transport guidance is in the linked agent guide.
+
 The actual LLM worker discovered the supplied character's capabilities,
 authored the requested appearance and nine-second sequence, encountered an
 intentional real stale-revision failure, inspected actual state, corrected the
