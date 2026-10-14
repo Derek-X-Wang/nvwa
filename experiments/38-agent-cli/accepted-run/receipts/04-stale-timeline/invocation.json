@@ -1,0 +1,39 @@
+{
+  "step": "04-stale-timeline",
+  "started_utc": "2026-10-14T23:24:08.471248+00:00",
+  "finished_utc": "2026-10-14T23:24:08.477795+00:00",
+  "cwd": "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa",
+  "argv": [
+    "/Users/derekxwang/.codex/worktrees/m12-agent-cli/target-cli/debug/nvwa-cli",
+    "apply",
+    "experiments/38-agent-cli/accepted-run/appearance.nvwa.json",
+    "experiments/38-agent-cli/accepted-run/stale-timeline.commands.json",
+    "experiments/38-agent-cli/accepted-run/stale-output.nvwa.json"
+  ],
+  "binary_sha256": "e0da6b3e5759801b9d5e4898a2ecda716111ee05159415163521fb01eb6ea637",
+  "exit_code": 1,
+  "stdout": "stdout.txt",
+  "stderr": "stderr.txt",
+  "json_arguments_before": {
+    "experiments/38-agent-cli/accepted-run/appearance.nvwa.json": {
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d",
+      "snapshot": "argument-1.before.json"
+    },
+    "experiments/38-agent-cli/accepted-run/stale-timeline.commands.json": {
+      "sha256": "255f055ddad45690b3be034deff73380d6aca5868912c9cc702ecc238b7caa04",
+      "snapshot": "argument-2.before.json"
+    }
+  },
+  "json_arguments_after": {
+    "experiments/38-agent-cli/accepted-run/appearance.nvwa.json": {
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d",
+      "snapshot": "argument-1.after.json"
+    },
+    "experiments/38-agent-cli/accepted-run/stale-timeline.commands.json": {
+      "sha256": "255f055ddad45690b3be034deff73380d6aca5868912c9cc702ecc238b7caa04",
+      "snapshot": "argument-2.after.json"
+    }
+  },
+  "tool_route": "Codex Desktop native collaboration worker -> functions.exec -> exec_command -> Python subprocess -> production nvwa-cli",
+  "authoring_decisions": "made_by_LLM_between_separately_recorded_calls"
+}

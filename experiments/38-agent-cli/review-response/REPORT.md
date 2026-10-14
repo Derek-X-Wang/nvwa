@@ -57,6 +57,13 @@ calls are retained there too. This is synthetic boundary evidence, not a new
 adaptive-agent authoring claim. The probe creates a fresh evidence directory
 and intentionally refuses to overwrite an existing one.
 
+`stderr-controls.json` separately records two actual revised-binary controls:
+a domain failure with closed stderr, and a read-only response with both stdout
+and stderr consumers closed. Both exit 1. Closed streams are recorded as
+unavailable, not as observed empty diagnostics. Regression tests and the
+differential transport probe remain separate from the repeated actual agent
+run in `../accepted-run/`.
+
 ## Retained original evidence and resource handoff
 
 Before rebuilding, the original agent binary was copied to:

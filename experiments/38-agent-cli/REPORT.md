@@ -1,7 +1,10 @@
 # M1.2 actual agent CLI authoring
 
 This report and its nine raw process receipts describe the original authoring
-run. Independent review later found a response-transport error boundary in that
+run. Its pre-fix transport contract was rejected and is not current API evidence.
+The [revised-binary actual run](accepted-run/REPORT.md) records the current
+nine-call adaptive chain and byte-identical final work. Independent review
+found a response-transport error boundary in the original
 binary. The [review response](review-response/REPORT.md) records red/green proof
 and the correction. The original binary, receipts and exact saved work remain
 unchanged. Current transport guidance is in the linked agent guide.
