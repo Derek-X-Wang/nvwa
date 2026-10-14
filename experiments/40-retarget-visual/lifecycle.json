@@ -1,0 +1,12 @@
+{
+  "interactive_processes": [
+    {"variant": "reference-wave", "pid": 99887, "exec_session_id": 20810, "stop": "SIGINT", "exit_code": 130, "reaped": true},
+    {"variant": "naive-wave", "pid": 3907, "exec_session_id": 68639, "stop": "SIGINT", "exit_code": 130, "reaped": true},
+    {"variant": "corrected-wave", "pid": 5399, "exec_session_id": 51367, "stop": "SIGINT", "exit_code": 130, "reaped": true}
+  ],
+  "smoke_processes_receipt": "smoke-processes.json",
+  "cleanup_observation": "Scoped ps after all smoke children were reaped found no Nvwa-retarget.app/Contents/MacOS/Nvwa process",
+  "gpu_ui_token": "released to parent before CPU-only analysis",
+  "no_build_performed": true,
+  "preserved_private_copy": ".work/m12-retarget"
+}

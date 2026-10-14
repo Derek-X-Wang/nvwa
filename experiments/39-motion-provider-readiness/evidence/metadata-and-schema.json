@@ -1,0 +1,713 @@
+{
+  "evidence_kind": "STATIC SOURCE / PUBLIC METADATA / EXISTING AUTHORED FIXTURE ONLY",
+  "actual_checkpoint_output_observed": false,
+  "source_integrity_checks_passed": 38,
+  "checkpoint_internal_skeleton": "SOMASkeleton30",
+  "checkpoint_fps": 30,
+  "skeleton_joint_counts": {
+    "SOMASkeleton77": 77,
+    "SOMASkeleton30": 30
+  },
+  "official_external_conversion_calls": 2,
+  "somaskel30_joint_names": [
+    "Hips",
+    "Spine1",
+    "Spine2",
+    "Chest",
+    "Neck1",
+    "Neck2",
+    "Head",
+    "Jaw",
+    "LeftEye",
+    "RightEye",
+    "LeftShoulder",
+    "LeftArm",
+    "LeftForeArm",
+    "LeftHand",
+    "LeftHandThumbEnd",
+    "LeftHandMiddleEnd",
+    "RightShoulder",
+    "RightArm",
+    "RightForeArm",
+    "RightHand",
+    "RightHandThumbEnd",
+    "RightHandMiddleEnd",
+    "LeftLeg",
+    "LeftShin",
+    "LeftFoot",
+    "LeftToeBase",
+    "RightLeg",
+    "RightShin",
+    "RightFoot",
+    "RightToeBase"
+  ],
+  "somaskel77_joint_names": [
+    "Hips",
+    "Spine1",
+    "Spine2",
+    "Chest",
+    "Neck1",
+    "Neck2",
+    "Head",
+    "HeadEnd",
+    "Jaw",
+    "LeftEye",
+    "RightEye",
+    "LeftShoulder",
+    "LeftArm",
+    "LeftForeArm",
+    "LeftHand",
+    "LeftHandThumb1",
+    "LeftHandThumb2",
+    "LeftHandThumb3",
+    "LeftHandThumbEnd",
+    "LeftHandIndex1",
+    "LeftHandIndex2",
+    "LeftHandIndex3",
+    "LeftHandIndex4",
+    "LeftHandIndexEnd",
+    "LeftHandMiddle1",
+    "LeftHandMiddle2",
+    "LeftHandMiddle3",
+    "LeftHandMiddle4",
+    "LeftHandMiddleEnd",
+    "LeftHandRing1",
+    "LeftHandRing2",
+    "LeftHandRing3",
+    "LeftHandRing4",
+    "LeftHandRingEnd",
+    "LeftHandPinky1",
+    "LeftHandPinky2",
+    "LeftHandPinky3",
+    "LeftHandPinky4",
+    "LeftHandPinkyEnd",
+    "RightShoulder",
+    "RightArm",
+    "RightForeArm",
+    "RightHand",
+    "RightHandThumb1",
+    "RightHandThumb2",
+    "RightHandThumb3",
+    "RightHandThumbEnd",
+    "RightHandIndex1",
+    "RightHandIndex2",
+    "RightHandIndex3",
+    "RightHandIndex4",
+    "RightHandIndexEnd",
+    "RightHandMiddle1",
+    "RightHandMiddle2",
+    "RightHandMiddle3",
+    "RightHandMiddle4",
+    "RightHandMiddleEnd",
+    "RightHandRing1",
+    "RightHandRing2",
+    "RightHandRing3",
+    "RightHandRing4",
+    "RightHandRingEnd",
+    "RightHandPinky1",
+    "RightHandPinky2",
+    "RightHandPinky3",
+    "RightHandPinky4",
+    "RightHandPinkyEnd",
+    "LeftLeg",
+    "LeftShin",
+    "LeftFoot",
+    "LeftToeBase",
+    "LeftToeEnd",
+    "RightLeg",
+    "RightShin",
+    "RightFoot",
+    "RightToeBase",
+    "RightToeEnd"
+  ],
+  "target_fixture": {
+    "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "skin_count": 1,
+    "joint_count": 18,
+    "joint_names": [
+      "root",
+      "pelvis",
+      "spine",
+      "chest",
+      "neck",
+      "head",
+      "upper_arm.L",
+      "forearm.L",
+      "hand.L",
+      "upper_arm.R",
+      "forearm.R",
+      "hand.R",
+      "thigh.L",
+      "shin.L",
+      "foot.L",
+      "thigh.R",
+      "shin.R",
+      "foot.R"
+    ],
+    "authored_animation_names": [
+      "idle",
+      "turn",
+      "wave"
+    ]
+  },
+  "models": {
+    "kimodo": {
+      "id": "nvidia/Kimodo-SOMA-RP-v1.1",
+      "revision": "6c9233af1180b8151e3c4703477104af5dce9dd5",
+      "last_modified": "2026-04-10T16:52:05.000Z",
+      "gated": false,
+      "metadata_license": "other",
+      "safetensors": {
+        "parameters": {
+          "F32": 283281777
+        },
+        "total": 283281777
+      },
+      "artifacts": [
+        {
+          "path": "model.safetensors",
+          "bytes": 1133185036,
+          "lfs": {
+            "sha256": "ef0a0ca45a6089ab4532dde609785771ae3f38755b4ae6cf314b0213e07cd4a3",
+            "size": 1133185036,
+            "pointerSize": 135
+          }
+        }
+      ]
+    },
+    "llama": {
+      "id": "meta-llama/Meta-Llama-3-8B-Instruct",
+      "revision": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2",
+      "last_modified": "2025-06-18T23:49:51.000Z",
+      "gated": "manual",
+      "metadata_license": "llama3",
+      "safetensors": {
+        "parameters": {
+          "BF16": 8030261248
+        },
+        "total": 8030261248
+      },
+      "artifacts": [
+        {
+          "path": "model-00001-of-00004.safetensors",
+          "bytes": 4976698672,
+          "lfs": {
+            "sha256": "d8cf9c4d0dd972e1a2131bfe656235ee98221679711a3beef6d46dadf0f20b5c",
+            "size": 4976698672,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "model-00002-of-00004.safetensors",
+          "bytes": 4999802720,
+          "lfs": {
+            "sha256": "8d4782b4a69ef03845159ce1a15e272aadaaf134dc138d68f616098e8531729c",
+            "size": 4999802720,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "model-00003-of-00004.safetensors",
+          "bytes": 4915916176,
+          "lfs": {
+            "sha256": "3acdd690e65c24f42a24581b8467af98bd3ca357444580f8012aacd2bd607921",
+            "size": 4915916176,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "model-00004-of-00004.safetensors",
+          "bytes": 1168138808,
+          "lfs": {
+            "sha256": "67e9ad31c8c32abf3a55ee7fc7217b3ecb35fd3c74d98a5bd233e0e4d6964f46",
+            "size": 1168138808,
+            "pointerSize": 135
+          }
+        }
+      ]
+    },
+    "mntp": {
+      "id": "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp",
+      "revision": "31474e395ada192e8ed1586db6be79fb3b70c9c0",
+      "last_modified": "2025-12-02T04:38:45.000Z",
+      "gated": false,
+      "metadata_license": "mit",
+      "safetensors": null,
+      "artifacts": [
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 167829552,
+          "lfs": {
+            "sha256": "de9c8736618a13173c6a1623cdef1b75e86c69317f1073ae82cd516ac36a632d",
+            "size": 167829552,
+            "pointerSize": 134
+          }
+        }
+      ]
+    },
+    "supervised": {
+      "id": "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised",
+      "revision": "baa8ebf04a1c2500e61288e7dad65e8ae42601a7",
+      "last_modified": "2024-04-30T03:48:00.000Z",
+      "gated": false,
+      "metadata_license": "mit",
+      "safetensors": null,
+      "artifacts": [
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 167829552,
+          "lfs": {
+            "sha256": "53f8f94ebdf396667ba99dd96e78203edae27bbcdbd1cf5f12b611e1d916b225",
+            "size": 167829552,
+            "pointerSize": 134
+          }
+        }
+      ]
+    },
+    "cpp-motion": {
+      "id": "LocalAI-io/Kimodo-SOMA-RP-v1.1-GGML",
+      "revision": "65f8b8ab34ee7524161cc87b20ae4cb4f5d3a12d",
+      "last_modified": "2026-08-26T14:40:32.000Z",
+      "gated": false,
+      "metadata_license": "other",
+      "safetensors": null,
+      "artifacts": [
+        {
+          "path": "models/kimodo-soma-rp-v1.1-f32.gguf",
+          "bytes": 1133166784,
+          "lfs": {
+            "sha256": "3bf1229f4c1eff1d28f5196a854113da2df9a11a5e21c60694630903bf948ee4",
+            "size": 1133166784,
+            "pointerSize": 135
+          }
+        }
+      ]
+    },
+    "cpp-text": {
+      "id": "LocalAI-io/Llama-3-Kimodo-GGML",
+      "revision": "3e8d958803beaddb6011ac534f2be972e2710c7d",
+      "last_modified": "2026-09-17T13:14:40.000Z",
+      "gated": false,
+      "metadata_license": "other",
+      "safetensors": null,
+      "artifacts": [
+        {
+          "path": "Llama-3-Kimodo-BF16.gguf",
+          "bytes": 15177675936,
+          "lfs": {
+            "sha256": "d9a60017b3981bac874c4d118fc7e34f05b41763a12f0c0c7ee1e3b84eebb20f",
+            "size": 15177675936,
+            "pointerSize": 136
+          }
+        },
+        {
+          "path": "Llama-3-Kimodo-Q4_K.gguf",
+          "bytes": 4389729536,
+          "lfs": {
+            "sha256": "b47f3d57c72660df7faa18338749be945e725032f1db467fe3cabf580a80e012",
+            "size": 4389729536,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "Llama-3-Kimodo-Q4_K_M.gguf",
+          "bytes": 5058327904,
+          "lfs": {
+            "sha256": "c06f2cb6a7615e949bcbb5b582ad35a191338b68b5a51abe17d259ebe574c005",
+            "size": 5058327904,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "Llama-3-Kimodo-Q5_K.gguf",
+          "bytes": 5327811840,
+          "lfs": {
+            "sha256": "7b4d8524d2a9298d4087a684c0ea2042f8d6e86881bc7ecdb99fee920a784211",
+            "size": 5327811840,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "Llama-3-Kimodo-Q6_K.gguf",
+          "bytes": 6324524288,
+          "lfs": {
+            "sha256": "656b790e44f90f27d746c48342aee066e3cf078db0322f98667c1a89be3ad7a2",
+            "size": 6324524288,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "Llama-3-Kimodo-Q8_0.gguf",
+          "bytes": 8142058752,
+          "lfs": {
+            "sha256": "b26d0e74b115b33a7f2df5aca04426548365e99217cd590986f8abc4172e4c5c",
+            "size": 8142058752,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/embedding.gguf",
+          "bytes": 1050674240,
+          "lfs": {
+            "sha256": "8d2c16c7996d2d2a6b5071d623fbff413432c881a998a0b4d442786b47c63560",
+            "size": 1050674240,
+            "pointerSize": 135
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/final-norm.gguf",
+          "bytes": 9248,
+          "lfs": null
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-00.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "b4fbf81fa84d08c4c657dc7956fccdbd9d50c83e11fe291d9f3a58dddb4ba4cc",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-01.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "6ac62e2961540327478b6a7487392f404ee98da4e9206b49b129d9b28fa54ab2",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-02.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "c47cef118e2a8e48a479f4823e330bd2e861d8b31b3239a02e78fc31ca97dd04",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-03.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "8539ec5b283159d38aad68115b99a12b7a54b38e65ca205d7297873a7bdfa509",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-04.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "204f009bb401aaaab7a4a14adc57ce8b94896cdc4ae4e2e80b8df2f97954cad0",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-05.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "b20a74d09ba0abb5135fdb900067cca02e6d5cc34d05a37147cb78c63b388c04",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-06.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "c00d620a46a111786b340bce68f47ae89a62f3d05d31acde830c0a71d9060200",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-07.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "578064ffe7a38b9c4a014780ac5ca99de2497ac93544c04ba849bb262470a563",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-08.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "4a6319773a5e19b6e17bb55ee2629ddaa97f6a8fb22d37c3ea6be9e58e3c3087",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-09.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "49a13e69f524144afed1c52fa819ec48f40014c3561f4e62ccf5eac1808e940e",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-10.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "122fac4b17d800f84fbd2e9c0d5510ad773818e604d9e396328bd9cafcf72008",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-11.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "aaddc4180b44bac7a0be466d7f4812fb338bbdefae188b4195580cf4cef64266",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-12.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "889d22f1f7b01e5cbb74f3e8d48a3af0c1d03d075c997c660a1ec00ab9014b32",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-13.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "4fbf6d5ef2e4001a8fd5e356702294ebe60799f79ae39a7495290ccd616f9ba4",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-14.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "683b753e7778f774f819141d745fb8aee27b59186f18f0b6e7e4b2501c9aa779",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-15.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "ebc5ec00c746ad1c4bf5b83a381f76de7354e756a514abfa741aa25a42cecd98",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-16.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "195fb02a1828a5cdf10a1babca4346539c8e79c986051f246def49691cb0928b",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-17.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "89010f85d6d65f6565d87ea973ae3478c0c50318bec65092677a0629037e4b29",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-18.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "c792d2a68d5694c4b3c5f6ecb34ccdf58a9b70eecb0f2b4e088a0e000a2ce003",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-19.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "8eea4627aa980a6af4c398fab8bd2722afbbddcf06eae20ebba8eabe1b9b4cff",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-20.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "e78a1a63c518163180fcad8834ad2aafded81724a89b39a2b08c14868387e532",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-21.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "5f299eab47553e622c0a8a21592ff54d9c5117ae612efb482f200186e588f718",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-22.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "70a85e4fbcb4420d56f2ae919293a21a311c32ef2dd19ffead2392350af8d772",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-23.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "1f91267d870d917fda9e2a3e7a9e99ba4c90746f24bc0c0a26a8263847def38c",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-24.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "705fb89b13fe8aeb4207d95a9c83f54078983062719148859269238723015b49",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-25.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "883f02a1d6d960f54ad109b7c0d546babc774a68857efbb7e7043c4916d948af",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-26.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "7c7dcf9ce30093dd5bcb74e69215d7685bc451af7760e7c07f43ac0792aefc4f",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-27.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "59babbcac45cce55247ecf582e30d6ef7987126517c504bf929c32fb925acc4a",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-28.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "ac4575ab811d1e2b844133bf1d4076c8938de7de7801493701a45e2a7fb7ddaa",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-29.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "c5a4c71d0ee6570cd8e6964500c2acd65a263cff3c61aaa45a01a911dd34695b",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-30.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "2af5c0c42fea1b91bfe2f6a52918fc11724c09a9faf0beb08177c22d5b56ffb0",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/layer-31.gguf",
+          "bytes": 441469344,
+          "lfs": {
+            "sha256": "a2e6086de679aa0e07c5fd8f7768c5eda0e00b5863ac2c1773622c90d619c16f",
+            "size": 441469344,
+            "pointerSize": 134
+          }
+        },
+        {
+          "path": "generated/llm2vec-text-bundle/tokenizer.gguf",
+          "bytes": 7295054,
+          "lfs": {
+            "sha256": "81614aca62a98846c02b72cc2e5378e5bdce8b4d507b88f96eb1faa90dae607e",
+            "size": 7295054,
+            "pointerSize": 132
+          }
+        },
+        {
+          "path": "tokenizer.gguf",
+          "bytes": 7295054,
+          "lfs": {
+            "sha256": "81614aca62a98846c02b72cc2e5378e5bdce8b4d507b88f96eb1faa90dae607e",
+            "size": 7295054,
+            "pointerSize": 132
+          }
+        }
+      ]
+    }
+  },
+  "cpp_payload_estimates": {
+    "BF16": {
+      "payload_bytes": 16318137774,
+      "payload_gib": 15.197450084611773,
+      "interpretation": "Artifact bytes only; not peak resident memory or latency."
+    },
+    "Q8_0": {
+      "payload_bytes": 9282520590,
+      "payload_gib": 8.64502097479999,
+      "interpretation": "Artifact bytes only; not peak resident memory or latency."
+    },
+    "Q4_K_M": {
+      "payload_bytes": 6198789742,
+      "payload_gib": 5.773072822019458,
+      "interpretation": "Artifact bytes only; not peak resident memory or latency."
+    }
+  },
+  "publisher_manifest_metadata_checks": {
+    "cpp-motion": {
+      "artifacts_checked": 1,
+      "lfs_sha256_matches": 1,
+      "sha256_unavailable_in_metadata": [],
+      "source_revisions": {
+        "nvidia/Kimodo-SOMA-RP-v1.1": "6c9233af1180b8151e3c4703477104af5dce9dd5"
+      }
+    },
+    "cpp-text": {
+      "artifacts_checked": 42,
+      "lfs_sha256_matches": 41,
+      "sha256_unavailable_in_metadata": [
+        "generated/llm2vec-text-bundle/final-norm.gguf"
+      ],
+      "source_revisions": {
+        "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp": "31474e395ada192e8ed1586db6be79fb3b70c9c0",
+        "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised": "baa8ebf04a1c2500e61288e7dad65e8ae42601a7",
+        "meta-llama/Meta-Llama-3-8B-Instruct": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2"
+      }
+    }
+  },
+  "official_base_bf16_plus_motion_bytes_lower_bound": 17193707532,
+  "official_base_bf16_plus_motion_gib_lower_bound": 16.012887965887785,
+  "warning": "No adapter, tensor, generated motion, retargeting, model memory/latency, or playback was executed."
+}

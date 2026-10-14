@@ -1,0 +1,22 @@
+{
+  "name": "02-owned-build",
+  "argv": [
+    "env",
+    "CARGO_TARGET_DIR=.work/m12-alpha-build",
+    "cargo",
+    "build",
+    "-p",
+    "nvwa-cli",
+    "--locked",
+    "--offline",
+    "-j1"
+  ],
+  "cwd": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa",
+  "observed_utc": "2026-10-14T23:30:16.717432+00:00",
+  "exit": 0,
+  "elapsed_seconds": 36.95175820798613,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "f7d4be17e548ddfe8f0a50a32eba7c55a1a6f829036daa10cdb7952e96aa1b31",
+  "before_work_sha256": {},
+  "after_work_sha256": {}
+}

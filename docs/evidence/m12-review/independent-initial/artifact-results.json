@@ -1,0 +1,190 @@
+{
+  "manifest_files": 61,
+  "manifest_mismatches": [],
+  "binaries": [
+    {
+      "path": "/Users/derekxwang/Development/incubator/Nvwa/nvwa/dist/Nvwa.app/Contents/MacOS/Nvwa",
+      "sha256": "3be9380f1747c8a6266c59e49f73550e180038fb1259187942af16033a2bc929",
+      "matches": true
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-retarget/Nvwa-retarget.app/Contents/MacOS/Nvwa",
+      "sha256": "3be9380f1747c8a6266c59e49f73550e180038fb1259187942af16033a2bc929",
+      "matches": true
+    }
+  ],
+  "variants": [
+    {
+      "name": "reference",
+      "source_copy_hash_exact": true,
+      "animation_names": [
+        "idle",
+        "turn",
+        "wave"
+      ],
+      "works": [
+        {
+          "mode": "rest",
+          "public_private_exact": true,
+          "work_hash_exact": true,
+          "asset_hash_exact": true,
+          "animation_index": 2,
+          "zero_parameters": true,
+          "scale": 1.0,
+          "timeline": []
+        },
+        {
+          "mode": "wave",
+          "public_private_exact": true,
+          "work_hash_exact": true,
+          "asset_hash_exact": true,
+          "animation_index": 2,
+          "zero_parameters": true,
+          "scale": 1.0,
+          "timeline": [
+            {
+              "id": "controlled-wave",
+              "clip_id": "wave",
+              "start_seconds": 0.0,
+              "duration_seconds": 3.0416667,
+              "speed": 1.0,
+              "looping": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "naive",
+      "source_copy_hash_exact": true,
+      "animation_names": [
+        "idle",
+        "turn",
+        "wave"
+      ],
+      "works": [
+        {
+          "mode": "rest",
+          "public_private_exact": true,
+          "work_hash_exact": true,
+          "asset_hash_exact": true,
+          "animation_index": 2,
+          "zero_parameters": true,
+          "scale": 1.0,
+          "timeline": []
+        },
+        {
+          "mode": "wave",
+          "public_private_exact": true,
+          "work_hash_exact": true,
+          "asset_hash_exact": true,
+          "animation_index": 2,
+          "zero_parameters": true,
+          "scale": 1.0,
+          "timeline": [
+            {
+              "id": "controlled-wave",
+              "clip_id": "wave",
+              "start_seconds": 0.0,
+              "duration_seconds": 3.0416667,
+              "speed": 1.0,
+              "looping": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "corrected",
+      "source_copy_hash_exact": true,
+      "animation_names": [
+        "idle",
+        "turn",
+        "wave"
+      ],
+      "works": [
+        {
+          "mode": "rest",
+          "public_private_exact": true,
+          "work_hash_exact": true,
+          "asset_hash_exact": true,
+          "animation_index": 2,
+          "zero_parameters": true,
+          "scale": 1.0,
+          "timeline": []
+        },
+        {
+          "mode": "wave",
+          "public_private_exact": true,
+          "work_hash_exact": true,
+          "asset_hash_exact": true,
+          "animation_index": 2,
+          "zero_parameters": true,
+          "scale": 1.0,
+          "timeline": [
+            {
+              "id": "controlled-wave",
+              "clip_id": "wave",
+              "start_seconds": 0.0,
+              "duration_seconds": 3.0416667,
+              "speed": 1.0,
+              "looping": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pixel_metric_recalculation": [
+    {
+      "time": 0,
+      "naive": true,
+      "corrected": true
+    },
+    {
+      "time": 0.123,
+      "naive": true,
+      "corrected": true
+    },
+    {
+      "time": 0.5,
+      "naive": true,
+      "corrected": true
+    },
+    {
+      "time": 1.25,
+      "naive": true,
+      "corrected": true
+    },
+    {
+      "time": 2.345,
+      "naive": true,
+      "corrected": true
+    },
+    {
+      "time": 3,
+      "naive": true,
+      "corrected": true
+    }
+  ],
+  "rest_metric_recalculation": {
+    "naive": true,
+    "corrected": true
+  },
+  "live_frame_scene_deltas": {
+    "naive": {
+      "pixel_count": 782080,
+      "changed_pixels": 8342,
+      "pixels_over_8_levels": 2229,
+      "max_channel_difference_0_to_255": 157,
+      "mean_absolute_channel_difference": 0.12067051963993454
+    },
+    "corrected": {
+      "pixel_count": 782080,
+      "changed_pixels": 11753,
+      "pixels_over_8_levels": 4694,
+      "max_channel_difference_0_to_255": 193,
+      "mean_absolute_channel_difference": 0.2891055475995636
+    }
+  }
+}

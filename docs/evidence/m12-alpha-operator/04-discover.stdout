@@ -1,0 +1,235 @@
+{
+  "asset_path": "fixtures/nvwa-humanoid.glb",
+  "asset_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+  "character_id": "character-1",
+  "cli_contract": {
+    "apply": {
+      "atomicity": "save_only_after_entire_batch_succeeds",
+      "failure": "before_successful_save_input_and_existing_output_unchanged_no_new_output",
+      "failure_scope": "input_command_validation_and_persistence_errors_before_successful_save",
+      "history": "undo_redo_and_successful_retry_ids_only_within_same_apply_invocation",
+      "output": "array_of_revision_summary_duplicate_results_in_input_order",
+      "persistent_idempotency": false,
+      "response_transport_failure": "stdout_write_may_follow_successful_save_inspect_output_before_retry",
+      "session": "fresh_editor_per_invocation"
+    },
+    "asset_validation": "validate_with_asset_root_checks_profile_asset_hash_and_structure",
+    "command_examples": [
+      {
+        "command": {
+          "character_id": "character-1",
+          "type": "set_parameters",
+          "values": {
+            "jaw_width": 0.0,
+            "nose_width": 0.0,
+            "shoulder_width": 0.0,
+            "smile": 0.0
+          }
+        },
+        "command_id": "example-1",
+        "expected_revision": 0
+      },
+      {
+        "command": {
+          "character_id": "character-1",
+          "scale": 1.0,
+          "type": "set_scale"
+        },
+        "command_id": "example-2",
+        "expected_revision": 0
+      },
+      {
+        "command": {
+          "clips": [
+            {
+              "clip_id": "idle",
+              "duration_seconds": 3.0416667,
+              "id": "timeline-1",
+              "looping": true,
+              "speed": 1.0,
+              "start_seconds": 0.0
+            }
+          ],
+          "type": "set_timeline"
+        },
+        "command_id": "example-3",
+        "expected_revision": 0
+      },
+      {
+        "command": {
+          "type": "undo"
+        },
+        "command_id": "example-4",
+        "expected_revision": 0
+      },
+      {
+        "command": {
+          "type": "redo"
+        },
+        "command_id": "example-5",
+        "expected_revision": 0
+      }
+    ],
+    "entrypoints": {
+      "apply": [
+        "input.json",
+        "command_or_array.json",
+        "output.json"
+      ],
+      "describe-capabilities": [
+        "input.json"
+      ],
+      "inspect": [
+        "input.json"
+      ],
+      "new": [
+        "profile.json",
+        "output.json"
+      ],
+      "save": [
+        "input.json",
+        "output.json"
+      ],
+      "validate": [
+        "input.json",
+        "optional_asset_root"
+      ]
+    },
+    "error_recovery": {
+      "command_id_conflict": "use_a_new_id_for_changed_payload_in_same_invocation",
+      "invalid_reference": "read_character_id_and_profile_parameter_clip_ids",
+      "nothing_to_redo": "redo_requires_undo_in_same_invocation",
+      "nothing_to_undo": "history_does_not_cross_apply_invocations",
+      "other_errors": "read_code_and_message_input_command_validation_and_persistence_failures_before_save_do_not_commit_output",
+      "out_of_range": "read_profile_parameter_ranges_and_timeline_constraints",
+      "overlapping_timeline": "use_nonoverlapping_wall_time_spans",
+      "revision_conflict": "inspect_actual_input_then_rebuild_request_with_current_revision_and_reconsider_intent",
+      "stdout_write": "output_may_already_be_saved_inspect_actual_output_before_retrying_mutation"
+    },
+    "examples_are": "independent_shapes_at_loaded_revision_not_a_batch",
+    "input": {
+      "apply_payload": "one_command_envelope_or_array",
+      "duplicate_object_keys": "rejected",
+      "envelope_fields": {
+        "command": "object_with_type_tag",
+        "command_id": "nonblank_string",
+        "expected_revision": "u64"
+      },
+      "max_json_bytes": 2097152,
+      "unknown_fields": "rejected"
+    },
+    "revision": {
+      "advance": "each_successful_nonduplicate_command_increments_by_one_including_undo_redo",
+      "batch": "later_envelopes_use_revision_after_preceding_commands",
+      "check": "expected_revision_against_loaded_input_document",
+      "concurrency": "no_cross_file_or_cross_process_compare_and_swap"
+    },
+    "schema_version": 1,
+    "set_parameters": "updates_only_named_parameters_within_profile_min_max_inclusive",
+    "set_scale": "finite_greater_than_zero",
+    "set_timeline": {
+      "bounds": "end_and_duration_times_speed_must_be_finite",
+      "clip_id": "must_reference_profile_clips_id",
+      "duration_seconds": "finite_positive_wall_time_not_source_clip_length",
+      "effect": "replaces_entire_timeline",
+      "gaps": "allowed_holds",
+      "id": "nonblank_unique_timeline_entry_id",
+      "looping": "boolean",
+      "overlap": "rejected",
+      "playback_order": "start_seconds_not_array_order",
+      "speed": "finite_greater_than_zero_source_time_multiplier",
+      "start_seconds": "finite_nonnegative_wall_time"
+    },
+    "stdio": {
+      "error_exit_code": 1,
+      "error_stderr": {
+        "code": "string",
+        "message": "string"
+      },
+      "error_stdout": "empty_before_response_delivery_may_be_partial_on_stdout_write",
+      "filesystem_and_response_delivery_atomic": false,
+      "stderr_delivery": "best_effort_when_stderr_writable",
+      "success_exit_code": 0,
+      "success_stdout": "json_except_help_text"
+    },
+    "studio_control": false,
+    "transport": "offline_files"
+  },
+  "clips": [
+    {
+      "animation_index": 0,
+      "duration_seconds": 3.0416667,
+      "id": "idle"
+    },
+    {
+      "animation_index": 1,
+      "duration_seconds": 4.0416665,
+      "id": "turn"
+    },
+    {
+      "animation_index": 2,
+      "duration_seconds": 3.0416667,
+      "id": "wave"
+    }
+  ],
+  "document_revision": 0,
+  "editor_retention": {
+    "byte_accounting": {
+      "excludes": [
+        "live_document",
+        "temporary_candidates",
+        "allocation_overhead"
+      ],
+      "history": "sum_of_compact_scene_document_json_bytes",
+      "retry": "sum_of_compact_envelope_result_tuple_json_bytes"
+    },
+    "duplicate_reads_refresh_retention": false,
+    "eviction": "fifo",
+    "expired_id_reuse": "allowed_with_current_revision_and_valid_command",
+    "expired_original_envelope": "revision_conflict",
+    "limits": {
+      "history_bytes": 16777216,
+      "history_snapshots": 128,
+      "retry_bytes": 8388608,
+      "retry_entries": 1024
+    },
+    "oversized_retry_entry": "evict_all_older_entries_then_expire_without_rejecting_edit",
+    "oversized_snapshot": "clear_destination_history_without_rejecting_edit",
+    "persisted_in_document": false,
+    "retained_conflicting_id": "command_id_conflict",
+    "retained_identical_envelope": "duplicate",
+    "session_local": true
+  },
+  "id": "nvwa-original-humanoid-v1",
+  "license": "CC0-1.0 (original Nvwa test fixture only)",
+  "parameters": [
+    {
+      "default": 0.0,
+      "id": "jaw_width",
+      "max": 1.0,
+      "min": 0.0,
+      "morph_index": 0
+    },
+    {
+      "default": 0.0,
+      "id": "nose_width",
+      "max": 1.0,
+      "min": 0.0,
+      "morph_index": 1
+    },
+    {
+      "default": 0.0,
+      "id": "smile",
+      "max": 1.0,
+      "min": 0.0,
+      "morph_index": 2
+    },
+    {
+      "default": 0.0,
+      "id": "shoulder_width",
+      "max": 1.0,
+      "min": 0.0,
+      "morph_index": 3
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "compared_main": "a094baa048e6e50056e3288ecfa85bb4ac62e140",
+  "head_observed": "a6cb13eeadeae0e30b42c9307286d9c84c49286b",
+  "history_exact_bytes": true,
+  "history_sha256": "82f6cd61a262f70709d8f0a929fc9127fd0b1b67732563f056668e41c15bc04c",
+  "history_declared_hash_exact": true,
+  "pull_requests": [
+    {
+      "pr": 22,
+      "page_lengths": [
+        100,
+        11
+      ],
+      "full_count": 111,
+      "api_changed_files": 111,
+      "inventory_count": 111,
+      "paths_exact": true,
+      "head_exact": true,
+      "base_name_exact": true,
+      "blob_mismatches": [],
+      "states": {
+        "later_different": 6,
+        "absent": 105
+      },
+      "api_state": "open",
+      "merged": false,
+      "head_branch": "experiments/startup-viewport",
+      "local_refs_at_head": [
+        "refs/heads/experiments/startup-viewport",
+        "refs/remotes/origin/experiments/startup-viewport"
+      ],
+      "public_link": "https://github.com/Derek-X-Wang/nvwa/tree/11fc789e898119e0ed2b423f8a909dacb547f772"
+    },
+    {
+      "pr": 28,
+      "page_lengths": [
+        100,
+        69
+      ],
+      "full_count": 169,
+      "api_changed_files": 169,
+      "inventory_count": 169,
+      "paths_exact": true,
+      "head_exact": true,
+      "base_name_exact": true,
+      "blob_mismatches": [],
+      "states": {
+        "later_different": 1,
+        "absent": 168
+      },
+      "api_state": "open",
+      "merged": false,
+      "head_branch": "codex/m1-1-editor-web",
+      "local_refs_at_head": [
+        "refs/heads/codex/m1-1-editor-web",
+        "refs/remotes/origin/codex/m1-1-editor-web"
+      ],
+      "public_link": "https://github.com/Derek-X-Wang/nvwa/tree/bb21905879d1fdd6dd3a37ba38400d90801a6b72"
+    },
+    {
+      "pr": 29,
+      "page_lengths": [
+        100,
+        49
+      ],
+      "full_count": 149,
+      "api_changed_files": 149,
+      "inventory_count": 149,
+      "paths_exact": true,
+      "head_exact": true,
+      "base_name_exact": true,
+      "blob_mismatches": [],
+      "states": {
+        "absent": 149
+      },
+      "api_state": "open",
+      "merged": false,
+      "head_branch": "codex/m1-1-performance-followup",
+      "local_refs_at_head": [
+        "refs/heads/codex/m1-1-performance-followup",
+        "refs/remotes/origin/codex/m1-1-performance-followup"
+      ],
+      "public_link": "https://github.com/Derek-X-Wang/nvwa/tree/49d116c69cb9e7cfaa6f2c4356749ebd1504dd4e"
+    }
+  ],
+  "issues": [
+    {
+      "number": 3,
+      "state": "open",
+      "labels": [
+        "bug",
+        "needs-info"
+      ],
+      "milestone": {
+        "url": "https://api.github.com/repos/Derek-X-Wang/nvwa/milestones/1",
+        "html_url": "https://github.com/Derek-X-Wang/nvwa/milestone/1",
+        "labels_url": "https://api.github.com/repos/Derek-X-Wang/nvwa/milestones/1/labels",
+        "id": 18492980,
+        "node_id": "MI_kwDOVEWtT84BGi40",
+        "number": 1,
+        "title": "M1.1 \u2014 \u7f16\u8f91\u5668\u4f53\u9a8c\u4e0e Web \u6784\u5efa\u4f18\u5316\u9a8c\u8bc1",
+        "description": "Bounded M1 stabilization authorized on 2026-10-11: isolated Rust egui component prototype and profile-only Web build A/B; actual native/Web builds, tests and functional/measurement evidence; adopt/reject/inconclusive decisions before production integration. No M2, new rigs, paid services or unbounded CI.",
+        "creator": {
+          "login": "Derek-X-Wang",
+          "id": 6364170,
+          "node_id": "MDQ6VXNlcjYzNjQxNzA=",
+          "avatar_url": "https://avatars.githubusercontent.com/u/6364170?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/Derek-X-Wang",
+          "html_url": "https://github.com/Derek-X-Wang",
+          "followers_url": "https://api.github.com/users/Derek-X-Wang/followers",
+          "following_url": "https://api.github.com/users/Derek-X-Wang/following{/other_user}",
+          "gists_url": "https://api.github.com/users/Derek-X-Wang/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/Derek-X-Wang/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/Derek-X-Wang/subscriptions",
+          "organizations_url": "https://api.github.com/users/Derek-X-Wang/orgs",
+          "repos_url": "https://api.github.com/users/Derek-X-Wang/repos",
+          "events_url": "https://api.github.com/users/Derek-X-Wang/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/Derek-X-Wang/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "open_issues": 5,
+        "closed_issues": 15,
+        "state": "open",
+        "created_at": "2026-10-11T17:13:15Z",
+        "updated_at": "2026-10-14T23:15:23Z",
+        "due_on": null,
+        "closed_at": null
+      },
+      "body": "## What to build\n\nIAB viewport/DPR emulation misaligns rendered egui controls and pointer coordinates, even when configured before reload. Ordinary unoverridden viewport input works. Reproduce and isolate the Winit/egui/canvas sizing boundary before changing normal HiDPI behavior.\n\n## Acceptance criteria\n\n- [ ] Retain a minimal real WebGPU reproduction with observed CSS, physical-buffer and scale dimensions.\n- [ ] Pointer clicks and slider drag target the visible controls after supported resize/DPR changes.\n- [ ] Regression-check normal native HiDPI and ordinary browser sizing.\n- [ ] If the cause is outside Nvwa, document the exact upstream boundary and supported workaround.\n\n## Blocked by\n\nOriginal IAB DPR-emulation capability is unavailable: the current supported viewport API accepts only `width` and `height`. An exact original emulation trace or a supported physical display-scale transition is needed for the remaining diagnosis. Independent tasks can proceed.\n\n## Evidence and scope\n\n[M0 verification matrix](https://github.com/Derek-X-Wang/nvwa/blob/d74493d/docs/TEST-MATRIX.md); [actual GUI observations](https://github.com/Derek-X-Wang/nvwa/blob/d74493d/docs/evidence/GUI-SESSION.md)\n\nKnown M0 gap; independent of thin M1.\n\n## 2026-10-11 supported-browser control\n\nPARTIAL \u2014 Actual Chrome zoom100%\u2192110%\u2192125%\u2192100% passes, with observed DPR2\u21922.2\u21922.5\u21922 and CSS size changing together. Actual Work click/settled-caret checks, typing, jaw edit/one Undo and complete saved Work restoration pass. Derek's physical125% Chinese candidates/Space, shortcuts/tab return and continuous drag/Undo checks pass separately.\n\nThe original IAB emulated-DPR trigger is unavailable in the current width/height-only API. Original failure/cause, fixed-CSS DPR isolation and physical display migration are NOT-RUN. No speculative sizing fix is selected; this issue stays OPEN. Earlier native acceptance is artifact-specific and was not repeated this turn.\n\n[Raw evidence and reproduction](https://github.com/Derek-X-Wang/nvwa/blob/860d1c40e9a99dc37ff08e7a61caa93b86587219/docs/evidence/input-scale/ACCEPTANCE.md), [independent review](https://github.com/Derek-X-Wang/nvwa/blob/860d1c40e9a99dc37ff08e7a61caa93b86587219/docs/evidence/input-scale/REVIEW.md), publication [PR #31](https://github.com/Derek-X-Wang/nvwa/pull/31). Checker-only stale-pair false passes were repaired;15 tests pass and pre-fix reds remain reproducible. One untrusted compositionend's origin is UNKNOWN, tracked separately in #32; it is not a demonstrated product defect.\n\nNext decisive work needs supported original DPR-emulation capability/trace or an actual display-scale transition. Ordinary browser zoom is a passing control and cannot establish that original emulator defect is fixed or outside Nvwa.\n\n## 2026-10-12 bounded capability recheck\n\nThe current Codex In-app Browser viewport documentation was refreshed once. Its `set(options: ViewportSize)` accepts only `height` and `width`; `reset()` clears that size override. No DPR-emulation entry is advertised. The original triggering condition remains unavailable, so no speculative product sizing change and no repeat of already-passing ordinary zoom controls was made. This issue stays OPEN with `needs-info` and all original acceptance criteria retained.\n\nPR #33 is merged. Its fixed-CSS DPR control and native2x/window enlargement checks remain artifact-specific accepted controls; fixed-CSS continuous drag and physical display migration remain NOT-RUN. The paired input-method provenance investigation #32 is closed with UNKNOWN retained, not as a product fix. [Merged bounded evidence](https://github.com/Derek-X-Wang/nvwa/blob/6b5cf8068fe5f859f82a1934bfedc8b224d49e20/docs/evidence/bounded-scale-ime/ACCEPTANCE.md).\n\nExit for this attempt: BLOCKED by missing original capability. Next decisive input is a supported original DPR-emulation control/trace, or an actual display-scale transition. Continue independent #4 startup measurement and #5 screenshot-export diagnosis; do not interpret this blocker as completion or deletion of the original requirement.\n\n## Published bounded checkpoint (2026-10-12)\n\n[PR #34](https://github.com/Derek-X-Wang/nvwa/pull/34) preserves the actual width/height-only capability documentation and [blocker](https://github.com/Derek-X-Wang/nvwa/blob/5af5f73e5a3a5efe8a07d03b4e51d776b8fc6c26/docs/evidence/bounded-startup-capture/issue3-blocker.md). The original triggering condition remains unavailable; no additional ordinary control rerun or product sizing patch was selected. Independent #4/#5 checks proceeded. Original acceptance criteria remain unchanged and this issue remains OPEN/needs-info.\n"
+    },
+    {
+      "number": 4,
+      "state": "open",
+      "labels": [
+        "enhancement",
+        "ready-for-agent"
+      ],
+      "milestone": {
+        "url": "https://api.github.com/repos/Derek-X-Wang/nvwa/milestones/1",
+        "html_url": "https://github.com/Derek-X-Wang/nvwa/milestone/1",
+        "labels_url": "https://api.github.com/repos/Derek-X-Wang/nvwa/milestones/1/labels",
+        "id": 18492980,
+        "node_id": "MI_kwDOVEWtT84BGi40",
+        "number": 1,
+        "title": "M1.1 \u2014 \u7f16\u8f91\u5668\u4f53\u9a8c\u4e0e Web \u6784\u5efa\u4f18\u5316\u9a8c\u8bc1",
+        "description": "Bounded M1 stabilization authorized on 2026-10-11: isolated Rust egui component prototype and profile-only Web build A/B; actual native/Web builds, tests and functional/measurement evidence; adopt/reject/inconclusive decisions before production integration. No M2, new rigs, paid services or unbounded CI.",
+        "creator": {
+          "login": "Derek-X-Wang",
+          "id": 6364170,
+          "node_id": "MDQ6VXNlcjYzNjQxNzA=",
+          "avatar_url": "https://avatars.githubusercontent.com/u/6364170?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/Derek-X-Wang",
+          "html_url": "https://github.com/Derek-X-Wang",
+          "followers_url": "https://api.github.com/users/Derek-X-Wang/followers",
+          "following_url": "https://api.github.com/users/Derek-X-Wang/following{/other_user}",
+          "gists_url": "https://api.github.com/users/Derek-X-Wang/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/Derek-X-Wang/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/Derek-X-Wang/subscriptions",
+          "organizations_url": "https://api.github.com/users/Derek-X-Wang/orgs",
+          "repos_url": "https://api.github.com/users/Derek-X-Wang/repos",
+          "events_url": "https://api.github.com/users/Derek-X-Wang/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/Derek-X-Wang/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "open_issues": 5,
+        "closed_issues": 15,
+        "state": "open",
+        "created_at": "2026-10-11T17:13:15Z",
+        "updated_at": "2026-10-14T23:15:23Z",
+        "due_on": null,
+        "closed_at": null
+      },
+      "body": "## What to build\n\nM0 measured release main-loop cadence and native child RSS, not exact presented frames or GPU memory. A first native probe completed its real screenshot after 8.52 seconds; the cause is unprofiled. Web measurements used a warm browser/cache.\n\n## Acceptance criteria\n\n- [ ] Instrument and report exact measurement boundaries rather than calling asset readiness first frame.\n- [ ] Measure cold Web startup with documented cache/network conditions.\n- [ ] Profile native first-launch stalls before attributing them to shader compilation.\n- [ ] Collect GPU timings and browser/RSS memory where supported; retain NOT-RUN for unavailable metrics.\n- [ ] Use one real character at 1280\u00d7720 release with competing heavy jobs stopped.\n\n## Blocked by\n\nNone (can start immediately).\n\n## Evidence and scope\n\n[actual measurements](https://github.com/Derek-X-Wang/nvwa/blob/d74493d/docs/PERFORMANCE.md)\n\nKnown M0 gap; independent of thin M1.\n\n## 2026-10-12 bounded HTTP-cache startup result\n\nPARTIAL \u2014 Two actual fresh-prefix, no-store IAB startups rendered the real character at1280\u00d7720/DPR1. Five critical bodies transmitted20,564,428bytes per run; an explicit optional `.glb.meta`404 adds28bytes. Exact frozen bodies, browser resource sizes and server records reconcile. Boot-hidden517.5/634.4ms and GLB responseEnd936.6/1100.8ms use separate navigation clocks; neither is first presentation.\n\nStartup2's actual raw Rust event records AssetReady0.4248s and screenshot callback15.4457s on `bevy_TimeReal_since_first_update`; the callback includes requested15s warmup. Startup1's console capture is empty. These are separate from HTML navigation and actual download/file evidence.\n\nVERIFIED \u2014 11 CPU boundary tests, actual optional-metadata red/green, exact archived observations and independent agent review with corrected factual claims. Same31 accepted product inputs and retained artifacts; no product/dependency/lockfile change or new Rust build/native run.\n\nNOT-RUN \u2014 exact first presentation, fully cold browser/GPU/OS/shader state, GPU/browser memory/timestamps and native startup attribution. Fresh URLs/no-store prove the HTTP-cache boundary only. This issue remains OPEN with all original criteria retained. Next work can independently evaluate supported native profiling or presentation instrumentation; no attribution to shader compilation is established.\n\n[Acceptance and raw packet](https://github.com/Derek-X-Wang/nvwa/blob/5af5f73e5a3a5efe8a07d03b4e51d776b8fc6c26/docs/evidence/bounded-startup-capture/ACCEPTANCE.md), [experiment/reproduction](https://github.com/Derek-X-Wang/nvwa/blob/5af5f73e5a3a5efe8a07d03b4e51d776b8fc6c26/experiments/24-http-cold-startup/README.md), [independent agent review](https://github.com/Derek-X-Wang/nvwa/blob/5af5f73e5a3a5efe8a07d03b4e51d776b8fc6c26/docs/evidence/bounded-startup-capture/REVIEW.md); publication [PR #34](https://github.com/Derek-X-Wang/nvwa/pull/34).\n"
+    }
+  ]
+}

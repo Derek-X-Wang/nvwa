@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "revision": 0,
+  "profile": {
+    "id": "nvwa-original-humanoid-v1",
+    "asset_path": "fixtures/corrected.glb",
+    "asset_sha256": "425d1628dd3805fb37bbe1b2bbc8ba3cfcab2dd6ae610a59c652a7445c0a7d56",
+    "license": "CC0-1.0 (original Nvwa test fixture only)",
+    "parameters": [
+      {
+        "id": "jaw_width",
+        "morph_index": 0,
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "nose_width",
+        "morph_index": 1,
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "smile",
+        "morph_index": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "shoulder_width",
+        "morph_index": 3,
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.0
+      }
+    ],
+    "clips": [
+      {
+        "id": "idle",
+        "animation_index": 0,
+        "duration_seconds": 3.0416667461395264
+      },
+      {
+        "id": "turn",
+        "animation_index": 1,
+        "duration_seconds": 4.041666507720947
+      },
+      {
+        "id": "wave",
+        "animation_index": 2,
+        "duration_seconds": 3.0416667461395264
+      }
+    ]
+  },
+  "character": {
+    "id": "character-1",
+    "profile_id": "nvwa-original-humanoid-v1",
+    "parameters": {
+      "jaw_width": 0.0,
+      "nose_width": 0.0,
+      "smile": 0.0,
+      "shoulder_width": 0.0
+    },
+    "scale": 1.0
+  },
+  "timeline": []
+}
