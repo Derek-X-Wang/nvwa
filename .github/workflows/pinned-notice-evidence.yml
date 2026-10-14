@@ -1,0 +1,38 @@
+name: Pinned notice evidence
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/pinned-notice-evidence.yml'
+      - 'experiments/37-pinned-notice-sources/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/pinned-notice-evidence.yml'
+      - 'experiments/37-pinned-notice-sources/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pinned-notice-evidence-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline-evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # existing repository pin
+        with:
+          persist-credentials: false
+      - name: Verify retained source evidence offline
+        run: python3 -B experiments/37-pinned-notice-sources/verify.py
+      - name: Verify portable data access
+        run: python3 -B experiments/37-pinned-notice-sources/portable_test.py --scratch "$RUNNER_TEMP/pinned-notice-portable"
+      - name: Exercise actual mutation controls
+        run: python3 -B experiments/37-pinned-notice-sources/controls.py --scratch "$RUNNER_TEMP/pinned-notice-controls" --evidence "$RUNNER_TEMP/pinned-notice-control-evidence"
+      - name: State unresolved coverage
+        run: |
+          echo 'Integrity checks passed. Licensing applicability, entire instruments, all expression branches, and distribution permission remain UNKNOWN.'
+          echo 'Frozen baseline remains 23 missing-text packages and 47 gap records. This job performs no acquisition, build, gap closure, or release approval.'

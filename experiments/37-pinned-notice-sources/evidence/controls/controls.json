@@ -1,0 +1,471 @@
+{
+  "status": "VERIFIED",
+  "mutations": 16,
+  "runs": 33,
+  "all_passed": true,
+  "controls": [
+    {
+      "name": "baseline-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "actual-document-byte-tamper-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/actual-document-byte-tamper"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "actual legal Git blob join mismatch",
+      "passed": true,
+      "stdout_sha256": "3d7ff24375f43653e0dc2d76503fdea9be7068c727182d1b2715084450ccaee1"
+    },
+    {
+      "name": "actual-document-byte-tamper-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "mirrored-commit-substitution-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/mirrored-commit-substitution"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "pinned package/VCS/declaration mismatch",
+      "passed": true,
+      "stdout_sha256": "6d973f0049f8b0f10307a0cb8d86aefd5587f1226afe156335871abf9a8ffe29"
+    },
+    {
+      "name": "mirrored-commit-substitution-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "mirrored-source-path-substitution-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/mirrored-source-path-substitution"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "source request URL/commit/path mismatch",
+      "passed": true,
+      "stdout_sha256": "5d0ee8f7e88b25c33f20f8d83cbd28c5de801853b380761db82d99495ce83ff9"
+    },
+    {
+      "name": "mirrored-source-path-substitution-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "actual-code-promoted-as-terms-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/actual-code-promoted-as-terms"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "content-derived document role mismatch",
+      "passed": true,
+      "stdout_sha256": "fdfcce21a3c4ce96c853e9b6341eda03fe9941604760702a35b419773cd74c6e"
+    },
+    {
+      "name": "actual-code-promoted-as-terms-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "actual-declaration-promoted-as-terms-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/actual-declaration-promoted-as-terms"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "content-derived document role mismatch",
+      "passed": true,
+      "stdout_sha256": "f7a012947c2e20a9ce433e089958f6a6b46d729c1d71c4d66059db76e3d10d81"
+    },
+    {
+      "name": "actual-declaration-promoted-as-terms-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "omit-no-legal-root-finding-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/omit-no-legal-root-finding"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "required observed absence/content scope omitted",
+      "passed": true,
+      "stdout_sha256": "b3452a4c352156ec380c9aeb763e2c041ca4828e65a0ab1f5880c08813760707"
+    },
+    {
+      "name": "omit-no-legal-root-finding-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "approve-empty-hexf-coverage-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/approve-empty-hexf-coverage"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "observed absence/notice/terms status differs",
+      "passed": true,
+      "stdout_sha256": "d3378a4361c56436432fbd0debf38dfde8f2150ba3e392faaf7ff730f9f05078"
+    },
+    {
+      "name": "approve-empty-hexf-coverage-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "backfill-absent-VCS-path-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/backfill-absent-VCS-path"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "absent VCS path backfilled",
+      "passed": true,
+      "stdout_sha256": "1c3c404f899cab70ee3272328f4460d9b5c6c434e64eb81cdf45987b443befe5"
+    },
+    {
+      "name": "backfill-absent-VCS-path-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "ambiguous-original-manifest-tree-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/ambiguous-original-manifest-tree"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "original manifest blob path absent/ambiguous",
+      "passed": true,
+      "stdout_sha256": "c461879847470266e1f0a08013200bef800b61757eaa74e26b3255841b856b05"
+    },
+    {
+      "name": "ambiguous-original-manifest-tree-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "flatten-raw-slash-expression-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/flatten-raw-slash-expression"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "pinned package/VCS/declaration mismatch",
+      "passed": true,
+      "stdout_sha256": "d835396a6bba439ede6e8b1dc889e9c39d31b3d7d7d7dd10fc28db07f3fd2081"
+    },
+    {
+      "name": "flatten-raw-slash-expression-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "promote-expression-coverage-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/promote-expression-coverage"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "package coverage/approval unknowns changed",
+      "passed": true,
+      "stdout_sha256": "7815c7c16ce175c3d25edbfaabcf963e5abc4d644fbf0a883c0c8120adda20f9"
+    },
+    {
+      "name": "promote-expression-coverage-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "omit-legal-body-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/omit-legal-body"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "aae6955b00c0f718f2847e4b95676d38c1957c619bbfde04b92eb8d03fdbf900"
+    },
+    {
+      "name": "omit-legal-body-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "omit-captured-legal-record-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/omit-captured-legal-record"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "captured legal sources omitted/added",
+      "passed": true,
+      "stdout_sha256": "25495cf1c35cf67a2c052ce09566171bf67818fb0c949d03e20e3e379fe3d272"
+    },
+    {
+      "name": "omit-captured-legal-record-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "alter-actual-Git-tree-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/alter-actual-Git-tree"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "reconstructed Git tree mismatch",
+      "passed": true,
+      "stdout_sha256": "547daf13c193b535fb394a3741d17ada471fd2efec9d1ab2c9968277dba86c64"
+    },
+    {
+      "name": "alter-actual-Git-tree-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "rewrite-baseline23-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/rewrite-baseline23"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "independent baseline anchor mismatch",
+      "passed": true,
+      "stdout_sha256": "a1b68d351715f51e042858be62ada025bac8e99831442a702bd338b38e90e870"
+    },
+    {
+      "name": "rewrite-baseline23-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    },
+    {
+      "name": "change-sourceID-red",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        ".work/pinned-notice-sources/controls/change-sourceID"
+      ],
+      "exit_code": 1,
+      "expected": "red",
+      "expected_error": "pinned package/VCS/declaration mismatch",
+      "passed": true,
+      "stdout_sha256": "e5c8c36a47ff3eff44a4c805b45600e54e9b2b67a2f313bf84b2314ab00d2f9f"
+    },
+    {
+      "name": "change-sourceID-restored-green",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources/verify.py",
+        "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/experiments/37-pinned-notice-sources"
+      ],
+      "exit_code": 0,
+      "expected": "green",
+      "expected_error": null,
+      "passed": true,
+      "stdout_sha256": "59567cd1c032c22c4b715b98b06cc3d22977d25d92839052d49b24a3aaa17a99"
+    }
+  ],
+  "temporary_mutation_copies_removed": true
+}

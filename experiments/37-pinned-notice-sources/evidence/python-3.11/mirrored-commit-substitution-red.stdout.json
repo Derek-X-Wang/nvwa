@@ -1,0 +1,45 @@
+{
+  "status": "FAIL",
+  "errors": [
+    "frozen capture hash mismatch",
+    "pinned package/VCS/declaration mismatch: profiling@1.0.18 commit",
+    "published VCS metadata altered/backfilled",
+    "source request URL/commit/path mismatch",
+    "actual commit record mismatch"
+  ],
+  "capture_sha256": "9f63e640eba11343ff36fa9838a97b2e35521544b5d3c5ec74b57a1600303848",
+  "packages": [
+    {
+      "package": "profiling@1.0.18",
+      "observed_state": "original terms candidates captured",
+      "captured_files": 2,
+      "resolved_package_path": "profiling",
+      "published_path_in_vcs": "profiling",
+      "expression": "MIT OR Apache-2.0"
+    },
+    {
+      "package": "svg_fmt@0.4.5",
+      "observed_state": "original terms candidates captured",
+      "captured_files": 1,
+      "resolved_package_path": "svg_fmt",
+      "published_path_in_vcs": "svg_fmt",
+      "expression": "MIT/Apache-2.0"
+    },
+    {
+      "package": "hexf-parse@0.2.1",
+      "observed_state": "UNKNOWN no legal file at package/ancestor roots",
+      "captured_files": 0,
+      "resolved_package_path": "parse",
+      "published_path_in_vcs": null,
+      "expression": "CC0-1.0"
+    }
+  ],
+  "actual_http_requests": 9,
+  "captured_legal_files": 3,
+  "failed_requests": 0,
+  "baseline_missing_unchanged": 23,
+  "baseline_gaps_unchanged": 47,
+  "live_comparison": "NOT-RUN",
+  "review_acceptance": "PENDING",
+  "legal_distribution_approval": "NOT-RUN"
+}

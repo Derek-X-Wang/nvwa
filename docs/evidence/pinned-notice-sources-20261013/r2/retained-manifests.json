@@ -1,0 +1,82 @@
+{
+  "profiling@1.0.18": {
+    "sha256": "00c84a390cdb283f2fea80bb6ccbfef8af8cd2005e79309057af1b5030d3e6a5",
+    "manifest": "inputs/manifests/profiling@1.0.18/Cargo.toml",
+    "package": {
+      "edition": "2018",
+      "rust-version": "1.60",
+      "name": "profiling",
+      "version": "1.0.18",
+      "authors": [
+        "Philip Degarmo <aclysma@gmail.com>"
+      ],
+      "build": false,
+      "exclude": [
+        "/examples",
+        "/screenshots"
+      ],
+      "autolib": false,
+      "autobins": false,
+      "autoexamples": false,
+      "autotests": false,
+      "autobenches": false,
+      "description": "This crate provides a very thin abstraction over other profiler crates.",
+      "homepage": "https://github.com/aclysma/profiling",
+      "readme": "README.md",
+      "keywords": [
+        "performance",
+        "profiling"
+      ],
+      "categories": [
+        "development-tools::profiling"
+      ],
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/aclysma/profiling"
+    }
+  },
+  "svg_fmt@0.4.5": {
+    "sha256": "84650d018d4259c31ab944439b642665668367ed4312a64a735ee2654d1056e5",
+    "manifest": "inputs/manifests/svg_fmt@0.4.5/Cargo.toml",
+    "package": {
+      "edition": "2018",
+      "name": "svg_fmt",
+      "version": "0.4.5",
+      "authors": [
+        "Nicolas Silva <nical@fastmail.com>"
+      ],
+      "build": false,
+      "autolib": false,
+      "autobins": false,
+      "autoexamples": false,
+      "autotests": false,
+      "autobenches": false,
+      "description": "Very simple debugging utilities to dump shapes in SVG format.",
+      "documentation": "https://docs.rs/svg_fmt/",
+      "readme": "README.md",
+      "keywords": [
+        "2d",
+        "graphics",
+        "svg"
+      ],
+      "license": "MIT/Apache-2.0",
+      "repository": "https://github.com/nical/rust_debug"
+    }
+  },
+  "hexf-parse@0.2.1": {
+    "sha256": "dd7274968556f3f3309df5615d94437ec4e4823777cc440f91177b2170cbe2a7",
+    "manifest": "inputs/manifests/hexf-parse@0.2.1/Cargo.toml",
+    "package": {
+      "edition": "2018",
+      "name": "hexf-parse",
+      "version": "0.2.1",
+      "authors": [
+        "Kang Seonghoon <public+rust@mearie.org>"
+      ],
+      "description": "Parses hexadecimal floats (see also hexf)",
+      "homepage": "https://github.com/lifthrasiir/hexf",
+      "documentation": "https://docs.rs/hexf-parse/",
+      "license": "CC0-1.0",
+      "repository": "https://github.com/lifthrasiir/hexf"
+    }
+  }
+}
