@@ -1,0 +1,2637 @@
+{
+  "schema": 1,
+  "compared_main": "a094baa048e6e50056e3288ecfa85bb4ac62e140",
+  "historical_roadmap_sha256": "82f6cd61a262f70709d8f0a929fc9127fd0b1b67732563f056668e41c15bc04c",
+  "limits": [
+    "Not all historical experiment bytes are present in main",
+    "No obsolete profile/runtime changes are promoted",
+    "Closing archival PRs does not mark blocked verification complete"
+  ],
+  "pull_requests": [
+    {
+      "baseRefName": "main",
+      "headRefOid": "11fc789e898119e0ed2b423f8a909dacb547f772",
+      "number": 22,
+      "title": "Record actual startup, continuous animation and viewport evidence",
+      "html_url": "https://github.com/Derek-X-Wang/nvwa/pull/22",
+      "archive_head_url": "https://github.com/Derek-X-Wang/nvwa/tree/11fc789e898119e0ed2b423f8a909dacb547f772",
+      "paths": [
+        {
+          "path": "docs/EXECUTION.md",
+          "head_blob": "65aa8d1b38b4f48570683328ae7f8340556357e9",
+          "main_blob": "0f871d62503bdd3a4982eecbb13292ead0f4317f",
+          "main_state": "later_different"
+        },
+        {
+          "path": "docs/EXPERIMENTS.md",
+          "head_blob": "1f726fa7c7330124e456bc83c1b2140e68b9e28c",
+          "main_blob": "c1fb51836c25f90e1b1f6827ba32fe94d57555a4",
+          "main_state": "later_different"
+        },
+        {
+          "path": "docs/HANDOFF.md",
+          "head_blob": "8eb21057738d7ce1f06751164a99152d83fe2bc1",
+          "main_blob": "f386b335714d04dcae5a37900d97d2d1c66fa39a",
+          "main_state": "later_different"
+        },
+        {
+          "path": "docs/ISSUES.md",
+          "head_blob": "239d0492ff6fc040247bd195bf1f0d5d01273232",
+          "main_blob": "9a85710ad224eef4429f4a7b1c87c96654fdf3dd",
+          "main_state": "later_different"
+        },
+        {
+          "path": "docs/PERFORMANCE.md",
+          "head_blob": "9bc87bd4c52b8bb822b98867ad59d1a237186ef4",
+          "main_blob": "efda4616a4d3e5b8a59a5329afc8898348b745d3",
+          "main_state": "later_different"
+        },
+        {
+          "path": "docs/ROADMAP.md",
+          "head_blob": "989f4737185b5cbf740b6b3f856b1524a2821a29",
+          "main_blob": "894ade3b1fc60938061439766f26fe5dcf40b38c",
+          "main_state": "later_different"
+        },
+        {
+          "path": "docs/evidence/continuous-idle.md",
+          "head_blob": "8da1899f8530259c4a90ea6577c4d3bf8b3c1130",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/ACCEPTANCE.md",
+          "head_blob": "2eaa860b7800534db81352c0b45cb796222d9f12",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/continuous-end-isolation.json",
+          "head_blob": "3e19507ed6625ef0434d73c86242da4f57ddc91c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/continuous-start-isolation.json",
+          "head_blob": "5b2722f2057f5fbfadf86764163d55c7353f4351",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/later-competing-compilers.json",
+          "head_blob": "2bd3d9fca3dd7c913cad9654a03d53eafa6bc66c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-15s/capture.png",
+          "head_blob": "4e17c148a8d58cbcfdfee8b1158c453f5712ae9e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-15s/events.jsonl",
+          "head_blob": "49ad7c54632db66e1938d18d1e5723dd0501328e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-15s/report.json",
+          "head_blob": "4d1bae5130490f55453b981a1c067ab29ac75b54",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-15s/stderr.log",
+          "head_blob": "462a4293872b9f65f04c73de78cd801ab3debd48",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-15s/stdout.log",
+          "head_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-15s/visual-review.json",
+          "head_blob": "3bab37345224d3cef336ecf12e51be97f21d8f9a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-1s/capture.png",
+          "head_blob": "1a64c81530dd03e5347b02b433a1ba1e693b9aad",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-1s/events.jsonl",
+          "head_blob": "08ae9b6592a49ea622d51bf8bb509c958a56c499",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-1s/report.json",
+          "head_blob": "1ecd973c7918d5aadfad48de350152b886f3e4b4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-1s/stderr.log",
+          "head_blob": "aaed3fbb76d94a67affc46a11c5805e9fa11f4c4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-1s/stdout.log",
+          "head_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-1s/visual-review.json",
+          "head_blob": "a1a8cf1798b120cec4dafb98d9f8163c88a7bc77",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-continuous-15s/capture.png",
+          "head_blob": "eb3c37a3c5572974916dd39c7502b31c139939f7",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-continuous-15s/events.jsonl",
+          "head_blob": "d5a0c6006015a327f1f6f2b1075e33521dd66fe4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-continuous-15s/report.json",
+          "head_blob": "0dc8af05561e21fe2599fe5118eddc0c2546e1a6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-continuous-15s/stderr.log",
+          "head_blob": "d672368ee926e95218ff07c81e5dadf6d914ebd1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-continuous-15s/stdout.log",
+          "head_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/native-startup/native-continuous-15s/visual-review.json",
+          "head_blob": "2aa0009bb338c21d592b8039bfb63f0629c31005",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/startup-viewport-cleanup.json",
+          "head_blob": "fdd1f8ab388aa1101e37785cfd61250bcfffb06e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/startup-viewport-manifest.json",
+          "head_blob": "7fc74f62a1d2244f5dcf48a8c63f93087c7f58d4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/startup-viewport-review.md",
+          "head_blob": "65b63ae32e5bbcd6e26fa8264bfb0601ac3a612b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/ACCEPTANCE.md",
+          "head_blob": "4db84df3e5b2c05937ab450deda54db02c574d8d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/bundle-manifest.json",
+          "head_blob": "be564544a3c6f29b63d80dd493e110050c037c2e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/http.jsonl",
+          "head_blob": "084adc0739cd3b0e05394ca0d0649e1c1fd84098",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/installer-python39-failure.json",
+          "head_blob": "165113c00b5f1c34465ad6531df660b4e21ebb4d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/native-document-comparison.json",
+          "head_blob": "ca850b3224a0e4ac570b2b71015ae0d15694e4bd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/native-hidpi-edited.jpg",
+          "head_blob": "e019756b9c0074f94e72a768277f408aea5825ad",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/native-hidpi-edited.json",
+          "head_blob": "add1696383ace1700959228023e8a8efcdf47079",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/native-hidpi-undo.jpg",
+          "head_blob": "9337a62b8bae28bfdcacf616746eb1889ba18e95",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/native-hidpi-undo.json",
+          "head_blob": "6bee170dc9d1f67eb72c60564cedc2d4db472540",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/served-index.json",
+          "head_blob": "895c991c66bd58fcc69dbd3bcf04c21d6cdaaf0b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1024-caret-geometry.json.gz",
+          "head_blob": "d9f29bc3bf2521fe39adf0a53257889e33bf39ab",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1024-caret.jpg",
+          "head_blob": "6c052f64b7ca58fe0cd343b5abac5d27df367b45",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1024-edited.json",
+          "head_blob": "7120982d2ccdc43e3e704528b817ac1152a79b93",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1024-geometry.json.gz",
+          "head_blob": "20af72f1074954f81fe704a04e106d0b24239bcd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1024-undo.jpg",
+          "head_blob": "f36a2f0ec775cdbb1fa791627629500877a7d77d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1024-undo.json",
+          "head_blob": "46158b0e40cd44827d719f483f5aa85754f8c490",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1600-caret-geometry.json.gz",
+          "head_blob": "a205558ac237a6f81eee20131a5173ea0e685f48",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1600-caret.jpg",
+          "head_blob": "801bf5dcb7c3be6389c2df32bf09e16c0245543d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1600-edited.json",
+          "head_blob": "de594dcf01195e65c696388beb25812dca0e9637",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1600-geometry.json.gz",
+          "head_blob": "13621a917eaf80dc118a87711be728a31dad3a47",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1600-undo.jpg",
+          "head_blob": "5395fe5273e7250a120f72d09d0fb937ed6ac31c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-1600-undo.json",
+          "head_blob": "6bee170dc9d1f67eb72c60564cedc2d4db472540",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-baseline-geometry.json.gz",
+          "head_blob": "303e8fd882f83727fc2a2805d7431277889889dd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-baseline.json",
+          "head_blob": "437b8ddfed3def20ef2f0bf875904febc470d57c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-document-comparison.json",
+          "head_blob": "abb54950ee678ad6b6715ce0bb1f7658a5a7b07d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-geometry-summary.json",
+          "head_blob": "dfe66075a13051ff5a04c9984afa897dbf1584d5",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-restored-caret.jpg",
+          "head_blob": "16cc785484899c5e066e5c59bcc0c12f15363a3f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/viewport-boundary/web-restored-geometry.json.gz",
+          "head_blob": "87420003d20c57f122dfc86448cf3afb942764ba",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/ACCEPTANCE.md",
+          "head_blob": "3fa5d3bedf24273b7b1b960d9fe9cabf49b1a6db",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/bundle-manifest.json",
+          "head_blob": "964aaf12c2e98febf320924ac91ed6f6f5ab8997",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/canvas.png",
+          "head_blob": "30e7ebcfcdb4061b239c3479cb53c37be793d6cf",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/competing-compilers.json",
+          "head_blob": "fa38ec8cd293172279b9134863806077e0892f38",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/bundle-manifest.json",
+          "head_blob": "12f395440ee75fbefc7105777df2731951c5f395",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/canvas.png",
+          "head_blob": "edae2a03cb5835a0bae3720d2eace3ddbf22aabd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/end-isolation.json",
+          "head_blob": "bbac51aec901a691224e565b0f27e7d972186fbf",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/http-browser.jsonl",
+          "head_blob": "2810b016e7f3d7a3eb9cd9329eb60b2e48d0334e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/http-preflight.jsonl",
+          "head_blob": "61cbeaf33e726e2e1132f3105e44eb688c82a93b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/http-summary.json",
+          "head_blob": "3c53c5f24dcc4d1b865e782aa80357fe4d3941f4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/http.jsonl",
+          "head_blob": "a13341c4d6eda35e98a0d804876d94f458130d54",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/post-run-input-freeze.json",
+          "head_blob": "e3139f795360c4905f950a517dc0f8570557df98",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/report.json",
+          "head_blob": "fc98ce2ec4c087e0177c9c421091c83bdc4afff0",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/served-preflight.json",
+          "head_blob": "d05f838dcc7ec226856581477daea75215300990",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/start-isolation.json",
+          "head_blob": "b7459caefb5a4947facdd0a4fbab25cd101e4cb3",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/visible.jpg",
+          "head_blob": "f24cce613702c0cd3954fec593f99fdc378abe7a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/continuous/visual-review.json",
+          "head_blob": "da770facf40658c30d34a48f90c632d179e1a1d2",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/gzip-identities.json",
+          "head_blob": "6422248157a1c21da3da59d0892540ec8216e15d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/http-browser.jsonl",
+          "head_blob": "57e67fb6e065097a6acf9d2ce920cea9ecda4845",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/http-preflight.jsonl",
+          "head_blob": "b664421eb12d0bc72c004745dc07c796db060660",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/http-summary.json",
+          "head_blob": "ff677ff5a917210618cc223af8d9e1414d53e4cb",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/http.jsonl",
+          "head_blob": "9b518ac348f2f6aeae241248477acfb362b6ee3f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/post-run-input-freeze.json",
+          "head_blob": "ae378c24a68fedd6b188b923c6649d5a21efe233",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/report.json",
+          "head_blob": "3ec8de19e2468ba8d8b6175510ac9fdee35b3c4d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/served-preflight.json",
+          "head_blob": "c4f0b3293bd0eadf9d6ed3b629dcfb0407367c32",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/visible.jpg",
+          "head_blob": "e4595f393f431506d408223ccfe478fe1c53c031",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/web-startup/visual-review.json",
+          "head_blob": "d2a1c5f7402c4c4cb88df4014b17ea3ed9a95abe",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/12-native-startup/REPORT.md",
+          "head_blob": "deb67174ed44bafe5ca99fc8242ad69079a6fe4c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/12-native-startup/checks-failed-path-alias.log",
+          "head_blob": "c0bdedb0b951da36de5b99543b0c7b918e9dc6dd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/12-native-startup/checks.log",
+          "head_blob": "87ab44bc3c16453d443e0b23ef65eb910daa40f4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/12-native-startup/measure_native.py",
+          "head_blob": "bce58d015b8188b407e0019863d8b3e9794dd941",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/12-native-startup/test_measure_native.py",
+          "head_blob": "659b20a18e7a99847200f8e8949141036ecfe7b1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/README.md",
+          "head_blob": "b7fec981dd4e8347c1968a66c9ea0c01b80b82cc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/REPORT.md",
+          "head_blob": "d522daaa634d689fadd555c55393153497a8bb93",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/artifact-sha256.json",
+          "head_blob": "073f396aef3e2ee38b4e09eb7c4421cd9b7f789b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/checked-dist-manifest-before-python39-fix.json",
+          "head_blob": "12b46f7ae3d9fcb5662482de1a40e77d3a8b8fdc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/checked-dist-manifest-before-sidecar-fix.json",
+          "head_blob": "942756b44ff4d1814fabdeb00e33a3736db6def9",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/checked-dist-manifest.json",
+          "head_blob": "694b31fe142767e765091d87062e875963933a0f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/checks-before-python39-fix.json",
+          "head_blob": "dddc2823feb05488d100b16c4ab91b8a6d6f4407",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/checks-before-sidecar-fix.json",
+          "head_blob": "1caba531dab4b822fba14c933527ab94bd325751",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/checks.json",
+          "head_blob": "c6ea7a32d615d207516f95e4a10753eebf045339",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/collector.js",
+          "head_blob": "eb03c37d165c61a6ef3c4af6fdebefcd57e9f794",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/diagnostic-panel.html",
+          "head_blob": "6cc35af3e696928685568f671d1d4a3722ca3dfd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/install.py",
+          "head_blob": "509292eebaac3a054498025878aaa689125c455d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/packaging-failure-evidence.json",
+          "head_blob": "ae26a2a4168cb0826082778be5ddc22bcb95e6cf",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/python39-failure-evidence.json",
+          "head_blob": "e319aaf5ba91b33fafa35f7572aa8434d7b3ea97",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/source-evidence.json",
+          "head_blob": "30f1e03d64e0cc525ff351b751e5f06a020ed7ba",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/13-viewport-boundary/worker-artifact-sha256.json",
+          "head_blob": "fd28808049c5d6d4d79aa25ce32a48e9f71b4380",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/14-web-startup/PROTOCOL.md",
+          "head_blob": "ca062c99a12515b6443c08ed0582aa7c4cbf5b4e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/14-web-startup/REPORT.md",
+          "head_blob": "84f6587a20c69d0cff635af842b51bcd9843d83d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/14-web-startup/startup-probe.html",
+          "head_blob": "9fb64cd26c7af9621ab200474f05e02cadeb1240",
+          "main_blob": null,
+          "main_state": "absent"
+        }
+      ],
+      "counts": {
+        "absent": 105,
+        "same": 0,
+        "later_different": 6
+      },
+      "disposition": "retain_exact_branch_and_PR_objects; close_as_archived_experiment_without_merge_or_branch_delete",
+      "product_paths_changed": false
+    },
+    {
+      "baseRefName": "experiments/startup-viewport",
+      "headRefOid": "bb21905879d1fdd6dd3a37ba38400d90801a6b72",
+      "number": 28,
+      "title": "M1.1: validate Rust editor components and the Web size profile",
+      "html_url": "https://github.com/Derek-X-Wang/nvwa/pull/28",
+      "archive_head_url": "https://github.com/Derek-X-Wang/nvwa/tree/bb21905879d1fdd6dd3a37ba38400d90801a6b72",
+      "paths": [
+        {
+          "path": "docs/ROADMAP.md",
+          "head_blob": "0db1dfff7bb077b8ffdf2c29526969b835fdd5aa",
+          "main_blob": "894ade3b1fc60938061439766f26fe5dcf40b38c",
+          "main_state": "later_different"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-base.nvwa.json",
+          "head_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-drag.nvwa.json",
+          "head_blob": "d6f6dad1177afd66ff93d90f7607eca14c2ab43f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-functional-checks.json",
+          "head_blob": "388eead018ea180e23c7bdc8f9178325612b662c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-functional-http-summary.json",
+          "head_blob": "bcfd6f327af5629c8b6f534f7019b9102ec5f51d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-functional-http.jsonl",
+          "head_blob": "f07f521e71c38d29b8b411a8ee8cf04bea72d057",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-redo.nvwa.json",
+          "head_blob": "70974591b252e8b1a41ed21e7b1db18192d1d4ac",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-reload.nvwa.json",
+          "head_blob": "70974591b252e8b1a41ed21e7b1db18192d1d4ac",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-undo.nvwa.json",
+          "head_blob": "613a5828817655a42abe03554d1a6616e294b55e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-wave-http.jsonl",
+          "head_blob": "597356c9dc9a413c45b97c586d4c47d7f0b8c8b9",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A-wave.png",
+          "head_blob": "a1c300de2a706f03b3d4e41095b8910628acff88",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A1-browser-requests.jsonl",
+          "head_blob": "4875d89043f14f1cb3246d72d8e6ed3843d46c31",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A1-finite-console.json",
+          "head_blob": "2bb3b456bc6dc927e9d6128e387bec5132a7ba6d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A1-finite-requests.jsonl",
+          "head_blob": "b58914c66893a87e90cb0784c1e8ac8a7ff193b5",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A1-finite-server-summary.json",
+          "head_blob": "bca8d02a8f6d18c574eae5ed814bc8a84fca0b4e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A1-idle-console.json",
+          "head_blob": "6c641900c99c43f4f9cea60a025f48bec6d56361",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A1-idle-requests.jsonl",
+          "head_blob": "293fbe5ed34b86750ff3bee1c05fc910b5be37c5",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A1-idle-server-summary.json",
+          "head_blob": "8d9745a35c521ba0072834c04628c05f3ab0ab1d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A1-idle.png",
+          "head_blob": "b60c7a5f18ac809bdc44f63d083d4ec82b98a2ca",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A2-browser-requests.jsonl",
+          "head_blob": "7171fd4fae2859a3ce350b82706744885e8cb88b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A2-finite-console.json",
+          "head_blob": "8a666b0d930d62030bfc5db0988ddbc7f4d4dea1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A2-finite-requests.jsonl",
+          "head_blob": "5fc792a2ebf5cd453f87a64616c6d8182d9370a1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A2-finite-server-summary.json",
+          "head_blob": "d45b29d21fd6d5c2607db36ba23f0552fa3a4c77",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A2-idle-console.json",
+          "head_blob": "2734d500977e4477241b4022f988c4f3761b0f03",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A2-idle-requests.jsonl",
+          "head_blob": "abf234966be40a42797440bc46aa20880528e0d9",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A2-idle-server-summary.json",
+          "head_blob": "10b1430751b02fbf4746a73a7b6009114b096449",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A3-browser-requests.jsonl",
+          "head_blob": "0de65b6f600450200f0e6d307e0e7e7c0a008309",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A3-finite-console.json",
+          "head_blob": "ae93276747226fb904cc88c4625d52514cc4f489",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A3-finite-requests.jsonl",
+          "head_blob": "f783112bbc74d4f884c24ceb0d9d454f1fe6567a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A3-finite-server-summary.json",
+          "head_blob": "6c6744a2b2ef909806c2bc98bb336086d6fe143c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A3-idle-console.json",
+          "head_blob": "b5164ff334a83a178a0c5e04925f734002d5d9e0",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A3-idle-requests.jsonl",
+          "head_blob": "bbe943a4bc0f799118fe72af49b49c8a43bb104d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/A3-idle-server-summary.json",
+          "head_blob": "ee4460b456cc94a255159d535d2d3ea735f0fd3e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ACCEPTANCE.md",
+          "head_blob": "917c7f931435adc02808095bdf5310ae858edfbe",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-base.nvwa.json",
+          "head_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-drag.nvwa.json",
+          "head_blob": "d6f6dad1177afd66ff93d90f7607eca14c2ab43f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-from-native.nvwa.json",
+          "head_blob": "da058524ed09cfdc5d6217dac70a684ad0fdc9e6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-functional-checks.json",
+          "head_blob": "c2e7d444081e5ff0e45ac6ec5ae748369e933c0d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-functional-http.jsonl",
+          "head_blob": "c49dec9a43bdf482f0762500699a7458430f5a53",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-functional.png",
+          "head_blob": "3d97621810b68f89cb5ce35ddd54390402b03305",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-http-audit.json",
+          "head_blob": "7a21d5d6388f996a9c27b0d1e70803015260f386",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-redo.nvwa.json",
+          "head_blob": "70974591b252e8b1a41ed21e7b1db18192d1d4ac",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B-undo.nvwa.json",
+          "head_blob": "613a5828817655a42abe03554d1a6616e294b55e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-browser-requests.jsonl",
+          "head_blob": "8690e2674612ba2f9b895ab5c5aa19b7dfa5a8c0",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-finite-console.json",
+          "head_blob": "eea85ac69304f7b7ba6784e36543df9b741b0522",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-finite-requests.jsonl",
+          "head_blob": "921754fad8047133ad2dd0ca13d2b8f7d9d8c998",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-finite-server-summary.json",
+          "head_blob": "368370c5b5dafa745691b368debd1610a201c4d3",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-finite.png",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-idle-console.json",
+          "head_blob": "1c8583b32c6b5804f8036369f7d9b83e805e9cb8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-idle-requests.jsonl",
+          "head_blob": "49c37a3566300aecece78530afe6167f7fcfcd10",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-idle-server-summary.json",
+          "head_blob": "25969a8e91083e1e95002e5675bcbba87348db29",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B1-idle.png",
+          "head_blob": "138919155c0d9ff774d74324179906b68e644b0a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B2-browser-requests.jsonl",
+          "head_blob": "d54dd40f92fa5b153b636dae6f552bff6ed812cc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B2-finite-console.json",
+          "head_blob": "7c6774947061f1a794d0ebee2dc82dcda5d96fb4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B2-finite-requests.jsonl",
+          "head_blob": "9e5a61eaa3602e946717a8997b2c163cd882318b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B2-finite-server-summary.json",
+          "head_blob": "c018ef274a236eb1bcffc71de0b4efe4baa6b8a5",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B2-idle-console.json",
+          "head_blob": "4c5d5f1ce397b825b29f9fd4e13a513837bbbb90",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B2-idle-requests.jsonl",
+          "head_blob": "187cf5874bf5bd8043daaae093d7ce80bfb90993",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B2-idle-server-summary.json",
+          "head_blob": "4b239b61d062ed4c5786e52fd5806ca68d4bcd66",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B3-browser-requests.jsonl",
+          "head_blob": "ebb2d5774790231c9e24da41b3de94356a844b07",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B3-finite-console.json",
+          "head_blob": "fb4c52bd34283c489f456e99f4026b4005e50c74",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B3-finite-requests.jsonl",
+          "head_blob": "70ab3f312ff815c3a0966710c69078d5087627cc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B3-finite-server-summary.json",
+          "head_blob": "79666d2f5a38e93c43115ee5defbc492e0192232",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B3-idle-console.json",
+          "head_blob": "056868418c609b81d71f74613b748e9f39fa65bb",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B3-idle-requests.jsonl",
+          "head_blob": "0b95f0d1b875bf773a2866b4b9c228fe2e682c6b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/B3-idle-server-summary.json",
+          "head_blob": "7aa6637a467950f099769cd8187a5ce3a32f0de7",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/MANIFEST.json",
+          "head_blob": "eb480d7a25f61222a25b45243b57794371652a7e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/REVIEW.md",
+          "head_blob": "b14a0686c4654a27765aad84a7cbded517d7de2b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/UI-candidate-http.jsonl",
+          "head_blob": "a62969e22126ea544d670bfaf34996a715305b90",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/UI-http-audit.json",
+          "head_blob": "9d60eb06de884092c1e9ac1a91ce18ff2e7425c1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/baseline-manifest.json",
+          "head_blob": "fd533148609f46e654c710319d3b4d0d7d395937",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/matched-comparison.json",
+          "head_blob": "c756471170135d73151c9f2704f1fc4de1de9632",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-baseline/report.json",
+          "head_blob": "8260866cd0e3604e45aebd9c5959c537d22f397e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-click.nvwa.json",
+          "head_blob": "89a2d1858815ffe4e595c22686517d22de1c7587",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-edit-check.json",
+          "head_blob": "5ea46cfdbb2a56e7f4a180d4380edc788daaf805",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-exchange-check.json",
+          "head_blob": "4052efaa5b7c2f058a032b6f882f397364ed4929",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-exchange.nvwa.json",
+          "head_blob": "707399c61ce1ca0e2799d5b44a1533c2a3eaf638",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-redo.nvwa.json",
+          "head_blob": "707399c61ce1ca0e2799d5b44a1533c2a3eaf638",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-undo.nvwa.json",
+          "head_blob": "c9dcdb1c2f12dc7901a12bdaf3d0b4e9c282f21c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-unlocked/report.json",
+          "head_blob": "a3c70bc1db46d2a12143d386cbfcaffae87ad914",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/native-unlocked/visual-review.json",
+          "head_blob": "37f797f9b0451156007cb8ef585b9865ed38e4d9",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/original-workspace-tests.log",
+          "head_blob": "c7bfd8a02e4280f1c16bf42a67af6e7faa5ad3b9",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-B.png",
+          "head_blob": "855b984bf3aaef88a017bb073210b0a536497b5f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-after-manual.nvwa.json",
+          "head_blob": "6e53f9770a79fa390c2ed58162c30cebbb3fa5f0",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-base.nvwa.json",
+          "head_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-before-manual.nvwa.json",
+          "head_blob": "4fcc95908b868d1b53f0c55cef9d89f29d61a397",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-checks.json",
+          "head_blob": "3c2443603fdc7b12b998e0e3c850eb353ee25963",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-from-web.nvwa.json",
+          "head_blob": "6992f6e911f94281ccf76dc5f6395ff3c6bcb628",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-layout.nvwa.json",
+          "head_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-redo.nvwa.json",
+          "head_blob": "da058524ed09cfdc5d6217dac70a684ad0fdc9e6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native-reload.nvwa.json",
+          "head_blob": "da058524ed09cfdc5d6217dac70a684ad0fdc9e6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-native.nvwa.json",
+          "head_blob": "da058524ed09cfdc5d6217dac70a684ad0fdc9e6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-1024.png",
+          "head_blob": "dc173b4a2411101ccf1672d9da45ebf9840a11c7",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-1280.png",
+          "head_blob": "9a17bed325e89190c9a067278ce22aeeacce0a8f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-base.nvwa.json",
+          "head_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-checks.json",
+          "head_blob": "17def4e15b85092963268d1cd7a0058e5c4bc721",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-drag.nvwa.json",
+          "head_blob": "d6f6dad1177afd66ff93d90f7607eca14c2ab43f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-from-native.nvwa.json",
+          "head_blob": "da058524ed09cfdc5d6217dac70a684ad0fdc9e6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-layout.nvwa.json",
+          "head_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-redo.nvwa.json",
+          "head_blob": "70974591b252e8b1a41ed21e7b1db18192d1d4ac",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-sequence-1024.nvwa.json",
+          "head_blob": "6992f6e911f94281ccf76dc5f6395ff3c6bcb628",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-split.nvwa.json",
+          "head_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/evidence/m1-1/ui-web-undo.nvwa.json",
+          "head_blob": "613a5828817655a42abe03554d1a6616e294b55e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/implementation/m1-1-experiment-contract.md",
+          "head_blob": "a3107bf168c92952806024449a1f4c83e8f21e93",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "docs/research/2026-10-11-storytold-rust-editor-lessons.md",
+          "head_blob": "09eeed4a2ceee76dd93b4a8d506e20d133c5d9c8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/README.md",
+          "head_blob": "946dffa97a4848f3a88db96456aed63c66049253",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/REPORT.md",
+          "head_blob": "42d8a02783d8a84fcf9fb566d44d445a8fd108b2",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/check-run-stage.py",
+          "head_blob": "2401ae62f5f09a85d95d068114009f72a4087389",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/dependency-proposal.toml",
+          "head_blob": "6edf885a615542dc2bf36a69d07926b5bbcf87ab",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/generated-workspace-manifest.json",
+          "head_blob": "19938b6782c8823317795265407578e0114751ab",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/helper-checks-initial-simulated.json",
+          "head_blob": "97026c9dda3c435a9f0e0191268ee3ef02a43f6f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/helper-checks-real.log",
+          "head_blob": "91d8b4f6a774380227d4c6900376672b1d83f9f4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/helper-checks.json",
+          "head_blob": "91d8b4f6a774380227d4c6900376672b1d83f9f4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/native.json",
+          "head_blob": "d32ebe23ce7c0daa7f29bf42804859fcf1d5c9af",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/native.log",
+          "head_blob": "5afa6c60d69e92619e71b4ca59c8d67e284aa116",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/resize-window-red.json",
+          "head_blob": "28ac360a59fb81e7d1ef459f31fa023aa29880f5",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/resize-window-red.log",
+          "head_blob": "88947b0100e87306c6f312667128717b72d39672",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/wasm.json",
+          "head_blob": "1f73a6773edbe83d45e04734fb17c09915358a65",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/wasm.log",
+          "head_blob": "18dccf5e09419e28ca6d5b2242c72966f4448805",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/workspace-tests-final.json",
+          "head_blob": "a8bf4a122112ea79bba201dcc22a176e1fe9ca28",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/workspace-tests-final.log",
+          "head_blob": "91b05ccfbfcbab3c2764600fa99998f5897a2a9a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/workspace-tests-retry1.json",
+          "head_blob": "6729e1420d906e6fad31fc3f532977db15537872",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/workspace-tests-retry1.log",
+          "head_blob": "72b7d2ba9ebd0e601c09b1c32f28650ced89f56a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/workspace-tests-reviewed.json",
+          "head_blob": "d4049389822c562aea4175a50e827fac2e2676dd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/workspace-tests-reviewed.log",
+          "head_blob": "9d46bbda814cd7a06c13d813804a5e613040da56",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/workspace-tests.json",
+          "head_blob": "2581062bf74fd8321c4e87b2790cea779212af7a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/evidence/workspace-tests.log",
+          "head_blob": "451cf8ad0b20aac57d148f032c313aea4b202c25",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/generated-manifests/Cargo.lock",
+          "head_blob": "62145740173ae81b046cd4509a0a64c88a56416b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/generated-manifests/nvwa-studio.Cargo.toml",
+          "head_blob": "fe573cba96dd10670323987ad57272861b7aed7b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/integrated-dependencies.json",
+          "head_blob": "1a984ff15162d715e60e1cf27dd416cd61f8fa51",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/licenses/craft-ui-MIT.txt",
+          "head_blob": "e1450bdf57b9c0577e8b947db77ec77f4fea9d38",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/overlay/crates/nvwa-studio/src/editor_layout.rs",
+          "head_blob": "e7701125b44c24a50f8ec2fe99f179afeb484a48",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/overlay/crates/nvwa-studio/src/lib.rs",
+          "head_blob": "35e13e628489f68fa8c3303bf5d0dd14ffd482ae",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/preparation-checks.json",
+          "head_blob": "c2677e4e42a652feaea22701711130bfb055e64d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/prepare.py",
+          "head_blob": "2376cf76bc3aee8a8530db50b0ead6ce5530a926",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/run-stage.py",
+          "head_blob": "b45a21b9a704571453f4b42fe65e8449b78a9160",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/15-editor-components/upstream-source-manifest.json",
+          "head_blob": "6908cef4a8a9a505948f4a3931b8e438bb6ec8c0",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/PROPOSAL.md",
+          "head_blob": "01108784f81c1715678c889a2d7c034eb64a0bcc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/PROPOSED-PROFILE.toml",
+          "head_blob": "b164e0a82eb903e4439eb23796b1c7f2d5b166a7",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/README.md",
+          "head_blob": "9839194dc7407d78a801834480bdaa05dc741262",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/REPORT.md",
+          "head_blob": "2eea8f10d58391bfb16f36115518e12d5ba4427b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/check-owned-process.py",
+          "head_blob": "078bc5beaef6d96145cf48b2967a118dee8e6db7",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/check-packaging.py",
+          "head_blob": "18374aae4c91d60dcd15fab7621b729c20eba41f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/artifact-freeze.json",
+          "head_blob": "d89ec9661c653fac7b24e80713dfd71fa7730084",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/baseline-manifest.json",
+          "head_blob": "bbfe7c678228cdd152d2f4af643a737187f10376",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/build-start.json",
+          "head_blob": "a28200607a5426e3d449649718253354fc1f2057",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/build.json",
+          "head_blob": "4bd7b2fc707b0d4fe3a01a3c52034193c95badfe",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/build.log",
+          "head_blob": "51bfba5da1827e75c14ccc57f2cec2a34fb2ad29",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/candidate-manifest.json",
+          "head_blob": "1bacd4ee42fb624d68a8c1c66e1dda1ee6b41bdf",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/comparison.json",
+          "head_blob": "1d9aeb186d68babd63f2123d525ccae4de11698c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/cost-summary.json",
+          "head_blob": "943e087cf267765d8ffdc0c22a029ff470cd146d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/final-worker-verification.json",
+          "head_blob": "67c99544621228c74557dabd11bc92f368be8b8e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/freeze-after.json",
+          "head_blob": "5c0c9eda7d57b90b148615b49aedaf1f4e31f29d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/freeze-before.json",
+          "head_blob": "b6f7bd49d6235244065894e8f1fd61193b25813f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/frozen-git-source-check.json",
+          "head_blob": "eed990d2ea73ca5287bfb5dbf0ac69dbcfe79943",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/memory.jsonl",
+          "head_blob": "c53e4ff8a741e7371f5ba6c5fa25bf347b562fd6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/nvwa_studio.d.ts.diff",
+          "head_blob": "332372499e31551f37c68144e48ca7ea0f3bc8cc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/nvwa_studio_bg.wasm.d.ts.diff",
+          "head_blob": "4341e558069f7379fb0a135f5fd1a3d54f94adbf",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/owned-process-checks.json",
+          "head_blob": "f8e3af7ed568a19cfdd633b664a1aff33cb13d8d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/owned-process-checks.log",
+          "head_blob": "ed262b6ca7448eb7d76f58835f746693ed61f710",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/package-cost.json",
+          "head_blob": "fb979f8dffd3fb77af9e6ce1a79f7428e80cbcaa",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/pre-bindgen-wasm.json",
+          "head_blob": "8a5853cc8ef780867bd35ee2033e9900ea0805d4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/static-identity-before.json",
+          "head_blob": "818f4a1b95649542c3d5241882f2b20d6a7fd3b0",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/stdlib-checks.json",
+          "head_blob": "438e4bcf675163f3d95b76a286d0734bb7f79348",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/evidence/stdlib-checks.log",
+          "head_blob": "afedacbca7f34adf5c8e797279552ec0b4327738",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/experiment.py",
+          "head_blob": "b9ec05b38630081984941505814bcfe58b18c3cf",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/serve-observed.py",
+          "head_blob": "f73aeb4574a4a2de8c973ea929aeb73908ad205d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/summarize-matched.py",
+          "head_blob": "0850f4f2f799d1cfe36c58fa891b3e7dafbbb8e9",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/16-web-build-ab/summarize-requests.py",
+          "head_blob": "48de19b4b5a70a5a0630d945471f628f700eaebf",
+          "main_blob": null,
+          "main_state": "absent"
+        }
+      ],
+      "counts": {
+        "absent": 168,
+        "same": 0,
+        "later_different": 1
+      },
+      "disposition": "retain_exact_branch_and_PR_objects; close_as_archived_experiment_without_merge_or_branch_delete",
+      "product_paths_changed": false
+    },
+    {
+      "baseRefName": "codex/m1-1-editor-web",
+      "headRefOid": "49d116c69cb9e7cfaa6f2c4356749ebd1504dd4e",
+      "number": 29,
+      "title": "M1.1: retain default after bounded Web cadence follow-up",
+      "html_url": "https://github.com/Derek-X-Wang/nvwa/pull/29",
+      "archive_head_url": "https://github.com/Derek-X-Wang/nvwa/tree/49d116c69cb9e7cfaa6f2c4356749ebd1504dd4e",
+      "paths": [
+        {
+          "path": "experiments/17-web-cadence-followup/PUBLICATION_FILES.json",
+          "head_blob": "bc7c067993ff201a57983749b15003e891c8bb8b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/REPORT.md",
+          "head_blob": "eeaf310f9fffa6a4d7f8a239617e692fa4d440ba",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/audit-first-PNG-assumption.json",
+          "head_blob": "44a71feefb5713db040b4a2f5f1b2bdac93fd6d2",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/comparison.json",
+          "head_blob": "c34e77901f6981c3394f6872052000f5e02fa971",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/final-raw-audit-v2.json",
+          "head_blob": "03beb51671d7ebc27e18b3007322e771da35aa87",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/identity-after.json",
+          "head_blob": "d37f7f20d2e1044d7a80830a281512e41ba74dc4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/identity-before.json",
+          "head_blob": "d37f7f20d2e1044d7a80830a281512e41ba74dc4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/independent-review.json",
+          "head_blob": "eb121c49d84a5ba95b729d9f1ca4c307282f4dfa",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/preflight-checks-v5.json",
+          "head_blob": "44555922ebd2b9d45bacb81e888cb97607c43b55",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/process-summary.json",
+          "head_blob": "35c5dca3600d8ba874169490f4dff48311bdf561",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-cleanup.json",
+          "head_blob": "db1a88de6f6308fddf3921c42bed078d2d783672",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-finite-after-dom.json",
+          "head_blob": "afa99a686ddf68a19a61395d294717f47d131165",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-finite-before-dom.json",
+          "head_blob": "afa99a686ddf68a19a61395d294717f47d131165",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-finite-collection.json",
+          "head_blob": "739fcdea08166108f47e6ef198d0bd70059685b3",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-finite-console.json",
+          "head_blob": "16449b4bf2ceee2bceb908d4c4ec12b77c666b8d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-idle-after-dom.json",
+          "head_blob": "abbc305f07c5c13bfbe6f61002446c537759a689",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-idle-before-dom.json",
+          "head_blob": "abbc305f07c5c13bfbe6f61002446c537759a689",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-idle-collection.json",
+          "head_blob": "6ace34577ae0376eb197b8d9d5402ffb80f41910",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-idle-console.json",
+          "head_blob": "dc0e017a45e798d39dcff69774af8dd3b66ade86",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-idle.jpg",
+          "head_blob": "355d31c31da74f4ed1e5e7b45329acc02ecede45",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A1-requests.json",
+          "head_blob": "3de448869092731e2758042ede3f29ec471e770b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-cleanup.json",
+          "head_blob": "248a1e751dc5d10f79d49e0636b20ae399f25083",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-finite-after-dom.json",
+          "head_blob": "b15210fc9d99b0356ae5b8b61e7cc2d73bf617f3",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-finite-before-dom.json",
+          "head_blob": "b15210fc9d99b0356ae5b8b61e7cc2d73bf617f3",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-finite-collection.json",
+          "head_blob": "c79edea880a703eea0c34d5a3cc0d39cc031eff1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-finite-console.json",
+          "head_blob": "ff09eac486d7e224487021737f0bfd31cc094657",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-idle-after-dom.json",
+          "head_blob": "48ff02b213b7c8baf059940bad686d4d0352b988",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-idle-before-dom.json",
+          "head_blob": "48ff02b213b7c8baf059940bad686d4d0352b988",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-idle-collection.json",
+          "head_blob": "ba754fabdef874cd285f4a935177e40639378398",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-idle-console.json",
+          "head_blob": "7a48807b81dd10487b3f5eb1bd3391edce2a4b67",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-idle.jpg",
+          "head_blob": "ccb30a58a7831b79b3daca26c56135a45101a9fd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A2-requests.json",
+          "head_blob": "1ffcafc1178f6e3c96e150ccf80e9b88b504e2d4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-cleanup.json",
+          "head_blob": "43c5f246fbfc91677fe520a63d6ae527ef658edc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-finite-after-dom.json",
+          "head_blob": "8bc0e37685b4b9decc6b8cd8e321ac42d2bddb68",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-finite-before-dom.json",
+          "head_blob": "8bc0e37685b4b9decc6b8cd8e321ac42d2bddb68",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-finite-collection.json",
+          "head_blob": "95854853614f69a7f425edb98ff072a87f9aaa65",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-finite-console.json",
+          "head_blob": "3a6b202024be9e69880a2b8c6a7bb35ba03e2841",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-idle-after-dom.json",
+          "head_blob": "f549c83b8e3196dae70291386f2ae8a77531b101",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-idle-before-dom.json",
+          "head_blob": "f549c83b8e3196dae70291386f2ae8a77531b101",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-idle-collection.json",
+          "head_blob": "cdf89b3979f3ca0efe083f980653894c4700a7c3",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-idle-console.json",
+          "head_blob": "6d5c71c909cd50bd8643b2094996b8d4a5063c6d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-idle.jpg",
+          "head_blob": "08e93eba3d48acc442a1de6d0945feb96cbb8966",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A3-requests.json",
+          "head_blob": "ea1dcaa02457af6c93831ed4222bca1f292b5806",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-cleanup.json",
+          "head_blob": "33354289d04b7d62adacd3bc27df6dd2db0e9d14",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-finite-after-dom.json",
+          "head_blob": "0664dd9b24cc07ac4693068130ee562c6028995d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-finite-before-dom.json",
+          "head_blob": "0664dd9b24cc07ac4693068130ee562c6028995d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-finite-collection.json",
+          "head_blob": "6eb6f348f7e455a4248d98c52a6bedc259e12452",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-finite-console.json",
+          "head_blob": "2fb2d65f7bcaa8e08927ee50ad73266e651f3cc7",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-idle-after-dom.json",
+          "head_blob": "390bcce137df0c20ca415eb2a23b19e718e28578",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-idle-before-dom.json",
+          "head_blob": "390bcce137df0c20ca415eb2a23b19e718e28578",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-idle-collection.json",
+          "head_blob": "5602bc5065f9affcecaebb3d1c3dada4acc4a5bc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-idle-console.json",
+          "head_blob": "a8ece980ab5f876cc627be6dffdbbf8308e22634",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-idle.jpg",
+          "head_blob": "7a2db6643abf476f2f695b169d7443f9274cbee5",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A4-requests.json",
+          "head_blob": "f41b3643f7596ede4fe0e66bcbad4005190fffb8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-cleanup.json",
+          "head_blob": "3337d836f43ebd37444d1f351523429d5ff947f6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-finite-after-dom.json",
+          "head_blob": "5761e00bc180ffe826fff16ad69b35a7ec833239",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-finite-before-dom.json",
+          "head_blob": "5761e00bc180ffe826fff16ad69b35a7ec833239",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-finite-collection.json",
+          "head_blob": "5908450b581be279fd215bb70df60262d09f5c56",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-finite-console.json",
+          "head_blob": "05ba2fedf7445fe10110316ae53913ec18672f80",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-idle-after-dom.json",
+          "head_blob": "0de88a5de1cee555828fa2321415b4a7aed1d4d1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-idle-before-dom.json",
+          "head_blob": "0de88a5de1cee555828fa2321415b4a7aed1d4d1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-idle-collection.json",
+          "head_blob": "8b7554d77a62e571441a397f6402d7faf309a232",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-idle-console.json",
+          "head_blob": "87e6f6efa000dda6997c9dc67700636c6a3681ef",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-idle.jpg",
+          "head_blob": "3fc81afadd2891468a19bd9778bc5ede6d8af370",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/A5-requests.json",
+          "head_blob": "65862b6f3e140cf27db60059e4825f269a63687e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-cleanup.json",
+          "head_blob": "611e3f202c1a5ab2ed86a30800ebc0b1008f271e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-finite-after-dom.json",
+          "head_blob": "61d25db7b7b6ca2fde128bfca9629fe2377d3b18",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-finite-before-dom.json",
+          "head_blob": "61d25db7b7b6ca2fde128bfca9629fe2377d3b18",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-finite-collection.json",
+          "head_blob": "a7308049fd589f639cbaf75b659f7484f1575703",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-finite-console.json",
+          "head_blob": "1d639d24d3454387e9cf8bcfc82026ea9f3d61e8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-idle-after-dom.json",
+          "head_blob": "578e73e8633b86f6ec816155a7aebd905ca39e16",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-idle-before-dom.json",
+          "head_blob": "578e73e8633b86f6ec816155a7aebd905ca39e16",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-idle-collection.json",
+          "head_blob": "571919b774ec2565ce5dc95c0aa03ca3e97605dc",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-idle-console.json",
+          "head_blob": "d7ed883a75ef0b461018c02e8411ff92cc58c7c8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-idle.jpg",
+          "head_blob": "78822be515ff1bd7a240abd4fcea3e5c535fb711",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B1-requests.json",
+          "head_blob": "277aa03fb258d8b25d00f85fc3083337c24f917b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-cleanup.json",
+          "head_blob": "b3acb6f47c681474976ed0c841b623181943b96a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-finite-after-dom.json",
+          "head_blob": "8c538b945ae51486b4e0a4432c471ee19fe6faeb",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-finite-before-dom.json",
+          "head_blob": "8c538b945ae51486b4e0a4432c471ee19fe6faeb",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-finite-collection.json",
+          "head_blob": "cf6e2bede619bb051dec438b732a96536f834a7e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-finite-console.json",
+          "head_blob": "ffa530395a73c0b31d6aab291bc91e45dd0d5623",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-idle-after-dom.json",
+          "head_blob": "6e77190fa24784b5338370171e89c21c6f75e557",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-idle-before-dom.json",
+          "head_blob": "6e77190fa24784b5338370171e89c21c6f75e557",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-idle-collection.json",
+          "head_blob": "e54dc122956ccb36a300b7c0ae619710ddebc622",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-idle-console.json",
+          "head_blob": "07be7bcf30121b4ee51bd1e871581229e45153e8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-idle.jpg",
+          "head_blob": "3623ade5ca53fb7e7b22d3c4d9b7433ec3a194f1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B2-requests.json",
+          "head_blob": "069a066f8de9aa20eac6ec0729bf22b8b72df2df",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-cleanup.json",
+          "head_blob": "4a719d0eb24725f091ccb4f3a64e9b5813b024e2",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-finite-after-dom.json",
+          "head_blob": "86ee39760cedc84fd3aa93fc763426694c34d1b0",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-finite-before-dom.json",
+          "head_blob": "86ee39760cedc84fd3aa93fc763426694c34d1b0",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-finite-collection.json",
+          "head_blob": "b5d5f7f460ae73dfa70c263b804884b7edbb6143",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-finite-console.json",
+          "head_blob": "315dc9eb50e122d253e74bc47e4f9ce52e778439",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-idle-after-dom.json",
+          "head_blob": "33102e2783dcfdfe077d770e59a6b6d289ccea44",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-idle-before-dom.json",
+          "head_blob": "33102e2783dcfdfe077d770e59a6b6d289ccea44",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-idle-collection.json",
+          "head_blob": "84db7bde30336d697fe356c789e4c6ce6c55b7b6",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-idle-console.json",
+          "head_blob": "1984177538f03ac26d6f6ee5b5a54ef72b1b4923",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-idle.jpg",
+          "head_blob": "dc38ce56b9a39153971c4cbeb7ccbaabc80900f7",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B3-requests.json",
+          "head_blob": "d4cd5867c90bc6bc4ba6e4e8640c37b810cac00f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-cleanup.json",
+          "head_blob": "6f698e93634fbe7680084189883b8cdb72cce399",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-finite-after-dom.json",
+          "head_blob": "e4e7c02f8e1bca6897732eec2e40854e5555534e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-finite-before-dom.json",
+          "head_blob": "e4e7c02f8e1bca6897732eec2e40854e5555534e",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-finite-collection.json",
+          "head_blob": "4cdf739c8caa06b0a59fe681e09144a50c6aa311",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-finite-console.json",
+          "head_blob": "40a234d2ff8478e7f9f4e6154a1b60c870d52927",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-idle-after-dom.json",
+          "head_blob": "44bb2b8e3756ff83547d258a5bb63e6a86689826",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-idle-before-dom.json",
+          "head_blob": "44bb2b8e3756ff83547d258a5bb63e6a86689826",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-idle-collection.json",
+          "head_blob": "f8241de9595d6ff0029df1d2df0889c4da5406ca",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-idle-console.json",
+          "head_blob": "cb681e0a62a5c68beca5013c4ddcdfd4cadd1c0b",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-idle.jpg",
+          "head_blob": "1d7e1495ea3d206d96271f6f3249b40fd09e450f",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B4-requests.json",
+          "head_blob": "c99ae4a4edf7f5863e70426963f2b1cc85fc4b43",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-cleanup.json",
+          "head_blob": "bff2a9aaa135dded671b922c2a819e81da50c9bd",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-finite-after-dom.json",
+          "head_blob": "da984a9f9db799e988c51afca3f8389c418c5c87",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-finite-before-dom.json",
+          "head_blob": "da984a9f9db799e988c51afca3f8389c418c5c87",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-finite-collection.json",
+          "head_blob": "899d5aa03d5244a6438f2a467666ac763ddca5aa",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-finite-console.json",
+          "head_blob": "1b94b778fae36b57afc79d2d2f5968b7945aed6c",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-finite.jpg",
+          "head_blob": "d22ad6df7aecd55af5ed51c54867fca3697dd816",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-idle-after-dom.json",
+          "head_blob": "7d22b71c3250b411bc8a38f2dcc55ebccff6af22",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-idle-before-dom.json",
+          "head_blob": "7d22b71c3250b411bc8a38f2dcc55ebccff6af22",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-idle-collection.json",
+          "head_blob": "68a8404a59fe27ec17f02ba12e2145134358c267",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-idle-console.json",
+          "head_blob": "45fe9e51e23cc9aa5d6a8f67ef79e15b358e0726",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-idle.jpg",
+          "head_blob": "acdde2208df37d53d3412bcdd8fc00a5f2c1ed02",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/B5-requests.json",
+          "head_blob": "8c06e630c513125697825064ecaf38a881c92c09",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/adapter-preflight.json",
+          "head_blob": "bed8af02f0efa0a9d1ea2b0c5058027b2d830f42",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/attempt-ledger.json",
+          "head_blob": "9331ce8eb1ade9499973d039272287d7f55e93e8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/root-browser-cleanup.json",
+          "head_blob": "f717b07a4308c77ee8dfda2598300a45ffe92f47",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/raw/root-port-cleanup.json",
+          "head_blob": "b2380ac9d2e6f2851926f79c3e3abfe5ffa64552",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/root-collector.js",
+          "head_blob": "a037a90e6fc5211edad6216d4ccd278731effd8a",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/screenshot-map.json",
+          "head_blob": "3814b36f92284453cfcfdb2f3ad9183c90431991",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/seal-after.json",
+          "head_blob": "a5dc0319aa408917123be21205c9e4b72daab6c8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/evidence/public/seal-before.json",
+          "head_blob": "a5dc0319aa408917123be21205c9e4b72daab6c8",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/COLLECTION.md",
+          "head_blob": "53380d6eeeea4b66ed4234ef856eeb9a91bd6bb4",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/MEASURED-TO-PUBLISHED.diff",
+          "head_blob": "e8d8bf8a985e8ce5eabe83feb497127b36ecc2a1",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/PROTOCOL.md",
+          "head_blob": "3b026ae7323821293b7dcc5cc6a4062dd1a7338d",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/README.md",
+          "head_blob": "aad91d6c1990f96b2db4c81e8acc291ca18e8dbb",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/check-followup.py",
+          "head_blob": "54443d49ca0aa860e535a58f2b54e962f2048e81",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/evidence/post-run-helper-v2.json",
+          "head_blob": "b64e08eea53953addfddeef8a5cfe88ec5c96182",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/evidence/preflight-checks-v5.json",
+          "head_blob": "6019a32a945064fbdde9c3817182ee3ead869362",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/followup.py",
+          "head_blob": "17c50bc39586954b999de98e58c7a891ef3c7010",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/server.py",
+          "head_blob": "b643359d6ff1e5fd1a34ccb31a76814f6e0b82aa",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/source-manifest.json",
+          "head_blob": "98a7c49366374ce6047580a6a93489e6fca61385",
+          "main_blob": null,
+          "main_state": "absent"
+        },
+        {
+          "path": "experiments/17-web-cadence-followup/reproduce/verify-publication.py",
+          "head_blob": "39eddadb1bf9a55996709bd21fd67fec276e2713",
+          "main_blob": null,
+          "main_state": "absent"
+        }
+      ],
+      "counts": {
+        "absent": 149,
+        "same": 0,
+        "later_different": 0
+      },
+      "disposition": "retain_exact_branch_and_PR_objects; close_as_archived_experiment_without_merge_or_branch_delete",
+      "product_paths_changed": false
+    }
+  ]
+}

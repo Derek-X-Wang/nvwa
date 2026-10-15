@@ -1,0 +1,32 @@
+{
+  "name": "13-cli-tests",
+  "argv": [
+    "env",
+    "CARGO_TARGET_DIR=.work/m12-alpha-build",
+    "cargo",
+    "test",
+    "-p",
+    "nvwa-cli",
+    "--locked",
+    "--offline",
+    "-j1"
+  ],
+  "cwd": "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa",
+  "observed_utc": "2026-10-14T23:34:28.935492+00:00",
+  "exit": 0,
+  "elapsed_seconds": 8.575782083033118,
+  "stdout_sha256": "4155e44de29a6d041c93e95788dd4ee3729ec1580303e666ca78c49ed0790924",
+  "stderr_sha256": "b60686ed4167786b56353cee9eab0973d33c0e7d38e25b9a8d205acbecb42d03",
+  "before_work_sha256": {
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-alpha/final.json": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-alpha/authored.json": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-alpha/initial.json": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-alpha/appearance.json": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+  },
+  "after_work_sha256": {
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-alpha/final.json": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-alpha/authored.json": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-alpha/initial.json": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+    "/Users/derekxwang/.codex/worktrees/m11-ui-integration/nvwa/.work/m12-alpha/appearance.json": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+  }
+}

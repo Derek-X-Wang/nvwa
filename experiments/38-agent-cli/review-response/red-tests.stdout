@@ -1,0 +1,33 @@
+
+running 2 tests
+test closed_stderr_does_not_turn_a_domain_failure_into_a_panic ... FAILED
+test closed_stdout_reports_transport_error_after_save_without_panicking ... FAILED
+
+failures:
+
+---- closed_stderr_does_not_turn_a_domain_failure_into_a_panic stdout ----
+
+thread 'closed_stderr_does_not_turn_a_domain_failure_into_a_panic' (91444473) panicked at crates/nvwa-cli/tests/response_transport.rs:87:5:
+assertion `left == right` failed
+  left: Some(101)
+ right: Some(1)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- closed_stdout_reports_transport_error_after_save_without_panicking stdout ----
+
+thread 'closed_stdout_reports_transport_error_after_save_without_panicking' (91444474) panicked at crates/nvwa-cli/tests/response_transport.rs:48:9:
+assertion `left == right` failed: new: 
+thread 'main' (91444476) panicked at /rustc/59807616e1fa2540724bfbac14d7976d7e4a3860/library/std/src/io/stdio.rs:1165:9:
+failed printing to stdout: Broken pipe (os error 32)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  left: Some(101)
+ right: Some(1)
+
+
+failures:
+    closed_stderr_does_not_turn_a_domain_failure_into_a_panic
+    closed_stdout_reports_transport_error_after_save_without_panicking
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.19s
+

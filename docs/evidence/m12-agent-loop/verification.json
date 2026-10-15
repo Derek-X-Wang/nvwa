@@ -1,0 +1,145 @@
+{
+  "whole_document_comparisons": {
+    "web-initial-saved.nvwa.json": {
+      "whole_document_equal": true,
+      "revision": 2,
+      "jaw_width": 0.42,
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "web-initial-extra.nvwa.json": {
+      "whole_document_equal": true,
+      "revision": 2,
+      "jaw_width": 0.42,
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "native-edited.nvwa.json": {
+      "whole_document_equal": true,
+      "revision": 3,
+      "jaw_width": 0.71,
+      "sha256": "795c184c58cd3a86ec2d4045ce047d7a31d51f8c5af6018406acf9f41e32e54e"
+    },
+    "web-edited.nvwa.json": {
+      "whole_document_equal": true,
+      "revision": 3,
+      "jaw_width": 0.71,
+      "sha256": "795c184c58cd3a86ec2d4045ce047d7a31d51f8c5af6018406acf9f41e32e54e"
+    },
+    "native-undone.nvwa.json": {
+      "whole_document_equal": true,
+      "revision": 4,
+      "jaw_width": 0.42,
+      "sha256": "9aa3e14c53915fd04d6072d204ffd945fc1edbbab071c0455660d8549badb446"
+    },
+    "web-undone.nvwa.json": {
+      "whole_document_equal": true,
+      "revision": 4,
+      "jaw_width": 0.42,
+      "sha256": "9aa3e14c53915fd04d6072d204ffd945fc1edbbab071c0455660d8549badb446"
+    },
+    "web-reloaded-saved.nvwa.json": {
+      "whole_document_equal": true,
+      "revision": 4,
+      "jaw_width": 0.42,
+      "sha256": "9aa3e14c53915fd04d6072d204ffd945fc1edbbab071c0455660d8549badb446"
+    }
+  },
+  "cross_platform_edited_bytes_equal": true,
+  "cross_platform_undo_bytes_equal": true,
+  "web_reload_saved_bytes_equal": true,
+  "native_typing_attempt_preserved_but_not_acceptance_cycle": true,
+  "native_renderer_receipts": {
+    "native-studio.log": {
+      "active_animations": 1,
+      "animation_seconds": 0.855863094329834,
+      "build_profile": "release",
+      "capture_callback": true,
+      "capture_callback_seconds": 6.139382625,
+      "capture_file_bytes": 326259,
+      "clip": "idle",
+      "clock": "bevy_TimeReal_since_first_update",
+      "completed": false,
+      "document_revision": 2,
+      "elapsed_seconds": 6.139382625,
+      "error": null,
+      "first_asset_ready_seconds": 1.341255917,
+      "first_visible_kind": "screenshot_callback_after_requested_warmup",
+      "first_visible_upper_bound_seconds": 6.139382625,
+      "frame_ms_p50": 6.291916847229004,
+      "frame_ms_p95": 1758.6400146484375,
+      "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+      "frame_sample_count": 6,
+      "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+      "frames": 9,
+      "gpu": {
+        "backend": "Metal",
+        "name": "Apple M2 Pro"
+      },
+      "interaction_busy": false,
+      "joints": 18,
+      "meshes": 9,
+      "mode": "studio",
+      "morph_nodes": 1,
+      "morph_weights": 4,
+      "paused_animations": 0,
+      "physical_window": {
+        "height": 720,
+        "scale_factor": 1.0,
+        "width": 1280
+      },
+      "players": 1,
+      "playing": true,
+      "ready": true,
+      "ready_frames": 7,
+      "skins": 9,
+      "timeline_count": 3,
+      "timeout": false
+    },
+    "native-player.log": {
+      "active_animations": 1,
+      "animation_seconds": 3.2889838218688965,
+      "build_profile": "release",
+      "capture_callback": true,
+      "capture_callback_seconds": 3.323529458,
+      "capture_file_bytes": 485227,
+      "clip": "wave",
+      "clock": "bevy_TimeReal_since_first_update",
+      "completed": false,
+      "document_revision": 2,
+      "elapsed_seconds": 3.323529458,
+      "error": null,
+      "first_asset_ready_seconds": 0.284545542,
+      "first_visible_kind": "screenshot_callback_after_requested_warmup",
+      "first_visible_upper_bound_seconds": 3.323529458,
+      "frame_ms_p50": 8.337374687194824,
+      "frame_ms_p95": 8.840832710266113,
+      "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+      "frame_sample_count": 243,
+      "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+      "frames": 336,
+      "gpu": {
+        "backend": "Metal",
+        "name": "Apple M2 Pro"
+      },
+      "interaction_busy": false,
+      "joints": 18,
+      "meshes": 9,
+      "mode": "player",
+      "morph_nodes": 1,
+      "morph_weights": 4,
+      "paused_animations": 0,
+      "physical_window": {
+        "height": 720,
+        "scale_factor": 1.0,
+        "width": 1280
+      },
+      "players": 1,
+      "playing": true,
+      "ready": true,
+      "ready_frames": 334,
+      "skins": 9,
+      "timeline_count": 3,
+      "timeout": false
+    }
+  },
+  "web_evidence_boundary": "Actual visible WebGPU scene and UI plus downloaded full Works; browser console and GPU timing were not inspected."
+}

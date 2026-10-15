@@ -1,0 +1,42 @@
+name: CLI authoring evidence
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/m12-cli-evidence.yml'
+      - 'crates/nvwa-cli/**'
+      - 'docs/agents/cli-authoring.md'
+      - 'docs/implementation/contract.md'
+      - 'experiments/38-agent-cli/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/m12-cli-evidence.yml'
+      - 'crates/nvwa-cli/**'
+      - 'docs/agents/cli-authoring.md'
+      - 'docs/implementation/contract.md'
+      - 'experiments/38-agent-cli/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cli-authoring-evidence-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  retained-cli-evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify retained CLI process evidence offline
+        run: python3 -B experiments/38-agent-cli/verify.py
+      - name: Exercise actual retained-evidence rejection controls
+        run: python3 -B experiments/38-agent-cli/verify_controls.py
+      - name: State evidence boundary
+        run: |
+          echo 'Retained process/snapshot evidence only. Actual LLM authorship, GUI rendering, model inference, GPU metrics and release approval are separate evidence.'
+          echo 'Production CLI integration tests run in Bounded CI. This job does not acquire sources, install dependencies or run a model.'

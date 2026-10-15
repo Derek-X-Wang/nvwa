@@ -21,3 +21,33 @@ Rust fields use snake_case. Core has no Bevy/egui dependency and forbids unsafe.
 - PlatformIo delivers `FileCompletion::Opened(String)` or `Saved`, never an empty-string sentinel. Imports are bounded regular files on native and picker-selected bounded data on Web. Browser downloads confirm initiation; native writes complete before Saved. Explicit successful Open creates a new asset-load generation, including when profile/path are unchanged.
 - Asset workflow publishes assets/character.profile.json, assets/fixtures/nvwa-humanoid.glb, sources/license/hash manifest. Animation indices and morph indices must match actual exported data; other workflows consume rather than modify the asset files.
 - Integration owner is /root. Proposed interface changes go to /root first; only /root changes this contract, root dependencies, Cargo.lock and toolchain.
+
+## Additive offline CLI discovery (M1.2)
+
+`describe-capabilities <work.json>` preserves every existing profile and
+`editor_retention` key. It adds `character_id` from the loaded character recipe,
+`document_revision` from the loaded work, and `cli_contract` with its own
+`schema_version: 1`. This does not change the portable document schema.
+
+`cli_contract` describes entrypoints, strict JSON input and envelope fields,
+production-serialized command examples, parameter and timeline constraints,
+revision rules, atomic batch output, structured errors, stdio/exit status and
+asset validation. Examples use the loaded work's actual IDs and revision. Each
+is an independent command shape, not a ready-made batch; undo/redo require
+earlier history in the same `apply` invocation. Numeric JSON and retention
+limits come from the core constants; profile ranges and source clip durations
+remain authoritative for the loaded character.
+
+CLI editing remains offline. Each `apply` starts a fresh editor and saves only
+after every envelope succeeds. Input, command, validation and persistence
+failures before successful save leave the input and existing output unchanged
+and do not create an absent output. Response delivery is separate: a handled
+stdout write failure exits 1 with `stdout_write`, and structured stderr is best
+effort when writable. The output may already be saved and stdout may be partial;
+inspect the actual output before retrying a mutation. No rollback or atomicity
+between filesystem persistence and response transport is promised.
+Revision checks compare to the loaded input document only; there is no
+cross-file or cross-process
+compare-and-swap, persistent idempotency or cross-invocation undo/redo history.
+Discovery does not introduce live Studio control or generated motion. See the
+[CLI authoring guide](../agents/cli-authoring.md) for recovery and file exchange.

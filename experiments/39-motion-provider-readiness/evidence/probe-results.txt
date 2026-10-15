@@ -1,0 +1,26 @@
+Final actual commands completed with exit 0:
+python3 -B experiments/39-motion-provider-readiness/probe_local.py
+python3 -B experiments/39-motion-provider-readiness/collect_sources.py
+python3 -B experiments/39-motion-provider-readiness/analyze_schema.py
+
+Public responses captured and hash checked: 38
+SOMASkeleton30: 30
+SOMASkeleton77: 77
+Official source expansion call sites: 2
+Target fixture skin joint count: 18
+Target fixture SHA-256: f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6
+Publisher manifest sizes checked against hub metadata: 43
+Publisher manifest LFS SHA-256 matches: 42
+No hub SHA-256 available (not payload verified): ['generated/llm2vec-text-bundle/final-norm.gguf']
+An initial metadata probe assumed every file had LFS metadata and failed on final-norm.gguf.
+The corrected probe records unavailable metadata hashes explicitly; no payload was fetched.
+No downloaded tensor payload or executed model code.
+NOT-RUN: model inference, real output dimensions, memory/latency, retargeting, generated playback.
+
+Local inputs inspected (SHA-256):
+a3ac4ac89b26edcda1bb769def34cf036dae8b7fe452c4f76756df28b7a01417  AGENTS.md
+6d2db67b88702b30e19a06b02ff45b72064ab6fec4498efa40e1d0a91b7a81fe  GLOSSARY.md
+d242c2282451837fb4ab54b482589e7abc1e1d12b10d4b398d1109550cb5d739  docs/implementation/contract.md
+ba486d34da13884cfaf67b0e8b4a8c19e790fdd0b230f10caf4a7112a6171115  docs/implementation/m1-contract.md
+fac5f6fd0a287f463e438f4ad2eecc9aa818f0aff9075bf0690de7a66be099f7  docs/specs/Nvwa_Codex_Prototype_Brief_Rust_First_v2.md
+c61aa64d38a998eaa668b076a079ec2b16ee4ecc0621170aced5c2d4f83dec8a  experiments/05-ai-motion/REPORT.md

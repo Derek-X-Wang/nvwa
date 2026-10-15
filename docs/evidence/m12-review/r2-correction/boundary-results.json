@@ -1,0 +1,86 @@
+{
+  "binary_sha256": "e0da6b3e5759801b9d5e4898a2ecda716111ee05159415163521fb01eb6ea637",
+  "checks": [
+    {
+      "case": "new_closed_stdout",
+      "exit_code": 1,
+      "error": {
+        "code": "stdout_write",
+        "message": "Response delivery failed: Broken pipe (os error 32); a mutating operation may already be saved; inspect the output work before retrying"
+      },
+      "saved": true
+    },
+    {
+      "case": "apply_closed_stdout",
+      "exit_code": 1,
+      "error": {
+        "code": "stdout_write",
+        "message": "Response delivery failed: Broken pipe (os error 32); a mutating operation may already be saved; inspect the output work before retrying"
+      },
+      "saved": true
+    },
+    {
+      "case": "save_closed_stdout",
+      "exit_code": 1,
+      "error": {
+        "code": "stdout_write",
+        "message": "Response delivery failed: Broken pipe (os error 32); a mutating operation may already be saved; inspect the output work before retrying"
+      },
+      "saved": true
+    },
+    {
+      "case": "inspect_closed_stdout",
+      "exit_code": 1,
+      "error": {
+        "code": "stdout_write",
+        "message": "Response delivery failed: Broken pipe (os error 32); a mutating operation may already be saved; inspect the output work before retrying"
+      },
+      "saved": false
+    },
+    {
+      "case": "describe-capabilities_closed_stdout",
+      "exit_code": 1,
+      "error": {
+        "code": "stdout_write",
+        "message": "Response delivery failed: Broken pipe (os error 32); a mutating operation may already be saved; inspect the output work before retrying"
+      },
+      "saved": false
+    },
+    {
+      "case": "validate_closed_stdout",
+      "exit_code": 1,
+      "error": {
+        "code": "stdout_write",
+        "message": "Response delivery failed: Broken pipe (os error 32); a mutating operation may already be saved; inspect the output work before retrying"
+      },
+      "saved": false
+    },
+    {
+      "case": "help_closed_stdout",
+      "exit_code": 1,
+      "error": {
+        "code": "stdout_write",
+        "message": "Response delivery failed: Broken pipe (os error 32); a mutating operation may already be saved; inspect the output work before retrying"
+      },
+      "saved": false
+    },
+    {
+      "case": "closed_stderr_domain",
+      "exit_code": 1,
+      "diagnostic": "unavailable; closed pipe"
+    },
+    {
+      "case": "closed_both",
+      "exit_code": 1,
+      "diagnostic": "unavailable; closed pipe"
+    },
+    {
+      "case": "late_stale_absent",
+      "exit_code": 1
+    },
+    {
+      "case": "late_stale_existing",
+      "exit_code": 1
+    }
+  ]
+}

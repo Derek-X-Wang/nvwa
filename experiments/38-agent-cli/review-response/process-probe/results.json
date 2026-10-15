@@ -1,0 +1,149 @@
+{
+  "scope": "synthetic_real_process_transport_probe_not_agent_proof",
+  "cwd": "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa",
+  "calls": [
+    {
+      "label": "original",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/original-agent-nvwa-cli",
+        "new",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/assets/character.profile.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/review-response/process-probe/original-new.nvwa.json"
+      ],
+      "binary_sha256": "a35bce6b43b7e06d8f352441e7abf4e6505feab19163074df95fabc91ae078a4",
+      "stdout": "actual_pipe_reader_closed_before_process_start_no_consumer",
+      "stderr": "original-new.stderr",
+      "exit_code": 101,
+      "output": "original-new.nvwa.json",
+      "output_revision": 0,
+      "output_sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+      "original_input_unchanged": true
+    },
+    {
+      "label": "original",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/original-agent-nvwa-cli",
+        "apply",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/initial.nvwa.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/appearance.commands.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/review-response/process-probe/original-apply.nvwa.json"
+      ],
+      "binary_sha256": "a35bce6b43b7e06d8f352441e7abf4e6505feab19163074df95fabc91ae078a4",
+      "stdout": "actual_pipe_reader_closed_before_process_start_no_consumer",
+      "stderr": "original-apply.stderr",
+      "exit_code": 101,
+      "output": "original-apply.nvwa.json",
+      "output_revision": 1,
+      "output_sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d",
+      "original_input_unchanged": true
+    },
+    {
+      "label": "original",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/original-agent-nvwa-cli",
+        "save",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/initial.nvwa.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/review-response/process-probe/original-save.nvwa.json"
+      ],
+      "binary_sha256": "a35bce6b43b7e06d8f352441e7abf4e6505feab19163074df95fabc91ae078a4",
+      "stdout": "actual_pipe_reader_closed_before_process_start_no_consumer",
+      "stderr": "original-save.stderr",
+      "exit_code": 101,
+      "output": "original-save.nvwa.json",
+      "output_revision": 0,
+      "output_sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+      "original_input_unchanged": true
+    },
+    {
+      "label": "revised",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/target-cli/debug/nvwa-cli",
+        "new",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/assets/character.profile.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/review-response/process-probe/revised-new.nvwa.json"
+      ],
+      "binary_sha256": "e0da6b3e5759801b9d5e4898a2ecda716111ee05159415163521fb01eb6ea637",
+      "stdout": "actual_pipe_reader_closed_before_process_start_no_consumer",
+      "stderr": "revised-new.stderr",
+      "exit_code": 1,
+      "output": "revised-new.nvwa.json",
+      "output_revision": 0,
+      "output_sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+      "original_input_unchanged": true
+    },
+    {
+      "label": "revised",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/target-cli/debug/nvwa-cli",
+        "apply",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/initial.nvwa.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/appearance.commands.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/review-response/process-probe/revised-apply.nvwa.json"
+      ],
+      "binary_sha256": "e0da6b3e5759801b9d5e4898a2ecda716111ee05159415163521fb01eb6ea637",
+      "stdout": "actual_pipe_reader_closed_before_process_start_no_consumer",
+      "stderr": "revised-apply.stderr",
+      "exit_code": 1,
+      "output": "revised-apply.nvwa.json",
+      "output_revision": 1,
+      "output_sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d",
+      "original_input_unchanged": true
+    },
+    {
+      "label": "revised",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/target-cli/debug/nvwa-cli",
+        "save",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/initial.nvwa.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/review-response/process-probe/revised-save.nvwa.json"
+      ],
+      "binary_sha256": "e0da6b3e5759801b9d5e4898a2ecda716111ee05159415163521fb01eb6ea637",
+      "stdout": "actual_pipe_reader_closed_before_process_start_no_consumer",
+      "stderr": "revised-save.stderr",
+      "exit_code": 1,
+      "output": "revised-save.nvwa.json",
+      "output_revision": 0,
+      "output_sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445",
+      "original_input_unchanged": true
+    },
+    {
+      "label": "revised",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/target-cli/debug/nvwa-cli",
+        "describe-capabilities",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/agent-nine-second.nvwa.json"
+      ],
+      "binary_sha256": "e0da6b3e5759801b9d5e4898a2ecda716111ee05159415163521fb01eb6ea637",
+      "exit_code": 0,
+      "stdout": "revised-describe-capabilities.stdout",
+      "stderr": "revised-describe-capabilities.stderr"
+    },
+    {
+      "label": "revised",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/target-cli/debug/nvwa-cli",
+        "inspect",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/agent-nine-second.nvwa.json"
+      ],
+      "binary_sha256": "e0da6b3e5759801b9d5e4898a2ecda716111ee05159415163521fb01eb6ea637",
+      "exit_code": 0,
+      "stdout": "revised-inspect.stdout",
+      "stderr": "revised-inspect.stderr"
+    },
+    {
+      "label": "revised",
+      "argv": [
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/target-cli/debug/nvwa-cli",
+        "validate",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/experiments/38-agent-cli/agent-nine-second.nvwa.json",
+        "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa/assets"
+      ],
+      "binary_sha256": "e0da6b3e5759801b9d5e4898a2ecda716111ee05159415163521fb01eb6ea637",
+      "exit_code": 0,
+      "stdout": "revised-validate.stdout",
+      "stderr": "revised-validate.stderr"
+    }
+  ],
+  "final_work_sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc",
+  "final_work_unchanged": true
+}

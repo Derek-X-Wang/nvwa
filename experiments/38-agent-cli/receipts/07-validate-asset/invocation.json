@@ -1,0 +1,30 @@
+{
+  "step": "07-validate-asset",
+  "started_utc": "2026-10-14T23:14:44.469387+00:00",
+  "finished_utc": "2026-10-14T23:14:44.488244+00:00",
+  "cwd": "/Users/derekxwang/.codex/worktrees/m12-agent-cli/nvwa",
+  "argv": [
+    "/Users/derekxwang/.codex/worktrees/m12-agent-cli/target-cli/debug/nvwa-cli",
+    "validate",
+    "experiments/38-agent-cli/authored.nvwa.json",
+    "assets"
+  ],
+  "binary_sha256": "a35bce6b43b7e06d8f352441e7abf4e6505feab19163074df95fabc91ae078a4",
+  "exit_code": 0,
+  "stdout": "stdout.txt",
+  "stderr": "stderr.txt",
+  "json_arguments_before": {
+    "experiments/38-agent-cli/authored.nvwa.json": {
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc",
+      "snapshot": "argument-1.before.json"
+    }
+  },
+  "json_arguments_after": {
+    "experiments/38-agent-cli/authored.nvwa.json": {
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc",
+      "snapshot": "argument-1.after.json"
+    }
+  },
+  "tool_route": "Codex Desktop native collaboration worker -> functions.exec -> exec_command -> Python subprocess -> production nvwa-cli",
+  "authoring_decisions": "made_by_LLM_between_separately_recorded_calls"
+}

@@ -1,113 +1,56 @@
 # Nvwa 路线图
 
-## 最新检查点：PR #42 合并及独立缺口验证（2026-10-13）
+## 当前阶段：M1.2 真实 agent 创作闭环（2026-10-14）
 
-PR #42 已按用户授权合并，main 为 `7851c2e74f757f93774f2d5fa05151562c393012`；合并树与最终已审查、已测试的 head `ff7c592` 完全相同。最终 PR CI [38473292259](https://github.com/Derek-X-Wang/nvwa/actions/runs/38473292259) 通过113项独立 Rust CPU 测试、77项诊断控制、原生和真实 Studio Wasm 编译；两个采集器对照另计。合并后 main 的自然 CI [38477675464](https://github.com/Derek-X-Wang/nvwa/actions/runs/38477675464) 另行核验通过；真实日志确认相同113项独立Rust、77项诊断和双目标编译。
+Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。人和 agent 使用同一份 Work 和同一套 Rust 命令。
 
-后续并行范围保持在 M1.1：实验35复查实际 Web 下载观察边界，实验36整理当前生产构建的许可文本候选与缺口。实验35的两个实际加载、三个触发取得两张真实角色 PNG，但原因仍为 INCONCLUSIVE，不采用产品补丁。实验36保留323个目标筛选后的依赖候选及原始文本，完整性保持 BLOCKED；23项没有实质性条款候选、三个第一方许可未知。根项目许可由所有者决定，当前不选择许可、不发行二进制、不做签名。
+本轮授权：收束 M1.1；建立 [M1.2](https://github.com/Derek-X-Wang/nvwa/milestone/2)；主线实施真实 agent 的离线 CLI 创作闭环；并行开展 #13 视觉 A/B 和 #12 可行性核查。独立审查及最终 PR CI 通过后自主合并，再验证精确 main。M2 推理实施、权重下载、付费资源、实时 Studio 桥接和公开二进制发行是后续范围。
 
-初期三个证据工具问题已修复；后续内容审计发现27处误分、24个受影响包，旧覆盖接受已撤销。原始清单、失败证据及13项实验单元控制/90/93次旧批次检查仍保留。v3按真实内容保留661处实质性条款候选、29处说明和四份独立源码证据；121次新检查及独立复审另记，不与主线CI相加。见[本轮验收](evidence/export-notices-20261013/ACCEPTANCE.md)。#3 保持原始 IAB DPR 条件不可取得的阻塞；#4 保留完全冷启动、精确物理角色首帧、停顿归因、Web进程/GPU总内存与有效角色GPU耗时等缺口。本轮不新增M2功能。下方状态保留各自历史时间点。
+已核验的开工基线是 `a094baa048e6e50056e3288ecfa85bb4ac62e140`。其 [应用 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821416) 和 [证据 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821332) 已成功；113 项独立 Rust 测试、77 项诊断及两个另计采集器对照、原生/Studio Wasm 编译分别记录。它们不能代替后续实现 head、合并后 main 或真实 GUI 的验收。
 
-VERIFIED — PR #42最终PR CI、合并身份与合并后main CI通过；新实验复审另计。
+## 阶段与验收门
 
-## 2026-10-13：#4 有界测量补充
+| 阶段 | 交付与验收 | 状态 |
+| --- | --- | --- |
+| M0：Rust 双端底座 | 同一核心/运行时；真实 skin/morph 角色、骨骼动画、命令、保存/重载和双端 Work 交换 | 功能闭环已交付；性能、额外平台和发行缺口保留 |
+| 薄 M1：可捏、可编排、可互动 | 三段 authored action、5–10 秒编排、播放/暂停/定位、点击触发与恢复、原生/Web Player | #14–#16 已按有界本地验收完成；完整发行目标未完成 |
+| M1.1：界面与稳定性 | 窄 UI 组件整合、中文/输入恢复、有界历史/加载、永久 CPU 绘制回归、Web 构建 A/B | 功能/实验交付收束；残余 #3/#4 保持开放，不宣称性能或原始 DPR 故障已解决 |
+| M1.2：真实 agent 创作 Alpha | 能力发现→实际 CLI 命令→错误回读/纠正→保存→桌面/Web 继续编辑与播放 | 本轮实施；任务 #46→#47→#48 |
+| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 未实施；#12/#13 只提供进入该阶段的可行性证据 |
+| 内容与沙盒扩展 | Blender 工具、更多角色/服装、指定版本 VRM、IK/接触、只读 VaM 与有限迁移 | 后续逐项定范围，不承诺任意 rig/VAR/插件兼容 |
 
-已合并 main 为 `d832ef3e044017bddb5a0681ff5ca99256ebaef4`（PR #41），最终自然 main CI run38441179644 成功；113项 Rust 测试、原生/Wasm 编译与77项诊断控制分别记录。#39/#23/#40 已关闭。这是已完成的历史基线，本轮未重复主线编译。
+## 本轮主线与并行工作
 
-本轮在独立实验33/34完成三个原生进程、三个 Web 加载的实际测量，全部看到真实角色。桌面首次有效已记录 surface 呈现约9.966s/1.748s，角色 GPU 读回、命令完成和 PID 内存另记；Web 的 HTTP/CPU 边界及 JS heap 子集通过核对，GPU 时间戳实验出现无效值，保留失败。无产品代码、根依赖、Cargo.lock 或 CI 配置变化，观察器不整合进主线。
+1. [#45 收束 M1.1](https://github.com/Derek-X-Wang/nvwa/issues/45)：核对旧实验 PR，保留原始提交，整理当前索引，将残余验证明确留在开放 backlog。
+2. [#46 真实 CLI agent](https://github.com/Derek-X-Wang/nvwa/issues/46)：真实 LLM agent 发现参数/动作和命令合同，制作九秒作品，遇到真实 revision 错误后读取并纠正。原始工具过程与合成重放分开记录。
+3. [#47 双端继续编辑](https://github.com/Derek-X-Wang/nvwa/issues/47)：加载 #46 的确切 Work，实际显示角色、播放/定位、UI 修改、保存与整份文档比对。CLI 进程/重载不传递会话历史。
+4. [#48 Alpha 交接](https://github.com/Derek-X-Wang/nvwa/issues/48)：提供可执行命令和支持边界，让新的独立操作 session 跟随说明。agent 操作验收与实体真人易用性检查分别记录。
+5. [#13 视觉 A/B](https://github.com/Derek-X-Wang/nvwa/issues/13)：已有受控 derivative 在相同 renderer/相机/时间点比较；支持结论限于同拓扑/骨长/语义的 rest-basis 转换。
+6. [#12 模型可行性](https://github.com/Derek-X-Wang/nvwa/issues/12)：核查当前本地条件、官方模型/编码器及输出格式；条件不足可按 NO-GO/NOT-RUN 退出。已有 authored action 始终标为手工动作。
 
-PARTIAL — [测量验收](evidence/bounded-perf-20261013/ACCEPTANCE.md)与[性能边界](PERFORMANCE.md)保留实际结果。#4 开放：完全冷启动、精确角色物理首帧、停顿归因、Web 进程/GPU 内存及有效角色 GPU 耗时仍未验证。#3 继续按原始 IAB DPR 复现入口缺失保持阻塞。后续性能工作需要可控制的隔离浏览器/缓存或系统 profiler；这项实验不启动 M2，也不授权系统清缓存、重启或付费资源。下方保留既有阶段快照。
+Alpha 操作入口：[M1.2 交接与复现](M1.2-ALPHA.md)。实体真人独立试用单独跟踪 [#49](https://github.com/Derek-X-Wang/nvwa/issues/49)，当前 NOT-RUN；agent 操作通过不能关闭它。
 
-> 范围依据：[启动任务](specs/Nvwa_Codex_Kickoff_Parallel_Spikes.md)、[Rust-first 原型任务书](specs/Nvwa_Codex_Prototype_Brief_Rust_First_v2.md)、[实验登记](EXPERIMENTS.md)、[M1 验收](M1-VERIFICATION.md)、[问题索引](ISSUES.md)、[交接](HANDOFF.md)及各实验 `REPORT.md`。这是一份状态与证据登记，不授权后续功能实现。
+第一版 agent 通过现有 CLI 编辑文件并由 Studio 重载。GUI、CLI 和未来 bridge 共用领域命令；不把离线文件修改描述为控制运行中的窗口。CLI 的 revision 检查针对读入文档，不构成文件系统 CAS；历史和重试记忆属于当前 Editor 会话。
 
-## 当前状态（2026-10-13）
+## 持续验证与发行门
 
-已合并基线为 `045d8abc685760d09ba05afec0e40a811a282d1f`：PR #36、#38、#35 已依次进入 main。最终 main 的 GitHub CI run `38286368500` 通过，包含103项 Rust CPU 测试、原生/Wasm 编译、77项诊断测试和两个采集器对照。该结果不包含新一轮实现，也不证明 GUI、GPU 或真实输入法。
+| 问题 | 保留的边界与下一决定性条件 |
+| --- | --- |
+| #3 输入缩放 | OPEN/needs-info；原始 IAB DPR 模拟入口不可用。需要原始受支持控制/轨迹或真实显示尺度迁移；普通 zoom 通过不能关闭原始故障 |
+| #4 性能 | OPEN；精确角色首次物理呈现、完全冷状态、原生停顿归因、Web 进程/GPU 总内存和有效 GPU 耗时仍未验证。新条件可得时补测，不将 ready/cadence 当作呈现 |
+| #5 Web 截图导出 | 当前顶层成功与 iframe 有界未观察到下载分别保留；历史原因仍 UNKNOWN |
+| #9 平台 | macOS/受测浏览器之外按目标逐项验证；编译、实际启动、功能、性能分开记录 |
+| #10 发行 | 依赖/字体/资产适用完整条款、第一方许可、签名/公证与干净机器启动仍有缺口。23 个缺少条款文本的历史包/47 个缺口记录未被实验37消除 |
+| #11 角色品质 | 手形、权重和形变极值需进一步视觉检查；单一 fixture 不能代表生产级人物系统 |
 
-本轮按已批准的 M1.1 收尾范围推进：[永久 UI 绘制检查 #39](https://github.com/Derek-X-Wang/nvwa/issues/39)、[停滞加载 #23](https://github.com/Derek-X-Wang/nvwa/issues/23)、[启动测量 #4](https://github.com/Derek-X-Wang/nvwa/issues/4)、[像素小实验 #40](https://github.com/Derek-X-Wang/nvwa/issues/40)。6项永久 CPU 绘制测试及独立审查通过；绘制颜色故意改错时新检查失败，旧状态检查仍通过。现有 CI 的 workspace 测试会收集这些检查，无需新增 GPU runner。#23 的真实生产系统对照记录旧逻辑12个停滞根请求、新逻辑最多4个，恢复后只启动最新请求；18项加载测试通过。该上限约束根请求数量，不等于内存字节或 GPU 资源上限。
+## 历史证据与实验归档
 
-整合版113项 Rust 测试、strict native/Wasm 检查、双端 release 构建和原生打包已通过。实际 Web 在一个应用中接收12个作品：四个停滞下载占满上限时显示等待，放行后只启动最新作品12；真实角色恢复可见，保存的完整作品与作品12一致。首次路径输入试验没有选取文件，明确保留为未完成；成功试验使用浏览器文件选择器，原始工具记录经独立核验。
+旧路线图原文保留于 [历史快照](history/ROADMAP-through-m11.md)。其中的“当前”“待合并”和测试数量均属于当时的记录；新状态以本页、各任务及最终 PR 的精确 head/main 验收为准。
 
-#4 的两个原生实验已实际启动并取得加载、回调、进程采样数据，但图像全黑，不能算视觉通过。一次匹配基线的 Web 启动实际显示角色，八个请求和20,565,000字节响应正文已核对；这份基线结果不用于验收新加载策略。精确首次呈现、完全冷启动和完整 GPU 内存仍未验证。#40 的[离屏 GPU 实验32](../experiments/32-tab-pixels-headless/REPORT.md)已实际运行：两个正常画面通过，颜色故意改错的画面失败，Profile 状态保持不变；独立复审重放0/0/1并检查三张图。原生窗口实验31仍未运行。后来工具曾明确报告 Mac 锁定，当时原生验收阻塞；后续解锁验收见下段。不据此解释更早的黑图，也不推断离屏回调时的锁屏状态。见[当前验收](evidence/m1-1-final/ACCEPTANCE.md)。
+[旧实验 PR 清单](history/m11-experiment-pr-inventory.json)逐路径核对完整分页结果。#22/#28/#29 的历史实验并未全部进入 main；关闭它们表示结束实验分支的整合请求，不表示全部证据被采用，也不表示未验证项通过。保留分支和精确提交链接，不删除唯一副本。
 
-后续原生验收已完成：同一 release 二进制实际显示角色，Shape/Profile 切换前后保存的完整作品逐字节一致。隔离副本验证缺失 GLB 移除旧角色、同路径恢复、换路径恢复、保存后重载；四份保存作品的全部字段与输入一致。暂停在2.2秒时点击角色触发 wave，结束后回到原暂停位置，完整作品不变。两个验收进程已退出，私有资产已恢复。见[原生证据](evidence/m1-1-final/native/README.md)。这不补充首帧、FPS、实体输入法或本轮原生精确1024×768结论。
+- [#22 原始启动/输入证据](https://github.com/Derek-X-Wang/nvwa/tree/11fc789e898119e0ed2b423f8a909dacb547f772)：诊断成果按原边界归档。
+- [#28 UI/Web A/B 原型](https://github.com/Derek-X-Wang/nvwa/tree/bb21905879d1fdd6dd3a37ba38400d90801a6b72)：窄 UI 模式已通过 #26/#30 单独整合；较小 Web 配置未采用。
+- [#29 Web cadence 跟进](https://github.com/Derek-X-Wang/nvwa/tree/49d116c69cb9e7cfaa6f2c4356749ebd1504dd4e)：保留 DEFER 和无效测量条件，不提升为性能结论。
 
-源码批次 `9df6d3a` 的 hosted CI run `38392776461` 已通过：113项 Mac 测试、实际原生/Wasm 编译、Ubuntu27项重叠测试及77项诊断/两个采集器对照。PR #41 仍在工作分支；证据归档提交按其最终 head 单独核验 CI，合并后 main 也须验证。#23/#39 等待整合，#4 的物理测量缺口保留，#40 只完成有界实验，不采用永久 GPU CI。#3 保持原条件不可用的阻塞状态。M2、额外 rig、付费模型和发行签名不在本轮范围。
-
-VERIFIED — 主线113项 CPU 测试、双端构建、实际桌面/Web、离屏 GPU 正反对照及源码批次 hosted CI 通过；最终归档 head 与合并后 main 的 CI 另按 PR 记录核验。
-
-## 历史检查点（2026-10-12）
-
-最新检查点：PR #34 已合并，main 为 `de4ddef`；旧归档核验通过60项记录和31项正式输入。#3 继续保持阻塞，不反复要求真人重测。下一项独立验证选择 #7：[实验26](../experiments/26-export-drift/REPORT.md) 完成同版本两次实际导出，精确记录眼部三角序列/存储变化及485个法线分量差异；位置、蒙皮、形变 POSITION 与动画样本完全一致，冻结资产未改。完整 `.blend` 等价性、视觉影响和跨环境确定性仍未验证。
-
-ArtCraft 测试经验已形成一个实际有界原型：[M1.1 的 #37](https://github.com/Derek-X-Wang/nvwa/issues/37) 和 [PR #38](https://github.com/Derek-X-Wang/nvwa/pull/38)。现有 Shape/Profile 控件的 CPU 绘制指令检查在两个尺寸通过；只交换绘制颜色，新检查失败而原有状态测试仍通过。独立复审完整重放通过，50项产品输入恢复为原始字节。当前只保留实验，不加入永久测试集合；真实渲染像素及原生/Web 运行仍需分别验证。下一候选是永久 CPU 检查与独立像素参考实验，不扩展 UI 功能。
-
-[PR #35](https://github.com/Derek-X-Wang/nvwa/pull/35) 单独推进 ArtCraft 测试研究和有界 CI：本地103项 Rust 测试、原生/Web 目标编译与77项诊断测试/两个采集器对照通过；首次托管运行需按实际 run/head 单独验收。当前先采用标准 runner 的 CPU/编译检查；独立参考图像与故意改错的 UI 检查是下一项候选实验，尚未实现。这属于 M1.1 的稳定性验证，不新增功能里程碑，也不启动 M2。下方状态描述其各自的历史时间点。
-
-main 为 `6b5cf80`：PR #18、#20、#21、#30、#31、#33 均已合并。M0 和获准的薄 M1 已交付；M1.1 的界面整合进入主线，Web 构建性能复核保留默认构建。原最终整合记录有103项 Rust 测试及双端构建/实际运行证据；本轮复用了相同的31项正式构建输入，未重新编译。
-
-PR #31 归档了 #2 的实际 Chrome 标签切换、100%→110%→125%→100% 缩放恢复，以及 Derek 的125%中文输入法、快捷键、切换恢复、连续拖动/一次撤销验收；#2 已按该范围关闭。见[已合并证据](evidence/input-scale/ACCEPTANCE.md)。后续有界实验22在固定1100×640 CSS画布中实际验证 DPR2→2.5→2、点击与完整作品修改/一次撤销；原生2x及窗口放大后的点击/撤销也通过。实验23完成实际 Chrome 合成自检及普通文本框/Nvwa 的一次真实输入法对照。Derek 报告使用搜狗；两页均有来源未明的 untrusted 结束事件，按 UNKNOWN 结束有界调查。本次 Space 在中文提交后追加空格，候选框位置及 Space 选字不算通过。见[当前证据与边界](evidence/bounded-scale-ime/ACCEPTANCE.md)。
-
-下一步保持有界：#32 已按有界退出结论关闭，来源仍为 UNKNOWN；2026-10-12 刷新 IAB 工具说明后，#3 原始 DPR 模拟入口仍不可用，已记录阻塞并保持开放。已独立完成两次 #4 HTTP 缓存启动测量和 #5 顶层/iframe 导出对照。顶层自动与手动 PNG 实际落盘；iframe 的锚点挂载、延迟撤销均未改善下载，原因仍未知，不整合补丁。见[本轮证据](evidence/bounded-startup-capture/ACCEPTANCE.md)。#4/#5 保持开放，后续按剩余可取得的验证能力推进。固定画布的工具拖动未产生连续移动事件，不能记为拖动通过。原始输入法事件710的来源仍为 UNKNOWN。M2、任意 rig、VaM 和付费模型资源仍需单独确定范围。下方保留早期阶段的验收快照；旧测试数、待合并状态和 NOT-RUN 只描述对应时间点。
-
-PARTIAL — 当前 Mac/Chrome 支持的输入和缩放流程通过；原始 IAB 条件、物理显示迁移及其他平台未验证。
-
-## 早期里程碑与验收快照
-
-| 里程碑 | 目标 | 已证实状态与边界 |
-|---|---|---|
-| M0：双端 Rust Studio | 共用核心、桌面/Web 运行时、真实可变形角色、骨骼动画、命令、存档与跨端重载。 | **已交付**。M0 首次发布为 `d74493d`；薄 M1 后续合并后的 main 当前记录为 [`96c00de`](https://github.com/Derek-X-Wang/nvwa/commit/96c00dedf9a4a74038edb7abf20d99d89871ae6b)。真实原生 Metal 与 WebGPU 运行、双向作品交换、33 项 M0 Rust 测试及构建/测量证据已记录。M0 的已知验收缺口仍未全部关闭；功能闭环不等于完整发布就绪。见 [M0 实验](EXPERIMENTS.md)、[性能记录](PERFORMANCE.md)。 |
-| M1：可捏、可编排、可分享 | 任务书定义的较完整阶段：有限角色控制、简单时间轴、三段动作、撤销/重做、双端保存/重载、互动、静态 Player、可分发原生构建、CLI/agent 说明。 | **用户批准的薄 M1 已合并**：三段动作与播放/暂停/定位；点击角色触发一次 wave 后恢复作品；原生/Web 静态 Player。#14–#16 按记录的本地验收关闭。PR #17 独立 Standards 审查发现一项 P3 transport 重复代码建议，修复提交 `976331d` 已合并到 main 的 `96c00de`，并通过 targeted rereview；Spec 轴无发现。独立修复验收记录了 57 项测试、strict checks、双端 release 构建与实际运行。该 57 项结果是字体集成前的快照；字体快照另有 59 项测试、双端构建及实际中文/Unicode 文件验收；后续桌面 Web 输入修复现有 67 项测试、strict checks、双端 release 与实际运行及 Unicode 全量存档比对。修复后的 Web 实机候选框/Space、Command+A/V、跨应用恢复编辑已由 Derek 确认“全部正常”；PR #18 尚待合并。完整 M1 任务书的输入、缩放、性能、发行等验收缺口仍在。见 [PR #17 审查](evidence/pr17-review/REVIEW.md)和[修复验收](evidence/pr17-review/ACCEPTANCE.md)。 |
-| M2：真实动作生成 | 一个真实 provider、任务状态/取消/失败、规范化动作、到目标 rig 的映射及质量验证。 | **提议；未开始，也未获准实施。** 现有实验只证明隔离的 authored-preset 导入边界；没有进行模型推理。需先解决授权模型/运行时、输出格式和目标 rig 映射，再决定是否进入 M2。见 [AI 实验报告](../experiments/05-ai-motion/REPORT.md)。 |
-| 后续（顺序仍待决） | 简单 Blender 插件 → 额外角色/服装验证 → 指定版本 VRM → 约束/IK/接触 → 只读 VaM 检查器 → 经许可审核的迁移子集。 | **全为提议，未授权实现。** VaM 检查器只读；真实样本与许可不足时，合成包解析不能作为兼容证据。软体物理、头发/布料、VR、多人、市场、任意脚本插件不在前三个里程碑。 |
-
-**当前顺序：**PR #17 独立审查和合并已完成。#1 字体修复在 `fix/cjk-input-acceptance` 通过技术验收并等待合并；#2 的原生错误恢复、两端 Unicode Save/Open、Web 拖动/撤销与按键焦点已验证。原生自动化拖动、剪贴板/Command 组合键和批量中文输入未取得预期结果，不能外推为真人输入故障。用户解锁后，原生点击修改/撤销/重做及整份作品保存比对、文本按键焦点保护和窗口缩放/恢复均通过。原生自动化连续拖动仍未得到有效输入；Derek 已实机确认四项原生检查正常：连续拖动/一次撤销、中文候选选字、Command+A/V 和跨应用恢复编辑。Web 手测先报告无法输入中文且没有候选框；[#19](https://github.com/Derek-X-Wang/nvwa/issues/19) 已在 PR #18 修复桌面浏览器输入。当前 67 项测试、双端 release/实际启动、中文提交及完整存档比对通过。Derek 已确认修复后的候选框/Space、Command+A/V 和跨应用恢复编辑“全部正常”。见[独立输入验收](evidence/web-input/ACCEPTANCE.md)与[真人复测](evidence/web-input/WEB-HAND-TEST.md)。浏览器缩放/DPR 与额外平台仍待验证。见[实机验收](evidence/input-fonts/NATIVE-HAND-TEST.md)。同帧/跨帧 Command+A 的真实依赖库对照已复跑并独立审查；同帧组合键丢失 modifier，但 OS/CUA 实际事件序列仍未知，暂不整合 workaround。见[输入事件实验](../experiments/07-native-input-events/REPORT.md)。见[解锁后验收](evidence/input-fonts/UNLOCKED-ACCEPTANCE.md)。先完成剩余输入验收，再按风险重排 #3/#4/#6/#8/#9/#10 等稳定性和发行缺口；不承诺日期或工期。
-
-## 已验证的风险与限制
-
-| 项目 | 证据支持的结论 | 影响/仍未知 |
-|---|---|---|
-| 单一角色的能力边界 | 原创 CC0 fixture 有单一连续蒙皮主体、18 骨骼、4 个不同 morph、3 个手工动作；原生与 Web 实际播放已验证。 | 这是风格化固定 rig，不代表任意角色导入。手部粗糙；腋下及极端形变可能夹皱，生产级权重和全组合视觉检查未完成。见 [角色报告](../experiments/01-character/REPORT.md)。 |
-| 导出复现性（#7） | 两次独立 Blender 导出的 GLB/Blend **字节不同**；已测拓扑、结构与 morph 数据保持一致，差异原因未定位。 | 不得声称字节可复现。发布时需重写 profile/manifest 以匹配实际文件；跨版本/跨平台未测。 |
-| 字体与输入（#1、#2） | 同 cmap static Regular 400 fallback：30,890 映射码点、31,036 glyph；standalone gzip6,303,513bytes，对比 variable11,276,563bytes。59 项测试、strict checks、native/Web release 与实际中英标签、中文文件名、Unicode GUI Save/Open 通过；完整 JSON 等于 baseline。原生 missing-work 经真实 GUI Open 恢复。Web 一次连续拖动提交一个 revision，一次 Undo 恢复全作品；文本 Space 不暂停播放。 | #1 待合并。罕见补充汉字仍缺失；不等于真实 IME 通过。解锁后原生点击修改/撤销/重做和整份作品保存比对、文本焦点与窗口缩放恢复通过。原生 CUA 连续拖动、剪贴板/Command、批量 Unicode entry 未获有效结果；Derek 已确认上述四项原生实机输入正常；Web 真人输入先报告无候选框；#19 的 Rust/wasm 桌面输入代理现已通过 67 项测试及双端构建/实际运行。Derek 对修复后的候选框/Space、Command+A/V 和应用切换恢复回复“全部正常”；PR #18 待合并。缩放/DPR、额外浏览器仍待验证。不将自动化限制视作真人缺陷。见 [验收](evidence/input-fonts/ACCEPTANCE.md)、[字体实验](../experiments/06-cjk-fonts/REPORT.md)。 |
-| 浏览器缩放（#3） | IAB 视口/DPR 模拟曾出现显示与输入比例陈旧；普通未模拟视口的输入通过。 | 不把模拟视口结果外推到所有浏览器。当前 live1600×900 与1024×768（DPR1）已通过文本、滑块与全量 Undo；改变 DPR 的入口未暴露，原模拟比例故障未复现，真实 zoom/DPR 仍待验证。见 [受控报告](../experiments/11-viewport-input/REPORT.md)。 |
-| 性能与启动（#4） | M0 连续空闲 release cadence：原生 p95 8.65 ms、Web 11.20 ms。薄 M1 Player 的 600 样本约为原生 8.327/8.924 ms、Web 8.300/9.500 ms（p50/p95）。M1 样本来自 9.5 秒作品已结束并停在末帧之后。压缩文件和为 14,179,929 bytes。 | cadence 不是 GPU 帧完成时间。M1 数字不证明持续动画表现；首次精确呈现、冷启动 Web、浏览器/GPU 内存未测。native 首次截图约 8.52 秒只是可见性的上界。Web 重复 GLB 请求仍可多传约 1,129,081 bytes（#6）。30 fps/30 MB 是任务书初始预算，不是完整性能验收。见 [性能记录](PERFORMANCE.md)。 |
-| 命令历史（#8） | `fix/bounded-edit-history` 已整合128步/16MiB历史及1024条/8MiB重试记录上限；79项完整测试通过，10,000次编辑工作负载保持边界；CLI可发现策略且原profile值不变，独立修复复审通过。 | 容量按紧凑JSON内容计算，不是精确heap/RSS；会话内FIFO过期，保存只含作品。双端发布构建、原生/Web实际启动和GUI完整作品Undo/Redo/Save/Open/跨端重载通过，尚未合并。见[实验10](../experiments/10-bounded-history/REPORT.md)。 |
-| 互动命中 | 薄 M1 用原 rig 的胸/头保守目标触发 wave；恢复后的文档与交互前完整相等。 | 不是变形网格精确拾取。所有姿势/morph 极值下的热点包含性未验证；不能外推为任意 rig 支持。 |
-| 动作重定向（#13） | 真实动作的 19 个采样点数值 A/B：直接复制旋转的最大顶点误差约 0.868 m；受控 rest-basis 修正约 3.08e-8 m，退化输入检查通过。 | 仅证明骨长/拓扑/语义相同的坐标基变换。目标 GLB 未在渲染器视觉播放；不同骨长、缺骨、任意 rig、root motion、IK/接触均未验证。见 [A/B 报告](../experiments/04-retarget-basis/REPORT.md)。 |
-| AI 动作（#12） | 本地有限目录探测未发现可用 Kimodo runtime/授权权重；9 项 Python 测试只导入有明确标记的手工 wave preset。 | 真推理、M2 资源用量和播放兼容均为 NOT-RUN。Kimodo 文档对输出骨数有 30/77 的差异；M2 16 GiB 可行性和准确许可/权重仍需核对。不要把 preset 称作 AI。见 [AI 实验报告](../experiments/05-ai-motion/REPORT.md)。 |
-| 平台/发行（#9、#10） | macOS 原生和记录的 IAB WebGPU 环境完成了实际本地运行。 | 其他 OS、其他浏览器/WebGPU、公开托管、签名/公证和发行验证未完成；本地构建不能替代这些证据。 |
-
-## 提议的原型与验证队列
-
-以下都是**候选验证工作，不是实现授权**。PR #17 已合并；当前 #1 字体分支验证已完成，等待合并；先完成 #2 剩余输入验收。M2、一般 rig 支持和 VaM 工作仍需单独明确范围。
-
-| 原型 | 问题与 A/B 候选 | 最小可复现证据 | Go / no-go | 依赖 |
-|---|---|---|---|---|
-| #1 CJK 字体 | A：完整 variable；B：同 cmap static Regular400。选择 B，standalone gzip 少约4.97MB；共享回退已集成并完成技术验收。 | 实际 native/Web 中文标签/文件名、GUI Unicode Save/Open、59测试、双端构建和完整随包许可。Web 同文件集合 gzip 增加6,314,437bytes，总20,497,855bytes。 | 当前受测字符/两端范围通过，等待合并；保留补充汉字和真实 IME 边界。 | [验收/复现](evidence/input-fonts/ACCEPTANCE.md)、[许可](SOURCES-LICENSES.md)。 |
-| #2 输入与失败恢复 | 原生实际键入/Open恢复；Web实际按键、剪贴板、连续拖动/Undo；原生适配器组合键和拖动与物理输入分别验证。 | 已通过：原生 missing-work GUI恢复、两端Unicode Save/Open、Web revision6→7的一次拖动及Undo全量恢复revision8、文本Space焦点保护。原生四项物理输入已由 Derek 确认；修复后的 Web 候选框/Space、Command+A/V、跨应用恢复也已确认“全部正常”。原生窗口 zoom/恢复有工具证据；Web zoom/DPR 覆盖仍待验证。 | 当前双端基本实机输入通过；适配器限制与真人结果分开。#19 的真实无候选框故障已在 PR #18 修复，仍保留失败实验和未覆盖的 Web zoom/DPR 项。 | [验收](evidence/input-fonts/ACCEPTANCE.md)、[输入诊断](evidence/input-fonts/INPUT-DIAGNOSIS.md)；公开 baseline 为 `docs/evidence/m1/web-sequence.nvwa.json`。 |
-| #13 受控 rig 重定向视觉检查 | A：直接复制关节旋转（数值实验已失败）；B：按 rest basis 转换（数值实验已通过）。 | 用原 fixture 和现有两个 derivative GLB，在同一 runtime、相机和 wave 采样点播放；保留真实画面/播放记录，并复核数值误差及退化输入。 | B 视觉动作可辨且无基姿/末端明显偏移，才把结论扩大到这类受控 rig；否则只保留数值结论，不支持一般重定向。 | [已有受控 A/B 产物](../experiments/04-retarget-basis/REPORT.md)；原 fixture；不得替换成不同拓扑来扩大结论。 |
-| #6 GLB 重复传输 | A：当前两个实际 fetch 路径；B：单份已校验字节在加载路径间复用。 | 静态 Player 实际请求跟踪；记录 GLB 请求数、传输字节、SHA-256 校验结果和角色成功加载。 | B 保持完整性校验且只请求一次则通过；否则保留当前正确性并明确重复传输。 | 实际 Web release bundle、静态服务器、网络请求记录。 |
-| #4 冷启动与首次呈现测量 | A：已有 warm/steady cadence；B：全新冷 Web 会话并捕捉首次真实像素。 | 固定工作、设备、浏览器和 viewport；区分首次呈现、资产 ready、steady cadence，记录实际画面及可取得的内存/GPU证据。 | 只有真实首帧/冷启动与资源数据足以对照既定预算时才作性能 go/no-go；测不到的量明确 NOT-RUN。 | 单一 renderer、固定 release artifact；不把 cadence 当 GPU timing。 |
-| M2 provider 可行性门 | A：Kimodo 精确版本与获准本地权重；B：另一个逐项许可核验的本地 provider；基线为当前 authored-preset 导入，不算生成。 | 先确认本地 runtime、确切权重/代码版本、许可和输出 schema；获准后才做一次真实推理。保存生成元数据、资源/延迟、规范化动作、目标 rig 映射、失败/取消行为及真实播放质量。 | 只有实际生成、许可可接受、输出可映射并由 Nvwa 播放，才建议启动 M2；条件缺失即 no-go/继续 NOT-RUN，不下载权重或改称 preset。 | 单独授权的 M2 范围；本地可用算力/权重；模型、编码器与动作资产各自许可；与 #13 映射验证衔接。 |
-| 额外角色 / SOMA-X 离线导出 | A：继续使用原创固定 rig；B：选一个可核实许可的额外参数角色，离线导出到同一窄 profile。 | 固定单位、轴向、rest pose、skin/morph/服装语义；真实双端加载和形变极值检查；代码/资产/权重许可分别记录。 | 只有测试过的角色/参数进入支持清单；不得因能显示模型就承诺任意捏人。 | 在 M1 稳定后另定范围；SOMA-X 是候选研究，不移植其完整计算栈。 |
-| Blender Validate / Export / Send | A：当前脚本校验与离线导出；B：最小按钮调用同一约定及 CLI。 | 同源导出、校验报告、失败不覆盖发布资产；调查字节漂移并记录语义稳定性。 | 可重复运行且错误清楚才采用；不得用“Send”绕过已有校验。 | #7 与固定 GLB/profile 合同；无需双向完整同步。 |
-| VRM 指定版本适配 | A：当前普通 GLB；B：一个获准真实 VRM0.x 或1.0样本。 | 检查 humanoid、表情、视线、材质、spring bone 等扩展，逐项实际渲染并报告不支持。 | 单一版本、测试样本的能力通过才扩大；普通 glTF 显示不等于完整 VRM。 | 额外角色合同；两版本分别声明，不一起默认为支持。 |
-| 两骨骼 IK / 接触 | A：重定向后的未修正动作；B：一个两骨骼手目标或脚接触修正。 | 同一动作/目标，测末端误差、脚滑、不可达/共线等退化情况，并真实播放。 | 明确改善且稳定才集成；否则保留实验，不引入完整物理。 | 先有实际动作映射播放；与 M2 质量关衔接。 |
-| 后续 VaM 只读检查器 | A：获准真实样本 / B：标明为合成的最小容器 fixture。 | 只读检查容器、元数据、依赖和未知类型；验证路径穿越、文件数/解压大小上限；不执行脚本。 | 合成样本只能通过解析边界；声称真实格式能力需授权真实样本验证。许可字段不等于法律授权。 | P0/M0 不受拖慢；授权样本；单独批准后续实验。 |
-
-**原型退出规则：**每项先写问题、假设、对照、验收与退出条件；实验放 `experiments/`，留下 `REPORT.md` 和复现命令。正式测量仅一个 Nvwa 渲染器，暂停竞争重任务；默认最多两个重编译任务。不租用 GPU、不调用付费 API、不扩大 CI。结果可以 adopt/reject/inconclusive/blocked，失败实验不阻塞主线。
-
-## 证据索引
-
-- 里程碑原文：[v2 brief](specs/Nvwa_Codex_Prototype_Brief_Rust_First_v2.md)；双轨边界与 throwaway 规则：[kickoff](specs/Nvwa_Codex_Kickoff_Parallel_Spikes.md)。
-- 当前整合与开放工作：[M1 验收](M1-VERIFICATION.md)、[问题索引](ISSUES.md)、[交接](HANDOFF.md)。
-- 已做实验与决策：[实验汇总](EXPERIMENTS.md)、[角色](../experiments/01-character/REPORT.md)、[命令](../experiments/02-command-transactions/REPORT.md)、[运行时/UI](../experiments/03-runtime-ui/REPORT.md)、[重定向 A/B](../experiments/04-retarget-basis/REPORT.md)、[AI motion](../experiments/05-ai-motion/REPORT.md)。
-
-Current Control-key checkpoint:71 workspace tests, strict native/Wasm checks and both release builds/package pass. The rebuilt Web actually starts and explicit Control+H/Control+A callbacks pass. Native bytes match the67-build; its startup is not repeated. An independent final P2 review was repaired and rereviewed; [acceptance](evidence/web-input-control/ACCEPTANCE.md) records exact identities and the CUA Meta/Control distinction. The67-build physical Chinese-input acceptance remains separately attributed. Live1600x900/1024x768 DPR1 input checks pass; actual zoom/DPR and browser-tab transition remain unverified.
-
-
-Current stability integration: PR20 publishes bounded history with79-test/dual-target actual GUI acceptance, pending merge. The subsequent `fix/single-glb-transfer` runtime has93 integrated tests, strict checks and dual release builds. Actual no-store Web A/B saves1,129,081 GLB body bytes (2→1 requests), and same-path missing/hash rejection/recovery passes. Independent R2 accepted the repaired publication fence and specific-error ordering. Native Ready passes; current visual captures are black with the Mac locked, so unlocked visual acceptance remains NOT-RUN. See [current acceptance](evidence/single-transfer/ACCEPTANCE.md). Next bounded work is completion of this visual acceptance, then #4/#3 measurement/coverage; genuine AI/M2, additional characters and VaM remain separate decisions.
-
-
-Later acceptance update: Derek manually unlocked the Mac. The same current native binary (`3be9380f…`) now exits0 with a visually inspected real character playing wave, revision9 and18 joints/4 morphs/3 timeline entries. [Unlocked native evidence](evidence/single-transfer/native-unlocked.png) supersedes only the earlier blocked visual result; both black captures remain retained failures. This is a functional smoke, not a current performance benchmark. PR18 is merged at `07858fe6b5d6062200d28df654c5ce53ad89007b`, with #1/#19 closed; #2/#3 remain open. PR20 remains pending merge; PR21 completes local acceptance and is pending review/merge.
+权威范围：[v2 任务书](specs/Nvwa_Codex_Prototype_Brief_Rust_First_v2.md)、[双轨 kickoff](specs/Nvwa_Codex_Kickoff_Parallel_Spikes.md)、[领域合同](implementation/contract.md)。历史能力/实验/验收入口：[M1](M1-VERIFICATION.md)、[实验](EXPERIMENTS.md)、[性能](PERFORMANCE.md)、[M1.1 最终验收](evidence/m1-1-final/ACCEPTANCE.md)、[源证据37](../experiments/37-pinned-notice-sources/REPORT.md)。
