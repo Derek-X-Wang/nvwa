@@ -1,0 +1,320 @@
+{
+  "checked_utc": "2026-10-15T18:03:13.556161+00:00",
+  "verifier_sha256": "db8b255a49faff9cb76441b922ab57d19e3f183413d3b1e8a2ed58920187baa2",
+  "mode": "No model acquisition, inference, compilation, fixture evidence mutation only",
+  "case_count": 20,
+  "valid_normal_passes": 2,
+  "bad_ledger_normal_rejections": 2,
+  "optimized_rejections": 16,
+  "all_expected_results": true,
+  "cases": [
+    {
+      "fixture": "valid",
+      "entry": "cli",
+      "mode": "normal",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 0,
+      "stdout": "{\n  \"published_files_verified\": 29,\n  \"raw_files\": 2,\n  \"finite_scalars\": 11070,\n  \"quaternions\": 2700,\n  \"max_quaternion_norm_error\": 8.412634311394385e-08,\n  \"diffusion_steps\": 25,\n  \"one_attempt_receipts_consistent\": true,\n  \"numeric_structure\": \"PASS\",\n  \"axes_normalization_mapping_semantics_playback\": \"NOT-RUN\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "valid",
+      "entry": "cli",
+      "mode": "dash-O",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-O",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "valid",
+      "entry": "cli",
+      "mode": "dash-OO",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-OO",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "valid",
+      "entry": "cli",
+      "mode": "env-1",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "1",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "valid",
+      "entry": "cli",
+      "mode": "env-2",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "2",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "valid",
+      "entry": "imported-main",
+      "mode": "normal",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 0,
+      "stdout": "{\n  \"published_files_verified\": 29,\n  \"raw_files\": 2,\n  \"finite_scalars\": 11070,\n  \"quaternions\": 2700,\n  \"max_quaternion_norm_error\": 8.412634311394385e-08,\n  \"diffusion_steps\": 25,\n  \"one_attempt_receipts_consistent\": true,\n  \"numeric_structure\": \"PASS\",\n  \"axes_normalization_mapping_semantics_playback\": \"NOT-RUN\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "fixture": "valid",
+      "entry": "imported-main",
+      "mode": "dash-O",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-O",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "valid",
+      "entry": "imported-main",
+      "mode": "dash-OO",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-OO",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "valid",
+      "entry": "imported-main",
+      "mode": "env-1",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "1",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "valid",
+      "entry": "imported-main",
+      "mode": "env-2",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/valid/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "2",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "cli",
+      "mode": "normal",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py\", line 120, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py\", line 34, in main\n    assert path.stat().st_size == row['bytes'] and sha(path) == row['sha256'], name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: evidence/one-attempt-ledger.json\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "cli",
+      "mode": "dash-O",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-O",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "cli",
+      "mode": "dash-OO",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-OO",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "cli",
+      "mode": "env-1",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "1",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "cli",
+      "mode": "env-2",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "2",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "imported-main",
+      "mode": "normal",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()\n                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py\", line 34, in main\n    assert path.stat().st_size == row['bytes'] and sha(path) == row['sha256'], name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: evidence/one-attempt-ledger.json\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "imported-main",
+      "mode": "dash-O",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-O",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "imported-main",
+      "mode": "dash-OO",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-OO",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "imported-main",
+      "mode": "env-1",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "1",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    },
+    {
+      "fixture": "bad-ledger",
+      "entry": "imported-main",
+      "mode": "env-2",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import runpy,sys; runpy.run_path(sys.argv[1],run_name=\"imported_evidence_verifier\")[\"main\"]()",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/green-fixtures/bad-ledger/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "2",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Evidence verification requires Python optimization disabled; use normal Python without -O/-OO or PYTHONOPTIMIZE.\n"
+    }
+  ]
+}

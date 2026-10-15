@@ -1,0 +1,122 @@
+{
+  "comparison_policy": "finite float abs(a-b)<=1e-13+1e-13*max(abs(a),abs(b)); exact JSON structure/types/discrete values",
+  "cross_runtime_stdout_bytes_identical": false,
+  "original_red": {
+    "before_controls_sha256": "dd7b8d2feb8d0696be45e23cafaaf16eac5af9213b7573d948dfc67e53f892d1",
+    "controls_exit": 1,
+    "exception": "ValueError: historical numeric drift: all_signed_bases",
+    "private_evidence": "45/.work/portability-before/",
+    "probe_exit": 0,
+    "python_version": "3.9.6"
+  },
+  "probe_sha256": "2eae93bfc69363675393a97faec4288ad752775ced24efda70f9ed87be598d6e",
+  "result": "PASS all six runtime/script combinations; genuine playable admission HOLD",
+  "runtime_results": [
+    {
+      "executable": "/usr/bin/python3",
+      "historical_float_comparison": {
+        "atol": 1e-13,
+        "changed_float_leaves": 80,
+        "float_leaves": 257,
+        "max_absolute_difference": 9.992007221626409e-16,
+        "policy": "exact keys/shapes/types/discrete values; finite floats: abs(a-b)<=atol+rtol*max(abs(a),abs(b))",
+        "rtol": 1e-13
+      },
+      "python_version": "3.9.6",
+      "rejected_controls": 31,
+      "runs": {
+        "probe.py": {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "experiments/45-genuine-rig-admission/probe.py"
+          ],
+          "returncode": 0,
+          "stderr": "",
+          "stdout_sha256": "15a7dc820823e42ccae67eee2b037e09550f8bccd64ac463fa25eedf38dd18c1"
+        },
+        "test_controls.py": {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "experiments/45-genuine-rig-admission/test_controls.py"
+          ],
+          "returncode": 0,
+          "stderr": "",
+          "stdout_sha256": "f92f2057345d001772b31a09756122d43e0668b19c5a3f8491a1b982f79582af"
+        }
+      }
+    },
+    {
+      "executable": "/opt/homebrew/bin/python3.12",
+      "historical_float_comparison": {
+        "atol": 1e-13,
+        "changed_float_leaves": 0,
+        "float_leaves": 257,
+        "max_absolute_difference": 0.0,
+        "policy": "exact keys/shapes/types/discrete values; finite floats: abs(a-b)<=atol+rtol*max(abs(a),abs(b))",
+        "rtol": 1e-13
+      },
+      "python_version": "3.12.11",
+      "rejected_controls": 31,
+      "runs": {
+        "probe.py": {
+          "argv": [
+            "/opt/homebrew/bin/python3.12",
+            "-B",
+            "experiments/45-genuine-rig-admission/probe.py"
+          ],
+          "returncode": 0,
+          "stderr": "",
+          "stdout_sha256": "7cb79e0d1c0d7b430b3e3e40205531190b6103503dc85aa9b681fe61433e8fdf"
+        },
+        "test_controls.py": {
+          "argv": [
+            "/opt/homebrew/bin/python3.12",
+            "-B",
+            "experiments/45-genuine-rig-admission/test_controls.py"
+          ],
+          "returncode": 0,
+          "stderr": "",
+          "stdout_sha256": "d2fd769ae433e651bc9ee79d149121a8624fe057f459b8c679cd41e7ed377bfa"
+        }
+      }
+    },
+    {
+      "executable": "/opt/homebrew/bin/python3.14",
+      "historical_float_comparison": {
+        "atol": 1e-13,
+        "changed_float_leaves": 0,
+        "float_leaves": 257,
+        "max_absolute_difference": 0.0,
+        "policy": "exact keys/shapes/types/discrete values; finite floats: abs(a-b)<=atol+rtol*max(abs(a),abs(b))",
+        "rtol": 1e-13
+      },
+      "python_version": "3.14.7",
+      "rejected_controls": 31,
+      "runs": {
+        "probe.py": {
+          "argv": [
+            "/opt/homebrew/bin/python3.14",
+            "-B",
+            "experiments/45-genuine-rig-admission/probe.py"
+          ],
+          "returncode": 0,
+          "stderr": "",
+          "stdout_sha256": "7cb79e0d1c0d7b430b3e3e40205531190b6103503dc85aa9b681fe61433e8fdf"
+        },
+        "test_controls.py": {
+          "argv": [
+            "/opt/homebrew/bin/python3.14",
+            "-B",
+            "experiments/45-genuine-rig-admission/test_controls.py"
+          ],
+          "returncode": 0,
+          "stderr": "",
+          "stdout_sha256": "3b153696f37dc87cf920799dc5624df08e4af4d29c1e98d9da49564a836e3363"
+        }
+      }
+    }
+  ],
+  "test_controls_sha256": "2b857232f203cd9534ff67138d544d876d429b66522e8e553ce2d9569da5b086"
+}

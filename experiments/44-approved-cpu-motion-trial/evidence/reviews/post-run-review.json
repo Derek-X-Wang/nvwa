@@ -1,0 +1,156 @@
+{
+  "checked_utc": "2026-10-15T17:50:47.286666+00:00",
+  "decision": "GO for genuine raw-output evidence and bounded raw-data handoff; numeric structure passes. Signed axes, normalization, retargeting, semantic quality and playback remain unadmitted.",
+  "run_path": "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/genuine-run-d375b71b87b1",
+  "attempt_evidence": {
+    "before_run_directories": 0,
+    "after_run_directories": 1,
+    "one_use_ledger_invocations": 1,
+    "ledger_before_controller_start": true,
+    "provider_pid": 41445,
+    "provider_pgid": 41445,
+    "diffusion_steps_exact": [
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16,
+      15,
+      14,
+      13,
+      12,
+      11,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "retry_observed": false,
+    "limit": "Count supported by one-use ledger, zero-to-one directory inventory, controller and matching primary receipts; no claim of global tamperproof host audit."
+  },
+  "settings": "Prompt including trailing newline hash verified; 90 frames, 25 steps, seed 42, CPU four threads from unchanged guarded launch, CFG 2/2 matches exact native source call, tokenizer sibling path verified during preflight.",
+  "execution": {
+    "reason": "exited",
+    "returncode": 0,
+    "stdout_exact": true,
+    "stderr_bytes": 12137,
+    "stderr_all_profile_lines": true,
+    "guard_elapsed_including_cleanup_seconds": 58.54524337500334,
+    "max_sampled_group_rss_bytes": 1234583552,
+    "sample_count": 544,
+    "limits": "Single warm-cache-possible observation. RSS is sampled, not true hard peak or physical footprint; elapsed includes guard/cleanup and is not a repeatable cold-start benchmark."
+  },
+  "raw_files": [
+    {
+      "name": "root_positions.f32",
+      "bytes": 1080,
+      "sha256": "dcc221d506999a803b1d0fddef87abc0131b1e8f4e64187bc57fde3a63c204af",
+      "finite_scalar_count": 270
+    },
+    {
+      "name": "local_rotations_xyzw.f32",
+      "bytes": 43200,
+      "sha256": "67914c5d72c54429bf8a70d3f9ef43157fb5181fa36ab2c5f8ce7f9dc69d3a55",
+      "finite_scalar_count": 10800
+    }
+  ],
+  "numeric_admission": {
+    "root_shape": [
+      90,
+      3
+    ],
+    "local_xyzw_shape": [
+      90,
+      30,
+      4
+    ],
+    "all_finite": true,
+    "quaternion_count": 2700,
+    "quaternion_norm_min": 0.9999999158736569,
+    "quaternion_norm_max": 1.0000000817999215,
+    "max_absolute_norm_error": 8.412634311394385e-08,
+    "nondegenerate": true,
+    "root_component_min": [
+      -0.006981560029089451,
+      0.9940531253814697,
+      -0.005630766972899437
+    ],
+    "root_component_max": [
+      0.01413070410490036,
+      0.9962186813354492,
+      0.009797913953661919
+    ],
+    "root_first": [
+      0.004514073021709919,
+      0.9952756762504578,
+      0.005544576328247786
+    ],
+    "root_last": [
+      -0.004846581257879734,
+      0.9948112964630127,
+      0.00949019379913807
+    ],
+    "time_samples": "Derived i/30 convention, not independently stored in raw stream",
+    "first_time_seconds": 0.0,
+    "last_time_seconds": 2.966666666666667,
+    "nominal_frame_budget_seconds": 3.0
+  },
+  "unadmitted": [
+    "Signed-axis and handedness validation",
+    "Normalization/rest-root convention and root trajectory applied exactly once",
+    "Target skeleton mapping/retargeting",
+    "Prompt semantic success or motion quality",
+    "Nvwa playback and physical-human assessment"
+  ],
+  "provenance_checks": "Both receipt shared fields equal; raw hashes/bytes, prompt, proposal fields, runtime hashes and 37 frozen sources match.",
+  "cleanup": {
+    "receipt_owned_group_exit_verified": true,
+    "receipt_cleanup_errors": [],
+    "fresh_ps": [
+      {
+        "argv": [
+          "/bin/ps",
+          "-g",
+          "41445",
+          "-o",
+          "pid=,pgid=,rss="
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "/bin/ps",
+          "-p",
+          "41343,41353,41445",
+          "-o",
+          "pid=,ppid=,pgid=,stat=,command="
+        ],
+        "returncode": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "review_resources": "No live owned resources. Private audit notes retained for root."
+  },
+  "hashes": {
+    ".work/m2-provider/genuine-run-d375b71b87b1/generation-receipt.json": "554fd2e64e316d218fd699bbbe8d3e45351a7b3a3e08ef077cdc2c6cfaaa52c9",
+    ".work/m2-provider/genuine-run-d375b71b87b1/process/receipt.json": "f67726f84982d6e5bd7c22e944131a7991016508e541d88972da6e20abc6410b",
+    ".work/m2-provider/genuine-run-d375b71b87b1/process/stdout.txt": "d8cafdcca9f05b92f112232345c7435335858a1f019cabc2067d30ba4e71d5d1",
+    ".work/m2-provider/genuine-run-d375b71b87b1/process/stderr.txt": "f2e3a95f36b1457e653d8b5c0967de07ad638752710ea1c2505d8583bc2ff21d",
+    ".work/m2-provider/approved-trial-20261015T174230Z/one-attempt-ledger.json": "c608b5830820267bd3bb8b7778830929684effd44b75aa8321ddae6fa4c758fa",
+    ".work/m2-provider/approved-trial-20261015T174230Z/inference-controller.json": "599a0f8006a3154ddc682cc8829b94afee9fb44a01c5b1ab96f667aa9102c288"
+  }
+}

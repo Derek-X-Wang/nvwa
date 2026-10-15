@@ -1,0 +1,42 @@
+{
+  "reviewed_utc": "2026-10-15T17:43:21.441794+00:00",
+  "decision": "GO for unchanged source/build and guard eligibility; HOLD actual launch until all three approved local model files are fully acquired and verified",
+  "scope": "Independent pre-run R2 review only; no authorization or generation result asserted",
+  "freeze_checks": {
+    "indexed_files_per_worktree": 37,
+    "worktrees": [
+      "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/experiments/41-real-short-motion",
+      "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/41-real-short-motion"
+    ],
+    "mismatches": [],
+    "private_build_source_files": 168,
+    "private_build_source_mismatches": []
+  },
+  "current_float_prerequisite": "Passed current identity equality and exact tiny offline probe output 0000803f, returncode 0",
+  "runtime_sha256": {
+    "kmd-generate": "55b5c74fb7ab8c83d1560476eb2b9a29e184cbc7020181f3d6eeef44840e9f7d",
+    "libggml-base": "f3cdb5bcae0bfa87ab7bb006d1283b4c64ed4a9b3d98acf7b97e70715e52c573",
+    "libggml-cpu": "f8da1afdfe1256600db919c51ce5b7f92302cddf3f0d80e9abed54b7c566bd6b",
+    "libggml": "f9f8ccf8b67f584f59e97066e8f5ee676444d71df83468af05021d55546ee301"
+  },
+  "dynamic_loading": "Executable LC_RPATH points to exact private build ggml/src directory; all six dylib symlinks resolve to the three identity-checked versioned libraries",
+  "constraints": "600 second monitoring stop; 7516192768 byte sampled process-group RSS stop; 100ms nominal poll with bounded ps latency; no kernel memory cap or exact hard runtime deadline. CPU four threads, chunk one, 1024 MiB text residency setting. sandbox-exec deny network and explicit credential/proxy-free child environment. No extra resources approved.",
+  "cleanup": "Owned session process group, TERM then KILL with bounded waits; BSD ps diagnostic/invalid states fail closed; uncertainty remains explicit and prevents ordinary success. No new review resources remain.",
+  "success_admission": "Requires exited reason, exit 0, exact success stdout, both exact raw sizes and recorded hashes. Raw completeness alone is not numeric/schema/axis/normalization/playback admission. Numeric finite/nondegenerate checks and orientation semantics remain postrun gates.",
+  "attempt_control": "One inference attempt authorized; controller must issue only one run invocation. Script is not a persistent one-use authorization ledger. Before-run directory inventory empty.",
+  "readiness_at_check": "approved-models directory absent; zero genuine-run directories. No current acquisition result claimed.",
+  "risk_limits": [
+    "Current memory headroom/swap observations supplied by root are not independently repeated and do not prove safe peak usage. Accepted sampled-stop limitation remains.",
+    "Existing source report/proposal describe their earlier model-free snapshot; direct authorization receipt changes permission, not those historic measurements.",
+    "No inference, acquisition, build, GPU, network, Git/GitHub, shared-source write or old-control replay performed by reviewer."
+  ],
+  "file_sha256": {
+    "SHA256SUMS.json": "b0e2bc532342dc916199decaf74f4f420a334a49767498a9e1709da170244bc7",
+    "REPORT.md": "5d837143fd98c2179109db73aaa973854e9338034b2b4432695c03167ee35b53",
+    "proposal.json": "68b029866a2511e1ed0538e64cd8d91a2086f91e0cfe6be8d16fbecf741524ce",
+    "acquire_models.py": "de97195e2f8b688888545b34e3faa369daadda0b2dd9b4e346182d0b324f5d4d",
+    "run_guard.py": "efa444623607e1808c2053ce4f67dc30fabd25d47422e0d8085ff0a4b04e8721",
+    "float_prerequisite.py": "489a897b862dc05b13ec76ce73f125f4dda0300abd843711c9049ea5fafffaef",
+    "evidence/float-prerequisite.json": "d95d2e3aef084319244509cb1ac469e7cb3231149982959d7a28669ce02fba70"
+  }
+}

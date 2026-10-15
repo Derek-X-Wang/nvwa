@@ -1,0 +1,121 @@
+profile text.upload component=embedding mib=344.44 ms=175.035
+profile text.upload component=layer-0 mib=139.98 ms=48.281
+profile text.upload component=layer-1 mib=139.98 ms=57.245
+profile text.upload component=layer-2 mib=139.98 ms=68.643
+profile text.upload component=layer-3 mib=139.98 ms=82.962
+profile text.upload component=layer-4 mib=139.98 ms=61.568
+profile text.upload component=layer-5 mib=139.98 ms=64.149
+profile text.upload component=layer-6 mib=139.98 ms=58.228
+profile text.upload component=layer-7 mib=139.98 ms=54.876
+profile text.upload component=layer-8 mib=139.98 ms=60.463
+profile text.upload component=layer-9 mib=139.98 ms=60.956
+profile text.upload component=layer-10 mib=139.98 ms=74.108
+profile text.upload component=layer-11 mib=139.98 ms=57.957
+profile text.upload component=layer-12 mib=139.98 ms=55.307
+profile text.upload component=layer-13 mib=139.98 ms=61.625
+profile text.upload component=layer-14 mib=139.98 ms=56.285
+profile text.upload component=layer-15 mib=139.98 ms=62.472
+profile text.upload component=layer-16 mib=139.98 ms=53.643
+profile text.upload component=layer-17 mib=139.98 ms=60.662
+profile text.upload component=layer-18 mib=139.98 ms=59.983
+profile text.upload component=layer-19 mib=139.98 ms=58.763
+profile text.upload component=layer-20 mib=139.98 ms=58.176
+profile text.upload component=layer-21 mib=139.98 ms=58.114
+profile text.upload component=layer-22 mib=139.98 ms=68.941
+profile text.upload component=layer-23 mib=139.98 ms=82.143
+profile text.upload component=layer-24 mib=139.98 ms=83.557
+profile text.upload component=layer-25 mib=139.98 ms=73.681
+profile text.upload component=layer-26 mib=139.98 ms=71.059
+profile text.upload component=layer-27 mib=139.98 ms=53.333
+profile text.upload component=layer-28 mib=139.98 ms=54.469
+profile text.upload component=layer-29 mib=139.98 ms=55.027
+profile text.upload component=layer-30 mib=139.98 ms=53.491
+profile text.upload component=layer-31 mib=139.98 ms=53.298
+profile text.upload component=final-norm mib=0.01 ms=0.109
+profile text.encode tokens=13 embedding_ms=176.070 layers_ms=3210.390 final_ms=0.327 total_ms=3398.605 resident=0
+profile motion.weights allocation_ms=5.440 upload_ms=626.581 total_ms=632.021
+profile motion.weights_ready_ms=632.149
+profile motion.graph_cache nodes=21 metadata_kib=90.0 scratch_mib=5.33
+profile motion.graph_cache nodes=360 metadata_kib=210.4 scratch_mib=11.83
+profile motion.graph_cache nodes=360 metadata_kib=210.4 scratch_mib=11.83
+profile motion.graph_cache nodes=5 metadata_kib=82.8 scratch_mib=2.72
+profile motion.transformer stage=root_model calls=4 graph_ms=0.079 allocation_ms=0.187 upload_ms=1.012 compute_ms=1243.027 download_ms=0.609 total_ms=1247.321
+profile motion.graph_cache nodes=21 metadata_kib=90.0 scratch_mib=5.33
+profile motion.graph_cache nodes=360 metadata_kib=210.4 scratch_mib=11.83
+profile motion.graph_cache nodes=360 metadata_kib=210.4 scratch_mib=11.83
+profile motion.graph_cache nodes=5 metadata_kib=82.8 scratch_mib=2.72
+profile motion.transformer stage=body_model calls=4 graph_ms=0.061 allocation_ms=0.158 upload_ms=1.298 compute_ms=1208.721 download_ms=0.924 total_ms=1212.961
+profile motion.diffusion_step index=24 ms=2461.316
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=3.660 compute_ms=1176.449 download_ms=0.549 total_ms=1180.749
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=1.828 compute_ms=1174.405 download_ms=0.553 total_ms=1176.845
+profile motion.diffusion_step index=23 ms=2358.869
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=1.006 compute_ms=1158.380 download_ms=0.271 total_ms=1159.720
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.856 compute_ms=1117.467 download_ms=0.299 total_ms=1118.675
+profile motion.diffusion_step index=22 ms=2278.811
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.938 compute_ms=1118.588 download_ms=0.199 total_ms=1119.784
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.685 compute_ms=1068.614 download_ms=0.222 total_ms=1069.563
+profile motion.diffusion_step index=21 ms=2189.735
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.643 compute_ms=1065.806 download_ms=0.180 total_ms=1066.703
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.657 compute_ms=1059.426 download_ms=0.232 total_ms=1060.356
+profile motion.diffusion_step index=20 ms=2127.289
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.247 compute_ms=1062.342 download_ms=0.196 total_ms=1062.840
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.262 compute_ms=1054.348 download_ms=0.207 total_ms=1054.854
+profile motion.diffusion_step index=19 ms=2117.935
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.247 compute_ms=1055.767 download_ms=0.199 total_ms=1056.268
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.282 compute_ms=1056.175 download_ms=0.202 total_ms=1056.699
+profile motion.diffusion_step index=18 ms=2113.196
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.249 compute_ms=1058.747 download_ms=0.214 total_ms=1059.285
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.233 compute_ms=1064.440 download_ms=0.197 total_ms=1064.918
+profile motion.diffusion_step index=17 ms=2124.412
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.502 compute_ms=1065.977 download_ms=0.175 total_ms=1066.724
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.658 compute_ms=1060.459 download_ms=0.380 total_ms=1061.538
+profile motion.diffusion_step index=16 ms=2128.635
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.261 compute_ms=1060.579 download_ms=0.204 total_ms=1061.082
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.269 compute_ms=1055.269 download_ms=0.427 total_ms=1056.003
+profile motion.diffusion_step index=15 ms=2117.401
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.268 compute_ms=1123.956 download_ms=0.228 total_ms=1124.514
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.241 compute_ms=1102.950 download_ms=0.317 total_ms=1103.549
+profile motion.diffusion_step index=14 ms=2228.286
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.355 compute_ms=1064.809 download_ms=0.209 total_ms=1065.437
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.241 compute_ms=1054.013 download_ms=0.194 total_ms=1054.488
+profile motion.diffusion_step index=13 ms=2120.152
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.311 compute_ms=1061.074 download_ms=0.156 total_ms=1061.599
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.386 compute_ms=1088.273 download_ms=0.283 total_ms=1088.979
+profile motion.diffusion_step index=12 ms=2150.818
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.549 compute_ms=1062.218 download_ms=0.189 total_ms=1063.019
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.248 compute_ms=1071.505 download_ms=0.227 total_ms=1072.015
+profile motion.diffusion_step index=11 ms=2135.284
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.327 compute_ms=1073.628 download_ms=0.184 total_ms=1074.214
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.525 compute_ms=1077.789 download_ms=0.287 total_ms=1078.657
+profile motion.diffusion_step index=10 ms=2153.157
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.568 compute_ms=1056.385 download_ms=0.206 total_ms=1057.210
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.265 compute_ms=1107.651 download_ms=0.389 total_ms=1108.354
+profile motion.diffusion_step index=9 ms=2165.936
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.332 compute_ms=1115.286 download_ms=0.309 total_ms=1115.972
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.630 compute_ms=1073.637 download_ms=0.378 total_ms=1074.703
+profile motion.diffusion_step index=8 ms=2191.153
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.404 compute_ms=1058.889 download_ms=0.200 total_ms=1059.556
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.248 compute_ms=1062.507 download_ms=0.267 total_ms=1063.066
+profile motion.diffusion_step index=7 ms=2122.950
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.300 compute_ms=1062.189 download_ms=0.181 total_ms=1062.723
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.235 compute_ms=1057.735 download_ms=0.181 total_ms=1058.194
+profile motion.diffusion_step index=6 ms=2121.159
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.245 compute_ms=1070.118 download_ms=0.222 total_ms=1070.645
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.365 compute_ms=1061.317 download_ms=0.210 total_ms=1061.933
+profile motion.diffusion_step index=5 ms=2132.813
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.632 compute_ms=1078.033 download_ms=0.195 total_ms=1078.906
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.546 compute_ms=1069.412 download_ms=0.182 total_ms=1070.185
+profile motion.diffusion_step index=4 ms=2149.387
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.248 compute_ms=1059.031 download_ms=0.196 total_ms=1059.527
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.258 compute_ms=1056.758 download_ms=0.260 total_ms=1057.316
+profile motion.diffusion_step index=3 ms=2117.078
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.268 compute_ms=1082.564 download_ms=0.205 total_ms=1083.118
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.257 compute_ms=1075.696 download_ms=0.447 total_ms=1076.441
+profile motion.diffusion_step index=2 ms=2159.760
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.479 compute_ms=1072.803 download_ms=0.306 total_ms=1073.649
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.759 compute_ms=1067.404 download_ms=0.207 total_ms=1068.406
+profile motion.diffusion_step index=1 ms=2142.390
+profile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.263 compute_ms=1088.351 download_ms=0.253 total_ms=1088.914
+profile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.244 compute_ms=1066.642 download_ms=0.319 total_ms=1067.236
+profile motion.diffusion_step index=0 ms=2156.406
+profile motion.generate sampling_ms=54264.878 decode_ms=0.027 total_ms=54897.405

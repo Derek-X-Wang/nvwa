@@ -1,0 +1,25 @@
+{
+  "guard_invocation_count": 1,
+  "provider_attempt_budget": 1,
+  "retry_allowed": false,
+  "state": "consumed_before_launch",
+  "recorded_utc": "2026-10-15T17:48:13.603923+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "experiments/41-real-short-motion/run_guard.py",
+    "--approved-run",
+    ".work/m2-provider/authorization-2026-10-15.json"
+  ],
+  "authorization_receipt": ".work/m2-provider/authorization-2026-10-15.json",
+  "root_go": "RUN GO received after independent readiness review",
+  "independent_review_receipt": ".work/m2-approved-trial-review/readiness-review.json",
+  "independent_review_sha256": "ca87127f945c2c3802d03d2d5f347ef1f50851e63e224211db254e307c58eae7",
+  "limits": {
+    "wall_stop_seconds": 600,
+    "sampled_group_rss_stop_bytes": 7516192768,
+    "threads": 4,
+    "hard_memory_cap": false
+  },
+  "wrapper_pid": 41343
+}

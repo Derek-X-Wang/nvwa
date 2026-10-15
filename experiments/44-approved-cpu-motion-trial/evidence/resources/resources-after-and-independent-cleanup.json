@@ -1,0 +1,78 @@
+{
+  "observed_utc": "2026-10-15T17:49:31.816916+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/bin/ps",
+        "-g",
+        "41445",
+        "-o",
+        "pid=,pgid=,rss="
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/bin/ps",
+        "-g",
+        "41353",
+        "-o",
+        "pid=,pgid=,rss="
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "41343",
+        "-o",
+        "pid=,pgid=,stat=,command="
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/memory_pressure",
+        "-Q"
+      ],
+      "returncode": 0,
+      "stdout": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 51%\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/sbin/sysctl",
+        "hw.memsize",
+        "vm.swapusage"
+      ],
+      "returncode": 0,
+      "stdout": "hw.memsize: 17179869184\nvm.swapusage: total = 14336.00M  used = 13677.44M  free = 658.56M  (encrypted)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/bin/df",
+        "-k",
+        "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa"
+      ],
+      "returncode": 0,
+      "stdout": "Filesystem   1024-blocks      Used Available Capacity  iused      ifree %iused  Mounted on\n/dev/disk3s5   971350180 660639336 270339180    71% 18538630 2703391800    1%   /System/Volumes/Data\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/vm_stat"
+      ],
+      "returncode": 0,
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     4466.\nPages active:                                 256318.\nPages inactive:                               255064.\nPages speculative:                               457.\nPages throttled:                                   0.\nPages wired down:                             179796.\nPages purgeable:                                1970.\n\"Translation faults\":                    30387744575.\nPages copy-on-write:                      2061114959.\nPages zero filled:                        8909468179.\nPages reactivated:                        8191344234.\nPages purged:                              203070355.\nFile-backed pages:                            123254.\nAnonymous pages:                              388585.\nPages stored in compressor:                   559053.\nPages occupied by compressor:                 300085.\nDecompressions:                           9596721234.\nCompressions:                            10346684651.\nPageins:                                  1312212014.\nPageouts:                                    4068760.\nSwapins:                                   254453837.\nSwapouts:                                  264290790.\n",
+      "stderr": ""
+    }
+  ]
+}
