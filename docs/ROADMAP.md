@@ -1,12 +1,14 @@
 # Nvwa 路线图
 
-## 当前阶段：M1.2 真实 agent 创作闭环（2026-10-14）
+## 当前阶段：M1.2 真人独立验收待完成；M2 有界实验获授权（2026-10-15）
 
 Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。人和 agent 使用同一份 Work 和同一套 Rust 命令。
 
-本轮授权：收束 M1.1；建立 [M1.2](https://github.com/Derek-X-Wang/nvwa/milestone/2)；主线实施真实 agent 的离线 CLI 创作闭环；并行开展 #13 视觉 A/B 和 #12 可行性核查。独立审查及最终 PR CI 通过后自主合并，再验证精确 main。M2 推理实施、权重下载、付费资源、实时 Studio 桥接和公开二进制发行是后续范围。
+M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/milestone/2) 的离线 CLI 创作、双端继续编辑和交接已由 [PR #50](https://github.com/Derek-X-Wang/nvwa/pull/50) 交付，合并 main 为 `9502dd370b262761bf4f4f10f2418163c7574946`。保存反馈 #51 已由 [PR #52](https://github.com/Derek-X-Wang/nvwa/pull/52) 交付，合并 main 为 `f7b15eb166ed8a616dd73965cf23d1b7dcad61f6`。这些技术交付和后续引导式真人观察不等于完整 Alpha 关闭。
 
-已核验的开工基线是 `a094baa048e6e50056e3288ecfa85bb4ac62e140`。其 [应用 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821416) 和 [证据 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821332) 已成功；113 项独立 Rust 测试、77 项诊断及两个另计采集器对照、原生/Studio Wasm 编译分别记录。它们不能代替后续实现 head、合并后 main 或真实 GUI 的验收。
+新增授权：开展 [M2](https://github.com/Derek-X-Wang/nvwa/milestone/3) 真实生成、结果导入和目标 rig 映射的有界实验，分别跟踪于 [#54 真实短动作生成](https://github.com/Derek-X-Wang/nvwa/issues/54)、[#55 动作导入](https://github.com/Derek-X-Wang/nvwa/issues/55) 和 [#56 rig 映射](https://github.com/Derek-X-Wang/nvwa/issues/56)。隔离实验进行中，具体结果与边界由 #54–#56 分别记录；真实推理未执行、产品 provider 未交付，不包含产品 UI 或依赖整合；模型/编码器下载或额外算力仍需具体批准。#12 的真实输出与生成播放验收条件仍独立开放；先前的 NO-GO 保留为当时的准备度结论，不是实际生成证据。实时 Studio 桥接和公开二进制发行仍属后续范围。
+
+2026-10-14 的开工基线是 `a094baa048e6e50056e3288ecfa85bb4ac62e140`。其 [应用 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821416) 和 [证据 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821332) 已成功；113 项独立 Rust 测试、77 项诊断及两个另计采集器对照、原生/Studio Wasm 编译分别记录。这是历史基线，不能代替后续实现 head、合并后 main 或真实 GUI 的验收。
 
 ## 阶段与验收门
 
@@ -14,12 +16,12 @@ Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以
 | --- | --- | --- |
 | M0：Rust 双端底座 | 同一核心/运行时；真实 skin/morph 角色、骨骼动画、命令、保存/重载和双端 Work 交换 | 功能闭环已交付；性能、额外平台和发行缺口保留 |
 | 薄 M1：可捏、可编排、可互动 | 三段 authored action、5–10 秒编排、播放/暂停/定位、点击触发与恢复、原生/Web Player | #14–#16 已按有界本地验收完成；完整发行目标未完成 |
-| M1.1：界面与稳定性 | 窄 UI 组件整合、中文/输入恢复、有界历史/加载、永久 CPU 绘制回归、Web 构建 A/B | 功能/实验交付收束；残余 #3/#4 保持开放，不宣称性能或原始 DPR 故障已解决 |
-| M1.2：真实 agent 创作 Alpha | 能力发现→实际 CLI 命令→错误回读/纠正→保存→桌面/Web 继续编辑与播放 | 本轮实施；任务 #46→#47→#48 |
-| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 未实施；#12/#13 只提供进入该阶段的可行性证据 |
+| M1.1：界面与稳定性 | 窄 UI 组件整合、中文/输入恢复、有界历史/加载、永久 CPU 绘制回归、Web 构建 A/B | 技术范围已关闭；残余 #3/#4 保持开放，不宣称性能或原始 DPR 故障已解决 |
+| M1.2：真实 agent 创作 Alpha | 能力发现→实际 CLI 命令→错误回读/纠正→保存→桌面/Web 继续编辑与播放 | #46→#47→#48 技术交付完成；引导式真人检查已补齐，#49 未引导完整 Alpha 门仍开放 |
+| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 隔离实验进行中，具体结果与边界由 #54–#56 分别记录；真实推理未执行、产品 provider 未交付；下载/额外算力另行批准 |
 | 内容与沙盒扩展 | Blender 工具、更多角色/服装、指定版本 VRM、IK/接触、只读 VaM 与有限迁移 | 后续逐项定范围，不承诺任意 rig/VAR/插件兼容 |
 
-## 本轮主线与并行工作
+## M1.2 交付与实验索引
 
 1. [#45 收束 M1.1](https://github.com/Derek-X-Wang/nvwa/issues/45)：核对旧实验 PR，保留原始提交，整理当前索引，将残余验证明确留在开放 backlog。
 2. [#46 真实 CLI agent](https://github.com/Derek-X-Wang/nvwa/issues/46)：真实 LLM agent 发现参数/动作和命令合同，制作九秒作品，遇到真实 revision 错误后读取并纠正。原始工具过程与合成重放分开记录。
@@ -28,7 +30,7 @@ Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以
 5. [#13 视觉 A/B](https://github.com/Derek-X-Wang/nvwa/issues/13)：已有受控 derivative 在相同 renderer/相机/时间点比较；支持结论限于同拓扑/骨长/语义的 rest-basis 转换。
 6. [#12 模型可行性](https://github.com/Derek-X-Wang/nvwa/issues/12)：核查当前本地条件、官方模型/编码器及输出格式；条件不足可按 NO-GO/NOT-RUN 退出。已有 authored action 始终标为手工动作。
 
-Alpha 操作入口：[M1.2 交接与复现](M1.2-ALPHA.md)。实体真人试用单独跟踪 [#49](https://github.com/Derek-X-Wang/nvwa/issues/49)：首轮引导式原生播放、编辑、保存已通过；保存确认的可见性改进见 [#51](https://github.com/Derek-X-Wang/nvwa/issues/51)。未引导的完整 Alpha 及真人 Web/Player/错误恢复仍未验证，agent 操作或三项引导试用不能关闭 #49。
+Alpha 操作入口：[M1.2 交接与复现](M1.2-ALPHA.md)。实体真人试用单独跟踪 [#49](https://github.com/Derek-X-Wang/nvwa/issues/49)：引导式原生播放、编辑、撤销/重做、保存已通过；后续引导式 Web Player Restart/Pause、胸部点击 wave/恢复及操作清晰度正常；引导式 Web 文件交换、无效 JSON 保留原角色和重新打开有效 Work 恢复九秒播放已通过。记录与评论来源见 [真人试用后续观察](evidence/m12-human-alpha/REPORT.md#follow-on-record-2026-10-15)。保存文字/目的地已获真人确认；最终右下角位置只有技术运行验证，未补做独立真人接受检查。未引导的完整 Alpha 仍未验证，#49 保持开放。
 
 第一版 agent 通过现有 CLI 编辑文件并由 Studio 重载。GUI、CLI 和未来 bridge 共用领域命令；不把离线文件修改描述为控制运行中的窗口。CLI 的 revision 检查针对读入文档，不构成文件系统 CAS；历史和重试记忆属于当前 Editor 会话。
 
