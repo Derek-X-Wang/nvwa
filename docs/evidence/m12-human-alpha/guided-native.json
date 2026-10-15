@@ -1,0 +1,39 @@
+{
+  "baseline": {
+    "source": "main 9502dd370b262761bf4f4f10f2418163c7574946",
+    "work_sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc",
+    "revision": 2
+  },
+  "observation": {
+    "method": "Guided physical-human native Alpha trial",
+    "playback": "Human reports complete nine-second playback normal",
+    "edit_undo_redo": "Human reports normal",
+    "save_find_reopen": "Human reports normal",
+    "confusion": "Save had no noticeable confirmation; human initially thought it had not saved, then reopened and confirmed success",
+    "saved_work_sha256": "eeb37048459d985adbf15a96fe103d45e31e9810bb99d8006d9cdbd668d7a2e9",
+    "actual_saved_changes": [
+      {
+        "path": "/character/parameters/jaw_width",
+        "before": 0.42,
+        "after": 1.0
+      },
+      {
+        "path": "/revision",
+        "before": 2,
+        "after": 5
+      }
+    ],
+    "other_json_fields_equal": true
+  },
+  "limits": [
+    "Unassisted capability discovery NOT-RUN",
+    "Human Web exchange NOT-RUN",
+    "Human Player clarity NOT-RUN",
+    "Human error recovery NOT-RUN",
+    "A technical check of the new notice is not a second human visibility acceptance",
+    "Original issues #3 and #4 unchanged"
+  ],
+  "preservation": "Original edited Desktop Work retained; separate private byte-identical snapshot kept",
+  "followup_issue": 51,
+  "human_trial_issue": 49
+}
