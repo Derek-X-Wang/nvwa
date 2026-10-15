@@ -1,16 +1,20 @@
 # Nvwa 路线图
 
-## 当前阶段：M1.2 真人独立验收待完成；M2 有界实验获授权（2026-10-15）
+## 当前阶段：M1.2 真人独立验收待完成；M2 已有一个真实原始动作样本（2026-10-15）
 
 Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。人和 agent 使用同一份 Work 和同一套 Rust 命令。
 
 M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/milestone/2) 的离线 CLI 创作、双端继续编辑和交接已由 [PR #50](https://github.com/Derek-X-Wang/nvwa/pull/50) 交付，合并 main 为 `9502dd370b262761bf4f4f10f2418163c7574946`。保存反馈 #51 已由 [PR #52](https://github.com/Derek-X-Wang/nvwa/pull/52) 交付，合并 main 为 `f7b15eb166ed8a616dd73965cf23d1b7dcad61f6`。这些技术交付和后续引导式真人观察不等于完整 Alpha 关闭。
 
-#53 浏览器标题修复已由 [PR #57](https://github.com/Derek-X-Wang/nvwa/pull/57) 交付，合并 main 为 `c30a250361f1c21ea055fb414c4a2b674702135f`。精确候选 head `7cfe171ea7d0bd2ba8e777b188e68ab9cbd85bf8` 的 [PR CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38758576949) 已通过；[合并后 main CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38763622991) 此记录时仍在运行，尚未验收。#49 的独立真人门保持开放。
+#53 浏览器标题修复已由 [PR #57](https://github.com/Derek-X-Wang/nvwa/pull/57) 交付，合并 main 为 `c30a250361f1c21ea055fb414c4a2b674702135f`。精确候选 head `7cfe171ea7d0bd2ba8e777b188e68ab9cbd85bf8` 的 [PR CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38758576949) 已通过；[合并后 main CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38763622991) 已在同一 `c30a250361f1c21ea055fb414c4a2b674702135f` 通过。#49 的独立真人门保持开放。
 
-新增授权：开展 [M2](https://github.com/Derek-X-Wang/nvwa/milestone/3) 真实生成、结果导入和目标 rig 映射的有界实验，分别跟踪于 [#54 真实短动作生成](https://github.com/Derek-X-Wang/nvwa/issues/54)、[#55 动作导入](https://github.com/Derek-X-Wang/nvwa/issues/55) 和 [#56 rig 映射](https://github.com/Derek-X-Wang/nvwa/issues/56)。隔离实验进行中，具体结果与边界由 #54–#56 分别记录；真实推理未执行、产品 provider 未交付，不包含产品 UI 或依赖整合；模型/编码器下载或额外算力仍需具体批准。#12 的真实输出与生成播放验收条件仍独立开放；先前的 NO-GO 保留为当时的准备度结论，不是实际生成证据。实时 Studio 桥接和公开二进制发行仍属后续范围。
+新增授权：开展 [M2](https://github.com/Derek-X-Wang/nvwa/milestone/3) 真实生成、结果导入和目标 rig 映射的有界实验，分别跟踪于 [#54 真实短动作生成](https://github.com/Derek-X-Wang/nvwa/issues/54)、[#55 动作导入](https://github.com/Derek-X-Wang/nvwa/issues/55) 和 [#56 rig 映射](https://github.com/Derek-X-Wang/nvwa/issues/56)。[#58](https://github.com/Derek-X-Wang/nvwa/pull/58) 已保留隔离 CPU/importer/authored 映射控制，#55/#56 按有界实验范围完成；其 [PR CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38764869474) 与 [合并后 main CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38770232509) 均通过，main 为 `b7122a20366f665f7ca32d48d5dc2f51a874ddbf`。随后，具体批准的三文件下载和一次离线 CPU 试跑已完成：[44 真实原始样本](../experiments/44-approved-cpu-motion-trial/REPORT.md) 保留成功退出、原始字节与数值结构检查。产品 provider、规范化/目标映射及生成播放仍未交付；本次单次授权已用完，新的下载、推理或额外算力仍需另行具体批准。#12 的真实输出与生成播放验收条件仍独立开放；先前的 NO-GO 保留为当时的准备度结论，不是实际生成证据。实时 Studio 桥接和公开二进制发行仍属后续范围。
 
-本轮已取得有界实验结果：[41 CPU 后端与 guard](../experiments/41-real-short-motion/REPORT.md) 已完成模型外的构建/控制；[42 独立导入](../experiments/42-motion-import/REPORT.md) 的 19 项 CLI 边界测试与 [43 authored 映射控制](../experiments/43-rig-mapping/REPORT.md) 通过。父 session 实际验证并在 native/Web 播放原始、naive、calibrated 三份 authored Work；naive 明显折叠，calibrated 呈现声明动作，但端点仍差 `0.277118877976 m`。这些结果保持隔离，未采用到产品；[验收与边界](evidence/m2-authored-controls/ACCEPTANCE.md)保留 native seek 未验证、真实 provider 坐标/生成未验证、模型批准待定及 hosted CI/最终整合审查待完成。
+[41 CPU 后端与 guard](../experiments/41-real-short-motion/REPORT.md) 保留模型外准备时的原始报告；获授权后的真实生成另见 [44](../experiments/44-approved-cpu-motion-trial/REPORT.md)。该一次请求产生 90 帧/30 关节原始数据，11,070 个浮点值均有限，2,700 个四元数非退化；58.545243 秒含 guard/清理，最大采样组 RSS 为 1,234,583,552 字节。这是忙碌 16 GiB Mac、模型刚经 hash 读取后的单次观察，不是冷启动性能测试或硬内存上限。signed axes、rest/root 约定、目标映射、语义质量和真实生成播放仍未验收，M2/#12 保持开放。
+
+[45 真实样本映射数值研究](../experiments/45-genuine-rig-admission/REPORT.md) 对同一个 90 帧样本给出 **HOLD**：直接套用 43 的 authored 规则，目标 pelvis 世界位置约多出 `0.83 m`。旋转和缩放后的 pelvis 偏移重定位能修正声明的 hip-world 数学条件，但 source 左肢为 +X、target `.L` 为 −X，手臂中立姿势/解剖基仍未校准；矩阵自洽不能选择语义方向。该研究不导出规范化动作或 Work，不验收目标播放；CI 检查通过只表示 HOLD 研究/拒绝控制通过。下一步仍属 #12 的明确基准与 root 校准门，#3/#4/#49 不变。
+
+[42 独立导入](../experiments/42-motion-import/REPORT.md) 的 19 项 CLI 边界测试与 [43 authored 映射控制](../experiments/43-rig-mapping/REPORT.md) 通过。父 session 实际验证并在 native/Web 播放原始、naive、calibrated 三份 authored Work；naive 明显折叠，calibrated 呈现声明动作，但端点仍差 `0.277118877976 m`。[历史验收](evidence/m2-authored-controls/ACCEPTANCE.md)中的模型批准待定/真实生成未执行状态及索引属于 #58 的 `b7122a2` 快照；后续 CI 成功与真实样本由本页和 44 分开更新，旧报告、索引和证据字节不重写。authored 控制不能代替真实样本的坐标/rest/目标映射验收，native seek 和独立真人门仍保留。
 
 2026-10-14 的开工基线是 `a094baa048e6e50056e3288ecfa85bb4ac62e140`。其 [应用 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821416) 和 [证据 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821332) 已成功；113 项独立 Rust 测试、77 项诊断及两个另计采集器对照、原生/Studio Wasm 编译分别记录。这是历史基线，不能代替后续实现 head、合并后 main 或真实 GUI 的验收。
 
@@ -22,7 +26,7 @@ M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/mil
 | 薄 M1：可捏、可编排、可互动 | 三段 authored action、5–10 秒编排、播放/暂停/定位、点击触发与恢复、原生/Web Player | #14–#16 已按有界本地验收完成；完整发行目标未完成 |
 | M1.1：界面与稳定性 | 窄 UI 组件整合、中文/输入恢复、有界历史/加载、永久 CPU 绘制回归、Web 构建 A/B | 技术范围已关闭；残余 #3/#4 保持开放，不宣称性能或原始 DPR 故障已解决 |
 | M1.2：真实 agent 创作 Alpha | 能力发现→实际 CLI 命令→错误回读/纠正→保存→桌面/Web 继续编辑与播放 | #46→#47→#48 技术交付完成；引导式真人检查已补齐，#49 未引导完整 Alpha 门仍开放 |
-| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 隔离 CPU/importer/authored 映射与双端播放已有证据；真实推理未执行、产品 provider 未交付；#54–#56 分别记录，下载/额外算力另行批准 |
+| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 隔离控制与一个真实原始样本已有证据；数值结构通过，坐标/rest/规范化/目标映射及生成播放未验收；产品 provider 未交付，#12 保持开放；本次单次授权已用完 |
 | 内容与沙盒扩展 | Blender 工具、更多角色/服装、指定版本 VRM、IK/接触、只读 VaM 与有限迁移 | 后续逐项定范围，不承诺任意 rig/VAR/插件兼容 |
 
 ## M1.2 交付与实验索引

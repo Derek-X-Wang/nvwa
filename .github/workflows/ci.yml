@@ -37,6 +37,9 @@ jobs:
         run: |
           cargo fetch --locked --manifest-path experiments/42-motion-import/Cargo.toml
           python3 -B experiments/42-motion-import/check_model_free.py
+          python3 -B experiments/44-approved-cpu-motion-trial/verify_evidence.py
+          python3 -B experiments/45-genuine-rig-admission/probe.py
+          python3 -B experiments/45-genuine-rig-admission/test_controls.py
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     runs-on: macos-14

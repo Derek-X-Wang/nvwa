@@ -1,0 +1,42 @@
+{
+  "observed_utc": "2026-10-15T17:42:30.119561+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/bin/df",
+        "-k",
+        "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa"
+      ],
+      "returncode": 0,
+      "stdout": "Filesystem   1024-blocks      Used Available Capacity  iused      ifree %iused  Mounted on\n/dev/disk3s5   971350180 654609276 276369244    71% 18538511 2763692440    1%   /System/Volumes/Data\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/sbin/sysctl",
+        "hw.memsize",
+        "vm.swapusage"
+      ],
+      "returncode": 0,
+      "stdout": "hw.memsize: 17179869184\nvm.swapusage: total = 14336.00M  used = 12701.75M  free = 1634.25M  (encrypted)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/memory_pressure",
+        "-Q"
+      ],
+      "returncode": 0,
+      "stdout": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 36%\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/vm_stat"
+      ],
+      "returncode": 0,
+      "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     4350.\nPages active:                                 178813.\nPages inactive:                               177256.\nPages speculative:                               512.\nPages throttled:                                   0.\nPages wired down:                             187075.\nPages purgeable:                                  10.\n\"Translation faults\":                    30368497994.\nPages copy-on-write:                      2060735363.\nPages zero filled:                        8906154421.\nPages reactivated:                        8183711897.\nPages purged:                              202957841.\nFile-backed pages:                            125129.\nAnonymous pages:                              231452.\nPages stored in compressor:                   822517.\nPages occupied by compressor:                 448180.\nDecompressions:                           9585398338.\nCompressions:                            10335153026.\nPageins:                                  1310598374.\nPageouts:                                    4062318.\nSwapins:                                   254272239.\nSwapouts:                                  264037445.\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "reviewed_utc": "2026-10-15T18:01:37.660169+00:00",
+  "decision": "HOLD for one P2 optimized-verifier false-success defect; publication evidence and narrative otherwise pass the frozen scope",
+  "review_scope": "Exactly 32 paths from frozen inventory; experiment45 and later CI/docs changes excluded",
+  "frozen_inventory_sha256": "d12a817078b86dd7dcc5f7878146f2851e5ea46959c2bd13fe47a73ef4c2da89",
+  "experiment_index_sha256": "1ad87f6ae5a1da98ac13e38b006ed053c059c8333efb041d7702f5eb508e9692",
+  "verifier_sha256": "b64e923c060208558971db66f5334a721b43a2b8c38ba91a3c4d9c40babea955",
+  "finding": {
+    "severity": "P2",
+    "file": "experiments/44-approved-cpu-motion-trial/verify_evidence.py",
+    "lines": "20-132",
+    "title": "Reject optimized Python before reporting evidence verified",
+    "trigger": "python3 -O -B verify_evidence.py or -OO; PYTHONOPTIMIZE can enable the same interpreter behavior",
+    "actual_proof": "Private copy changed ledger guard_invocation_count to 2 without updating inventory/provenance hashes. Normal Python exits1; -O and -OO exit0 and print one_attempt_receipts_consistent=true and numeric_structure=PASS.",
+    "effect": "All assert-based integrity, authorization, numeric and cleanup checks vanish while success output remains. Existing valid raw evidence is unaffected.",
+    "recommended_fix": "Explicit non-assert rejection when sys.flags.optimize != 0, or explicit conditional validation exceptions throughout. Retain optimized tamper rejection proof."
+  },
+  "verification": {
+    "frozen_paths": 32,
+    "experiment_files": 30,
+    "experiment_bytes": 332215,
+    "exact_copies_compared_to_originals": 25,
+    "protected_prior_files_unchanged": 154,
+    "offline_verifier": "PASS normal mode",
+    "private_negative_controls": "Extra unindexed file, raw byte corruption, changed attempt ledger, NaN after rebinding hashes, cleanup uncertainty after rebinding hashes all rejected normal mode.",
+    "cross_runtime": "Clean exact cohort PASS on local Python3.9.6, 3.12, 3.14; cross-version floating mismatch not reproduced",
+    "ci_statement_evidence": [
+      {
+        "kind": "pr57",
+        "id": 38758576949,
+        "head_sha": "7cfe171ea7d0bd2ba8e777b188e68ab9cbd85bf8",
+        "conclusion": "success"
+      },
+      {
+        "kind": "main57",
+        "id": 38763622991,
+        "head_sha": "c30a250361f1c21ea055fb414c4a2b674702135f",
+        "conclusion": "success"
+      },
+      {
+        "kind": "pr58",
+        "id": 38764869474,
+        "head_sha": "b7937c3237a695fb52098dafa88efa50968b5dcd",
+        "conclusion": "success"
+      },
+      {
+        "kind": "main58",
+        "id": 38770232509,
+        "head_sha": "b7122a20366f665f7ca32d48d5dc2f51a874ddbf",
+        "conclusion": "success"
+      }
+    ],
+    "privacy": "No model weights, executables, dylibs, archives, source caches, signed URL queries, credentials, human reply contents or private human Works in selected 30 files. Task-local absolute provenance paths are intentional and documented.",
+    "interpretation": "Exact 3-artifact acquisition, one producer attempt, finite/nondegenerate raw numeric structure, 25 steps, settings and cleanup match retained originals. Warm-cache eligibility, high host-wide swap, sampled RSS and elapsed/cleanup limits correctly preserved. Signed axes/handedness, normalization, target mapping, semantics/quality/playback remain unadmitted. Public authorization does not assert acceptance of gated legal terms.",
+    "reproduction": "Offline standard-library verifier reads only retained small files and sibling41 proposal; no network/model entrypoints. Historical run commands explicitly consumed and non-replayable under old permission."
+  },
+  "checks_sha256": "297318777e2370e41c6489813f5ff01ab18ebab9a5023958f4b055ac5e286c77",
+  "optimization_checks_sha256": "8f8b026bc532c68d0dbbe8755df43db7a9380497bb70bbeb3b1697c88fdca37e",
+  "cleanup": "Six ordinary and one optimized private fixture trees removed. No reviewer processes, model activity or shared-source writes. Compact reports retained under reviewer-owned r1 directory."
+}

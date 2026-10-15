@@ -1,0 +1,23 @@
+{
+  "probe.py": {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "experiments/45-genuine-rig-admission/probe.py"
+    ],
+    "returncode": 0,
+    "stdout_sha256": "15a7dc820823e42ccae67eee2b037e09550f8bccd64ac463fa25eedf38dd18c1",
+    "stderr": ""
+  },
+  "test_controls.py": {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "experiments/45-genuine-rig-admission/test_controls.py"
+    ],
+    "returncode": 1,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/45-genuine-rig-admission/test_controls.py\", line 96, in <module>\n    main()\n  File \"/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/45-genuine-rig-admission/test_controls.py\", line 58, in main\n    check(actual[key]==old[key], 'historical numeric drift: '+key)\n  File \"/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/45-genuine-rig-admission/probe.py\", line 31, in require\n    raise ValueError(message)\nValueError: historical numeric drift: all_signed_bases\n"
+  },
+  "python_version": "Python 3.9.6"
+}

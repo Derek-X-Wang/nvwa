@@ -1,0 +1,70 @@
+{
+  "checked_utc": "2026-10-15T18:02:33.493315+00:00",
+  "fixture_mutation": "guard_invocation_count 1->2; stale published hashes deliberately retained",
+  "original_verifier_sha256": "b64e923c060208558971db66f5334a721b43a2b8c38ba91a3c4d9c40babea955",
+  "actual_controls": [
+    {
+      "case": "normal",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/red-fixture/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/red-fixture/44-approved-cpu-motion-trial/verify_evidence.py\", line 117, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/red-fixture/44-approved-cpu-motion-trial/verify_evidence.py\", line 31, in main\n    assert path.stat().st_size == row['bytes'] and sha(path) == row['sha256'], name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: evidence/one-attempt-ledger.json\n"
+    },
+    {
+      "case": "dash-O",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-O",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/red-fixture/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 0,
+      "stdout": "{\n  \"published_files_verified\": 29,\n  \"raw_files\": 2,\n  \"finite_scalars\": 11070,\n  \"quaternions\": 2700,\n  \"max_quaternion_norm_error\": 8.412634311394385e-08,\n  \"diffusion_steps\": 25,\n  \"one_attempt_receipts_consistent\": true,\n  \"numeric_structure\": \"PASS\",\n  \"axes_normalization_mapping_semantics_playback\": \"NOT-RUN\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "dash-OO",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-OO",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/red-fixture/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": null,
+      "returncode": 0,
+      "stdout": "{\n  \"published_files_verified\": 29,\n  \"raw_files\": 2,\n  \"finite_scalars\": 11070,\n  \"quaternions\": 2700,\n  \"max_quaternion_norm_error\": 8.412634311394385e-08,\n  \"diffusion_steps\": 25,\n  \"one_attempt_receipts_consistent\": true,\n  \"numeric_structure\": \"PASS\",\n  \"axes_normalization_mapping_semantics_playback\": \"NOT-RUN\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "env-1",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/red-fixture/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "1",
+      "returncode": 0,
+      "stdout": "{\n  \"published_files_verified\": 29,\n  \"raw_files\": 2,\n  \"finite_scalars\": 11070,\n  \"quaternions\": 2700,\n  \"max_quaternion_norm_error\": 8.412634311394385e-08,\n  \"diffusion_steps\": 25,\n  \"one_attempt_receipts_consistent\": true,\n  \"numeric_structure\": \"PASS\",\n  \"axes_normalization_mapping_semantics_playback\": \"NOT-RUN\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "env-2",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-approved-trial/publication-fix-20261015T1802Z/red-fixture/44-approved-cpu-motion-trial/verify_evidence.py"
+      ],
+      "pythonoptimize": "2",
+      "returncode": 0,
+      "stdout": "{\n  \"published_files_verified\": 29,\n  \"raw_files\": 2,\n  \"finite_scalars\": 11070,\n  \"quaternions\": 2700,\n  \"max_quaternion_norm_error\": 8.412634311394385e-08,\n  \"diffusion_steps\": 25,\n  \"one_attempt_receipts_consistent\": true,\n  \"numeric_structure\": \"PASS\",\n  \"axes_normalization_mapping_semantics_playback\": \"NOT-RUN\"\n}\n",
+      "stderr": ""
+    }
+  ],
+  "red_demonstrated": true
+}

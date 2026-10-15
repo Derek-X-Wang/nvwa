@@ -1,0 +1,46 @@
+{
+  "reviewed_utc": "2026-10-15T18:06:21.687845+00:00",
+  "decision": "HOLD publication for one P2 documented Python3.9+ reproduction failure. Mathematical HOLD/admission conclusions otherwise supported.",
+  "cohort_sha256": "fc83737699f37d1e5adfaeb44f87b065a7ecfd4fb75d586df1b25630dcb07208",
+  "scope": "12 files under experiments/45-genuine-rig-admission only; moving44 repair and final docs/CI excluded",
+  "finding": {
+    "severity": "P2",
+    "file": "experiments/45-genuine-rig-admission/test_controls.py",
+    "line": 58,
+    "title": "Use tight numeric comparison for historical floating results",
+    "actual_failure": "Python3.9.6 probe passes; test_controls fails historical numeric drift: all_signed_bases. Python3.12 and3.14 both pass.",
+    "concrete_difference": "max_equivariant_position_error_m is4.163336342344337e-17 on3.9 versus1.1443916996305594e-16 recorded/current3.12+. Both satisfy declared1e-12 invariant.",
+    "impact": "README/REPORT promise Python3.9+ and two-command reproduction, but supported runtime fails before output controls and cannot report all15 controls. Exact historical dict equality conflates floating rounding with material drift.",
+    "repair": "Typed recursive comparison with explicit tight float tolerances; exact ints/strings/bools/shapes/hashes. Keep original historical bytes/hashes intact. Record numeric agreement, not universal exact equality; restore3.9 green and prove material perturbation rejection."
+  },
+  "verified": {
+    "inventory_and_exact_historical_copies": true,
+    "offline_public_only_reproduction": "Copied only12 scope files plus8 pinned public dependencies; no private paths needed.3.12/3.14 both scripts pass with15 rejections.",
+    "independent_oracle": "Separate quaternion-vector action, matrix-localization and affine FK implementation imports neither43 nor45; all root and endpoint metrics agree within1e-12.",
+    "root_error_m": {
+      "correct_hip_world": 1.734723475976807e-18,
+      "old43": 0.8299999133474834,
+      "unrotated_subtraction": 0.02822498009560867,
+      "double_rest": 0.07999999821186066
+    },
+    "root_interpretation": "Formula correctly subtracts rotated/scaled target pelvis local offset from desired hip world position. Target root scale here is[1,1,1]; no arbitrary-scale/rig proof claimed. Absolute replacement avoids second rest/0.988 addition.",
+    "endpoint_error_m": {
+      "LeftHand": 1.2889525156524586,
+      "RightHand": 1.3259374930619794,
+      "LeftFoot": 0.3617572281078151,
+      "RightFoot": 0.35709225952951296
+    },
+    "basis_semantics": "Independent all48 signed permutations confirm24 proper/24 improper preserve FK; this does not choose front, handedness or left/right anatomy.",
+    "static_sources": "All6 cited current retained source hashes match. Inspected decoder/model/generator/sequence/skeleton/exporter lines support nativeXYZW, parent-local, absolute-root algebra and no additive0.988 animation offset. C++ was never executed.",
+    "additional_negative_controls": "8 corrupted pinned input files each rejected by actual probe entrypoint. Removing actual root correction rejects via target pelvis world oracle. Explicit guards still execute under-O; all15 controls pass optimized3.14.",
+    "provenance_privacy": "Only small public raw-derived numbers, scripts, static hashes and unchanged historical task-local paths. No weights/runtime/tool/private human content/signed URLs or external communications.",
+    "playable_admission": "HOLD; source semantics, anatomical rest/twist calibration, ground/contact, normalized schema, export, native/Web playback and official parity remain unproven."
+  },
+  "evidence_sha256": {
+    "reproduction-checks.json": "9dc0e6bef45e8e0e53775027c8e006349da79155d5d462678ab8cd86ceeba77c",
+    "independent_oracle.py": "32f87932d4133ea4d9596173b227c7f8208f03dc3d1bb986492c9766dcd9e02f",
+    "independent-oracle.json": "0f024f10734672a8ca6a6d521d3838ceeab46c2e59c5a8acedbab30dc40f2ca7",
+    "entrypoint-controls.json": "14853e651e9085fe1f4f4366c43c6777c47aa8c7e6c4708932e5e24b007e3815"
+  },
+  "cleanup": "Reviewer private public-only fixture removed. No live owned process, model/build/GPU/network/UI activity or reviewed-source edit. Compact private evidence retained."
+}

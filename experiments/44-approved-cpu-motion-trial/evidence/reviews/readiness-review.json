@@ -1,0 +1,75 @@
+{
+  "decision": "GO: exact completed three model files, unchanged frozen sources, and previously reverified runtime eligible for one authorized bounded CPU invocation",
+  "checked_utc": "2026-10-15T17:47:24.498344+00:00",
+  "artifacts": [
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/approved-models/kimodo-soma-rp-v1.1-f32.gguf",
+      "bytes": 1133166784,
+      "sha256": "3bf1229f4c1eff1d28f5196a854113da2df9a11a5e21c60694630903bf948ee4"
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/approved-models/Llama-3-Kimodo-Q4_K_M.gguf",
+      "bytes": 5058327904,
+      "sha256": "c06f2cb6a7615e949bcbb5b582ad35a191338b68b5a51abe17d259ebe574c005"
+    },
+    {
+      "path": "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/approved-models/tokenizer.gguf",
+      "bytes": 7295054,
+      "sha256": "81614aca62a98846c02b72cc2e5378e5bdce8b4d507b88f96eb1faa90dae607e"
+    }
+  ],
+  "total_bytes": 6198789742,
+  "acquisition_receipt_sha256": "9946abf7bb009c06994c24d4d5afe1dc9b8c1d7b4407e3761f15a3b20c3e707f",
+  "worker_ready_sha256": "366a02bf69ba2c24ec130ba7d47a454f3f6cd79e1791392b89c177a05b505056",
+  "worker_ready": {
+    "ready_utc": "2026-10-15T17:46:54.549152+00:00",
+    "state": "READY_FOR_INDEPENDENT_HASH_REVIEW_NOT_AUTHORIZED_TO_RUN_YET",
+    "artifact_proof": [
+      {
+        "repository": "LocalAI-io/Kimodo-SOMA-RP-v1.1-GGML",
+        "revision": "65f8b8ab34ee7524161cc87b20ae4cb4f5d3a12d",
+        "path": "models/kimodo-soma-rp-v1.1-f32.gguf",
+        "bytes": 1133166784,
+        "sha256": "3bf1229f4c1eff1d28f5196a854113da2df9a11a5e21c60694630903bf948ee4",
+        "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Kimodo-SOMA-RP-v1.1-GGML/resolve/65f8b8ab34ee7524161cc87b20ae4cb4f5d3a12d/models/kimodo-soma-rp-v1.1-f32.gguf",
+        "local_path": "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/approved-models/kimodo-soma-rp-v1.1-f32.gguf",
+        "verified_bytes": 1133166784,
+        "verified_sha256": "3bf1229f4c1eff1d28f5196a854113da2df9a11a5e21c60694630903bf948ee4"
+      },
+      {
+        "repository": "LocalAI-io/Llama-3-Kimodo-GGML",
+        "revision": "3e8d958803beaddb6011ac534f2be972e2710c7d",
+        "path": "Llama-3-Kimodo-Q4_K_M.gguf",
+        "bytes": 5058327904,
+        "sha256": "c06f2cb6a7615e949bcbb5b582ad35a191338b68b5a51abe17d259ebe574c005",
+        "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Llama-3-Kimodo-GGML/resolve/3e8d958803beaddb6011ac534f2be972e2710c7d/Llama-3-Kimodo-Q4_K_M.gguf",
+        "local_path": "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/approved-models/Llama-3-Kimodo-Q4_K_M.gguf",
+        "verified_bytes": 5058327904,
+        "verified_sha256": "c06f2cb6a7615e949bcbb5b582ad35a191338b68b5a51abe17d259ebe574c005"
+      },
+      {
+        "repository": "LocalAI-io/Llama-3-Kimodo-GGML",
+        "revision": "3e8d958803beaddb6011ac534f2be972e2710c7d",
+        "path": "tokenizer.gguf",
+        "bytes": 7295054,
+        "sha256": "81614aca62a98846c02b72cc2e5378e5bdce8b4d507b88f96eb1faa90dae607e",
+        "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Llama-3-Kimodo-GGML/resolve/3e8d958803beaddb6011ac534f2be972e2710c7d/tokenizer.gguf",
+        "local_path": "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/approved-models/tokenizer.gguf",
+        "verified_bytes": 7295054,
+        "verified_sha256": "81614aca62a98846c02b72cc2e5378e5bdce8b4d507b88f96eb1faa90dae607e"
+      }
+    ],
+    "exact_total_bytes": 6198789742,
+    "acquisition_returncode": 0,
+    "acquisition_attempt_count": 1,
+    "inference_attempt_count": 0,
+    "frozen_38_unchanged": true,
+    "resource_receipt": "resources-ready.json",
+    "model_free_float_prerequisite": "float-prerequisite-verification.json",
+    "http_status": "not separately exposed by unchanged reviewed script"
+  },
+  "frozen_index_sha256": "b0e2bc532342dc916199decaf74f4f420a334a49767498a9e1709da170244bc7",
+  "existing_genuine_run_directories": 0,
+  "limits": "This is pre-run readiness only. One invocation, unchanged guard, 600 second monitoring stop and 7 GiB sampled process-group RSS stop; no kernel hard cap. Numeric/axis/playback result still NOT-RUN.",
+  "cleanup": "Hashing finished; no background work or owned resources retained."
+}

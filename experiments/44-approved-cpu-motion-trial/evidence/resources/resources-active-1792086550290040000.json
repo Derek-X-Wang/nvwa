@@ -1,0 +1,37 @@
+{
+  "observed_utc": "2026-10-15T17:49:10.277969+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/bin/ps",
+        "-g",
+        "41445",
+        "-o",
+        "pid=,pgid=,stat=,etime=,rss="
+      ],
+      "returncode": 0,
+      "stdout": "41445 41445 Rs   00:53 1192144\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/memory_pressure",
+        "-Q"
+      ],
+      "returncode": 0,
+      "stdout": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 44%\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/sbin/sysctl",
+        "vm.swapusage"
+      ],
+      "returncode": 0,
+      "stdout": "vm.swapusage: total = 14336.00M  used = 13757.44M  free = 578.56M  (encrypted)\n",
+      "stderr": ""
+    }
+  ],
+  "provider_stderr_tail": "ompute_ms=1073.628 download_ms=0.184 total_ms=1074.214\nprofile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.525 compute_ms=1077.789 download_ms=0.287 total_ms=1078.657\nprofile motion.diffusion_step index=10 ms=2153.157\nprofile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.568 compute_ms=1056.385 download_ms=0.206 total_ms=1057.210\nprofile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.265 compute_ms=1107.651 download_ms=0.389 total_ms=1108.354\nprofile motion.diffusion_step index=9 ms=2165.936\nprofile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.332 compute_ms=1115.286 download_ms=0.309 total_ms=1115.972\nprofile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.630 compute_ms=1073.637 download_ms=0.378 total_ms=1074.703\nprofile motion.diffusion_step index=8 ms=2191.153\nprofile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.404 compute_ms=1058.889 download_ms=0.200 total_ms=1059.556\nprofile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.248 compute_ms=1062.507 download_ms=0.267 total_ms=1063.066\nprofile motion.diffusion_step index=7 ms=2122.950\nprofile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.300 compute_ms=1062.189 download_ms=0.181 total_ms=1062.723\nprofile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.235 compute_ms=1057.735 download_ms=0.181 total_ms=1058.194\nprofile motion.diffusion_step index=6 ms=2121.159\nprofile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.245 compute_ms=1070.118 download_ms=0.222 total_ms=1070.645\nprofile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.365 compute_ms=1061.317 download_ms=0.210 total_ms=1061.933\nprofile motion.diffusion_step index=5 ms=2132.813\nprofile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.632 compute_ms=1078.033 download_ms=0.195 total_ms=1078.906\nprofile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.546 compute_ms=1069.412 download_ms=0.182 total_ms=1070.185\nprofile motion.diffusion_step index=4 ms=2149.387\nprofile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.248 compute_ms=1059.031 download_ms=0.196 total_ms=1059.527\nprofile motion.transformer stage=body_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.258 compute_ms=1056.758 download_ms=0.260 total_ms=1057.316\nprofile motion.diffusion_step index=3 ms=2117.078\nprofile motion.transformer stage=root_model calls=4 graph_ms=0.000 allocation_ms=0.000 upload_ms=0.268 compute_ms=1082.564 download_ms=0.205 total_ms=1083.118\n",
+  "provider_stdout": ""
+}

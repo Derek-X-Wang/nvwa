@@ -1,5 +1,16 @@
 # Experiment conclusions
 
+## 2026-10-15：一个获授权的真实原始 CPU 动作样本
+
+| 实验 | 决定 | 实际证据与限制 |
+| --- | --- | --- |
+| [44 获授权 CPU 原始动作试跑](../experiments/44-approved-cpu-motion-trial/REPORT.md) | 接受一个 genuine raw 样本及数值结构；M2/#12 保持开放 | 精确三文件 6,198,789,742 字节已获批准并验证；一次离线 CPU 请求 exit 0，90 帧/30 关节，两份 F32 大小/hash 与 11,070 个有限值、2,700 个非退化四元数检查通过。58.545243 秒包含 guard/清理，1,234,583,552 字节为采样组 RSS；忙碌 16 GiB Mac、hash 后缓存状态，不是硬峰值/冷启动基准。坐标、rest/root、规范化、目标映射、语义和生成播放仍未验收；单次授权已用完，无重试。 |
+| [45 真实样本映射数值研究](../experiments/45-genuine-rig-admission/REPORT.md) | HOLD 可播放准入；保留 root 与解剖基问题的数值证据 | 只使用 44 的同一 90 帧样本。原 43 规则产生约 `0.83 m` pelvis 世界位置偏差；旋转/缩放偏移重定位只修正声明的 hip-world 条件，左右方向与手臂中立姿势仍未校准。无规范化/导出/Work/播放；离线 CI 通过表示 HOLD 研究与拒绝控制通过，不表示生成播放获准。 |
+
+44 保留原始 acquisition/controller/process/profile/resource/cleanup 记录、两个小原始数组和独立前/后审查；可仅用 Python 标准库离线核验，不运行模型。41 的预跑报告保持原字节，授权后的真实证据在 44 单独记录。#54 仅在本轮审查与发布合并后可按有界实验范围关闭；#3/#4/#12/#49 不变。
+
+[#58](https://github.com/Derek-X-Wang/nvwa/pull/58) 的 [PR CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38764869474) 和 `b7122a20366f665f7ca32d48d5dc2f51a874ddbf` 的 [main CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38770232509) 已通过。下方 41–43 与历史验收/索引保留各自当时状态，旧整合清单中的根文档 hash 属于该历史快照；当前文档的状态更新不改写旧清单，也不宣称全部历史路径仍与当前文档逐字节相同。
+
 ## 2026-10-15：M2 隔离控制与双端 authored 播放
 
 | 实验 | 决定 | 实际证据与限制 |
