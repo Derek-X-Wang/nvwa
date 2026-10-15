@@ -1,0 +1,116 @@
+{
+  "status": "PASS",
+  "scope": "public authority/geometry audit CLI only; no primary calibration code read or invoked",
+  "checks": [
+    {
+      "mode": "normal",
+      "control": "baseline",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "mode": "normal",
+      "control": "wrong_side",
+      "exit_code": 1,
+      "expected_error": "wrong target physical side/suffix policy",
+      "actual_error": "wrong target physical side/suffix policy"
+    },
+    {
+      "mode": "normal",
+      "control": "reversed_front",
+      "exit_code": 1,
+      "expected_error": "fixture forward claim contradicts pupil/white geometry",
+      "actual_error": "fixture forward claim contradicts pupil/white geometry"
+    },
+    {
+      "mode": "normal",
+      "control": "changed_source_pin",
+      "exit_code": 1,
+      "expected_error": "source pin mismatch: cpp-src__skeleton.hpp",
+      "actual_error": "source pin mismatch: cpp-src__skeleton.hpp"
+    },
+    {
+      "mode": "normal",
+      "control": "false_palm_certification",
+      "exit_code": 1,
+      "expected_error": "false palm/sole/contact certification",
+      "actual_error": "false palm/sole/contact certification"
+    },
+    {
+      "mode": "normal",
+      "control": "changed_retained_source_claim",
+      "exit_code": 1,
+      "expected_error": "retained source claim identity changed",
+      "actual_error": "retained source claim identity changed"
+    },
+    {
+      "mode": "normal",
+      "control": "changed_eye_geometry",
+      "exit_code": 1,
+      "expected_error": "eye geometry mismatch: Eye pupil -1",
+      "actual_error": "eye geometry mismatch: Eye pupil -1"
+    },
+    {
+      "mode": "normal",
+      "control": "restored_baseline",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "mode": "-O",
+      "control": "baseline",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "mode": "-O",
+      "control": "wrong_side",
+      "exit_code": 1,
+      "expected_error": "wrong target physical side/suffix policy",
+      "actual_error": "wrong target physical side/suffix policy"
+    },
+    {
+      "mode": "-O",
+      "control": "reversed_front",
+      "exit_code": 1,
+      "expected_error": "fixture forward claim contradicts pupil/white geometry",
+      "actual_error": "fixture forward claim contradicts pupil/white geometry"
+    },
+    {
+      "mode": "-O",
+      "control": "changed_source_pin",
+      "exit_code": 1,
+      "expected_error": "source pin mismatch: cpp-src__skeleton.hpp",
+      "actual_error": "source pin mismatch: cpp-src__skeleton.hpp"
+    },
+    {
+      "mode": "-O",
+      "control": "false_palm_certification",
+      "exit_code": 1,
+      "expected_error": "false palm/sole/contact certification",
+      "actual_error": "false palm/sole/contact certification"
+    },
+    {
+      "mode": "-O",
+      "control": "changed_retained_source_claim",
+      "exit_code": 1,
+      "expected_error": "retained source claim identity changed",
+      "actual_error": "retained source claim identity changed"
+    },
+    {
+      "mode": "-O",
+      "control": "changed_eye_geometry",
+      "exit_code": 1,
+      "expected_error": "eye geometry mismatch: Eye pupil -1",
+      "actual_error": "eye geometry mismatch: Eye pupil -1"
+    },
+    {
+      "mode": "-O",
+      "control": "restored_baseline",
+      "exit_code": 0,
+      "status": "PASS"
+    }
+  ],
+  "temporary_mutations_removed": true,
+  "background_processes_created": false
+}

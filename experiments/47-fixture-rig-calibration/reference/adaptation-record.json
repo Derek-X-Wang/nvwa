@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "method": "Explicit JSON adaptation record; no context-only unified patch",
+  "first_pass_manifest_sha256": "9e9c880f214b0d77ea27fc893df2b3b577263212f7e5b5d8b5c93722a34b5043",
+  "first_pass_files": {
+    "INDEPENDENT-FIRST-REPORT.md": {
+      "sha256": "9ddd992efb4af47cd524ec55124a28889448208541f4a73ab08f7a74462a19d2",
+      "bytes": 14572
+    },
+    "derive.py": {
+      "sha256": "2f057bdf5aa370bd2fc3253ce5644b3bb81613fb847ac2a510badbab42bdb3ef",
+      "bytes": 8167
+    },
+    "derived.json": {
+      "sha256": "8805c24ca20a0d8069f95bc392e502ad781e9f65d40b34069aa083e6ad5a47d2",
+      "bytes": 14031
+    },
+    "input-hashes.json": {
+      "sha256": "cd60cb05557f32f16e151cfbd98c046ef74fdcd90f7160e8fdef195a3362cd40",
+      "bytes": 4614
+    },
+    "receipt-checks.json": {
+      "sha256": "c34bc5d3bd87ec21ed5799063b468df08d12d79f5bd7717cf5e115addb012c75",
+      "bytes": 2306
+    }
+  },
+  "input_path_transformations": [
+    {
+      "original_input_id": "experiments/41-real-short-motion/source-skeleton.json",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "d137f3ea5522deeb70257d2fd5522ca6d5436c0145ea001a1e8b4fc646cddd9a",
+      "retained_bytes": 6206
+    },
+    {
+      "original_input_id": "cached-original-source/cpp-src__skeleton.hpp",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "6c1e1d98170a99105bd325c32caff5421bfb20d1e16160980a9f2c3258e244a3",
+      "retained_bytes": 6872
+    },
+    {
+      "original_input_id": "cached-original-source/official-skeleton.md",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "88c94293365af8ed2017d8c238a65b7d4efeac189cb78c128ad50ca04ddf7987",
+      "retained_bytes": 3233
+    },
+    {
+      "original_input_id": "cached-original-source/official-output-formats.md",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "f3f9dcdc1fa21846469791d59977f5d06213225aea63960f9001654379ea163d",
+      "retained_bytes": 4312
+    },
+    {
+      "original_input_id": "cached-original-source/cpp-src__motion_decode.cpp",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "d9f0076d3254cd6d89719a0097c09aa265fea8ad3404bf303d527b90ce5714ff",
+      "retained_bytes": 2702
+    },
+    {
+      "original_input_id": "cached-original-source/cpp-src__motion_rep.cpp",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "a2194f392cbfa2260896733c8c69f5ef27c8811a01e890d90b222127708381dd",
+      "retained_bytes": 2596
+    },
+    {
+      "original_input_id": "cached-original-source/cpp-scripts__export_glb.py",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "574a5f1f20476268e33b0007aa2ec212eb5f28767895d810130cc7a639b0cabb",
+      "retained_bytes": 11923
+    },
+    {
+      "original_input_id": "cached-original-source/cpp-scripts__export_bvh.py",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "4119510f003215b3721b1c13c61eb033a002f65feadcab295b63825be1bdc180",
+      "retained_bytes": 6951
+    },
+    {
+      "original_input_id": "cached-original-source/cpp-include__kimodo__kimodo.hpp",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "6a7c10ed13ebd7ed7a06aeacb6263e6a56846794012f39dff26d69d967e726e5",
+      "retained_bytes": 1584
+    },
+    {
+      "original_input_id": "cached-original-source/contract-receipts.json",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "cd2c33536b017cb9e57afeed5ef2d3db53d301f8a80f919c26a4fbc84a1bec42",
+      "retained_bytes": 1392
+    },
+    {
+      "original_input_id": "cached-original-source/source-receipts.json",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "8d4d48da6453fd256521382c6b1fb47835e4249b55deb5a5cb912fa24650c100",
+      "retained_bytes": 9140
+    },
+    {
+      "original_input_id": "experiments/41-real-short-motion/evidence/source-index.json",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "734c3ad1a26f6608f62f7488e0276c1b1471a1a39855e592fb2b264d7419af1a",
+      "retained_bytes": 5606
+    },
+    {
+      "original_input_id": "experiments/41-real-short-motion/evidence/source-receipts.json",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "94dfed7555b1e62134add3f5964ff66cba2615781513fbabb750d2d45b83d5f1",
+      "retained_bytes": 13739
+    },
+    {
+      "original_input_id": "tools/blender/generate_fixture.py",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "bc54eec314ccba2ca2a77499b03d96b1ec9afb8c38cfbb9ac9e1fb04f5736f0e",
+      "retained_bytes": 14987
+    },
+    {
+      "original_input_id": "assets/fixtures/provenance-manifest.json",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f",
+      "retained_bytes": 3579
+    },
+    {
+      "original_input_id": "assets/fixtures/source-structure.json",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "acd23cb37f1d315dd0b371014365b0a8c254532b4971390fcf7a3be89f1e1b1d",
+      "retained_bytes": 732
+    },
+    {
+      "original_input_id": "docs/adr/0003-original-character-fixture.md",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "2e9d3ab4c8c79058c8416574b17726d92b37274f0a54765bc83b8d3bdd717fd4",
+      "retained_bytes": 2665
+    },
+    {
+      "original_input_id": "AGENTS.md",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "a3ac4ac89b26edcda1bb769def34cf036dae8b7fe452c4f76756df28b7a01417",
+      "retained_bytes": 335
+    },
+    {
+      "original_input_id": "GLOSSARY.md",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "6d2db67b88702b30e19a06b02ff45b72064ab6fec4498efa40e1d0a91b7a81fe",
+      "retained_bytes": 1014
+    },
+    {
+      "original_input_id": "private-first-pass/CONTRACT.json",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "56bacabca226929875712020c8be6a309bbb9e84e95d404191408b574a4e0951",
+      "retained_bytes": 1866
+    },
+    {
+      "original_input_id": "assets/fixtures/nvwa-humanoid.glb",
+      "transformation": "strip local root or replace cache/private root with logical prefix",
+      "retained_sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+      "retained_bytes": 3827840
+    }
+  ],
+  "artifact_transformations": [
+    {
+      "original": "derived.json",
+      "portable": "original-derived.json",
+      "operation": "byte-exact copy"
+    },
+    {
+      "original": "receipt-checks.json",
+      "portable": "original-receipt-matches.json",
+      "operation": "byte-exact copy"
+    },
+    {
+      "original": "FIRST-FREEZE.json",
+      "portable": "original-first-freeze.json",
+      "operation": "byte-exact copy"
+    },
+    {
+      "original": "input-hashes.json",
+      "portable": "input-hashes.json",
+      "operation": "retain 21 hashes and byte counts, replace private absolute names with portable logical input IDs"
+    },
+    {
+      "original": "INDEPENDENT-FIRST-REPORT.md",
+      "portable": "REPORT.md + authority-claims.json",
+      "operation": "paraphrased factual adaptation; original private report never overwritten; no third-party text/code copied"
+    },
+    {
+      "original": "derive.py",
+      "portable": "audit.py",
+      "operation": "adapt independent stdlib GLB/TRS arithmetic; remove provider-cache requirement and assert-based checks; add explicit receipt/claims bounds and mutation CLI inputs"
+    }
+  ],
+  "reading_order_evidence": "Reported process order plus frozen hashes, not cryptographic proof of what a person or agent read.",
+  "portable_artifact_hashes": {
+    "REPORT.md": {
+      "sha256": "e8c8f04692250635fdc13a9acac30e57b77ca46a91c668c0cbb5e213b048a424",
+      "bytes": 10266
+    },
+    "audit-results.json": {
+      "sha256": "958505f8103c2eb847f2976fe19fbe1ac5ecbc062d0bf3700bd71c549d5e951f",
+      "bytes": 2070
+    },
+    "audit.py": {
+      "sha256": "07e7b9343568ecaa0b04abcf33854483774c8f2d43edf79bf8848c33117bd4b6",
+      "bytes": 13155
+    },
+    "authority-claims.json": {
+      "sha256": "9c339b3ad3f10e0dbe2a48fc0fdd8073b0ba42e218cafe39a42e97ae9d0830a1",
+      "bytes": 5776
+    },
+    "input-hashes.json": {
+      "sha256": "cc0a405557fb6bbeb545ecd05af91b3f54aaf29b6f21d61aa206a067c5625c1d",
+      "bytes": 3263
+    },
+    "mutation-results.json": {
+      "sha256": "39b9dbf1da3063daa4759ef0126aae1880d835952c82fa36c607fad5ce9336b4",
+      "bytes": 3461
+    },
+    "original-derived.json": {
+      "sha256": "8805c24ca20a0d8069f95bc392e502ad781e9f65d40b34069aa083e6ad5a47d2",
+      "bytes": 14031
+    },
+    "original-first-freeze.json": {
+      "sha256": "9e9c880f214b0d77ea27fc893df2b3b577263212f7e5b5d8b5c93722a34b5043",
+      "bytes": 844
+    },
+    "original-receipt-matches.json": {
+      "sha256": "c34bc5d3bd87ec21ed5799063b468df08d12d79f5bd7717cf5e115addb012c75",
+      "bytes": 2306
+    },
+    "test_audit.py": {
+      "sha256": "2f72b98c185a37ac857a980de9c618d837449350c965576da5c4a47cebbb2fa3",
+      "bytes": 4745
+    }
+  },
+  "data_change_plan": {
+    "original-derived.json": "Exact original derived.json bytes; no content changes.",
+    "original-first-freeze.json": "Exact original FIRST-FREEZE.json bytes; only published filename differs.",
+    "original-receipt-matches.json": "Exact original receipt-checks.json bytes; only published filename differs.",
+    "input-hashes.json": "21 original entries, identical SHA256/byte-count values; all absolute key names mapped to declared logical IDs.",
+    "authority-claims.json": "New authored claim/identity capsule, paraphrased from first report; no third-party document/code bodies.",
+    "audit-results.json": "New normal/optimized public audit outputs.",
+    "mutation-results.json": "New six-control normal/optimized CLI outputs and restored baselines."
+  }
+}

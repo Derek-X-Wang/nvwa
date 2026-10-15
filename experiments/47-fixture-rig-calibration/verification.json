@@ -1,0 +1,1046 @@
+{
+  "checks": [
+    {
+      "expected": "REJECT",
+      "name": "input-pin experiments/41-real-short-motion/source-skeleton.json",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: experiments/41-real-short-motion/source-skeleton.json"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin experiments/43-rig-mapping/spike.py",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: experiments/43-rig-mapping/spike.py"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin assets/fixtures/nvwa-humanoid.glb",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: assets/fixtures/nvwa-humanoid.glb"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin experiments/44-approved-cpu-motion-trial/evidence/run/process/receipt.json",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/process/receipt.json"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin experiments/44-approved-cpu-motion-trial/evidence/run/process/stdout.txt",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/process/stdout.txt"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin tools/blender/generate_fixture.py",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: tools/blender/generate_fixture.py"
+    },
+    {
+      "expected": "REJECT",
+      "name": "input-pin assets/fixtures/provenance-manifest.json",
+      "observed": "REJECT",
+      "reason": "SHA256 mismatch: assets/fixtures/provenance-manifest.json"
+    },
+    {
+      "expected": "REJECT",
+      "name": "missing input identity",
+      "observed": "REJECT",
+      "reason": "exact input identities"
+    },
+    {
+      "expected": "REJECT",
+      "name": "parallel-front gauge singularity has no fallback",
+      "observed": "REJECT",
+      "reason": "nonzero direction"
+    },
+    {
+      "expected": "REJECT",
+      "name": "boolean quaternion is not numeric rotation",
+      "observed": "REJECT",
+      "reason": "finite vector"
+    },
+    {
+      "expected": "REJECT",
+      "name": "nonfinite quaternion",
+      "observed": "REJECT",
+      "reason": "finite vector"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "named_labels_reflected independent generator segment and signed roll references",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "named_labels_reflected independent signed source/target lateral landmarks",
+      "observed": "PASS"
+    },
+    {
+      "expected": "REJECT",
+      "name": "named reflection fails independently anchored physical policy",
+      "observed": "REJECT",
+      "reason": "independent physical side/up/front mismatch"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 2.6020852139652114e-18
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored root longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 2.220446049250313e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored root secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 1.1102230246251565e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored spine longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 1.1102230246251565e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored spine secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 1.6653345369377348e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored chest longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 3.3306690738754696e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored chest secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 1.1102230246251565e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored neck longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 4.440892098500626e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored neck secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 2.220446049250313e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored head longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 4.440892098500626e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored head secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.539101744798521e-07,
+        "closed_form_vs_exact_affine_direction_residual": 3.3306690738754696e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored upper_arm.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.7945687651127837e-07,
+        "closed_form_vs_exact_affine_direction_residual": 3.0531133177191805e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored upper_arm.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 2.0955521168492455e-07,
+        "closed_form_vs_exact_affine_direction_residual": 6.635339439009513e-08
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored forearm.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 2.1901765397309654e-07,
+        "closed_form_vs_exact_affine_direction_residual": 7.357431874854825e-08
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored forearm.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 4.080884324908496e-08
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored hand.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 9.375715574744259e-08
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored hand.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.5391017483552378e-07,
+        "closed_form_vs_exact_affine_direction_residual": 3.3306690738754696e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored upper_arm.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.2108788881605038e-07,
+        "closed_form_vs_exact_affine_direction_residual": 1.1102230246251565e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored upper_arm.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 2.0428197843632533e-07,
+        "closed_form_vs_exact_affine_direction_residual": 6.575963196198131e-08
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored forearm.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.9320688518844508e-07,
+        "closed_form_vs_exact_affine_direction_residual": 2.3305032847975582e-08
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored forearm.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 4.0197272122011185e-08
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored hand.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 8.01170796371764e-09
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored hand.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.902393937283325e-08,
+        "closed_form_vs_exact_affine_direction_residual": 2.220446049250313e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored thigh.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 6.236929632054839e-08,
+        "closed_form_vs_exact_affine_direction_residual": 2.7755575615628914e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored thigh.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.744861428087007e-08,
+        "closed_form_vs_exact_affine_direction_residual": 8.487120790046099e-07
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored shin.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 6.900314825760897e-07,
+        "closed_form_vs_exact_affine_direction_residual": 9.441448608482617e-07
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored shin.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 9.222326987634588e-07
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored foot.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 7.829306081785781e-07
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored foot.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.902393958867855e-08,
+        "closed_form_vs_exact_affine_direction_residual": 2.220446049250313e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored thigh.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.0603905950855236e-07,
+        "closed_form_vs_exact_affine_direction_residual": 3.3306690738754696e-16
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored thigh.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.744861452705996e-08,
+        "closed_form_vs_exact_affine_direction_residual": 8.487121941902487e-07
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored shin.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.461144435600048e-07,
+        "closed_form_vs_exact_affine_direction_residual": 7.539341644324793e-07
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored shin.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 6.134931843093661e-07
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored foot.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 7.432963945452897e-07
+      },
+      "expected": "PASS",
+      "name": "named_labels_reflected authored foot.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "named_labels_reflected collapsed omitted Spine2 into Chest",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "named_labels_reflected collapsed omitted Neck2 into Head",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "named_labels_reflected collapsed omitted LeftShoulder into LeftArm",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "named_labels_reflected collapsed omitted RightShoulder into RightArm",
+      "observed": "PASS"
+    },
+    {
+      "expected": "PASS",
+      "maximum_m": 1.734723475976807e-18,
+      "name": "named_labels_reflected independent all90 recursive pelvis world oracle",
+      "observed": "PASS"
+    },
+    {
+      "expected": "PASS",
+      "marker_count": 3240,
+      "name": "named_labels_reflected independent all90 x18 exact affine signed markers",
+      "observed": "PASS"
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected first animated frame is wrong neutral",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected hand180 twist actual candidate path",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected parent_localized_twice actual90 path",
+      "observed": "REJECT",
+      "reason": "changed candidate trajectory"
+    },
+    {
+      "expected": "MEASURE",
+      "name": "named_labels_reflected parent_localized_twice trajectory difference",
+      "observed": 0.45263030663550474
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected conjugated_xyz actual90 path",
+      "observed": "REJECT",
+      "reason": "changed candidate trajectory"
+    },
+    {
+      "expected": "MEASURE",
+      "name": "named_labels_reflected conjugated_xyz trajectory difference",
+      "observed": 0.9154438110447959
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected wrong_xywz actual90 path",
+      "observed": "REJECT",
+      "reason": "changed candidate trajectory"
+    },
+    {
+      "expected": "MEASURE",
+      "name": "named_labels_reflected wrong_xywz trajectory difference",
+      "observed": 1.4999995370380383
+    },
+    {
+      "expected": "MEASURE",
+      "name": "named_labels_reflected q_negated trajectory difference",
+      "observed": 0.0
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected double_target_root_offset independent FK",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected double_source_trajectory independent FK",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected exporter_height independent FK",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected unrotated_pelvis_subtraction actual candidate rotations",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "named_labels_reflected unchanged43_root_addition actual candidate rotations",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "named_labels_reflected status cannot promote from numeric closure",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "physical_sides_identity independent generator segment and signed roll references",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "physical_sides_identity independent signed source/target lateral landmarks",
+      "observed": "PASS"
+    },
+    {
+      "detail": "PASS",
+      "expected": "PASS",
+      "name": "independently anchored physical policy",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 2.6020852139652114e-18
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored root longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 2.220446049250313e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored root secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 1.1102230246251565e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored spine longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 1.1102230246251565e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored spine secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 1.6653345369377348e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored chest longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 3.3306690738754696e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored chest secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 1.1102230246251565e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored neck longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 4.440892098500626e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored neck secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 2.220446049250313e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored head longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 4.440892098500626e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored head secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.5391017483552378e-07,
+        "closed_form_vs_exact_affine_direction_residual": 3.3306690738754696e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored upper_arm.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.2108788881605038e-07,
+        "closed_form_vs_exact_affine_direction_residual": 1.1102230246251565e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored upper_arm.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 2.0428197843632533e-07,
+        "closed_form_vs_exact_affine_direction_residual": 6.575963196198131e-08
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored forearm.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.9320688518844508e-07,
+        "closed_form_vs_exact_affine_direction_residual": 2.3305032847975582e-08
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored forearm.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 4.0197272122011185e-08
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored hand.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 8.01170796371764e-09
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored hand.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.539101744798521e-07,
+        "closed_form_vs_exact_affine_direction_residual": 3.3306690738754696e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored upper_arm.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.7945687651127837e-07,
+        "closed_form_vs_exact_affine_direction_residual": 3.0531133177191805e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored upper_arm.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 2.0955521168492455e-07,
+        "closed_form_vs_exact_affine_direction_residual": 6.635339439009513e-08
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored forearm.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 2.1901765397309654e-07,
+        "closed_form_vs_exact_affine_direction_residual": 7.357431874854825e-08
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored forearm.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 4.080884324908496e-08
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored hand.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 9.375715574744259e-08
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored hand.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.902393958867855e-08,
+        "closed_form_vs_exact_affine_direction_residual": 2.220446049250313e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored thigh.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 1.0603905950855236e-07,
+        "closed_form_vs_exact_affine_direction_residual": 3.3306690738754696e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored thigh.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.744861452705996e-08,
+        "closed_form_vs_exact_affine_direction_residual": 8.487121941902487e-07
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored shin.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.461144435600048e-07,
+        "closed_form_vs_exact_affine_direction_residual": 7.539341644324793e-07
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored shin.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 6.134931842538549e-07
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored foot.L longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 7.432963944342674e-07
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored foot.L secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.902393937283325e-08,
+        "closed_form_vs_exact_affine_direction_residual": 2.220446049250313e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored thigh.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 6.236929632054839e-08,
+        "closed_form_vs_exact_affine_direction_residual": 2.7755575615628914e-16
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored thigh.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 7.744861428087007e-08,
+        "closed_form_vs_exact_affine_direction_residual": 8.487120790046099e-07
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored shin.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": 6.900314825760897e-07,
+        "closed_form_vs_exact_affine_direction_residual": 9.441448608482617e-07
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored shin.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 9.222326987634588e-07
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored foot.R longitudinal",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "authored_head_vs_exact_affine_child_residual_m": null,
+        "closed_form_vs_exact_affine_direction_residual": 7.829306083451115e-07
+      },
+      "expected": "PASS",
+      "name": "physical_sides_identity authored foot.R secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "physical_sides_identity collapsed omitted Spine2 into Chest",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "physical_sides_identity collapsed omitted Neck2 into Head",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "physical_sides_identity collapsed omitted LeftShoulder into LeftArm",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "physical_sides_identity collapsed omitted RightShoulder into RightArm",
+      "observed": "PASS"
+    },
+    {
+      "expected": "PASS",
+      "maximum_m": 1.734723475976807e-18,
+      "name": "physical_sides_identity independent all90 recursive pelvis world oracle",
+      "observed": "PASS"
+    },
+    {
+      "expected": "PASS",
+      "marker_count": 3240,
+      "name": "physical_sides_identity independent all90 x18 exact affine signed markers",
+      "observed": "PASS"
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity first animated frame is wrong neutral",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity hand180 twist actual candidate path",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity parent_localized_twice actual90 path",
+      "observed": "REJECT",
+      "reason": "changed candidate trajectory"
+    },
+    {
+      "expected": "MEASURE",
+      "name": "physical_sides_identity parent_localized_twice trajectory difference",
+      "observed": 0.45263030663550474
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity conjugated_xyz actual90 path",
+      "observed": "REJECT",
+      "reason": "changed candidate trajectory"
+    },
+    {
+      "expected": "MEASURE",
+      "name": "physical_sides_identity conjugated_xyz trajectory difference",
+      "observed": 0.9154438110447959
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity wrong_xywz actual90 path",
+      "observed": "REJECT",
+      "reason": "changed candidate trajectory"
+    },
+    {
+      "expected": "MEASURE",
+      "name": "physical_sides_identity wrong_xywz trajectory difference",
+      "observed": 1.4999995370380383
+    },
+    {
+      "expected": "MEASURE",
+      "name": "physical_sides_identity q_negated trajectory difference",
+      "observed": 0.0
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity double_target_root_offset independent FK",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity double_source_trajectory independent FK",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity exporter_height independent FK",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity unrotated_pelvis_subtraction actual candidate rotations",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "physical_sides_identity unchanged43_root_addition actual candidate rotations",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "physical_sides_identity status cannot promote from numeric closure",
+      "observed": "PASS"
+    },
+    {
+      "expected": "REJECT",
+      "name": "mirror physical signed trajectory",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "front180 reversal independent front reference",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "front180 reversal actual signed trajectory",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "side swap independent signed rest landmarks",
+      "observed": "REJECT",
+      "reason": "independent signed side landmark mismatch"
+    },
+    {
+      "expected": "REJECT",
+      "name": "side swap asymmetric actual candidate path",
+      "observed": "REJECT",
+      "reason": "independent signed direction/position mismatch"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "retained candidates reproduce with strict typed finite comparator",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expected": "PASS",
+      "name": "selected calibration reproduces exactly with strict typed finite comparator",
+      "observed": "PASS"
+    },
+    {
+      "expected": "REJECT",
+      "name": "comparator bool vs integer",
+      "observed": "REJECT",
+      "reason": "strict result type"
+    },
+    {
+      "expected": "REJECT",
+      "name": "comparator nonfinite",
+      "observed": "REJECT",
+      "reason": "strict finite result float"
+    },
+    {
+      "expected": "REJECT",
+      "name": "comparator discrete mutation",
+      "observed": "REJECT",
+      "reason": "strict discrete result identity"
+    }
+  ],
+  "diagnostic_provenance": "hand-authored closed-form controls only; no generated claim",
+  "measured_count": 8,
+  "positive_count": 89,
+  "rejection_count": 43,
+  "schema": "nvwa.fixture-calibration-controls.v1",
+  "status": "PASS"
+}

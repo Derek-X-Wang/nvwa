@@ -46,6 +46,12 @@ jobs:
           python3 -B experiments/46-soma-reference-calibration/independent/oracle.py
           python3 -B experiments/46-soma-reference-calibration/independent/test_controls.py
           python3 -B -O experiments/46-soma-reference-calibration/independent/test_controls.py
+          python3 -B experiments/47-fixture-rig-calibration/calibrate.py
+          python3 -B experiments/47-fixture-rig-calibration/test_controls.py
+          python3 -B -O experiments/47-fixture-rig-calibration/test_controls.py
+          python3 -B experiments/47-fixture-rig-calibration/reference/audit.py
+          python3 -B -O experiments/47-fixture-rig-calibration/reference/audit.py
+          python3 -B experiments/47-fixture-rig-calibration/reference/test_audit.py
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     runs-on: macos-14
