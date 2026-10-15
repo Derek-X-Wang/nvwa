@@ -57,7 +57,9 @@ impl WorkBytes {
 #[derive(Debug, PartialEq, Eq)]
 pub enum FileCompletion {
     Opened(String),
-    Saved,
+    Saved(String),
+    #[cfg(any(target_arch = "wasm32", test))]
+    DownloadStarted(String),
 }
 
 #[derive(Resource)]
@@ -170,8 +172,9 @@ impl PlatformIo {
     #[cfg(not(target_arch = "wasm32"))]
     fn save_impl(&mut self, json: String, path: &str) -> Result<(), String> {
         native_atomic_save(&json, std::path::Path::new(path))?;
+        let destination = std::path::absolute(path).unwrap_or_else(|_| path.into());
         self.sender
-            .send(Ok(FileCompletion::Saved))
+            .send(Ok(FileCompletion::Saved(destination.display().to_string())))
             .map_err(|e| e.to_string())?;
         self.pending = true;
         Ok(())
@@ -226,16 +229,16 @@ impl PlatformIo {
             .dyn_into()
             .map_err(|element: web_sys::Element| js_error(element.into()))?;
         anchor.set_href(&url);
-        anchor.set_download(
-            path.rsplit('/')
-                .next()
-                .filter(|s| !s.is_empty())
-                .unwrap_or("scene.nvwa.json"),
-        );
+        let file_name = path
+            .rsplit('/')
+            .next()
+            .filter(|s| !s.is_empty())
+            .unwrap_or("scene.nvwa.json");
+        anchor.set_download(file_name);
         anchor.click();
         web_sys::Url::revoke_object_url(&url).map_err(js_error)?;
         self.sender
-            .send(Ok(FileCompletion::Saved))
+            .send(Ok(FileCompletion::DownloadStarted(file_name.into())))
             .map_err(|e| e.to_string())?;
         self.pending = true;
         Ok(())
@@ -533,7 +536,10 @@ mod tests {
         let mut io = PlatformIo::default();
         io.request_save("{}".into(), path.to_str().expect("path"))
             .expect("save");
-        assert_eq!(io.poll(), Some(Ok(FileCompletion::Saved)));
+        assert_eq!(
+            io.poll(),
+            Some(Ok(FileCompletion::Saved(path.display().to_string())))
+        );
         assert_eq!(std::fs::read_to_string(path).expect("save bytes"), "{}");
         assert_eq!(
             std::fs::read_to_string(sibling).expect("sibling bytes"),
