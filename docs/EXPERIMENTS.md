@@ -1,5 +1,15 @@
 # Experiment conclusions
 
+## 2026-10-15：M2 隔离控制与双端 authored 播放
+
+| 实验 | 决定 | 实际证据与限制 |
+| --- | --- | --- |
+| [41 真实短动作 CPU 准备](../experiments/41-real-short-motion/REPORT.md) | 保留私有构建/guard 证据；真实生成待批准 | CPU 后端构建/help、原生 float 前提及失败/清理控制通过；后续 ps 误判导致 HOLD，修复后定向 R2 通过，旧结论与失败证据分开保留。模型/编码器下载和一次有界 CPU 推理仍需明确批准，未执行真实推理或证明输出坐标约定。 |
+| [42 动作导入](../experiments/42-motion-import/REPORT.md) | 保留独立 importer 与回归控制；不整合产品 | 离线锁定构建及 19 项真实 CLI 边界测试通过；authored GLB/Work 已由父 session 用产品 CLI 验证并双端播放。伪造生成凭证仍被拒绝，归一化输入/输出 hash 分开记录。 |
+| [43 rig 映射](../experiments/43-rig-mapping/REPORT.md) | 接受 authored 控制的旋转规则；拒绝一般位置保持 | 30/77 数值 A/B、负例及父 session 导入/双端播放通过；naive 四肢明显折叠，calibrated 呈现声明的非对称动作。源手/脚端点仍差 `0.277118877976 m`，真实 provider rest/handedness、接触/IK 与一般 rig 未验证。 |
+
+[父 session 验收与复现](evidence/m2-authored-controls/ACCEPTANCE.md)分开记录本地 model-free 检查、CLI、native/Web 实际观察和历史报告边界。当前 70 项冻结文件与源 cohort 一致；仅 41 经明确授权按原 worker 的修复版本精确刷新，初始 64 项索引及失败历史保留。新增 CI 只在现有 portable job 显式准备锁定 Rust 源依赖，再离线运行 importer/mapping 与实际 CPU 清理控制，不调用 provider 或模型。36 份独立 authored 参考文件支持跨 Python 的严格结构/来源与有限浮点误差比较；3.9/3.12/当前版本检查通过。尚待本轮 hosted CI 和定向独立整合复审。全部动作均为 `authored_control`、`ai_generated:false`，没有新真人或性能结论；#3/#4/#12/#49 门保持开放。以下记录保留各自历史状态。
+
 ## 2026-10-13：下载观察与发行许可候选
 
 | 实验 | 决定 | 实际证据与限制 |

@@ -1,0 +1,58 @@
+{
+  "host": "local macOS arm64; worker-run model-free controls",
+  "source_base": "7cfe171ea7d0bd2ba8e777b188e68ab9cbd85bf8",
+  "command": "python3 -B experiments/42-motion-import/check_model_free.py",
+  "commands": [
+    {
+      "name": "build",
+      "argv": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "$REPO/experiments/42-motion-import/Cargo.toml",
+        "--locked",
+        "--offline",
+        "--jobs",
+        "2"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 6.9072726250160486
+    },
+    {
+      "name": "boundary",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "$REPO/experiments/42-motion-import/check_model_free.py",
+        "--boundary",
+        "$REPO/.work/m2-model-free-ci/target/debug/nvwa-motion-import-experiment",
+        "$REPO/.work/m2-model-free-ci/run-z6oh3hps"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 3.2774385830853134
+    },
+    {
+      "name": "mapping",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "$REPO/experiments/43-rig-mapping/spike.py",
+        "--out",
+        "$REPO/.work/m2-model-free-ci/run-z6oh3hps/mapping"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.9764236249029636
+    }
+  ],
+  "cli_boundary_tests": 19,
+  "all_passed": true,
+  "mapping_manifest_sha256": "fa60a9740a8f269d63f89c36aa169b31802e7d8e2986b60ada8e465a1e746c63",
+  "mapping_metrics_sha256": "30816b5720f2d86beb01666ffdf2dbda0ddc6160809ef4cac8309926413d0b9f",
+  "all_64_frozen_files_unchanged": true,
+  "standalone_binary_sha256": "387526304ef73aea7c177255b84c6725c3e7f11ce8c079121eb54feac82f615b",
+  "hosted_ci": "NOT-RUN at local handoff",
+  "main_workspace_build": "NOT-RUN; unchanged product source"
+}

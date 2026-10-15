@@ -1,0 +1,249 @@
+{
+  "network": {
+    "started_utc": "2026-10-15T15:02:56.273196+00:00",
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "-c",
+      "import socket,errno; s=socket.socket(); rc=s.connect_ex((\"127.0.0.1\",9)); print(rc); assert rc==errno.EPERM"
+    ],
+    "wall_stop_seconds": 2,
+    "rss_stop_bytes": 1073741824,
+    "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+    "samples": [
+      {
+        "seconds": 0.005304374964907765,
+        "rss_bytes": 3997696,
+        "members": [
+          {
+            "pid": 76815,
+            "rss_bytes": 3997696
+          }
+        ]
+      }
+    ],
+    "reason": "exited",
+    "pid": 76815,
+    "pgid": 76815,
+    "returncode": 0,
+    "owned_group_exit_verified": true,
+    "elapsed_seconds": 0.11422866699285805,
+    "max_sampled_group_rss_bytes": 3997696
+  },
+  "timeout": {
+    "started_utc": "2026-10-15T15:02:56.388184+00:00",
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "-c",
+      "import time; time.sleep(60)"
+    ],
+    "wall_stop_seconds": 0.15,
+    "rss_stop_bytes": 1073741824,
+    "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+    "samples": [
+      {
+        "seconds": 0.0053681249264627695,
+        "rss_bytes": 4014080,
+        "members": [
+          {
+            "pid": 76818,
+            "rss_bytes": 4014080
+          }
+        ]
+      },
+      {
+        "seconds": 0.10992837499361485,
+        "rss_bytes": 15024128,
+        "members": [
+          {
+            "pid": 76818,
+            "rss_bytes": 15024128
+          }
+        ]
+      },
+      {
+        "seconds": 0.21860620798543096,
+        "rss_bytes": 15024128,
+        "members": [
+          {
+            "pid": 76818,
+            "rss_bytes": 15024128
+          }
+        ]
+      }
+    ],
+    "reason": "time_limit",
+    "pid": 76818,
+    "pgid": 76818,
+    "returncode": -15,
+    "owned_group_exit_verified": true,
+    "elapsed_seconds": 0.22320349991787225,
+    "max_sampled_group_rss_bytes": 15024128
+  },
+  "memory": {
+    "started_utc": "2026-10-15T15:02:56.611894+00:00",
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "-c",
+      "import time; data=bytearray(32*1024*1024); time.sleep(60)"
+    ],
+    "wall_stop_seconds": 2,
+    "rss_stop_bytes": 25165824,
+    "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+    "samples": [
+      {
+        "seconds": 0.008727415930479765,
+        "rss_bytes": 4079616,
+        "members": [
+          {
+            "pid": 76832,
+            "rss_bytes": 4079616
+          }
+        ]
+      },
+      {
+        "seconds": 0.11785370798315853,
+        "rss_bytes": 48726016,
+        "members": [
+          {
+            "pid": 76832,
+            "rss_bytes": 48726016
+          }
+        ]
+      }
+    ],
+    "reason": "resource_limit",
+    "pid": 76832,
+    "pgid": 76832,
+    "returncode": -15,
+    "owned_group_exit_verified": true,
+    "elapsed_seconds": 0.12476216594222933,
+    "max_sampled_group_rss_bytes": 48726016
+  },
+  "group": {
+    "started_utc": "2026-10-15T15:02:56.737065+00:00",
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "-c",
+      "import subprocess,sys,signal,time; p=subprocess.Popen([sys.executable,\"-B\",\"-c\",\"import time; time.sleep(60)\"]); signal.signal(signal.SIGTERM, lambda *args: (p.wait(),sys.exit(0))); time.sleep(60)"
+    ],
+    "wall_stop_seconds": 0.25,
+    "rss_stop_bytes": 1073741824,
+    "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+    "samples": [
+      {
+        "seconds": 0.004353458993136883,
+        "rss_bytes": 3997696,
+        "members": [
+          {
+            "pid": 76836,
+            "rss_bytes": 3997696
+          }
+        ]
+      },
+      {
+        "seconds": 0.11387912498321384,
+        "rss_bytes": 31768576,
+        "members": [
+          {
+            "pid": 76836,
+            "rss_bytes": 16662528
+          },
+          {
+            "pid": 76838,
+            "rss_bytes": 15106048
+          }
+        ]
+      },
+      {
+        "seconds": 0.22026904206722975,
+        "rss_bytes": 31768576,
+        "members": [
+          {
+            "pid": 76836,
+            "rss_bytes": 16662528
+          },
+          {
+            "pid": 76838,
+            "rss_bytes": 15106048
+          }
+        ]
+      },
+      {
+        "seconds": 0.3287623339565471,
+        "rss_bytes": 31768576,
+        "members": [
+          {
+            "pid": 76836,
+            "rss_bytes": 16662528
+          },
+          {
+            "pid": 76838,
+            "rss_bytes": 15106048
+          }
+        ]
+      }
+    ],
+    "reason": "time_limit",
+    "pid": 76836,
+    "pgid": 76836,
+    "returncode": 0,
+    "owned_group_exit_verified": true,
+    "elapsed_seconds": 0.34082658402621746,
+    "max_sampled_group_rss_bytes": 31768576
+  },
+  "force_kill": {
+    "started_utc": "2026-10-15T15:02:57.078318+00:00",
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "-c",
+      "import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(60)"
+    ],
+    "wall_stop_seconds": 0.15,
+    "rss_stop_bytes": 1073741824,
+    "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+    "samples": [
+      {
+        "seconds": 0.0065705409506335855,
+        "rss_bytes": 3997696,
+        "members": [
+          {
+            "pid": 76873,
+            "rss_bytes": 3997696
+          }
+        ]
+      },
+      {
+        "seconds": 0.1130322499666363,
+        "rss_bytes": 15073280,
+        "members": [
+          {
+            "pid": 76873,
+            "rss_bytes": 15073280
+          }
+        ]
+      },
+      {
+        "seconds": 0.22144700004719198,
+        "rss_bytes": 15073280,
+        "members": [
+          {
+            "pid": 76873,
+            "rss_bytes": 15073280
+          }
+        ]
+      }
+    ],
+    "reason": "time_limit",
+    "pid": 76873,
+    "pgid": 76873,
+    "returncode": -9,
+    "owned_group_exit_verified": true,
+    "elapsed_seconds": 0.5279694580240175,
+    "max_sampled_group_rss_bytes": 15073280
+  }
+}

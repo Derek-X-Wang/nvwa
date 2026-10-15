@@ -1,0 +1,120 @@
+[
+  {
+    "argv": [
+      "cargo",
+      "build",
+      "--manifest-path",
+      "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/42-motion-import/Cargo.toml",
+      "--locked",
+      "--offline",
+      "--jobs",
+      "2"
+    ],
+    "pid": 89489,
+    "timed_out": false,
+    "pending_signals": [],
+    "errors": [],
+    "cleanup": {
+      "signals_attempted": [
+        "SIGTERM",
+        "SIGKILL"
+      ],
+      "errors": [],
+      "leader_reaped": true,
+      "owned_group_exit_verified": true,
+      "leader_exit_code": 0,
+      "remaining_members": [],
+      "owned_live_group_absent": true,
+      "status": "verified_absent"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 3.059736374998465,
+    "name": "build"
+  },
+  {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/42-motion-import/check_model_free.py",
+      "--boundary",
+      "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-model-free-ci/target/debug/nvwa-motion-import-experiment",
+      "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-model-free-ci/run-px317n1p"
+    ],
+    "pid": 89919,
+    "timed_out": false,
+    "pending_signals": [],
+    "errors": [],
+    "cleanup": {
+      "signals_attempted": [
+        "SIGTERM",
+        "SIGKILL"
+      ],
+      "errors": [],
+      "leader_reaped": true,
+      "owned_group_exit_verified": true,
+      "leader_exit_code": 0,
+      "remaining_members": [],
+      "owned_live_group_absent": true,
+      "status": "verified_absent"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 5.728178999968804,
+    "name": "boundary"
+  },
+  {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/42-motion-import/test_model_free.py"
+    ],
+    "pid": 90866,
+    "timed_out": false,
+    "pending_signals": [],
+    "errors": [],
+    "cleanup": {
+      "signals_attempted": [
+        "SIGTERM",
+        "SIGKILL"
+      ],
+      "errors": [],
+      "leader_reaped": true,
+      "owned_group_exit_verified": true,
+      "leader_exit_code": 0,
+      "remaining_members": [],
+      "owned_live_group_absent": true,
+      "status": "verified_absent"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 11.926891625043936,
+    "name": "integration-controls"
+  },
+  {
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/43-rig-mapping/spike.py",
+      "--out",
+      "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/.work/m2-model-free-ci/run-px317n1p/mapping"
+    ],
+    "pid": 93593,
+    "timed_out": false,
+    "pending_signals": [],
+    "errors": [],
+    "cleanup": {
+      "signals_attempted": [
+        "SIGTERM",
+        "SIGKILL"
+      ],
+      "errors": [],
+      "leader_reaped": true,
+      "owned_group_exit_verified": true,
+      "leader_exit_code": 0,
+      "remaining_members": [],
+      "owned_live_group_absent": true,
+      "status": "verified_absent"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 1.2934207499492913,
+    "name": "mapping"
+  }
+]

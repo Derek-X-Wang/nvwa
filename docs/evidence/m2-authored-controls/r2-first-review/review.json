@@ -1,0 +1,58 @@
+{
+  "verdict": "REQUEST_CHANGES: two P2 integration findings",
+  "branch": "codex/m2-experiment-integration",
+  "head": "7cfe171ea7d0bd2ba8e777b188e68ab9cbd85bf8",
+  "freeze": {
+    "frozen-inputs.json": "702f6ad18555106068ee667e41aebb0bf7df06af47b29a57b2899b59589e63a0",
+    "integration-files.json": "2710b2056ba34d510102827b08e2e50ab0dba6b2753e0b98151a959a39b5cacf"
+  },
+  "verified": [
+    "All 64 frozen files and 23 integration inventory entries match bytes/hash; inventory union including self equals all 88 candidate paths exactly",
+    "All nine supplied parent/reviewer receipt copies checked byte-identical",
+    "Existing standalone binary SHA 387526304ef73aea7c177255b84c6725c3e7f11ce8c079121eb54feac82f615b; 19 actual boundary tests passed in 3.138s",
+    "Optimized-Python main invocation rejects before work",
+    "Mapping assertions pass on local Python 3.12 and 3.9; 3.12 reproduces both frozen hashes",
+    "git diff --check passed; root/product source, dependencies, lock and assets unchanged"
+  ],
+  "not_run": [
+    "Hosted Ubuntu CI",
+    "Fresh standalone compilation; reused supplied existing binary",
+    "Parent native/Web observations independently reenacted",
+    "Models, inference, provider setup/build, GPU, network, main workspace build"
+  ],
+  "cleanup": "Only reviewer-owned .work/m2-integration-review artifacts retained for root. Lifecycle probe parent exited and exact child group23641 was terminated and verified absent. No actual compiler, GPU, server, browser, model or network was used. No reviewed files altered.",
+  "findings": [
+    {
+      "priority": 2,
+      "path": "experiments/42-motion-import/check_model_free.py",
+      "lines": [
+        108,
+        110
+      ],
+      "title": "Do not require cross-runtime floating results to have identical JSON bytes",
+      "proof": "Python 3.9.6 completes every frozen mapper assertion but its manifest and metrics differ from the checked-in Python 3.14 results. Python 3.12 matches on this Mac. 115 metric leaves differ under 3.9; one foot travel is 0.5607800505016268 vs baseline 0.5607800505016267. The new byte equality check therefore rejects a valid model-free run under the documented generic Python 3 prerequisite.",
+      "invariant": "Portable model-free CI/reproduction must distinguish arithmetic rounding from behavioral regressions. Frozen source bytes, authored provenance, structural identities and all negative-control assertions remain strict.",
+      "fix": "Either explicitly constrain and verify supported interpreter/platform runtimes, including the actual Ubuntu runner, or compare regenerated content structurally with narrowly justified numeric tolerances while validating generated manifests against their generated files. Preserve frozen files and negative controls.",
+      "limit": "Ubuntu/x86_64 was not run; no claim that Python 3.12 Ubuntu definitely fails."
+    },
+    {
+      "priority": 2,
+      "path": "experiments/42-motion-import/check_model_free.py",
+      "lines": [
+        63,
+        78
+      ],
+      "title": "Terminate the owned process group when the driver is interrupted",
+      "proof": "Actual driver main with only cargo replaced by a review-owned sleeping stand-in: SIGINT terminates driver PID23617 with exit -2, but newly sessioned child/group23641 survives. Exact child group subsequently terminated by reviewer and verified absent.",
+      "invariant": "The local model-free check must retain its bounded resource and cleanup guarantee when cancelled, not leave its detached compiler/control descendants running.",
+      "fix": "Handle interruption/termination and exceptional exits after Popen with bounded owned-process-group TERM then KILL and leader reap, while preserving ordinary error reporting and signal exit semantics. Add bounded controls for timeout and cancellation; do not touch frozen source."
+    }
+  ],
+  "artifact_comparison_guidance": [
+    "Keep frozen-input inventory checks byte-exact. Preserve all frozen mapping assertions and negative controls.",
+    "Mapping manifest files maps 36 raw/normalized outputs: require identical path/key sets, recompute each generated file SHA/size against its own generated manifest, then compare decoded generated file content with expected schemas/provenance/discrete values exact and numeric differences tightly finite/bounded. Do not just omit files hashes from comparison.",
+    "Keep fixed fixture/contract/script/source-layout/source-definition SHA values exact; generated output digests naturally vary with valid numeric rounding.",
+    "Keep source/target identity, parent lists, joint names, keys/types, frame/case counts, provenance flags and policies exact. Float comparison must reject nonfinite values and not allow bool-as-number coercion. Preserve the underlying behavioral assertions thresholds.",
+    "Validate both accepted benign floating differences and rejected material numeric/provenance/hash mutations. Hosted Ubuntu remains a separate required validation."
+  ]
+}

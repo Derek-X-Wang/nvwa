@@ -1,0 +1,74 @@
+{
+  "identity": {
+    "compiler": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++",
+    "compiler_resolved": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang",
+    "compiler_sha256": "1590ac950a3d627817d09ade5cb60b2115f17a72182a3141e010b4bcc482a0c9",
+    "compiler_config_sha256": "fea1c051ec6c09a83b78f9155c69e21325236e1161a95de61f6830339f2a0cfa",
+    "compile_flags_file_sha256": "abc6cc20c4061b767b312168ca779ebd14b1e7186e6f024db02f9d5e0dcae754",
+    "build_cache_sha256": "c74cef14d864d208a8e13c748bbcf669dd080fce2ad324d3a5054824439e1ab7",
+    "compile_flags": [
+      "-O3",
+      "-DNDEBUG",
+      "-std=c++2b",
+      "-arch",
+      "arm64",
+      "-isysroot",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+      "-fvisibility=hidden",
+      "-fvisibility-inlines-hidden",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Wconversion",
+      "-Wshadow"
+    ],
+    "runtime": {
+      "binary_sha256": "55b5c74fb7ab8c83d1560476eb2b9a29e184cbc7020181f3d6eeef44840e9f7d",
+      "libraries": [
+        {
+          "path": ".work/m2-provider/runtime/build-cpu/ggml/src/libggml-base.0.20.2.dylib",
+          "sha256": "f3cdb5bcae0bfa87ab7bb006d1283b4c64ed4a9b3d98acf7b97e70715e52c573"
+        },
+        {
+          "path": ".work/m2-provider/runtime/build-cpu/ggml/src/libggml-cpu.0.20.2.dylib",
+          "sha256": "f8da1afdfe1256600db919c51ce5b7f92302cddf3f0d80e9abed54b7c566bd6b"
+        },
+        {
+          "path": ".work/m2-provider/runtime/build-cpu/ggml/src/libggml.0.20.2.dylib",
+          "sha256": "f9f8ccf8b67f584f59e97066e8f5ee676444d71df83468af05021d55546ee301"
+        }
+      ]
+    },
+    "source_sha256": "589d82258b946e1f2c0c94f86e151b10a96e1f07b873e996f9467eb3301b4975"
+  },
+  "compile_argv": [
+    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++",
+    "-O3",
+    "-DNDEBUG",
+    "-std=c++2b",
+    "-arch",
+    "arm64",
+    "-isysroot",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+    "-fvisibility=hidden",
+    "-fvisibility-inlines-hidden",
+    "-Wall",
+    "-Wextra",
+    "-Wpedantic",
+    "-Wconversion",
+    "-Wshadow",
+    "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/experiments/41-real-short-motion/float_probe.cpp",
+    "-o",
+    "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/float_probe"
+  ],
+  "compile_returncode": 0,
+  "compile_stdout": "",
+  "compile_stderr": "",
+  "elapsed_seconds": 0.8553863749839365,
+  "probe_path": "/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/float_probe",
+  "probe_sha256": "263aaf8dc085b2b907886aca3a0715b5a10667b0fd14ac2fff272bdd73885f2d",
+  "execution": {
+    "returncode": 0,
+    "native_float_one_hex": "0000803f"
+  }
+}

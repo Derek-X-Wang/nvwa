@@ -32,6 +32,11 @@ jobs:
         run: bash experiments/27-ci-baseline/check.sh portable
       - name: Check bounded diagnostic controls
         run: bash experiments/27-ci-baseline/check.sh diagnostics
+      - name: Prepare locked importer dependencies and check offline motion controls
+        timeout-minutes: 6
+        run: |
+          cargo fetch --locked --manifest-path experiments/42-motion-import/Cargo.toml
+          python3 -B experiments/42-motion-import/check_model_free.py
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     runs-on: macos-14
