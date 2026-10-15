@@ -1,0 +1,122 @@
+[
+  {
+    "file": "ggml/CMakeLists.txt",
+    "line": 16,
+    "text": "    execute_process(COMMAND ${GIT_EXE} rev-parse --short HEAD"
+  },
+  {
+    "file": "ggml/CMakeLists.txt",
+    "line": 24,
+    "text": "    execute_process(COMMAND ${GIT_EXE} diff-index --quiet HEAD -- ."
+  },
+  {
+    "file": "ggml/CMakeLists.txt",
+    "line": 456,
+    "text": "    # https://learn.microsoft.com/en-us/cpp/intrinsics/x64-amd64-intrinsics-list?view=msvc-170"
+  },
+  {
+    "file": "ggml/CMakeLists.txt",
+    "line": 457,
+    "text": "    # https://learn.microsoft.com/en-us/cpp/build/reference/arch-x64?view=msvc-170"
+  },
+  {
+    "file": "ggml/cmake/GitVars.cmake",
+    "line": 4,
+    "text": "execute_process(COMMAND"
+  },
+  {
+    "file": "ggml/cmake/GitVars.cmake",
+    "line": 11,
+    "text": "execute_process(COMMAND"
+  },
+  {
+    "file": "ggml/cmake/GitVars.cmake",
+    "line": 18,
+    "text": "execute_process(COMMAND"
+  },
+  {
+    "file": "ggml/src/CMakeLists.txt",
+    "line": 92,
+    "text": "execute_process("
+  },
+  {
+    "file": "ggml/src/CMakeLists.txt",
+    "line": 292,
+    "text": "    # Building a MODULE library with a version is not supported on macOS (https://gitlab.kitware.com/cmake/cmake/-/issues/20782)"
+  },
+  {
+    "file": "ggml/src/CMakeLists.txt",
+    "line": 393,
+    "text": "            # https://learn.microsoft.com/en-us/cpp/intrinsics/x64-amd64-intrinsics-list?view=msvc-170"
+  },
+  {
+    "file": "ggml/src/CMakeLists.txt",
+    "line": 394,
+    "text": "            # https://learn.microsoft.com/en-us/cpp/build/reference/arch-x64?view=msvc-170"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 117,
+    "text": "                execute_process("
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 385,
+    "text": "                execute_process(COMMAND bash -c \"prtconf |grep 'Implementation' | head -n 1\" OUTPUT_VARIABLE POWER10_M)"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 585,
+    "text": "        include(FetchContent)"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 587,
+    "text": "        set(KLEIDIAI_DOWNLOAD_URL \"https://github.com/ARM-software/kleidiai/releases/download/${KLEIDIAI_COMMIT_TAG}/kleidiai-${KLEIDIAI_COMMIT_TAG}-src.tar.gz\")"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 591,
+    "text": "            URL ${KLEIDIAI_DOWNLOAD_URL}"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 595,
+    "text": "            list(APPEND KLEIDIAI_FETCH_ARGS DOWNLOAD_EXTRACT_TIMESTAMP NEW)"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 599,
+    "text": "            FetchContent_Declare(KleidiAI_Download"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 604,
+    "text": "            FetchContent_MakeAvailable(KleidiAI_Download)"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 605,
+    "text": "            FetchContent_GetProperties(KleidiAI_Download SOURCE_DIR KLEIDIAI_SRC)"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 607,
+    "text": "            FetchContent_Declare(KleidiAI_Download"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 611,
+    "text": "            FetchContent_GetProperties(KleidiAI_Download"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 617,
+    "text": "                FetchContent_Populate(KleidiAI_Download)"
+  },
+  {
+    "file": "ggml/src/ggml-cpu/CMakeLists.txt",
+    "line": 618,
+    "text": "                FetchContent_GetProperties(KleidiAI_Download SOURCE_DIR KLEIDIAI_SRC)"
+  }
+]

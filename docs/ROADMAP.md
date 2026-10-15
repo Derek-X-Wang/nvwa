@@ -6,7 +6,11 @@ Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以
 
 M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/milestone/2) 的离线 CLI 创作、双端继续编辑和交接已由 [PR #50](https://github.com/Derek-X-Wang/nvwa/pull/50) 交付，合并 main 为 `9502dd370b262761bf4f4f10f2418163c7574946`。保存反馈 #51 已由 [PR #52](https://github.com/Derek-X-Wang/nvwa/pull/52) 交付，合并 main 为 `f7b15eb166ed8a616dd73965cf23d1b7dcad61f6`。这些技术交付和后续引导式真人观察不等于完整 Alpha 关闭。
 
+#53 浏览器标题修复已由 [PR #57](https://github.com/Derek-X-Wang/nvwa/pull/57) 交付，合并 main 为 `c30a250361f1c21ea055fb414c4a2b674702135f`。精确候选 head `7cfe171ea7d0bd2ba8e777b188e68ab9cbd85bf8` 的 [PR CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38758576949) 已通过；[合并后 main CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38763622991) 此记录时仍在运行，尚未验收。#49 的独立真人门保持开放。
+
 新增授权：开展 [M2](https://github.com/Derek-X-Wang/nvwa/milestone/3) 真实生成、结果导入和目标 rig 映射的有界实验，分别跟踪于 [#54 真实短动作生成](https://github.com/Derek-X-Wang/nvwa/issues/54)、[#55 动作导入](https://github.com/Derek-X-Wang/nvwa/issues/55) 和 [#56 rig 映射](https://github.com/Derek-X-Wang/nvwa/issues/56)。隔离实验进行中，具体结果与边界由 #54–#56 分别记录；真实推理未执行、产品 provider 未交付，不包含产品 UI 或依赖整合；模型/编码器下载或额外算力仍需具体批准。#12 的真实输出与生成播放验收条件仍独立开放；先前的 NO-GO 保留为当时的准备度结论，不是实际生成证据。实时 Studio 桥接和公开二进制发行仍属后续范围。
+
+本轮已取得有界实验结果：[41 CPU 后端与 guard](../experiments/41-real-short-motion/REPORT.md) 已完成模型外的构建/控制；[42 独立导入](../experiments/42-motion-import/REPORT.md) 的 19 项 CLI 边界测试与 [43 authored 映射控制](../experiments/43-rig-mapping/REPORT.md) 通过。父 session 实际验证并在 native/Web 播放原始、naive、calibrated 三份 authored Work；naive 明显折叠，calibrated 呈现声明动作，但端点仍差 `0.277118877976 m`。这些结果保持隔离，未采用到产品；[验收与边界](evidence/m2-authored-controls/ACCEPTANCE.md)保留 native seek 未验证、真实 provider 坐标/生成未验证、模型批准待定及 hosted CI/最终整合审查待完成。
 
 2026-10-14 的开工基线是 `a094baa048e6e50056e3288ecfa85bb4ac62e140`。其 [应用 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821416) 和 [证据 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38521821332) 已成功；113 项独立 Rust 测试、77 项诊断及两个另计采集器对照、原生/Studio Wasm 编译分别记录。这是历史基线，不能代替后续实现 head、合并后 main 或真实 GUI 的验收。
 
@@ -18,7 +22,7 @@ M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/mil
 | 薄 M1：可捏、可编排、可互动 | 三段 authored action、5–10 秒编排、播放/暂停/定位、点击触发与恢复、原生/Web Player | #14–#16 已按有界本地验收完成；完整发行目标未完成 |
 | M1.1：界面与稳定性 | 窄 UI 组件整合、中文/输入恢复、有界历史/加载、永久 CPU 绘制回归、Web 构建 A/B | 技术范围已关闭；残余 #3/#4 保持开放，不宣称性能或原始 DPR 故障已解决 |
 | M1.2：真实 agent 创作 Alpha | 能力发现→实际 CLI 命令→错误回读/纠正→保存→桌面/Web 继续编辑与播放 | #46→#47→#48 技术交付完成；引导式真人检查已补齐，#49 未引导完整 Alpha 门仍开放 |
-| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 隔离实验进行中，具体结果与边界由 #54–#56 分别记录；真实推理未执行、产品 provider 未交付；下载/额外算力另行批准 |
+| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 隔离 CPU/importer/authored 映射与双端播放已有证据；真实推理未执行、产品 provider 未交付；#54–#56 分别记录，下载/额外算力另行批准 |
 | 内容与沙盒扩展 | Blender 工具、更多角色/服装、指定版本 VRM、IK/接触、只读 VaM 与有限迁移 | 后续逐项定范围，不承诺任意 rig/VAR/插件兼容 |
 
 ## M1.2 交付与实验索引

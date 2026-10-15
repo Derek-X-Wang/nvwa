@@ -1,0 +1,196 @@
+{
+  "guard_controls": {
+    "inspection_failure": {
+      "started_utc": "2026-10-15T15:44:38.937732+00:00",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import os,signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); open('/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/failure-controls-42d2f9f9/inspection-ready',\"w\").write(str(os.getpid())); time.sleep(60)"
+      ],
+      "wall_stop_seconds": 2,
+      "rss_stop_bytes": 7516192768,
+      "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+      "samples": [
+        {
+          "seconds": 0.006807250087149441,
+          "rss_bytes": 4046848,
+          "members": [
+            {
+              "pid": 57424,
+              "rss_bytes": 4046848
+            }
+          ]
+        }
+      ],
+      "reason": "cleanup_unconfirmed",
+      "deferred_cancel_signals": [],
+      "pid": 57424,
+      "pgid": 57424,
+      "error": "CONTROL: owned-group ps inspection unavailable",
+      "cleanup_errors": [
+        {
+          "stage": "leader_term_wait",
+          "type": "TimeoutExpired",
+          "error": "Command '['/usr/bin/sandbox-exec', '-p', '(version 1)(allow default)(deny network*)', '/opt/homebrew/opt/python@3.14/bin/python3.14', '-B', '-c', 'import os,signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); open(\\'/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/failure-controls-42d2f9f9/inspection-ready\\',\"w\").write(str(os.getpid())); time.sleep(60)']' timed out after 0.3 seconds"
+        },
+        {
+          "stage": "inspect_after_term",
+          "type": "RuntimeError",
+          "error": "CONTROL: owned-group ps inspection unavailable"
+        },
+        {
+          "stage": "inspect_final",
+          "type": "RuntimeError",
+          "error": "CONTROL: owned-group ps inspection unavailable"
+        }
+      ],
+      "cleanup_signals": [
+        15,
+        9,
+        9
+      ],
+      "owned_group_exit_verified": false,
+      "cleanup_uncertainty": "owned group absence could not be verified",
+      "returncode": -9,
+      "elapsed_seconds": 0.4171328750671819,
+      "max_sampled_group_rss_bytes": 4046848,
+      "independent_post_control_group_absent": true
+    },
+    "exited_leader": {
+      "started_utc": "2026-10-15T15:44:39.358701+00:00",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import subprocess,sys,time; p=subprocess.Popen([sys.executable,\"-B\",\"-c\",'import os,signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); open(\\'/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/failure-controls-42d2f9f9/descendant-ready\\',\"w\").write(str(os.getpid())); time.sleep(60)']);\nwhile not __import__(\"pathlib\").Path('/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/failure-controls-42d2f9f9/descendant-ready').exists(): time.sleep(.01)\n"
+      ],
+      "wall_stop_seconds": 2,
+      "rss_stop_bytes": 7516192768,
+      "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+      "samples": [
+        {
+          "seconds": 0.005134457955136895,
+          "rss_bytes": 3997696,
+          "members": [
+            {
+              "pid": 57457,
+              "rss_bytes": 3997696
+            }
+          ]
+        }
+      ],
+      "reason": "exited",
+      "deferred_cancel_signals": [],
+      "pid": 57457,
+      "pgid": 57457,
+      "cleanup_errors": [],
+      "cleanup_signals": [
+        15,
+        9
+      ],
+      "owned_group_exit_verified": true,
+      "remaining_members_after_term": [
+        {
+          "pid": 57472,
+          "rss_bytes": 15171584
+        }
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11251254193484783,
+      "max_sampled_group_rss_bytes": 3997696
+    },
+    "cancel_during_teardown": {
+      "started_utc": "2026-10-15T15:44:39.474249+00:00",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-c",
+        "import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(60)"
+      ],
+      "wall_stop_seconds": 0.2,
+      "rss_stop_bytes": 7516192768,
+      "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+      "samples": [
+        {
+          "seconds": 0.004071541014127433,
+          "rss_bytes": 3997696,
+          "members": [
+            {
+              "pid": 57481,
+              "rss_bytes": 3997696
+            }
+          ]
+        },
+        {
+          "seconds": 0.11728262493852526,
+          "rss_bytes": 15171584,
+          "members": [
+            {
+              "pid": 57481,
+              "rss_bytes": 15171584
+            }
+          ]
+        },
+        {
+          "seconds": 0.22514841600786895,
+          "rss_bytes": 15171584,
+          "members": [
+            {
+              "pid": 57481,
+              "rss_bytes": 15171584
+            }
+          ]
+        }
+      ],
+      "reason": "cancelled",
+      "deferred_cancel_signals": [
+        15
+      ],
+      "pid": 57481,
+      "pgid": 57481,
+      "cleanup_errors": [
+        {
+          "stage": "leader_term_wait",
+          "type": "TimeoutExpired",
+          "error": "Command '['/usr/bin/sandbox-exec', '-p', '(version 1)(allow default)(deny network*)', '/opt/homebrew/opt/python@3.14/bin/python3.14', '-B', '-c', 'import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(60)']' timed out after 0.3 seconds"
+        }
+      ],
+      "cleanup_signals": [
+        15,
+        9
+      ],
+      "owned_group_exit_verified": true,
+      "remaining_members_after_term": [
+        {
+          "pid": 57481,
+          "rss_bytes": 15171584
+        }
+      ],
+      "returncode": -9,
+      "elapsed_seconds": 0.5405177079373971,
+      "max_sampled_group_rss_bytes": 15171584
+    }
+  },
+  "float_checks": {
+    "valid": {
+      "receipt_sha256": "d95d2e3aef084319244509cb1ac469e7cb3231149982959d7a28669ce02fba70",
+      "probe_sha256": "263aaf8dc085b2b907886aca3a0715b5a10667b0fd14ac2fff272bdd73885f2d",
+      "binary_sha256": "55b5c74fb7ab8c83d1560476eb2b9a29e184cbc7020181f3d6eeef44840e9f7d",
+      "returncode": 0,
+      "native_float_one_hex": "0000803f"
+    },
+    "missing": {
+      "rejected": true,
+      "error": "[Errno 2] No such file or directory: '/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/failure-controls-42d2f9f9/missing.json'"
+    },
+    "stale_runtime": {
+      "rejected": true,
+      "error": "C++ float prerequisite missing or stale for this compiler/runtime identity"
+    },
+    "run_entrypoint": {
+      "rejected_before_launch": true
+    }
+  },
+  "no_model_or_provider_run": true
+}

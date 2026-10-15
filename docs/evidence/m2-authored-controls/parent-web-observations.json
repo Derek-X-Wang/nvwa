@@ -1,0 +1,39 @@
+{
+  "adapter": "Codex IAB 2/tab4 through cua_repl; task tab now closed",
+  "runtime_source_head": "7cfe171ea7d0bd2ba8e777b188e68ab9cbd85bf8",
+  "cases": {
+    "authored": {
+      "ready": true,
+      "real_character": true,
+      "active_clip": "imported_authored_control",
+      "times": [
+        0.4139,
+        0.0355
+      ],
+      "restart_pause": true
+    },
+    "naive": {
+      "ready": true,
+      "real_character": true,
+      "time": 0.7755,
+      "visual_result": "Negative control visibly folds limbs; expected mapping rejection"
+    },
+    "calibrated": {
+      "ready": true,
+      "real_character": true,
+      "times": [
+        0.7817,
+        0.7999,
+        0.58
+      ],
+      "pause": true,
+      "seek": true,
+      "visual_result": "Asymmetric arm raise/torso lean; math endpoint gap retained"
+    }
+  },
+  "provenance_kind": "authored_control",
+  "ai_generated": false,
+  "physical_human": "NOT-RUN",
+  "performance": "NOT-RUN",
+  "screenshots": "Observed in CUA tool outputs; no saved local screenshot files claimed"
+}

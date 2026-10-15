@@ -1,0 +1,50 @@
+{
+  "verdict": "GO to present concrete three-artifact download plus one bounded offline CPU run permission request; explicit user approval still required",
+  "open_findings": [],
+  "previous_blockers": {
+    "cleanup_exception_and_cancellation": "resolved",
+    "C++_float_prerequisite": "resolved"
+  },
+  "freeze_hashes": {
+    "SHA256SUMS.json": "6884ad95d6b415a6299637c2b067718cc8a080fab993a5a9b9a7c1c7f6a6a897",
+    "REPORT.md": "cec997fc0d95865fbe4230bdda337e6a6720d64291c9dda594ab094e84842f95",
+    "evidence/float-prerequisite.json": "d95d2e3aef084319244509cb1ac469e7cb3231149982959d7a28669ce02fba70"
+  },
+  "frozen_files": 31,
+  "prior_evidence_preserved": true,
+  "independent_replay": {
+    "actual_process_failure_controls": 3,
+    "actual_standard_guard_controls": 5,
+    "float_probe_and_current_runtime_identity": "pass, no compilation",
+    "missing_stale_and_launch_prerequisite_rejections": "pass",
+    "owned_groups_absent_on_final_independent_query": [
+      15255,
+      15352,
+      15377,
+      15598,
+      15636,
+      15705,
+      15735,
+      15820
+    ]
+  },
+  "unchanged_permission_scope": {
+    "model_payload_bytes": 6198789742,
+    "artifacts": 3,
+    "cpu_attempts": 1,
+    "frames": 90,
+    "seed": 42,
+    "diffusion_steps": 25,
+    "deadline_seconds": 600,
+    "sampled_RSS_stop_GiB": 7,
+    "planning_ceiling_GiB_not_hardcap": 8
+  },
+  "not_run": [
+    "model acquisition/loading/inference",
+    "actual model memory/latency/cancellation",
+    "raw numeric and signed-axis admission",
+    "official decoder parity",
+    "normalization/retargeting/generated playback"
+  ],
+  "cleanup": "Only reviewer-owned files under .work/m2-provider-review/r2 changed. All eight owned groups independently absent. No model files, downloads, builds, source edits, Git/GH actions, or servers."
+}

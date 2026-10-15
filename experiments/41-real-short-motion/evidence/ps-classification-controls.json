@@ -1,0 +1,170 @@
+{
+  "production_seam": "subprocess.run called by unmodified group_rss",
+  "no_model_or_provider_run": true,
+  "actual_BSD_responses": {
+    "clean_no_match": {
+      "argv": [
+        "/bin/ps",
+        "-g",
+        "99999",
+        "-o",
+        "pid=,pgid=,rss="
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "diagnostic_error": {
+      "argv": [
+        "/bin/ps",
+        "-g",
+        "2147483647",
+        "-o",
+        "pid=,pgid=,rss="
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "ps: process group too large: 2147483647\n"
+    }
+  },
+  "guard_receipt": {
+    "started_utc": "2026-10-15T15:44:20.455148+00:00",
+    "argv": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "-B",
+      "-c",
+      "import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); open('/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/ps-controls-be25fa37/child-ready',\"w\").write(\"ready\"); time.sleep(60)"
+    ],
+    "wall_stop_seconds": 0.25,
+    "rss_stop_bytes": 7516192768,
+    "rss_note": "sampled process-group sum, 100ms polling; not an allocation hard cap",
+    "samples": [
+      {
+        "seconds": 0.00432283291593194,
+        "rss_bytes": 4030464,
+        "members": [
+          {
+            "pid": 55557,
+            "rss_bytes": 4030464
+          }
+        ]
+      }
+    ],
+    "reason": "cleanup_unconfirmed",
+    "deferred_cancel_signals": [],
+    "pid": 55557,
+    "pgid": 55557,
+    "error": "owned process-group RSS diagnostic: ps: process group too large: 2147483647",
+    "cleanup_errors": [
+      {
+        "stage": "leader_term_wait",
+        "type": "TimeoutExpired",
+        "error": "Command '['/usr/bin/sandbox-exec', '-p', '(version 1)(allow default)(deny network*)', '/opt/homebrew/opt/python@3.14/bin/python3.14', '-B', '-c', 'import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); open(\\'/Users/derekxwang/.codex/worktrees/m2-motion-provider/nvwa/.work/m2-provider/ps-controls-be25fa37/child-ready\\',\"w\").write(\"ready\"); time.sleep(60)']' timed out after 0.3 seconds"
+      },
+      {
+        "stage": "inspect_after_term",
+        "type": "RuntimeError",
+        "error": "owned process-group RSS diagnostic: ps: process group too large: 2147483647"
+      },
+      {
+        "stage": "inspect_final",
+        "type": "RuntimeError",
+        "error": "owned process-group RSS diagnostic: ps: process group too large: 2147483647"
+      }
+    ],
+    "cleanup_signals": [
+      15,
+      9,
+      9
+    ],
+    "owned_group_exit_verified": false,
+    "cleanup_uncertainty": "owned group absence could not be verified",
+    "returncode": -9,
+    "elapsed_seconds": 0.42259887501131743,
+    "max_sampled_group_rss_bytes": 4030464
+  },
+  "durable_guard_receipt_matches": true,
+  "independent_after_guard": {
+    "returncode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "emergency_control_cleanup_needed": false,
+  "classification_controls": {
+    "clean_no_match": {
+      "accepted": true,
+      "result": [],
+      "passed": true
+    },
+    "valid_rc0": {
+      "accepted": true,
+      "result": [
+        {
+          "pid": 123,
+          "rss_bytes": 4096
+        },
+        {
+          "pid": 124,
+          "rss_bytes": 0
+        }
+      ],
+      "passed": true
+    },
+    "diagnostic_rc1": {
+      "accepted": false,
+      "error": "owned process-group RSS diagnostic: ps: process group too large: 2147483647",
+      "passed": true
+    },
+    "diagnostic_rc0": {
+      "accepted": false,
+      "error": "owned process-group RSS diagnostic: ps: diagnostic",
+      "passed": true
+    },
+    "rc1_with_records": {
+      "accepted": false,
+      "error": "RSS query returned records with no-match status",
+      "passed": true
+    },
+    "rc0_empty": {
+      "accepted": false,
+      "error": "RSS query returned empty successful output",
+      "passed": true
+    },
+    "malformed_rc0": {
+      "accepted": false,
+      "error": "RSS query returned a malformed record",
+      "passed": true
+    },
+    "unowned_group": {
+      "accepted": false,
+      "error": "RSS query returned an invalid, duplicate, or unowned record",
+      "passed": true
+    },
+    "negative_rss": {
+      "accepted": false,
+      "error": "RSS query returned a malformed record",
+      "passed": true
+    },
+    "zero_pid": {
+      "accepted": false,
+      "error": "RSS query returned an invalid, duplicate, or unowned record",
+      "passed": true
+    },
+    "duplicate_pid": {
+      "accepted": false,
+      "error": "RSS query returned an invalid, duplicate, or unowned record",
+      "passed": true
+    },
+    "blank_record": {
+      "accepted": false,
+      "error": "RSS query returned a malformed record",
+      "passed": true
+    },
+    "unexpected_rc": {
+      "accepted": false,
+      "error": "owned process-group RSS query failed",
+      "passed": true
+    }
+  },
+  "passed": true
+}

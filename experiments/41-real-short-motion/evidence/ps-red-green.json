@@ -1,0 +1,41 @@
+{
+  "red": {
+    "private_receipt": ".work/m2-provider/ps-controls-6fc9c57b/control-receipt.json",
+    "receipt_sha256": "870d4f9d67122ae92cc267c750e47c6ddbde97cde3e238e7e70595b055c79501",
+    "passed": false,
+    "reason": "time_limit",
+    "returncode": null,
+    "owned_group_exit_verified": true,
+    "cleanup_signals": [
+      15
+    ],
+    "emergency_control_cleanup_needed": true,
+    "independent_after_guard": {
+      "returncode": 0,
+      "stdout": "54593 54593  14704\n",
+      "stderr": ""
+    }
+  },
+  "green": {
+    "private_receipt": ".work/m2-provider/ps-controls-be25fa37/control-receipt.json",
+    "receipt_sha256": "a650056f9ea1b02b35af4d5f5f7599260eee3d4feade7ebabf887d2697da9f3a",
+    "passed": true,
+    "reason": "cleanup_unconfirmed",
+    "returncode": -9,
+    "owned_group_exit_verified": false,
+    "cleanup_signals": [
+      15,
+      9,
+      9
+    ],
+    "emergency_control_cleanup_needed": false,
+    "independent_after_guard": {
+      "returncode": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  "red_source_sha256": "6f85a4efbc58bbde26f9fc79b8e47545bb2f6fdef35d74a8b6ccc68235804fa3",
+  "green_source_sha256": "efa444623607e1808c2053ce4f67dc30fabd25d47422e0d8085ff0a4b04e8721",
+  "scope": "Captured actual BSD diagnostic injected at real production inspection seam for actual owned child; red test emergency cleanup reaped child; no models."
+}

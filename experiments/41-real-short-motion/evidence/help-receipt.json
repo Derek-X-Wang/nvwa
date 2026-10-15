@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/usr/bin/sandbox-exec",
+    "-p",
+    "(version 1)(allow default)(deny network*)",
+    ".work/m2-provider/runtime/build-cpu/kmd-generate",
+    "--help"
+  ],
+  "returncode": 2,
+  "elapsed_seconds": 0.5371082089841366,
+  "stdout": "",
+  "stderr": "usage: .work/m2-provider/runtime/build-cpu/kmd-generate MOTION.gguf TEXT_BUNDLE PROMPT.txt FRAMES STEPS SEED OUTPUT_DIR\n   or: .work/m2-provider/runtime/build-cpu/kmd-generate MOTION.gguf TEXT_BUNDLE --sequence TRANSITION STEPS SEED OUTPUT_DIR FRAME PROMPT.txt [FRAME PROMPT.txt ...]\n",
+  "binary_bytes": 279632,
+  "binary_sha256": "55b5c74fb7ab8c83d1560476eb2b9a29e184cbc7020181f3d6eeef44840e9f7d"
+}

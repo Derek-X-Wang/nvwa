@@ -1,0 +1,81 @@
+{
+  "state": "AWAITING_EXPLICIT_MODEL_DOWNLOAD_AND_RUN_APPROVAL",
+  "artifacts": [
+    {
+      "repository": "LocalAI-io/Kimodo-SOMA-RP-v1.1-GGML",
+      "revision": "65f8b8ab34ee7524161cc87b20ae4cb4f5d3a12d",
+      "path": "models/kimodo-soma-rp-v1.1-f32.gguf",
+      "bytes": 1133166784,
+      "sha256": "3bf1229f4c1eff1d28f5196a854113da2df9a11a5e21c60694630903bf948ee4",
+      "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Kimodo-SOMA-RP-v1.1-GGML/resolve/65f8b8ab34ee7524161cc87b20ae4cb4f5d3a12d/models/kimodo-soma-rp-v1.1-f32.gguf"
+    },
+    {
+      "repository": "LocalAI-io/Llama-3-Kimodo-GGML",
+      "revision": "3e8d958803beaddb6011ac534f2be972e2710c7d",
+      "path": "Llama-3-Kimodo-Q4_K_M.gguf",
+      "bytes": 5058327904,
+      "sha256": "c06f2cb6a7615e949bcbb5b582ad35a191338b68b5a51abe17d259ebe574c005",
+      "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Llama-3-Kimodo-GGML/resolve/3e8d958803beaddb6011ac534f2be972e2710c7d/Llama-3-Kimodo-Q4_K_M.gguf"
+    },
+    {
+      "repository": "LocalAI-io/Llama-3-Kimodo-GGML",
+      "revision": "3e8d958803beaddb6011ac534f2be972e2710c7d",
+      "path": "tokenizer.gguf",
+      "bytes": 7295054,
+      "sha256": "81614aca62a98846c02b72cc2e5378e5bdce8b4d507b88f96eb1faa90dae607e",
+      "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Llama-3-Kimodo-GGML/resolve/3e8d958803beaddb6011ac534f2be972e2710c7d/tokenizer.gguf"
+    }
+  ],
+  "model_payload_bytes": 6198789742,
+  "model_payload_gib": 5.773072822019458,
+  "code_revision": "5679ff19ba0a522c0b0516e9a9d402fe1af2c027",
+  "ggml_revision": "8c63e70982c95ceb862e3a1073a2c1beef75d60a",
+  "prompt": "A person stands in place and waves their right hand.",
+  "seed": 42,
+  "frames": 90,
+  "fps": 30,
+  "diffusion_steps": 25,
+  "text_cfg": 2.0,
+  "constraint_cfg": 2.0,
+  "nominal_frame_budget_seconds": 3.0,
+  "sampled_first_to_last_seconds": 2.966666666666667,
+  "backend": "cpu",
+  "threads": 4,
+  "wall_stop_seconds": 600,
+  "rss_soft_stop_bytes": 7516192768,
+  "rss_target_ceiling_bytes": 8589934592,
+  "rss_limit_note": "sampled own-process-group watchdog; not an OS hard memory cap; peak and completion time unmeasured",
+  "raw_outputs": [
+    {
+      "name": "root_positions.f32",
+      "shape": [
+        90,
+        3
+      ],
+      "bytes": 1080
+    },
+    {
+      "name": "local_rotations_xyzw.f32",
+      "shape": [
+        90,
+        30,
+        4
+      ],
+      "bytes": 43200
+    }
+  ],
+  "raw_format": "host-native IEC559 binary32, 8-bit bytes, little endian; model-free same-compiler probe is enforced before inference and bound to exact runtime/compiler hashes",
+  "float_prerequisite_receipt": "evidence/float-prerequisite.json",
+  "wall_limit_note": "600-second monitoring abort threshold; bounded inspection and teardown can add latency; not a hard process-runtime deadline",
+  "success_stdout": "generated 90 frames with 30 joints\n",
+  "normalization": "pending root contract: source identity soma30, samples i/30, root trajectory replaces root translation once; do not add exporter 0.988m offset",
+  "license_instruments": [
+    "Apache-2.0: kimodo.cpp code",
+    "MIT: GGML code",
+    "NVIDIA Open Model License: SOMA-RP weights",
+    "Meta Llama 3 Community License and acceptable use: converted text encoder",
+    "MIT: McGill adapters"
+  ],
+  "terms_approval": "UNKNOWN; no terms accepted or gated account inspected",
+  "genuine_generation": "NOT-RUN; no model payload downloaded"
+}

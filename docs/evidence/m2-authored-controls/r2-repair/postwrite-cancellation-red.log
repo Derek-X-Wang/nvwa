@@ -1,0 +1,25 @@
+test_actual_signal_after_receipt_write_is_persisted_before_exit (__main__.Lifecycle.test_actual_signal_after_receipt_write_is_persisted_before_exit) ... FAIL
+
+======================================================================
+FAIL: test_actual_signal_after_receipt_write_is_persisted_before_exit (__main__.Lifecycle.test_actual_signal_after_receipt_write_is_persisted_before_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/42-motion-import/test_model_free.py", line 282, in test_actual_signal_after_receipt_write_is_persisted_before_exit
+    self.exercise("signal_after_persistence")
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/derekxwang/.codex/worktrees/m2-experiment-integration/nvwa/experiments/42-motion-import/test_model_free.py", line 243, in exercise
+    self.assertEqual(result["pending_signals"], [signal.SIGTERM])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [<Signals.SIGTERM: 15>]
+
+Second list contains 1 additional elements.
+First extra element 0:
+<Signals.SIGTERM: 15>
+
+- []
++ [<Signals.SIGTERM: 15>]
+
+----------------------------------------------------------------------
+Ran 1 test in 1.052s
+
+FAILED (failures=1)
