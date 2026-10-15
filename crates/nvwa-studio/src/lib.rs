@@ -25,6 +25,7 @@ struct StudioUi {
     layout: editor_layout::EditorLayout,
     file_path: String,
     error: Option<String>,
+    save_notice: Option<SaveNotice>,
 }
 impl Default for StudioUi {
     fn default() -> Self {
@@ -33,9 +34,69 @@ impl Default for StudioUi {
             layout: default(),
             file_path: "scene.nvwa.json".into(),
             error: None,
+            save_notice: None,
         }
     }
 }
+
+/// Session-only feedback. The dwell starts when the completion is first drawn.
+#[derive(Clone)]
+struct SaveNotice {
+    title: &'static str,
+    destination: String,
+    work_path: String,
+    shown_at: Option<f64>,
+}
+impl SaveNotice {
+    fn new(title: &'static str, destination: String, work_path: String) -> Self {
+        Self {
+            title,
+            destination,
+            work_path,
+            shown_at: None,
+        }
+    }
+
+    fn draw(&mut self, ctx: &egui::Context) -> bool {
+        const DWELL_SECONDS: f64 = 8.0;
+        let now = ctx.input(|input| input.time);
+        let shown_at = *self.shown_at.get_or_insert(now);
+        let remaining = DWELL_SECONDS - (now - shown_at);
+        if remaining <= 0.0 {
+            return false;
+        }
+        ctx.request_repaint_after(std::time::Duration::from_secs_f64(remaining));
+        let width = 360.0_f32.min((ctx.viewport_rect().width() - 48.0).max(0.0));
+        // Different contents get a fresh sizing pass, so a longer destination
+        // cannot reuse a shorter notice's height at the bottom anchor.
+        egui::Area::new(egui::Id::new((
+            "save_notice",
+            self.title,
+            &self.destination,
+        )))
+        .order(egui::Order::Foreground)
+        .anchor(egui::Align2::RIGHT_BOTTOM, egui::vec2(-16.0, -16.0))
+        .fade_in(false)
+        .show(ctx, |ui| {
+            // Area's first pass measures its size invisibly. Resolve that
+            // pass now so the completion frame already paints the notice.
+            if ui.is_sizing_pass() {
+                ctx.request_discard("measure save notice before first paint");
+            }
+            egui::Frame::popup(ui.style()).show(ui, |ui| {
+                ui.set_width(width);
+                ui.colored_label(egui::Color32::LIGHT_GREEN, self.title);
+                egui::ScrollArea::vertical()
+                    .max_height(120.0)
+                    .show(ui, |ui| {
+                        ui.add(egui::Label::new(&self.destination).selectable(true).wrap());
+                    });
+            });
+        });
+        true
+    }
+}
+
 /// This is set by egui, before any viewport keyboard/mouse handler.
 /// The initial Studio camera is fixed; UI drags cannot rotate it.
 #[derive(Resource, Default)]
@@ -471,11 +532,25 @@ fn accept_file_completion(
     ui: &mut StudioUi,
 ) {
     match result {
-        Ok(FileCompletion::Saved) => {
-            editor.message = "Document saved".into();
+        Ok(FileCompletion::Saved(destination)) => {
             ui.error = None;
+            ui.save_notice = Some(SaveNotice::new(
+                "已保存 / Saved",
+                destination,
+                ui.file_path.clone(),
+            ));
+        }
+        #[cfg(any(target_arch = "wasm32", test))]
+        Ok(FileCompletion::DownloadStarted(file_name)) => {
+            ui.error = None;
+            ui.save_notice = Some(SaveNotice::new(
+                "下载已开始 / Download started",
+                format!("{file_name} · Check your browser downloads."),
+                ui.file_path.clone(),
+            ));
         }
         Ok(FileCompletion::Opened(json)) => {
+            ui.save_notice = None;
             match SceneDocument::from_json(&json)
                 .map_err(|e| e.to_string())
                 .and_then(|d| editor.replace(d))
@@ -484,7 +559,10 @@ fn accept_file_completion(
                 Err(error) => ui.error = Some(error),
             }
         }
-        Err(error) => ui.error = Some(error),
+        Err(error) => {
+            ui.save_notice = None;
+            ui.error = Some(error);
+        }
     }
 }
 
@@ -572,6 +650,14 @@ fn draw_editor_ui(
             .max_rect(ctx.viewport_rect()),
     );
     let mut layout = state.layout.clone();
+    let mut save_notice = if io.busy() {
+        None
+    } else {
+        state
+            .save_notice
+            .clone()
+            .filter(|notice| notice.work_path == state.file_path)
+    };
     let document = editor.visible_document().cloned();
     let mut next_playback = playback.clone();
     let mut file_action = None;
@@ -596,7 +682,11 @@ fn draw_editor_ui(
             }
             ui.separator();
             ui.label("作品 / Work");
+            let previous_path = state.file_path.clone();
             draw_work_path(ui, &mut state.file_path, 220.0);
+            if previous_path != state.file_path {
+                save_notice = None;
+            }
             if ui
                 .add_enabled(!io.busy(), egui::Button::new("Open…"))
                 .clicked()
@@ -616,6 +706,9 @@ fn draw_editor_ui(
                 ui.label(format!("Revision {}", doc.revision));
             }
         });
+        if file_action.is_some() {
+            save_notice = None;
+        }
     });
     egui::Panel::left("scene_objects")
         .exact_size(180.0)
@@ -870,6 +963,11 @@ fn draw_editor_ui(
                 .id_salt("timeline_scroll")
                 .show(ui, &mut timeline_body);
         });
+    if let Some(notice) = &mut save_notice
+        && !notice.draw(ctx)
+    {
+        save_notice = None;
+    }
     // Do not paint a central egui panel: the scene remains visible through it.
     guard.pointer = editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
     guard.keyboard = ctx.egui_wants_keyboard_input();
@@ -893,6 +991,7 @@ fn draw_editor_ui(
         return Ok(());
     }
     state.layout = layout;
+    state.save_notice = save_notice;
     *playback = next_playback;
     if let Some(save) = file_action {
         let result = if save {
@@ -1626,8 +1725,12 @@ mod tests {
             error: Some("old error".into()),
             ..default()
         };
-        accept_file_completion(Ok(FileCompletion::Saved), &mut editor, &mut ui);
-        assert_eq!(editor.message, "Document saved");
+        accept_file_completion(
+            Ok(FileCompletion::Saved("/tmp/scene.json".into())),
+            &mut editor,
+            &mut ui,
+        );
+        assert!(ui.save_notice.is_some());
         assert!(ui.error.is_none());
         assert_eq!(editor.document().unwrap(), &original);
     }
@@ -1662,3 +1765,6 @@ mod tests {
         assert_eq!(editor.document().unwrap().timeline, reopened.timeline);
     }
 }
+
+#[cfg(all(test, not(target_arch = "wasm32")))]
+mod save_feedback_tests;

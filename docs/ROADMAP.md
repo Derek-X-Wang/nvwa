@@ -28,7 +28,7 @@ Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以
 5. [#13 视觉 A/B](https://github.com/Derek-X-Wang/nvwa/issues/13)：已有受控 derivative 在相同 renderer/相机/时间点比较；支持结论限于同拓扑/骨长/语义的 rest-basis 转换。
 6. [#12 模型可行性](https://github.com/Derek-X-Wang/nvwa/issues/12)：核查当前本地条件、官方模型/编码器及输出格式；条件不足可按 NO-GO/NOT-RUN 退出。已有 authored action 始终标为手工动作。
 
-Alpha 操作入口：[M1.2 交接与复现](M1.2-ALPHA.md)。实体真人独立试用单独跟踪 [#49](https://github.com/Derek-X-Wang/nvwa/issues/49)，当前 NOT-RUN；agent 操作通过不能关闭它。
+Alpha 操作入口：[M1.2 交接与复现](M1.2-ALPHA.md)。实体真人试用单独跟踪 [#49](https://github.com/Derek-X-Wang/nvwa/issues/49)：首轮引导式原生播放、编辑、保存已通过；保存确认的可见性改进见 [#51](https://github.com/Derek-X-Wang/nvwa/issues/51)。未引导的完整 Alpha 及真人 Web/Player/错误恢复仍未验证，agent 操作或三项引导试用不能关闭 #49。
 
 第一版 agent 通过现有 CLI 编辑文件并由 Studio 重载。GUI、CLI 和未来 bridge 共用领域命令；不把离线文件修改描述为控制运行中的窗口。CLI 的 revision 检查针对读入文档，不构成文件系统 CAS；历史和重试记忆属于当前 Editor 会话。
 
