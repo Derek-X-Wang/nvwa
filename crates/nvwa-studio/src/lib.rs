@@ -112,6 +112,14 @@ enum AppMode {
     Player,
 }
 impl AppMode {
+    #[cfg(any(target_arch = "wasm32", test))]
+    fn browser_title(self) -> &'static str {
+        match self {
+            Self::Studio => "Nvwa · Character Studio",
+            Self::Player => "Nvwa · Player",
+        }
+    }
+
     fn label(self) -> &'static str {
         match self {
             Self::Studio => "studio",
@@ -143,6 +151,12 @@ pub fn build_app() -> App {
 }
 
 fn build_app_for_mode(config: LaunchConfig, smoke: SmokeRun) -> App {
+    #[cfg(target_arch = "wasm32")]
+    if let Some(document) = web_sys::window().and_then(|window| window.document()) {
+        // Use the final Rust launch mode, including the existing error-recovery
+        // mode. The HTML bootstrap cannot validate a launch query itself.
+        document.set_title(config.mode.browser_title());
+    }
     let benchmark = config.benchmark;
     let mut app = App::new();
     #[cfg(not(target_arch = "wasm32"))]
@@ -442,6 +456,18 @@ fn parse_web_pairs(
     Ok(config)
 }
 
+#[cfg(any(target_arch = "wasm32", test))]
+fn web_launch_or_recovery(
+    parsed: std::result::Result<LaunchConfig, String>,
+    requested_mode: AppMode,
+) -> LaunchConfig {
+    parsed.unwrap_or_else(|error| LaunchConfig {
+        mode: requested_mode,
+        error: Some(error),
+        ..default()
+    })
+}
+
 #[cfg(target_arch = "wasm32")]
 fn launch_options() -> (LaunchConfig, SmokeRun) {
     let mut requested_mode = AppMode::Studio;
@@ -476,11 +502,7 @@ fn launch_options() -> (LaunchConfig, SmokeRun) {
             }
             parse_web_pairs(pairs)
         });
-    let config = parsed.unwrap_or_else(|error| LaunchConfig {
-        mode: requested_mode,
-        error: Some(error),
-        ..default()
-    });
+    let config = web_launch_or_recovery(parsed, requested_mode);
     let smoke = if config.benchmark {
         SmokeRun {
             capture: Some("nvwa-web-benchmark.png".into()),
@@ -1456,6 +1478,66 @@ mod tests {
             vec![("work", "works/a.json"), ("work", "works/b.json")],
         ] {
             assert!(parse(&pairs).is_err(), "accepted {pairs:?}");
+        }
+    }
+
+    #[test]
+    fn web_title_follows_validated_launch_and_preserves_error_recovery_mode() {
+        let launch = |pairs: &[(&str, &str)], requested_mode| {
+            web_launch_or_recovery(
+                parse_web_pairs(
+                    pairs
+                        .iter()
+                        .map(|(key, value)| ((*key).into(), (*value).into())),
+                ),
+                requested_mode,
+            )
+        };
+        for pairs in [vec![], vec![("player", "0")]] {
+            // A successful parse owns the mode, regardless of a fallback hint.
+            let config = launch(&pairs, AppMode::Player);
+            assert_eq!(config.mode.browser_title(), "Nvwa · Character Studio");
+            assert!(config.error.is_none());
+        }
+        let player = launch(
+            &[("player", "1"), ("work", "works/alpha.json")],
+            AppMode::Studio,
+        );
+        assert_eq!(player.mode.browser_title(), "Nvwa · Player");
+        assert!(player.error.is_none());
+        assert_eq!(player.work.as_deref(), Some("works/alpha.json"));
+
+        for (pairs, requested_mode, expected_title) in [
+            (
+                vec![("player", "true")],
+                AppMode::Studio,
+                "Nvwa · Character Studio",
+            ),
+            (
+                vec![("player", "1"), ("player", "0")],
+                AppMode::Player,
+                "Nvwa · Player",
+            ),
+            (
+                vec![("player", "1"), ("work", "../alpha.json")],
+                AppMode::Player,
+                "Nvwa · Player",
+            ),
+        ] {
+            let rejected = parse_web_pairs(
+                pairs
+                    .iter()
+                    .map(|(key, value)| ((*key).into(), (*value).into())),
+            )
+            .unwrap_err();
+            let config = launch(&pairs, requested_mode);
+            assert_eq!(config.mode.browser_title(), expected_title);
+            assert_eq!(config.error.as_deref(), Some(rejected.as_str()));
+            assert!(config.work.is_none());
+            assert!(matches!(
+                config.startup_policy(),
+                StartupDocumentPolicy::WaitForOpen
+            ));
         }
     }
 
