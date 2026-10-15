@@ -1,0 +1,4464 @@
+{
+  "all48_algebraic_invariance": {
+    "frame_index": 47,
+    "improper": 24,
+    "max_fk_equivariance_error_m": 0.0,
+    "meaning": "numerical consistency only; not signed-reference evidence",
+    "proper": 24
+  },
+  "anatomical_semantic_admission": "HOLD",
+  "fps": 30,
+  "frames": 90,
+  "historical43_endpoint_limits": {
+    "identity_conditional": {
+      "max_named_endpoint_difference_m": {
+        "foot.L": 0.36175722810781497,
+        "foot.R": 0.35709225952951285,
+        "hand.L": 1.2889525156524586,
+        "hand.R": 1.3259374930619794
+      },
+      "meaning": "historical43 orientation rule after conditional root fix; differences mix rest directions, lengths and removed offsets; not a quality bound"
+    },
+    "x_reflection_conditional": {
+      "max_named_endpoint_difference_m": {
+        "foot.L": 0.2545930389642021,
+        "foot.R": 0.25505310440337103,
+        "hand.L": 0.45248656969216644,
+        "hand.R": 0.4715808314068711
+      },
+      "meaning": "historical43 orientation rule after conditional root fix; differences mix rest directions, lengths and removed offsets; not a quality bound"
+    }
+  },
+  "input_sha256": {
+    "assets/fixtures/nvwa-humanoid.glb": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "assets/fixtures/provenance-manifest.json": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f",
+    "experiments/41-real-short-motion/source-skeleton.json": "d137f3ea5522deeb70257d2fd5522ca6d5436c0145ea001a1e8b4fc646cddd9a",
+    "experiments/43-rig-mapping/spike.py": "063aefdd56d988256154b291b7f783d874f513b714303c546a36d8bf695bfe93",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json": "554fd2e64e316d218fd699bbbe8d3e45351a7b3a3e08ef077cdc2c6cfaaa52c9",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/process/receipt.json": "f67726f84982d6e5bd7c22e944131a7991016508e541d88972da6e20abc6410b",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/process/stdout.txt": "d8cafdcca9f05b92f112232345c7435335858a1f019cabc2067d30ba4e71d5d1",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32": "67914c5d72c54429bf8a70d3f9ef43157fb5181fa36ab2c5f8ce7f9dc69d3a55",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32": "dcc221d506999a803b1d0fddef87abc0131b1e8f4e64187bc57fde3a63c204af",
+    "tools/blender/generate_fixture.py": "bc54eec314ccba2ca2a77499b03d96b1ec9afb8c38cfbb9ac9e1fb04f5736f0e"
+  },
+  "issue": 59,
+  "kind": "offline fixed-sample reference diagnostics",
+  "max_raw_quaternion_norm_error": 8.412634311394385e-08,
+  "missing_references": [
+    "independent signed anatomical up/front/left and parity authority",
+    "signed palm/sole or explicitly reviewed authored twist gauge for target leaf joints",
+    "trusted neutral/twist reference; near-collinear elbows do not provide stable anatomical roll"
+  ],
+  "neutral_geometry": {
+    "collapsed_chain_twist": "No twist distribution chosen. Historical43 multiplies removed-link rotations and omits their moving translations.",
+    "endpoint_limit": "Lengths, removed positional links and T-like versus A-like rest geometry prevent interpreting endpoint fit as semantic acceptance.",
+    "neutral_relative_anatomical_reference": null,
+    "segments": [
+      {
+        "identity_direction_error_rad": 2.34353716475309,
+        "segment": "upper_arm.L -> forearm.L",
+        "source_direction": [
+          0.9999999959458036,
+          8.708226032190068e-09,
+          -9.004661411880728e-05
+        ],
+        "source_length_m": 0.287393079165148,
+        "target_direction": [
+          -0.6981002948233741,
+          -0.7159999848935181,
+          9.968229841074807e-16
+        ],
+        "target_length_m": 0.279329551498326,
+        "x_reflection_direction_error_rad": 0.7980555062531554
+      },
+      {
+        "identity_direction_error_rad": 2.2051578902724462,
+        "segment": "forearm.L -> hand.L",
+        "source_direction": [
+          0.9999999953637869,
+          -2.608051950484067e-08,
+          9.629343316678019e-05
+        ],
+        "source_length_m": 0.27093981325613464,
+        "target_direction": [
+          -0.5926675064772674,
+          -0.804333955877348,
+          0.042333369682965485
+        ],
+        "target_length_m": 0.23622024090980348,
+        "x_reflection_direction_error_rad": 0.936424589086605
+      },
+      {
+        "identity_direction_error_rad": 2.3435372213082033,
+        "segment": "upper_arm.R -> forearm.R",
+        "source_direction": [
+          -0.9999999959161152,
+          6.52922839150174e-08,
+          -9.037568910828662e-05
+        ],
+        "source_length_m": 0.28736639417357124,
+        "target_direction": [
+          0.6981002948233741,
+          -0.7159999848935181,
+          9.968229841074807e-16
+        ],
+        "target_length_m": 0.279329551498326,
+        "x_reflection_direction_error_rad": 0.7980555628661572
+      },
+      {
+        "identity_direction_error_rad": 2.205157912205059,
+        "segment": "forearm.R -> hand.R",
+        "source_direction": [
+          -0.9999999953641271,
+          -4.3034214241588306e-09,
+          9.628990481719231e-05
+        ],
+        "source_length_m": 0.2713361992578801,
+        "target_direction": [
+          0.5926675064772674,
+          -0.804333955877348,
+          0.042333369682965485
+        ],
+        "target_length_m": 0.23622024090980348,
+        "x_reflection_direction_error_rad": 0.9364246110188811
+      },
+      {
+        "identity_direction_error_rad": 0.05852119337076413,
+        "segment": "thigh.L -> shin.L",
+        "source_direction": [
+          -2.313250651991188e-08,
+          -0.9998274997935405,
+          -0.018573385706359448
+        ],
+        "source_length_m": 0.43229210747779073,
+        "target_direction": [
+          -0.05546995238184124,
+          -0.9984603569410035,
+          -4.5034305637442675e-17
+        ],
+        "target_length_m": 0.3605551421642303,
+        "x_reflection_direction_error_rad": 0.05852123724858635
+      },
+      {
+        "identity_direction_error_rad": 0.08694511861792549,
+        "segment": "shin.L -> foot.L",
+        "source_direction": [
+          2.364143414047117e-08,
+          -0.9966069239296662,
+          -0.08230819628353032
+        ],
+        "source_length_m": 0.4229861832966257,
+        "target_direction": [
+          -0.027767016517727346,
+          -0.9996144220616789,
+          7.341718078785331e-16
+        ],
+        "target_length_m": 0.3601388722884698,
+        "x_reflection_direction_error_rad": 0.08694510349850397
+      },
+      {
+        "identity_direction_error_rad": 0.058521441243297105,
+        "segment": "thigh.R -> shin.R",
+        "source_direction": [
+          2.3057578921544995e-08,
+          -0.9998274852777989,
+          -0.018574167089597145
+        ],
+        "source_length_m": 0.43369687809644425,
+        "target_direction": [
+          0.05546995238184124,
+          -0.9984603569410035,
+          -4.5034305637442675e-17
+        ],
+        "target_length_m": 0.3605551421642303,
+        "x_reflection_direction_error_rad": 0.0585214849788114
+      },
+      {
+        "identity_direction_error_rad": 0.0869448408838137,
+        "segment": "shin.R -> foot.R",
+        "source_direction": [
+          4.732519486618937e-08,
+          -0.9966069460848517,
+          -0.08230792802290274
+        ],
+        "source_length_m": 0.42260787430247454,
+        "target_direction": [
+          0.027767016517727346,
+          -0.9996144220616789,
+          7.341718078785331e-16
+        ],
+        "target_length_m": 0.3601388722884698,
+        "x_reflection_direction_error_rad": 0.08694487114981445
+      }
+    ],
+    "source_neutral": "pinned static rest; frame zero is animated and is not a neutral reference",
+    "target_neutral": "pinned authored bind pose",
+    "transfer_mode_selected": null,
+    "twist_rule": "HOLD without signed secondary reference. Bind rotations/global forward may define an explicitly adopted gauge only; none is adopted here."
+  },
+  "not_run": [
+    "pose transfer adoption",
+    "normalized motion",
+    "export",
+    "generated Work",
+    "native/Web playback",
+    "contact/quality/scale-fitting admission",
+    "new inference",
+    "trained-data semantic parity"
+  ],
+  "numerical_calibration": "PASS conditional root arithmetic only",
+  "observability": {
+    "source": [
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.0027431671618402004,
+            0.970139858327856,
+            0.2425306791264348
+          ],
+          [
+            0.9999385984000478,
+            0.00526508559656291,
+            -0.009750810397529988
+          ],
+          [
+            -0.010736594603034739,
+            0.2424890392518151,
+            -0.9700947331982902
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 1.2944537939555922,
+        "joint": "Hips",
+        "normalized_projection_sine": 0.7725266090373143,
+        "primary": {
+          "landmark": "Hips -> Spine1",
+          "vector_m": [
+            -0.00013727,
+            0.0500376256,
+            -0.00053726669
+          ]
+        },
+        "projected_secondary_m": 0.10328331523728822,
+        "secondary": {
+          "landmark": "Hips -> LeftLeg",
+          "vector_m": [
+            0.10043214,
+            -0.0843452671,
+            0.0259565473
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -2.618450201031264e-08,
+            -4.811635290902707e-07,
+            -0.999999999999884
+          ],
+          [
+            0.9999912397905577,
+            -0.004185730777644122,
+            -2.417025163580068e-08
+          ],
+          [
+            -0.004185730777632007,
+            -0.9999912397904421,
+            4.812689152729417e-07
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 9.68179822443216,
+        "joint": "Spine1",
+        "normalized_projection_sine": 0.1032865978839019,
+        "primary": {
+          "landmark": "Spine1 -> Spine2",
+          "vector_m": [
+            -1.865741029987572e-09,
+            0.0712530139,
+            -0.00029824854599999997
+          ]
+        },
+        "projected_secondary_m": 0.00784361312641855,
+        "secondary": {
+          "landmark": "Spine2 -> Chest",
+          "vector_m": [
+            -5.751883979987537e-09,
+            0.0755006305,
+            -0.00815970992
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -7.57422017303264e-08,
+            -0.07953478441340397,
+            0.9968320912111065
+          ],
+          [
+            0.9942105936062753,
+            0.1071086423030009,
+            0.008546011061633054
+          ],
+          [
+            -0.10744903704106434,
+            0.9910610257760726,
+            0.07907431711135311
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 11.521569906151933,
+        "joint": "Spine2",
+        "normalized_projection_sine": 0.08679372760356649,
+        "primary": {
+          "landmark": "Spine2 -> Chest",
+          "vector_m": [
+            -5.751883979987537e-09,
+            0.0755006305,
+            -0.00815970992
+          ]
+        },
+        "projected_secondary_m": 0.022842147935479454,
+        "secondary": {
+          "landmark": "Chest -> Neck1",
+          "vector_m": [
+            -0.0018167651699999999,
+            0.26311295300000004,
+            -0.005533482920000001
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.006903195869759058,
+            0.30306520566787293,
+            0.9529448184445276
+          ],
+          [
+            0.9997551034235809,
+            0.022128969976296264,
+            0.00020461254404852226
+          ],
+          [
+            -0.02102567633368175,
+            0.9527128580014431,
+            -0.30314374665071553
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 4.057703864760292,
+        "joint": "Chest",
+        "normalized_projection_sine": 0.24644479570937708,
+        "primary": {
+          "landmark": "Chest -> Neck1",
+          "vector_m": [
+            -0.0018167651699999999,
+            0.26311295300000004,
+            -0.005533482920000001
+          ]
+        },
+        "projected_secondary_m": 0.05877295269861404,
+        "secondary": {
+          "landmark": "Chest -> LeftShoulder",
+          "vector_m": [
+            0.0162165175,
+            0.232371641,
+            0.0511341324
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -3.54344217081028e-07,
+            -1.964541253409996e-05,
+            0.9999999998069661
+          ],
+          [
+            0.958175636506548,
+            -0.2861807987572987,
+            -5.282615856201071e-06
+          ],
+          [
+            0.2861807988058353,
+            0.9581756363197158,
+            1.8925162170374225e-05
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 54.50675672837842,
+        "joint": "Neck1",
+        "normalized_projection_sine": 0.018346349333959906,
+        "primary": {
+          "landmark": "Neck1 -> Neck2",
+          "vector_m": [
+            -2.851022309988821e-08,
+            0.07709396639999999,
+            0.0230258546
+          ]
+        },
+        "projected_secondary_m": 0.0011801792857302903,
+        "secondary": {
+          "landmark": "Neck2 -> Head",
+          "vector_m": [
+            -4.597543700000234e-08,
+            0.06128915950000002,
+            0.0195370861
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -7.147061791222387e-07,
+            0.0009406514001594805,
+            0.9999995575871184
+          ],
+          [
+            0.9527639945620581,
+            -0.30371152210554503,
+            0.00028636774152008437
+          ],
+          [
+            0.30371165711187237,
+            0.9527635732516627,
+            -0.0008960017210048202
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 1.116593458603712,
+        "joint": "Neck2",
+        "normalized_projection_sine": 0.8955811018725554,
+        "primary": {
+          "landmark": "Neck2 -> Head",
+          "vector_m": [
+            -4.597543700000234e-08,
+            0.06128915950000002,
+            0.0195370861
+          ]
+        },
+        "projected_secondary_m": 0.028043063183477473,
+        "secondary": {
+          "landmark": "Head -> Jaw",
+          "vector_m": [
+            2.6368790100000103e-05,
+            0.004755922500000009,
+            0.030949406199999998
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.0008421116458746217,
+            0.6091341186144952,
+            -0.7930667792737999
+          ],
+          [
+            0.15188477396720365,
+            0.783788143269509,
+            0.6021687154835156
+          ],
+          [
+            0.9883978481790151,
+            -0.1209618617989893,
+            -0.09185816079812872
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 1.8730919530827828,
+        "joint": "Head",
+        "normalized_projection_sine": 0.5338766195403137,
+        "primary": {
+          "landmark": "Head -> Jaw",
+          "vector_m": [
+            2.6368790100000103e-05,
+            0.004755922500000009,
+            0.030949406199999998
+          ]
+        },
+        "projected_secondary_m": 0.05252333423102839,
+        "secondary": {
+          "landmark": "Head -> LeftEye",
+          "vector_m": [
+            0.0320638079,
+            0.05380205130000004,
+            0.0758688308
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "Jaw",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            2.6368790100000103e-05,
+            0.004755922500000009,
+            0.030949406199999998
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "LeftEye",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            0.0320638079,
+            0.05380205130000004,
+            0.0758688308
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "RightEye",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            -0.0322244017,
+            0.05361868999999997,
+            0.0755823359
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.9382300449500922,
+            0.3460121135927873,
+            8.674439189765099e-09
+          ],
+          [
+            1.3796769790762584e-07,
+            -3.4903691366684435e-07,
+            -0.9999999999999296
+          ],
+          [
+            -0.3460121135927599,
+            0.9382300449500273,
+            -3.752154139594336e-07
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 2.8907780696814123,
+        "joint": "LeftShoulder",
+        "normalized_projection_sine": 0.3459276277511709,
+        "primary": {
+          "landmark": "LeftShoulder -> LeftArm",
+          "vector_m": [
+            0.149198457,
+            2.1939787320235382e-08,
+            -0.0550232576
+          ]
+        },
+        "projected_secondary_m": 0.09941720610770412,
+        "secondary": {
+          "landmark": "LeftArm -> LeftForeArm",
+          "vector_m": [
+            0.287393078,
+            2.5026838934572027e-09,
+            -2.5878773699999913e-05
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.9999999959458036,
+            9.004661417530156e-05,
+            -8.103021849921842e-09
+          ],
+          [
+            8.708226032190068e-09,
+            -0.0001866949452742744,
+            -0.9999999825724986
+          ],
+          [
+            -9.004661411880728e-05,
+            0.9999999785183021,
+            -0.00018669494530152269
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 5366.532860085267,
+        "joint": "LeftArm",
+        "normalized_projection_sine": 0.00018634004972516114,
+        "primary": {
+          "landmark": "LeftArm -> LeftForeArm",
+          "vector_m": [
+            0.287393078,
+            2.5026838934572027e-09,
+            -2.5878773699999913e-05
+          ]
+        },
+        "projected_secondary_m": 5.0486938274674004e-05,
+        "secondary": {
+          "landmark": "LeftForeArm -> LeftHand",
+          "vector_m": [
+            0.27093981199999995,
+            -7.066251084264508e-09,
+            2.6089724799999506e-05
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.9999999953637869,
+            -9.629343635772743e-05,
+            -8.103021849921844e-09
+          ],
+          [
+            -2.608051950484067e-08,
+            -0.00018669494365569745,
+            -0.9999999825724986
+          ],
+          [
+            9.629343316678019e-05,
+            0.9999999779362858,
+            -0.00018669494530152277
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 5366.532860085266,
+        "joint": "LeftForeArm",
+        "normalized_projection_sine": 0.00018634004972516117,
+        "primary": {
+          "landmark": "LeftForeArm -> LeftHand",
+          "vector_m": [
+            0.27093981199999995,
+            -7.066251084264508e-09,
+            2.6089724799999506e-05
+          ]
+        },
+        "projected_secondary_m": 5.355284066230086e-05,
+        "secondary": {
+          "landmark": "LeftForeArm -> LeftArm (proximal bend plane)",
+          "vector_m": [
+            -0.287393078,
+            -2.5026838934572027e-09,
+            2.5878773699999913e-05
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.9998630179094284,
+            -0.007170181022865106,
+            -0.014917570886358223
+          ],
+          [
+            -0.0164546704543765,
+            -0.5278688507090725,
+            -0.8491664856029828
+          ],
+          [
+            -0.0017858435788294738,
+            0.8492956287154563,
+            -0.5279145250961842
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 2.374462422884824,
+        "joint": "LeftHand",
+        "normalized_projection_sine": 0.4211479576859601,
+        "primary": {
+          "landmark": "LeftHand -> LeftHandMiddleEnd",
+          "vector_m": [
+            0.19011959499999997,
+            -0.003128783869999985,
+            -0.0003395703729999998
+          ]
+        },
+        "projected_secondary_m": 0.05716566358484626,
+        "secondary": {
+          "landmark": "LeftHand -> LeftHandThumbEnd",
+          "vector_m": [
+            0.12268626699999996,
+            -0.03220175730000002,
+            0.0483306876
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "LeftHandThumbEnd",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            0.12268626699999996,
+            -0.03220175730000002,
+            0.0483306876
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "LeftHandMiddleEnd",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            0.19011959499999997,
+            -0.003128783869999985,
+            -0.0003395703729999998
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.9382300320467248,
+            -0.34601214858093843,
+            6.511693674163648e-08
+          ],
+          [
+            7.324294546828589e-07,
+            -1.7978281298757258e-06,
+            0.9999999999981157
+          ],
+          [
+            -0.3460121485801693,
+            0.9382300320450047,
+            1.940205833206587e-06
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 2.8907803574615936,
+        "joint": "RightShoulder",
+        "normalized_projection_sine": 0.3459273539820591,
+        "primary": {
+          "landmark": "RightShoulder -> RightArm",
+          "vector_m": [
+            -0.150371962,
+            1.1738790101079033e-07,
+            -0.0554560437
+          ]
+        },
+        "projected_secondary_m": 0.0994078963598289,
+        "secondary": {
+          "landmark": "RightArm -> RightForeArm",
+          "vector_m": [
+            -0.287366393,
+            1.8762808196015612e-08,
+            -2.597093590000002e-05
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.9999999959161152,
+            -9.037570717019592e-05,
+            3.159694627401254e-08
+          ],
+          [
+            6.52922839150174e-08,
+            -0.0003728362479864185,
+            0.9999999304965616
+          ],
+          [
+            -9.037568910828662e-05,
+            0.9999999264126791,
+            0.0003728362523646346
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 5357.173294865031,
+        "joint": "RightArm",
+        "normalized_projection_sine": 0.0001866656060871733,
+        "primary": {
+          "landmark": "RightArm -> RightForeArm",
+          "vector_m": [
+            -0.287366393,
+            1.8762808196015612e-08,
+            -2.597093590000002e-05
+          ]
+        },
+        "projected_secondary_m": 5.064913608786221e-05,
+        "secondary": {
+          "landmark": "RightForeArm -> RightHand",
+          "vector_m": [
+            -0.271336198,
+            -1.1676740130361907e-09,
+            2.61269368e-05
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.9999999953641271,
+            9.628989972918434e-05,
+            3.1596946274012536e-08
+          ],
+          [
+            -4.3034214241588306e-09,
+            -0.00037283625367867993,
+            0.9999999304965616
+          ],
+          [
+            9.628990481719231e-05,
+            0.9999999258606888,
+            0.0003728362523646345
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 5357.17329486503,
+        "joint": "RightForeArm",
+        "normalized_projection_sine": 0.00018666560608717332,
+        "primary": {
+          "landmark": "RightForeArm -> RightHand",
+          "vector_m": [
+            -0.271336198,
+            -1.1676740130361907e-09,
+            2.61269368e-05
+          ]
+        },
+        "projected_secondary_m": 5.3641422137495224e-05,
+        "secondary": {
+          "landmark": "RightForeArm -> RightArm (proximal bend plane)",
+          "vector_m": [
+            0.287366393,
+            -1.8762808196015612e-08,
+            2.597093590000002e-05
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.9998684414414755,
+            0.007138124500811733,
+            -0.014565266492787022
+          ],
+          [
+            -0.01613503220129626,
+            -0.5296801431571093,
+            0.8480439886473623
+          ],
+          [
+            -0.0016614888678910314,
+            0.8481674322465318,
+            0.5297256330696739
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 2.3834609033718857,
+        "joint": "RightHand",
+        "normalized_projection_sine": 0.4195579623669507,
+        "primary": {
+          "landmark": "RightHand -> RightHandMiddleEnd",
+          "vector_m": [
+            -0.190005945,
+            -0.003066155419999994,
+            -0.00031573430000000034
+          ]
+        },
+        "projected_secondary_m": 0.05688129394403565,
+        "secondary": {
+          "landmark": "RightHand -> RightHandThumbEnd",
+          "vector_m": [
+            -0.12264248300000002,
+            -0.03211454479999998,
+            0.048040390399999994
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "RightHandThumbEnd",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            -0.12264248300000002,
+            -0.03211454479999998,
+            0.048040390399999994
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "RightHandMiddleEnd",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            -0.190005945,
+            -0.003066155419999994,
+            -0.00031573430000000034
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -2.313250651991188e-08,
+            7.325834966172624e-07,
+            0.9999999999997314
+          ],
+          [
+            -0.9998274997935405,
+            0.018573385706337524,
+            -3.673507200254097e-08
+          ],
+          [
+            -0.018573385706359448,
+            -0.9998274997932727,
+            7.320274768468987e-07
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 15.678003088787525,
+        "joint": "LeftLeg",
+        "normalized_projection_sine": 0.0637836333069211,
+        "primary": {
+          "landmark": "LeftLeg -> LeftShin",
+          "vector_m": [
+            -9.999999994736442e-09,
+            -0.432217537,
+            -0.00802912805
+          ]
+        },
+        "projected_secondary_m": 0.026979595609286092,
+        "secondary": {
+          "landmark": "LeftShin -> LeftFoot",
+          "vector_m": [
+            9.999999994736442e-09,
+            -0.42155095900000006,
+            -0.0348152298
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            2.364143414047117e-08,
+            7.325672494492573e-07,
+            0.9999999999997314
+          ],
+          [
+            -0.9966069239296662,
+            0.08230819628352552,
+            -3.673507200254097e-08
+          ],
+          [
+            -0.08230819628353032,
+            -0.9966069239293975,
+            7.320274768468987e-07
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 15.678003088787522,
+        "joint": "LeftShin",
+        "normalized_projection_sine": 0.06378363330692112,
+        "primary": {
+          "landmark": "LeftShin -> LeftFoot",
+          "vector_m": [
+            9.999999994736442e-09,
+            -0.42155095900000006,
+            -0.0348152298
+          ]
+        },
+        "projected_secondary_m": 0.027573161264839538,
+        "secondary": {
+          "landmark": "LeftShin -> LeftLeg (proximal bend plane)",
+          "vector_m": [
+            9.999999994736442e-09,
+            0.432217537,
+            0.00802912805
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.0,
+            -2.461953678445104e-08,
+            -0.9999999999999998
+          ],
+          [
+            -0.3571595072812372,
+            0.9340434071062347,
+            -2.2995716019525934e-08
+          ],
+          [
+            0.9340434071062349,
+            0.3571595072812371,
+            -8.79310162742683e-09
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 1.0413723904467151,
+        "joint": "LeftFoot",
+        "normalized_projection_sine": 0.960271281602763,
+        "primary": {
+          "landmark": "LeftFoot -> LeftToeBase",
+          "vector_m": [
+            0.0,
+            -0.05059472060000003,
+            0.132315294
+          ]
+        },
+        "projected_secondary_m": 0.40618148433451196,
+        "secondary": {
+          "landmark": "LeftFoot -> LeftShin (proximal)",
+          "vector_m": [
+            -9.999999994736442e-09,
+            0.42155095900000006,
+            0.0348152298
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "LeftToeBase",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            0.0,
+            -0.05059472060000003,
+            0.132315294
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            2.3057578921544995e-08,
+            3.812100978229245e-07,
+            0.9999999999999272
+          ],
+          [
+            -0.9998274852777989,
+            0.01857416708960459,
+            1.597294109651637e-08
+          ],
+          [
+            -0.018574167089597145,
+            -0.9998274852777265,
+            3.815726087923688e-07
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 15.678260827020074,
+        "joint": "RightLeg",
+        "normalized_projection_sine": 0.06378258475433639,
+        "primary": {
+          "landmark": "RightLeg -> RightShin",
+          "vector_m": [
+            9.999999994736442e-09,
+            -0.43362205899999995,
+            -0.00805555828
+          ]
+        },
+        "projected_secondary_m": 0.026955022560547524,
+        "secondary": {
+          "landmark": "RightShin -> RightFoot",
+          "vector_m": [
+            2.000000000335067e-08,
+            -0.421173943,
+            -0.0347839785
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            4.732519486618937e-08,
+            3.7896321267210646e-07,
+            0.9999999999999271
+          ],
+          [
+            -0.9966069460848517,
+            0.0823079280229148,
+            1.5972941096516365e-08
+          ],
+          [
+            -0.08230792802290274,
+            -0.9966069460847797,
+            3.8157260879236886e-07
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 15.678260827020074,
+        "joint": "RightShin",
+        "normalized_projection_sine": 0.06378258475433639,
+        "primary": {
+          "landmark": "RightShin -> RightFoot",
+          "vector_m": [
+            2.000000000335067e-08,
+            -0.421173943,
+            -0.0347839785
+          ]
+        },
+        "projected_secondary_m": 0.027662307884877554,
+        "secondary": {
+          "landmark": "RightShin -> RightLeg (proximal bend plane)",
+          "vector_m": [
+            -9.999999994736442e-09,
+            0.43362205899999995,
+            0.00805555828
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -2.4110655024412978e-08,
+            -5.629005108266082e-08,
+            -0.9999999999999981
+          ],
+          [
+            -0.35715943115741156,
+            0.934043436214458,
+            -4.396600490458403e-08
+          ],
+          [
+            0.9340434362144586,
+            0.3571594311574099,
+            -4.2624921692888863e-08
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 1.0413724472441097,
+        "joint": "RightFoot",
+        "normalized_projection_sine": 0.9602712292286993,
+        "primary": {
+          "landmark": "RightFoot -> RightToeBase",
+          "vector_m": [
+            -3.429076689265287e-09,
+            -0.0507960932,
+            0.132841956
+          ]
+        },
+        "projected_secondary_m": 0.4058181829381649,
+        "secondary": {
+          "landmark": "RightFoot -> RightShin (proximal)",
+          "vector_m": [
+            -2.000000000335067e-08,
+            0.421173943,
+            0.0347839785
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "RightToeBase",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            -3.429076689265287e-09,
+            -0.0507960932,
+            0.132841956
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      }
+    ],
+    "target": [
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "COLLINEAR",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "root",
+        "normalized_projection_sine": 0.0,
+        "primary": {
+          "landmark": "root -> pelvis",
+          "vector_m": [
+            0.0,
+            0.7499999403953552,
+            0.0
+          ]
+        },
+        "projected_secondary_m": 0.0,
+        "secondary": {
+          "landmark": "pelvis -> spine",
+          "vector_m": [
+            0.0,
+            0.1700000762939453,
+            0.0
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            -0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 1.0283969797217978,
+        "joint": "pelvis",
+        "normalized_projection_sine": 0.9723871420455944,
+        "primary": {
+          "landmark": "pelvis -> spine",
+          "vector_m": [
+            0.0,
+            0.1700000762939453,
+            0.0
+          ]
+        },
+        "projected_secondary_m": 0.125,
+        "secondary": {
+          "landmark": "pelvis -> thigh.L",
+          "vector_m": [
+            -0.125,
+            0.03000009059906006,
+            0.0
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "COLLINEAR",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "spine",
+        "normalized_projection_sine": 0.0,
+        "primary": {
+          "landmark": "spine -> chest",
+          "vector_m": [
+            0.0,
+            0.19000005722045898,
+            0.0
+          ]
+        },
+        "projected_secondary_m": 0.0,
+        "secondary": {
+          "landmark": "chest -> neck",
+          "vector_m": [
+            0.0,
+            0.18999993801116943,
+            0.0
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          [
+            1.0,
+            0.0,
+            -0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 1.1640067242217222,
+        "joint": "chest",
+        "normalized_projection_sine": 0.8591015663321186,
+        "primary": {
+          "landmark": "chest -> neck",
+          "vector_m": [
+            0.0,
+            0.18999993801116943,
+            0.0
+          ]
+        },
+        "projected_secondary_m": 0.23499999940395355,
+        "secondary": {
+          "landmark": "chest -> upper_arm.L",
+          "vector_m": [
+            -0.23499999940395355,
+            0.13999998569488525,
+            0.0
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "COLLINEAR",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "neck",
+        "normalized_projection_sine": 0.0,
+        "primary": {
+          "landmark": "neck -> head",
+          "vector_m": [
+            0.0,
+            0.10000002384185791,
+            0.0
+          ]
+        },
+        "projected_secondary_m": 0.0,
+        "secondary": {
+          "landmark": "neck -> chest (proximal)",
+          "vector_m": [
+            0.0,
+            -0.18999993801116943,
+            0.0
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "head",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            0.0,
+            0.10000002384185791,
+            0.0
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.6981002948233741,
+            0.6841530212188349,
+            -0.21116491641524798
+          ],
+          [
+            -0.7159999848935181,
+            -0.6670494914719853,
+            0.20588588479895267
+          ],
+          [
+            9.968229841074807e-16,
+            0.29492307384147864,
+            0.9555209995159153
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 6.96668080169766,
+        "joint": "upper_arm.L",
+        "normalized_projection_sine": 0.14354037861994728,
+        "primary": {
+          "landmark": "upper_arm.L -> forearm.L",
+          "vector_m": [
+            -0.19500004225386225,
+            -0.1999999546531146,
+            2.784421170739655e-16
+          ]
+        },
+        "projected_secondary_m": 0.033907142817888355,
+        "secondary": {
+          "landmark": "forearm.L -> hand.L",
+          "vector_m": [
+            -0.1400000611594726,
+            -0.1899999608292824,
+            0.009999998785033878
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.5926675064772674,
+            0.7772738287382122,
+            -0.21116491641524798
+          ],
+          [
+            -0.804333955877348,
+            -0.5573669256990845,
+            0.20588588479895265
+          ],
+          [
+            0.042333369682965485,
+            0.2918689865254471,
+            0.9555209995159153
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 6.966680801697657,
+        "joint": "forearm.L",
+        "normalized_projection_sine": 0.14354037861994734,
+        "primary": {
+          "landmark": "forearm.L -> hand.L",
+          "vector_m": [
+            -0.1400000611594726,
+            -0.1899999608292824,
+            0.009999998785033878
+          ]
+        },
+        "projected_secondary_m": 0.04009506958180979,
+        "secondary": {
+          "landmark": "forearm.L -> upper_arm.L (proximal bend plane)",
+          "vector_m": [
+            0.19500004225386225,
+            0.1999999546531146,
+            -2.784421170739655e-16
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "hand.L",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            -0.1400000611594726,
+            -0.1899999608292824,
+            0.009999998785033878
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.6981002948233741,
+            -0.6841530212188349,
+            -0.21116491641524798
+          ],
+          [
+            -0.7159999848935181,
+            -0.6670494914719853,
+            -0.20588588479895267
+          ],
+          [
+            9.968229841074807e-16,
+            0.29492307384147864,
+            -0.9555209995159153
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 6.96668080169766,
+        "joint": "upper_arm.R",
+        "normalized_projection_sine": 0.14354037861994728,
+        "primary": {
+          "landmark": "upper_arm.R -> forearm.R",
+          "vector_m": [
+            0.19500004225386225,
+            -0.1999999546531146,
+            2.784421170739655e-16
+          ]
+        },
+        "projected_secondary_m": 0.033907142817888355,
+        "secondary": {
+          "landmark": "forearm.R -> hand.R",
+          "vector_m": [
+            0.1400000611594726,
+            -0.1899999608292824,
+            0.009999998785033878
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.5926675064772674,
+            -0.7772738287382122,
+            -0.21116491641524798
+          ],
+          [
+            -0.804333955877348,
+            -0.5573669256990845,
+            -0.20588588479895265
+          ],
+          [
+            0.042333369682965485,
+            0.2918689865254471,
+            -0.9555209995159153
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 6.966680801697657,
+        "joint": "forearm.R",
+        "normalized_projection_sine": 0.14354037861994734,
+        "primary": {
+          "landmark": "forearm.R -> hand.R",
+          "vector_m": [
+            0.1400000611594726,
+            -0.1899999608292824,
+            0.009999998785033878
+          ]
+        },
+        "projected_secondary_m": 0.04009506958180979,
+        "secondary": {
+          "landmark": "forearm.R -> upper_arm.R (proximal bend plane)",
+          "vector_m": [
+            -0.19500004225386225,
+            0.1999999546531146,
+            -2.784421170739655e-16
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "hand.R",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            0.1400000611594726,
+            -0.1899999608292824,
+            0.009999998785033878
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.05546995238184124,
+            0.9984603569410035,
+            -2.8064131829797444e-14
+          ],
+          [
+            -0.9984603569410035,
+            -0.05546995238184124,
+            1.514012789882311e-15
+          ],
+          [
+            -4.5034305637442675e-17,
+            2.8104905301379208e-14,
+            1.0
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 36.06944196939995,
+        "joint": "thigh.L",
+        "normalized_projection_sine": 0.0277242991684863,
+        "primary": {
+          "landmark": "thigh.L -> shin.L",
+          "vector_m": [
+            -0.019999976566877853,
+            -0.36000001594221165,
+            -1.623735047137554e-17
+          ]
+        },
+        "projected_secondary_m": 0.009984597837526817,
+        "secondary": {
+          "landmark": "shin.L -> foot.L",
+          "vector_m": [
+            -0.00999998201550964,
+            -0.36000001068458354,
+            2.64403806955362e-16
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            -0.027767016517727346,
+            0.9996144220616788,
+            -2.806413182979745e-14
+          ],
+          [
+            -0.9996144220616789,
+            -0.02776701651772734,
+            1.5140127898823112e-15
+          ],
+          [
+            7.341718078785331e-16,
+            2.8095350537850454e-14,
+            1.0
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 36.06944196939995,
+        "joint": "shin.L",
+        "normalized_projection_sine": 0.027724299168486302,
+        "primary": {
+          "landmark": "shin.L -> foot.L",
+          "vector_m": [
+            -0.00999998201550964,
+            -0.36000001068458354,
+            2.64403806955362e-16
+          ]
+        },
+        "projected_secondary_m": 0.00999613862809723,
+        "secondary": {
+          "landmark": "shin.L -> thigh.L (proximal bend plane)",
+          "vector_m": [
+            0.019999976566877853,
+            0.36000001594221165,
+            1.623735047137554e-17
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "foot.L",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            -0.00999998201550964,
+            -0.36000001068458354,
+            2.64403806955362e-16
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.05546995238184124,
+            -0.9984603569410035,
+            -2.8064131829797444e-14
+          ],
+          [
+            -0.9984603569410035,
+            -0.05546995238184124,
+            -1.514012789882311e-15
+          ],
+          [
+            -4.5034305637442675e-17,
+            2.8104905301379208e-14,
+            -1.0
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 36.06944196939995,
+        "joint": "thigh.R",
+        "normalized_projection_sine": 0.0277242991684863,
+        "primary": {
+          "landmark": "thigh.R -> shin.R",
+          "vector_m": [
+            0.019999976566877853,
+            -0.36000001594221165,
+            -1.623735047137554e-17
+          ]
+        },
+        "projected_secondary_m": 0.009984597837526817,
+        "secondary": {
+          "landmark": "shin.R -> foot.R",
+          "vector_m": [
+            0.00999998201550964,
+            -0.36000001068458354,
+            2.64403806955362e-16
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "GEOMETRY_ONLY",
+        "frame": [
+          [
+            0.027767016517727346,
+            -0.9996144220616788,
+            -2.806413182979745e-14
+          ],
+          [
+            -0.9996144220616789,
+            -0.02776701651772734,
+            -1.5140127898823112e-15
+          ],
+          [
+            7.341718078785331e-16,
+            2.8095350537850454e-14,
+            -1.0
+          ]
+        ],
+        "geometric_rank": 2,
+        "inverse_sine_sensitivity": 36.06944196939995,
+        "joint": "shin.R",
+        "normalized_projection_sine": 0.027724299168486302,
+        "primary": {
+          "landmark": "shin.R -> foot.R",
+          "vector_m": [
+            0.00999998201550964,
+            -0.36000001068458354,
+            2.64403806955362e-16
+          ]
+        },
+        "projected_secondary_m": 0.00999613862809723,
+        "secondary": {
+          "landmark": "shin.R -> thigh.R (proximal bend plane)",
+          "vector_m": [
+            -0.019999976566877853,
+            0.36000001594221165,
+            1.623735047137554e-17
+          ]
+        },
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": false,
+        "trusted_anatomical_frame": false
+      },
+      {
+        "anatomical_twist_status": "HOLD",
+        "conditioning": "SECONDARY_ABSENT",
+        "frame": null,
+        "geometric_rank": 1,
+        "inverse_sine_sensitivity": null,
+        "joint": "foot.R",
+        "normalized_projection_sine": null,
+        "primary": {
+          "landmark": "incoming only; distal direction absent",
+          "vector_m": [
+            0.00999998201550964,
+            -0.36000001068458354,
+            2.64403806955362e-16
+          ]
+        },
+        "projected_secondary_m": null,
+        "secondary": null,
+        "sign_authority": "pinned joint names and geometric order only; anatomical sign unverified",
+        "terminal": true,
+        "trusted_anatomical_frame": false
+      }
+    ]
+  },
+  "provenance_kind": "generated",
+  "provenance_scope": "Original public44 sample only. All transformed quantities are diagnostic controls; no generated product artifact is admitted.",
+  "raw_floats_finite": true,
+  "reference_anchors": {
+    "source_front": {
+      "authority": "pinned41 metadata declaration and toe/eye offsets; trained-data parity unverified",
+      "left_eye_minus_head_m": [
+        0.0320638079,
+        0.05380205130000004,
+        0.0758688308
+      ],
+      "left_toe_minus_foot_m": [
+        0.0,
+        -0.05059472060000003,
+        0.132315294
+      ],
+      "signed_axis": "+Z"
+    },
+    "source_named_left": {
+      "authority": "pinned41 names/offsets; anatomical label unverified",
+      "geometry_left_minus_right_m": [
+        0.20090492,
+        -0.0013926675999999943,
+        -0.0002466222000000011
+      ],
+      "signed_axis": "+X"
+    },
+    "source_up": {
+      "authority": "pinned41 metadata declaration; trained-data parity unverified",
+      "signed_axis": "+Y"
+    },
+    "target_front": {
+      "authority": "pinned generator eye/front placement corroborated by actual GLB POSITION vertices",
+      "eye_centroids_m": {
+        "Eye pupil -1": [
+          -0.07845605349709801,
+          1.6720000505447388,
+          0.17200000559466386
+        ],
+        "Eye pupil 1": [
+          0.07754394968632547,
+          1.6720000505447388,
+          0.17200000559466386
+        ],
+        "Eye white -1": [
+          -0.0790321186766134,
+          1.6720000505447388,
+          0.1480000017135983
+        ],
+        "Eye white 1": [
+          0.07696788451561691,
+          1.6720000505447388,
+          0.1480000017135983
+        ]
+      },
+      "signed_axis": "+Z"
+    },
+    "target_named_left": {
+      "authority": "pinned generator side=-1 for L and actual bind geometry; anatomical label unverified",
+      "geometry_left_minus_right_m": [
+        -0.25,
+        0.0,
+        0.0
+      ],
+      "signed_axis": "-X"
+    },
+    "target_up": {
+      "authority": "pinned generator export and actual bind geometry",
+      "signed_axis": "+Y"
+    }
+  },
+  "representation_max_fk_position_change_m": {
+    "XYWZ_misread": 1.1450166613421142,
+    "parent_localized_twice": 0.7327771111288437,
+    "q_negated": 0.0,
+    "xyz_conjugated": 1.386387008845683
+  },
+  "root_candidates": {
+    "identity_conditional": {
+      "frames": 90,
+      "hips_xz_path_m": 0.07349292719323285,
+      "max_pelvis_world_error_m": 1.734723475976807e-18,
+      "max_scene_root_vs_hips_difference_m": 0.7499999403953553,
+      "numeric_status": "PASS",
+      "per_frame_error_m": [
+        8.673617379884035e-19,
+        8.673617379884035e-19,
+        8.673617379884035e-19,
+        8.673617379884035e-19,
+        4.336808689942018e-19,
+        0.0,
+        0.0,
+        1.734723475976807e-18,
+        0.0,
+        0.0,
+        0.0,
+        1.734723475976807e-18,
+        1.734723475976807e-18,
+        1.734723475976807e-18,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.734723475976807e-18,
+        1.734723475976807e-18,
+        1.734723475976807e-18,
+        0.0,
+        1.734723475976807e-18,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.69739903612216e-19,
+        0.0,
+        0.0,
+        8.673617379884035e-19,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        8.673617379884035e-19,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scene_root_xz_path_m": 0.16769069210466325
+    },
+    "x_reflection_conditional": {
+      "frames": 90,
+      "hips_xz_path_m": 0.07349292719323285,
+      "max_pelvis_world_error_m": 1.734723475976807e-18,
+      "max_scene_root_vs_hips_difference_m": 0.7499999403953553,
+      "numeric_status": "PASS",
+      "per_frame_error_m": [
+        8.673617379884035e-19,
+        8.673617379884035e-19,
+        8.673617379884035e-19,
+        8.673617379884035e-19,
+        4.336808689942018e-19,
+        0.0,
+        0.0,
+        1.734723475976807e-18,
+        0.0,
+        0.0,
+        0.0,
+        1.734723475976807e-18,
+        1.734723475976807e-18,
+        1.734723475976807e-18,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.734723475976807e-18,
+        1.734723475976807e-18,
+        1.734723475976807e-18,
+        0.0,
+        1.734723475976807e-18,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        9.69739903612216e-19,
+        0.0,
+        0.0,
+        8.673617379884035e-19,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        8.673617379884035e-19,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scene_root_xz_path_m": 0.16769069210466325
+    }
+  },
+  "root_negative_controls": {
+    "basis_rotations_without_translation": {
+      "frames": 90,
+      "hips_xz_path_m": 0.07349292719323285,
+      "max_pelvis_world_error_m": 0.02826140820980072,
+      "max_scene_root_vs_hips_difference_m": 0.7503117054805728,
+      "numeric_status": "FAIL",
+      "per_frame_error_m": [
+        0.009028146043419838,
+        0.010497135110199451,
+        0.012175130657851696,
+        0.014190585352480412,
+        0.016599366441369057,
+        0.019249605014920235,
+        0.021871227771043777,
+        0.024373380467295647,
+        0.026473717764019966,
+        0.02782001532614231,
+        0.02826140820980072,
+        0.027746332809329033,
+        0.026516368612647057,
+        0.025076791644096375,
+        0.023654859513044357,
+        0.0219894852489233,
+        0.01966727152466774,
+        0.016840608790516853,
+        0.01370945293456316,
+        0.010116920806467533,
+        0.005438616964966059,
+        0.002545247320085764,
+        0.00039981238660402596,
+        0.000798381632193923,
+        0.0017154840752482414,
+        0.002564680064097047,
+        0.0032629230991005898,
+        0.0036675690207630396,
+        0.00393427349627018,
+        0.004206549376249313,
+        0.00432102894410491,
+        0.004241219721734524,
+        0.0039784531109035015,
+        0.003666948527097702,
+        0.0032933824695646763,
+        0.0027490060310810804,
+        0.0021428728941828012,
+        0.001438705949112773,
+        0.0005843877443112433,
+        0.0002287960087414831,
+        0.0008828585268929601,
+        0.0015573714626953006,
+        0.002422350225970149,
+        0.0031689212191849947,
+        0.003426618641242385,
+        0.003555559553205967,
+        0.003944835625588894,
+        0.00447441590949893,
+        0.005103517789393663,
+        0.005712294951081276,
+        0.006270518060773611,
+        0.006803630851209164,
+        0.00724827591329813,
+        0.007531415205448866,
+        0.0077116661705076694,
+        0.007766501512378454,
+        0.0077194697223603725,
+        0.0076460628770291805,
+        0.0075772469863295555,
+        0.007560566533356905,
+        0.007723415736109018,
+        0.007973706349730492,
+        0.008336489088833332,
+        0.00880521722137928,
+        0.00909714587032795,
+        0.009049792774021626,
+        0.00865660049021244,
+        0.007867586798965931,
+        0.006644547916948795,
+        0.005112292245030403,
+        0.0033906714525073767,
+        0.0016486011445522308,
+        0.00023414923634845763,
+        0.0021521947346627712,
+        0.0038327849470078945,
+        0.0054156179539859295,
+        0.007288474589586258,
+        0.00908505916595459,
+        0.010705702006816864,
+        0.012200267985463142,
+        0.013314706273376942,
+        0.013875295408070087,
+        0.013963120058178902,
+        0.013575728051364422,
+        0.012824833393096924,
+        0.011868365108966827,
+        0.010923901572823524,
+        0.010137367062270641,
+        0.009755036793649197,
+        0.009693162515759468
+      ],
+      "scene_root_xz_path_m": 0.15984839099614312
+    },
+    "double_source_trajectory": {
+      "frames": 90,
+      "hips_xz_path_m": 0.1469858543864657,
+      "max_pelvis_world_error_m": 0.9962255990604941,
+      "max_scene_root_vs_hips_difference_m": 0.24721473879762576,
+      "numeric_status": "FAIL",
+      "per_frame_error_m": [
+        0.9953013568350598,
+        0.9956695953033321,
+        0.9958826188267804,
+        0.9959312084553589,
+        0.9959156673381628,
+        0.9958381943395624,
+        0.9956630349789342,
+        0.9953854422383165,
+        0.9950908500387458,
+        0.9949634634899602,
+        0.9950274979308616,
+        0.9951196872203354,
+        0.9951311953435701,
+        0.9950944832652427,
+        0.9951337919965906,
+        0.9952166406049999,
+        0.9952373960992902,
+        0.9949845028221889,
+        0.9947142920008206,
+        0.9952420273397162,
+        0.9953246438501372,
+        0.9950667426177321,
+        0.9950365653435512,
+        0.9949194148111536,
+        0.994778089603226,
+        0.9949455786747993,
+        0.9952621168784604,
+        0.9951538863956163,
+        0.9949122134654088,
+        0.9948179928513584,
+        0.994702405139024,
+        0.9946168935734445,
+        0.9946030301242954,
+        0.9947156502814206,
+        0.9948258665206116,
+        0.9948450025690966,
+        0.9948673602419142,
+        0.9948483915848627,
+        0.9947253911184178,
+        0.9946099585964085,
+        0.9946434326090805,
+        0.994787763584012,
+        0.9948409919528501,
+        0.9947862037130002,
+        0.9947919572465845,
+        0.9949411236550362,
+        0.9949590428590978,
+        0.9947696939651932,
+        0.9944999908923723,
+        0.9942791051178638,
+        0.9941391079784978,
+        0.9940753989570289,
+        0.9940598002621933,
+        0.9941021005805144,
+        0.9941608563020246,
+        0.9942575743500502,
+        0.9943815563978222,
+        0.9945011488569192,
+        0.9946646616608319,
+        0.9948698017691552,
+        0.995053248836635,
+        0.9952131407136976,
+        0.9952722280420876,
+        0.9952971755535572,
+        0.9954043559359969,
+        0.9955877433168583,
+        0.9958204622677458,
+        0.9960490585466278,
+        0.9961714354966359,
+        0.9962145896450938,
+        0.9962255990604941,
+        0.9961826020465651,
+        0.9961703335975722,
+        0.9961833778178043,
+        0.9961424182801422,
+        0.9960264769613714,
+        0.9958249221509209,
+        0.9956289784495558,
+        0.9955782583772497,
+        0.9955952218452463,
+        0.9954923550373909,
+        0.9953099156154694,
+        0.9951359914616965,
+        0.9949826191096801,
+        0.9948734469977373,
+        0.994810911407229,
+        0.9947779256334479,
+        0.9948044084860714,
+        0.994883154624828,
+        0.9948683675233898
+      ],
+      "scene_root_xz_path_m": 0.21759728096587677
+    },
+    "double_target_rest": {
+      "frames": 90,
+      "hips_xz_path_m": 0.07349292719323285,
+      "max_pelvis_world_error_m": 0.07999999821186066,
+      "max_scene_root_vs_hips_difference_m": 0.6700633540774751,
+      "numeric_status": "FAIL",
+      "per_frame_error_m": [
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066,
+        0.07999999821186066
+      ],
+      "scene_root_xz_path_m": 0.16769069210466325
+    },
+    "exporter_height": {
+      "frames": 90,
+      "hips_xz_path_m": 0.07349292719323285,
+      "max_pelvis_world_error_m": 0.988,
+      "max_scene_root_vs_hips_difference_m": 0.2401946739592528,
+      "numeric_status": "FAIL",
+      "per_frame_error_m": [
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988,
+        0.988
+      ],
+      "scene_root_xz_path_m": 0.16769069210466325
+    },
+    "old43": {
+      "frames": 90,
+      "hips_xz_path_m": 0.15656716220095165,
+      "max_pelvis_world_error_m": 0.8299999133474834,
+      "max_scene_root_vs_hips_difference_m": 0.07999999821186066,
+      "numeric_status": "FAIL",
+      "per_frame_error_m": [
+        0.8299973472492707,
+        0.8299969738317643,
+        0.8299963986473673,
+        0.8299958515035485,
+        0.8299953593848826,
+        0.8299949430148612,
+        0.8299944477494217,
+        0.8299937077707997,
+        0.8299924123625659,
+        0.8299899063367796,
+        0.8299853249275458,
+        0.8299785082327099,
+        0.8299700054943938,
+        0.829961786924948,
+        0.8299552364137689,
+        0.8299520542617638,
+        0.8299534184817674,
+        0.8299586193735227,
+        0.8299658030273981,
+        0.8299702880749488,
+        0.8299724806748647,
+        0.829973285629584,
+        0.8299702135392112,
+        0.8299647465177084,
+        0.8299593300442065,
+        0.8299549229265991,
+        0.8299524129353664,
+        0.8299505995718937,
+        0.8299490251803212,
+        0.8299487466924164,
+        0.829950735355908,
+        0.8299563666071389,
+        0.8299653011188808,
+        0.8299753152266937,
+        0.8299827539685859,
+        0.8299868862932481,
+        0.8299893779284492,
+        0.8299905492513493,
+        0.8299902220449404,
+        0.8299880684947151,
+        0.8299843936828777,
+        0.8299787679061943,
+        0.8299719419552964,
+        0.8299664664480042,
+        0.8299627794566736,
+        0.8299596981180389,
+        0.8299580042125487,
+        0.8299571290624832,
+        0.8299564051891137,
+        0.829955387656638,
+        0.8299542837851533,
+        0.8299530017840715,
+        0.8299522382180241,
+        0.8299526841997403,
+        0.8299536354145282,
+        0.8299549952755111,
+        0.8299574007526588,
+        0.8299607710527971,
+        0.8299649461188703,
+        0.8299693281452333,
+        0.8299731841468692,
+        0.8299768162047827,
+        0.8299799159077771,
+        0.8299827648471358,
+        0.8299856074193096,
+        0.8299884458323533,
+        0.8299909482708476,
+        0.8299930103541765,
+        0.829994487834434,
+        0.8299953699303061,
+        0.8299956893743176,
+        0.8299955388256363,
+        0.8299951676090114,
+        0.8299946086804921,
+        0.829993945805142,
+        0.8299933795827624,
+        0.8299932754474807,
+        0.8299935851766792,
+        0.8299939776757539,
+        0.829994390326602,
+        0.8299950300116767,
+        0.8299961097853418,
+        0.8299972936392898,
+        0.8299983555597527,
+        0.8299992154394709,
+        0.82999970246534,
+        0.8299998872964505,
+        0.8299999133474834,
+        0.8299998820969438,
+        0.8299998228502894
+      ],
+      "scene_root_xz_path_m": 0.07349292719323285
+    },
+    "transpose_rotation": {
+      "frames": 90,
+      "hips_xz_path_m": 0.28836496135487727,
+      "max_pelvis_world_error_m": 0.056315120413513976,
+      "max_scene_root_vs_hips_difference_m": 0.7499999403953553,
+      "numeric_status": "FAIL",
+      "per_frame_error_m": [
+        0.012700742397142863,
+        0.013585032994983638,
+        0.014844411764051437,
+        0.01595037084874787,
+        0.016883325752507207,
+        0.017634148949316548,
+        0.01848756034484909,
+        0.019693866921950794,
+        0.02164435637188632,
+        0.024989125145815763,
+        0.030159522023674744,
+        0.03652156810513182,
+        0.04316144242031789,
+        0.04872569353523772,
+        0.05274018928206276,
+        0.05458092249413128,
+        0.05379043769333936,
+        0.050681857412490504,
+        0.04604478146690829,
+        0.042883020375262336,
+        0.04122671855873556,
+        0.0405760124009725,
+        0.04281701117490273,
+        0.04657412966255357,
+        0.050040160595104605,
+        0.05271256276322796,
+        0.05419706095203265,
+        0.05525314308928079,
+        0.05614918320666587,
+        0.056315120413513976,
+        0.05521437218347824,
+        0.05195528223587864,
+        0.04631433615738603,
+        0.03903905819839905,
+        0.032605061716538083,
+        0.028412700602403414,
+        0.025560357303654392,
+        0.024107572906892794,
+        0.0245325044067299,
+        0.02712502427987689,
+        0.03105160089413832,
+        0.03624748860175884,
+        0.041693563927550095,
+        0.04559753210587599,
+        0.048050691762424075,
+        0.05000929515911703,
+        0.05105491637304024,
+        0.05158668398106526,
+        0.052021217464345536,
+        0.05262490749211763,
+        0.05327157807840432,
+        0.05401310377765373,
+        0.05445010838117402,
+        0.05419635710078796,
+        0.05365108216836342,
+        0.05286133651817087,
+        0.051431243836484765,
+        0.04935543476582805,
+        0.04665394705516572,
+        0.04363752123305493,
+        0.04079817137729637,
+        0.03792901083245821,
+        0.035296031991527047,
+        0.03268929070550826,
+        0.029862269983276866,
+        0.026742642435786716,
+        0.023653112448922032,
+        0.020764320330606652,
+        0.018417770235775194,
+        0.016861783875280555,
+        0.016261574565647995,
+        0.016547055603505445,
+        0.01723091068929314,
+        0.018212306156648206,
+        0.01931184580713105,
+        0.020203973209149153,
+        0.020364284532396134,
+        0.019885852453039407,
+        0.01926223887162388,
+        0.018583869762390532,
+        0.017479927614004628,
+        0.015438174016422465,
+        0.012831411384891352,
+        0.009926842299343661,
+        0.006709390437921837,
+        0.0038339795946664046,
+        0.0017871793512198122,
+        0.0012539459664578296,
+        0.0018755485623301357,
+        0.00268434732500029
+      ],
+      "scene_root_xz_path_m": 0.1533821524232532
+    },
+    "unrotated_offset": {
+      "frames": 90,
+      "hips_xz_path_m": 0.15656716220095165,
+      "max_pelvis_world_error_m": 0.02822498009560867,
+      "max_scene_root_vs_hips_difference_m": 0.7499999403953552,
+      "numeric_status": "FAIL",
+      "per_frame_error_m": [
+        0.006350428314789634,
+        0.006792586364126625,
+        0.007422297517597455,
+        0.007975298482362477,
+        0.008441797298846395,
+        0.008817236634366845,
+        0.00924398077507936,
+        0.00984718310195939,
+        0.010822505993127764,
+        0.012495048804897206,
+        0.015080562255114498,
+        0.018262142644183833,
+        0.02158299347431622,
+        0.024366407853311286,
+        0.026375349483758206,
+        0.02729795839212975,
+        0.026906301654924136,
+        0.02535773026743212,
+        0.023048296404962546,
+        0.021480877678735775,
+        0.020671404113661165,
+        0.02036615452651326,
+        0.02150785964766846,
+        0.023402247977197622,
+        0.025138719519800973,
+        0.026467667826171545,
+        0.02719553264760353,
+        0.027709489612906778,
+        0.02814810474123565,
+        0.02822498009560867,
+        0.027671335378028454,
+        0.026039803449573826,
+        0.023217118551651744,
+        0.01957538313748175,
+        0.016353382985517084,
+        0.0142521932468404,
+        0.01281988674629435,
+        0.01208805215981715,
+        0.01229687340268175,
+        0.013591441448469533,
+        0.015553635841271871,
+        0.018151164965274448,
+        0.020873200285057524,
+        0.022823231713215885,
+        0.024047375313886732,
+        0.0250245349570038,
+        0.02554579115205171,
+        0.025810971919132293,
+        0.02602827238398397,
+        0.02633069444780995,
+        0.026654897004321543,
+        0.02702653438187702,
+        0.027245474455334873,
+        0.02711781122734085,
+        0.026843495336453492,
+        0.026446390517027345,
+        0.025728939173493184,
+        0.02468867358885506,
+        0.023335789016988753,
+        0.02182582112498099,
+        0.02040488970645766,
+        0.0189693787033885,
+        0.017652180053796315,
+        0.016348206053440423,
+        0.014934093781955841,
+        0.013373669917720276,
+        0.01182841213548106,
+        0.010383663793902603,
+        0.009210177075230114,
+        0.008432071477860847,
+        0.008131943742838736,
+        0.008274745335891186,
+        0.00861675324166562,
+        0.009107508300240834,
+        0.009657258066328467,
+        0.010103187682801277,
+        0.010183073875578002,
+        0.009943584430783583,
+        0.009631544559308444,
+        0.009292191191476111,
+        0.008740124837761898,
+        0.007719190059065213,
+        0.0064157807294266695,
+        0.004963481582754232,
+        0.003354741667052688,
+        0.0019170177195448565,
+        0.0008936015094481436,
+        0.0006269804866601849,
+        0.0009377851378095109,
+        0.0013421873219552523
+      ],
+      "scene_root_xz_path_m": 0.07349292719323285
+    }
+  },
+  "root_scope": {
+    "equation": "absolute scene translation = B*h - R*S*pelvis_local_rest",
+    "hierarchy": "identity nonjoint scene ancestor; pelvis directly under joint root",
+    "nonunit_root_scale_support": "NOT-RUN on this fixed unit-scale fixture",
+    "oracle": "generic 4x4 affine pelvis WORLD position for all90; scene-root path equality is not required",
+    "rotation_assumption": "R = (B*R_source_Hips(t)*B^-1)*R_target_root_bind. This is a declared conditional convention, not an independently identified target orientation.",
+    "scale": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "units_policy": "1 metre/metre; no height fit"
+  },
+  "schema_version": 1,
+  "script_sha256": "79234aba13c85894dbedca335940975c5fb8aab60318d189ddfdddc47ea5ff03",
+  "signed_policies": {
+    "candidates": [
+      {
+        "agrees": {
+          "front": false,
+          "named_left": true,
+          "up": false
+        },
+        "basis": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 3.141592653589793,
+          "named_left": 0.0,
+          "up": 3.141592653589793
+        }
+      },
+      {
+        "agrees": {
+          "front": true,
+          "named_left": true,
+          "up": false
+        },
+        "basis": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 0.0,
+          "named_left": 0.0,
+          "up": 3.141592653589793
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": true,
+          "up": true
+        },
+        "basis": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 3.141592653589793,
+          "named_left": 0.0,
+          "up": 0.0
+        }
+      },
+      {
+        "agrees": {
+          "front": true,
+          "named_left": true,
+          "up": true
+        },
+        "basis": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 0.0,
+          "named_left": 0.0,
+          "up": 0.0
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 3.141592653589793,
+          "named_left": 3.141592653589793,
+          "up": 3.141592653589793
+        }
+      },
+      {
+        "agrees": {
+          "front": true,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 0.0,
+          "named_left": 3.141592653589793,
+          "up": 3.141592653589793
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": true
+        },
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 3.141592653589793,
+          "named_left": 3.141592653589793,
+          "up": 0.0
+        }
+      },
+      {
+        "agrees": {
+          "front": true,
+          "named_left": false,
+          "up": true
+        },
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 0.0,
+          "named_left": 3.141592653589793,
+          "up": 0.0
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": true,
+          "up": false
+        },
+        "basis": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 0.0,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": true,
+          "up": false
+        },
+        "basis": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 0.0,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": true,
+          "up": false
+        },
+        "basis": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 0.0,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": true,
+          "up": false
+        },
+        "basis": [
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 0.0,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 3.141592653589793,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 3.141592653589793,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 3.141592653589793,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 3.141592653589793,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 3.141592653589793,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": true,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 0.0,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 3.141592653589793,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": true,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 0.0,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 3.141592653589793,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": true,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 0.0,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 3.141592653589793,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": true,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 0.0,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            -1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 1.5707963267948966
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 3.141592653589793
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 3.141592653589793
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": true
+        },
+        "basis": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 0.0
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": true
+        },
+        "basis": [
+          [
+            0,
+            0,
+            -1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 0.0
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 3.141592653589793
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": false
+        },
+        "basis": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 3.141592653589793
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": true
+        },
+        "basis": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0
+          ]
+        ],
+        "determinant": 1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 0.0
+        }
+      },
+      {
+        "agrees": {
+          "front": false,
+          "named_left": false,
+          "up": true
+        },
+        "basis": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "determinant": -1,
+        "residual_rad": {
+          "front": 1.5707963267948966,
+          "named_left": 1.5707963267948966,
+          "up": 0.0
+        }
+      }
+    ],
+    "counts": {
+      "all": 48,
+      "up": 8,
+      "up_front": 2,
+      "up_front_named_left": 1
+    },
+    "policy_selected": null,
+    "reason": "Identity preserves common up/front; X reflection also preserves those axes and matches current named-side signs. Anatomical label/parity authority is unresolved.",
+    "semantic_status": "HOLD"
+  },
+  "source_joints": 30,
+  "target_joints": 18,
+  "target_playable_admission": "HOLD",
+  "tolerances": {
+    "anatomical_conditioning_threshold": null,
+    "frame_algebra": 1e-10,
+    "numerical_rank_sine": 1e-12,
+    "root_world_m": 1e-12
+  }
+}

@@ -1,0 +1,503 @@
+{
+  "anatomical_semantic_admission": "HOLD",
+  "checks": [
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "retained results reproduce under typed finite float policy",
+      "observed": "PASS"
+    },
+    {
+      "detail": "SHA256 mismatch: experiments/41-real-short-motion/source-skeleton.json",
+      "expectation": "REJECT",
+      "name": "input pin experiments/41-real-short-motion/source-skeleton.json",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: experiments/43-rig-mapping/spike.py",
+      "expectation": "REJECT",
+      "name": "input pin experiments/43-rig-mapping/spike.py",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: assets/fixtures/nvwa-humanoid.glb",
+      "expectation": "REJECT",
+      "name": "input pin assets/fixtures/nvwa-humanoid.glb",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json",
+      "expectation": "REJECT",
+      "name": "input pin experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/process/receipt.json",
+      "expectation": "REJECT",
+      "name": "input pin experiments/44-approved-cpu-motion-trial/evidence/run/process/receipt.json",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/process/stdout.txt",
+      "expectation": "REJECT",
+      "name": "input pin experiments/44-approved-cpu-motion-trial/evidence/run/process/stdout.txt",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32",
+      "expectation": "REJECT",
+      "name": "input pin experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32",
+      "expectation": "REJECT",
+      "name": "input pin experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: tools/blender/generate_fixture.py",
+      "expectation": "REJECT",
+      "name": "input pin tools/blender/generate_fixture.py",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "SHA256 mismatch: assets/fixtures/provenance-manifest.json",
+      "expectation": "REJECT",
+      "name": "input pin assets/fixtures/provenance-manifest.json",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "exact input identities required",
+      "expectation": "REJECT",
+      "name": "missing input identity",
+      "observed": "REJECT"
+    },
+    {
+      "detail": 1.734723475976807e-18,
+      "expectation": "PASS",
+      "name": "all90 pelvis world identity_conditional",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "hips_xz_path_m": 0.07349292719323285,
+        "root_compensation_m": 0.7499999403953553,
+        "scene_root_xz_path_m": 0.16769069210466325
+      },
+      "expectation": "PASS",
+      "name": "scene-root equality is a false oracle identity_conditional",
+      "observed": "PASS"
+    },
+    {
+      "detail": 1.734723475976807e-18,
+      "expectation": "PASS",
+      "name": "all90 pelvis world x_reflection_conditional",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "hips_xz_path_m": 0.07349292719323285,
+        "root_compensation_m": 0.7499999403953553,
+        "scene_root_xz_path_m": 0.16769069210466325
+      },
+      "expectation": "PASS",
+      "name": "scene-root equality is a false oracle x_reflection_conditional",
+      "observed": "PASS"
+    },
+    {
+      "detail": "pelvis-world oracle failed",
+      "expectation": "REJECT",
+      "name": "actual root oracle old43",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "pelvis-world oracle failed",
+      "expectation": "REJECT",
+      "name": "actual root oracle unrotated_offset",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "pelvis-world oracle failed",
+      "expectation": "REJECT",
+      "name": "actual root oracle double_target_rest",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "pelvis-world oracle failed",
+      "expectation": "REJECT",
+      "name": "actual root oracle double_source_trajectory",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "pelvis-world oracle failed",
+      "expectation": "REJECT",
+      "name": "actual root oracle exporter_height",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "pelvis-world oracle failed",
+      "expectation": "REJECT",
+      "name": "actual root oracle transpose_rotation",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "pelvis-world oracle failed",
+      "expectation": "REJECT",
+      "name": "actual root oracle basis_rotations_without_translation",
+      "observed": "REJECT"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "independent signed anchors narrow48 to8 to2 to1",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "named-side parity is conditional improper reflection",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "identity survives common up/front",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "independent changed side anchor changes matching policy",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "independent changed front anchor distinguishes180 Y",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "actual48 FK invariance is numerical consistency",
+      "observed": "PASS"
+    },
+    {
+      "detail": "HOLD: independent signed anatomical reference missing",
+      "expectation": "REJECT",
+      "name": "false semantic promotion from48 invariant",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "HOLD: independent signed anatomical reference missing",
+      "expectation": "REJECT",
+      "name": "false semantic promotion from root pass",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "HOLD: no independent signed reference is admitted by this experiment",
+      "expectation": "REJECT",
+      "name": "unrecognized invented authority cannot admit",
+      "observed": "REJECT"
+    },
+    {
+      "detail": {
+        "inverse_sine": 5366.532860085267,
+        "sine": 0.00018634004972516114
+      },
+      "expectation": "PASS",
+      "name": "near-collinear LeftArm remains anatomical HOLD",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "inverse_sine": 5366.532860085266,
+        "sine": 0.00018634004972516117
+      },
+      "expectation": "PASS",
+      "name": "near-collinear LeftForeArm remains anatomical HOLD",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "inverse_sine": 5357.173294865031,
+        "sine": 0.0001866656060871733
+      },
+      "expectation": "PASS",
+      "name": "near-collinear RightArm remains anatomical HOLD",
+      "observed": "PASS"
+    },
+    {
+      "detail": {
+        "inverse_sine": 5357.17329486503,
+        "sine": 0.00018666560608717332
+      },
+      "expectation": "PASS",
+      "name": "near-collinear RightForeArm remains anatomical HOLD",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "target leaf twist absent hand.L",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "target leaf twist absent hand.R",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "target leaf twist absent foot.L",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "target leaf twist absent foot.R",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "hand geometric frame observes both landmark directions",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "180 twist preserves primary but reverses secondary",
+      "observed": "PASS"
+    },
+    {
+      "detail": "signed secondary/twist mismatch",
+      "expectation": "REJECT",
+      "name": "sign-reversed secondary actual frame oracle",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "primary segment direction mismatch",
+      "expectation": "REJECT",
+      "name": "reversed primary actual frame oracle",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "zero/nonfinite direction",
+      "expectation": "REJECT",
+      "name": "collinear frame cannot recover twist",
+      "observed": "REJECT"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "actual rest directions differ after reflection",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "actual q versus minus q equivalence",
+      "observed": "PASS"
+    },
+    {
+      "detail": "FK representation mismatch",
+      "expectation": "REJECT",
+      "name": "actual FK representation xyz_conjugated",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "FK representation mismatch",
+      "expectation": "REJECT",
+      "name": "actual FK representation XYWZ_misread",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "FK representation mismatch",
+      "expectation": "REJECT",
+      "name": "actual FK representation parent_localized_twice",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "invalid finite vector: XYZW quaternion",
+      "expectation": "REJECT",
+      "name": "quaternion rejects NaN",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "invalid finite vector: XYZW quaternion",
+      "expectation": "REJECT",
+      "name": "quaternion rejects infinity",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "invalid finite vector: XYZW quaternion",
+      "expectation": "REJECT",
+      "name": "quaternion rejects bool",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "invalid finite vector: XYZW quaternion",
+      "expectation": "REJECT",
+      "name": "quaternion rejects string",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "zero/nonfinite direction",
+      "expectation": "REJECT",
+      "name": "zero quaternion",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "unsupported pelvis hierarchy",
+      "expectation": "REJECT",
+      "name": "unsupported pelvis hierarchy",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "float mismatch: $.root_candidates.identity_conditional.max_pelvis_world_error_m",
+      "expectation": "REJECT",
+      "name": "typed result material root metric",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "identity mismatch: $.input_sha256.experiments/41-real-short-motion/source-skeleton.json",
+      "expectation": "REJECT",
+      "name": "typed result changed hash",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "identity mismatch: $.frames",
+      "expectation": "REJECT",
+      "name": "typed result integer value",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "type mismatch: $.frames",
+      "expectation": "REJECT",
+      "name": "typed result integer to float",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "type mismatch: $.schema_version",
+      "expectation": "REJECT",
+      "name": "typed result integer to bool",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "type mismatch: $.raw_floats_finite",
+      "expectation": "REJECT",
+      "name": "typed result boolean to integer",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "type mismatch: $.signed_policies.policy_selected",
+      "expectation": "REJECT",
+      "name": "typed result null to string",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "identity mismatch: $.target_playable_admission",
+      "expectation": "REJECT",
+      "name": "typed result admission promotion",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "keys mismatch: $",
+      "expectation": "REJECT",
+      "name": "typed result missing key",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "keys mismatch: $",
+      "expectation": "REJECT",
+      "name": "typed result extra key",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "length mismatch: $.not_run",
+      "expectation": "REJECT",
+      "name": "typed result list shape",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "type mismatch: $.not_run",
+      "expectation": "REJECT",
+      "name": "typed result list type",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "nonfinite comparison: $.max_raw_quaternion_norm_error",
+      "expectation": "REJECT",
+      "name": "typed result NaN float",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "nonfinite comparison: $.max_raw_quaternion_norm_error",
+      "expectation": "REJECT",
+      "name": "typed result infinite float",
+      "observed": "REJECT"
+    },
+    {
+      "detail": "nonfinite comparison: $",
+      "expectation": "REJECT",
+      "name": "nonfinite expected comparator",
+      "observed": "REJECT"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "last-bit finite float tolerance accepted",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "all source and target anatomical twists remain HOLD",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "no semantic or playable promotion",
+      "observed": "PASS"
+    },
+    {
+      "detail": null,
+      "expectation": "PASS",
+      "name": "public inputs unchanged after controls",
+      "observed": "PASS"
+    }
+  ],
+  "comparison": {
+    "discrete_types_shapes_identities_and_pins": "exact",
+    "finite_float_atol": 1e-13,
+    "finite_float_rtol": 1e-13
+  },
+  "development_repairs": [
+    {
+      "control": "near-collinear LeftForeArm remains anatomical HOLD",
+      "initial_failure": "generic secondary selected hand-thumb grandchild; observed sine 0.427781260092206",
+      "repair": "explicit proximal elbow segment selected; current actual sine retained in checks"
+    },
+    {
+      "control": "Python3.9 retained-result comparison",
+      "initial_absolute_difference": 2.19198805e-12,
+      "initial_failure": "float mismatch: $.observability.source[17].frame[0][1]",
+      "repair": "cross-cross perpendicular projection avoids longitudinal subtraction cancellation; comparator tolerance unchanged"
+    }
+  ],
+  "optimization": 0,
+  "owned_temporary_resources": "none created; all mutations in memory",
+  "positive_checks": 27,
+  "python_version": "3.14.7",
+  "rejection_checks": 48,
+  "results_sha256": "e13aec679ebc807a41d7508bda98293144e54cd6152cb0ad6d4b4c464aff78c9",
+  "schema_version": 1,
+  "status": "PASS",
+  "target_playable_admission": "HOLD",
+  "test_script_sha256": "52ee6353438d245d1f3a105b95f23b53b864525ada7fe397ca54ab8a71b84dd4"
+}

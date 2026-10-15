@@ -2,7 +2,7 @@
 
 ## 当前阶段：M1.2 真人独立验收待完成；M2 已有一个真实原始动作样本（2026-10-15）
 
-Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。人和 agent 使用同一份 Work 和同一套 Rust 命令。
+Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。桌面、Web 和无需窗口的 CLI 是正式支持的三种入口；人和 agent 使用同一份 Work 和同一套 Rust 命令。当前 CLI 的正式范围是离线文件创作、能力发现和校验，详见 [CLI 支持范围](CLI-SUPPORT.md)。逐帧骨骼采样、离屏图像导出、运行中 Studio 控制和并发共享写入仍需单独实现与验收。
 
 M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/milestone/2) 的离线 CLI 创作、双端继续编辑和交接已由 [PR #50](https://github.com/Derek-X-Wang/nvwa/pull/50) 交付，合并 main 为 `9502dd370b262761bf4f4f10f2418163c7574946`。保存反馈 #51 已由 [PR #52](https://github.com/Derek-X-Wang/nvwa/pull/52) 交付，合并 main 为 `f7b15eb166ed8a616dd73965cf23d1b7dcad61f6`。这些技术交付和后续引导式真人观察不等于完整 Alpha 关闭。
 
@@ -13,6 +13,8 @@ M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/mil
 [41 CPU 后端与 guard](../experiments/41-real-short-motion/REPORT.md) 保留模型外准备时的原始报告；获授权后的真实生成另见 [44](../experiments/44-approved-cpu-motion-trial/REPORT.md)。该一次请求产生 90 帧/30 关节原始数据，11,070 个浮点值均有限，2,700 个四元数非退化；58.545243 秒含 guard/清理，最大采样组 RSS 为 1,234,583,552 字节。这是忙碌 16 GiB Mac、模型刚经 hash 读取后的单次观察，不是冷启动性能测试或硬内存上限。signed axes、rest/root 约定、目标映射、语义质量和真实生成播放仍未验收，M2/#12 保持开放。
 
 [45 真实样本映射数值研究](../experiments/45-genuine-rig-admission/REPORT.md) 对同一个 90 帧样本给出 **HOLD**：直接套用 43 的 authored 规则，目标 pelvis 世界位置约多出 `0.83 m`。旋转和缩放后的 pelvis 偏移重定位能修正声明的 hip-world 数学条件，但 source 左肢为 +X、target `.L` 为 −X，手臂中立姿势/解剖基仍未校准；矩阵自洽不能选择语义方向。该研究不导出规范化动作或 Work，不验收目标播放；CI 检查通过只表示 HOLD 研究/拒绝控制通过。下一步仍属 #12 的明确基准与 root 校准门，#3/#4/#49 不变。
+
+[#59 骨骼校准](https://github.com/Derek-X-Wang/nvwa/issues/59) 的 [46 有界诊断](../experiments/46-soma-reference-calibration/REPORT.md) 复用同一原始样本：独立 up/front/name-side 约束给出条件性的 `48→8→2→1` 候选，保留左右语义冲突；逐关节报告中立几何和扭转可观测性。两个条件基的 pelvis 世界位置在全部 90 帧闭合，最大误差约 `1.735e-18 m`；七种错误 root 规则被实际 oracle 拒绝。[独立 4×4 复算](../experiments/46-soma-reference-calibration/independent/README.md) 不导入 43/45/46 数学实现。源肘部近平直、目标手脚缺少独立扭转参考，因此数值检查通过不改变解剖或可播放 **HOLD**。#59/#12/M2 的后续准入门继续开放；没有新推理、下载或目标导出。CLI 正式支持记录另见 [#61](https://github.com/Derek-X-Wang/nvwa/issues/61) 和 [无窗口实际调用证据](evidence/cli-third-entry/README.md)，与生成动作验收分别记录。
 
 [42 独立导入](../experiments/42-motion-import/REPORT.md) 的 19 项 CLI 边界测试与 [43 authored 映射控制](../experiments/43-rig-mapping/REPORT.md) 通过。父 session 实际验证并在 native/Web 播放原始、naive、calibrated 三份 authored Work；naive 明显折叠，calibrated 呈现声明动作，但端点仍差 `0.277118877976 m`。[历史验收](evidence/m2-authored-controls/ACCEPTANCE.md)中的模型批准待定/真实生成未执行状态及索引属于 #58 的 `b7122a2` 快照；后续 CI 成功与真实样本由本页和 44 分开更新，旧报告、索引和证据字节不重写。authored 控制不能代替真实样本的坐标/rest/目标映射验收，native seek 和独立真人门仍保留。
 

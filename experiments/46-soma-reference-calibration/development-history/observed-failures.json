@@ -1,0 +1,23 @@
+{
+  "kind": "transcription of exact stdout/stderr strings observed in development tool results; not original process capture files",
+  "source_cohort_hashes": null,
+  "limits": "Failing source bytes and separate original logs were not retained. No reconstructed file is represented as an original. The explanations below are retrospective; error strings are transcribed from observed output.",
+  "failures": [
+    {
+      "stage": "initial actual controls on Python 3.14.7",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "{\"code\": \"controls_failed\", \"message\": \"positive control failed: near-collinear LeftForeArm remains anatomical HOLD\"}\n",
+      "derived_explanation": "Generic secondary selection used the hand-thumb grandchild after the wrist. Its sine 0.427781260092206 measured different geometry. Explicit proximal limb selection now observes the elbow plane and retains near-collinear HOLD."
+    },
+    {
+      "stage": "Python 3.9.6 portability, both normal and -O",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "{\"code\": \"controls_failed\", \"message\": \"float mismatch: $.observability.source[17].frame[0][1]\"}\n",
+      "observed_python39_value": -0.00009037570571723185,
+      "observed_python314_value": -0.0000903757079092199,
+      "derived_explanation": "Subtracting almost equal longitudinal components amplified last-bit runtime differences at the near-collinear source elbow. Cross-cross perpendicular projection restored the strict comparator without relaxing its 1e-13 absolute/relative float tolerance or anatomical HOLD."
+    }
+  ]
+}

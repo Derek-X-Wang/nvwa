@@ -1,0 +1,23 @@
+{
+  "adaptation_diff_redaction": "Original task-local contract path is replaced by <original-task-local-contract>; original content identity remains bound by the frozen script SHA-256.",
+  "adaptation_diff_sha256": "d9d6e0535463b4dc1e8f617877b2cbb68d94eb0809f1808cb7b16b8fc1d0e484",
+  "changes": [
+    "Replace task-local contract read with identical frozen public input pins",
+    "Keep repository root derived from script location",
+    "Write full JSON result to stdout only",
+    "Replace optimization-sensitive assert statements with explicit require checks",
+    "Expose analyze() for independent control harness"
+  ],
+  "math_changes": false,
+  "neutral_relative_gauge": "Derived placement control, separate from raw absolute-Hips placement",
+  "original_freeze_sha256": "3ef7fa2b1ccadcdf7a4bd6d59a0724dbcf002d0bac3f9b7f90ebf36ec5071baa",
+  "original_frozen_files_sha256": {
+    "README.md": "ce8c7f4c6d919628f64d8d6427e8ed2326ec3ba33b661c44da1c88ddccea53bd",
+    "independent-results.json": "3286637be8090ab2ccbc31fbf8a7fa3fa8880a8606fe34a1fc153c1da0e9d3ce",
+    "oracle.py": "0e6980b2f81fe71509b7ea41717cbab47751015a7ef848239a5d01bc84b9eb78",
+    "pelvis-all90.json": "04a5df47701f33c008640a75c04d32668af395309d9943c5ebfb07ac78d63d14",
+    "run-output.json": "c4e3cf26bde36af48ab2c1eb53e347fd8b71222241033009f9b37d8820990bde"
+  },
+  "originals_preserved": true,
+  "primary46_comparison_status": "Declared identity-basis root orientation agrees; final-primary-match NOT-RUN pending primary final freeze"
+}

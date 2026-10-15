@@ -40,6 +40,12 @@ jobs:
           python3 -B experiments/44-approved-cpu-motion-trial/verify_evidence.py
           python3 -B experiments/45-genuine-rig-admission/probe.py
           python3 -B experiments/45-genuine-rig-admission/test_controls.py
+          python3 -B experiments/46-soma-reference-calibration/calibrate.py
+          python3 -B experiments/46-soma-reference-calibration/test_controls.py
+          python3 -B -O experiments/46-soma-reference-calibration/test_controls.py
+          python3 -B experiments/46-soma-reference-calibration/independent/oracle.py
+          python3 -B experiments/46-soma-reference-calibration/independent/test_controls.py
+          python3 -B -O experiments/46-soma-reference-calibration/independent/test_controls.py
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     runs-on: macos-14
