@@ -159,6 +159,50 @@ fn text(output: &egui::FullOutput, label: &str) -> egui::Rect {
         })
         .1
 }
+fn notice_bounds(output: &egui::FullOutput, title_position: egui::Pos2) -> egui::Rect {
+    fn collect(shape: &egui::Shape, point: egui::Pos2, found: &mut Vec<egui::Rect>) {
+        match shape {
+            egui::Shape::Rect(rect)
+                if rect.blur_width == 0.0
+                    && rect.rect.contains(point)
+                    && rect.rect.width() < 420.0 =>
+            {
+                found.push(rect.rect);
+            }
+            egui::Shape::Vec(shapes) => {
+                for shape in shapes {
+                    collect(shape, point, found);
+                }
+            }
+            _ => {}
+        }
+    }
+    let mut found = Vec::new();
+    for shape in &output.shapes {
+        collect(&shape.shape, title_position, &mut found);
+    }
+    assert_eq!(
+        found.len(),
+        1,
+        "Notice must have one small painted background"
+    );
+    found[0]
+}
+fn assert_bottom_right(bounds: egui::Rect, size: egui::Vec2) {
+    assert!(egui::Rect::from_min_size(egui::Pos2::ZERO, size).contains_rect(bounds));
+    assert!(
+        (size.x - bounds.right() - 16.0).abs() <= 1.0,
+        "right margin: {bounds:?}"
+    );
+    assert!(
+        (size.y - bounds.bottom() - 16.0).abs() <= 1.0,
+        "bottom margin: {bounds:?}"
+    );
+    assert!(
+        bounds.width() <= 400.0 && bounds.height() <= 180.0,
+        "bounded notice: {bounds:?}"
+    );
+}
 fn no_notice(output: &egui::FullOutput) {
     assert!(painted_text(output).iter().all(|(value, _)|
         value != "已保存 / Saved" && value != "下载已开始 / Download started"));
@@ -198,8 +242,14 @@ fn save_feedback_actual_save_control_completion_repeat_dwell_and_fit() {
             "Notice must paint its destination below the title"
         );
         let path = destinations[0].1;
-        assert!(saved.top() > text(&complete, "Save").bottom());
-        assert!(path.left() >= 0.0 && path.right() <= size.x && path.bottom() < 160.0);
+        let bounds = notice_bounds(&complete, saved.center());
+        assert_bottom_right(bounds, size);
+        assert!(bounds.contains_rect(saved));
+        assert!(bounds.contains_rect(path));
+        // Floating feedback must not move the toolbar or editing panels.
+        for label in ["Save", "Scene", "Shape parameters", "Animation"] {
+            assert_eq!(text(&complete, label), text(&initial, label));
+        }
         for label in [
             "Save",
             "Open…",
@@ -212,6 +262,29 @@ fn save_feedback_actual_save_control_completion_repeat_dwell_and_fit() {
             let rect = text(&complete, label);
             assert!(egui::Rect::from_min_size(egui::Pos2::ZERO, size).contains_rect(rect));
         }
+        // The overlay captures its own pointer, without covering the scene.
+        h.frame(vec![egui::Event::PointerMoved(saved.center())])
+            .drop_without_applying_deltas();
+        assert!(h.app.world().resource::<UiInputGuard>().pointer);
+        assert!(!scene_pointer_allowed(
+            true,
+            true,
+            h.app.world().resource::<UiInputGuard>().pointer
+        ));
+        h.frame(vec![egui::Event::PointerMoved(egui::pos2(700.0, 250.0))])
+            .drop_without_applying_deltas();
+        assert!(!h.app.world().resource::<UiInputGuard>().pointer);
+        assert!(scene_pointer_allowed(
+            true,
+            true,
+            h.app.world().resource::<UiInputGuard>().pointer
+        ));
+        // A real inspector control remains editable with the overlay present.
+        h.click(&complete, "Profile").drop_without_applying_deltas();
+        let profile = h.frame(vec![]);
+        text(&profile, "Profile: nvwa-original-humanoid-v1");
+        text(&profile, "已保存 / Saved");
+        h.click(&profile, "Shape").drop_without_applying_deltas();
         h.time = 7.0;
         let pending = h.click(&complete, "Save");
         no_notice(&pending);
@@ -289,6 +362,69 @@ fn save_feedback_actual_failed_save_open_and_destination_edit_clear_success() {
     no_notice(&h.click(&recovered, "Open…"));
     no_notice(&h.frame(vec![]));
     assert!(h.ui().save_notice.is_none());
+}
+
+#[test]
+fn save_feedback_long_native_destination_stays_small_and_selectable() {
+    for size in [egui::vec2(1280.0, 720.0), egui::vec2(1024.0, 768.0)] {
+        let mut h = Harness::new(size);
+        let initial = h.frame(vec![]);
+        h.click(&initial, "Save").drop_without_applying_deltas();
+        let short = h.frame(vec![]);
+        text(&short, "已保存 / Saved");
+        let mut directory = h.directory.clone();
+        for index in 0..12 {
+            directory = directory.join(format!("long-destination-segment-{index:02}"));
+        }
+        std::fs::create_dir_all(&directory).unwrap();
+        let destination = directory
+            .join("long-work-name.nvwa.json")
+            .display()
+            .to_string();
+        h.app.world_mut().resource_mut::<StudioUi>().file_path = destination.clone();
+        let initial = h.frame(vec![]);
+        h.click(&initial, "Save").drop_without_applying_deltas();
+        let complete = h.frame(vec![]);
+        let title = text(&complete, "已保存 / Saved");
+        let bounds = notice_bounds(&complete, title.center());
+        assert_bottom_right(bounds, size);
+        let paths: Vec<_> = painted_text(&complete)
+            .into_iter()
+            .filter(|(value, rect)| value == &destination && rect.top() >= title.bottom())
+            .collect();
+        assert_eq!(
+            paths.len(),
+            1,
+            "Notice must paint the long destination below its title"
+        );
+        let path = paths[0].1;
+        assert!(bounds.intersects(path) && path.left() >= bounds.left());
+        assert!(path.width() <= bounds.width());
+        assert!(
+            path.height() > 120.0,
+            "Long destination must use bounded scrolling"
+        );
+        // Drag in the actual destination label: selectable path input stays
+        // owned by egui, including over the scene's mouse interaction path.
+        let inside = egui::pos2(path.left() + 10.0, title.bottom() + 12.0);
+        h.frame(vec![
+            egui::Event::PointerMoved(inside),
+            pointer(inside, true),
+        ])
+        .drop_without_applying_deltas();
+        assert!(h.app.world().resource::<UiInputGuard>().pointer);
+        h.frame(vec![egui::Event::PointerMoved(
+            inside + egui::vec2(80.0, 0.0),
+        )])
+        .drop_without_applying_deltas();
+        assert!(h.app.world().resource::<UiInputGuard>().pointer);
+        h.frame(vec![pointer(inside + egui::vec2(80.0, 0.0), false)])
+            .drop_without_applying_deltas();
+        let copied = h.frame(vec![egui::Event::Copy]);
+        assert!(copied.platform_output.commands.iter().any(|command| {
+            matches!(command, egui::OutputCommand::CopyText(value) if !value.is_empty() && destination.contains(value))
+        }), "Dragging the destination must allow copying selected path text");
+    }
 }
 
 #[test]

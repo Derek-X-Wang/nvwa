@@ -57,19 +57,41 @@ impl SaveNotice {
         }
     }
 
-    fn draw(&mut self, ui: &mut egui::Ui) -> bool {
+    fn draw(&mut self, ctx: &egui::Context) -> bool {
         const DWELL_SECONDS: f64 = 8.0;
-        let now = ui.input(|input| input.time);
+        let now = ctx.input(|input| input.time);
         let shown_at = *self.shown_at.get_or_insert(now);
         let remaining = DWELL_SECONDS - (now - shown_at);
         if remaining <= 0.0 {
             return false;
         }
-        ui.ctx()
-            .request_repaint_after(std::time::Duration::from_secs_f64(remaining));
-        egui::Frame::group(ui.style()).show(ui, |ui| {
-            ui.colored_label(egui::Color32::LIGHT_GREEN, self.title);
-            ui.add(egui::Label::new(&self.destination).selectable(true).wrap());
+        ctx.request_repaint_after(std::time::Duration::from_secs_f64(remaining));
+        let width = 360.0_f32.min((ctx.viewport_rect().width() - 48.0).max(0.0));
+        // Different contents get a fresh sizing pass, so a longer destination
+        // cannot reuse a shorter notice's height at the bottom anchor.
+        egui::Area::new(egui::Id::new((
+            "save_notice",
+            self.title,
+            &self.destination,
+        )))
+        .order(egui::Order::Foreground)
+        .anchor(egui::Align2::RIGHT_BOTTOM, egui::vec2(-16.0, -16.0))
+        .fade_in(false)
+        .show(ctx, |ui| {
+            // Area's first pass measures its size invisibly. Resolve that
+            // pass now so the completion frame already paints the notice.
+            if ui.is_sizing_pass() {
+                ctx.request_discard("measure save notice before first paint");
+            }
+            egui::Frame::popup(ui.style()).show(ui, |ui| {
+                ui.set_width(width);
+                ui.colored_label(egui::Color32::LIGHT_GREEN, self.title);
+                egui::ScrollArea::vertical()
+                    .max_height(120.0)
+                    .show(ui, |ui| {
+                        ui.add(egui::Label::new(&self.destination).selectable(true).wrap());
+                    });
+            });
         });
         true
     }
@@ -643,9 +665,6 @@ fn draw_editor_ui(
     let mut preview: Option<BTreeMap<String, f32>> = None;
     let mut commit_drag = false;
     egui::Panel::top("document_toolbar").show(&mut viewport_ui, |ui| {
-        // The pinned Panel clips to its previous height before measuring rows.
-        // Let new feedback paint immediately while this toolbar grows to fit it.
-        ui.set_clip_rect(ctx.viewport_rect());
         ui.horizontal(|ui| {
             ui.heading("Nvwa");
             ui.separator();
@@ -689,14 +708,6 @@ fn draw_editor_ui(
         });
         if file_action.is_some() {
             save_notice = None;
-        }
-        if let Some(notice) = &mut save_notice
-            && !notice.draw(ui)
-        {
-            save_notice = None;
-        }
-        if let Some(error) = &state.error {
-            ui.colored_label(egui::Color32::LIGHT_RED, error);
         }
     });
     egui::Panel::left("scene_objects")
@@ -952,6 +963,11 @@ fn draw_editor_ui(
                 .id_salt("timeline_scroll")
                 .show(ui, &mut timeline_body);
         });
+    if let Some(notice) = &mut save_notice
+        && !notice.draw(ctx)
+    {
+        save_notice = None;
+    }
     // Do not paint a central egui panel: the scene remains visible through it.
     guard.pointer = editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
     guard.keyboard = ctx.egui_wants_keyboard_input();
