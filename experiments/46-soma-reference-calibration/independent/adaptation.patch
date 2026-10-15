@@ -1,0 +1,134 @@
+--- independently-frozen-oracle.py
++++ portable-oracle.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Private independent issue59 oracle. Stdlib; no experiment43/45/46 imports.
++"""Portable independent issue59 oracle. Stdlib; no experiment43/45/46 imports.
+ 
+ This freezes numerical consequences of explicit hypotheses, not anatomy.
+ All arrays are read from the single public44 sample. No generated output motion.
+@@ -14,13 +14,16 @@
+ HERE = Path(__file__).resolve().parent
+ ROOT = HERE.parents[2]
+ 
++PINS = {'assets/fixtures/nvwa-humanoid.glb': 'f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6', 'experiments/41-real-short-motion/source-skeleton.json': 'd137f3ea5522deeb70257d2fd5522ca6d5436c0145ea001a1e8b4fc646cddd9a', 'experiments/43-rig-mapping/spike.py': '063aefdd56d988256154b291b7f783d874f513b714303c546a36d8bf695bfe93', 'experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json': '554fd2e64e316d218fd699bbbe8d3e45351a7b3a3e08ef077cdc2c6cfaaa52c9', 'experiments/44-approved-cpu-motion-trial/evidence/run/process/receipt.json': 'f67726f84982d6e5bd7c22e944131a7991016508e541d88972da6e20abc6410b', 'experiments/44-approved-cpu-motion-trial/evidence/run/process/stdout.txt': 'd8cafdcca9f05b92f112232345c7435335858a1f019cabc2067d30ba4e71d5d1', 'experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32': '67914c5d72c54429bf8a70d3f9ef43157fb5181fa36ab2c5f8ce7f9dc69d3a55', 'experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32': 'dcc221d506999a803b1d0fddef87abc0131b1e8f4e64187bc57fde3a63c204af', 'tools/blender/generate_fixture.py': 'bc54eec314ccba2ca2a77499b03d96b1ec9afb8c38cfbb9ac9e1fb04f5736f0e'}
++
+ 
+ def digest(p):
+     return hashlib.sha256(p.read_bytes()).hexdigest()
+ 
+ 
+-def write(p, value):
+-    p.write_text(json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + '\n')
++def require(condition, message):
++    if not condition:
++        raise ValueError(message)
+ 
+ 
+ def plus(a, b):
+@@ -41,7 +44,7 @@
+ 
+ def normalized(v):
+     n = norm(v)
+-    assert math.isfinite(n) and n > 1e-15
++    require(math.isfinite(n) and n > 1e-15, 'independent numerical invariant at source line 47')
+     return [x/n for x in v]
+ 
+ 
+@@ -104,19 +107,19 @@
+ 
+ def target_glb(path):
+     raw = path.read_bytes()
+-    assert struct.unpack_from('<III', raw) == (0x46546c67, 2, len(raw))
++    require(struct.unpack_from('<III', raw) == (0x46546c67, 2, len(raw)), 'independent numerical invariant at source line 110')
+     offset, chunks = 12, []
+     while offset < len(raw):
+         size, kind = struct.unpack_from('<II', raw, offset)
+         chunks.append((kind, raw[offset+8:offset+8+size]))
+         offset += size+8
+-    assert offset == len(raw)
++    require(offset == len(raw), 'independent numerical invariant at source line 116')
+     g = json.loads(next(data for kind, data in chunks if kind == 0x4e4f534a))
+     nodes, joints = g['nodes'], g['skins'][0]['joints']
+     parent = {}
+     for i, node in enumerate(nodes):
+         for c in node.get('children', []):
+-            assert c not in parent
++            require(c not in parent, 'independent numerical invariant at source line 122')
+             parent[c] = i
+     cache = {}
+     def local(i):
+@@ -132,10 +135,10 @@
+         world(i)
+     nj = [nodes[i] for i in joints]
+     p = [joints.index(parent[i]) if parent.get(i) in joints else None for i in joints]
+-    assert all(v is None or v < j for j,v in enumerate(p))
+-    assert all('matrix' not in n for n in nj)
++    require(all(v is None or v < j for j,v in enumerate(p)), 'independent numerical invariant at source line 138')
++    require(all('matrix' not in n for n in nj), 'independent numerical invariant at source line 139')
+     external = [parent[i] for i in joints if parent.get(i) not in joints and i in parent]
+-    assert all(cache[i] == ident(4) for i in external)
++    require(all(cache[i] == ident(4) for i in external), 'independent numerical invariant at source line 141')
+     return {'names':[n['name'] for n in nj], 'parents':p,
+             'translations':[n.get('translation',[0,0,0]) for n in nj],
+             'rotations':[quat_matrix(n.get('rotation',[0,0,0,1])) for n in nj],
+@@ -183,10 +186,9 @@
+             'all_signed_permutations':rows}
+ 
+ 
+-def main():
+-    contract=json.loads((ROOT/'<original-task-local-contract>').read_text())
+-    input_hashes={p:digest(ROOT/p) for p in contract['inputs_sha256']}
+-    assert input_hashes==contract['inputs_sha256']
++def analyze():
++    input_hashes={p:digest(ROOT/p) for p in PINS}
++    require(input_hashes==PINS, 'frozen input SHA-256 mismatch')
+     source=json.loads((ROOT/'experiments/41-real-short-motion/source-skeleton.json').read_text())
+     sn=source['joint_names']; sp=[None if p==-1 else p for p in source['parents']]
+     sr=[quat_matrix(q) for q in source['rest_local_rotations_xyzw']]
+@@ -194,14 +196,14 @@
+     target=target_glb(ROOT/'assets/fixtures/nvwa-humanoid.glb')
+     tn=target['names']; tp=target['parents']; tt=target['translations']; tr=target['rotations']; ts=target['scales']
+     tw=target['world']; ri=tn.index('root'); pi=tn.index('pelvis')
+-    assert ri==0 and pi==1 and tp[pi]==ri
++    require(ri==0 and pi==1 and tp[pi]==ri, 'independent numerical invariant at source line 199')
+     rawdir=ROOT/'experiments/44-approved-cpu-motion-trial/evidence/run/raw'
+     qb=(rawdir/'local_rotations_xyzw.f32').read_bytes(); rb=(rawdir/'root_positions.f32').read_bytes()
+-    assert len(qb)==90*30*4*4 and len(rb)==90*3*4
++    require(len(qb)==90*30*4*4 and len(rb)==90*3*4, 'independent numerical invariant at source line 202')
+     qa=struct.unpack('<10800f',qb); ra=struct.unpack('<270f',rb)
+     frames=[[list(qa[f*120+j*4:f*120+j*4+4]) for j in range(30)] for f in range(90)]
+     roots=[list(ra[f*3:f*3+3]) for f in range(90)]
+-    assert all(math.isfinite(x) for x in qa+ra)
++    require(all(math.isfinite(x) for x in qa+ra), 'independent numerical invariant at source line 206')
+     qnorm=[norm(q) for f in frames for q in f]
+     anchors=signed_anchors()
+     obs={'source':ray_observability(sn,sp,sw),'target':ray_observability(tn,tp,tw)}
+@@ -334,15 +336,16 @@
+              'admission':{'numeric_closure':'PASS conditional hypotheses only','anatomical_semantics':'HOLD','target_playable':'HOLD',
+                           'missing_references':['Independent source and target up/front/anatomical side reference','Independent per-limb twist or off-axis frames','Chosen source-root to target-pelvis placement policy','External pose/motion ground truth for semantic validation'],
+                           'generated_wave_is_external_ground_truth':False}}
+-    assert summary['pelvis_all90_max_affine_error_m']<1e-12
+-    assert summary['neutral_relative_pelvis_all90_max_affine_error_m']<1e-12
+-    assert qsignmax<1e-12 and target_qsignmax<1e-12 and twist_control['primary_ray_unit_position_error']<1e-12 and twist_control['off_axis_marker_displacement_m']>.09
+-    assert all(v['max_error_m']>1e-3 for v in summary['falsifications'].values())
+-    write(HERE/'independent-results.json',summary)
+-    write(HERE/'pelvis-all90.json',pelvis_rows)
+-    print(json.dumps({'numeric_closure':summary['pelvis_all90_max_affine_error_m'], 'qsign_error':qsignmax,
+-                      'falsifications':summary['falsifications'],'elbows':conditioning,'admission':summary['admission']},sort_keys=True))
+-
+-
+-if __name__=='__main__':
++    require(summary['pelvis_all90_max_affine_error_m']<1e-12, 'independent numerical invariant at source line 339')
++    require(summary['neutral_relative_pelvis_all90_max_affine_error_m']<1e-12, 'independent numerical invariant at source line 340')
++    require(qsignmax<1e-12 and target_qsignmax<1e-12 and twist_control['primary_ray_unit_position_error']<1e-12 and twist_control['off_axis_marker_displacement_m']>.09, 'independent numerical invariant at source line 341')
++    require(all(v['max_error_m']>1e-3 for v in summary['falsifications'].values()), 'independent numerical invariant at source line 342')
++    return {'summary': summary, 'pelvis_all90': pelvis_rows}
++
++
++def main():
++    print(json.dumps(analyze(), sort_keys=True, indent=2, allow_nan=False))
++
++
++if __name__ == '__main__':
+     main()

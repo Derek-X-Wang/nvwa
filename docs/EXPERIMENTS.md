@@ -1,5 +1,16 @@
 # Experiment conclusions
 
+## 2026-10-15：CLI 第三入口与同一样本的有界校准
+
+CLI 已明确为与桌面、Web 并列的正式入口，支持范围是现有离线文件操作；[实际六次调用](evidence/cli-third-entry/README.md) 保留能力发现、命令、真实资产校验和完整保存回读。数据编辑不要求窗口、GPU 或本地动作权重。逐帧姿态、离屏图像导出、运行中桥接与并发共享写入未交付，详见 [CLI 支持范围](CLI-SUPPORT.md)。
+
+| 实验 | 决定 | 实际证据与限制 |
+| --- | --- | --- |
+| [46 签名参考与骨骼校准](../experiments/46-soma-reference-calibration/REPORT.md) | 接受条件 root 数学与诊断；解剖/可播放准入 HOLD | 复用 44 原始 90 帧；独立 signed anchors 条件约束 `48→8→2→1`，不自动采用反射或左右标签政策。逐关节几何/扭转缺口明确。两个条件基的 pelvis 世界误差最大约 `1.735e-18 m`，七个 root 错误策略被拒绝；27 个正向与 48 个拒绝检查在 Python 3.9/3.12/3.14 普通及优化模式通过。无规范化/生成 Work/目标播放。 |
+| [46 独立仿射 oracle](../experiments/46-soma-reference-calibration/independent/README.md) | 保留独立实现与反例 | 不导入 43/45/46 数学；独立冻结后复算 90 帧、q/−q、近共线敏感性和扭转不可观测性。绝对 hip 与中立相对位置是分别声明的条件规则；数学闭合不选择解剖政策或实际落地高度。 |
+
+173 项既有产品、资产与 41–45 输入路径保持冻结；无根依赖、锁文件、模型或渲染器改变。新增 CI 只在原 portable job 增加离线标准库检查。候选与合并后 main CI 仍需分别验证；#3 保持阻塞，#4/#49 未验证项保留，#59/#12/M2 的后续准入门开放。此前 [#60](https://github.com/Derek-X-Wang/nvwa/pull/60) 已合并为 `8dfc8a8c05ac2f5794498a76b36e8c747e27054c`，其 [独立 main CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38790750484) 通过，#54 按单次原始试跑范围关闭。下方旧记录保留当时状态。
+
 ## 2026-10-15：一个获授权的真实原始 CPU 动作样本
 
 | 实验 | 决定 | 实际证据与限制 |

@@ -1,0 +1,30 @@
+[
+  {
+    "command_id": "third-entry-parameter-1",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": {
+        "jaw_width": 0.5
+      }
+    }
+  },
+  {
+    "command_id": "third-entry-authored-clip-2",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "third-entry-clip-1",
+          "clip_id": "idle",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.0416667,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  }
+]

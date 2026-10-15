@@ -1,6 +1,6 @@
 # Nvwa
 
-Rust character Studio and Player for native macOS and browser WebGPU. One Rust document, command core, Bevy runtime and egui UI serve both targets. The original clothed humanoid has a continuous skinned body, four real morph targets and authored idle, wave and turn animations. These animations are presets, not AI generation.
+Nvwa is a character creation and animation sandbox with three supported entrypoints: native macOS Studio/Player, Web Studio/Player and a source-built offline CLI. Studio and Web share one Rust document, command core, Bevy runtime and egui UI; the CLI uses the same typed command core to edit portable Work files. The original clothed humanoid has a continuous skinned body, four real morph targets and authored idle, wave and turn animations. These animations are presets, not AI generation.
 
 The repository implements M0 editing/exchange plus thin M1: a three-action 5–10 second work, transport, a chest/head click that plays one wave and restores the work, and an editor-free static Player. See the [roadmap](docs/ROADMAP.md), [M1 evidence](docs/M1-VERIFICATION.md), [verification matrix](docs/TEST-MATRIX.md) and [known issues](docs/ISSUES.md). Arbitrary character imports remain outside this prototype.
 
@@ -53,27 +53,59 @@ For Web, build and serve as above, then open `http://127.0.0.1:9201/?player=1&wo
 
 The exchanged [revision 6 work](docs/evidence/m1/web-sequence.nvwa.json) contains both edited appearance values and a 9.5-second timeline. Open it in either Studio or Player. To publish it, copy the file into the static bundle's `works/` directory and use its relative path in the URL.
 
-## Programmatic edits
+## Programmatic edits with the native CLI
 
-The CLI uses the same typed core commands as the Studio. It edits offline documents; reopen the result in Studio to see it. It does not control an already-open window.
+The CLI is the third supported entrypoint. It uses the same typed core commands as Studio and edits portable Work files offline. Open its saved output in native Studio or Web Studio to render and continue editing. The CLI does not control an already-open window. See [CLI support](docs/CLI-SUPPORT.md) for scope and platform evidence, and the [CLI authoring guide](docs/agents/cli-authoring.md) for command and error contracts.
 
-```sh
-cargo run -p nvwa-cli --locked -- new assets/character.profile.json examples/default.nvwa.json
-cargo run -p nvwa-cli --locked -- describe-capabilities examples/default.nvwa.json
-cargo run -p nvwa-cli --locked -- apply examples/default.nvwa.json examples/m0-commands.json examples/edited.nvwa.json
-cargo run -p nvwa-cli --locked -- validate examples/edited.nvwa.json assets
-cargo run -p nvwa-cli --locked -- save examples/edited.nvwa.json examples/portable.nvwa.json
-cargo run -p nvwa-cli --locked -- inspect examples/portable.nvwa.json
-```
-
-Recreate the three-action work through shared commands:
+This quickstart builds the CLI, creates a fresh ignored `.work` directory, and writes every Work and command file there. It leaves the checked-in examples and existing Works untouched. The command values below come from the current bundled profile's `describe-capabilities` response; read that response before adapting the commands to another profile.
 
 ```sh
-cargo run -p nvwa-cli --locked -- apply examples/default.nvwa.json examples/m1-commands.json /tmp/nvwa-m1.nvwa.json
-cargo run -p nvwa-cli --locked -- validate /tmp/nvwa-m1.nvwa.json assets
+cargo build --locked -p nvwa-cli
+mkdir -p .work
+CLI_OUT="$(mktemp -d .work/nvwa-cli.XXXXXX)"
+CLI="$PWD/target/debug/nvwa-cli"
+
+"$CLI" new assets/character.profile.json "$CLI_OUT/work.nvwa.json"
+"$CLI" describe-capabilities "$CLI_OUT/work.nvwa.json" > "$CLI_OUT/capabilities.json"
+
+cat > "$CLI_OUT/commands.json" <<'JSON'
+[
+  {
+    "command_id": "quickstart-parameter-1",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": { "jaw_width": 0.5 }
+    }
+  },
+  {
+    "command_id": "quickstart-authored-clip-2",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "quickstart-clip-1",
+          "clip_id": "idle",
+          "start_seconds": 0.0,
+          "duration_seconds": 3.0416667,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  }
+]
+JSON
+
+"$CLI" apply "$CLI_OUT/work.nvwa.json" "$CLI_OUT/commands.json" "$CLI_OUT/edited.nvwa.json"
+"$CLI" validate "$CLI_OUT/edited.nvwa.json" assets
+"$CLI" save "$CLI_OUT/edited.nvwa.json" "$CLI_OUT/saved.nvwa.json"
+"$CLI" inspect "$CLI_OUT/saved.nvwa.json"
 ```
 
-Commands include expected revision and unique command IDs. Failed edits preserve the original document. Repeating an identical envelope is idempotent within an editor session. Conflicting ID reuse, stale revisions, unknown fields, duplicate JSON keys, invalid ranges, oversized JSON and unsafe asset paths return structured errors.
+`idle` is an authored action from the bundled profile. This example edits a Work; it does not generate motion. For the full revision, session-history, file-safety and response-delivery rules, follow the [CLI authoring guide](docs/agents/cli-authoring.md).
 
 ## Verify and reproduce
 

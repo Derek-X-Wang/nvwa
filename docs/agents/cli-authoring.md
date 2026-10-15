@@ -1,5 +1,7 @@
 # Author a work through the offline CLI
 
+For the user-facing support scope, source build and platform verification limits, see [Native CLI support](../CLI-SUPPORT.md).
+
 The CLI edits portable work files through the same core commands as Studio.
 It does not control a running Studio. Authored actions remain authored actions;
 choosing and sequencing them does not generate motion.
