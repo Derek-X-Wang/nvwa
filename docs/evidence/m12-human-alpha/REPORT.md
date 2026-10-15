@@ -13,3 +13,7 @@ Byte inspection of the saved Work confirms revision 2 â†’ 5 and jaw width 0.42 â
 This was guided: the agent prepared the application and Work and supplied three steps. It does not establish unassisted capability discovery or full Alpha acceptance. Human Web exchange, Player clarity and error recovery remain NOT-RUN. Issue [#49](https://github.com/Derek-X-Wang/nvwa/issues/49) stays open. The visible Save confirmation fix is tracked separately in [#51](https://github.com/Derek-X-Wang/nvwa/issues/51).
 
 The original #3 scaling blocker, #4 performance gaps, #12 real-model no-go and distribution/platform limits are unchanged. No real inference, signed release, extra hardware or formal performance measurement is implied.
+
+## Human feedback after the first fix
+
+The first revised native build displayed a visible saved message and destination. The human confirmed those were clear, then requested bottom-right placement instead of the upper-left banner. That observation used source `0cd7146bf487d15bc30f187508dab6ba786d5c3d` and native binary SHA-256 `7c53117d27e3c812168ee9ad889290ea582dba2afb57dd66c0052fc17fa1541c`. It is separate from any later acceptance of the bottom-right placement. The same focused fix, #51 / PR #52, incorporates this positioning request.
