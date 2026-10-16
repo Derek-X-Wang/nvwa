@@ -1,7 +1,8 @@
 # Retained-sample numerical reproduction contract
 
 This contract concerns derived angle calculation across Python hosts.
-It does not change any pose, skin, quality, semantic or acceptance threshold.
+This changes only the retained-angle reproduction rule. It does not change
+pose/skin comparison tolerances or motion-quality gates.
 The evaluator, golden record and captured inputs remain unchanged.
 
 ## Measured source
