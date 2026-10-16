@@ -28,5 +28,7 @@ python3 -B experiments/49-runtime-pose-parity/verify_native_failure.py
 
 重新采集需另行构建并启动[隔离诊断程序](probe/README.md)。CI 只复核留存采样、运行控制测试并编译两个目标，不在 hosted runner 上重新执行 GPU 骨架采集。
 
+旧实验48封存的是当时源码。[历史版本适配校验](historical48/README.md)保留其原始断言及全部拒绝测试，明确区分历史源码与本轮实际采集的源码；不会把旧画面当作当前版本的重放。
+
 其余实际关键帧、关键帧之间的插值、GPU 顶点回读、官方 decoder 一致性、完整动作语义/解剖质量和替代策略的实际效果均未验证。
 #3 保持阻塞，#4 保留测量缺口。[#49 一页中文试用说明](../../docs/m12-unassisted-trial/PARTICIPANT-BRIEF.md)是独立文档改进，没有开始新真人试用。

@@ -59,9 +59,13 @@ jobs:
           python3 -B -O experiments/48-genuine-fixture-work/independent/check_serialized.py
           python3 -B experiments/48-genuine-fixture-work/independent/test_serialized.py
           python3 -B -O experiments/48-genuine-fixture-work/independent/test_serialized.py
-          python3 -B experiments/48-genuine-fixture-work/runtime/verify_evidence.py
-          python3 -B experiments/48-genuine-fixture-work/runtime/test_controls.py
-          python3 -B -O experiments/48-genuine-fixture-work/runtime/test_controls.py
+          # Run the unchanged historical48 verifier/26 controls against its
+          # authenticated source snapshot; current49 source is checked separately.
+          python3 -B experiments/49-runtime-pose-parity/historical48/audit.py
+          python3 -B experiments/49-runtime-pose-parity/historical48/audit.py --check controls
+          python3 -B -O experiments/49-runtime-pose-parity/historical48/audit.py --check controls
+          python3 -B experiments/49-runtime-pose-parity/historical48/test_audit.py
+          python3 -B -O experiments/49-runtime-pose-parity/historical48/test_audit.py
           # Offline controls only; these do not launch either renderer.
           python3 -B experiments/49-runtime-pose-parity/offline/test_evaluator.py
           python3 -B -O experiments/49-runtime-pose-parity/offline/test_evaluator.py

@@ -198,6 +198,28 @@ remains exact. Web canvas bytes are also identical. Native canvas bytes differ;
 no pixel-parity claim is made. All numerical conclusions and the quality HOLD
 remain unchanged.
 
+## Historical source guard exposed by CI
+
+The [first candidate CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38853065304)
+rejected `crates/nvwa-studio/Cargo.toml` in the unchanged experiment48 runtime
+audit. That historical audit pins 54 source inputs. Exactly two now differ:
+the reviewed `manual-start` feature and its Web entrypoint condition. The other
+52 inputs retain their original bytes, SHA256 and Git blob identity. The same
+unchanged verifier passes against the original source version; its direct
+current-checkout rejection is preserved as an expected version-boundary result.
+
+The [historical48 adapter](historical48/README.md) supplies a declared historical
+source snapshot to the original verifier and its original mutation controls.
+It authenticates the two archived source files against the original cohort,
+checks the other 52 current inputs unchanged, and separately binds both current
+Studio files to the actual experiment49 build/capture cohorts. It does not edit
+the old scripts, substitute their expected hashes, or treat historical images
+as current-code replay. CI executes the original assertions and all 26
+mutation-red/restored-green cases normally and under `-O` through this adapter.
+Experiments41–48 and numerical thresholds remain unchanged. The existing
+experiment49 runtime source/artifacts are unchanged by this CI-only boundary
+correction; no further renderer launch is claimed.
+
 ## Cleanup and reproduction
 
 The owned native renderers exited. Root closed refreshed diagnostic tab 8,
@@ -211,8 +233,8 @@ available for review; they are not product or publication artifacts.
 From the repository root:
 
 ```sh
-python3 experiments/49-runtime-pose-parity/offline/run_controls.py
-python3 -O experiments/49-runtime-pose-parity/offline/run_controls.py
+python3 experiments/49-runtime-pose-parity/offline/test_evaluator.py
+python3 -O experiments/49-runtime-pose-parity/offline/test_evaluator.py
 python3 experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/native.json
 python3 experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/web.json
 python3 -m unittest discover -s experiments/49-runtime-pose-parity/probe -p 'test_*staging.py'
