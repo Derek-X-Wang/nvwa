@@ -4,7 +4,9 @@
 
 用户已授权并行推进 [#69 人物试演室](https://github.com/Derek-X-Wang/nvwa/issues/69)的 [#70 第一阶段](https://github.com/Derek-X-Wang/nvwa/issues/70)：可调灯光、相机、背景/地面和画质，使用共享 Rust 命令与可保存的舞台配置。目标是完成度高、可反复使用的人物展示与动作试演。房间导入和物理分别留在后续阶段；Relais 与多人服务不是舞台交付的前置条件。当前正在开发与验证，编译、实际启动、功能、画面和性能结果分别记录，未完成项不视为通过。
 
-[#68 上臂中立策略对照](https://github.com/Derek-X-Wang/nvwa/issues/68)复用现有角色与真实样本，候选只调整两个上臂通道；数值、表面指标和桌面/Web 同帧效果分别验收。它与舞台展示独立，不以灯光改善替代动作质量，也不默认改变生产映射策略。
+[#68 上臂中立策略对照](https://github.com/Derek-X-Wang/nvwa/issues/68)复用现有角色与真实样本，候选只调整两个上臂通道；数值、表面指标和桌面/Web 同帧效果分别验收。[PR #71](https://github.com/Derek-X-Wang/nvwa/pull/71) 已经在独立审查与 CI 通过后合并，#68 已关闭；合并后 main CI 单独验证。它与舞台展示独立，不以灯光改善替代动作质量，生产映射保持原样。
+
+试演舞台的 [草稿 PR #72](https://github.com/Derek-X-Wang/nvwa/pull/72) 已有 137 项测试、双端构建及实际 Web/CLI 操作和文件证据。原生窗口与画面因 Mac 锁定尚未验收；黑色读回不算通过。当前继续修复历史 CLI 来源校验的 CI 适配，#70 保持开放。详细边界见[舞台验收记录](evidence/rehearsal-stage/ACCEPTANCE.md)。
 
 [#59 当前角色标定](https://github.com/Derek-X-Wang/nvwa/issues/59) 已补齐 [47 标定](../experiments/47-fixture-rig-calibration/REPORT.md) 的 [独立来源依据](../experiments/47-fixture-rig-calibration/reference/REPORT.md)：实际眼睛/脸部几何与缓存的固定版本源资料支持 +Y 上、+Z 前、身体左侧 +X。当前 fixture 的 `.L/.R` 名称与身体左右相反，因此保留资产名称，采用恒等坐标基、source Left→target `.R`。静态 T→A 中立对应、投影正面/上方滚转及手脚末端标记是工程约定，不宣称恢复掌面、足底或接触解剖。89 项正向、43 项拒绝和 8 项测量控制通过。47 的 `PROPOSED_NOT_ADMITTED` 是保留的候选快照；两次独立审查后，负责人在 [48 的独立准入记录](../experiments/48-genuine-fixture-work/admission.json)中明确采用这一有界工程策略，再开始后续导出。准入只覆盖当前角色和 44 的原有 90 帧，不是通用骨骼或动作质量认证。[PR #63](https://github.com/Derek-X-Wang/nvwa/pull/63) 已合并；其合并后 main CI 单独核验。
 
