@@ -1,0 +1,86 @@
+{
+  "schema": "nvwa.experiment48.contract.v1",
+  "status": "AUTHORIZED_AFTER_LOCAL_CALIBRATION_ADMISSION",
+  "scope": "exact current SOMA30/raw44/Nvwa18 engineering retarget only",
+  "directory": "experiments/48-genuine-fixture-work",
+  "calibration_sha256": "d730f372adc92d83931c23da84d8709dd8bfa7eb75d57964817577f4b034a6d0",
+  "root_gate_required": true,
+  "source_generation": "unchanged experiment44 successful single approved trial",
+  "frames": 90,
+  "fps": 30,
+  "time_keys": "binary32(i/30), i=0..89; no extra sample",
+  "target_joint_nodes": [
+    17,
+    16,
+    9,
+    8,
+    1,
+    0,
+    4,
+    3,
+    2,
+    7,
+    6,
+    5,
+    12,
+    11,
+    10,
+    15,
+    14,
+    13
+  ],
+  "root_channel_node": 17,
+  "forbidden_root_targets": [
+    23,
+    "runtime CharacterRoot"
+  ],
+  "channels": {
+    "rotations": 18,
+    "translations": 1,
+    "scales": 0,
+    "morphs": 0
+  },
+  "animation_index": 3,
+  "new_clip_id": "genuine44_calibrated47",
+  "preserve": {
+    "old_json": "all existing values and ordering, except buffers[0].byteLength",
+    "old_BIN": "exact full byte prefix including padding",
+    "old_animations": "all original three, unchanged",
+    "root_dependencies": "no edits",
+    "product_and_old_experiments": "no edits"
+  },
+  "representation": "proper matrices to normalized XYZW; record f64/f32 conversion and q-sign hemisphere continuity; verify after serialization",
+  "root_rule": "root translation = source Hips world - mapped root rotation * exact pelvis bind local translation, once; pelvis rotation stays bind",
+  "inputs": "strict pinned47 calibration+script/topmanifest; raw44 two arrays+successful generation receipt; source41 skeleton; original fixture/profile/provenance",
+  "output_provenance": "source generation vs transformation separate; pin every source/transform/admission/serialized output identity; no authored preset substitution or 42 guard change",
+  "runtime_proof": "CLI asset_checked true; independent decoded channel/FK and markers; actual native and Web playback, seek, saved whole-document equality, bidirectional exchange; missing/corrupt asset rejection separate",
+  "publication_limits": [
+    "not product provider",
+    "not official decoder parity",
+    "not certified palm/sole anatomy or contact fitting",
+    "not arbitrary rigs",
+    "not semantic prompt or human quality acceptance",
+    "not performance/cold/GPU measurement"
+  ],
+  "ownership": {
+    "root": [
+      "contract",
+      "admission",
+      "topmanifests",
+      "rootdocs",
+      "CI",
+      "Git/GitHub",
+      "runtime UI"
+    ],
+    "primary": [
+      "exporter, own controls and new48 report/output files except independent/"
+    ],
+    "independent": [
+      "NEW48 independent/ verifier and tests; first derive privately before exporter exposure"
+    ]
+  },
+  "external_limits": "no downloads/dependencies/models/inference/extra compute/machines; physical human request only after concrete readiness",
+  "stop": "any source/admission mismatch or nonexclusive destination; do not overwrite prior work",
+  "admission_sha256": "94676288d6e3f22886e4b08512aa9094e6e18cf21d50eac1d52e711d1cb365d6",
+  "publication": "separate subsequent PR after63, merge gated on independent review and currentCI"
+}

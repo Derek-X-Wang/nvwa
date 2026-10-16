@@ -52,6 +52,16 @@ jobs:
           python3 -B experiments/47-fixture-rig-calibration/reference/audit.py
           python3 -B -O experiments/47-fixture-rig-calibration/reference/audit.py
           python3 -B experiments/47-fixture-rig-calibration/reference/test_audit.py
+          python3 -B experiments/48-genuine-fixture-work/export.py verify experiments/48-genuine-fixture-work/artifacts
+          python3 -B experiments/48-genuine-fixture-work/test_controls.py
+          python3 -B -O experiments/48-genuine-fixture-work/test_controls.py
+          python3 -B experiments/48-genuine-fixture-work/independent/check_serialized.py
+          python3 -B -O experiments/48-genuine-fixture-work/independent/check_serialized.py
+          python3 -B experiments/48-genuine-fixture-work/independent/test_serialized.py
+          python3 -B -O experiments/48-genuine-fixture-work/independent/test_serialized.py
+          python3 -B experiments/48-genuine-fixture-work/runtime/verify_evidence.py
+          python3 -B experiments/48-genuine-fixture-work/runtime/test_controls.py
+          python3 -B -O experiments/48-genuine-fixture-work/runtime/test_controls.py
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     runs-on: macos-14

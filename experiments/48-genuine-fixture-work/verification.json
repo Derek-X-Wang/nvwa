@@ -1,0 +1,532 @@
+{
+  "schema": "nvwa.experiment48.primary-verification.v3",
+  "status": "PASS",
+  "correction": "v3 rejects signed-zero representation changes at every nonallowlisted binary64 float leaf; v2 three-leaf diagnostic roundoff policy unchanged",
+  "historical_v1": {
+    "python": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+    "verification_sha256": "a6aab6450bbe67b301a6c7ba93bfa5502ee50b2eb5342e6665dc4a108d531fb9",
+    "ledger_sha256": "fbcb5cdcea8e3221d6da8bd86e47a97d5b07824762760b69fc99497ae663e22e",
+    "primary_reload_recording_runtime": "CPython3.9.6",
+    "primary_reload_values_retained": true
+  },
+  "comparison_policy": {
+    "paths": [
+      "primary_reload/max_joint_position_error_m",
+      "primary_reload/max_pelvis_world_error_m",
+      "primary_reload/max_rotation_matrix_error"
+    ],
+    "absolute_tolerance": 2e-15,
+    "relative_tolerance": 0,
+    "finite_float_only": true,
+    "upper_bound_exclusive": 0.000002
+  },
+  "runtimes": [
+    {
+      "runtime": {
+        "implementation": "cpython",
+        "version": "3.9.6"
+      },
+      "runs": [
+        {
+          "name": "verify",
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "experiments/48-genuine-fixture-work/export.py",
+            "verify",
+            "experiments/48-genuine-fixture-work/artifacts"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.8676621250000001,
+          "stdout_sha256": "f706a63c46a6fa2b7a08dac238182641f9724eeaec974edd104841ce53cf9807",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "result": {
+            "status": "PASS",
+            "frames": 90,
+            "channels": 19,
+            "original_BIN_prefix_bytes": 3770416,
+            "max_rotation_matrix_error": 7.871245816248873e-8,
+            "max_pelvis_world_error_m": 7.409786746280263e-9,
+            "max_joint_position_error_m": 3.3445869382219576e-8,
+            "hemisphere_flips": 0,
+            "verification_runtime": {
+              "implementation": "cpython",
+              "version": "3.9.6"
+            },
+            "historical_ledger_diagnostics": "build-time observations; runtime-qualified records in REPORT.md and verification.json",
+            "diagnostic_comparison": {
+              "paths": [
+                "primary_reload/max_joint_position_error_m",
+                "primary_reload/max_pelvis_world_error_m",
+                "primary_reload/max_rotation_matrix_error"
+              ],
+              "absolute_tolerance": 2e-15,
+              "relative_tolerance": 0,
+              "finite_float_only": true,
+              "upper_bound_exclusive": 0.000002
+            }
+          }
+        },
+        {
+          "name": "controls",
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "experiments/48-genuine-fixture-work/test_controls.py"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 21.035970917,
+          "stdout_sha256": "aa6b8bb59cfddd99b378855d5ba1fe98e6a3fde2d924e90f12c1763839011290",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "result": {
+            "status": "PASS",
+            "positive_checks": [
+              "actual serialized90frame derivative reload",
+              "exclusive real publication and full reload",
+              "allowlisted f64 roundoff max_joint_position_error_m",
+              "allowlisted f64 roundoff max_pelvis_world_error_m",
+              "allowlisted f64 roundoff max_rotation_matrix_error",
+              "exact positive-zero float representation preserved",
+              "restored exact historical ledger",
+              "existing destination preserved",
+              "postwrite failure removes owned outputs",
+              "partial write cleanup"
+            ],
+            "rejected_controls": [
+              "root channel changed to ancestor23",
+              "root and pelvis channel switched",
+              "named sides exchanged",
+              "original animation renamed",
+              "exact original rest scale changed",
+              "original BIN byte changed",
+              "wrong appended accessor count",
+              "sampler uses old animation accessor",
+              "wrong animation index insertion",
+              "old root height added a second time",
+              "XYZW component order changed",
+              "unrecorded single-frame hemisphere sign flip",
+              "invented final three-second key",
+              "admission altered source pin",
+              "calibration altered source pin",
+              "raw altered source pin",
+              "receipt altered source pin",
+              "false raw ledger binding",
+              "false calibration ledger binding",
+              "false admission ledger binding",
+              "false derivative hash",
+              "duplicate JSON keys",
+              "nonfinite JSON",
+              "verify_artifacts diagnostic max_joint_position_error_m outside roundoff",
+              "verify_artifacts diagnostic max_joint_position_error_m boolean",
+              "verify_artifacts diagnostic max_joint_position_error_m integer",
+              "verify_artifacts diagnostic max_joint_position_error_m nonfinite",
+              "verify_artifacts diagnostic max_joint_position_error_m physical bound",
+              "verify_artifacts diagnostic max_joint_position_error_m negative",
+              "verify_artifacts diagnostic max_pelvis_world_error_m outside roundoff",
+              "verify_artifacts diagnostic max_pelvis_world_error_m boolean",
+              "verify_artifacts diagnostic max_pelvis_world_error_m integer",
+              "verify_artifacts diagnostic max_pelvis_world_error_m nonfinite",
+              "verify_artifacts diagnostic max_pelvis_world_error_m physical bound",
+              "verify_artifacts diagnostic max_pelvis_world_error_m negative",
+              "verify_artifacts diagnostic max_rotation_matrix_error outside roundoff",
+              "verify_artifacts diagnostic max_rotation_matrix_error boolean",
+              "verify_artifacts diagnostic max_rotation_matrix_error integer",
+              "verify_artifacts diagnostic max_rotation_matrix_error nonfinite",
+              "verify_artifacts diagnostic max_rotation_matrix_error physical bound",
+              "verify_artifacts diagnostic max_rotation_matrix_error negative",
+              "verify_artifacts exact provenance value",
+              "verify_artifacts exact discrete boolean",
+              "verify_artifacts exact discrete float type",
+              "verify_artifacts exact nonallowlisted numeric field",
+              "verify_artifacts nonallowlisted signed-zero representation",
+              "existing destination",
+              "symlink output",
+              "symlink input",
+              "postwrite verification failure",
+              "partial write disk failure"
+            ],
+            "rejection_count": 51,
+            "reload": {
+              "status": "PASS",
+              "frames": 90,
+              "channels": 19,
+              "original_BIN_prefix_bytes": 3770416,
+              "max_rotation_matrix_error": 7.871245816248873e-8,
+              "max_pelvis_world_error_m": 7.409786746280263e-9,
+              "max_joint_position_error_m": 3.3445869382219576e-8,
+              "hemisphere_flips": 0
+            },
+            "temporary_resources_remaining": 0
+          }
+        },
+        {
+          "name": "controls-optimized",
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "-O",
+            "experiments/48-genuine-fixture-work/test_controls.py"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 20.773046958000002,
+          "stdout_sha256": "aa6b8bb59cfddd99b378855d5ba1fe98e6a3fde2d924e90f12c1763839011290",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "result": {
+            "status": "PASS",
+            "positive_checks": [
+              "actual serialized90frame derivative reload",
+              "exclusive real publication and full reload",
+              "allowlisted f64 roundoff max_joint_position_error_m",
+              "allowlisted f64 roundoff max_pelvis_world_error_m",
+              "allowlisted f64 roundoff max_rotation_matrix_error",
+              "exact positive-zero float representation preserved",
+              "restored exact historical ledger",
+              "existing destination preserved",
+              "postwrite failure removes owned outputs",
+              "partial write cleanup"
+            ],
+            "rejected_controls": [
+              "root channel changed to ancestor23",
+              "root and pelvis channel switched",
+              "named sides exchanged",
+              "original animation renamed",
+              "exact original rest scale changed",
+              "original BIN byte changed",
+              "wrong appended accessor count",
+              "sampler uses old animation accessor",
+              "wrong animation index insertion",
+              "old root height added a second time",
+              "XYZW component order changed",
+              "unrecorded single-frame hemisphere sign flip",
+              "invented final three-second key",
+              "admission altered source pin",
+              "calibration altered source pin",
+              "raw altered source pin",
+              "receipt altered source pin",
+              "false raw ledger binding",
+              "false calibration ledger binding",
+              "false admission ledger binding",
+              "false derivative hash",
+              "duplicate JSON keys",
+              "nonfinite JSON",
+              "verify_artifacts diagnostic max_joint_position_error_m outside roundoff",
+              "verify_artifacts diagnostic max_joint_position_error_m boolean",
+              "verify_artifacts diagnostic max_joint_position_error_m integer",
+              "verify_artifacts diagnostic max_joint_position_error_m nonfinite",
+              "verify_artifacts diagnostic max_joint_position_error_m physical bound",
+              "verify_artifacts diagnostic max_joint_position_error_m negative",
+              "verify_artifacts diagnostic max_pelvis_world_error_m outside roundoff",
+              "verify_artifacts diagnostic max_pelvis_world_error_m boolean",
+              "verify_artifacts diagnostic max_pelvis_world_error_m integer",
+              "verify_artifacts diagnostic max_pelvis_world_error_m nonfinite",
+              "verify_artifacts diagnostic max_pelvis_world_error_m physical bound",
+              "verify_artifacts diagnostic max_pelvis_world_error_m negative",
+              "verify_artifacts diagnostic max_rotation_matrix_error outside roundoff",
+              "verify_artifacts diagnostic max_rotation_matrix_error boolean",
+              "verify_artifacts diagnostic max_rotation_matrix_error integer",
+              "verify_artifacts diagnostic max_rotation_matrix_error nonfinite",
+              "verify_artifacts diagnostic max_rotation_matrix_error physical bound",
+              "verify_artifacts diagnostic max_rotation_matrix_error negative",
+              "verify_artifacts exact provenance value",
+              "verify_artifacts exact discrete boolean",
+              "verify_artifacts exact discrete float type",
+              "verify_artifacts exact nonallowlisted numeric field",
+              "verify_artifacts nonallowlisted signed-zero representation",
+              "existing destination",
+              "symlink output",
+              "symlink input",
+              "postwrite verification failure",
+              "partial write disk failure"
+            ],
+            "rejection_count": 51,
+            "reload": {
+              "status": "PASS",
+              "frames": 90,
+              "channels": 19,
+              "original_BIN_prefix_bytes": 3770416,
+              "max_rotation_matrix_error": 7.871245816248873e-8,
+              "max_pelvis_world_error_m": 7.409786746280263e-9,
+              "max_joint_position_error_m": 3.3445869382219576e-8,
+              "hemisphere_flips": 0
+            },
+            "temporary_resources_remaining": 0
+          }
+        }
+      ],
+      "normal_and_optimized_output_equal": true
+    },
+    {
+      "runtime": {
+        "implementation": "cpython",
+        "version": "3.14.7"
+      },
+      "runs": [
+        {
+          "name": "verify",
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "experiments/48-genuine-fixture-work/export.py",
+            "verify",
+            "experiments/48-genuine-fixture-work/artifacts"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.723626167,
+          "stdout_sha256": "86262d4d47f048159ab7c88860d8ded6bc6b6adb2295216dc374c93a32214333",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "result": {
+            "status": "PASS",
+            "frames": 90,
+            "channels": 19,
+            "original_BIN_prefix_bytes": 3770416,
+            "max_rotation_matrix_error": 7.871245816248873e-8,
+            "max_pelvis_world_error_m": 7.409786746280263e-9,
+            "max_joint_position_error_m": 3.3445869193683264e-8,
+            "hemisphere_flips": 0,
+            "verification_runtime": {
+              "implementation": "cpython",
+              "version": "3.14.7"
+            },
+            "historical_ledger_diagnostics": "build-time observations; runtime-qualified records in REPORT.md and verification.json",
+            "diagnostic_comparison": {
+              "paths": [
+                "primary_reload/max_joint_position_error_m",
+                "primary_reload/max_pelvis_world_error_m",
+                "primary_reload/max_rotation_matrix_error"
+              ],
+              "absolute_tolerance": 2e-15,
+              "relative_tolerance": 0,
+              "finite_float_only": true,
+              "upper_bound_exclusive": 0.000002
+            }
+          }
+        },
+        {
+          "name": "controls",
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "experiments/48-genuine-fixture-work/test_controls.py"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 17.610231416999998,
+          "stdout_sha256": "a4def42583f6d94c179e59237ed699d2bc89324e3b7d8971b180bea6bf8e9a36",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "result": {
+            "status": "PASS",
+            "positive_checks": [
+              "actual serialized90frame derivative reload",
+              "exclusive real publication and full reload",
+              "allowlisted f64 roundoff max_joint_position_error_m",
+              "allowlisted f64 roundoff max_pelvis_world_error_m",
+              "allowlisted f64 roundoff max_rotation_matrix_error",
+              "exact positive-zero float representation preserved",
+              "restored exact historical ledger",
+              "existing destination preserved",
+              "postwrite failure removes owned outputs",
+              "partial write cleanup"
+            ],
+            "rejected_controls": [
+              "root channel changed to ancestor23",
+              "root and pelvis channel switched",
+              "named sides exchanged",
+              "original animation renamed",
+              "exact original rest scale changed",
+              "original BIN byte changed",
+              "wrong appended accessor count",
+              "sampler uses old animation accessor",
+              "wrong animation index insertion",
+              "old root height added a second time",
+              "XYZW component order changed",
+              "unrecorded single-frame hemisphere sign flip",
+              "invented final three-second key",
+              "admission altered source pin",
+              "calibration altered source pin",
+              "raw altered source pin",
+              "receipt altered source pin",
+              "false raw ledger binding",
+              "false calibration ledger binding",
+              "false admission ledger binding",
+              "false derivative hash",
+              "duplicate JSON keys",
+              "nonfinite JSON",
+              "verify_artifacts diagnostic max_joint_position_error_m outside roundoff",
+              "verify_artifacts diagnostic max_joint_position_error_m boolean",
+              "verify_artifacts diagnostic max_joint_position_error_m integer",
+              "verify_artifacts diagnostic max_joint_position_error_m nonfinite",
+              "verify_artifacts diagnostic max_joint_position_error_m physical bound",
+              "verify_artifacts diagnostic max_joint_position_error_m negative",
+              "verify_artifacts diagnostic max_pelvis_world_error_m outside roundoff",
+              "verify_artifacts diagnostic max_pelvis_world_error_m boolean",
+              "verify_artifacts diagnostic max_pelvis_world_error_m integer",
+              "verify_artifacts diagnostic max_pelvis_world_error_m nonfinite",
+              "verify_artifacts diagnostic max_pelvis_world_error_m physical bound",
+              "verify_artifacts diagnostic max_pelvis_world_error_m negative",
+              "verify_artifacts diagnostic max_rotation_matrix_error outside roundoff",
+              "verify_artifacts diagnostic max_rotation_matrix_error boolean",
+              "verify_artifacts diagnostic max_rotation_matrix_error integer",
+              "verify_artifacts diagnostic max_rotation_matrix_error nonfinite",
+              "verify_artifacts diagnostic max_rotation_matrix_error physical bound",
+              "verify_artifacts diagnostic max_rotation_matrix_error negative",
+              "verify_artifacts exact provenance value",
+              "verify_artifacts exact discrete boolean",
+              "verify_artifacts exact discrete float type",
+              "verify_artifacts exact nonallowlisted numeric field",
+              "verify_artifacts nonallowlisted signed-zero representation",
+              "existing destination",
+              "symlink output",
+              "symlink input",
+              "postwrite verification failure",
+              "partial write disk failure"
+            ],
+            "rejection_count": 51,
+            "reload": {
+              "status": "PASS",
+              "frames": 90,
+              "channels": 19,
+              "original_BIN_prefix_bytes": 3770416,
+              "max_rotation_matrix_error": 7.871245816248873e-8,
+              "max_pelvis_world_error_m": 7.409786746280263e-9,
+              "max_joint_position_error_m": 3.3445869193683264e-8,
+              "hemisphere_flips": 0
+            },
+            "temporary_resources_remaining": 0
+          }
+        },
+        {
+          "name": "controls-optimized",
+          "argv": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "-B",
+            "-O",
+            "experiments/48-genuine-fixture-work/test_controls.py"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 17.612072875,
+          "stdout_sha256": "a4def42583f6d94c179e59237ed699d2bc89324e3b7d8971b180bea6bf8e9a36",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "result": {
+            "status": "PASS",
+            "positive_checks": [
+              "actual serialized90frame derivative reload",
+              "exclusive real publication and full reload",
+              "allowlisted f64 roundoff max_joint_position_error_m",
+              "allowlisted f64 roundoff max_pelvis_world_error_m",
+              "allowlisted f64 roundoff max_rotation_matrix_error",
+              "exact positive-zero float representation preserved",
+              "restored exact historical ledger",
+              "existing destination preserved",
+              "postwrite failure removes owned outputs",
+              "partial write cleanup"
+            ],
+            "rejected_controls": [
+              "root channel changed to ancestor23",
+              "root and pelvis channel switched",
+              "named sides exchanged",
+              "original animation renamed",
+              "exact original rest scale changed",
+              "original BIN byte changed",
+              "wrong appended accessor count",
+              "sampler uses old animation accessor",
+              "wrong animation index insertion",
+              "old root height added a second time",
+              "XYZW component order changed",
+              "unrecorded single-frame hemisphere sign flip",
+              "invented final three-second key",
+              "admission altered source pin",
+              "calibration altered source pin",
+              "raw altered source pin",
+              "receipt altered source pin",
+              "false raw ledger binding",
+              "false calibration ledger binding",
+              "false admission ledger binding",
+              "false derivative hash",
+              "duplicate JSON keys",
+              "nonfinite JSON",
+              "verify_artifacts diagnostic max_joint_position_error_m outside roundoff",
+              "verify_artifacts diagnostic max_joint_position_error_m boolean",
+              "verify_artifacts diagnostic max_joint_position_error_m integer",
+              "verify_artifacts diagnostic max_joint_position_error_m nonfinite",
+              "verify_artifacts diagnostic max_joint_position_error_m physical bound",
+              "verify_artifacts diagnostic max_joint_position_error_m negative",
+              "verify_artifacts diagnostic max_pelvis_world_error_m outside roundoff",
+              "verify_artifacts diagnostic max_pelvis_world_error_m boolean",
+              "verify_artifacts diagnostic max_pelvis_world_error_m integer",
+              "verify_artifacts diagnostic max_pelvis_world_error_m nonfinite",
+              "verify_artifacts diagnostic max_pelvis_world_error_m physical bound",
+              "verify_artifacts diagnostic max_pelvis_world_error_m negative",
+              "verify_artifacts diagnostic max_rotation_matrix_error outside roundoff",
+              "verify_artifacts diagnostic max_rotation_matrix_error boolean",
+              "verify_artifacts diagnostic max_rotation_matrix_error integer",
+              "verify_artifacts diagnostic max_rotation_matrix_error nonfinite",
+              "verify_artifacts diagnostic max_rotation_matrix_error physical bound",
+              "verify_artifacts diagnostic max_rotation_matrix_error negative",
+              "verify_artifacts exact provenance value",
+              "verify_artifacts exact discrete boolean",
+              "verify_artifacts exact discrete float type",
+              "verify_artifacts exact nonallowlisted numeric field",
+              "verify_artifacts nonallowlisted signed-zero representation",
+              "existing destination",
+              "symlink output",
+              "symlink input",
+              "postwrite verification failure",
+              "partial write disk failure"
+            ],
+            "rejection_count": 51,
+            "reload": {
+              "status": "PASS",
+              "frames": 90,
+              "channels": 19,
+              "original_BIN_prefix_bytes": 3770416,
+              "max_rotation_matrix_error": 7.871245816248873e-8,
+              "max_pelvis_world_error_m": 7.409786746280263e-9,
+              "max_joint_position_error_m": 3.3445869193683264e-8,
+              "hemisphere_flips": 0
+            },
+            "temporary_resources_remaining": 0
+          }
+        }
+      ],
+      "normal_and_optimized_output_equal": true
+    }
+  ],
+  "artifact_preservation": {
+    "snapshot_files": 28,
+    "snapshot_mismatches": [],
+    "artifacts": [
+      {
+        "path": "artifacts/assets/generated/genuine44-calibrated47.glb",
+        "sha256": "c343f6cf47dc0a7c0b09f13ad7d21cf2706a08fb1cfdaca233f14edab02e44fc",
+        "bytes": 3859752,
+        "v2_exact": true
+      },
+      {
+        "path": "artifacts/character.profile.json",
+        "sha256": "af8638e626c0ade115d94663f191621ab5753c1f970e8a337ecc03aad16429b0",
+        "bytes": 1330,
+        "v2_exact": true
+      },
+      {
+        "path": "artifacts/genuine44-calibrated47.nvwa.json",
+        "sha256": "7668eb7a2a2f87070500cbf49fa27d6794aa1fb83f5392b75a0ff51667cde779",
+        "bytes": 1977,
+        "v2_exact": true
+      }
+    ],
+    "ledger_changes": [
+      {
+        "path": "/exporter_sha256",
+        "old": "46e974f60ed255a525d3ad3b962cd40dcd2674eca8f2bbf125f1e5fbf7e3971d",
+        "current": "5cc3d8254a0e2ec2e92c92367d7dcf3a4f9b28a7f856c0010ae1086d7a3b425f"
+      }
+    ]
+  },
+  "persistent_processes": 0,
+  "historical_v2": {
+    "verification_sha256": "485857ac84e46fc4d8b0532afbbfaf2fca6bfb6e0ec3be6fdc1b9d18cdfaba5a",
+    "exporter_sha256": "46e974f60ed255a525d3ad3b962cd40dcd2674eca8f2bbf125f1e5fbf7e3971d",
+    "ledger_sha256": "9c633e7e5357cc29d96550f7b524324de18fbb9309de9268d2986bc038074394",
+    "preserved_snapshot_files": 28
+  },
+  "nonallowlisted_float_policy": "exact struct.pack(>d) binary64 representation; +0.0 and -0.0 differ"
+}

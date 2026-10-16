@@ -1,0 +1,224 @@
+{
+  "baseline": {
+    "affine_tolerance_m": 0.0001706575400125284,
+    "epsilon_binary32": 5.960464477539063e-08,
+    "frames": 90,
+    "glb_sha256": "c343f6cf47dc0a7c0b09f13ad7d21cf2706a08fb1cfdaca233f14edab02e44fc",
+    "max_joint_world_error_m": 3.114200830545144e-08,
+    "max_quaternion_error": 3.3281079225844223e-08,
+    "max_root_translation_error_m": 7.409698077331939e-09,
+    "max_signed_marker_error_m": 8.767021192346292e-09,
+    "not_run": [
+      "semantic prompt/human motion quality",
+      "official decoder parity",
+      "anatomy/contact",
+      "general rigs",
+      "native/Web playback and exchange"
+    ],
+    "pelvis_world_comparisons": 90,
+    "profile_work_ledger_bindings": "PASS",
+    "quaternion_tolerance": 4.76837158203125e-07,
+    "root_translation_comparisons": 90,
+    "rotation_comparisons": 1620,
+    "signed_marker_comparisons": 3240,
+    "status": "PASS"
+  },
+  "controls": [
+    {
+      "boundary": "exact targets/root17",
+      "control": "wrong-root23",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "root translation",
+      "control": "double-root-exporter-height",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "rotation frame0 node4",
+      "control": "physical-side-exchange",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "rotation frame0 node17",
+      "control": "quaternion-XYWZ",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "rotation frame0 node4",
+      "control": "wrong-sample-index",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "old BIN exact prefix",
+      "control": "old-BIN-byte",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "old animations preserved",
+      "control": "old-animation-value",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "old JSON nodes",
+      "control": "old-node-bool-type",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "90 samples",
+      "control": "framecount91",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "90 samples",
+      "control": "framecount-bool",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "accessor bounds",
+      "control": "out-of-view",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "accessor alignment",
+      "control": "misaligned-accessor",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "exact binary32 time keys",
+      "control": "invented-last-frame",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "accessor finite",
+      "control": "nonfinite-channel",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "hemisphere continuity",
+      "control": "discontinuous-q-sign",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "clip genuine provenance",
+      "control": "forged-clip-authored",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "index type/bounds",
+      "control": "root-bool-type",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "ledger admission_sha256",
+      "control": "wrong-admission",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "ledger calibration_sha256",
+      "control": "wrong-calibration",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "source genuine receipt identity",
+      "control": "wrong-source-receipt",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "genuine raw hash binding",
+      "control": "wrong-raw-hash",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "genuine experimental provenance",
+      "control": "forged-ai-provenance",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "actual exporter identity",
+      "control": "wrong-exporter-identity",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "separate generation/transformation",
+      "control": "new-generation-forged",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "explicit clip3 entry times/speed/nonlooping",
+      "control": "authored-wave-fallback",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "profile old values and clip3",
+      "control": "profile-wrong-clip-index",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "whole Work embedded profile",
+      "control": "whole-Work-profile-mismatch",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "explicit clip3 entry times/speed/nonlooping",
+      "control": "timeline-loop-bool-type",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "pinned input experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32",
+      "control": "pinned-source:experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "pinned input experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json",
+      "control": "pinned-source:experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "pinned input experiments/48-genuine-fixture-work/admission.json",
+      "control": "pinned-source:experiments/48-genuine-fixture-work/admission.json",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    },
+    {
+      "boundary": "pinned input experiments/47-fixture-rig-calibration/calibration.json",
+      "control": "pinned-source:experiments/47-fixture-rig-calibration/calibration.json",
+      "mutant": "REJECTED",
+      "restored": "PASS"
+    }
+  ],
+  "negative_controls": 32,
+  "optimized_python": false,
+  "restored_green_checks": 32,
+  "status": "PASS"
+}
