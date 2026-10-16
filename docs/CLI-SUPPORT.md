@@ -9,13 +9,21 @@ The CLI supports these local operations:
 | Command | Operation |
 | --- | --- |
 | `new` | Create a Work from a character profile. |
-| `describe-capabilities` | Read the profile, current revision, supported parameters and authored clips, plus the CLI command contract. |
+| `describe-capabilities` | Read the profile, current revision, supported parameters and authored clips, the saved stage, plus the CLI command contract. |
 | `inspect` | Read a Work as JSON. |
-| `apply` | Apply `set_parameters`, `set_scale`, `set_timeline`, `undo` or `redo` commands and save the result to an output file. |
+| `apply` | Apply `set_parameters`, `set_scale`, `set_timeline`, `set_stage`, `undo` or `redo` commands and save the result to an output file. |
 | `validate` | Check a Work; with an asset root, also check the referenced asset's hash and structure. |
 | `save` | Validate and reserialize a Work without changing its revision. |
 
 Successful machine-readable responses use JSON on stdout. Help uses text. Handled errors return exit code 1 and a `{ "code": "...", "message": "..." }` JSON diagnostic on stderr when stderr is writable. The exact response and recovery rules are in the [CLI authoring guide](agents/cli-authoring.md).
+
+## Rehearsal stage files
+
+New and saved Works use schema 2. The strict schema 1 reader upgrades legacy Works to the default white studio stage without changing their revision, recipe, profile or timeline. Schema 2 requires an explicit `stage`; unknown fields, duplicate keys and invalid settings are rejected. Saving the upgrade writes schema 2, which older Nvwa versions cannot read. Original fixtures remain schema 1.
+
+`set_stage` replaces the complete stage through the same atomic command as Studio. `describe-capabilities` returns the loaded stage, a serialized command example, numeric bounds and the quality profiles. `inspect`, `validate`, `save` and `apply` use the shared validator. Light intensity is lux, colors are three sRGB channels in `[0,1]`, and angles are degrees. Camera distance and target height use character-relative units, multiplied by the character scale only in the runtime. The floor remains at world height zero. Core scale validation remains finite and positive; the fixed presentation runtime reports an explicit camera error outside scale `0.001..=100` and preserves the Work.
+
+Low quality requests no MSAA and no shadows. Balanced requests 4× MSAA and a 2048 key-light shadow map. High requests 4× MSAA, a 4096 key-light shadow map and screen-space contact shadows with a depth prepass. The saved shadow switch can disable the key shadows in Balanced and High; fill shadows stay off. These are shared runtime settings. Actual native/Web rendering, memory and frame times require separate acceptance. The CLI does not render them.
 
 ## Build and run requirements
 

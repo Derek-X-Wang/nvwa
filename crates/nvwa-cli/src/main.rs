@@ -98,6 +98,9 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         Command::SetTimeline {
             clips: document.timeline.clone(),
         },
+        Command::SetStage {
+            stage: document.stage.clone(),
+        },
         Command::Undo,
         Command::Redo,
     ];
@@ -118,6 +121,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
     Ok(serde_json::json!({
         "schema_version": 1,
         "transport": "offline_files",
+        "work_schema": {"writes": nvwa_core::SCHEMA_VERSION, "reads": [1, nvwa_core::SCHEMA_VERSION], "legacy_upgrade": "schema1_to_schema2_default_white_studio_without_revision_change"},
         "entrypoints": {
             "new": ["profile.json", "output.json"],
             "inspect": ["input.json"],
@@ -153,6 +157,27 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "overlap": "rejected",
             "gaps": "allowed_holds",
             "playback_order": "start_seconds_not_array_order"
+        },
+        "set_stage": {
+            "effect": "atomically_replaces_entire_stage",
+            "persisted_in_work": true,
+            "colors": "three_finite_srgb_channels_0_to_1_inclusive",
+            "lights": {"illuminance_lux": [0, 100000], "azimuth_degrees": [-180, 180], "elevation_degrees": [5, 89]},
+            "ambient_brightness": [0, 2000],
+            "floor": "visible_color_srgb_shadows_at_fixed_y_zero",
+            "camera_units": "distance_and_target_height_relative_to_character_scale_angles_degrees",
+            "runtime_presentation_scale": [0.001, 100],
+            "runtime_extreme_scale": "explicit_stage_camera_error_work_preserved",
+            "camera": {"azimuth_degrees": [-180, 180], "elevation_degrees": [-20, 80], "distance": [0.35, 20], "target_height": [0, 4], "fov_degrees": [15, 75]},
+            "quality": ["low", "balanced", "high"],
+            "bounds": "all_floats_finite_and_ranges_inclusive",
+            "profiles": {
+                "low": {"msaa_samples": 1, "key_shadow_maps": false, "shadow_map_size": 1024, "contact_shadows": false},
+                "balanced": {"msaa_samples": 4, "key_shadow_maps": "floor_shadows_request", "shadow_map_size": 2048, "contact_shadows": false},
+                "high": {"msaa_samples": 4, "key_shadow_maps": "floor_shadows_request", "shadow_map_size": 4096, "contact_shadows": "floor_shadows_request"}
+            },
+            "fill_shadows": false,
+            "quality_effects": "requested_shared_runtime_settings_actual_platform_rendering_and_performance_need_separate_acceptance"
         },
         "revision": {
             "check": "expected_revision_against_loaded_input_document",
@@ -222,6 +247,11 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                     .map_err(|e| CoreError::new("serialize", e.to_string()))?;
                 capabilities["document_revision"] = serde_json::json!(document.revision);
                 capabilities["character_id"] = serde_json::json!(document.character.id);
+                capabilities["stage"] = serde_json::from_str(
+                    &serde_json::to_string(&document.stage)
+                        .map_err(|e| CoreError::new("serialize", e.to_string()))?,
+                )
+                .map_err(|e| CoreError::new("serialize", e.to_string()))?;
                 capabilities["cli_contract"] = cli_contract(&document)?;
                 capabilities["editor_retention"] = serde_json::json!({
                     "limits": nvwa_core::EDITOR_RETENTION_LIMITS,

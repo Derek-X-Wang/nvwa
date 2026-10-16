@@ -2,6 +2,7 @@
 mod editor_layout;
 mod fonts;
 pub mod platform;
+mod stage_ui;
 #[cfg(any(target_arch = "wasm32", test))]
 mod web_input;
 
@@ -14,7 +15,7 @@ use bevy_egui::{EguiContexts, EguiPlugin, EguiPrimaryContextPass, egui};
 use nvwa_core::{Command, SceneDocument, TimelineClip};
 use nvwa_runtime::{
     CharacterInteraction, CharacterInteractionInput, EditorState, NvwaRuntimePlugin, Playback,
-    RuntimeStatus, SceneCamera, StartupDocumentPolicy,
+    RuntimeStatus, SceneCamera, StageViewOverride, StartupDocumentPolicy,
 };
 use platform::{FileCompletion, PlatformIo};
 use std::collections::BTreeMap;
@@ -26,6 +27,7 @@ struct StudioUi {
     file_path: String,
     error: Option<String>,
     save_notice: Option<SaveNotice>,
+    stage: stage_ui::StageUi,
 }
 impl Default for StudioUi {
     fn default() -> Self {
@@ -35,6 +37,7 @@ impl Default for StudioUi {
             file_path: "scene.nvwa.json".into(),
             error: None,
             save_notice: None,
+            stage: default(),
         }
     }
 }
@@ -98,7 +101,7 @@ impl SaveNotice {
 }
 
 /// This is set by egui, before any viewport keyboard/mouse handler.
-/// The initial Studio camera is fixed; UI drags cannot rotate it.
+/// Stage gestures and picking reject editor-owned input.
 #[derive(Resource, Default)]
 pub struct UiInputGuard {
     pub pointer: bool,
@@ -602,6 +605,7 @@ fn draw_studio(
     status: Res<RuntimeStatus>,
     interaction: Res<CharacterInteraction>,
     config: Res<LaunchConfig>,
+    mut view: ResMut<StageViewOverride>,
     session: StudioSession,
 ) -> Result {
     let StudioSession {
@@ -623,6 +627,7 @@ fn draw_studio(
                 state: &mut state,
                 io: &mut io,
                 guard: &mut guard,
+                view: &mut view,
             },
         );
         return Ok(());
@@ -672,6 +677,7 @@ fn draw_editor_ui(
             .max_rect(ctx.viewport_rect()),
     );
     let mut layout = state.layout.clone();
+    let mut stage_ui = state.stage.clone();
     let mut save_notice = if io.busy() {
         None
     } else {
@@ -703,6 +709,7 @@ fn draw_editor_ui(
                 command = Some(Command::Redo);
             }
             ui.separator();
+            ui.toggle_value(&mut stage_ui.open, "舞台 / Stage");
             ui.label("作品 / Work");
             let previous_path = state.file_path.clone();
             draw_work_path(ui, &mut state.file_path, 220.0);
@@ -958,12 +965,15 @@ fn draw_editor_ui(
                 ui.small("Durations are wall time. Duration, order and removal edits join the rows without gaps.");
             }
         }
-        ui.small("Viewport camera is fixed. Space plays or pauses when the editor has no keyboard focus.");
+        ui.small("Right-drag orbits · wheel zooms · Space plays/pauses without keyboard focus.");
         ui.small(if interaction.busy() {
             "Wave interaction · sequence cursor held"
         } else {
             "Original fixture: Click chest/head to wave"
         });
+        if let Some(error) = &status.stage_error {
+            ui.colored_label(egui::Color32::LIGHT_RED, error);
+        }
         if let Some(error) = &status.error {
             ui.colored_label(egui::Color32::LIGHT_RED, error);
         }
@@ -990,6 +1000,20 @@ fn draw_editor_ui(
     {
         save_notice = None;
     }
+    let mut stage_intent = if let Some(document) = &document {
+        stage_ui::draw(ctx, &mut stage_ui, &document.stage)
+    } else {
+        default()
+    };
+    if let Some(document) = &document {
+        stage_ui::orbit(
+            ctx,
+            viewport_ui.available_rect_before_wrap(),
+            &mut stage_ui,
+            &document.stage,
+            &mut stage_intent,
+        );
+    }
     // Do not paint a central egui panel: the scene remains visible through it.
     guard.pointer = editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
     guard.keyboard = ctx.egui_wants_keyboard_input();
@@ -1013,6 +1037,7 @@ fn draw_editor_ui(
         return Ok(());
     }
     state.layout = layout;
+    state.stage = stage_ui;
     state.save_notice = save_notice;
     *playback = next_playback;
     if let Some(save) = file_action {
@@ -1028,6 +1053,13 @@ fn draw_editor_ui(
         if let Err(error) = result {
             state.error = Some(error);
         }
+    }
+    if stage_intent.cancel {
+        preview = None;
+        commit_drag = false;
+    }
+    if let Err(error) = stage_ui::apply(editor, stage_intent) {
+        state.error = Some(error);
     }
     if let Some(values) = preview
         && let Err(error) = editor.preview_parameters(values)
@@ -1053,6 +1085,7 @@ struct PlayerSession<'a> {
     state: &'a mut StudioUi,
     io: &'a mut PlatformIo,
     guard: &'a mut UiInputGuard,
+    view: &'a mut StageViewOverride,
 }
 
 fn draw_player(
@@ -1067,6 +1100,7 @@ fn draw_player(
         state,
         io,
         guard,
+        view,
     } = session;
     let mut viewport = egui::Ui::new(
         ctx.clone(),
@@ -1112,6 +1146,7 @@ fn draw_player(
                 "Original fixture: Click chest/head to wave"
             });
             for error in [
+                status.stage_error.as_ref(),
                 status.error.as_ref(),
                 next.error.as_ref(),
                 state.error.as_ref(),
@@ -1122,6 +1157,20 @@ fn draw_player(
                 ui.colored_label(egui::Color32::LIGHT_RED, error);
             }
         });
+    let mut stage_ui = state.stage.clone();
+    let prior_camera = view.camera(editor).cloned();
+    let mut orbit_intent = stage_ui::Intent::default();
+    if let (Some(document), Some(camera)) = (editor.visible_document(), prior_camera.as_ref()) {
+        let mut stage = document.stage.clone();
+        stage.camera = camera.clone();
+        stage_ui::orbit(
+            ctx,
+            viewport.available_rect_before_wrap(),
+            &mut stage_ui,
+            &stage,
+            &mut orbit_intent,
+        );
+    }
     guard.pointer = editor_owns_pointer(ctx, viewport.available_rect_before_wrap());
     guard.keyboard = ctx.egui_wants_keyboard_input();
     if !guard.keyboard
@@ -1136,6 +1185,14 @@ fn draw_player(
         return;
     }
     *playback = next;
+    state.stage = stage_ui;
+    if orbit_intent.cancel {
+        view.reset();
+    } else if let Some(stage) = orbit_intent.preview
+        && let Err(error) = view.set(editor, stage.camera)
+    {
+        state.error = Some(error);
+    }
     if open {
         match io.request_open(&state.file_path) {
             Ok(()) => state.error = None,
@@ -1330,7 +1387,10 @@ fn smoke_and_capture(
     #[cfg(target_arch = "wasm32")]
     let capture_complete = smoke.captured;
     let complete = warmed && (smoke.capture.is_none() || capture_complete);
-    let failed = status.error.is_some() || work.ui.error.is_some() || now > smoke.timeout;
+    let failed = status.error.is_some()
+        || status.stage_error.is_some()
+        || work.ui.error.is_some()
+        || now > smoke.timeout;
     if complete || failed {
         let mut times = status.warmed_frame_times_ms.clone();
         times.sort_by(f32::total_cmp);
@@ -1344,6 +1404,8 @@ fn smoke_and_capture(
         let evidence = serde_json::json!({
             "ready": status.ready, "error": status.error.as_ref().or(work.ui.error.as_ref()), "elapsed_seconds": now,
             "mode": work.config.mode.label(),
+            "stage": work.editor.visible_document().map(|doc| &doc.stage),
+            "stage_error": status.stage_error,
             "document_revision": work.editor.document().map(|doc| doc.revision),
             "timeline_count": work.editor.document().map(|doc| doc.timeline.len()),
             "playing": playback.playing, "completed": playback.completed,
@@ -1637,6 +1699,7 @@ mod tests {
                 &status,
                 &interaction,
                 PlayerSession {
+                    view: &mut StageViewOverride::default(),
                     editor: &editor,
                     playback: &mut playback,
                     state: &mut state,
