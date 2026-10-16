@@ -44,10 +44,16 @@ The production scale test includes `0.001`, `0.5`, `1`, `2` and `100`; it verifi
 
 A direct run before package cleanup failed discovery tests because reused executables referenced a retired wefty snapshot for compile-time fixture paths. A package-scoped Cargo cleanup and rebuild from the stable checkout restored the actual fixture reads, without changing the test assertions or product behavior. The shared dependency cache was retained. Final formatting, whitespace and strict core/CLI Clippy checks passed.
 
-Native/Web build receipts follow. This source gate does not claim GPU pixels, native or browser input acceptance, performance, memory, first frame or human preference.
+Native/Web build receipts appear below. This source gate does not claim GPU pixels, native or browser input acceptance, performance, memory, first frame or human preference.
 
 ## Native artifact
 
 `CARGO_TARGET_DIR=<allocated existing runtime cache> CARGO_BUILD_JOBS=1 cargo build -p nvwa-studio --bin nvwa-studio --offline --locked` completed in **2.91 s**, dev optimized+debuginfo, on stable source after the 135-test gate. Copied artifact: 156,128,016 bytes, SHA-256 `379aa3e290ac049489154bff42cde271faf93da882986275358237ce1ed81921`. Source-file-map SHA-256: `ffecacb5df699d40add6eacd86922d59d2715367207752c49a52ebc4a60b344a` (canonical sorted compact JSON of all Rust crate source/manifests, workspace manifest/lock/toolchain and Web index hashes). The private artifact manifest records every source hash, exact checkout and copy time; root integration owns graphical evidence. The unchanged fixture SHA-256 is `f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6`.
 
 At native copy, HEAD was `9b3fd91615e09397f82836ed5cb6a0219ce39993` plus the implementation changes committed next. The binary must use the production `NVWA_ASSET_ROOT` override when moved away from its source checkout. No GPU launch was performed by this worker.
+
+## Web artifact
+
+`CARGO_TARGET_DIR=<allocated existing runtime cache> CARGO_BUILD_JOBS=1 cargo build -p nvwa-studio --lib --target wasm32-unknown-unknown --offline --locked` completed in **46.71 s**, dev optimized+debuginfo. The existing pinned `wasm-bindgen 0.2.129 --target web` generated the browser bundle successfully. Generated `nvwa_studio_bg.wasm`: 114,613,742 bytes, SHA-256 `070f0314088bc34ac8b9cc23425f944b20254bda7eb7f0e9c455bd8027821b48`. Generated JS: SHA-256 `526b770740bd181d491b5c2688292959f0c74002dc16a2b56544869880a28b8b`. Source is commit `fe4afb6cfcb63d484210bcfccaf40a52ffea436e` and matches the native source-file hashes. Web index, unchanged fixture/profile, example Work and required license files accompany the private bundle.
+
+The raw debug Wasm retains debug information and is larger than the bindgen browser module. No download, new dependency or release graph was used. The implementation worker performed no browser/GPU launch, input test or performance measurement. Root integration owns actual native/Web acceptance.
