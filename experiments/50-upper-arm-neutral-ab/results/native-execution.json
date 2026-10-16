@@ -1,0 +1,42 @@
+{
+  "baseline": {
+    "capture_sha256": "731db999bca820dd0bda4ae5b5b3893211953317e017c0b8da5016857013365e",
+    "os_exit_code": 0,
+    "staging": {
+      "variant": "baseline",
+      "inputs": {
+        "experiments/48-genuine-fixture-work/artifacts/genuine44-calibrated47.nvwa.json": "7668eb7a2a2f87070500cbf49fa27d6794aa1fb83f5392b75a0ff51667cde779",
+        "experiments/48-genuine-fixture-work/artifacts/assets/generated/genuine44-calibrated47.glb": "c343f6cf47dc0a7c0b09f13ad7d21cf2706a08fb1cfdaca233f14edab02e44fc"
+      },
+      "work_query": "?work=works/genuine44-calibrated47.nvwa.json",
+      "native_binary_sha256": "6ebe5be1b7a3ebe103ee336404cff799a8d449f08e0707021411810b5080bb23"
+    },
+    "visual": {
+      "status": "OBSERVED_TOOL_SCREENSHOT",
+      "source_key": 89,
+      "tool": "cua_repl App.getScreenshot",
+      "local_png": "NOT-RUN: adapter exposes bytes and emitted image, no documented file persistence API",
+      "later_product_gpu_export": "PASS; see native-visual-execution.json and native-*-canvas.png"
+    }
+  },
+  "candidate": {
+    "capture_sha256": "fed703d52aa35a54ab5ff1f4d1ed51b97893991ba94bfeed19f7bff6b9a1715d",
+    "os_exit_code": 0,
+    "staging": {
+      "variant": "candidate",
+      "inputs": {
+        "experiments/50-upper-arm-neutral-ab/artifacts/genuine44-upper-arm-neutral50.nvwa.json": "033344a831e3a8c6a9bb2fd1e03ce84c78662e568572c528302b86bfaab50fcf",
+        "experiments/50-upper-arm-neutral-ab/artifacts/assets/generated/genuine44-upper-arm-neutral50.glb": "2779b012405a915cbc84b38dc18e5eb7a91215661b54ac0c7753ecebb49feae7"
+      },
+      "work_query": "?work=works/genuine44-upper-arm-neutral50.nvwa.json",
+      "native_binary_sha256": "6ebe5be1b7a3ebe103ee336404cff799a8d449f08e0707021411810b5080bb23"
+    },
+    "visual": {
+      "status": "OBSERVED_TOOL_SCREENSHOT",
+      "source_key": 89,
+      "tool": "cua_repl App.getScreenshot",
+      "local_png": "NOT-RUN: adapter exposes bytes and emitted image, no documented file persistence API",
+      "later_product_gpu_export": "PASS; see native-visual-execution.json and native-*-canvas.png"
+    }
+  }
+}
