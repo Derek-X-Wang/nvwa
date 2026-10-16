@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "scope": "packaging only; fake executable and fake assets; no renderer evidence",
+  "interpreter": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "normal": {
+    "tests": 3,
+    "status": "PASS"
+  },
+  "optimized": {
+    "tests": 3,
+    "status": "PASS"
+  },
+  "controls": [
+    "fresh staging creates absent log parent and preserves Work/GLB copy bytes",
+    "missing diagnostic executable refuses before app staging",
+    "removing log-parent creation makes the actual generated launcher fail; original source restored"
+  ]
+}

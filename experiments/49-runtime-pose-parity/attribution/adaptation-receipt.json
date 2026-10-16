@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "private_predecessor": {
+    "directions.json_sha256": "d3aacae6dd5e74603c89576c40b36460d34d8394798364cdeb74d699f5926836",
+    "directions.py_sha256": "06732202201ba913c6dbdde351c5ad62d76264f8402faa5dcd6f36c5dcc08e6c",
+    "REPORT.md_sha256": "a5164a4b3027f7db16bc65713ada07ba61d0b235774593edbe42be57f52e8b89"
+  },
+  "retained_native_record_sha256": "2dc480f471376c590567800c5abad63faa1ff5be2e7b4d3c0247ae07a99b1832",
+  "cache_path_alias_rule": {
+    "field": "cached_source_hashes",
+    "rule": "Replace absolute cache-directory prefix with cached-original-source/; preserve each basename and hash value"
+  },
+  "field_renames": {
+    "static_neutral_only_counterfactual_not_adopted": "existing_policy_prediction",
+    "actual_vs_static_neutral_only_angle_deg": "actual_vs_existing_policy_prediction_angle_deg"
+  },
+  "metadata_changes": [
+    "status declares retained record",
+    "source_text_audit explicitly declares retained prior audit, not fresh source reading",
+    "prediction label clarifies existing policy, with no runtime intervention"
+  ],
+  "sample_values_typed_exact_after_field_rename": true,
+  "all_original_numeric_values_unchanged": true,
+  "original_numeric_leaf_count": 3330,
+  "renamed_numeric_leaf_sha256": "c564ad7a421adacc7e18515a5eaf1f1d41d7f992cb874a21dcc083779196d7f4"
+}

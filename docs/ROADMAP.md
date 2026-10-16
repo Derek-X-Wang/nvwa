@@ -1,14 +1,16 @@
 # Nvwa 路线图
 
-## 当前阶段：M1.2 等待无引导真人试用；M2 单一样本已完成双端文件闭环（2026-10-15）
+## 当前阶段：M1.2 等待无引导真人试用；M2 同帧骨架通过，质量保持 HOLD（2026-10-15）
 
 [#59 当前角色标定](https://github.com/Derek-X-Wang/nvwa/issues/59) 已补齐 [47 标定](../experiments/47-fixture-rig-calibration/REPORT.md) 的 [独立来源依据](../experiments/47-fixture-rig-calibration/reference/REPORT.md)：实际眼睛/脸部几何与缓存的固定版本源资料支持 +Y 上、+Z 前、身体左侧 +X。当前 fixture 的 `.L/.R` 名称与身体左右相反，因此保留资产名称，采用恒等坐标基、source Left→target `.R`。静态 T→A 中立对应、投影正面/上方滚转及手脚末端标记是工程约定，不宣称恢复掌面、足底或接触解剖。89 项正向、43 项拒绝和 8 项测量控制通过。47 的 `PROPOSED_NOT_ADMITTED` 是保留的候选快照；两次独立审查后，负责人在 [48 的独立准入记录](../experiments/48-genuine-fixture-work/admission.json)中明确采用这一有界工程策略，再开始后续导出。准入只覆盖当前角色和 44 的原有 90 帧，不是通用骨骼或动作质量认证。[PR #63](https://github.com/Derek-X-Wang/nvwa/pull/63) 已合并；其合并后 main CI 单独核验。
 
-[48 真实 Work 实验](../experiments/48-genuine-fixture-work/README.md)对应 [#64](https://github.com/Derek-X-Wang/nvwa/issues/64)：现有 genuine 样本已实际导出、通过 CLI 校验和保存，分别在桌面/Web 播放、定位，并完成桌面保存→Web 打开/修改/下载→桌面打开/保存。独立序列化检查覆盖全部 90 帧、18 个旋转通道和一次 root 平移；保留旧 GLB 字节及未选中的原动作。完整文件交换证据见 [运行记录](../experiments/48-genuine-fixture-work/runtime/REPORT.md)。**动作质量仍为 HOLD**：画面出现手臂与躯干相交，尚未区分原样本、映射和权重的影响；运行时逐骨骼数值采样、官方 decoder 一致性、解剖/接触和语义质量均未验收。这里没有新增模型运行、下载、产品 provider 或通用导入器。
+[48 真实 Work 实验](../experiments/48-genuine-fixture-work/README.md)对应 [#64](https://github.com/Derek-X-Wang/nvwa/issues/64)：现有 genuine 样本已实际导出、通过 CLI 校验和保存，分别在桌面/Web 播放、定位，并完成桌面保存→Web 打开/修改/下载→桌面打开/保存。独立序列化检查覆盖全部 90 帧、18 个旋转通道和一次 root 平移；保留旧 GLB 字节及未选中的原动作。完整文件交换证据见 [运行记录](../experiments/48-genuine-fixture-work/runtime/REPORT.md)。该阶段发现手臂与躯干相交并保留质量 HOLD；其当时缺少的运行时数值证据由下一项单独补充。
 
-[#49 无引导真人试用材料](m12-unassisted-trial/README.md)及本次私有路径交接单已准备，参与者 Work 文件夹保持空白。使用源输入匹配的既有构建，CLI 准备检查、复制后的原生与 Web 实际启动已通过；全新编译、参与者同意及实际无引导真人试用分别为 NOT-RUN。旧准备文档保留其当时状态，现阶段不关闭 #49。#3 保持阻塞，#4 保留原测量缺口。
+[#66 的 49 同帧实验](../experiments/49-runtime-pose-parity/README.md)复用相同 Work/GLB，在桌面和 Web 的七个精确关键帧采集实际骨架：24 个 GLB 节点、9 个皮肤实例均完整，局部变换一致，世界矩阵最大分量误差约 `1.76e-7`。离线重建已存在严格表面相交。进一步的[方向归因](../experiments/49-runtime-pose-parity/attribution/README.md)表明，既定 T→A 中立对应约 `45.7°` 的差异可以解释这些帧的上臂内折；这是当前相对中立姿势策略的效果，不是已证明的四元数空间或实现错误。**质量继续 HOLD**：尚未运行替代策略、验证改善效果，或完成全部关键帧/插值、GPU 顶点回读、官方 decoder 一致性、解剖/接触及语义验收。下一步是同样本/角色的中立策略对照。没有新增模型运行、模型/工具下载或产品 provider。
 
-Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。桌面、Web 和无需窗口的 CLI 是正式支持的三种入口；人和 agent 使用同一份 Work 和同一套 Rust 命令。当前 CLI 的正式范围是离线文件创作、能力发现和校验，详见 [CLI 支持范围](CLI-SUPPORT.md)。逐帧骨骼采样、离屏图像导出、运行中 Studio 控制和并发共享写入仍需单独实现与验收。
+[#49 无引导真人试用](m12-unassisted-trial/README.md)已记录一次在创建前求助并暂停的尝试。随后四步有引导操作使用已有九秒作品，参与者报告播放、编辑、保存和 Web 保留修改正常；它不能代替独立创建、Player 和恢复验收。[本次结果](m12-unassisted-trial/RESULTS-2026-10-15.md)与[一页中文说明](m12-unassisted-trial/PARTICIPANT-BRIEF.md)已分开归档；开发者复现命令仍留在技术指南。新说明没有启动新试用，入口单尚待准备，#49 保持开放。#3 保持阻塞，#4 保留原测量缺口。
+
+Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。桌面、Web 和无需窗口的 CLI 是正式支持的三种入口；人和 agent 使用同一份 Work 和同一套 Rust 命令。当前 CLI 的正式范围是离线文件创作、能力发现和校验，详见 [CLI 支持范围](CLI-SUPPORT.md)。49 的骨架采样是隔离诊断程序；正式 CLI 的逐帧骨骼采样、离屏图像导出、运行中 Studio 控制和并发共享写入仍需单独实现与验收。
 
 以下段落按发生顺序保留此前进展。各旧实验的 HOLD、NOT-RUN 和“未交付”属于当时快照；当前范围以本页开头、阶段表及 48 的运行记录为准。
 

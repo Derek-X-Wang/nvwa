@@ -533,7 +533,7 @@ fn request_initial_work(
     }
 }
 
-#[cfg(target_arch = "wasm32")]
+#[cfg(all(target_arch = "wasm32", not(feature = "manual-start")))]
 #[wasm_bindgen::prelude::wasm_bindgen(start)]
 pub fn wasm_start() {
     let _ = run();

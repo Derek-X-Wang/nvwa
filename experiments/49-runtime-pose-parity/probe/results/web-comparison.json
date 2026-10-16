@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "platform": "web",
+  "glb_sha256": "c343f6cf47dc0a7c0b09f13ad7d21cf2706a08fb1cfdaca233f14edab02e44fc",
+  "work_sha256": "7668eb7a2a2f87070500cbf49fa27d6794aa1fb83f5392b75a0ff51667cde779",
+  "thresholds": {
+    "local_translation_m": 2e-06,
+    "local_rotation_component": 2e-06,
+    "local_scale": 2e-06,
+    "global_matrix_component": 2e-05,
+    "inverse_bind_component": 2e-06,
+    "skinned_vertex_m": 3e-05
+  },
+  "max_errors": {
+    "local_translation_m": 0.0,
+    "local_rotation_component": 0.0,
+    "local_scale": 0.0,
+    "global_matrix_component": 1.758703864762623e-07,
+    "inverse_bind_component": 0.0,
+    "skinned_vertex_m": 1.4781719542833471e-07
+  },
+  "samples": [
+    {
+      "key_index": 0,
+      "time_seconds": 0.0,
+      "frame": 9,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 15,
+      "time_seconds": 0.5,
+      "frame": 11,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 30,
+      "time_seconds": 1.0,
+      "frame": 13,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 45,
+      "time_seconds": 1.5,
+      "frame": 15,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 60,
+      "time_seconds": 2.0,
+      "frame": 17,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 75,
+      "time_seconds": 2.5,
+      "frame": 19,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 89,
+      "time_seconds": 2.9666666984558105,
+      "frame": 21,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    }
+  ],
+  "cpu_reconstructed_vertices_compared": 173152,
+  "expectation_space": "serialized scene under independently expected identity CharacterRoot; no observed-root fitting",
+  "not_run": [
+    "GPU deformed vertex readback",
+    "anatomical/semantic quality",
+    "official decoder parity"
+  ],
+  "capture_sha256": "0a67e93f157e031e18151f935a6f7625726a7ec2deabcccdd7fe404dc3e38f34"
+}

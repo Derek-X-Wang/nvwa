@@ -1,0 +1,89 @@
+{
+  "human_trial": "NOT-RUN",
+  "launch_route": "CUA native app API; separate owned .app bundles",
+  "launched_binary_sha256": {
+    "NvwaPoseNegative.app": "50df11076d8293b95d5c6c09327cf7a45cf061a02eaec2aee0393c16a7c30714",
+    "NvwaPoseProbe.app": "50df11076d8293b95d5c6c09327cf7a45cf061a02eaec2aee0393c16a7c30714"
+  },
+  "native": {
+    "native": {
+      "child_os_exit_code": 0,
+      "error": null,
+      "raw": "native.json",
+      "raw_sha256": "731db999bca820dd0bda4ae5b5b3893211953317e017c0b8da5016857013365e",
+      "sample_count": 7,
+      "source_keys": [
+        0,
+        15,
+        30,
+        45,
+        60,
+        75,
+        89
+      ],
+      "status": "complete"
+    },
+    "native-negative": {
+      "child_os_exit_code": 1,
+      "error": "wrong Work/profile",
+      "raw": "native-negative.json",
+      "raw_sha256": "3515821694bb39d3552f534775216162a8c9a3acc1f2c012a1cd9694585cb3a1",
+      "sample_count": 0,
+      "source_keys": [],
+      "status": "failed"
+    },
+    "native-visual": {
+      "child_os_exit_code": 0,
+      "error": null,
+      "raw": "native-visual.json",
+      "raw_sha256": "731db999bca820dd0bda4ae5b5b3893211953317e017c0b8da5016857013365e",
+      "sample_count": 7,
+      "source_keys": [
+        0,
+        15,
+        30,
+        45,
+        60,
+        75,
+        89
+      ],
+      "status": "complete"
+    }
+  },
+  "native_visual": {
+    "file": "native-canvas.png",
+    "method": "existing product --capture without --smoke; native screenshot callback",
+    "observed": {
+      "active_animations": 1,
+      "animation_seconds": 2.9666666984558105,
+      "capture_callback": true,
+      "capture_file_bytes": 1113765,
+      "clip": "genuine44_calibrated47",
+      "document_revision": 0,
+      "error": null,
+      "gpu": {
+        "backend": "Metal",
+        "name": "Apple M2 Pro"
+      },
+      "joints": 18,
+      "meshes": 9,
+      "paused_animations": 1,
+      "physical_window": {
+        "height": 1440,
+        "scale_factor": 2.0,
+        "width": 2560
+      },
+      "players": 1,
+      "playing": false,
+      "ready": true,
+      "skins": 9
+    },
+    "sha256": "bcbf6e86d49d213a24ef13a3ed6dbc2e693e4ed304bd497fc8bec8cba7cb0657"
+  },
+  "operator_notes": [
+    "First CUA window screenshot exposed an early startup frame despite current result title. Retained final canvas is the later product screenshot with ready paused final-time evidence.",
+    "Negative CUA launch call timed out after launching. Current failed raw, native process observation, and child OS exit 1 confirmed execution without a replay."
+  ],
+  "performance_claim": false,
+  "schema_version": 1
+}

@@ -1,0 +1,152 @@
+{
+  "status": "PASS",
+  "scope": "Portable retained-capture numerical reproduction; no fresh runtime capture, renderer, model run or fix",
+  "runs": [
+    {
+      "label": "native numeric",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 experiments/49-runtime-pose-parity/attribution/directions.py",
+      "exit_code": 0,
+      "result": {
+        "status": "MEASURED_NOT_ADMITTED",
+        "capture": "native",
+        "source_text_audit": "NOT-RUN",
+        "numeric_controls": {
+          "known_positive_z90_maps_x_to_y": true,
+          "known_parent_rotation_transports_child_offset": true,
+          "quaternion_sign_equivalent": true,
+          "identity_source_rest_offsets_add": true
+        },
+        "output": ".work/runtime-pose-attribution-check/native-q8n6ayda/directions.json"
+      }
+    },
+    {
+      "label": "native numeric optimized",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -O experiments/49-runtime-pose-parity/attribution/directions.py",
+      "exit_code": 0,
+      "result": {
+        "status": "MEASURED_NOT_ADMITTED",
+        "capture": "native",
+        "source_text_audit": "NOT-RUN",
+        "numeric_controls": {
+          "known_positive_z90_maps_x_to_y": true,
+          "known_parent_rotation_transports_child_offset": true,
+          "quaternion_sign_equivalent": true,
+          "identity_source_rest_offsets_add": true
+        },
+        "output": ".work/runtime-pose-attribution-check/native-w1qi3dpz/directions.json"
+      }
+    },
+    {
+      "label": "web numeric",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 experiments/49-runtime-pose-parity/attribution/directions.py --capture web",
+      "exit_code": 0,
+      "result": {
+        "status": "MEASURED_NOT_ADMITTED",
+        "capture": "web",
+        "source_text_audit": "NOT-RUN",
+        "numeric_controls": {
+          "known_positive_z90_maps_x_to_y": true,
+          "known_parent_rotation_transports_child_offset": true,
+          "quaternion_sign_equivalent": true,
+          "identity_source_rest_offsets_add": true
+        },
+        "output": ".work/runtime-pose-attribution-check/web-x24u_6ki/directions.json"
+      }
+    },
+    {
+      "label": "web numeric optimized",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -O experiments/49-runtime-pose-parity/attribution/directions.py --capture web",
+      "exit_code": 0,
+      "result": {
+        "status": "MEASURED_NOT_ADMITTED",
+        "capture": "web",
+        "source_text_audit": "NOT-RUN",
+        "numeric_controls": {
+          "known_positive_z90_maps_x_to_y": true,
+          "known_parent_rotation_transports_child_offset": true,
+          "quaternion_sign_equivalent": true,
+          "identity_source_rest_offsets_add": true
+        },
+        "output": ".work/runtime-pose-attribution-check/web-szu3e353/directions.json"
+      }
+    },
+    {
+      "label": "native cache audit",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 experiments/49-runtime-pose-parity/attribution/directions.py --source-cache <existing-pinned-source-cache>",
+      "exit_code": 0,
+      "result": {
+        "status": "MEASURED_NOT_ADMITTED",
+        "capture": "native",
+        "source_text_audit": "PASS",
+        "numeric_controls": {
+          "known_positive_z90_maps_x_to_y": true,
+          "known_parent_rotation_transports_child_offset": true,
+          "quaternion_sign_equivalent": true,
+          "identity_source_rest_offsets_add": true
+        },
+        "output": ".work/runtime-pose-attribution-check/native-7_gza8t_/directions.json"
+      }
+    },
+    {
+      "label": "native cache audit optimized",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -O experiments/49-runtime-pose-parity/attribution/directions.py --source-cache <existing-pinned-source-cache>",
+      "exit_code": 0,
+      "result": {
+        "status": "MEASURED_NOT_ADMITTED",
+        "capture": "native",
+        "source_text_audit": "PASS",
+        "numeric_controls": {
+          "known_positive_z90_maps_x_to_y": true,
+          "known_parent_rotation_transports_child_offset": true,
+          "quaternion_sign_equivalent": true,
+          "identity_source_rest_offsets_add": true
+        },
+        "output": ".work/runtime-pose-attribution-check/native-ori665m1/directions.json"
+      }
+    },
+    {
+      "label": "port controls",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 experiments/49-runtime-pose-parity/attribution/test_port.py",
+      "exit_code": 0,
+      "result": {
+        "status": "PASS",
+        "tests": 11,
+        "names": [
+          "__main__.PortTests.test_boolean_key_rejected",
+          "__main__.PortTests.test_default_does_not_claim_fresh_source_text_inspection",
+          "__main__.PortTests.test_existing_output_file_rejected",
+          "__main__.PortTests.test_missing_source_cache_fails_without_fetch",
+          "__main__.PortTests.test_original_four_numeric_controls_pass",
+          "__main__.PortTests.test_partial_capture_rejected",
+          "__main__.PortTests.test_retained_output_directory_rejected",
+          "__main__.PortTests.test_same_native_sample_values_as_retained_record",
+          "__main__.PortTests.test_web_same_sample_direction_values",
+          "__main__.PortTests.test_wrong_input_pin_fails",
+          "__main__.PortTests.test_wrong_platform_rejected"
+        ]
+      }
+    },
+    {
+      "label": "port controls optimized",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -O experiments/49-runtime-pose-parity/attribution/test_port.py",
+      "exit_code": 0,
+      "result": {
+        "status": "PASS",
+        "tests": 11,
+        "names": [
+          "__main__.PortTests.test_boolean_key_rejected",
+          "__main__.PortTests.test_default_does_not_claim_fresh_source_text_inspection",
+          "__main__.PortTests.test_existing_output_file_rejected",
+          "__main__.PortTests.test_missing_source_cache_fails_without_fetch",
+          "__main__.PortTests.test_original_four_numeric_controls_pass",
+          "__main__.PortTests.test_partial_capture_rejected",
+          "__main__.PortTests.test_retained_output_directory_rejected",
+          "__main__.PortTests.test_same_native_sample_values_as_retained_record",
+          "__main__.PortTests.test_web_same_sample_direction_values",
+          "__main__.PortTests.test_wrong_input_pin_fails",
+          "__main__.PortTests.test_wrong_platform_rejected"
+        ]
+      }
+    }
+  ]
+}

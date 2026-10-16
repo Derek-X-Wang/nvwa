@@ -1,0 +1,8 @@
+{
+  "scope": "SYNTHETIC AFTER-FIX paired reproduction; NOT actual runtime evidence",
+  "comparator_sha256_after_fix": "1016e81bf1d5cbe6a9dddccb9eed5f70c7c74ff7092b028f136b7fe31550214a",
+  "mutation": "Delete four primitive22 entities and alias all five mesh4 skin records to primitive22_0 at every sample",
+  "expected_verdict": "FAIL; four actual component instances missing",
+  "observed_verdict_after_fix": "FAIL",
+  "reason": "key 0 unique actual skin component entity"
+}
