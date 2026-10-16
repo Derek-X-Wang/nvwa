@@ -1,0 +1,24 @@
+   Compiling compiled-character-probe v0.1.0 (/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.69s
+     Running unittests src/main.rs (experiments/54-compiled-character-package/target/debug/deps/compiled_character_probe-1fee01eeda16bc8b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/compiled-numeric-probe.rs (experiments/54-compiled-character-package/target/debug/deps/compiled_numeric_probe-5ee45a00d04d050f)
+
+running 10 tests
+test fit::tests::helper_and_proxy_fail_closed_on_bad_index_or_denominator ... ok
+test signed::tests::handwritten_control_combination_adds_without_replacing_prior_target ... ok
+test signed::tests::rejects_bad_domain_and_nonfinite_inputs ... ok
+test signed::tests::handwritten_control_signed_midpoints_and_endpoints ... ok
+test fit::tests::handwritten_garment_control_has_recomputed_axis_scales_and_unscaled_source_weights ... ok
+test fit::tests::handwritten_helper_control_tracks_actual_deformed_vertices ... ok
+test signed::tests::rejects_duplicate_sparse_index_instead_of_silently_doubling ... ok
+test fit::tests::bone_cycle_rejected_instead_of_constructing_invalid_rest_hierarchy ... ok
+test signed::tests::validates_unselected_branch_and_preserves_basis ... ok
+test signed::tests::rejects_missing_unknown_and_duplicate_parameters ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

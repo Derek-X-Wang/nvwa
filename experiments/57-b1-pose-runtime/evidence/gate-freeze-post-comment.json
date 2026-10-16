@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "scope": "Post-comment source-binding refresh; source algorithm unchanged; explicit positive-final-aggregate CPU bridge policy.",
+  "source_tree_sha256": "16988777ebca441dc9c22edeaf230ee3a62555df9942a3901371f763b826801e",
+  "source_code_tree_sha256": "1c75796828d3af9311ac9bf6f8e8777a77d66838e598544aff7377b908c8a6e8",
+  "adapter_tree_sha256": "5f91da92e274bcee0b67e8237518200f8206f14b68e93aef015de3eb865701af",
+  "adapter_lib_sha256": "cf130be4e01f869a95b84d088fdf3c8ba9aa2f7dc89b63ec4056eae286aacb8b",
+  "binary_sha256": "878fc73a9d81cad6679aebe8e9f241dd9ba8d1420941646b40957e6a736bcf34",
+  "checker_sources": {
+    "compare.py": "0fcbeda79d029fbb67d1f8962834a9ec03fe6c094a0fcf2817487ad5f678b9ae",
+    "compare_all.py": "43bb83b9bd78fa82f0c5178fd0004fe71bc6b9fa97e8e73218aef134e632a76c",
+    "sampled_regression.py": "e6225dbb2ff4fffe074b2e69941bb5dc05eeac0ad73109685e438bdfc4942775",
+    "validation.py": "20e5e1090f03c06cf1f103645247d89408d911063dfdb7060ad3706492ee6c0a"
+  },
+  "authoritative_full_gate": "evidence/post-comment40.json",
+  "gate_receipts": {
+    "build-09-api-comment.json": "7f12c54b911e762f04da2d805f80f83cac8cca8658483fe902b51e73addbc8e9",
+    "post-comment40.json": "98f6ed39ce53284448a3beaecca9991f04cef8865272694efbf42c31b766a474",
+    "post-comment40-execution.json": "8a7784792d2e4801071190315656a1f7b0978a83885ad534a824bd1928ef29cf",
+    "policy-clarification.json": "00889e56412931d92623e9c6e777d57c03d55b9478f5781db891b132cb99616d",
+    "api-comment-correction.json": "83247612255dce26ac51c827372255997ce6497e8325caf6c8ccecdf4c294d17"
+  },
+  "historical_receipts_preserved": [
+    "evidence/gate-freeze.json",
+    "evidence/final-current40.json",
+    "evidence/final-current40-execution.json",
+    "evidence/policy-clarification-before-api-comment.json",
+    "evidence/inventory-before-api-comment.json"
+  ],
+  "status": "PASS",
+  "original_four_slot_quality": "HOLD unchanged",
+  "graphics": "NOT-RUN by57"
+}

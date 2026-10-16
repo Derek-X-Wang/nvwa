@@ -1,0 +1,332 @@
+{
+  "status": "wrong_gauge_detected_restored_green",
+  "scope": "actual captured frame fault injection; no separately compiled mutant claim",
+  "candidate_sha256": "33418e0d430f8c3984a05d3d0db8822d6b81d76783694d48e09c82049b6e0fbe",
+  "reference_sha256": "a7934b6c674e54f2211d1e55d99b6d143f515ec5d85e2cbd21967c1671e6c13c",
+  "comparator_sha256": "f0d342a83b4fb839bbf117b8f0a25e2e41cfd1b1b6c22e5c8971768bcb170fe2",
+  "baseline": {
+    "body": {
+      "rest_matrix": {
+        "count": 53,
+        "max_component": 3.874301910400391e-06,
+        "rms_distance": 1.433358913160168e-06,
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "posed_matrix": {
+        "count": 53,
+        "max_component": 4.038214683532715e-06,
+        "rms_distance": 1.5136752975886e-06,
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "frame_gauge_identities": {
+        "rest_gauge_identity": {
+          "count": 53,
+          "max_component": 1.0953351892162289e-07,
+          "rms_distance": 3.532115734162412e-08,
+          "tolerance": 1e-05,
+          "passed": true
+        },
+        "posed_gauge_identity": {
+          "count": 53,
+          "max_component": 1.0953351270437395e-07,
+          "rms_distance": 3.511521142999149e-08,
+          "tolerance": 1e-05,
+          "passed": true
+        },
+        "physical_skin_identity": {
+          "count": 53,
+          "max_component": 1.0800312277847723e-07,
+          "rms_distance": 4.971021999430814e-08,
+          "tolerance": 1e-05,
+          "passed": true
+        }
+      }
+    },
+    "garment": {
+      "rest_matrix": {
+        "count": 53,
+        "max_component": 3.874301910400391e-06,
+        "rms_distance": 1.433358913160168e-06,
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "posed_matrix": {
+        "count": 53,
+        "max_component": 4.038214683532715e-06,
+        "rms_distance": 1.5136752975886e-06,
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "frame_gauge_identities": {
+        "rest_gauge_identity": {
+          "count": 53,
+          "max_component": 1.0953351892162289e-07,
+          "rms_distance": 3.532115734162412e-08,
+          "tolerance": 1e-05,
+          "passed": true
+        },
+        "posed_gauge_identity": {
+          "count": 53,
+          "max_component": 1.0953351270437395e-07,
+          "rms_distance": 3.511521142999149e-08,
+          "tolerance": 1e-05,
+          "passed": true
+        },
+        "physical_skin_identity": {
+          "count": 53,
+          "max_component": 1.0800312277847723e-07,
+          "rms_distance": 4.971021999430814e-08,
+          "tolerance": 1e-05,
+          "passed": true
+        }
+      }
+    }
+  },
+  "wrong_gauge": {
+    "rejected": true,
+    "measures": {
+      "body": {
+        "candidate_weight_oracle": {
+          "count": 22077,
+          "max_component": 1.8100213061700288e-07,
+          "rms_distance": 4.65606627085231e-08,
+          "tolerance": 1e-05,
+          "passed": true
+        },
+        "full_mpfb_geometry": {
+          "count": 22077,
+          "max_component": 8.940696716308594e-07,
+          "rms_distance": 4.7400209321618764e-07,
+          "tolerance": 0.001,
+          "passed": true,
+          "source_count": 19158,
+          "mapped_source_count": 19158,
+          "mesh_count": 22077,
+          "coverage_complete": true,
+          "worst_source_id": 9647,
+          "secondary_source_groups": {
+            "body": {
+              "source_vertices": 13380,
+              "max_component": 8.940696716308594e-07,
+              "worst_source_id": 9647,
+              "points_over_full_gate": 0
+            },
+            "HelperGeometry": {
+              "source_vertices": 4778,
+              "max_component": 8.344650268554688e-07,
+              "worst_source_id": 16703,
+              "points_over_full_gate": 0
+            },
+            "helper-tights": {
+              "source_vertices": 2674,
+              "max_component": 8.344650268554688e-07,
+              "worst_source_id": 16703,
+              "points_over_full_gate": 0
+            },
+            "helper-skirt": {
+              "source_vertices": 720,
+              "max_component": 8.046627044677734e-07,
+              "worst_source_id": 18705,
+              "points_over_full_gate": 0
+            },
+            "JointCubes": {
+              "source_vertices": 1000,
+              "max_component": 8.344650268554688e-07,
+              "worst_source_id": 13731,
+              "points_over_full_gate": 0
+            }
+          },
+          "worst_source_groups": [
+            "Left",
+            "body"
+          ]
+        },
+        "rest_matrix": {
+          "count": 53,
+          "max_component": 0.06014735996723175,
+          "rms_distance": 0.005940167815416412,
+          "tolerance": 0.0001,
+          "passed": false
+        },
+        "posed_matrix": {
+          "count": 53,
+          "max_component": 0.06014713644981384,
+          "rms_distance": 0.005940148574489974,
+          "tolerance": 0.0001,
+          "passed": false
+        },
+        "raw_rest_matrix": {
+          "count": 53,
+          "max_component": 0.06014735996723175,
+          "rms_distance": 0.005940167815416412,
+          "tolerance": 0.0001,
+          "passed": false
+        },
+        "raw_posed_matrix": {
+          "count": 53,
+          "max_component": 0.06014713644981384,
+          "rms_distance": 0.005940148574489974,
+          "tolerance": 0.0001,
+          "passed": false
+        },
+        "frame_gauge_identities": {
+          "rest_gauge_identity": {
+            "count": 53,
+            "max_component": 0.0,
+            "rms_distance": 0.0,
+            "tolerance": 1e-05,
+            "passed": true
+          },
+          "posed_gauge_identity": {
+            "count": 53,
+            "max_component": 0.0,
+            "rms_distance": 0.0,
+            "tolerance": 1e-05,
+            "passed": true
+          },
+          "physical_skin_identity": {
+            "count": 53,
+            "max_component": 1.0800301564195536e-07,
+            "rms_distance": 4.467740330938222e-08,
+            "tolerance": 1e-05,
+            "passed": true
+          }
+        },
+        "joint_heads": {
+          "count": 53,
+          "max_component": 8.940696716308594e-07,
+          "rms_distance": 5.371619482732159e-07,
+          "tolerance": 1e-05,
+          "passed": true
+        },
+        "normals_tangents": {
+          "passed": true,
+          "present_finite": true,
+          "normal_min_length": 0.9999998898754712,
+          "tangent_min_length": 0.9999998775826634,
+          "max_frame_identity_error": 1.0810219741586025e-07,
+          "appearance_acceptance": "NOT-RUN"
+        },
+        "weight_difference": {
+          "source_vertices": 19158,
+          "reference_influences_under_four": 16896,
+          "reference_influences_over_four": 981,
+          "max_l1_normalized_distribution_delta": 0.0,
+          "mean_l1_normalized_distribution_delta": 0.0,
+          "reference_mass_beyond_four_diagnostic": 0.23812380716680082,
+          "actual_truncation_performed": false,
+          "actual_route": "b1-full-weight-cpu",
+          "actual_max_influences": 7,
+          "raw_transferred_sum_min": 0.999899979273323,
+          "raw_transferred_sum_max": 1.000000175088644,
+          "source_padding_policy": "full candidate transfer, no truncation; recorded raw then normalized for LBS"
+        }
+      },
+      "garment": {
+        "candidate_weight_oracle": {
+          "count": 1986,
+          "max_component": 1.6569115224296382e-07,
+          "rms_distance": 3.8971451772050904e-08,
+          "tolerance": 1e-05,
+          "passed": true
+        },
+        "full_mpfb_geometry": {
+          "count": 1986,
+          "max_component": 0.00014081597328186035,
+          "rms_distance": 1.1165547413395648e-05,
+          "tolerance": 0.003,
+          "passed": true,
+          "source_count": 1797,
+          "mapped_source_count": 1797,
+          "mesh_count": 1986,
+          "coverage_complete": true,
+          "worst_source_id": 198
+        },
+        "rest_matrix": {
+          "count": 53,
+          "max_component": 0.06014735996723175,
+          "rms_distance": 0.005940167815416412,
+          "tolerance": 0.0001,
+          "passed": false
+        },
+        "posed_matrix": {
+          "count": 53,
+          "max_component": 0.06014713644981384,
+          "rms_distance": 0.005940148574489974,
+          "tolerance": 0.0001,
+          "passed": false
+        },
+        "raw_rest_matrix": {
+          "count": 53,
+          "max_component": 0.06014735996723175,
+          "rms_distance": 0.005940167815416412,
+          "tolerance": 0.0001,
+          "passed": false
+        },
+        "raw_posed_matrix": {
+          "count": 53,
+          "max_component": 0.06014713644981384,
+          "rms_distance": 0.005940148574489974,
+          "tolerance": 0.0001,
+          "passed": false
+        },
+        "frame_gauge_identities": {
+          "rest_gauge_identity": {
+            "count": 53,
+            "max_component": 0.0,
+            "rms_distance": 0.0,
+            "tolerance": 1e-05,
+            "passed": true
+          },
+          "posed_gauge_identity": {
+            "count": 53,
+            "max_component": 0.0,
+            "rms_distance": 0.0,
+            "tolerance": 1e-05,
+            "passed": true
+          },
+          "physical_skin_identity": {
+            "count": 53,
+            "max_component": 1.0800301564195536e-07,
+            "rms_distance": 4.467740330938222e-08,
+            "tolerance": 1e-05,
+            "passed": true
+          }
+        },
+        "joint_heads": {
+          "count": 53,
+          "max_component": 8.940696716308594e-07,
+          "rms_distance": 5.371619482732159e-07,
+          "tolerance": 1e-05,
+          "passed": true
+        },
+        "normals_tangents": {
+          "passed": true,
+          "present_finite": true,
+          "normal_min_length": 0.9999998792691701,
+          "tangent_min_length": 0.9999998643478213,
+          "max_frame_identity_error": 1.0810219741586025e-07,
+          "appearance_acceptance": "NOT-RUN"
+        },
+        "weight_difference": {
+          "source_vertices": 1797,
+          "reference_influences_under_four": 1259,
+          "reference_influences_over_four": 89,
+          "max_l1_normalized_distribution_delta": 0.0034210871012347955,
+          "mean_l1_normalized_distribution_delta": 0.00019488726934328688,
+          "reference_mass_beyond_four_diagnostic": 0.020078084128765807,
+          "actual_truncation_performed": false,
+          "actual_route": "b1-full-weight-cpu",
+          "actual_max_influences": 6,
+          "raw_transferred_sum_min": 0.9999998594867066,
+          "raw_transferred_sum_max": 1.0021747723221779,
+          "source_padding_policy": "full candidate transfer, no truncation; recorded raw then normalized for LBS"
+        }
+      }
+    }
+  },
+  "restored_passed": true,
+  "validator_sha256": "20e5e1090f03c06cf1f103645247d89408d911063dfdb7060ad3706492ee6c0a"
+}

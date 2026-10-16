@@ -1,0 +1,20 @@
+   Compiling humentity v0.19.0 (/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/derived)
+   Compiling b1-pose-adapter v0.0.0 (/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/adapter)
+    Finished `test` profile [unoptimized] target(s) in 11.38s
+     Running tests/sampled.rs (experiments/57-b1-pose-runtime/target/debug/deps/sampled-21195f40ffb7ed37)
+
+running 1 test
+
+thread 'actual_source_sampled_regression' (115727573) panicked at tests/sampled.rs:5:9:
+B1_CI_INPUTS is required in CI; refusing a green NOT-RUN
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test actual_source_sampled_regression ... FAILED
+
+failures:
+
+failures:
+    actual_source_sampled_regression
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `--test sampled`

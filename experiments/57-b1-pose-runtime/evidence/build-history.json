@@ -1,0 +1,43 @@
+{
+  "baseline_build": {
+    "log": "build-02.log",
+    "exit_code": 0,
+    "duration_seconds_from_cargo": 7.24,
+    "baseline_executable_not_retained": true
+  },
+  "padding_build": {
+    "command": [
+      "cargo",
+      "build",
+      "--offline",
+      "--locked",
+      "--jobs",
+      "1",
+      "--manifest-path",
+      "experiments/57-b1-pose-runtime/adapter/Cargo.toml"
+    ],
+    "log": "build-03-padding.log",
+    "exit_code": 0,
+    "duration_seconds_from_cargo": 6.44,
+    "binary_sha256": "56d77976619b86a3f985419aa5ec78d60efa73f41fcb4b34a11e52b8bee31514",
+    "actual_binary_retained_at": ".work/b1-pose-runtime/b1-four-slot-padding-fixed"
+  },
+  "initial_compile_error": {
+    "log": "build-01.log",
+    "exit_code": 101,
+    "error": "get_vertex_normals not exported; fixed by reading actual mesh normal attribute"
+  },
+  "current_source_preparation_sha256": "389cbe5b964df46c1fa77f4e5f1fa64c85015b82f7e8cba4b38f0661e98742f7",
+  "current_successful_build_receipt": "build-08-full-weights.json",
+  "old_A_control": "Unchanged, no new pose/skinning capability claimed",
+  "old_B1_outputs_preserved": {
+    "run3": {
+      "outputs": 8,
+      "summary_sha256": "8ea110f4c526204c847a3dc63297945c9aa3c6788ba914ec0adfc802b05fca42"
+    },
+    "B1-run1": {
+      "outputs": 8,
+      "summary_sha256": "b54dfdbb2270ae8fb547417daf514e84d69318974be5fcc32ad83cf4c0497495"
+    }
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "status": "read_only_policy_clarification",
+  "scope": "Documentation correction only. No source/library/binary or actual historical capture changes.",
+  "route_id": "b1-full-weight-cpu",
+  "policy": {
+    "input": "Original source RigWeights and actual Mhclo helper map; no reference weights as candidate input.",
+    "aggregation": "Sum signed Mhclo contributions for each proxy vertex and bone, using positive helper-bone input weights as the existing source does.",
+    "additional_bridge_filter": "Retain only each final per-bone aggregate strictly greater than zero; do not clamp individual negative terms before summing.",
+    "influence_cap": null,
+    "stored_rows": "full_joint_influences are already positive-filtered aggregates before retained-row normalization, not every raw signed influence.",
+    "deformation": "Normalize each retained positive row by its positive sum, then CPU linear blend skinning.",
+    "legacy_gpu4": "Signed aggregation, top-four selection without final positive-only filter, then selected-row normalization; negative stored weights can remain.",
+    "mpfb_reference": "Retains only final interpolated average_weight strictly greater than 0.001. Bridge uses >0 instead."
+  },
+  "source_references": [
+    {
+      "path": "experiments/57-b1-pose-runtime/derived/src/loaders/mhclo.rs",
+      "sha256": "eae76f2964502ceea4e212b2f5cb229d1d2886446687e43a424d71e6e86aa8fc",
+      "lines": [
+        219,
+        239
+      ],
+      "supports": "Signed Mhclo coefficients are parsed and normalized; negative coefficients are retained."
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/derived/src/mesh_ops.rs",
+      "sha256": "c6cd8e188c6c9768344926616f7c42b566da9ea35232584f06e72fc2146e9c95",
+      "lines": [
+        247,
+        297
+      ],
+      "supports": "Source GPU4 aggregates signed proxy terms, selects four without final positive filtering, then normalizes."
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/derived/src/rigs.rs",
+      "sha256": "4ae57b2d08ed0d41e7497d533464351136aadf97e0f21e9a9e22f560294ac2cc",
+      "lines": [
+        116,
+        119
+      ],
+      "supports": "Read-only original source helper weights accessor."
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/adapter/src/lib.rs",
+      "sha256": "794682c0a988a2089ef380c1bb2baa2dc01b003ca7092709365e84aa7e946d49",
+      "lines": [
+        334,
+        382
+      ],
+      "supports": "Bridge aggregates signed contributions and retains only final per-bone weight > 0; comment Every raw influence is retained is overly broad."
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/adapter/src/lib.rs",
+      "sha256": "794682c0a988a2089ef380c1bb2baa2dc01b003ca7092709365e84aa7e946d49",
+      "lines": [
+        399,
+        426
+      ],
+      "supports": "Stored full rows are positive-filtered before retained-row normalization during CPU deformation."
+    },
+    {
+      "path": ".work/character-approved-20261016/mpfb-addon/services/clothesservice.py",
+      "sha256": "20b60daeb862e35652035b9e94d1830f1bd2d86706b1e6056f0f2cee43c8d40b",
+      "lines": [
+        460,
+        489
+      ],
+      "supports": "MPFB sums signed interpolation and retains only final average_weight > 0.001."
+    },
+    {
+      "path": "experiments/58-b1-desktop-web/src/lib.rs",
+      "sha256": "cab233c3f99912e9f83fdd5628438fee31deadd99e5b384af0ff5f7f3c3b9e4b",
+      "lines": [
+        829,
+        840
+      ],
+      "supports": "Selected full CPU route reads the bridge frame, including retained legacy attributes."
+    },
+    {
+      "path": "experiments/58-b1-desktop-web/src/lib.rs",
+      "sha256": "cab233c3f99912e9f83fdd5628438fee31deadd99e5b384af0ff5f7f3c3b9e4b",
+      "lines": [
+        853,
+        885
+      ],
+      "supports": "CPU display uploads already-deformed position/normal/tangent arrays; legacy joint attributes are not the CPU deformation input."
+    }
+  ],
+  "observations": {
+    "frame_path": ".work/b1-pose-viewer/native-check/full-weight.json",
+    "frame_sha256": "a83b867412771bc73858e5c4de8c5c8e6e9ab299b7947136a44538b05d8c79b4",
+    "legacy_render_rows": [
+      {
+        "render_vertex": 422,
+        "source_id": 792,
+        "legacy_joint_weights": [
+          0.9817190170288086,
+          0.020455876365303993,
+          -0.00010356330312788486,
+          -0.0020712660625576973
+        ],
+        "legacy_bone_names": [
+          "spine_03",
+          "spine_02",
+          "pelvis",
+          "spine_01"
+        ],
+        "positive_filtered_pre_normalization_rows": [
+          [
+            "spine_02",
+            0.020455874502658844
+          ],
+          [
+            "spine_03",
+            0.981718897819519
+          ]
+        ]
+      },
+      {
+        "render_vertex": 522,
+        "source_id": 486,
+        "legacy_joint_weights": [
+          0.9946024417877197,
+          0.0061592720448970795,
+          -0.0007617363007739186,
+          0.0
+        ],
+        "legacy_bone_names": [
+          "upperarm_r",
+          "clavicle_r",
+          "spine_03",
+          "Root"
+        ],
+        "positive_filtered_pre_normalization_rows": [
+          [
+            "clavicle_r",
+            0.006159272976219654
+          ],
+          [
+            "upperarm_r",
+            0.9946025609970093
+          ]
+        ]
+      }
+    ],
+    "signed_pre_selection_negative_aggregates": [
+      {
+        "source_id": 486,
+        "bone": "spine_03",
+        "weight": -0.0007617364171892405
+      },
+      {
+        "source_id": 685,
+        "bone": "pelvis",
+        "weight": -1.5868422451603692e-06
+      },
+      {
+        "source_id": 685,
+        "bone": "spine_01",
+        "weight": -3.903632386936806e-05
+      },
+      {
+        "source_id": 792,
+        "bone": "pelvis",
+        "weight": -0.00010356328857596964
+      },
+      {
+        "source_id": 792,
+        "bone": "spine_01",
+        "weight": -0.0020712658297270536
+      }
+    ],
+    "negative_aggregate_count": 5,
+    "negative_source_ids": [
+      486,
+      685,
+      792
+    ],
+    "negative_aggregate_method": "Read-only f32 evaluation of the existing loader normalization and signed helper-weight sum on approved55 data; no candidate build or execution.",
+    "legacy_context": "Only486/792 retain negatives after source GPU4 top-four selection;685 negatives fall outside the selected four.",
+    "small_positive_aggregates_retained": 409,
+    "small_positive_source_vertices": 363,
+    "small_positive_range": "0 < aggregate <= 0.001",
+    "normalized_distribution_difference": {
+      "body_max_l1": 0.0,
+      "garment_max_l1": 0.0034210871012347955,
+      "garment_worst_source_id": 198,
+      "candidate_normalized_weights": {
+        "pelvis": 0.0007222896289535973,
+        "spine_01": 0.010136126000161083,
+        "spine_02": 0.21682218051229618,
+        "spine_03": 0.7713311499369253,
+        "upperarm_l": 0.0009882539216638198
+      },
+      "reference_omits": [
+        "pelvis",
+        "upperarm_l"
+      ],
+      "explanation": "Bridge keeps the two small positive aggregates; MPFB strict >0.001 omits them. Remaining rows normalize differently."
+    }
+  },
+  "data_source_sha256": {
+    "experiments/55-source-character-runtime/data/weights.game_engine.json": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473",
+    "experiments/55-source-character-runtime/data/garment/female_sportsuit01.mhclo": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7"
+  },
+  "superseded_descriptions": [
+    "Every raw influence is retained",
+    "raw transferred influences without the positive-filter qualification",
+    "unchanged signed source full transfer with only the four-influence cap removed"
+  ],
+  "historical_evidence_policy": "Historical source comments, snapshots, labels and actual capture bytes remain unchanged; interpret them with this explicit policy clarification.",
+  "numeric_gate": "Existing actual geometry/arithmetic gate remains valid for this exact positive-filtered CPU bridge. This clarification does not upgrade GPU4 or establish product admission.",
+  "unchanged_source_binary_and_capture_sha256": {
+    "experiments/57-b1-pose-runtime/adapter/src/lib.rs": "794682c0a988a2089ef380c1bb2baa2dc01b003ca7092709365e84aa7e946d49",
+    "experiments/57-b1-pose-runtime/derived/src/mesh_ops.rs": "c6cd8e188c6c9768344926616f7c42b566da9ea35232584f06e72fc2146e9c95",
+    "experiments/57-b1-pose-runtime/derived/src/loaders/mhclo.rs": "eae76f2964502ceea4e212b2f5cb229d1d2886446687e43a424d71e6e86aa8fc",
+    "experiments/57-b1-pose-runtime/derived/src/rigs.rs": "4ae57b2d08ed0d41e7497d533464351136aadf97e0f21e9a9e22f560294ac2cc",
+    "experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter": "878fc73a9d81cad6679aebe8e9f241dd9ba8d1420941646b40957e6a736bcf34",
+    "experiments/57-b1-pose-runtime/evidence/final-current40.json": "2708cb30cf92dce9c7a07bd4c1496c55c2584b8c49ac50c2fe719d4f7ec344e5",
+    "experiments/57-b1-pose-runtime/evidence/final-current40-execution.json": "28ff3b0367cb7bff0c51dd8a0f5a64b12197d6a4e24de580b9d6cfd46990ef9a",
+    "experiments/57-b1-pose-runtime/evidence/sampled-restored.json": "c5af8f59e60bbbc18175463ed3e1a5a6b7b2dc41752b23d565bfdbd52d2dcfce"
+  },
+  "documentation": [
+    "README.md",
+    "REPORT.md",
+    "API.md"
+  ]
+}

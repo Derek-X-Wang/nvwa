@@ -1,0 +1,35 @@
+{
+  "status": "sampled_comparator_mutations_detected_restored_green",
+  "scope": "fault injection on captured actual output; no separately compiled mutant claim",
+  "candidate_sha256": "33418e0d430f8c3984a05d3d0db8822d6b81d76783694d48e09c82049b6e0fbe",
+  "reference_sha256": "5fe4eddf20a3e83e741f10f218b62dfcfe2812746b7084e3542b30224bfe3a2d",
+  "sampled_comparator_sha256": "7f7d967ab1feb540cc0807d864ffa00768cdb582e48d032ad2974177ec0cb72b",
+  "mutations": [
+    {
+      "fault": "wrong-bone-order",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "omitted-deformation",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "wrong-gauge",
+      "rejected": true,
+      "error": "canonical gauge/physical skin identity failed"
+    },
+    {
+      "fault": "missing-bone",
+      "rejected": true,
+      "error": "bone coverage mismatch"
+    },
+    {
+      "fault": "nonfinite-matrix",
+      "rejected": true,
+      "error": "invalid matrix dimensions/finite values"
+    }
+  ],
+  "restored_passed": true
+}

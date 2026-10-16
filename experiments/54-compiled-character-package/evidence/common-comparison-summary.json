@@ -1,0 +1,200 @@
+{
+  "schema_version": 2,
+  "sample_class": "makehuman-approved-sample",
+  "route_id": "compiled-package",
+  "status": "passed",
+  "scope": "source-compiled body positions and GameEngine helper-derived joint endpoints; garment only if both candidate+reference present",
+  "source_input_manifest_sha256": "2e8566a4f12de710ead88f6aa2d71fc44e0680761a4f2fdc48a844b6f3534ab7",
+  "package_sha256": "dcdc82b42a86d9b8ffd6e57803171eae73df4a564bcec04cc4d13d30183ef022",
+  "package_bytes": 2117964,
+  "coordinate_convention": "root measured Blender mesh-local; raw OBJ conversion .1x,-.1z,.1y",
+  "tolerance_max_abs": 1e-05,
+  "tolerance_defined_before_evaluation": true,
+  "cases": [
+    {
+      "case_id": "neutral",
+      "status": "passed",
+      "recipe": {
+        "jaw_drop": 0.0,
+        "torso_length": 0.0
+      },
+      "vertices": 19158,
+      "bones": 53,
+      "body_max_abs_error": 3.807830809554602e-07,
+      "bone_endpoint_max_abs_error": 2.539825438852006e-07,
+      "garment_max_abs_error": 3.0110187632104157e-07,
+      "reference_sha256": "c5671e6d808cbd96b42840e6fa9c33477b4951fcc9d25a902228e1d967a86c7b",
+      "result_sha256": "81f48edaeea750337354a4c0418b71b7a97312ec0a78bddfa2f39a796af67ba1",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/target/debug/compiled-numeric-probe",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/compiled-package.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/neutral.recipe.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison/neutral.result.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case_id": "body-negative",
+      "status": "passed",
+      "recipe": {
+        "jaw_drop": 0.0,
+        "torso_length": -1.0
+      },
+      "vertices": 19158,
+      "bones": 53,
+      "body_max_abs_error": 3.807830809554602e-07,
+      "bone_endpoint_max_abs_error": 2.539825438852006e-07,
+      "garment_max_abs_error": 3.0110187632104157e-07,
+      "reference_sha256": "69716d6e6f8121ea39b6bdec1855503c075d599d53939ca5de65a42d135798f9",
+      "result_sha256": "b2a13ec5f6d7faf650c2aa72947dc79b916c36cf06a6c2427c0ddb1bb85fd500",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/target/debug/compiled-numeric-probe",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/compiled-package.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/body-negative.recipe.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison/body-negative.result.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case_id": "body-half",
+      "status": "passed",
+      "recipe": {
+        "jaw_drop": 0.0,
+        "torso_length": 0.5
+      },
+      "vertices": 19158,
+      "bones": 53,
+      "body_max_abs_error": 3.807830809554602e-07,
+      "bone_endpoint_max_abs_error": 2.539825438852006e-07,
+      "garment_max_abs_error": 3.0110187632104157e-07,
+      "reference_sha256": "3b428f67d144c6ac9cb64821a475e81b5b2a7f9baa08c219b5a9653cd45cfba7",
+      "result_sha256": "511867dfc129faa44afdd89383e885221cbe6c436a54c1a1bd5bb1ca777be5c7",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/target/debug/compiled-numeric-probe",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/compiled-package.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/body-half.recipe.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison/body-half.result.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case_id": "body-positive",
+      "status": "passed",
+      "recipe": {
+        "jaw_drop": 0.0,
+        "torso_length": 1.0
+      },
+      "vertices": 19158,
+      "bones": 53,
+      "body_max_abs_error": 3.807830809554602e-07,
+      "bone_endpoint_max_abs_error": 2.539825438852006e-07,
+      "garment_max_abs_error": 3.0110187632104157e-07,
+      "reference_sha256": "7ee2f6fd2204a239f77aadd4ed4eb56d071d1ee1ce74ec931eb3cbd210d4a9bf",
+      "result_sha256": "20d5db39e7125c22f956bbd2022628a6f196171063026e5893b888bd7251a8d6",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/target/debug/compiled-numeric-probe",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/compiled-package.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/body-positive.recipe.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison/body-positive.result.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case_id": "face-negative",
+      "status": "passed",
+      "recipe": {
+        "jaw_drop": -1.0,
+        "torso_length": 0.0
+      },
+      "vertices": 19158,
+      "bones": 53,
+      "body_max_abs_error": 3.807830809554602e-07,
+      "bone_endpoint_max_abs_error": 2.539825438852006e-07,
+      "garment_max_abs_error": 3.0110187632104157e-07,
+      "reference_sha256": "aed47ee3686ac0be87b878734fabadf839e84c789d566bb3bcc5b514bd7574cc",
+      "result_sha256": "337762ef18a5468258016e039595604bd03d12ed7ad4aace3690b9b554fae589",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/target/debug/compiled-numeric-probe",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/compiled-package.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/face-negative.recipe.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison/face-negative.result.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case_id": "face-half",
+      "status": "passed",
+      "recipe": {
+        "jaw_drop": 0.5,
+        "torso_length": 0.0
+      },
+      "vertices": 19158,
+      "bones": 53,
+      "body_max_abs_error": 3.807830809554602e-07,
+      "bone_endpoint_max_abs_error": 2.539825438852006e-07,
+      "garment_max_abs_error": 3.0110187632104157e-07,
+      "reference_sha256": "40aa8fa197bcb6b3fdbb2191e0cb41f6ac5dcb4f99963a4e9dad481bba20c4f7",
+      "result_sha256": "fa0c75ab41eb3cfbfad9e5fd9d6d21c8e1b7e9e3fb861003dd14b0a6d71bfba3",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/target/debug/compiled-numeric-probe",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/compiled-package.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/face-half.recipe.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison/face-half.result.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case_id": "face-positive",
+      "status": "passed",
+      "recipe": {
+        "jaw_drop": 1.0,
+        "torso_length": 0.0
+      },
+      "vertices": 19158,
+      "bones": 53,
+      "body_max_abs_error": 3.807830809554602e-07,
+      "bone_endpoint_max_abs_error": 2.539825438852006e-07,
+      "garment_max_abs_error": 3.0110187632104157e-07,
+      "reference_sha256": "3524399fa1294f4bd5aca5f8067f31d56a92feb8bcd6d0b4887ff18eb6c72dff",
+      "result_sha256": "82d29f73f14030a7276ae0b984c0841c97da35825f555d30a3a0dc75a13d9d7a",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/target/debug/compiled-numeric-probe",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/compiled-package.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/face-positive.recipe.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison/face-positive.result.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case_id": "combined",
+      "status": "passed",
+      "recipe": {
+        "jaw_drop": 0.5,
+        "torso_length": 0.5
+      },
+      "vertices": 19158,
+      "bones": 53,
+      "body_max_abs_error": 3.807830809554602e-07,
+      "bone_endpoint_max_abs_error": 2.539825438852006e-07,
+      "garment_max_abs_error": 3.0110187632104157e-07,
+      "reference_sha256": "918cac1170915feb2bd2832479d4bf760ec25d9bf169fdf5d3f64499d681ba24",
+      "result_sha256": "2cc738739b26a788a962b7058de4a3ed25543db13754e7affeb3e6022e4156ef",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/target/debug/compiled-numeric-probe",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/compiled-package.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/compiled/combined.recipe.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison/combined.result.json"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "max_body_abs_error": 3.807830809554602e-07,
+  "max_joint_endpoint_abs_error": 2.539825438852006e-07,
+  "garment_comparison_executed": true,
+  "rest_matrix_inverse_bind_comparison_executed": false,
+  "reference_pipeline_executed_by_root": true,
+  "native_graphical_execution_run": false,
+  "web_graphical_execution_run": false,
+  "private_evidence_path": "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/full-common-run1/comparison",
+  "duration_seconds": 3.5292173749767244
+}

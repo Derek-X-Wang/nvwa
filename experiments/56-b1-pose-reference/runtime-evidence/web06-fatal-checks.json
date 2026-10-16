@@ -1,0 +1,67 @@
+{
+  "before_status": "Actual Rust phase 255; gpu4; recipe neutral; pose neutral; camera 0; error: Explicit target missing: chin-jaw-drop-incr; fatal_reload_required: true; rejected_commands: 0",
+  "before_state": {
+    "backend": "gpu4",
+    "camera_yaw": 0,
+    "format": "nvwa-b1-pose-prototype",
+    "pose": "neutral",
+    "recipe": "neutral",
+    "schema_version": 1
+  },
+  "checks": [
+    {
+      "command": {
+        "action": "import",
+        "state": {
+          "backend": "full-weight-cpu",
+          "camera_yaw": 45,
+          "format": "nvwa-b1-pose-prototype",
+          "pose": "combined",
+          "recipe": "body-positive",
+          "schema_version": 1
+        }
+      },
+      "actual_dom_status": "Actual Rust phase 255; gpu4; recipe neutral; pose neutral; camera 0; error: Explicit target missing: chin-jaw-drop-incr; fatal_reload_required: true; rejected_commands: 1",
+      "actual_exported_state": {
+        "backend": "gpu4",
+        "camera_yaw": 0,
+        "format": "nvwa-b1-pose-prototype",
+        "pose": "neutral",
+        "recipe": "neutral",
+        "schema_version": 1
+      }
+    },
+    {
+      "command": {
+        "action": "select",
+        "camera_yaw": 25
+      },
+      "actual_dom_status": "Actual Rust phase 255; gpu4; recipe neutral; pose neutral; camera 0; error: Explicit target missing: chin-jaw-drop-incr; fatal_reload_required: true; rejected_commands: 2",
+      "actual_exported_state": {
+        "backend": "gpu4",
+        "camera_yaw": 0,
+        "format": "nvwa-b1-pose-prototype",
+        "pose": "neutral",
+        "recipe": "neutral",
+        "schema_version": 1
+      }
+    },
+    {
+      "command": {
+        "action": "select",
+        "recipe": "combined",
+        "pose": "elbow",
+        "backend": "full-weight-cpu"
+      },
+      "actual_dom_status": "Actual Rust phase 255; gpu4; recipe neutral; pose neutral; camera 0; error: Explicit target missing: chin-jaw-drop-incr; fatal_reload_required: true; rejected_commands: 3",
+      "actual_exported_state": {
+        "backend": "gpu4",
+        "camera_yaw": 0,
+        "format": "nvwa-b1-pose-prototype",
+        "pose": "neutral",
+        "recipe": "neutral",
+        "schema_version": 1
+      }
+    }
+  ]
+}

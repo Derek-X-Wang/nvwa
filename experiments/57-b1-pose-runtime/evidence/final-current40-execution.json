@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "status": "actual_candidate_executed",
+  "binary_sha256": "878fc73a9d81cad6679aebe8e9f241dd9ba8d1420941646b40957e6a736bcf34",
+  "adapter_tree_sha256": "61a705705f26aad31470d89e799502e4e1fd67b6a9057e0afda623dfba09b595",
+  "source_tree_sha256": "16988777ebca441dc9c22edeaf230ee3a62555df9942a3901371f763b826801e",
+  "poses_sha256": "8e51c044841eb1c6cb96d583ca927cceb51ddf7d0729f4526f61777c8b7adab2",
+  "common_sha256": "2e8566a4f12de710ead88f6aa2d71fc44e0680761a4f2fdc48a844b6f3534ab7",
+  "route_environment": {
+    "B1_FRAME_GAUGE": "1",
+    "B1_FULL_WEIGHTS": "1"
+  },
+  "cases": [
+    {
+      "recipe_id": "body-half",
+      "config_sha256": "0c819e10471b3f0266313ce5797c43a416b173733bee29f9a86c9a4c5ffb9549",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/configs/body-half.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/56-b1-pose-reference/poses.json",
+        "experiments/57-b1-pose-runtime/results/final-current40/body-half"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 12.800652042031288,
+      "log_sha256": "8b474a6850737b9b93c1e5bd713dd7498da6abe45d6928ff30111c10e3823275",
+      "outputs": {
+        "combined.json": "316757956e73f137aaba350d672722def7ea3c96bb5c34720bb4dafc51a1f04f",
+        "elbow.json": "272b2434656d0dce416492ad9eb63e2bf514a56f83ffd8f2bb81446578cf9de9",
+        "knee.json": "0c20dcb684e9909d5f386db611646c05bfe3f72195c22515040913ca5ed450d5",
+        "neutral.json": "066308654ac2ff0e69ede5ec031efe5488b42bddaec116a79ba0eda6cab96993",
+        "shoulder.json": "e15d08c5727b0cbb019bc9eaa5048e8fcbec39181b042c6c5c5be82718437965"
+      }
+    },
+    {
+      "recipe_id": "body-negative",
+      "config_sha256": "545211fc173fec21da656616e266efdc460d3318109583afe3f42752ed3238b9",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/configs/body-negative.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/56-b1-pose-reference/poses.json",
+        "experiments/57-b1-pose-runtime/results/final-current40/body-negative"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 14.841286499984562,
+      "log_sha256": "790bd4622c282cbc05778f9aa093fb974f4d48d84ca81ebbd2ba193bc8581c73",
+      "outputs": {
+        "combined.json": "b58fbcd6f9d1dc3d3f025518fc314296390befd25a06ca37789a9d6a7103efa9",
+        "elbow.json": "964f284fb6161f20626727b3ca56367f10dac574ff937aaf5b5718b9e9934e91",
+        "knee.json": "76b3de02b25cb9c327615521864fca5dffa0624dd8db2f445ec6f06614a93962",
+        "neutral.json": "c753ea9f76500f095016f90d5914df0360fe74db86d1c42357b0e76a2d9975a4",
+        "shoulder.json": "ce4cdf0bb63154c7b7b94a5cd4ba6e5a6e3c401163795a0b8ae0d066c9714950"
+      }
+    },
+    {
+      "recipe_id": "body-positive",
+      "config_sha256": "fb6ef47e148e6de286b9e4e716aa0708ac6e9f137b5cfde04bd369f9262d8e02",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/configs/body-positive.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/56-b1-pose-reference/poses.json",
+        "experiments/57-b1-pose-runtime/results/final-current40/body-positive"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 16.38447016698774,
+      "log_sha256": "c7095732636834ff8be3e186a0d72581698db71bdce8396769cf67d259a45441",
+      "outputs": {
+        "combined.json": "f5422c7643dc3e9a379e94afb3e108812f9d6450fd17b0d832d62417fef59890",
+        "elbow.json": "d2d9b01ded085607db939c93da4e5882a71b7ba5bb747303270e50786af0bd88",
+        "knee.json": "ad499961b6cc4c94387db32aa533681b2bcfbf13adf7a674a8495f0d82db5975",
+        "neutral.json": "298da2ab8e2535e69261d66ff9d085f6da3e39c4f8a414eec5dd1500ba9537a2",
+        "shoulder.json": "ca189967ee8df9924665c50efdc9c9c7a6230ccaf81ee7adb65cec133b4111ff"
+      }
+    },
+    {
+      "recipe_id": "combined",
+      "config_sha256": "0b085cf812ad9fb1e0e86f897608208972b06ffad731bb6759eac799a3fcf0cf",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/configs/combined.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/56-b1-pose-reference/poses.json",
+        "experiments/57-b1-pose-runtime/results/final-current40/combined"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 12.411418209085241,
+      "log_sha256": "bc0ab7911f9ef3c2b18043e231ae5c5dd791e63727d5999011ff0dcc78c32bd1",
+      "outputs": {
+        "combined.json": "e05b4a8823d74b9bb0d25277c867e8acfae888690c5d96bf966c381cbdd7d1ad",
+        "elbow.json": "f37354988a4f5e034f17f37e90edaccdd91440c6ca3fd79b82d4a77902e9e63e",
+        "knee.json": "4ca681e43c1ca1c8ed1c430e05faad783ea80743c1fb6879dadabe2fcfb82d45",
+        "neutral.json": "7718b71d5cab8c9fcd9c1defc685c4055145dbe4949ccd4cdabdadeece8fed1e",
+        "shoulder.json": "78c706242c21098c979a576e1e7d1f9b511ca2a20ceec4c00e58373ca8aa8e88"
+      }
+    },
+    {
+      "recipe_id": "face-half",
+      "config_sha256": "cf7d923dcd442470e3aa1276be09c9d3f6d4599055246221f833106cd28495db",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/configs/face-half.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/56-b1-pose-reference/poses.json",
+        "experiments/57-b1-pose-runtime/results/final-current40/face-half"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 11.831956750014797,
+      "log_sha256": "dc0f7859c10d5e43c160d878611f047d5d7aca552500e5a1bd0f85e77eaa7e76",
+      "outputs": {
+        "combined.json": "78e8fbfd782df037375486ab7eb06f304be9808374ef669f682a422f1fd46b66",
+        "elbow.json": "1943ecd4f701edf366ff398e5d68255387c4d6a3d944d7ddd7110b54fb68fca8",
+        "knee.json": "ce0171fc8781902fa6aa521312a59e130e9a155e8964a302f49cf411cd912fc2",
+        "neutral.json": "c0eb97d6392551476d583a47377a07e36addd51f61a7ccbc88b2116ebaaec2a1",
+        "shoulder.json": "6fba28feae3752e8bf38d63283d370806a92521f0da255dbca5cba1f380e85f0"
+      }
+    },
+    {
+      "recipe_id": "face-negative",
+      "config_sha256": "3c33d3e897ecba0ed1769a09626e95058540a1786c2c2ba9c03455a6229b84bd",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/configs/face-negative.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/56-b1-pose-reference/poses.json",
+        "experiments/57-b1-pose-runtime/results/final-current40/face-negative"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 12.208598917000927,
+      "log_sha256": "52fbc0e5ba8e1d0c88d6513f9eb1d33c822c2b61e82492958842d9f00d937c2d",
+      "outputs": {
+        "combined.json": "45c60df3f37e098f400387e2eb658071977f88c408227ee2d5cba63f7c88a944",
+        "elbow.json": "4410416433aecc32ec035191596275593a9e904653d16045f48e2d3d12c71624",
+        "knee.json": "853b52634f7a7202690527797d36a2a1d6eb76529132b48ee2742db43dd89ac8",
+        "neutral.json": "9604bc89b641d5370d522297b1eacd78ee48a587c616dc5c96fe8615ab5cce36",
+        "shoulder.json": "0ec2b9b76aadc635edba9f7e04fb616ea2aff44187b0453c28d9f7cd33ce8ec5"
+      }
+    },
+    {
+      "recipe_id": "face-positive",
+      "config_sha256": "548b487e071882a88046ba505ceb717bd9a47417f7359e12bb81db6d49248b33",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/configs/face-positive.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/56-b1-pose-reference/poses.json",
+        "experiments/57-b1-pose-runtime/results/final-current40/face-positive"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 13.472945417044684,
+      "log_sha256": "cbbc61a0b968f9dd7d9ae5b966314d52e9ae7fc41f8a9d0fdd650c603c71851d",
+      "outputs": {
+        "combined.json": "97e5f7c775b793969898205a3311cacfef030b503225dfd7782fbf66cde46786",
+        "elbow.json": "7bb396b5aa9c4c364337c3881a99d2f5c9e191509f156d71084f2ebbde6994c9",
+        "knee.json": "640caaa8f6d4ce85d4aa54cadab3490c6411b824e13542a6b652b6b1bc98acd7",
+        "neutral.json": "dece6e771552b94f03ce7ee06c444d19ec40c90623e8edd5173048f933919bd1",
+        "shoulder.json": "3f3520055216fd7354464296ac5e307da158f7f053dc1c98a4f18ee269330e78"
+      }
+    },
+    {
+      "recipe_id": "neutral",
+      "config_sha256": "95a069ba15cfe7d45eac755ab8b28bfc5f2e5148d68c750b2fce44f9f88a0dac",
+      "command": [
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/configs/neutral.json",
+        "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/56-b1-pose-reference/poses.json",
+        "experiments/57-b1-pose-runtime/results/final-current40/neutral"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 14.811453250003979,
+      "log_sha256": "6b3825df4fbcd2c04dac8fee7f1c056ceacea6541f659f0378ae00146876364a",
+      "outputs": {
+        "combined.json": "bfd7842dc5cde154f03bb56a67402a02586ccb73bf7cb48cd7231be094b829e9",
+        "elbow.json": "2f14c5d9263079d015f7d88f3f4b9e918e5e5c9eeee84fab6c935e5baabb0cda",
+        "knee.json": "a95d14d9bbce109ac7ec04311638262e8c1f595707aadf069d9c6d80d4fbef6f",
+        "neutral.json": "cbfd25c632c69e25cb3ff13e2d722d922b24f6380782bea2dfd3c6c4302d77c0",
+        "shoulder.json": "7a8728efebb34d553632390355073f242e45836aa504e8cb678e9cec81ac5219"
+      }
+    }
+  ],
+  "duration_seconds": 108.88735345797613
+}

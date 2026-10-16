@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8"><title>B1 character source runtime · isolated prototype</title>
+<style>body{margin:0;background:#111823;color:#d9e3ef;font:14px system-ui}canvas{width:100vw;height:100vh;display:block}#boot{position:absolute;bottom:8px;left:12px;pointer-events:none}#diagnostics{position:absolute;right:12px;top:12px;max-width:390px;padding:8px;background:#172334eF;border:1px solid #4c6078;border-radius:6px}#diagnostics textarea{display:block;box-sizing:border-box;width:370px;max-width:80vw;background:#0d1623;color:#e2ecfa;border:1px solid #54687f;margin:6px 0;font:11px monospace}#diagnostics button{margin:3px;padding:5px}#diagnostic-status{display:block;font-size:11px;max-width:370px;overflow-wrap:anywhere}</style>
+<canvas id="b1-canvas"></canvas><div id="boot">Starting actual B1 WebAssembly source runtime…</div>
+<details id="diagnostics"><summary>Prototype diagnostic controls</summary>
+<label for="diagnostic-command">Diagnostic command JSON</label>
+<textarea id="diagnostic-command" aria-label="Diagnostic command JSON" rows="5" spellcheck="false"></textarea>
+<button id="send-command" type="button">Send diagnostic command</button>
+<button id="show-state" type="button">Show state JSON</button>
+<button id="download-frame" type="button">Download frame JSON</button>
+<output id="diagnostic-status" aria-label="Diagnostic runtime status" aria-live="polite">Waiting for actual Rust report…</output>
+<label for="diagnostic-output">Diagnostic output JSON</label>
+<textarea id="diagnostic-output" aria-label="Diagnostic output JSON" rows="10" readonly spellcheck="false"></textarea>
+</details>
+<script type="module">
+import init from './b1_desktop_web.js';
+const fail = error => { document.querySelector('#boot').textContent=`B1 WEB FAILED: ${error}`; };
+window.addEventListener('error',e=>fail(e.message));
+window.addEventListener('unhandledrejection',e=>fail(e.reason));
+window.b1 = {
+  command(command) { window.__b1command = JSON.stringify(command); },
+  report() { return JSON.parse(window.__b1report || '{}'); },
+  state() { return this.report().state; },
+  frame() { return this.report().frame; },
+  download(kind='frame') { const data=this.report()[kind];const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download=`b1-${kind}.json`;a.click();URL.revokeObjectURL(a.href); }
+};
+let lastReportText;
+let actualReport = {};
+const status = document.querySelector('#diagnostic-status');
+function refreshActualReport() {
+  const text = window.__b1report;
+  if (typeof text !== 'string' || text === lastReportText) return;
+  lastReportText = text;
+  try {
+    actualReport = JSON.parse(text);
+    const state = actualReport.state || {};
+    status.textContent = `Actual Rust phase ${actualReport.phase}; ${state.backend || ''}; recipe ${state.recipe || ''}; pose ${state.pose || ''}; camera ${state.camera_yaw ?? ''}; error: ${actualReport.error || 'none'}; fatal_reload_required: ${actualReport.fatal_reload_required ?? false}; rejected_commands: ${actualReport.rejected_commands ?? 0}`;
+  } catch (error) { status.textContent = `Rust report parse failed: ${error}`; }
+}
+setInterval(refreshActualReport, 200);
+document.querySelector('#send-command').addEventListener('click', () => {
+  try { window.b1.command(JSON.parse(document.querySelector('#diagnostic-command').value)); }
+  catch (error) { status.textContent = `Diagnostic command JSON rejected before submission: ${error}`; }
+});
+document.querySelector('#show-state').addEventListener('click', () => {
+  refreshActualReport(); document.querySelector('#diagnostic-output').value = JSON.stringify(actualReport.state ?? null, null, 2);
+});
+document.querySelector('#download-frame').addEventListener('click', () => {
+  window.b1.download('frame');
+});
+try { await init(); document.querySelector('#boot').textContent='B1 source runtime started — loader status is in the viewer'; }
+catch(error) {document.querySelector('#boot').textContent=`B1 START FAILED: ${error}`;throw error;}
+</script>

@@ -1,0 +1,22 @@
+--- a/src/rigs.rs
++++ b/src/rigs.rs
+@@ -105,6 +105,19 @@
+ }
+ 
+ impl RigSpec {
++    /// Read-only fitted endpoint/roll frames using the existing rig algorithm.
++    /// Does not change the fixed animation-rest frames used by the skeleton.
++    pub fn endpoint_roll_frames(&self, helpers: &[Vec3], groups: &AHashMap<String, Vec<[usize; 2]>>) -> Vec<Mat4> {
++        self.reference_rig.bone_names.iter().map(|&name| {
++            get_bone_transform(name, &self.config.bones[name], groups, helpers).to_matrix()
++        }).collect()
++    }
++
++    /// Original helper weights, before proxy aggregation, truncation or normalization.
++    pub fn original_weights(&self) -> &AHashMap<&'static str, AHashMap<u16, f32>> {
++        &self.weights.weights
++    }
++
+     pub fn bone_index(&self, bone_name: &str) -> Option<usize> {
+         self.reference_rig
+             .bone_name_to_index

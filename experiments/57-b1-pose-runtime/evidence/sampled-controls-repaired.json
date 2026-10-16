@@ -1,0 +1,86 @@
+{
+  "scope": "captured actual executable output and tampered expectation through exact CI comparator; no compiled mutant claim",
+  "mutations": [
+    {
+      "fault": "tampered-expectation",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "wrong-bone-order",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "omitted-deformation",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "wrong-gauge",
+      "rejected": true,
+      "error": "canonical gauge/physical skin identity failed"
+    },
+    {
+      "fault": "missing-bone",
+      "rejected": true,
+      "error": "bone coverage mismatch"
+    },
+    {
+      "fault": "nonfinite-matrix",
+      "rejected": true,
+      "error": "invalid matrix dimensions/finite values"
+    },
+    {
+      "fault": "zero-normals",
+      "rejected": true,
+      "error": "normals must be nonzero unit vectors"
+    },
+    {
+      "fault": "empty-normals",
+      "rejected": true,
+      "error": "normals count mismatch"
+    },
+    {
+      "fault": "zero-tangents",
+      "rejected": true,
+      "error": "tangents must be nonzero unit vectors"
+    },
+    {
+      "fault": "empty-tangents",
+      "rejected": true,
+      "error": "tangents count mismatch"
+    },
+    {
+      "fault": "zero-gauge",
+      "rejected": true,
+      "error": "nonaffine matrix"
+    },
+    {
+      "fault": "zero-raw-rest",
+      "rejected": true,
+      "error": "nonaffine matrix"
+    },
+    {
+      "fault": "wrong-rest",
+      "rejected": true,
+      "error": "rest/inverse-bind or stored skin identity failed"
+    },
+    {
+      "fault": "wrong-inverse-bind",
+      "rejected": true,
+      "error": "rest/inverse-bind or stored skin identity failed"
+    },
+    {
+      "fault": "invalid-tangent-handedness",
+      "rejected": true,
+      "error": "invalid tangent handedness"
+    }
+  ],
+  "restored_passed": true,
+  "status": "sampled_comparator_controls_pass",
+  "python_optimized": true,
+  "comparator_sha256": "67ef902869ba985db074bd2b5707aa76ab2256ef550e0a09834add66add3f82a",
+  "validator_sha256": "20e5e1090f03c06cf1f103645247d89408d911063dfdb7060ad3706492ee6c0a",
+  "candidate_sha256": "33418e0d430f8c3984a05d3d0db8822d6b81d76783694d48e09c82049b6e0fbe"
+}

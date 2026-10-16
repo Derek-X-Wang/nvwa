@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "status": "garment-geometry-and-three-texture-dependencies-audited",
+  "archive_sha256": "b542127a8e25547c7c29c19f2d1d2adb9a664c80396ecd694095dbc8028a0107",
+  "archive_bytes": 280737770,
+  "archive_entries": 517,
+  "all_archive_expanded_file_bytes": 298739872,
+  "zip_traversal_symlink_encryption_case_collision_check": "passed",
+  "all_archive_crc_checked": false,
+  "selected_file_crc_checked": true,
+  "selected_garment": "female_sportsuit01",
+  "files": [
+    {
+      "archive_path": "clothes/female_sportsuit01/female_sportsuit01.mhclo",
+      "path": ".work/character-approved-20261016/system-assets/clothes/female_sportsuit01/female_sportsuit01.mhclo",
+      "bytes": 124049,
+      "sha256": "6df057d3116db93afbbbb6d692f92cce84aa16db699f47dd14e825d07c6fd42f",
+      "crc_verified": true,
+      "license": "CC0-1.0",
+      "license_evidence": "Explicit CC0 header in this file",
+      "license_header": "# This is a clothes file for MakeHuman\n#\n# This asset was explicitly released as CC0 in september 2020. The license\n# text for CC0 can be found in the root of this repository.\n#\n# The copyright holders at the point of the release to CC0 were:\n#\n# Copyright (C) 2020 Data Collection AB, https://www.datacollection.se\n# Copyright (C) 2020 Joel Palmius\n# Copyright (C) 2020 Jonas Hauquier\n#\n# The primary legal contact for MakeHuman is Data Collection AB.\n#\n# For more information, see homepage at http://www.makehumancommunity.org"
+    },
+    {
+      "archive_path": "clothes/female_sportsuit01/female_sportsuit01.obj",
+      "path": ".work/character-approved-20261016/system-assets/clothes/female_sportsuit01/female_sportsuit01.obj",
+      "bytes": 142064,
+      "sha256": "fd529bb8dd6a994c1e9a3fb2fd8b236f52c0cc7cebb1f6fd9328953d9df6d6ff",
+      "crc_verified": true,
+      "license": "CC0-1.0",
+      "license_evidence": "Explicit CC0 header in this file",
+      "license_header": "# This is a mesh file for MakeHuman\n#\n# This asset was explicitly released as CC0 in september 2020. The license\n# text for CC0 can be found in the root of this repository.\n#\n# The copyright holders at the point of the release to CC0 were:\n#\n# Copyright (C) 2020 Data Collection AB, https://www.datacollection.se\n# Copyright (C) 2020 Joel Palmius\n# Copyright (C) 2020 Jonas Hauquier\n#\n# The primary legal contact for MakeHuman is Data Collection AB.\n#\n# For more information, see homepage at http://www.makehumancommunity.org\n#\n# basemesh hm08"
+    },
+    {
+      "archive_path": "clothes/female_sportsuit01/female_sportsuit01.mhmat",
+      "path": ".work/character-approved-20261016/system-assets/clothes/female_sportsuit01/female_sportsuit01.mhmat",
+      "bytes": 1400,
+      "sha256": "1153d5ad8a074f0f02c7102375d6d3ae0b82302b6f3909b5b64609a2d5cfdd6b",
+      "crc_verified": true,
+      "license": "CC0-1.0",
+      "license_evidence": "Explicit CC0 header in this file",
+      "license_header": "# This is a material file for MakeHuman\n#\n# This asset was explicitly released as CC0 in september 2020. The license\n# text for CC0 can be found in the root of this repository.\n#\n# The copyright holders at the point of the release to CC0 were:\n#\n# Copyright (C) 2020 Data Collection AB, https://www.datacollection.se\n# Copyright (C) 2020 Joel Palmius\n# Copyright (C) 2020 Jonas Hauquier\n#\n# The primary legal contact for MakeHuman is Data Collection AB.\n#\n# For more information, see homepage at http://www.makehumancommunity.org"
+    },
+    {
+      "archive_path": "clothes/female_sportsuit01/female_sportsuit01_diffuse.png",
+      "path": ".work/character-approved-20261016/system-assets/clothes/female_sportsuit01/female_sportsuit01_diffuse.png",
+      "bytes": 1396429,
+      "sha256": "00910e3e85b3dcf48d1aa827b4c075cdc77689989423ff4f75bc67f2e86cc588",
+      "crc_verified": true,
+      "license": "CC0-1.0",
+      "license_evidence": "Named texture dependency of explicitly CC0 material; official whole-asset item is CC0. No independent embedded PNG license assertion."
+    },
+    {
+      "archive_path": "clothes/female_sportsuit01/female_sportsuit01_normal.png",
+      "path": ".work/character-approved-20261016/system-assets/clothes/female_sportsuit01/female_sportsuit01_normal.png",
+      "bytes": 250945,
+      "sha256": "2bc78509fc4e74b2346dbb54f7f627644125a41573ee458d624246e337f1d28f",
+      "crc_verified": true,
+      "license": "CC0-1.0",
+      "license_evidence": "Named texture dependency of explicitly CC0 material; official whole-asset item is CC0. No independent embedded PNG license assertion."
+    },
+    {
+      "archive_path": "clothes/female_sportsuit01/female_sportsuit01_ao.png",
+      "path": ".work/character-approved-20261016/system-assets/clothes/female_sportsuit01/female_sportsuit01_ao.png",
+      "bytes": 1692805,
+      "sha256": "6faffbb99e3d20faeaf87cdddece43fee7d6b7262de3e55817545809f0368524",
+      "crc_verified": true,
+      "license": "CC0-1.0",
+      "license_evidence": "Named texture dependency of explicitly CC0 material; official whole-asset item is CC0. No independent embedded PNG license assertion."
+    }
+  ],
+  "selected_extracted_file_bytes": 3607692,
+  "dependency_edges": [
+    {
+      "from": "clothes/female_sportsuit01/female_sportsuit01.mhclo",
+      "key": "obj_file",
+      "to": "clothes/female_sportsuit01/female_sportsuit01.obj",
+      "present": true
+    },
+    {
+      "from": "clothes/female_sportsuit01/female_sportsuit01.mhclo",
+      "key": "material",
+      "to": "clothes/female_sportsuit01/female_sportsuit01.mhmat",
+      "present": true
+    },
+    {
+      "from": "clothes/female_sportsuit01/female_sportsuit01.mhmat",
+      "key": "diffuseTexture",
+      "to": "clothes/female_sportsuit01/female_sportsuit01_diffuse.png",
+      "present": true
+    },
+    {
+      "from": "clothes/female_sportsuit01/female_sportsuit01.mhmat",
+      "key": "normalmapTexture",
+      "to": "clothes/female_sportsuit01/female_sportsuit01_normal.png",
+      "present": true
+    },
+    {
+      "from": "clothes/female_sportsuit01/female_sportsuit01.mhmat",
+      "key": "aomapTexture",
+      "to": "clothes/female_sportsuit01/female_sportsuit01_ao.png",
+      "present": true
+    }
+  ],
+  "custom_weights_or_rig_references": [],
+  "legacy_makehuman_shader_references": [
+    {
+      "key": "shader",
+      "reference": "data/shaders/glsl/litsphere",
+      "present_in_system_pack": false
+    },
+    {
+      "key": "shaderParam litsphereTexture",
+      "reference": "data/litspheres/lit_matte.png",
+      "present_in_system_pack": false
+    }
+  ],
+  "appearance_boundary": "Legacy MakeHuman GLSL shader and litsphere are absent. MPFB MhMaterial parser explicitly leaves shader/litsphere handling as TODO. No complete MakeHuman material appearance parity is claimed; use bounded Blender material or neutral material for geometry comparison. No extra download authorized.",
+  "license_authors_from_headers": [
+    "Data Collection AB",
+    "Joel Palmius",
+    "Jonas Hauquier"
+  ],
+  "system_zip_standalone_license_text_present": false,
+  "retained_legal_text": "experiments/53-character-comparison/downloads/licenses/mpfb-LICENSE.ASSETS.md",
+  "official_item_license_evidence": "https://static.makehumancommunity.org/assets/assetpacks/makehuman_system_assets.html",
+  "thumbnail_extracted": false,
+  "other_pack_assets_extracted": false,
+  "upstream_code_executed_by_download_worker": false,
+  "completed_at": "2026-10-16T17:49:03.662021+00:00"
+}

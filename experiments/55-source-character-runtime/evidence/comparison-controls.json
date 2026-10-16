@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "all_passed": true,
+  "controls": 10,
+  "scope": "Actual CLI comparator on tampered copies of retained real B1 results; original outputs/common manifest unchanged",
+  "original_results_preserved": true,
+  "common_manifest_preserved": true,
+  "comparator_sha256": "1e516a14793f387d1d7c457ea82b28deccaf72b1057f9c434146982b1478a29c",
+  "records": [
+    {
+      "name": "changed-output",
+      "exit_code": 2,
+      "expected_reason": "execution output SHA256 mismatch",
+      "output": "NOT-RUN: execution output SHA256 mismatch: neutral\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "summary-failed-status",
+      "exit_code": 2,
+      "expected_reason": "summary status",
+      "output": "NOT-RUN: execution summary status is not successful execution\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "changed-output-hash",
+      "exit_code": 2,
+      "expected_reason": "output SHA256 mismatch",
+      "output": "NOT-RUN: execution output SHA256 mismatch: neutral\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "missing-case",
+      "exit_code": 2,
+      "expected_reason": "incomplete or duplicate cases",
+      "output": "NOT-RUN: execution summary incomplete or duplicate cases\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "nonzero-exit",
+      "exit_code": 2,
+      "expected_reason": "case failed or did not execute",
+      "output": "NOT-RUN: execution case failed or did not execute: neutral\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "false-execution-flag",
+      "exit_code": 2,
+      "expected_reason": "case failed or did not execute",
+      "output": "NOT-RUN: execution case failed or did not execute: neutral\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "wrong-common-manifest",
+      "exit_code": 2,
+      "expected_reason": "common manifest mismatch",
+      "output": "NOT-RUN: execution summary common manifest mismatch\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "wrong-variant",
+      "exit_code": 2,
+      "expected_reason": "run variant mismatch",
+      "output": "NOT-RUN: run variant mismatch\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "wrong-binary",
+      "exit_code": 2,
+      "expected_reason": "binary identity mismatch",
+      "output": "NOT-RUN: execution binary identity mismatch\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    },
+    {
+      "name": "wrong-adapter",
+      "exit_code": 2,
+      "expected_reason": "adapter identity mismatch",
+      "output": "NOT-RUN: execution adapter identity mismatch\n",
+      "no_comparison_receipt_created": true,
+      "copied_inputs_preserved": true
+    }
+  ]
+}

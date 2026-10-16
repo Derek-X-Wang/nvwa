@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "launch": {
+    "utc": "2026-10-16T19:54:29.582909+00:00",
+    "pid": 97609,
+    "argv": [
+      "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/b1-pose-viewer/Nvwa B1 Pose Lab.app/Contents/MacOS/b1-desktop-web"
+    ],
+    "initial_state": {
+      "backend": "full-weight-cpu",
+      "camera_yaw": 45,
+      "format": "nvwa-b1-pose-prototype",
+      "pose": "combined",
+      "recipe": "combined",
+      "schema_version": 1
+    },
+    "frame_file": "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/b1-pose-viewer/final-binding/native-report.json",
+    "artifacts": {
+      ".work/b1-pose-viewer/Nvwa B1 Pose Lab.app/Contents/MacOS/b1-desktop-web": {
+        "bytes": 122451920,
+        "sha256": "170a6bbffe62b5c28559fa1cc2b4b2b580a023fc3b94e58f9a4a195f2527602e"
+      },
+      ".work/b1-pose-viewer/site/b1_desktop_web_bg.wasm": {
+        "bytes": 112583432,
+        "sha256": "2c40490e7314d5a89e710426bf25f6bfdedd92fa5336bd87b3828199eb8bbd37"
+      },
+      ".work/b1-pose-viewer/site/b1_desktop_web.js": {
+        "bytes": 112132,
+        "sha256": "007a221255b560e36eb3a7bab983a8cd77e31838b4c7fbdbd0d18a5007504536"
+      },
+      ".work/b1-pose-viewer/site/index.html": {
+        "bytes": 4061,
+        "sha256": "f7ad65355d0b7d107b935b2ee2aafb1008605dfde5d5299735d36f662e7f23cd"
+      },
+      "experiments/58-b1-desktop-web/src/lib.rs": {
+        "bytes": 53497,
+        "sha256": "f086f8bde2158837a9ba1cf060c9859f12d6d016d644c9f173a4a0b3112d60e8"
+      },
+      "experiments/58-b1-desktop-web/serve.py": {
+        "bytes": 1831,
+        "sha256": "ccbd3ce40f222d2052eb6cb5f93145f0d2dc537c2430e020aa8a5cf1ec68a9a8"
+      }
+    }
+  },
+  "actual_process_mapping": "p97609\nn/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/b1-pose-viewer/Nvwa B1 Pose Lab.app/Contents/MacOS/b1-desktop-web\n",
+  "actual_process_command": "97609 /Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/b1-pose-viewer/Nvwa B1 Pose Lab.app/Contents/MacOS/b1-desktop-web\n",
+  "served_open_file_bodies": [
+    {
+      "url": "/",
+      "bytes": 4061,
+      "sha256": "f7ad65355d0b7d107b935b2ee2aafb1008605dfde5d5299735d36f662e7f23cd"
+    },
+    {
+      "url": "/b1_desktop_web.js",
+      "bytes": 112132,
+      "sha256": "007a221255b560e36eb3a7bab983a8cd77e31838b4c7fbdbd0d18a5007504536"
+    },
+    {
+      "url": "/b1_desktop_web_bg.wasm",
+      "bytes": 112583432,
+      "sha256": "2c40490e7314d5a89e710426bf25f6bfdedd92fa5336bd87b3828199eb8bbd37"
+    },
+    {
+      "url": "/assets/vertex_groups.json",
+      "bytes": 81984,
+      "sha256": "8cb1417bc55ae5ec8aa99f90734e81ed5fbb556511ff6a2c00e0534b70911444"
+    },
+    {
+      "url": "/assets/composite.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "url": "/assets/base.obj",
+      "bytes": 1798283,
+      "sha256": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2"
+    },
+    {
+      "url": "/assets/targets/torso-scale-vert-decr.target",
+      "bytes": 201357,
+      "sha256": "a7deb8343fb3ecfef46c6118662b1a40f0cfc33d79ff959c641dd796a17bed9f"
+    },
+    {
+      "url": "/assets/targets/torso-scale-vert-incr.target",
+      "bytes": 195076,
+      "sha256": "caa5e04cebd43ba40c9a98717fc7f177b14b43c1f01c37e15fef7a4cb4e6660c"
+    },
+    {
+      "url": "/assets/empty.macro",
+      "bytes": 20,
+      "sha256": "e0ca0537a591ee9d362fb69c381d793f0e4a64f6ce62d21c0d607edfdd8bf37c"
+    },
+    {
+      "url": "/assets/targets/chin-jaw-drop-decr.target",
+      "bytes": 1072,
+      "sha256": "6bf2cab4e65e5dd7456405ad3d0b68f4ec80b6130ff78349a02f650f33f7f443"
+    },
+    {
+      "url": "/assets/targets/chin-jaw-drop-incr.target",
+      "bytes": 857,
+      "sha256": "789b8d79f920786244d8e7de1d87ce4fff7e2650d7bf171a35ad22b9011d5238"
+    },
+    {
+      "url": "/assets/rig.game_engine.json",
+      "bytes": 40936,
+      "sha256": "b324ddb4b707721c19630bfadb87c3e3b38eed3b6e4590bb3cead43ea918f799"
+    },
+    {
+      "url": "/assets/weights.game_engine.json",
+      "bytes": 3026778,
+      "sha256": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473"
+    },
+    {
+      "url": "/assets/garment/female_sportsuit01.mhclo",
+      "bytes": 127990,
+      "sha256": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7"
+    },
+    {
+      "url": "/assets/body.mhclo",
+      "bytes": 103864,
+      "sha256": "152e68fcc03cdbd08566b42d53dcb253546d7a71e3dabd62a95f8c72763aa5aa"
+    },
+    {
+      "url": "/assets/base.obj",
+      "bytes": 1798283,
+      "sha256": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2"
+    },
+    {
+      "url": "/assets/garment/female_sportsuit01.obj",
+      "bytes": 146887,
+      "sha256": "f9f91788c1dd2918fceedd4dd4ada520f56fb8dfd68cbbeb9a4f6bfbd8e101a9"
+    },
+    {
+      "url": "/assets/garment/female_sportsuit01.obj",
+      "bytes": 146887,
+      "sha256": "f9f91788c1dd2918fceedd4dd4ada520f56fb8dfd68cbbeb9a4f6bfbd8e101a9"
+    }
+  ],
+  "server_source_sha256": "ccbd3ce40f222d2052eb6cb5f93145f0d2dc537c2430e020aa8a5cf1ec68a9a8",
+  "actual_web_dom_status": "Actual Rust phase 4; full-weight-cpu; recipe combined; pose combined; camera 45; error: none; fatal_reload_required: false; rejected_commands: 0",
+  "same_pair_cpu_parity": {
+    "native_web_original_cpu_diagnostic_frame_parity": true,
+    "gpu_vertex_parity_claimed": false,
+    "state": {
+      "backend": "full-weight-cpu",
+      "camera_yaw": 45.0,
+      "format": "nvwa-b1-pose-prototype",
+      "pose": "combined",
+      "recipe": "combined",
+      "schema_version": 1
+    },
+    "maximum_component_error": {
+      "matrix": 8.344650268554688e-07,
+      "position": 2.980232238769531e-07,
+      "normal": 3.5762786865234375e-07,
+      "tangent": 3.5762786865234375e-07,
+      "weight": 1.1920928955078125e-07
+    },
+    "coverage": {
+      "body": {
+        "vertices": 22077,
+        "source_ids": 19158,
+        "bones": 53,
+        "frame_validation": {
+          "passed": true,
+          "present_finite": true,
+          "normal_min_length": 0.9999998860297048,
+          "tangent_min_length": 0.9999998775826634,
+          "max_frame_identity_error": 1.0810219741586025e-07,
+          "appearance_acceptance": "NOT-RUN"
+        },
+        "legacy_four_slot_negative_weight_components": 0,
+        "legacy_four_slot_vertices_with_negative_weights": 0,
+        "legacy_four_slot_min_weight": 0.0,
+        "weight_quality_acceptance": false
+      },
+      "garment": {
+        "vertices": 1986,
+        "source_ids": 1797,
+        "bones": 53,
+        "frame_validation": {
+          "passed": true,
+          "present_finite": true,
+          "normal_min_length": 0.9999998805126133,
+          "tangent_min_length": 0.9999998643478213,
+          "max_frame_identity_error": 1.0810219741586025e-07,
+          "appearance_acceptance": "NOT-RUN"
+        },
+        "legacy_four_slot_negative_weight_components": 3,
+        "legacy_four_slot_vertices_with_negative_weights": 2,
+        "legacy_four_slot_min_weight": -0.0020712660625576973,
+        "weight_quality_acceptance": false
+      }
+    }
+  },
+  "retained_files": {
+    ".work/b1-pose-viewer/final-binding/executable-mapping.txt": {
+      "bytes": 150,
+      "sha256": "8509c91405144123da75dae20afbca239bc421f62c0f4ccd8336f74ea0031a1a"
+    },
+    ".work/b1-pose-viewer/final-binding/launch.json": {
+      "bytes": 1604,
+      "sha256": "5f4ea4d617179f96f736e8994d0a80c158ba5967270fd156a53388c810c9bd9e"
+    },
+    ".work/b1-pose-viewer/final-binding/native-process.log": {
+      "bytes": 329,
+      "sha256": "c9810e96e5babc8f9cfff2fc37f7f4effcf6ab4bdbc6d208624794f4b2d8c597"
+    },
+    ".work/b1-pose-viewer/final-binding/native-report.json": {
+      "bytes": 10111872,
+      "sha256": "e5798bc9bb1f53f7307f31928cfa9f8a3d69341862366ad0fd2c92b94960be17"
+    },
+    ".work/b1-pose-viewer/final-binding/native.jpg": {
+      "bytes": 218120,
+      "sha256": "0e505e66aa2ef0f16ca109ad219eff088af6f26eb880bf7cf2d051deaababba8"
+    },
+    ".work/b1-pose-viewer/final-binding/parity.json": {
+      "bytes": 1728,
+      "sha256": "3ec4458dfff5e401d285ad07b2a6f7e32ffc3989848daae2ff16cf69aab2a95a"
+    },
+    ".work/b1-pose-viewer/final-binding/process.txt": {
+      "bytes": 148,
+      "sha256": "d1f4109ca7acf3416e00c8e3748b60fb9bab1eb4cb05be4c478235628102bdc0"
+    },
+    ".work/b1-pose-viewer/final-binding/web-frame.json": {
+      "bytes": 22405141,
+      "sha256": "088be0f0161f9fa0e83f393c620050917c9d9d0990ff58b9ec2208fff3004fbf"
+    },
+    ".work/b1-pose-viewer/final-binding/web-status.txt": {
+      "bytes": 144,
+      "sha256": "db5b4b7348d5f9e0d2f5adfa42fe6dd4e706f225dd04dd2d253ba5f686e86eb6"
+    },
+    ".work/b1-pose-viewer/final-binding/web.jpg": {
+      "bytes": 67771,
+      "sha256": "2bc5ff332484269569708081eb2c697a563d076974bdd309b771ce11fb8efd99"
+    },
+    ".work/b1-pose-viewer/server-final-binding.log": {
+      "bytes": 5272,
+      "sha256": "412efbdab41ae7a5ac12375a20c9da8b149dc3d5c60344a4f62a6a06aac19fdd"
+    }
+  },
+  "limits": [
+    "Response fd hash plus actual successful startup and full frame; no GPU vertex or pixel parity",
+    "No browser-cache cause inferred; diagnostic hashing overhead is not a performance measurement"
+  ]
+}

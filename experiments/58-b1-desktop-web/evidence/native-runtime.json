@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "native_actual_source_headless": true,
+  "native_graphical_executed": false,
+  "wasm_executed": false,
+  "common_manifest_sha256": "2e8566a4f12de710ead88f6aa2d71fc44e0680761a4f2fdc48a844b6f3534ab7",
+  "native_binary_sha256": "170a6bbffe62b5c28559fa1cc2b4b2b580a023fc3b94e58f9a4a195f2527602e",
+  "binary": "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/58-b1-desktop-web/target/debug/b1-desktop-web",
+  "asset_root": "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/b1-pose-viewer/site/assets",
+  "output": "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/b1-pose-viewer/native-final-10",
+  "coverage_and_vectors": {
+    "gpu4": {
+      "body": {
+        "vertices": 22077,
+        "source_ids": 19158,
+        "bones": 53,
+        "frame_validation": {
+          "passed": true,
+          "present_finite": true,
+          "normal_min_length": 0.9999998860186912,
+          "tangent_min_length": 0.9999998775826634,
+          "max_frame_identity_error": 1.0810219741586025e-07,
+          "appearance_acceptance": "NOT-RUN"
+        },
+        "legacy_four_slot_negative_weight_components": 0,
+        "legacy_four_slot_vertices_with_negative_weights": 0,
+        "legacy_four_slot_min_weight": 0.0,
+        "weight_quality_acceptance": false
+      },
+      "garment": {
+        "vertices": 1986,
+        "source_ids": 1797,
+        "bones": 53,
+        "frame_validation": {
+          "passed": true,
+          "present_finite": true,
+          "normal_min_length": 0.9999998805126133,
+          "tangent_min_length": 0.9999998643478213,
+          "max_frame_identity_error": 1.0810219741586025e-07,
+          "appearance_acceptance": "NOT-RUN"
+        },
+        "legacy_four_slot_negative_weight_components": 3,
+        "legacy_four_slot_vertices_with_negative_weights": 2,
+        "legacy_four_slot_min_weight": -0.0020712660625576973,
+        "weight_quality_acceptance": false
+      }
+    },
+    "positive-cpu": {
+      "body": {
+        "vertices": 22077,
+        "source_ids": 19158,
+        "bones": 53,
+        "frame_validation": {
+          "passed": true,
+          "present_finite": true,
+          "normal_min_length": 0.9999998860297048,
+          "tangent_min_length": 0.9999998775826634,
+          "max_frame_identity_error": 1.0810219741586025e-07,
+          "appearance_acceptance": "NOT-RUN"
+        },
+        "legacy_four_slot_negative_weight_components": 0,
+        "legacy_four_slot_vertices_with_negative_weights": 0,
+        "legacy_four_slot_min_weight": 0.0,
+        "weight_quality_acceptance": false
+      },
+      "garment": {
+        "vertices": 1986,
+        "source_ids": 1797,
+        "bones": 53,
+        "frame_validation": {
+          "passed": true,
+          "present_finite": true,
+          "normal_min_length": 0.9999998805126133,
+          "tangent_min_length": 0.9999998643478213,
+          "max_frame_identity_error": 1.0810219741586025e-07,
+          "appearance_acceptance": "NOT-RUN"
+        },
+        "legacy_four_slot_negative_weight_components": 3,
+        "legacy_four_slot_vertices_with_negative_weights": 2,
+        "legacy_four_slot_min_weight": -0.0020712660625576973,
+        "weight_quality_acceptance": false
+      }
+    }
+  },
+  "independent_cpu_max_component_metres": {
+    "gpu4": 1.3386598418652085e-07,
+    "positive-cpu": 1.4033822426373632e-07
+  },
+  "independent_vertices_checked": {
+    "gpu4": 24063,
+    "positive-cpu": 24063
+  },
+  "exact_state_restoration": {
+    "gpu4": {
+      "initial_seconds": 4.2169309159507975,
+      "restored_seconds": 1.7973712079692632,
+      "exact_state_restored": true
+    },
+    "positive-cpu": {
+      "initial_seconds": 1.642161958036013,
+      "restored_seconds": 1.7103332499973476,
+      "exact_state_restored": true
+    }
+  },
+  "roundtrip_max_component_errors": {
+    "gpu4": {
+      "matrix": 0.0,
+      "position": 1.7881393432617188e-07,
+      "normal": 1.7881393432617188e-07,
+      "tangent": 1.1920928955078125e-07,
+      "weight": 1.1920928955078125e-07
+    },
+    "positive-cpu": {
+      "matrix": 0.0,
+      "position": 0.0,
+      "normal": 0.0,
+      "tangent": 0.0,
+      "weight": 1.1920928955078125e-07
+    }
+  },
+  "live_command_boundary": {
+    "camera_only_outer_and_frame_state_atomic": true,
+    "camera_only_skin_sequence_unchanged": true,
+    "invalid_schema_import_preserved_actual_state_and_frame": true,
+    "valid_import_cleared_error": true,
+    "process_exit": 0
+  },
+  "fatal_command_boundary": {
+    "valid_import_rejected": true,
+    "camera_command_rejected": true,
+    "recipe_pose_backend_command_rejected": true,
+    "first_error_state_frame_preserved": true,
+    "commands_acknowledged": 3,
+    "process_exit": 1
+  },
+  "omitted_target": {
+    "exit": 1,
+    "error": "Explicit target missing: chin-jaw-drop-incr",
+    "seconds": 0.11157708300743252
+  },
+  "comparator_sha256": "405d5db4f4dca667cb9507698dc53101fd5735971b70b437308af0b2ff6562d9",
+  "shared_validator_sha256": "20e5e1090f03c06cf1f103645247d89408d911063dfdb7060ad3706492ee6c0a"
+}

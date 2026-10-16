@@ -1,0 +1,14 @@
+--- a/src/mesh_ops.rs
++++ b/src/mesh_ops.rs
+@@ -278,9 +278,9 @@
+         if pairs.is_empty() {
+             continue;
+         }
+-        // Pad to 4 entries if needed
++        // Zero-pad unused influences; repeating a real weight changes the distribution.
+         while pairs.len() < 4 {
+-            pairs.push(pairs[0]);
++            pairs.push((0, 0.0));
+         }
+         let mut raw_indices = [0u16; 4];
+         let mut raw_weights = [0.0f32; 4];

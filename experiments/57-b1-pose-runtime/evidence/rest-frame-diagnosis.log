@@ -1,0 +1,671 @@
+{
+  "status": "diagnosis_only_not_candidate_output",
+  "source_policy": "fitted heads with unchanged base reference rotations",
+  "alternative": "existing get_bone_transform endpoint+roll algorithm on morphed helpers",
+  "cases": [
+    {
+      "recipe_id": "neutral",
+      "candidate_sha256": "eff593d94b6e7fec5df9621339a59aca06e73d7ff523d6f1366a1a1dfe74d7fc",
+      "reference_sha256": "6fc8117fb618cdd9e455b2d83af44781aa4ad3eed6d1ab8c677d05d6e79f9c42",
+      "predicted_all_bones_max_component": 1.865635856523884e-06,
+      "worst_actual_bones": [
+        {
+          "bone": "middle_01_l",
+          "actual_rest_max_component": 3.680586814880371e-06,
+          "endpoint_roll_prediction_max_component": 1.0417183627930982e-06,
+          "head_from_candidate_helpers": [
+            0.4608299970626831,
+            0.1886150002479553,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            0.4712450027465821,
+            0.16724000275135043,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "middle_01_r",
+          "actual_rest_max_component": 3.680586814880371e-06,
+          "endpoint_roll_prediction_max_component": 1.0417183627930982e-06,
+          "head_from_candidate_helpers": [
+            -0.4608299970626831,
+            0.1886150002479553,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4712450027465821,
+            0.16724000275135043,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "index_02_l",
+          "actual_rest_max_component": 3.0100345611572266e-06,
+          "endpoint_roll_prediction_max_component": 1.1395409830194936e-06,
+          "head_from_candidate_helpers": [
+            0.4531525015830994,
+            0.1895137518644333,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            0.4533825039863586,
+            0.17453999817371368,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "index_02_r",
+          "actual_rest_max_component": 3.0100345611572266e-06,
+          "endpoint_roll_prediction_max_component": 1.1395409830194936e-06,
+          "head_from_candidate_helpers": [
+            -0.4531525015830994,
+            0.1895137518644333,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4533825039863586,
+            0.17453999817371368,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "hand_l",
+          "actual_rest_max_component": 2.555549144744873e-06,
+          "endpoint_roll_prediction_max_component": 1.5523484000329324e-06,
+          "head_from_candidate_helpers": [
+            0.4311850070953369,
+            0.24518124759197235,
+            0.17565500140190124
+          ],
+          "tail_from_candidate_helpers": [
+            0.4291150093078613,
+            0.2226250022649765,
+            0.19686000347137453
+          ]
+        }
+      ]
+    },
+    {
+      "recipe_id": "body-negative",
+      "candidate_sha256": "8422f738da669acea34f45b6c8c2fd6a528391c1a3d9da1ba220b2745c38d627",
+      "reference_sha256": "3978fa91d0c1f9c2bd27385d206296a609c52fdb297fd4e958c033b2d0080936",
+      "predicted_all_bones_max_component": 2.0570295327093646e-06,
+      "worst_actual_bones": [
+        {
+          "bone": "clavicle_l",
+          "actual_rest_max_component": 0.042901039123535156,
+          "endpoint_roll_prediction_max_component": 2.492663047914956e-07,
+          "head_from_candidate_helpers": [
+            0.02655500024557114,
+            0.48253500461578364,
+            0.06942500174045563
+          ],
+          "tail_from_candidate_helpers": [
+            0.1677125036716461,
+            0.48148002624511715,
+            0.014605000242590906
+          ]
+        },
+        {
+          "bone": "clavicle_r",
+          "actual_rest_max_component": 0.042901039123535156,
+          "endpoint_roll_prediction_max_component": 2.492663047914956e-07,
+          "head_from_candidate_helpers": [
+            -0.02655500024557114,
+            0.48253500461578364,
+            0.06942500174045563
+          ],
+          "tail_from_candidate_helpers": [
+            -0.1677125036716461,
+            0.48148002624511715,
+            0.014605000242590906
+          ]
+        },
+        {
+          "bone": "spine_03",
+          "actual_rest_max_component": 0.029875054955482483,
+          "endpoint_roll_prediction_max_component": 7.245702549063537e-08,
+          "head_from_candidate_helpers": [
+            0.0,
+            0.2742649912834168,
+            0.02594500035047531
+          ],
+          "tail_from_candidate_helpers": [
+            0.0,
+            0.40750501155853264,
+            -0.0071250002831220625
+          ]
+        },
+        {
+          "bone": "spine_02",
+          "actual_rest_max_component": 0.007187321782112122,
+          "endpoint_roll_prediction_max_component": 1.0261267391342699e-07,
+          "head_from_candidate_helpers": [
+            0.0,
+            0.186665004491806,
+            0.014855001121759415
+          ],
+          "tail_from_candidate_helpers": [
+            0.0,
+            0.2742649912834168,
+            0.02594500035047531
+          ]
+        },
+        {
+          "bone": "middle_01_l",
+          "actual_rest_max_component": 3.56137752532959e-06,
+          "endpoint_roll_prediction_max_component": 1.041718361238786e-06,
+          "head_from_candidate_helpers": [
+            0.4608299970626831,
+            0.14551500082015992,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            0.4712450027465821,
+            0.12414000332355499,
+            0.2690787434577942
+          ]
+        }
+      ]
+    },
+    {
+      "recipe_id": "body-half",
+      "candidate_sha256": "559970e542b65a91bd5a17d248bb783c5ca13df17fc9a6f372996624a29205d2",
+      "reference_sha256": "1b44dad81b528a7134aa3dcf74ea81ff0b31b982c669ff1b6d31d27de8fad766",
+      "predicted_all_bones_max_component": 2.098233020275675e-06,
+      "worst_actual_bones": [
+        {
+          "bone": "spine_03",
+          "actual_rest_max_component": 0.03499208390712738,
+          "endpoint_roll_prediction_max_component": 1.0759968738227599e-07,
+          "head_from_candidate_helpers": [
+            0.0,
+            0.2796649932861328,
+            0.02594500035047531
+          ],
+          "tail_from_candidate_helpers": [
+            0.0,
+            0.4646049976348877,
+            -0.0071250002831220625
+          ]
+        },
+        {
+          "bone": "middle_01_l",
+          "actual_rest_max_component": 3.919005393981934e-06,
+          "endpoint_roll_prediction_max_component": 1.1132447540196377e-06,
+          "head_from_candidate_helpers": [
+            0.4608299970626831,
+            0.24001500606536866,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            0.4712450027465821,
+            0.21864000558853147,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "middle_01_r",
+          "actual_rest_max_component": 3.919005393981934e-06,
+          "endpoint_roll_prediction_max_component": 1.1132447540196377e-06,
+          "head_from_candidate_helpers": [
+            -0.4608299970626831,
+            0.24001500606536866,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4712450027465821,
+            0.21864000558853147,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "index_02_l",
+          "actual_rest_max_component": 3.039836883544922e-06,
+          "endpoint_roll_prediction_max_component": 1.1815308517681977e-06,
+          "head_from_candidate_helpers": [
+            0.4531525015830994,
+            0.24091375470161439,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            0.4533825039863586,
+            0.22594000995159147,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "index_02_r",
+          "actual_rest_max_component": 3.039836883544922e-06,
+          "endpoint_roll_prediction_max_component": 1.1815308517681977e-06,
+          "head_from_candidate_helpers": [
+            -0.4531525015830994,
+            0.24091375470161439,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4533825039863586,
+            0.22594000995159147,
+            0.30235375463962555
+          ]
+        }
+      ]
+    },
+    {
+      "recipe_id": "body-positive",
+      "candidate_sha256": "6062b09c9b1a10ca72470476da79fb8446fb9f804604c8838075b61ec415969d",
+      "reference_sha256": "b028ed695950bd21579b4518b5241c90955c60737c1d4759c6e40cdd335e36d5",
+      "predicted_all_bones_max_component": 2.22364236282524e-06,
+      "worst_actual_bones": [
+        {
+          "bone": "spine_03",
+          "actual_rest_max_component": 0.06014735996723175,
+          "endpoint_roll_prediction_max_component": 1.1138693611911776e-07,
+          "head_from_candidate_helpers": [
+            0.0,
+            0.2796649932861328,
+            0.02594500035047531
+          ],
+          "tail_from_candidate_helpers": [
+            0.0,
+            0.49635500907897945,
+            -0.0071250002831220625
+          ]
+        },
+        {
+          "bone": "middle_01_l",
+          "actual_rest_max_component": 3.859400749206543e-06,
+          "endpoint_roll_prediction_max_component": 1.1047846527612037e-06,
+          "head_from_candidate_helpers": [
+            0.4608299970626831,
+            0.2914150029420853,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            0.4712450027465821,
+            0.27004000544548035,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "middle_01_r",
+          "actual_rest_max_component": 3.859400749206543e-06,
+          "endpoint_roll_prediction_max_component": 1.1047846527612037e-06,
+          "head_from_candidate_helpers": [
+            -0.4608299970626831,
+            0.2914150029420853,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4712450027465821,
+            0.27004000544548035,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "index_02_l",
+          "actual_rest_max_component": 3.3080577850341797e-06,
+          "endpoint_roll_prediction_max_component": 1.3080728844538925e-06,
+          "head_from_candidate_helpers": [
+            0.4531525015830994,
+            0.29231375455856323,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            0.4533825039863586,
+            0.2773399978876114,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "index_02_r",
+          "actual_rest_max_component": 3.3080577850341797e-06,
+          "endpoint_roll_prediction_max_component": 1.3080728844538925e-06,
+          "head_from_candidate_helpers": [
+            -0.4531525015830994,
+            0.29231375455856323,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4533825039863586,
+            0.2773399978876114,
+            0.30235375463962555
+          ]
+        }
+      ]
+    },
+    {
+      "recipe_id": "face-negative",
+      "candidate_sha256": "980d7cb2bf6293508f70e063c1d0d30da69131d7b3b8b6c10a4b1af58ccd4d90",
+      "reference_sha256": "4bec59a5f083aa850e152d1b8cf98f264d1c30a512e724c31e17977b905dac9a",
+      "predicted_all_bones_max_component": 1.865635856523884e-06,
+      "worst_actual_bones": [
+        {
+          "bone": "middle_01_l",
+          "actual_rest_max_component": 3.680586814880371e-06,
+          "endpoint_roll_prediction_max_component": 1.0417183627930982e-06,
+          "head_from_candidate_helpers": [
+            0.4608299970626831,
+            0.1886150002479553,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            0.4712450027465821,
+            0.16724000275135043,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "middle_01_r",
+          "actual_rest_max_component": 3.680586814880371e-06,
+          "endpoint_roll_prediction_max_component": 1.0417183627930982e-06,
+          "head_from_candidate_helpers": [
+            -0.4608299970626831,
+            0.1886150002479553,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4712450027465821,
+            0.16724000275135043,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "index_02_l",
+          "actual_rest_max_component": 3.0100345611572266e-06,
+          "endpoint_roll_prediction_max_component": 1.1395409830194936e-06,
+          "head_from_candidate_helpers": [
+            0.4531525015830994,
+            0.1895137518644333,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            0.4533825039863586,
+            0.17453999817371368,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "index_02_r",
+          "actual_rest_max_component": 3.0100345611572266e-06,
+          "endpoint_roll_prediction_max_component": 1.1395409830194936e-06,
+          "head_from_candidate_helpers": [
+            -0.4531525015830994,
+            0.1895137518644333,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4533825039863586,
+            0.17453999817371368,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "hand_l",
+          "actual_rest_max_component": 2.555549144744873e-06,
+          "endpoint_roll_prediction_max_component": 1.5523484000329324e-06,
+          "head_from_candidate_helpers": [
+            0.4311850070953369,
+            0.24518124759197235,
+            0.17565500140190124
+          ],
+          "tail_from_candidate_helpers": [
+            0.4291150093078613,
+            0.2226250022649765,
+            0.19686000347137453
+          ]
+        }
+      ]
+    },
+    {
+      "recipe_id": "face-half",
+      "candidate_sha256": "191e26e4be474cebf6ceed0d115d75203ad51249828f9242afad3790ecdd2028",
+      "reference_sha256": "cf69d72b962a48cee5c8102aa5eddc4daeb9925ab110a08a2c1e51265ee45d75",
+      "predicted_all_bones_max_component": 1.865635856523884e-06,
+      "worst_actual_bones": [
+        {
+          "bone": "middle_01_l",
+          "actual_rest_max_component": 3.680586814880371e-06,
+          "endpoint_roll_prediction_max_component": 1.0417183627930982e-06,
+          "head_from_candidate_helpers": [
+            0.4608299970626831,
+            0.1886150002479553,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            0.4712450027465821,
+            0.16724000275135043,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "middle_01_r",
+          "actual_rest_max_component": 3.680586814880371e-06,
+          "endpoint_roll_prediction_max_component": 1.0417183627930982e-06,
+          "head_from_candidate_helpers": [
+            -0.4608299970626831,
+            0.1886150002479553,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4712450027465821,
+            0.16724000275135043,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "index_02_l",
+          "actual_rest_max_component": 3.0100345611572266e-06,
+          "endpoint_roll_prediction_max_component": 1.1395409830194936e-06,
+          "head_from_candidate_helpers": [
+            0.4531525015830994,
+            0.1895137518644333,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            0.4533825039863586,
+            0.17453999817371368,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "index_02_r",
+          "actual_rest_max_component": 3.0100345611572266e-06,
+          "endpoint_roll_prediction_max_component": 1.1395409830194936e-06,
+          "head_from_candidate_helpers": [
+            -0.4531525015830994,
+            0.1895137518644333,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4533825039863586,
+            0.17453999817371368,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "hand_l",
+          "actual_rest_max_component": 2.555549144744873e-06,
+          "endpoint_roll_prediction_max_component": 1.5523484000329324e-06,
+          "head_from_candidate_helpers": [
+            0.4311850070953369,
+            0.24518124759197235,
+            0.17565500140190124
+          ],
+          "tail_from_candidate_helpers": [
+            0.4291150093078613,
+            0.2226250022649765,
+            0.19686000347137453
+          ]
+        }
+      ]
+    },
+    {
+      "recipe_id": "face-positive",
+      "candidate_sha256": "3f55bbbc220c1c29b29d4625a5a681c13dee483dc555e815ae2fff4537aef3df",
+      "reference_sha256": "79046546d78579c1bc9c884315a5d66dc91ee76f7a01eed92b72ab3a6fb153e1",
+      "predicted_all_bones_max_component": 1.865635856523884e-06,
+      "worst_actual_bones": [
+        {
+          "bone": "middle_01_l",
+          "actual_rest_max_component": 3.680586814880371e-06,
+          "endpoint_roll_prediction_max_component": 1.0417183627930982e-06,
+          "head_from_candidate_helpers": [
+            0.4608299970626831,
+            0.1886150002479553,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            0.4712450027465821,
+            0.16724000275135043,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "middle_01_r",
+          "actual_rest_max_component": 3.680586814880371e-06,
+          "endpoint_roll_prediction_max_component": 1.0417183627930982e-06,
+          "head_from_candidate_helpers": [
+            -0.4608299970626831,
+            0.1886150002479553,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4712450027465821,
+            0.16724000275135043,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "index_02_l",
+          "actual_rest_max_component": 3.0100345611572266e-06,
+          "endpoint_roll_prediction_max_component": 1.1395409830194936e-06,
+          "head_from_candidate_helpers": [
+            0.4531525015830994,
+            0.1895137518644333,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            0.4533825039863586,
+            0.17453999817371368,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "index_02_r",
+          "actual_rest_max_component": 3.0100345611572266e-06,
+          "endpoint_roll_prediction_max_component": 1.1395409830194936e-06,
+          "head_from_candidate_helpers": [
+            -0.4531525015830994,
+            0.1895137518644333,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4533825039863586,
+            0.17453999817371368,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "hand_l",
+          "actual_rest_max_component": 2.555549144744873e-06,
+          "endpoint_roll_prediction_max_component": 1.5523484000329324e-06,
+          "head_from_candidate_helpers": [
+            0.4311850070953369,
+            0.24518124759197235,
+            0.17565500140190124
+          ],
+          "tail_from_candidate_helpers": [
+            0.4291150093078613,
+            0.2226250022649765,
+            0.19686000347137453
+          ]
+        }
+      ]
+    },
+    {
+      "recipe_id": "combined",
+      "candidate_sha256": "a858adead74c4ee14cf691fd835d860b2cc7de3b3b3b9aa1b1bc0a495738fddf",
+      "reference_sha256": "38c7412a88bda1f917737d9630fec11fa0bd74d43e386dd208cb16ae984e2c41",
+      "predicted_all_bones_max_component": 2.098233020275675e-06,
+      "worst_actual_bones": [
+        {
+          "bone": "spine_03",
+          "actual_rest_max_component": 0.03499208390712738,
+          "endpoint_roll_prediction_max_component": 1.0759968738227599e-07,
+          "head_from_candidate_helpers": [
+            0.0,
+            0.2796649932861328,
+            0.02594500035047531
+          ],
+          "tail_from_candidate_helpers": [
+            0.0,
+            0.4646049976348877,
+            -0.0071250002831220625
+          ]
+        },
+        {
+          "bone": "middle_01_l",
+          "actual_rest_max_component": 3.919005393981934e-06,
+          "endpoint_roll_prediction_max_component": 1.1132447540196377e-06,
+          "head_from_candidate_helpers": [
+            0.4608299970626831,
+            0.24001500606536866,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            0.4712450027465821,
+            0.21864000558853147,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "middle_01_r",
+          "actual_rest_max_component": 3.919005393981934e-06,
+          "endpoint_roll_prediction_max_component": 1.1132447540196377e-06,
+          "head_from_candidate_helpers": [
+            -0.4608299970626831,
+            0.24001500606536866,
+            0.2478974938392639
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4712450027465821,
+            0.21864000558853147,
+            0.2690787434577942
+          ]
+        },
+        {
+          "bone": "index_02_l",
+          "actual_rest_max_component": 3.039836883544922e-06,
+          "endpoint_roll_prediction_max_component": 1.1815308517681977e-06,
+          "head_from_candidate_helpers": [
+            0.4531525015830994,
+            0.24091375470161439,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            0.4533825039863586,
+            0.22594000995159147,
+            0.30235375463962555
+          ]
+        },
+        {
+          "bone": "index_02_r",
+          "actual_rest_max_component": 3.039836883544922e-06,
+          "endpoint_roll_prediction_max_component": 1.1815308517681977e-06,
+          "head_from_candidate_helpers": [
+            -0.4531525015830994,
+            0.24091375470161439,
+            0.2853787451982498
+          ],
+          "tail_from_candidate_helpers": [
+            -0.4533825039863586,
+            0.22594000995159147,
+            0.30235375463962555
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+2026-10-16T18:50:00.304792Z  WARN bevy_egui::render: Bindless textures are not yet supported on metal. Disabling bindless mode. See https://github.com/bevyengine/bevy/issues/18149 for more information
+2026-10-16T18:50:04.097731Z ERROR bevy_core_pipeline::tonemapping: TonyMcMapFace tonemapping requires the `tonemapping_luts` feature.
+                    Either enable the `tonemapping_luts` feature for bevy in `Cargo.toml` (recommended),
+                    or use a different `Tonemapping` method for your `Camera2d`/`Camera3d`.
+2026-10-16T18:50:12.294769Z ERROR bevy_render::error_handler: Caught rendering error: Validation Error
+
+Caused by:
+  In a CommandEncoder
+    In a draw command, kind: MultiDrawIndirect
+      The BindGroupLayout with 'mesh_layout' label of current set BindGroup with 'model_only_mesh_bind_group' label at index 2 is not compatible with the corresponding BindGroupLayout with 'skinned_mesh_layout' label of RenderPipeline with 'pbr_opaque_mesh_pipeline' label
+        Expected entry with binding 1 not found in assigned bind group layout
+
+2026-10-16T18:50:12.296910Z ERROR bevy_render::error_handler: Caught rendering error: Validation Error
+
+Caused by:
+  In Queue::submit
+    In a draw command, kind: MultiDrawIndirect
+      The BindGroupLayout with 'mesh_layout' label of current set BindGroup with 'model_only_mesh_bind_group' label at index 2 is not compatible with the corresponding BindGroupLayout with 'skinned_mesh_layout' label of RenderPipeline with 'pbr_opaque_mesh_pipeline' label
+        Expected entry with binding 1 not found in assigned bind group layout
+
+2026-10-16T18:50:12.298884Z ERROR bevy_render::error_handler: Quitting the application due to Validation RenderError
+2026-10-16T18:50:12.473398Z  WARN bevy_ecs::world::command_queue: CommandQueue has un-applied commands being dropped. Did you forget to call SystemState::apply?
+2026-10-16T18:50:12.475160Z  WARN bevy_ecs::world::command_queue: CommandQueue has un-applied commands being dropped. Did you forget to call SystemState::apply?

@@ -1,0 +1,743 @@
+{
+  "schema_version": 1,
+  "status": "PENDING_EXPLICIT_DOWNLOAD_APPROVAL",
+  "checked_at_utc": "2026-10-16T17:26:34.469420+00:00",
+  "sample_class": "makehuman-approved-sample (future; bytes absent)",
+  "download_authorized": false,
+  "reference_run_authorized": false,
+  "runtime_claims": false,
+  "common_items": [
+    {
+      "id": "blender-reference",
+      "order": 1,
+      "required_for": [
+        "reference"
+      ],
+      "filename": "blender-4.2.23-macos-arm64.dmg",
+      "version": "4.2.23",
+      "url": "https://download.blender.org/release/Blender4.2/blender-4.2.23-macos-arm64.dmg",
+      "transfer_bytes": 308239340,
+      "size_basis": "official release directory and HTTP HEAD Content-Length",
+      "size_evidence_url": "https://download.blender.org/release/Blender4.2/",
+      "sha256": "8b6bc5fafd4773e94bb863ca19ba1c9a54d096eecbbc4375eae7dbc3b49fab40",
+      "checksum_source": "https://download.blender.org/release/Blender4.2/blender-4.2.23.sha256",
+      "extracted_bytes": null,
+      "license": "GPL; bundled third-party component licenses must remain with tool",
+      "install_scope": "task-local extracted application; do not replace /opt/homebrew/bin/blender or alter global preferences"
+    },
+    {
+      "id": "mpfb-addon",
+      "order": 2,
+      "required_for": [
+        "reference",
+        "A-data",
+        "B-data"
+      ],
+      "filename": "add-on-mpfb-v2.0.18.zip",
+      "version": "2.0.18",
+      "source_commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e",
+      "source_ref": "v2.0.18",
+      "url": "https://extensions.blender.org/download/sha256:c075b3e9b94b8e5556a5f03f4653602d02ea306de08126e8f55ed6dee28a2dad/add-on-mpfb-v2.0.18.zip",
+      "transfer_bytes": 45956992,
+      "size_basis": "official extension API archive_size, confirmed HTTP HEAD Content-Length",
+      "size_evidence_url": "https://extensions.blender.org/api/v1/extensions/",
+      "sha256": "c075b3e9b94b8e5556a5f03f4653602d02ea306de08126e8f55ed6dee28a2dad",
+      "extracted_bytes": null,
+      "source_tree_src_mpfb_blob_bytes": 76173024,
+      "source_tree_bytes_are_not_archive_extracted_size": true,
+      "license": {
+        "code": "GPL-3.0-or-later",
+        "bundled_graphical_data": "CC0-1.0",
+        "mixed_configuration": "unresolved per file; macro.json excluded from product redistribution until classified"
+      },
+      "depends_on": [
+        "blender-reference"
+      ],
+      "compatibility": {
+        "upstream_min_blender": "4.2.0",
+        "installed_blender_from_integration_agent": "3.3.1; incompatible",
+        "tested": false
+      },
+      "archive_to_source_commit_equivalence_verified": false,
+      "notes": "Bundled core data expected from pinned release source tree; inspect ZIP and compare exact selected blobs after approval. No second MakeHuman download needed."
+    },
+    {
+      "id": "system-assets",
+      "order": 3,
+      "required_for": [
+        "reference-garment",
+        "A-data",
+        "B-data"
+      ],
+      "filename": "makehuman_system_assets_cc0.zip",
+      "version": "unversioned official archive snapshot; HEAD Last-Modified 2024-04-14T13:28:46Z",
+      "url": "https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip",
+      "transfer_bytes": 280737770,
+      "size_basis": "HTTP HEAD Content-Length",
+      "sha256": null,
+      "checksum_action": "No published SHA256 located. Compute after approval, retain original ZIP, freeze full provenance before use. Stop if HEAD Content-Length, Last-Modified or ETag changes from recorded snapshot.",
+      "head_etag": "\"10bbb7ea-6160e7c0d7996\"",
+      "head_last_modified": "Sun, 14 Apr 2024 13:28:46 GMT",
+      "extracted_bytes": null,
+      "license": "Official item table labels every item CC0; ZIP file-level declaration and dependencies NOT-RUN",
+      "selected_garment": {
+        "official_name": "female_sportsuit01",
+        "author": "makehuman_system",
+        "license_from_table": "CC0",
+        "table_url": "https://static.makehumancommunity.org/assets/assetpacks/makehuman_system_assets.html",
+        "internal_paths": null,
+        "material_texture_weight_dependencies": null,
+        "audit_action": "After approval locate exactly this garment and all referenced OBJ/MHCLO/material/texture/custom weight or rig dependencies. Reject missing or nonmatching license. Only one garment enters shared sample."
+      },
+      "notes": "Overfetch accepted fallback: no complete individually pinned official garment endpoint established. Other pack assets do not enter sample automatically. No full MakeHuman application, optional asset packs, skin, eyes or teeth needed for geometry/rig/garment numeric comparison; appearance acceptance remains separate."
+    }
+  ],
+  "common_transfer_bytes": 634934102,
+  "common_transfer_mib": 605.5203456878662,
+  "extracted_bytes_total": null,
+  "excluded_automatic_downloads": true,
+  "sample_source_inventory": [
+    {
+      "path": "src/mpfb/data/3dobjs/base.obj",
+      "bytes": 1749303,
+      "git_blob_sha1": "d26635e9326e3cca30778fd7b9c00062b03cce09",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/3dobjs/base.obj",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/mesh_metadata/basemesh_vertex_groups.json",
+      "bytes": 81984,
+      "git_blob_sha1": "b7604262dd96d6a6428645897340f10b8a84142e",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/mesh_metadata/basemesh_vertex_groups.json",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/mesh_metadata/hm08_config.json",
+      "bytes": 3600,
+      "git_blob_sha1": "f94e2731356232ed1b6306128fd04d18da5d21ea",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/mesh_metadata/hm08_config.json",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/rigs/standard/rig.game_engine.json",
+      "bytes": 40936,
+      "git_blob_sha1": "e0903a1bc1ed7aae1516b1a8d0fe3085bbc6e5f0",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/rigs/standard/rig.game_engine.json",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/rigs/standard/weights.game_engine.json",
+      "bytes": 3026778,
+      "git_blob_sha1": "c9366e4bfe5d1af69c66ebdf4065874b996af6b1",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/rigs/standard/weights.game_engine.json",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/poses/game_engine_fk/t-pose.json",
+      "bytes": 1258,
+      "git_blob_sha1": "0ba7dc585e2d98aa97617ad8407be9765d7cfb8c",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/poses/game_engine_fk/t-pose.json",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/targets/torso/torso-scale-vert-decr.target.gz",
+      "bytes": 39045,
+      "git_blob_sha1": "bdf5c7fa81d691c2d24358a3fc554ed829e02e1f",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/torso/torso-scale-vert-decr.target.gz",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/targets/torso/torso-scale-vert-incr.target.gz",
+      "bytes": 36386,
+      "git_blob_sha1": "024144c460debc5e30c08aee32b9b61790f05314",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/torso/torso-scale-vert-incr.target.gz",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/targets/chin/chin-jaw-drop-decr.target.gz",
+      "bytes": 374,
+      "git_blob_sha1": "d26ed5dd5c26c2e2365a31dc78ad4cbb5194093b",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/chin/chin-jaw-drop-decr.target.gz",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/targets/chin/chin-jaw-drop-incr.target.gz",
+      "bytes": 288,
+      "git_blob_sha1": "5a5c78e4ab3e966255ab84d2ffc1eaac15bad837",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/chin/chin-jaw-drop-incr.target.gz",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "CC0-1.0 per upstream bundled-asset definition; verify shipped archive after approval"
+    },
+    {
+      "path": "src/mpfb/data/targets/macrodetails/macro.json",
+      "bytes": 4356,
+      "git_blob_sha1": "13a841e528a356848b9118b51e512f720bf56005",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/macrodetails/macro.json",
+      "additional_transfer_bytes": 0,
+      "container": "mpfb-addon",
+      "contents_verified": false,
+      "license": "classification_unresolved_do_not_redistribute_as_CC0"
+    }
+  ],
+  "candidate_parameter_domain": {
+    "body_pair": "torso-scale-vert-decr/incr",
+    "local_face_pair": "chin-jaw-drop-decr/incr",
+    "rig": "game_engine",
+    "recipe_ranges_defaults_and_vertex_meaning": "must be established from actual approved source/reference; filenames are not measured semantics or runtime proof",
+    "macro_parameter_implementation": "not selected; macro.json classification remains unresolved"
+  },
+  "optional_B_items": {
+    "source": {
+      "id": "humentity-source",
+      "commit": "286d33124648501535655a0de811cef55152b9fd",
+      "source_url": "https://github.com/emberlightstudios/Humentity/tree/286d33124648501535655a0de811cef55152b9fd",
+      "retrieval": "raw individual files only, request identity encoding, verify Git blob SHA1 and compute SHA256 locally",
+      "file_count": 45,
+      "required_blob_content_bytes": 561909,
+      "new_transfer_bytes": 560168,
+      "already_present_license_bytes": 1741,
+      "archive_download": false,
+      "extracted_bytes": 561909,
+      "license": "MIT OR Apache-2.0 per LICENSE; MIT full text present, Apache section is notice plus link rather than full text",
+      "files": [
+        {
+          "path": "Cargo.toml",
+          "size": 1901,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/Cargo.toml",
+          "git_blob_sha1": "78f863ed914818ae08c2c1c3f9781c43014f91ba",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "LICENSE",
+          "size": 1741,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/LICENSE",
+          "git_blob_sha1": "007489153930ad55c7105d95671df83c953d7d7b",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": true
+        },
+        {
+          "path": "README.md",
+          "size": 21884,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/README.md",
+          "git_blob_sha1": "102e74fc8407913568ade5a9cd7def081ab1990e",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/animation.rs",
+          "size": 20847,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/animation.rs",
+          "git_blob_sha1": "f91b029f3104aed8725ef5b1be8e5a1b688e6084",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/assets.rs",
+          "size": 10655,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/assets.rs",
+          "git_blob_sha1": "03bfc2e69d6c2700ed464d7e10565d697c1e651c",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/basemesh.rs",
+          "size": 2406,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/basemesh.rs",
+          "git_blob_sha1": "93b80cf81e543e46c9afdc49c4f1c28ce25adfa2",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/bone_debug.rs",
+          "size": 985,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/bone_debug.rs",
+          "git_blob_sha1": "07420a1577cd31a4a0648fcfb61690119f2719e8",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/bake.rs",
+          "size": 29459,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/bake.rs",
+          "git_blob_sha1": "62d5404499a21a77dba92e52a4bdcfc8c8c6adba",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/bank.rs",
+          "size": 12157,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/bank.rs",
+          "git_blob_sha1": "02e7cd5b81aff0f37b1a13345aac445c7c13147b",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/config.rs",
+          "size": 9116,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/config.rs",
+          "git_blob_sha1": "5617e2a2be8a6e8653b4a0a37a5b6096a865a008",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/crowd_forward.wgsl",
+          "size": 1556,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/crowd_forward.wgsl",
+          "git_blob_sha1": "f7c2902d2958a0a4dcafeae2949fe7e9ac7f01c2",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/crowd_prepass.wgsl",
+          "size": 2691,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/crowd_prepass.wgsl",
+          "git_blob_sha1": "7f6647245c5fa79fe7f69ba9776dfdc5ad10f38f",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/crowd_skin.wgsl",
+          "size": 5007,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/crowd_skin.wgsl",
+          "git_blob_sha1": "38c7f7a95ce8ecc7cfa5f639f4214d9960c0d7e4",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/material.rs",
+          "size": 6216,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/material.rs",
+          "git_blob_sha1": "a2d56db762d844f63c31809025fd8f05d2c22a69",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/mod.rs",
+          "size": 5689,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/mod.rs",
+          "git_blob_sha1": "89fabcda0f56c074df95d919edee93ac5e893425",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/pipeline.rs",
+          "size": 9345,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/pipeline.rs",
+          "git_blob_sha1": "ec3aa0868f9b1fa7dbdbf9992afa57da988fa1b4",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/pose.wgsl",
+          "size": 12433,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/pose.wgsl",
+          "git_blob_sha1": "a1d06604c822850b8a9e2d8b5c1f2128ef21593f",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/readback.rs",
+          "size": 3709,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/readback.rs",
+          "git_blob_sha1": "7bbf66599e2c5efc31c2bc6f424001a981d3b0c8",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/shapes.rs",
+          "size": 7265,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/shapes.rs",
+          "git_blob_sha1": "162a634456f8465c4e1b79671038ce7e718e6528",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/gpu/state.rs",
+          "size": 10907,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/gpu/state.rs",
+          "git_blob_sha1": "7f0564de971eb4b290af5e81785f1b122adf6abc",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/helpers.rs",
+          "size": 1202,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/helpers.rs",
+          "git_blob_sha1": "634b886038a1a7caaadf62fd858f69578ba7ae2c",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/lib.rs",
+          "size": 18040,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/lib.rs",
+          "git_blob_sha1": "0d8911d50ba99ab8f7c3cb0454cdb284a2392bf6",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/composite_target_manifest.rs",
+          "size": 4812,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/composite_target_manifest.rs",
+          "git_blob_sha1": "832f03df9a33cd2c029ab096264059ddfd7e4dcb",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/macro_json.rs",
+          "size": 3417,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/macro_json.rs",
+          "git_blob_sha1": "484c4e207afede4411c05329994b1901250aca16",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/mhclo.rs",
+          "size": 13787,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/mhclo.rs",
+          "git_blob_sha1": "015879ea666370f52d67fe16f5ea5c235bf74c9b",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/mod.rs",
+          "size": 1262,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/mod.rs",
+          "git_blob_sha1": "39e8f0c1f33b7031a20f14f911e8234f84afdc08",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/obj_verts.rs",
+          "size": 3474,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/obj_verts.rs",
+          "git_blob_sha1": "d382c3a6742e07780ae1350c89531b3d32827916",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/reference_rig.rs",
+          "size": 10809,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/reference_rig.rs",
+          "git_blob_sha1": "2f9ed2c9576f20a724791403f71615da12f6f989",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/rig_config.rs",
+          "size": 2557,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/rig_config.rs",
+          "git_blob_sha1": "2b6d7cb92efff64105bf7c25072b4324ae7f2323",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/rig_weights.rs",
+          "size": 2060,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/rig_weights.rs",
+          "git_blob_sha1": "7e7312b95b2da31546d103fc1d1de4858e9e77a1",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/rotation_only_animation.rs",
+          "size": 29688,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/rotation_only_animation.rs",
+          "git_blob_sha1": "819aa6baf7f23797064301d45e53a7aa9bd504c2",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/shape_config.rs",
+          "size": 2825,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/shape_config.rs",
+          "git_blob_sha1": "add7dbaba92442696c135dc350434cb5d73a8624",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/target.rs",
+          "size": 3433,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/target.rs",
+          "git_blob_sha1": "f9217ad53217d9a15dd1891bc4d67b61d623baf1",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/loaders/template_asset.rs",
+          "size": 1323,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/loaders/template_asset.rs",
+          "git_blob_sha1": "913b69a3c5e6ffd9feabcfc7d2650b9dc8a76eee",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/mesh_ops.rs",
+          "size": 11161,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/mesh_ops.rs",
+          "git_blob_sha1": "97b58b413c7c4f5827b77a5f57c323076e7bbfd6",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/morphs.rs",
+          "size": 22526,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/morphs.rs",
+          "git_blob_sha1": "a66059e2b16b803a02eae7134b7043c127b14b1a",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/physics/avian.rs",
+          "size": 44221,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/physics/avian.rs",
+          "git_blob_sha1": "118cccdcdfaa8e9dea8f0af49c81385a722d2047",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/physics/boxddd.rs",
+          "size": 44807,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/physics/boxddd.rs",
+          "git_blob_sha1": "4d0d485c28cd1ca24856a7daa85973c1481f691b",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/physics/jolt.rs",
+          "size": 41880,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/physics/jolt.rs",
+          "git_blob_sha1": "5a68ddf9aec69abba699f8e942053b696d6b7762",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/physics/mod.rs",
+          "size": 6353,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/physics/mod.rs",
+          "git_blob_sha1": "b80b01cf118c077201dd14c3c9a3a6c603f42ea1",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/rigs.rs",
+          "size": 27383,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/rigs.rs",
+          "git_blob_sha1": "70c50ea0cd67ad847aaee6789356fca1f5994c2b",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/skeleton_lod.rs",
+          "size": 21423,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/skeleton_lod.rs",
+          "git_blob_sha1": "99c2ea47540d84cbc932486c54bffa806b899acb",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/spawn_mesh.rs",
+          "size": 24807,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/spawn_mesh.rs",
+          "git_blob_sha1": "d4899108c6467242435676439d8ef435ba68132d",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/spawn_skeleton.rs",
+          "size": 32396,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/spawn_skeleton.rs",
+          "git_blob_sha1": "e4afb17b98a5e1c1aa0f6b49be832d5d95b4b135",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        },
+        {
+          "path": "src/template.rs",
+          "size": 10294,
+          "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/src/template.rs",
+          "git_blob_sha1": "53e8c8b73b6be5439ae258466ed13ef8dd570e51",
+          "sha256": null,
+          "approval_status": "pending",
+          "already_present_review_license": false
+        }
+      ],
+      "not_a_buildable_package_claim": true,
+      "known_barriers": [
+        "Cargo.toml bevy_jolt optional dependency inherits absent workspace entry",
+        "Cargo.lock reflects Bevy 0.18 while manifest requests 0.19.1",
+        "Independent minimal manifest and exact offline dependency resolution required; physics/dev assets excluded"
+      ],
+      "full_source_retrieval_budget_bytes": 561909
+    },
+    "unresolved_transitive_download_bytes": null,
+    "unresolved_transitive_download_approval": false,
+    "known_missing_crates": [
+      {
+        "id": "bevy_obj",
+        "version": "0.19.0",
+        "url": "https://static.crates.io/crates/bevy_obj/bevy_obj-0.19.0.crate",
+        "transfer_bytes": 44610,
+        "size_basis": "crates.io version metadata crate_size",
+        "sha256": "894c100f4b3f147d67fab910e176e8c5453593abdfb894a94eb0c93661996dfa",
+        "metadata_url": "https://crates.io/api/v1/crates/bevy_obj/0.19.0",
+        "license": "MIT OR Apache-2.0 per registry; inspect actual crate license files after approval",
+        "extracted_bytes": null,
+        "approval_status": "separate_known_B_input_pending",
+        "dependencies_complete": false
+      },
+      {
+        "id": "wobj",
+        "version": "0.3.0",
+        "url": "https://static.crates.io/crates/wobj/wobj-0.3.0.crate",
+        "transfer_bytes": 15638,
+        "size_basis": "crates.io version metadata crate_size",
+        "sha256": "28b34b5fbb60f0273c065bfadca18e2decf9e1cac4da09e0ce61b799c05ee631",
+        "metadata_url": "https://crates.io/api/v1/crates/wobj/0.3.0",
+        "license": "MIT OR Apache-2.0",
+        "extracted_bytes": null,
+        "approval_status": "separate_known_B_input_pending",
+        "dependencies_complete": false
+      }
+    ]
+  },
+  "common_plus_B_source_new_transfer_bytes": 635494270,
+  "these_totals_do_not_cover_unknown_transitives": true,
+  "license_texts_already_retrieved_for_review": [
+    {
+      "local_path": "licenses/mpfb-LICENSE.md",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/LICENSE.md",
+      "bytes": 3188,
+      "sha256": "5cefb60680cb9efd4550a2e65d719021cfbec9dad3658481d11d48ae863ce04d",
+      "download_class": "public_license_text_retrieved_for_review"
+    },
+    {
+      "local_path": "licenses/mpfb-LICENSE.CODE.md",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/LICENSE.CODE.md",
+      "bytes": 34940,
+      "sha256": "26c03bc049c15fc5b9e52d791a06f1a6bc32f89edc8f8c701ab0aadf66e85b82",
+      "download_class": "public_license_text_retrieved_for_review"
+    },
+    {
+      "local_path": "licenses/mpfb-LICENSE.ASSETS.md",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/LICENSE.ASSETS.md",
+      "bytes": 6962,
+      "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c",
+      "download_class": "public_license_text_retrieved_for_review"
+    },
+    {
+      "local_path": "licenses/humentity-LICENSE",
+      "url": "https://raw.githubusercontent.com/emberlightstudios/Humentity/286d33124648501535655a0de811cef55152b9fd/LICENSE",
+      "bytes": 1741,
+      "sha256": "a6bf173350167d8cb25909e781579e004361a2595485004751792c0b90df0052",
+      "download_class": "public_license_text_retrieved_for_review"
+    },
+    {
+      "local_path": "licenses/blender-COPYING",
+      "url": "https://raw.githubusercontent.com/blender/blender/v4.2.23/COPYING",
+      "bytes": 302,
+      "sha256": "19e6f4b541772f9d7b98a52bdbca3ebd5ef9e404956a9a6de68bfc3c1a178387",
+      "download_class": "public_license_text_retrieved_for_review"
+    },
+    {
+      "local_path": "licenses/blender-GPL-license.txt",
+      "url": "https://raw.githubusercontent.com/blender/blender/v4.2.23/doc/license/GPL-license.txt",
+      "bytes": 17992,
+      "sha256": "f2703dec1b0118070caabd3302e21738c00211b0cc3260dbeb1168d6eda726b7",
+      "download_class": "public_license_text_retrieved_for_review"
+    }
+  ],
+  "license_metadata_bytes_excluded_from_future_download_totals": 65125,
+  "completeness_blockers": [
+    "Explicit download approval absent; all asset, addon, source and binary bytes absent",
+    "System pack immutable version and published SHA256 unavailable; post-download digest and file-level license/dependency audit required",
+    "Archive content listing and addon/tag equivalence not verified without downloading",
+    "Actual Blender macOS platform compatibility, extension activation, generation and export NOT-RUN",
+    "Body/face parameter ranges and exact recipes need approved source/reference inspection",
+    "B exact minimal dependency resolution and additional missing crates unknown; no blanket network-fetch approval"
+  ],
+  "after_approval_order": [
+    "Recheck recorded headers, fetch only approved URLs into task-local staging with automatic network asset resolution disabled",
+    "Verify published SHA256, or exact source Git blob SHA1; compute local SHA256 for every artifact",
+    "Audit ZIP path safety, exact selected data provenance and garment dependencies/licenses before extraction/use",
+    "Inspect/extract Blender locally without global replacement; isolate user preferences/addon directories",
+    "Freeze sample per-file SHA256 manifest and parameter contract; stop on gaps before running reference",
+    "Resolve B dependencies offline first; prepare separate exact download request for every further missing crate"
+  ],
+  "evidence_file": "source-metadata.json",
+  "common_plus_full_B_source_and_two_known_crates_budget_bytes": 635556259,
+  "common_plus_B_source_and_two_known_crates_new_transfer_bytes": 635554518
+}

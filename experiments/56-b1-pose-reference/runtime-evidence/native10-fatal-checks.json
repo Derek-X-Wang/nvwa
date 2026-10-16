@@ -1,0 +1,103 @@
+{
+  "before": {
+    "error": "Explicit target missing: chin-jaw-drop-incr",
+    "fatal_reload_required": true,
+    "frame": null,
+    "graphical_path_attached": false,
+    "phase": 255,
+    "rejected_commands": 0,
+    "state": {
+      "backend": "gpu4",
+      "camera_yaw": 0.0,
+      "format": "nvwa-b1-pose-prototype",
+      "pose": "neutral",
+      "recipe": "neutral",
+      "schema_version": 1
+    },
+    "status": "FAILED \u2014 reload required; state and frame frozen"
+  },
+  "checks": [
+    {
+      "command": {
+        "action": "import",
+        "state": {
+          "backend": "full-weight-cpu",
+          "camera_yaw": 45.0,
+          "format": "nvwa-b1-pose-prototype",
+          "pose": "combined",
+          "recipe": "body-positive",
+          "schema_version": 1
+        },
+        "request_id": "1792180213700337000"
+      },
+      "actual_report": {
+        "error": "Explicit target missing: chin-jaw-drop-incr",
+        "fatal_reload_required": true,
+        "frame": null,
+        "graphical_path_attached": false,
+        "phase": 255,
+        "rejected_commands": 1,
+        "state": {
+          "backend": "gpu4",
+          "camera_yaw": 0.0,
+          "format": "nvwa-b1-pose-prototype",
+          "pose": "neutral",
+          "recipe": "neutral",
+          "schema_version": 1
+        },
+        "status": "FAILED \u2014 reload required; state and frame frozen"
+      }
+    },
+    {
+      "command": {
+        "action": "select",
+        "camera_yaw": 25,
+        "request_id": "1792180213751994000"
+      },
+      "actual_report": {
+        "error": "Explicit target missing: chin-jaw-drop-incr",
+        "fatal_reload_required": true,
+        "frame": null,
+        "graphical_path_attached": false,
+        "phase": 255,
+        "rejected_commands": 2,
+        "state": {
+          "backend": "gpu4",
+          "camera_yaw": 0.0,
+          "format": "nvwa-b1-pose-prototype",
+          "pose": "neutral",
+          "recipe": "neutral",
+          "schema_version": 1
+        },
+        "status": "FAILED \u2014 reload required; state and frame frozen"
+      }
+    },
+    {
+      "command": {
+        "action": "select",
+        "recipe": "combined",
+        "pose": "elbow",
+        "backend": "full-weight-cpu",
+        "request_id": "1792180213807589000"
+      },
+      "actual_report": {
+        "error": "Explicit target missing: chin-jaw-drop-incr",
+        "fatal_reload_required": true,
+        "frame": null,
+        "graphical_path_attached": false,
+        "phase": 255,
+        "rejected_commands": 3,
+        "state": {
+          "backend": "gpu4",
+          "camera_yaw": 0.0,
+          "format": "nvwa-b1-pose-prototype",
+          "pose": "neutral",
+          "recipe": "neutral",
+          "schema_version": 1
+        },
+        "status": "FAILED \u2014 reload required; state and frame frozen"
+      }
+    }
+  ],
+  "graphical_window_observation": "separate actual CUA screenshot; graphical_path_attached is false because no character mesh attached"
+}

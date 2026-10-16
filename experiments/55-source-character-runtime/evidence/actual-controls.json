@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "controls": 10,
+  "all_passed": true,
+  "scope": "Actual new prepare_data.py/run_cases.py subprocess paths; approved-byte copies for source tamper; no candidate execution",
+  "inputs_checked": 69,
+  "records": [
+    {
+      "name": "manifest-tamper-real-prepare",
+      "exit_code": 1,
+      "expected_reason": "SHA-256 mismatch",
+      "output": "Traceback (most recent call last):\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/prepare_data.py\", line 103, in <module>\n    if __name__=='__main__':main()\n                            ~~~~^^\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/prepare_data.py\", line 29, in main\n    common=run.read_pinned_json(args.common_manifest,args.common_manifest_sha256,'common sample manifest')\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/run.py\", line 85, in read_pinned_json\n    require(digest(path) == expected, kind + ' SHA-256 mismatch')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/run.py\", line 23, in require\n    raise Blocked(reason)\nrun.Blocked: common sample manifest SHA-256 mismatch\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "upstream-source-tamper-real-run",
+      "exit_code": 2,
+      "expected_reason": "upstream Git blob mismatch",
+      "output": "NOT-RUN: candidate upstream Git blob mismatch: src/morphs.rs\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "raw-common-source-tamper-real-prepare",
+      "exit_code": 1,
+      "expected_reason": "common frozen file mismatch",
+      "output": "Traceback (most recent call last):\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/prepare_data.py\", line 103, in <module>\n    if __name__=='__main__':main()\n                            ~~~~^^\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/prepare_data.py\", line 38, in main\n    run.require(absolute.is_file() and absolute.stat().st_size==entry['bytes'] and\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                sha(absolute)==entry['sha256'], 'common frozen file mismatch: '+str(relative))\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/run.py\", line 23, in require\n    raise Blocked(reason)\nrun.Blocked: common frozen file mismatch: mpfb-addon/data/3dobjs/base.obj\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "existing-data-preserved-real-prepare",
+      "exit_code": 1,
+      "expected_reason": "derived data already exists",
+      "output": "Traceback (most recent call last):\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/prepare_data.py\", line 103, in <module>\n    if __name__=='__main__':main()\n                            ~~~~^^\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/prepare_data.py\", line 44, in main\n    data=ROOT/'data';run.require(not data.exists(),'derived data already exists; audit before repeat')\n                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/run.py\", line 23, in require\n    raise Blocked(reason)\nrun.Blocked: derived data already exists; audit before repeat\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "receipt-is-common-manifest-real-run",
+      "exit_code": 2,
+      "expected_reason": "result directory already exists",
+      "output": "NOT-RUN: result directory already exists\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "receipt-is-raw-source-real-run",
+      "exit_code": 2,
+      "expected_reason": "result directory already exists",
+      "output": "NOT-RUN: result directory already exists\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "symlink-input-alias-real-run",
+      "exit_code": 2,
+      "expected_reason": "result directory already exists",
+      "output": "NOT-RUN: result directory already exists\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "hardlink-input-alias-real-run",
+      "exit_code": 2,
+      "expected_reason": "result directory already exists",
+      "output": "NOT-RUN: result directory already exists\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "existing-result-preserved-real-run",
+      "exit_code": 2,
+      "expected_reason": "result directory already exists",
+      "output": "NOT-RUN: result directory already exists\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    },
+    {
+      "name": "config-recipe-tamper-real-run",
+      "exit_code": 2,
+      "expected_reason": "config recipe/scale tamper",
+      "output": "NOT-RUN: config recipe/scale tamper\n",
+      "input_hashes_preserved": true,
+      "candidate_execution_attempted": false
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "sample_class": "handwritten-numeric-control",
+  "status": "passed",
+  "cases": [
+    {
+      "case_id": "handwritten--1",
+      "status": "passed",
+      "result_sha256": "94a2778f12e6f0210bd27c77040eb0a6a07c5cf3c9628cf181b3ea4a3a95a1cb"
+    },
+    {
+      "case_id": "handwritten--0.5",
+      "status": "passed",
+      "result_sha256": "becc0c46bca76774266954a2d7e500936cdcc5e1c890a205e25b8f52fc83cb7c"
+    },
+    {
+      "case_id": "handwritten--0.25",
+      "status": "passed",
+      "result_sha256": "2a9dd1c217d40590ba559a0f90f51ec35d43ee984985c125233474a81d2e7659"
+    },
+    {
+      "case_id": "handwritten-0",
+      "status": "passed",
+      "result_sha256": "7d1d14f29b24c559ec4f9f1cd0718d1aaca89eb2688525b289d6e18b8a3f40d7"
+    },
+    {
+      "case_id": "handwritten-0.25",
+      "status": "passed",
+      "result_sha256": "e10e913126ef712617a6253e03e71c2dc152fb4934eb974c82d259894767684b"
+    },
+    {
+      "case_id": "handwritten-0.5",
+      "status": "passed",
+      "result_sha256": "0c0fdce1b00c43d27ecf6f767b124905dd69a66de8db7461538b763b601265cb"
+    },
+    {
+      "case_id": "handwritten-1",
+      "status": "passed",
+      "result_sha256": "e90580a2584059535a0a26eb515e5f287e529575f09bf12ef77b646a6a1b1129"
+    }
+  ],
+  "failure_controls": [
+    {
+      "case_id": "unselected-branch-invalid-index",
+      "status": "passed-rejection-control",
+      "diagnostic": {
+        "error": "invalid/duplicate sparse compiled delta",
+        "status": "failed"
+      }
+    },
+    {
+      "case_id": "invalid-helper-index",
+      "status": "passed-rejection-control",
+      "diagnostic": {
+        "error": "helper vertex outside source topology",
+        "status": "failed"
+      }
+    },
+    {
+      "case_id": "zero-garment-denominator",
+      "status": "passed-rejection-control",
+      "diagnostic": {
+        "error": "invalid garment scale rule",
+        "status": "failed"
+      }
+    },
+    {
+      "case_id": "unknown-bone-parent",
+      "status": "passed-rejection-control",
+      "diagnostic": {
+        "error": "invalid bone parent/roll",
+        "status": "failed"
+      }
+    },
+    {
+      "case_id": "duplicate-node-primitive",
+      "status": "passed-rejection-control",
+      "diagnostic": {
+        "error": "ambiguous/duplicate compiled node/mesh/primitive",
+        "status": "failed"
+      }
+    },
+    {
+      "case_id": "valid-existing-output",
+      "status": "passed-rejection-control"
+    }
+  ],
+  "actual_makehuman_data_run": false,
+  "reference_pipeline_run": false,
+  "private_evidence_path": "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/signed-checkpoint-final/numeric-controls"
+}
