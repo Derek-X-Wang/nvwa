@@ -1,19 +1,23 @@
 {
   "canvas": {
     "file": "web-canvas.png",
-    "method": "user-activated canvas.toBlob PNG download from actual rendered canvas; byte-exact retained download",
+    "method": "root user-activated canvas.toBlob PNG download from actual rendered canvas; byte-exact retained download; root and worker viewed PNG",
     "sha256": "b267e1f92ffc37392759dae6b0e9793dbc1bce106cb7aa677e55b96241628765"
   },
   "human_trial": "NOT-RUN",
-  "observed_renderer_backend": "BrowserWebGpu",
-  "operator_observation": "DOM reported Runtime pose complete:7/7 samples,last source key89. Final actual canvas shows folded arms intersecting/hidden by torso and hands at waist.",
+  "operator_observations": [
+    "Worker CUA inventory exposed no browsers and supported fresh IAB creation returned unavailable. No navigation landed in worker. Root verified its own eligible IAB and took sole graphics control.",
+    "Root first opened bare9204, selecting production default fixture and receiving asset path not found:assets/fixtures/nvwa-humanoid.glb, failed0samples. This wrong-entry operator result is retained privately and is not the explicit-Work result.",
+    "Root then navigated owned tab8 to the exact required ?work= URL and observed complete7/7,lastkey89 before downloading actual JSON and canvasPNG.",
+    "Root closed tab8 and observed own IAB tab list empty; graphics control released."
+  ],
   "owned_tab_closed": true,
   "performance_claim": false,
   "raw": {
     "error": null,
     "file": "web.json",
     "sample_count": 7,
-    "sha256": "0a67e93f157e031e18151f935a6f7625726a7ec2deabcccdd7fe404dc3e38f34",
+    "sha256": "161442516dfb5d62476b3f3b2ab52f7b2b9f44a7177bcb2ae5ac978208f52e5f",
     "source_keys": [
       0,
       15,
@@ -25,6 +29,7 @@
     ],
     "status": "complete"
   },
-  "route": "fresh CUA in-app browser tab1 at127.0.0.1:9204; existing tabs untouched",
+  "required_entry_url": "http://127.0.0.1:9204/?work=works/genuine44-calibrated47.nvwa.json",
+  "route": "root CUA in-app browser owned tab8 at127.0.0.1:9204; worker browser adapter unavailable during refresh",
   "schema_version": 1
 }

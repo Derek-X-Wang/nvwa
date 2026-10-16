@@ -37,13 +37,13 @@ at every requested key. The final key is binary32(89/30),
 
 | Source key | Exact requested time(s) | Native capture frame | Web capture frame |
 | ---: | ---: | ---: | ---: |
-| 0 | 0.0 | 5 | 9 |
-| 15 | 0.5 | 7 | 11 |
-| 30 | 1.0 | 9 | 13 |
-| 45 | 1.5 | 11 | 15 |
-| 60 | 2.0 | 13 | 17 |
-| 75 | 2.5 | 15 | 19 |
-| 89 | 2.9666666984558105 | 17 | 21 |
+| 0 | 0.0 | 5 | 10 |
+| 15 | 0.5 | 7 | 12 |
+| 30 | 1.0 | 9 | 14 |
+| 45 | 1.5 | 11 | 16 |
+| 60 | 2.0 | 13 | 18 |
+| 75 | 2.5 | 15 | 20 |
+| 89 | 2.9666666984558105 | 17 | 22 |
 
 The [native raw capture](probe/results/native.json),
 [Web raw capture](probe/results/web.json), and their independent
@@ -92,7 +92,8 @@ that the motion introduced every crossing. See the
 
 Native and Web compilation, launch, capture, visual inspection and numerical
 comparison each passed separately. Both native app binaries match the
-snapshot-built executable. The actual Web renderer reports `BrowserWebGpu`.
+snapshot-built executable. The refreshed Web run used the actual WebGPU-only probe build. Root operated
+its own eligible in-app browser because the worker browser adapter was unavailable.
 [Native](probe/results/native-cohort.json) and
 [Web](probe/results/web-cohort.json) cohort receipts compare the actual Wefty
 snapshot source/input hashes against the final checkout and artifact.
@@ -101,11 +102,12 @@ JavaScript, HTML, Work and GLB. Final builds used cached dependencies, `--locked
 --offline`, two Rust jobs and owned output directories. Existing pinned
 wasm-bindgen 0.2.129 produced the Web glue; no tool was installed.
 
-An initial native dependency build failed on the collector's borrowed graph
-index. The final native snapshot corrected it and passed; the Web snapshot
-also passed. The final native incremental build took 26.79 seconds and Web
-compilation took 11 minutes. These are build observations, not runtime
-performance measurements. The only product seam is the additive Studio
+An initial predecessor native dependency build failed on the collector's
+borrowed graph index. The corrected predecessor snapshot passed. This
+portability refresh compiled fresh cached native and Web snapshots in
+30.63 seconds and 39.25 seconds respectively. Web preparation took
+28.259 seconds separately. These are build/preparation observations, not
+runtime performance measurements. The only product seam is the additive Studio
 `manual-start` feature: it suppresses the library's Web auto-entrypoint only
 when explicitly enabled by this probe. Default Studio entrypoints remain
 selected by default. Hosted CI and default-product build results are separate
@@ -115,21 +117,26 @@ The actual native failure control launches the normal default fixture. It
 emits [failed raw state](probe/results/native-negative.json) with
 `wrong Work/profile`, zero samples and
 [child OS exit 1](probe/results/native-negative-exit-code.txt). Positive and
-visual runs exit 0. The negative CUA launch call timed out after launching;
-current raw state, process observation and the eventual child exit verified
-execution without replaying it. The first native window screenshot exposed a
-startup frame despite the current completion title; it is not used as final
-pose evidence. A separate bounded positive launch of the same binary supplied
-the retained, ready final canvas. These operator observations are retained in
+visual runs exit 0. The refreshed negative CUA call opened the failed diagnostic window, then a
+local REPL variable assignment raised a binding error after the launch. It
+was not replayed. Fresh raw state and the actual child exit independently
+verified execution. During the predecessor session a window screenshot had
+exposed a startup frame despite the completion title. The retained final
+canvas therefore uses the existing product capture callback after readiness;
+a separate bounded visual launch was repeated for this refreshed binary.
+These operator observations are retained in
 [native execution](probe/results/native-execution.json).
 
 Independent comparator controls cover wrong clip/time/pose, missing bones and
 skin instances, changed Work revision/types/content, root double application
 and scale, wrong ancestors, wrong joint order, perturbed inverse binds,
 nonfinite values and quaternion sign equivalence. Their synthetic fixtures
-are not runtime captures. Three packaging controls pass normally and with
-Python `-O`, including exact removal of log-parent creation causing the real
-generated launcher to fail, then restored-green. Packaging uses a fake
+are not runtime captures. Nine packaging controls pass normally and with
+Python `-O`: three native controls and six Web preparation controls. Native
+controls include exact removal of log-parent creation causing the real
+generated launcher to fail, then restored-green. Web controls cover explicit
+pinned-tool selection, custom paths containing spaces, missing tools or Wasm,
+wrong tool version and failed version probes before staging. Packaging uses a fake
 executable and cannot count as renderer evidence. See
 [staging controls](probe/results/staging-controls.json).
 
@@ -140,10 +147,61 @@ quality validation, generalized rigs, physical human trials, and the separate
 unassisted Alpha trial are **NOT-RUN**. There was no inference, model-cache
 access, retargeting change, asset replacement or performance claim.
 
+
+## Portable preparation refresh and predecessor comparison
+
+The reviewed predecessor is commit
+`e9a5ef1bcf907c7e412f968a151372bfe111fee3`. Its raw data, images, source/hash
+records, app binaries and served Web files were preserved privately before
+changing the preparation helper. The helper now requires an explicit existing
+`--wasm-bindgen` executable reporting exactly `wasm-bindgen 0.2.129`. It also
+accepts explicit `--wasm` and `--stage` paths. Missing or wrong tools fail
+before staging; no installation or download is attempted.
+
+A complete normalized reproduction command is:
+
+```sh
+WASM_BINDGEN=/path/to/existing/wasm-bindgen
+python3 experiments/49-runtime-pose-parity/probe/prepare_web.py --wasm-bindgen "$WASM_BINDGEN" --wasm .work/runtime-pose-build/wasm32-unknown-unknown/debug/nvwa_runtime_pose_probe.wasm --stage .work/runtime-pose-web-portable
+```
+
+The executable path is a caller-supplied parameter, not literal captured argv.
+[Preparation evidence](probe/results/web-preparation.json) binds the actual
+tool version and SHA256; actual argv is retained privately. Cargo snapshot
+receipts bind the changed Python sources as well as Rust/Cargo inputs. The
+post-build README URL clarification is current documentation, not a compiled
+snapshot input; both final cohort `files` maps include its current hash.
+
+The stage must be opened with the complete production Work query:
+
+```text
+http://127.0.0.1:9204/?work=works/genuine44-calibrated47.nvwa.json
+```
+
+Root initially opened bare localhost 9204. That selects the normal default
+fixture, whose GLB is absent from this narrow stage, and produced zero samples
+with `Asset byte load failed: Path not found: assets/fixtures/nvwa-humanoid.glb`.
+That operator entrypoint error is retained privately and is separate from the
+valid explicit-Work run. It supports no broad failure-path conclusion. Root
+then used the exact URL above, observed all seven samples and downloaded the
+actual JSON and canvas PNG from owned tab 8. Root closed that tab. The worker
+verified the download/copy hashes, ran both comparisons and viewed the image.
+See [Web execution](probe/results/web-execution.json).
+
+The [raw recapture audit](probe/results/recapture-diff.json) uses typed recursive
+JSON comparison, including parsed float bits, without alignment or field
+normalization. New native, visual-native and negative raw files are byte
+identical to the preserved predecessor. Web raw differs only in its seven
+frame counters, each increasing by one (9..21 to 10..22 at step 2). Every local
+TRS, global matrix, inverse bind, ordered skin binding and other raw field
+remains exact. Web canvas bytes are also identical. Native canvas bytes differ;
+no pixel-parity claim is made. All numerical conclusions and the quality HOLD
+remain unchanged.
+
 ## Cleanup and reproduction
 
-The owned native renderers exited. The fresh Web diagnostic tab was closed,
-and its bounded localhost 9204 server was stopped. The pre-existing 9201 and
+The owned native renderers exited. Root closed refreshed diagnostic tab 8,
+and the bounded localhost 9204 server expired and has no listener. The pre-existing 9201 and
 9203 server processes remained live and were not changed. Existing Alpha
 browser state was not exposed in this worker's IAB session; no claim is made
 that an old tab was still active. No old tab was navigated, reloaded or edited.
@@ -157,7 +215,7 @@ python3 experiments/49-runtime-pose-parity/offline/run_controls.py
 python3 -O experiments/49-runtime-pose-parity/offline/run_controls.py
 python3 experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/native.json
 python3 experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/web.json
-python3 -m unittest discover -s experiments/49-runtime-pose-parity/probe -p test_native_staging.py
+python3 -m unittest discover -s experiments/49-runtime-pose-parity/probe -p 'test_*staging.py'
 ```
 
 The [probe guide](probe/README.md) documents separately granted runtime

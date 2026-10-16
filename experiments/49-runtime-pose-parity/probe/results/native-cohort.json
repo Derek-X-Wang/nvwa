@@ -1,10 +1,10 @@
 {
   "artifact": {
-    "bytes": 155981080,
+    "bytes": 155980968,
     "name": "nvwa-runtime-pose-probe",
-    "sha256": "50df11076d8293b95d5c6c09327cf7a45cf061a02eaec2aee0393c16a7c30714"
+    "sha256": "6441b4f0ad6f6e4c4239a95decf22abc063e5a08adf9130d75ceed4d576df0a4"
   },
-  "build_run_id": "run_3b64732e2a93d8f84752d8bb4c69588f",
+  "build_run_id": "run_cf97b06347aa8fd58bfd4669a2f330ae",
   "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
   "files": {
     "Cargo.lock": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
@@ -41,16 +41,17 @@
     "experiments/48-genuine-fixture-work/artifacts/genuine44-calibrated47.nvwa.json": "7668eb7a2a2f87070500cbf49fa27d6794aa1fb83f5392b75a0ff51667cde779",
     "experiments/49-runtime-pose-parity/probe/Cargo.lock": "d95d4795a895bac0f5001c2ddef180997b87dafefc122e2043d92fcd4265ab07",
     "experiments/49-runtime-pose-parity/probe/Cargo.toml": "3b602cc4220198a788f8ea96c9bf47b437572e95cd6005146f32066b57643fa3",
-    "experiments/49-runtime-pose-parity/probe/README.md": "7cd3c0d085b02878ff2f3b6427ccfd3b466caafe00a5ab964dba3fefc64b9119",
+    "experiments/49-runtime-pose-parity/probe/README.md": "a43bc0b4dc9e7cfcb92280973d5a72d2954970f1073a54cd43075e5f98b101bc",
     "experiments/49-runtime-pose-parity/probe/SCHEMA.md": "22a470d805eb36d93a65e369fc8486356c71ee13ba5dae88ad323209cf466d97",
     "experiments/49-runtime-pose-parity/probe/build.py": "95716914b9d7e250bd46b0cbc70454c844b3f83c208bcc7dcee2d7829aba8316",
     "experiments/49-runtime-pose-parity/probe/prepare_native.py": "689b5687fbe5c6a12454307187c3cbdb462f14fae6ac35fa4132446531be3188",
     "experiments/49-runtime-pose-parity/probe/prepare_negative.py": "374b630ff4ac8029d43b053676e0bff6ce16fabd7d969a5b984b1b857132bd2c",
-    "experiments/49-runtime-pose-parity/probe/prepare_web.py": "137e1271ecb425020c9c4aab4b7bed5bd89fac9ad9aa8e92e7409af9d3aec31c",
+    "experiments/49-runtime-pose-parity/probe/prepare_web.py": "4f0c86319321cb67ee15ee5c30a6767249191519076d02ee49c5d1a6ae83de29",
     "experiments/49-runtime-pose-parity/probe/record_cohort.py": "11fec0c94aab5e43e5c53fec4f17974f714a95017e6b7dd547f86c1d44c89661",
     "experiments/49-runtime-pose-parity/probe/src/lib.rs": "223f991e3ebb28f5a8f98e61a2a29b19a25d66382d4941d3b4c8a549ae11257a",
     "experiments/49-runtime-pose-parity/probe/src/main.rs": "ce58e85cbdac887b9ef0745a8be42d096d6b8328a50d6ebbbec50ec729450a0f",
     "experiments/49-runtime-pose-parity/probe/test_native_staging.py": "278ef2b9bf2a221ab7dd556022377695ea96c3442805815f680e49fd838b20fa",
+    "experiments/49-runtime-pose-parity/probe/test_web_staging.py": "036ae8d89294d394bc3aecb8955e6c2f43984cdc2e16e546bd9286fdef998ef9",
     "rust-toolchain.toml": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7"
   },
   "platform": "native",
@@ -58,9 +59,9 @@
   "schema_version": 1,
   "snapshot_build": {
     "artifact": {
-      "bytes": 155981080,
+      "bytes": 155980968,
       "name": "nvwa-runtime-pose-probe",
-      "sha256": "50df11076d8293b95d5c6c09327cf7a45cf061a02eaec2aee0393c16a7c30714"
+      "sha256": "6441b4f0ad6f6e4c4239a95decf22abc063e5a08adf9130d75ceed4d576df0a4"
     },
     "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
     "command": [
@@ -75,7 +76,7 @@
       "--bin",
       "nvwa-runtime-pose-probe"
     ],
-    "duration_seconds": 26.870469,
+    "duration_seconds": 30.728909,
     "exit_code": 0,
     "platform": "native",
     "rustc": "rustc 1.95.0 (59807616e 2026-04-14)\nbinary: rustc\ncommit-hash: 59807616e1fa2540724bfbac14d7976d7e4a3860\ncommit-date: 2026-04-14\nhost: aarch64-apple-darwin\nrelease: 1.95.0\nLLVM version: 22.1.2",
@@ -119,14 +120,15 @@
       "experiments/49-runtime-pose-parity/probe/index.html": "043e744bf61dae564cd730c1da3372f115ba3d9f392b7e5fb6d4e57951636844",
       "experiments/49-runtime-pose-parity/probe/prepare_native.py": "689b5687fbe5c6a12454307187c3cbdb462f14fae6ac35fa4132446531be3188",
       "experiments/49-runtime-pose-parity/probe/prepare_negative.py": "374b630ff4ac8029d43b053676e0bff6ce16fabd7d969a5b984b1b857132bd2c",
-      "experiments/49-runtime-pose-parity/probe/prepare_web.py": "137e1271ecb425020c9c4aab4b7bed5bd89fac9ad9aa8e92e7409af9d3aec31c",
+      "experiments/49-runtime-pose-parity/probe/prepare_web.py": "4f0c86319321cb67ee15ee5c30a6767249191519076d02ee49c5d1a6ae83de29",
       "experiments/49-runtime-pose-parity/probe/record_cohort.py": "11fec0c94aab5e43e5c53fec4f17974f714a95017e6b7dd547f86c1d44c89661",
       "experiments/49-runtime-pose-parity/probe/src/lib.rs": "223f991e3ebb28f5a8f98e61a2a29b19a25d66382d4941d3b4c8a549ae11257a",
       "experiments/49-runtime-pose-parity/probe/src/main.rs": "ce58e85cbdac887b9ef0745a8be42d096d6b8328a50d6ebbbec50ec729450a0f",
       "experiments/49-runtime-pose-parity/probe/test_native_staging.py": "278ef2b9bf2a221ab7dd556022377695ea96c3442805815f680e49fd838b20fa",
+      "experiments/49-runtime-pose-parity/probe/test_web_staging.py": "036ae8d89294d394bc3aecb8955e6c2f43984cdc2e16e546bd9286fdef998ef9",
       "rust-toolchain.toml": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7"
     },
-    "started_utc": "2026-10-16T04:11:55.183606+00:00",
+    "started_utc": "2026-10-16T04:41:38.365506+00:00",
     "status": "complete"
   },
   "snapshot_matches_current": true

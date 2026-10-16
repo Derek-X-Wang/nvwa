@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "experiments/49-runtime-pose-parity/probe/prepare_web.py",
+    "--wasm-bindgen",
+    "$WASM_BINDGEN",
+    "--wasm",
+    ".work/runtime-pose-build/wasm32-unknown-unknown/debug/nvwa_runtime_pose_probe.wasm",
+    "--stage",
+    ".work/runtime-pose-web-portable"
+  ],
+  "command_representation": "normalized reproduction command; $WASM_BINDGEN is a caller parameter, not literal captured argv; actual executable is bound by tool SHA/version and actual argv is retained privately",
+  "downloads_or_installs": false,
+  "exit_code": 0,
+  "preparation_duration_seconds": 28.259173959027976,
+  "schema_version": 1,
+  "tool_selection": "explicit --wasm-bindgen caller argument; no embedded machine path",
+  "tool_sha256": "6ad2f953d8abcb36d6b084df221fb2f0716217854c1b8df938aa2f5678d1b948",
+  "tool_version": "wasm-bindgen 0.2.129"
+}

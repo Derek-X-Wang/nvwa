@@ -140,6 +140,9 @@ rendering, compilation or asset replacement was performed.
   aliases. Prediction-field names now describe the existing policy.
 - `adaptation-receipt.json`: private predecessor hashes, exact alias/field-change
   rules and digest of all3330 unchanged numeric leaves.
+- `capture-rebind.json`: prior/current capture identities, actual frame counters,
+  preserved pre-rebind attribution manifest and exact numerical comparisons. Native
+  capture/golden bytes remain unchanged; rebuilt Web capture bytes are newly bound.
 - `input-pins.json`: repository input/capture identities.
 - `verification.json`: normal/optimized native and Web reproductions, optional
   existing-cache audit and11 port controls. The original four numeric controls
@@ -153,3 +156,12 @@ when `--source-cache` is supplied. Capture schema/key/type, input pin, missing
 cache, output protection and exact retained-sample reproduction controls pass
 normally and under`-O`. Numeric matching does not clear quality HOLD or authorize
 a correction.
+
+The capture rebind preserves the complete previously reviewed attribution privately.
+Current Web source SHA256 is
+`161442516dfb5d62476b3f3b2ab52f7b2b9f44a7177bcb2ae5ac978208f52e5f`,
+with actual frames10/12/14/16/18/20/22. All3330 numerical leaves retain digest
+`c564ad7a421adacc7e18515a5eaf1f1d41d7f992cb874a21dcc083779196d7f4`.
+Both fresh reproductions match the preserved sample values exactly. The168
+native/Web GLB-node comparisons have zero local/global component difference.
+This is a new capture-provenance binding, not a relabeling of old raw observations.

@@ -44,3 +44,28 @@ result and child process exit code are retained separately; no user Work is read
 or saved. Native launchers record the actual child OS exit code under ignored
 `.work/runtime-pose-logs`. Packaging controls use a clearly fake executable and
 do not count as runtime evidence.
+
+Web preparation requires an explicit existing tool, pinned to `wasm-bindgen
+0.2.129`. No machine-specific path is embedded. Supply the installed tool and
+owned artifact/stage paths; no install or download is attempted:
+
+```sh
+python3 experiments/49-runtime-pose-parity/probe/prepare_web.py --wasm-bindgen "$WASM_BINDGEN" --wasm "$PROBE_WASM" --stage "$PROBE_STAGE"
+```
+
+`WASM_BINDGEN` names the existing executable, `PROBE_WASM` names the already-built
+Cargo Wasm artifact, and `PROBE_STAGE` names an owned static-site directory.
+Missing executables, failed version probes, versions other than exactly
+0.2.129, and missing Wasm inputs fail before creating the stage. Fake-tool
+packaging controls test those boundaries and explicit paths containing spaces.
+
+After serving the owned stage on the reserved free diagnostic port9204, open
+this exact entry URL so the production loader opens the staged genuine Work:
+
+```text
+http://127.0.0.1:9204/?work=works/genuine44-calibrated47.nvwa.json
+```
+
+The `?work=` query is required for this narrow stage. A bare URL selects the
+normal default fixture, whose GLB is deliberately absent from this stage.
+That operator entrypoint error is not generated-motion evidence.

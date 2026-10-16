@@ -66,6 +66,8 @@ jobs:
           python3 -B experiments/49-runtime-pose-parity/offline/test_evaluator.py
           python3 -B -O experiments/49-runtime-pose-parity/offline/test_evaluator.py
           python3 -B experiments/49-runtime-pose-parity/probe/test_native_staging.py
+          python3 -B experiments/49-runtime-pose-parity/probe/test_web_staging.py
+          python3 -B -O experiments/49-runtime-pose-parity/probe/test_web_staging.py
           # Verify retained captures; hosted CI does not collect new GPU poses.
           python3 -B experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/native.json
           python3 -B experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/native-visual.json
