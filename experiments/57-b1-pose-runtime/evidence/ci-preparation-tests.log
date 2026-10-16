@@ -1,0 +1,24 @@
+setUpClass (test_prepare_ci.PortablePreparation) ... ERROR
+
+======================================================================
+ERROR: setUpClass (test_prepare_ci.PortablePreparation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/test_prepare_ci.py", line 11, in setUpClass
+    cls.temp=tempfile.TemporaryDirectory();cls.base=Path(cls.temp.name);module_path=ROOT.parent/'59-b1-ci-inputs/prepare_ci_inputs.py';spec=importlib.util.spec_from_file_location('b1_ci_inputs',module_path);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);cls.seed=cls.base/'seed';module.prepare(cls.seed)
+                                                                                                                                                                                                                                                                                                                     ~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/59-b1-ci-inputs/prepare_ci_inputs.py", line 106, in prepare
+    return extract_verified(archive_path.read_bytes(), json.loads(manifest_bytes), output)
+  File "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/59-b1-ci-inputs/prepare_ci_inputs.py", line 49, in extract_verified
+    output = safe_new_output(output)
+  File "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/59-b1-ci-inputs/prepare_ci_inputs.py", line 43, in safe_new_output
+    require(not ancestor.is_symlink(), "output symlink or symlink ancestor rejected")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/59-b1-ci-inputs/prepare_ci_inputs.py", line 22, in require
+    raise InputError(message)
+b1_ci_inputs.InputError: output symlink or symlink ancestor rejected
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.010s
+
+FAILED (errors=1)

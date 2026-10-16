@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "status": "reference_validation_passed",
+  "syntax_checked": [
+    "freeze_reference.py",
+    "pose_reference.py",
+    "prepare_resources.py"
+  ],
+  "post_run_source_audits": {
+    "mpfb-extraction-receipt.json": {
+      "receipt_sha256": "b98b80d6b0430e4e9c2f66446533482d2c1f0cc76d78e9ace9c042923cd4a150",
+      "file_count": 2422,
+      "post_run_hashes_unchanged": true
+    },
+    "system-garment-extraction-receipt.json": {
+      "receipt_sha256": "7315144b1bd67b57822eddc352201966d105fd80e23b042a279b4123aba63480",
+      "file_count": 6,
+      "post_run_hashes_unchanged": true
+    }
+  },
+  "executed_exit_codes": {
+    "blender_probe1": 0,
+    "blender_run1": 0,
+    "freeze1": 0
+  },
+  "logs": {
+    ".work/b1-pose-reference/probe1.log": {
+      "sha256": "9fbf3c930072324a42a127b8b34ec88ea75a66a4cc07ff7d468f2585089c58af",
+      "bytes": 9429
+    },
+    ".work/b1-pose-reference/run1.log": {
+      "sha256": "a8695889fad598da91106c92c14ca774efb36804f37e74f98cabd4bf13b73ada",
+      "bytes": 57990
+    },
+    ".work/b1-pose-reference/freeze1.log": {
+      "sha256": "c50d801f5cf85efe73438520bc0ef1da5bcf5c3323f0af32d33ffc4481c26a0f",
+      "bytes": 1305
+    }
+  },
+  "owned_blender_processes_remaining": [],
+  "retained_private_artifacts": {
+    "directory": ".work/b1-pose-reference",
+    "reason": "parent/runtime worker comparison, independent review, and reproducibility",
+    "owner": "root"
+  },
+  "wefty": "not_used; full Blender command45.934s below five-minute threshold",
+  "gpu": "NOT-RUN; CPU depsgraph only"
+}

@@ -1,0 +1,39 @@
+{
+  "scope": "captured actual executable output and tampered expectation through exact CI comparator; no compiled mutant claim",
+  "mutations": [
+    {
+      "fault": "tampered-expectation",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "wrong-bone-order",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "omitted-deformation",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "wrong-gauge",
+      "rejected": true,
+      "error": "sampled geometry/matrix/oracle gate failed: body"
+    },
+    {
+      "fault": "missing-bone",
+      "rejected": true,
+      "error": "bone coverage mismatch"
+    },
+    {
+      "fault": "nonfinite-matrix",
+      "rejected": true,
+      "error": "nonfinite matrix"
+    }
+  ],
+  "restored_passed": true,
+  "status": "sampled_comparator_controls_pass",
+  "comparator_sha256": "0950a83e31004b5319d3d2c24bd1c951ae21090887949d547407b83ae459ac58",
+  "candidate_sha256": "33418e0d430f8c3984a05d3d0db8822d6b81d76783694d48e09c82049b6e0fbe"
+}

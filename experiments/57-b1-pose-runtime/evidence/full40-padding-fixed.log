@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/compare_all.py", line 21, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ~~~~^^
+  File "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/compare_all.py", line 10, in main
+    frozen=json.loads(manifest.read_text());execution=json.loads((a.results/'summary.json').read_text());assert execution['status']=='actual_candidate_executed' and execution['common_sha256']==COMMON and execution['poses_sha256']==POSES
+                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Applications/Blender.app/Contents/Resources/5.2/python/lib/python3.13/pathlib/_local.py", line 546, in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Applications/Blender.app/Contents/Resources/5.2/python/lib/python3.13/pathlib/_abc.py", line 632, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Applications/Blender.app/Contents/Resources/5.2/python/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'experiments/57-b1-pose-runtime/results/padding-fixed1/summary.json'

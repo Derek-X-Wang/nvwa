@@ -1,0 +1,686 @@
+{
+  "schema_version": 1,
+  "owner": "57 runtime worker",
+  "only_changed_root": "experiments/57-b1-pose-runtime",
+  "files": [
+    {
+      "path": "experiments/57-b1-pose-runtime/.gitignore",
+      "sha256": "5b892fac634cc5f13f8f9f63115e0373c62174410efe25d33b808b43d19df17d",
+      "bytes": 72
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/API.md",
+      "sha256": "807e59a8ed6d5d6947f932d20b351c1f832502f20b85438fa6cb80b9e2bb4f0a",
+      "bytes": 4420
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/README.md",
+      "sha256": "8b90c1b2bf538997e66c2bbbf6e2fc020b7cfbec7acc2f5513a3673a51e8edae",
+      "bytes": 11388
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/REPORT.md",
+      "sha256": "e5b5b524ba9902e64bea5b724d87eaf8620bf2709673b88ead87c1c3ad0aaa75",
+      "bytes": 11234
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/adapter/Cargo.lock",
+      "sha256": "c2d9afc73c41b0cae94c4b9819b9afce8ec3ee494226c97c54d96fd843e78039",
+      "bytes": 90709
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/adapter/Cargo.toml",
+      "sha256": "dc9d54eb1fbe61c328ea70857fd57d3129686f1803f11af48c2555d61a1b0920",
+      "bytes": 795
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/adapter/src/lib.rs",
+      "sha256": "cf130be4e01f869a95b84d088fdf3c8ba9aa2f7dc89b63ec4056eae286aacb8b",
+      "bytes": 16629
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/adapter/src/main.rs",
+      "sha256": "3d368d39d8a479ec3a967c199e982c6fe0ec522dc4d3a1ed88f2a8d164ebee1c",
+      "bytes": 11369
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/adapter/tests/sampled.rs",
+      "sha256": "e01b06ac000c8b19e8b27c634a7b239c546462b2d2d6879d52f5e51768f16079",
+      "bytes": 1264
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/build.py",
+      "sha256": "2d32cf3983a2c70d52322c042aa704a05b3ea49b8d79560542d0dc8dd013e52a",
+      "bytes": 1278
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/compare.py",
+      "sha256": "0fcbeda79d029fbb67d1f8962834a9ec03fe6c094a0fcf2817487ad5f678b9ae",
+      "bytes": 10506
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/compare_all.py",
+      "sha256": "43bb83b9bd78fa82f0c5178fd0004fe71bc6b9fa97e8e73218aef134e632a76c",
+      "bytes": 2607
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/diagnose_rest.py",
+      "sha256": "9cd4636995e7ceec1cb85236dc629fd9181d22f2df8412bc9a3ec93e7957c977",
+      "bytes": 3060
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/55-preservation.json",
+      "sha256": "fc0320febb4d69c014b05a8ca8bca239564d239ce54263fbba4b238b823c37ce",
+      "bytes": 509
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/api-comment-correction.json",
+      "sha256": "83247612255dce26ac51c827372255997ce6497e8325caf6c8ccecdf4c294d17",
+      "bytes": 766
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-01.log",
+      "sha256": "bb7d36d8be08614aefc1f980aba08afa578242f6df5b6592bd99b7cdfe10830a",
+      "bytes": 650
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-02.log",
+      "sha256": "aefe12950b9e1fae1a7c42ac71eaaa3c82fad3fcd308acc6b799062bb3cdc31c",
+      "bytes": 207
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-03-padding.log",
+      "sha256": "eb7fc2873e23b828f9ac645f51c359a0e8011d850a1f19e2e8765b948634aa1e",
+      "bytes": 349
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-04-gauge.json",
+      "sha256": "5e533c3af4500cd3daf7dc6904f5dce893a740ba09881bbcf6be5383ccff8575",
+      "bytes": 712
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-04-gauge.log",
+      "sha256": "fecee88aa2f666c379c6b4d01c2b1b1ac520edb8ccfa4f649460b63cf373cf5d",
+      "bytes": 349
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-05-full-weights.json",
+      "sha256": "7c558b8e426a7d71dcb73bd6c89956bb9c851058b57cfe97bcb0dca5129da76b",
+      "bytes": 627
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-05-full-weights.log",
+      "sha256": "b0ac38a847007e800cb27d98b572a3f9fc64ccfcbe5316117e179f1fba1ffae1",
+      "bytes": 838
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-06-full-weights.json",
+      "sha256": "f5bb47c027b79230ba0b490c75e2a5547aa74e15e9a3c2e80eea1d4ef136e474",
+      "bytes": 628
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-06-full-weights.log",
+      "sha256": "d8bc11e464e266e27fcdce86c772037a8e4b6f80aa7f078cab56960e0684c1fc",
+      "bytes": 761
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-07-full-weights.json",
+      "sha256": "9f681f2345e12a27adb4df6531e05ec0054ccd618bbc4cfd3cfa680a06229b36",
+      "bytes": 628
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-07-full-weights.log",
+      "sha256": "d8bc11e464e266e27fcdce86c772037a8e4b6f80aa7f078cab56960e0684c1fc",
+      "bytes": 761
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-08-full-weights.json",
+      "sha256": "845d17ec738cdad7acee99178ccbae1f8d71f62b6ace65562aea4755966fa09d",
+      "bytes": 711
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-08-full-weights.log",
+      "sha256": "2aee57f9cb80adbf2bf96f5752c50dea759829b92f163e7b433f04b7845d81af",
+      "bytes": 349
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-09-api-comment.json",
+      "sha256": "7f12c54b911e762f04da2d805f80f83cac8cca8658483fe902b51e73addbc8e9",
+      "bytes": 712
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-09-api-comment.log",
+      "sha256": "713cf35f5e2e00bd485e39d5be7dcdb89d44f81bc27a6317f1c162e2a3018e8f",
+      "bytes": 207
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/build-history.json",
+      "sha256": "2bbdee725a6a3d56d0ee52b816f5871a0b7f13498d9ac1135af04f2ec50abc26",
+      "bytes": 1387
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/ci-missing-seed.log",
+      "sha256": "863eb23b6a0cb7f16ba02a9fecc1b81b2805735a0a267ed459ec9a0761f2e5af",
+      "bytes": 956
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/ci-preparation-tests-02.log",
+      "sha256": "ade62754ae5723805d2ba96e71e297ebbad3be61e114405bdf08682129738a64",
+      "bytes": 552
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/ci-preparation-tests-final.log",
+      "sha256": "0021df3eaf8b4bb3afc91bf280b7d8067f73913fba28a57d949c0652a4f36219",
+      "bytes": 552
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/ci-preparation-tests-frozen.log",
+      "sha256": "85aa0f4598dad141b78d49eb1c39e54408180d9723f8619e6ec288c6e5bc5fea",
+      "bytes": 552
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/ci-preparation-tests.log",
+      "sha256": "26d34bd5a0e07f8acd6835d954889e985c21bf4488b3082db24de152eb07565f",
+      "bytes": 2240
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/ci-preparation.json",
+      "sha256": "f538b63df395e0a03400033d5d680bc5666b813262b5e6189777cffdeae89ce8",
+      "bytes": 1368
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/ci-preparation.log",
+      "sha256": "7cb2574bcc04347b595a2e64d9bd7fb1116b2d55185aae2502098525a09f14da",
+      "bytes": 1318
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/final-current40-compare.log",
+      "sha256": "f9f110b2032c24ed97948173502bb90d41047a40bcfa3fe6c563efb19fc5c671",
+      "bytes": 3610
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/final-current40-execution.json",
+      "sha256": "28ff3b0367cb7bff0c51dd8a0f5a64b12197d6a4e24de580b9d6cfd46990ef9a",
+      "bytes": 10997
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/final-current40-run.log",
+      "sha256": "921670b933588d694b99f4a0af0dbb6810a9953011e5278c7ad263e51b5eb5e6",
+      "bytes": 125
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/final-current40.json",
+      "sha256": "2708cb30cf92dce9c7a07bd4c1496c55c2584b8c49ac50c2fe719d4f7ec344e5",
+      "bytes": 364455
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/four-slot40-repaired.json",
+      "sha256": "d9e9f9f136288dd599a10fec18a5c18174ff0dd3deb3a933c1b0b129dafb055d",
+      "bytes": 300863
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/four-slot40-repaired.log",
+      "sha256": "511d0c918e3d1b09fe3aa696849abb256ef46527c9147c76fe17c9105fad06f8",
+      "bytes": 3654
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight-body-positive-probe.json",
+      "sha256": "7690271875627aebdd356cf1a91577dff706eacf60878dd88609dba5839b5776",
+      "bytes": 7902
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight-body-positive-probe.log",
+      "sha256": "33c7da22e64191cdf36566ff35d0f7234744f561b0ba03cf3699be9b15618971",
+      "bytes": 5890
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight-neutral-probe.json",
+      "sha256": "a9b8df329c7692aa1e1f17d8d4918fae61f683557b8572e640851280eb8b702a",
+      "bytes": 7922
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight-neutral-probe.log",
+      "sha256": "adc2bd4f4363024070d5bcabaa773b4c11eea3ee910f9eed42ed2f49da9f93c5",
+      "bytes": 5910
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight-probe-run.log",
+      "sha256": "3c2ffd9bc82694d5b1af227cbd2f1d48029ab62b82162c638c5ab464963aab9f",
+      "bytes": 30
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight40-02.log",
+      "sha256": "ae790445a4f882cb74625a28a11cfb327abaebc629bcaea86e31fe2770101a09",
+      "bytes": 3406
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight40-repaired.json",
+      "sha256": "2f981d5cb62cc4dae71a418e9db5cecb1a3b22afa4799245a9bc8a384a2e714e",
+      "bytes": 364275
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight40-repaired.log",
+      "sha256": "f9f110b2032c24ed97948173502bb90d41047a40bcfa3fe6c563efb19fc5c671",
+      "bytes": 3610
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight40-run.log",
+      "sha256": "921670b933588d694b99f4a0af0dbb6810a9953011e5278c7ad263e51b5eb5e6",
+      "bytes": 125
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight40.json",
+      "sha256": "8ab6db6a351c1ddd8a71333a29c049294c0b58b688eacc1d5e2c5efe8fe79c0f",
+      "bytes": 356649
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full-weight40.log",
+      "sha256": "243defbaf701a7a50c4ea1112bee6eaf6235984c6934d353fc31349dff94c419",
+      "bytes": 1684
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-adapter-manifest.toml",
+      "sha256": "40bdb921bd39a8ac5c47246d141c766f4657614d22b0bbc418dbdf92ebee9005",
+      "bytes": 857
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-adapter-source/Cargo.lock",
+      "sha256": "c2d9afc73c41b0cae94c4b9819b9afce8ec3ee494226c97c54d96fd843e78039",
+      "bytes": 90709
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-adapter-source/Cargo.toml",
+      "sha256": "40bdb921bd39a8ac5c47246d141c766f4657614d22b0bbc418dbdf92ebee9005",
+      "bytes": 857
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-adapter-source/src/lib.rs",
+      "sha256": "50b59d75ba293e80160bf301f721711295a71cf39a4fdc52981631dd6b5bfa63",
+      "bytes": 13807
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-adapter-source/src/main.rs",
+      "sha256": "daee1effb4b4b19612aacc4e9694c1bbff857e577d387a25ec8509846e9bb5ae",
+      "bytes": 9675
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-final.json",
+      "sha256": "d873116d7d4a5611744faa0b03bdbd99c9919c8bd7d8b5d17221ace69c5ea1d8",
+      "bytes": 236632
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-final.log",
+      "sha256": "f828ae11e4ee9940f10e2842ed3267cc965d2acf04990b5f42dbf41e8982c135",
+      "bytes": 3450
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-padding-fixed-02.log",
+      "sha256": "f828ae11e4ee9940f10e2842ed3267cc965d2acf04990b5f42dbf41e8982c135",
+      "bytes": 3450
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-padding-fixed.json",
+      "sha256": "6e27093d43182183dd6f47a377336971cbc78e1218337953bfee15a327f4f004",
+      "bytes": 236632
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/full40-padding-fixed.log",
+      "sha256": "51b2ad8bfb94156d5f21d48c2d759e742fce05d5b4a423156b42cf8c0bbbf081",
+      "bytes": 1685
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gate-freeze-post-comment.json",
+      "sha256": "7a180bd2508d15434ecf3a91d89f26398685dc7c2b7ab3ecfc1677ce7fabf283",
+      "bytes": 1968
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gate-freeze.json",
+      "sha256": "11d60c5bbb19eb15d797efa732ed844a0ef416318c9313594df1889db435cfb9",
+      "bytes": 3335
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gauge-body-positive.log",
+      "sha256": "c7095732636834ff8be3e186a0d72581698db71bdce8396769cf67d259a45441",
+      "bytes": 352
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gauge-controls-final.log",
+      "sha256": "8e2a191ff9c8b690732821440d0dfb52941667c9a5ee3b7efae1afd255ec7b6b",
+      "bytes": 3492
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gauge-controls-repaired.log",
+      "sha256": "41e510a6ef3cda3af5d32e6efe2f40b8635717050f32b53ab8fe9fed128c3fa0",
+      "bytes": 7707
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gauge-controls.json",
+      "sha256": "dd817a598c1bb9c4df9bf8cc996e6e077370d9d99aaab1558ffa1850d88591bf",
+      "bytes": 11027
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gauge-controls.log",
+      "sha256": "3f5de2fac55c39b2c3c3a893973a4c59b4196ad4661aca1883605742aae76ec2",
+      "bytes": 3492
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gauge-probe.json",
+      "sha256": "565e63daef6e99a53ef6f7ba14160f4f2272c9e404d843e454e15c59e51be4ef",
+      "bytes": 7585
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/gauge-probe.log",
+      "sha256": "7584f374d499f813d13ed962f783d7d31b910072caa61cb9c07b75bf06ac34d9",
+      "bytes": 5627
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/idempotence.json",
+      "sha256": "ebefcc333e9f421e26f43ae7ea09f3fa078d5ea51b04d24003b0e3a363e4d25a",
+      "bytes": 460
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/idempotence.log",
+      "sha256": "8d0182d8bf54c7b7ad45b0f09b81cf69960113cec91c5b547f40d829558681ee",
+      "bytes": 266
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/inventory-before-api-comment.json",
+      "sha256": "6d526579e8507f98bfd7319fe905584813d160c20f15e9b2263c1a39d4583fe0",
+      "bytes": 24506
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/missing-target.json",
+      "sha256": "1039fdf66a7fea07ad1d7133aeecd90ec99bb10e5b158d9d47e843002614a711",
+      "bytes": 628
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/missing-target.log",
+      "sha256": "38ae69e29bc68d21e54d3c7887f8099d16aacf48027987d96003a85626cb5f11",
+      "bytes": 23
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/mutation-controls-final.log",
+      "sha256": "50c40c71288433f80c49d80d8d3d5d04196b59e927ddc09d3a1cd79eec211287",
+      "bytes": 1654
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/mutation-controls.json",
+      "sha256": "cb346ec6a1e8de56d85149fab124f33b9221ec974b5ff38faeafd375a6fe2890",
+      "bytes": 2210
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/mutation-controls.log",
+      "sha256": "4bede38f87031080c8926875aefb6c0aeab3b9ec75d57d2c1aca963805d6a4e7",
+      "bytes": 1654
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/omitted-skin.json",
+      "sha256": "4577ab442268f4782abda666be9cdf1eb2b94336e9733501581fb3c3386776f5",
+      "bytes": 5352
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/omitted-skin.log",
+      "sha256": "14166750c45fd3e0cd4b377cbd4a89d48c177865eb38010ed85c87ba54890d1b",
+      "bytes": 4046
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/padding-fixed-probe.json",
+      "sha256": "98cfa7ff4f558462611710dc18ff86273a89c0e01d2edae5855b53fe15faf7b4",
+      "bytes": 5365
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/padding-fixed-probe.log",
+      "sha256": "7575511c7926c0d9c3a2fb64d0b481fcfcc6a469d8619ed72d5835580b3f85cc",
+      "bytes": 4059
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/padding-red.json",
+      "sha256": "36f57bc5b8bb310096a51c0f34637d6a122ce3b912408ac046f89dc2874ea527",
+      "bytes": 949
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/policy-clarification-before-api-comment.json",
+      "sha256": "a284a6b14351b21daee0840f1a66f7459223d17fd818f8ea44f1ac9c2d9a7e91",
+      "bytes": 9300
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/policy-clarification.json",
+      "sha256": "00889e56412931d92623e9c6e777d57c03d55b9478f5781db891b132cb99616d",
+      "bytes": 12507
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/post-comment40-compare.log",
+      "sha256": "f9f110b2032c24ed97948173502bb90d41047a40bcfa3fe6c563efb19fc5c671",
+      "bytes": 3610
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/post-comment40-execution.json",
+      "sha256": "8a7784792d2e4801071190315656a1f7b0978a83885ad534a824bd1928ef29cf",
+      "bytes": 10987
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/post-comment40-run.log",
+      "sha256": "921670b933588d694b99f4a0af0dbb6810a9953011e5278c7ad263e51b5eb5e6",
+      "bytes": 125
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/post-comment40.json",
+      "sha256": "98f6ed39ce53284448a3beaecca9991f04cef8865272694efbf42c31b766a474",
+      "bytes": 364455
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/preparation-final.log",
+      "sha256": "4754fa345452b80f6f8084e57bdd0205dbf1152b5b4666593b69d163ada878a5",
+      "bytes": 910
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/preparation-freeze-final.log",
+      "sha256": "4754fa345452b80f6f8084e57bdd0205dbf1152b5b4666593b69d163ada878a5",
+      "bytes": 910
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/preparation-restored.log",
+      "sha256": "4754fa345452b80f6f8084e57bdd0205dbf1152b5b4666593b69d163ada878a5",
+      "bytes": 910
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/preparation-verified-final.log",
+      "sha256": "47f04b10fd8ae91c9d158b3e9e4a8d89030454ed0670dc68d0e6c948028af1ab",
+      "bytes": 144
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/preparation.json",
+      "sha256": "389cbe5b964df46c1fa77f4e5f1fa64c85015b82f7e8cba4b38f0661e98742f7",
+      "bytes": 798
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/probe1-comparison.json",
+      "sha256": "f27c192cbeae8824b38bc1ec350fabcd2b88d80e1556e65ce64bb271e364dc15",
+      "bytes": 4000
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/probe1-comparison.log",
+      "sha256": "d65e51489f7ea1cb2659d2cf746bb89efbb2b35fb378e4071492cd28cbebd386",
+      "bytes": 3126
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/probe1.log",
+      "sha256": "6b3825df4fbcd2c04dac8fee7f1c056ceacea6541f659f0378ae00146876364a",
+      "bytes": 322
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/probe2.log",
+      "sha256": "6b3825df4fbcd2c04dac8fee7f1c056ceacea6541f659f0378ae00146876364a",
+      "bytes": 322
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/repaired-probe-controls.log",
+      "sha256": "cb311bc28d840d918c76a3d4c18d51e540dd02efb12f1e303b71b944429b4e0d",
+      "bytes": 977
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/rest-frame-diagnosis.json",
+      "sha256": "969c0c4c0fd5ad436a8d40b2f8b7fdcaa393c0d20a9d357dd0367beca01ad7d0",
+      "bytes": 22582
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/rest-frame-diagnosis.log",
+      "sha256": "969c0c4c0fd5ad436a8d40b2f8b7fdcaa393c0d20a9d357dd0367beca01ad7d0",
+      "bytes": 22582
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/run-padding-fixed1.log",
+      "sha256": "921670b933588d694b99f4a0af0dbb6810a9953011e5278c7ad263e51b5eb5e6",
+      "bytes": 125
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-cargo-test-final.log",
+      "sha256": "33f6be308a75485db3124bfe3fa6f894da78ddd80812f378f4aa8d4c75f35983",
+      "bytes": 591
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-cargo-test-restored.log",
+      "sha256": "5970b72c6d845e4d20f53baa74b0c3bd9fb809e4a999e6a1c5738c1f6141a34e",
+      "bytes": 880
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-cargo-test.log",
+      "sha256": "5be85bbb723d7715376d9d7d32d345fa5737ef6a9d39ceeedb32ac3a04114491",
+      "bytes": 1181
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-controls-current.json",
+      "sha256": "730161aa0b0fefc522386d1a937775ce702aa23b51d14c6d8a5b0784315806b0",
+      "bytes": 2360
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-controls-final.json",
+      "sha256": "be2428747e6ac7bcca2349756ca90c9899d0c720746bc96ebedbc8c675fdadf1",
+      "bytes": 1175
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-controls-repaired.json",
+      "sha256": "942b96ad6e6966a23da9194633e94e8f622a9f411bd8c8e965908480a393f0fd",
+      "bytes": 2380
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-controls.json",
+      "sha256": "6084c42134f590e03f57072daad2482d9534eb42dac145fdb59d0c3e53745c6a",
+      "bytes": 1137
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-controls.log",
+      "sha256": "9d586d7dac4af8165ca80d4a8a38ccf49bd84ef2fe3537dd4f096a61932782f8",
+      "bytes": 957
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-restored-binding.json",
+      "sha256": "13c1a074119586a41e9badb206dcd864ad707748f048f4c592c7cd4bfad91797",
+      "bytes": 744
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/sampled-restored.json",
+      "sha256": "c5af8f59e60bbbc18175463ed3e1a5a6b7b2dc41752b23d565bfdbd52d2dcfce",
+      "bytes": 71467
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/weight-diagnosis.json",
+      "sha256": "af273c89849058e4d6c636d9a47f446d85f017bf4003b75ec49dcf52a2c79605",
+      "bytes": 1749
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/wrong-bone-map.json",
+      "sha256": "a2d91982d787576a7ea7074a3a00fc235a2b26e11cb78c1d96df6acc73f3a8a0",
+      "bytes": 5367
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/evidence/wrong-bone-map.log",
+      "sha256": "b61644cf2694ded3a5de213ed89c9f9485ecb299330cb235ea894d6ee84ab3c6",
+      "bytes": 4061
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/gauge_controls.py",
+      "sha256": "9949b59ac527489c82a409bc0d3c9bffc5262bf32fb12cd08877cfd0b67cd820",
+      "bytes": 2028
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/mutation_controls.py",
+      "sha256": "4fce602347dd99fc3eb9a506762d89160107f54acdd28554604223c53e8a473f",
+      "bytes": 2301
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/patches/01-explicit-target-paths.patch",
+      "sha256": "d3421693a716c2ca1073de219d013a2a4727a272534acade27580629b4e4b778",
+      "bytes": 3825
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/patches/02-zero-padding.patch",
+      "sha256": "697ab610b9f63a1a0522d4282a2beda1fd5ea3b9816b76db688c7c5d6e5fe1a5",
+      "bytes": 458
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/patches/03-read-only-rig-data.patch",
+      "sha256": "f3fe7cdb5bbdf5c739669251b8a8742d957e6390de39fcdd507a13ab946abc94",
+      "bytes": 880
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/patches/04-proxy-map-export.patch",
+      "sha256": "5bdc1a9b0ba37149c84fce4ccca57332f85ce0c79c419c290b0204ed92daeb27",
+      "bytes": 794
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/prepare.py",
+      "sha256": "edf225e4b9dd05ca8a8ac951ecf8fe5611ac3838e784901eb2dd6c223d7a7695",
+      "bytes": 2826
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/prepare_ci.py",
+      "sha256": "3743556a42c07ad6a6ba9874618d917f36b98ceb255243d9cd360ae51abd3ab9",
+      "bytes": 3346
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/run_all.py",
+      "sha256": "a865fc97f2c74b8c8b0bf551a68ab8a2ffcd7e590bc3dc7a96cb876b358e276f",
+      "bytes": 2416
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/sampled_controls.py",
+      "sha256": "51436dc9a641df0ef1759d9fb2d037992703c62090d6c18a92265d6549ee1b8b",
+      "bytes": 1878
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/sampled_regression.py",
+      "sha256": "e6225dbb2ff4fffe074b2e69941bb5dc05eeac0ad73109685e438bdfc4942775",
+      "bytes": 9335
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/test_prepare_ci.py",
+      "sha256": "21465d4088d77cf807ff03da8205e979f7865b58a2ffd91dca17298ce0d2d59c",
+      "bytes": 2097
+    },
+    {
+      "path": "experiments/57-b1-pose-runtime/validation.py",
+      "sha256": "20e5e1090f03c06cf1f103645247d89408d911063dfdb7060ad3706492ee6c0a",
+      "bytes": 3880
+    }
+  ],
+  "ignored_retained_roots": [
+    "experiments/57-b1-pose-runtime/derived",
+    "experiments/57-b1-pose-runtime/.deps",
+    "experiments/57-b1-pose-runtime/target",
+    "experiments/57-b1-pose-runtime/results",
+    ".work/b1-pose-runtime"
+  ],
+  "external_writes": false,
+  "git_commits": false,
+  "graphics_executed": false,
+  "other_source_roots_changed": false,
+  "policy_clarification": {
+    "evidence": "evidence/policy-clarification.json",
+    "sha256": "00889e56412931d92623e9c6e777d57c03d55b9478f5781db891b132cb99616d",
+    "algorithm_change": false,
+    "one_line_api_comment_corrected": true,
+    "historical_source_binary_and_capture_receipts_preserved": true
+  },
+  "current_source_binding": "evidence/gate-freeze-post-comment.json"
+}

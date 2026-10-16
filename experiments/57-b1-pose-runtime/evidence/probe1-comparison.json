@@ -1,0 +1,121 @@
+{
+  "status": "FAIL",
+  "candidate_sha256": "27dd0b888e8c3ec4007afbb55d0ad4de5e756ed430a693017b694818c870bb1f",
+  "reference_sha256": "461bad9b1b92acc8f9a655cd7bdd614402caf7943c06333b3ab2edbda31b73ec",
+  "comparator_sha256": "f647898f3918ee75186fde01fc56d2769630a7de98ec356eb8b3e86ad7643f0c",
+  "mutation": null,
+  "measures": {
+    "body": {
+      "candidate_weight_oracle": {
+        "count": 22077,
+        "max_component": 1.693439708461142e-07,
+        "rms_distance": 4.4313243003172545e-08,
+        "tolerance": 1e-05,
+        "passed": true
+      },
+      "full_mpfb_geometry": {
+        "count": 22077,
+        "max_component": 0.08996425569057465,
+        "rms_distance": 0.0032068895096168744,
+        "tolerance": 0.001,
+        "passed": false,
+        "source_count": 19158,
+        "mapped_source_count": 19158,
+        "mesh_count": 22077,
+        "coverage_complete": true
+      },
+      "rest_matrix": {
+        "count": 53,
+        "max_component": 3.680586814880371e-06,
+        "rms_distance": 1.2882870842368522e-06,
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "posed_matrix": {
+        "count": 53,
+        "max_component": 4.0531158447265625e-06,
+        "rms_distance": 1.3809176283162058e-06,
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "joint_heads": {
+        "count": 53,
+        "max_component": 8.940696716308594e-07,
+        "rms_distance": 4.6818536394076495e-07,
+        "tolerance": 1e-05,
+        "passed": true
+      },
+      "normals_tangents": {
+        "present_finite": true,
+        "normal_min_length": 0.999999871509349,
+        "tangent_min_length": 0.9999998768417169,
+        "appearance_acceptance": "NOT-RUN"
+      },
+      "weight_difference": {
+        "source_vertices": 19158,
+        "reference_influences_under_four": 16896,
+        "reference_influences_over_four": 981,
+        "max_l1_normalized_distribution_delta": 0.5,
+        "mean_l1_normalized_distribution_delta": 0.07728321837255431,
+        "max_truncated_mass": 0.23812380716680082,
+        "source_padding_policy": "repeat strongest influence before normalization; unchanged"
+      }
+    },
+    "garment": {
+      "candidate_weight_oracle": {
+        "count": 1986,
+        "max_component": 1.4395888281448777e-07,
+        "rms_distance": 3.834494709253166e-08,
+        "tolerance": 1e-05,
+        "passed": true
+      },
+      "full_mpfb_geometry": {
+        "count": 1986,
+        "max_component": 0.01767641305923462,
+        "rms_distance": 0.0015424215962410526,
+        "tolerance": 0.003,
+        "passed": false,
+        "source_count": 1797,
+        "mapped_source_count": 1797,
+        "mesh_count": 1986,
+        "coverage_complete": true
+      },
+      "rest_matrix": {
+        "count": 53,
+        "max_component": 3.680586814880371e-06,
+        "rms_distance": 1.2882870842368522e-06,
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "posed_matrix": {
+        "count": 53,
+        "max_component": 4.0531158447265625e-06,
+        "rms_distance": 1.3809176283162058e-06,
+        "tolerance": 0.0001,
+        "passed": true
+      },
+      "joint_heads": {
+        "count": 53,
+        "max_component": 8.940696716308594e-07,
+        "rms_distance": 4.6818536394076495e-07,
+        "tolerance": 1e-05,
+        "passed": true
+      },
+      "normals_tangents": {
+        "present_finite": true,
+        "normal_min_length": 0.9999998862586654,
+        "tangent_min_length": 0.9999998877825588,
+        "appearance_acceptance": "NOT-RUN"
+      },
+      "weight_difference": {
+        "source_vertices": 1797,
+        "reference_influences_under_four": 1259,
+        "reference_influences_over_four": 89,
+        "max_l1_normalized_distribution_delta": 0.4998527020215988,
+        "mean_l1_normalized_distribution_delta": 0.08747652809354459,
+        "max_truncated_mass": 0.020078084128765807,
+        "source_padding_policy": "repeat strongest influence before normalization; unchanged"
+      }
+    }
+  }
+}

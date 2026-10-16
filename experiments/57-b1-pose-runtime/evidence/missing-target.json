@@ -1,0 +1,15 @@
+{
+  "command": [
+    "env",
+    "B1_OMIT_TARGET=targets/torso-scale-vert-incr.target",
+    "experiments/57-b1-pose-runtime/target/debug/b1-pose-adapter",
+    "experiments/55-source-character-runtime/configs/combined.json",
+    "experiments/56-b1-pose-reference/poses.json",
+    "experiments/57-b1-pose-runtime/results/missing-target"
+  ],
+  "exit_code": 1,
+  "output_directory_created": false,
+  "log_sha256": "38ae69e29bc68d21e54d3c7887f8099d16aacf48027987d96003a85626cb5f11",
+  "actual_loader_route": "explicit typed target paths; no folder load",
+  "scope": "headless native omission. HTTP/browser omission separate in58."
+}

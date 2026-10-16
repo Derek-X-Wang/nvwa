@@ -1,0 +1,15 @@
+   Compiling b1-pose-adapter v0.0.0 (/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/57-b1-pose-runtime/adapter)
+error[E0433]: cannot find type `MhcloVertexMap` in this scope
+   --> src/lib.rs:161:17
+    |
+161 |                 MhcloVertexMap::SingleVertex(vertex)=>{if let Some(&w)=bone_weights.get(vertex) && w>0.0 {weight=w;}},
+    |                 ^^^^^^^^^^^^^^ use of undeclared type `MhcloVertexMap`
+
+error[E0433]: cannot find type `MhcloVertexMap` in this scope
+   --> src/lib.rs:162:17
+    |
+162 |                 MhcloVertexMap::Triangle{helper_verts,helper_weights,..}=>{
+    |                 ^^^^^^^^^^^^^^ use of undeclared type `MhcloVertexMap`
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `b1-pose-adapter` (lib) due to 2 previous errors

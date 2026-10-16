@@ -1,0 +1,2284 @@
+{
+  "schema_version": 1,
+  "status": "actual_mpfb_pose_reference_frozen",
+  "common_sha256": "2e8566a4f12de710ead88f6aa2d71fc44e0680761a4f2fdc48a844b6f3534ab7",
+  "pose_sha256": "8e51c044841eb1c6cb96d583ca927cceb51ddf7d0729f4526f61777c8b7adab2",
+  "driver_sha256": "6188cc18a330b4a0f7eff4af82c6df0a27c0f1f09807d60c5fb2c886cc4852a5",
+  "source_sha256s": {
+    "mpfb-addon/data/3dobjs/base.obj": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+    "mpfb-addon/data/mesh_metadata/basemesh_vertex_groups.json": "8cb1417bc55ae5ec8aa99f90734e81ed5fbb556511ff6a2c00e0534b70911444",
+    "mpfb-addon/data/rigs/standard/rig.game_engine.json": "b324ddb4b707721c19630bfadb87c3e3b38eed3b6e4590bb3cead43ea918f799",
+    "mpfb-addon/data/rigs/standard/weights.game_engine.json": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473",
+    "mpfb-addon/data/targets/torso/torso-scale-vert-decr.target.gz": "c6624bda038ce3cc91e7d29e1324a7fadd1e51a095c32ce04c95b0cab91c46a5",
+    "mpfb-addon/data/targets/torso/torso-scale-vert-incr.target.gz": "da8f03a324d03fddca48d6304288763d3fe7700f8c7f3454308b943d07f8c67f",
+    "mpfb-addon/data/targets/chin/chin-jaw-drop-decr.target.gz": "9176198f2ddcbb48d21d26b5c61e646bb656c6fc96508d4406272efa2aeab40c",
+    "mpfb-addon/data/targets/chin/chin-jaw-drop-incr.target.gz": "b750b941a75badd7281db378356438dd8647ef043e3470f9e34bbf873e711e71",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01.mhclo": "6df057d3116db93afbbbb6d692f92cce84aa16db699f47dd14e825d07c6fd42f",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01.mhmat": "1153d5ad8a074f0f02c7102375d6d3ae0b82302b6f3909b5b64609a2d5cfdd6b",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01.obj": "fd529bb8dd6a994c1e9a3fb2fd8b236f52c0cc7cebb1f6fd9328953d9df6d6ff",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01_ao.png": "6faffbb99e3d20faeaf87cdddece43fee7d6b7262de3e55817545809f0368524",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01_diffuse.png": "00910e3e85b3dcf48d1aa827b4c075cdc77689989423ff4f75bc67f2e86cc588",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01_normal.png": "2bc78509fc4e74b2346dbb54f7f627644125a41573ee458d624246e337f1d28f"
+  },
+  "audited_source_receipt_sha256s": {
+    "mpfb-extraction-receipt.json": "b98b80d6b0430e4e9c2f66446533482d2c1f0cc76d78e9ace9c042923cd4a150",
+    "system-garment-extraction-receipt.json": "7315144b1bd67b57822eddc352201966d105fd80e23b042a279b4123aba63480"
+  },
+  "reference_summary_path": ".work/b1-pose-reference/run1/summary.json",
+  "reference_summary_sha256": "76317dac234bfeb2d522a09c631257015911068ece535bdafdf4e0f9d1a997d5",
+  "command": {
+    "executable": "/Applications/Blender.app/Contents/MacOS/Blender",
+    "argv": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "--background",
+      "--factory-startup",
+      "--offline-mode",
+      "--python-exit-code",
+      "7",
+      "--python",
+      "experiments/56-b1-pose-reference/reference/pose_reference.py",
+      "--",
+      "--sample",
+      "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/character-approved-20261016",
+      "--out",
+      "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/b1-pose-reference/run1"
+    ],
+    "BLENDER_USER_RESOURCES": "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/.work/b1-pose-reference/blender-user"
+  },
+  "blender_version": "5.2.2 LTS",
+  "mpfb_version": [
+    2,
+    0,
+    18
+  ],
+  "mpfb_build": "20261010",
+  "body_weight_summary": {
+    "vertices": 19158,
+    "influences": 36416,
+    "max_influences": 7,
+    "unweighted_vertices": 0,
+    "nonzero_sum_min": 0.999899979273323,
+    "sum_max": 1.000000175088644,
+    "max_abs_sum_minus_one_weighted": 0.00010002072667703032,
+    "truncated": false,
+    "renormalized": false,
+    "excluded_groups": [
+      "HelperGeometry",
+      "JointCubes",
+      "Left",
+      "Mid",
+      "Right",
+      "body",
+      "helper-genital",
+      "helper-hair",
+      "helper-l-eye",
+      "helper-l-eyelashes-1",
+      "helper-l-eyelashes-2",
+      "helper-lower-teeth",
+      "helper-r-eye",
+      "helper-r-eyelashes-1",
+      "helper-r-eyelashes-2",
+      "helper-skirt",
+      "helper-tights",
+      "helper-tongue",
+      "helper-upper-teeth",
+      "joint-ground",
+      "joint-head",
+      "joint-head-2",
+      "joint-jaw",
+      "joint-l-ankle",
+      "joint-l-clavicle",
+      "joint-l-elbow",
+      "joint-l-eye",
+      "joint-l-eye-target",
+      "joint-l-finger-1-1",
+      "joint-l-finger-1-2",
+      "joint-l-finger-1-3",
+      "joint-l-finger-1-4",
+      "joint-l-finger-2-1",
+      "joint-l-finger-2-2",
+      "joint-l-finger-2-3",
+      "joint-l-finger-2-4",
+      "joint-l-finger-3-1",
+      "joint-l-finger-3-2",
+      "joint-l-finger-3-3",
+      "joint-l-finger-3-4",
+      "joint-l-finger-4-1",
+      "joint-l-finger-4-2",
+      "joint-l-finger-4-3",
+      "joint-l-finger-4-4",
+      "joint-l-finger-5-1",
+      "joint-l-finger-5-2",
+      "joint-l-finger-5-3",
+      "joint-l-finger-5-4",
+      "joint-l-foot-1",
+      "joint-l-foot-2",
+      "joint-l-hand",
+      "joint-l-hand-2",
+      "joint-l-hand-3",
+      "joint-l-knee",
+      "joint-l-lowerlid",
+      "joint-l-scapula",
+      "joint-l-shoulder",
+      "joint-l-toe-1-1",
+      "joint-l-toe-1-2",
+      "joint-l-toe-1-3",
+      "joint-l-toe-2-1",
+      "joint-l-toe-2-2",
+      "joint-l-toe-2-3",
+      "joint-l-toe-2-4",
+      "joint-l-toe-3-1",
+      "joint-l-toe-3-2",
+      "joint-l-toe-3-3",
+      "joint-l-toe-3-4",
+      "joint-l-toe-4-1",
+      "joint-l-toe-4-2",
+      "joint-l-toe-4-3",
+      "joint-l-toe-4-4",
+      "joint-l-toe-5-1",
+      "joint-l-toe-5-2",
+      "joint-l-toe-5-3",
+      "joint-l-toe-5-4",
+      "joint-l-upper-leg",
+      "joint-l-upperlid",
+      "joint-mouth",
+      "joint-neck",
+      "joint-pelvis",
+      "joint-r-ankle",
+      "joint-r-clavicle",
+      "joint-r-elbow",
+      "joint-r-eye",
+      "joint-r-eye-target",
+      "joint-r-finger-1-1",
+      "joint-r-finger-1-2",
+      "joint-r-finger-1-3",
+      "joint-r-finger-1-4",
+      "joint-r-finger-2-1",
+      "joint-r-finger-2-2",
+      "joint-r-finger-2-3",
+      "joint-r-finger-2-4",
+      "joint-r-finger-3-1",
+      "joint-r-finger-3-2",
+      "joint-r-finger-3-3",
+      "joint-r-finger-3-4",
+      "joint-r-finger-4-1",
+      "joint-r-finger-4-2",
+      "joint-r-finger-4-3",
+      "joint-r-finger-4-4",
+      "joint-r-finger-5-1",
+      "joint-r-finger-5-2",
+      "joint-r-finger-5-3",
+      "joint-r-finger-5-4",
+      "joint-r-foot-1",
+      "joint-r-foot-2",
+      "joint-r-hand",
+      "joint-r-hand-2",
+      "joint-r-hand-3",
+      "joint-r-knee",
+      "joint-r-lowerlid",
+      "joint-r-scapula",
+      "joint-r-shoulder",
+      "joint-r-toe-1-1",
+      "joint-r-toe-1-2",
+      "joint-r-toe-1-3",
+      "joint-r-toe-2-1",
+      "joint-r-toe-2-2",
+      "joint-r-toe-2-3",
+      "joint-r-toe-2-4",
+      "joint-r-toe-3-1",
+      "joint-r-toe-3-2",
+      "joint-r-toe-3-3",
+      "joint-r-toe-3-4",
+      "joint-r-toe-4-1",
+      "joint-r-toe-4-2",
+      "joint-r-toe-4-3",
+      "joint-r-toe-4-4",
+      "joint-r-toe-5-1",
+      "joint-r-toe-5-2",
+      "joint-r-toe-5-3",
+      "joint-r-toe-5-4",
+      "joint-r-upper-leg",
+      "joint-r-upperlid",
+      "joint-spine-1",
+      "joint-spine-2",
+      "joint-spine-3",
+      "joint-spine-4",
+      "joint-tongue-1",
+      "joint-tongue-2",
+      "joint-tongue-3",
+      "joint-tongue-4",
+      "nippleTip",
+      "nipple",
+      "lips",
+      "fingernails",
+      "toenails",
+      "ears",
+      "scalp",
+      "genitals",
+      "Delete.female_sportsuit01"
+    ]
+  },
+  "garment_weight_summary": {
+    "vertices": 1797,
+    "influences": 5113,
+    "max_influences": 6,
+    "unweighted_vertices": 0,
+    "nonzero_sum_min": 0.9982894500717521,
+    "sum_max": 1.0021748319268227,
+    "max_abs_sum_minus_one_weighted": 0.0021748319268226624,
+    "truncated": false,
+    "renormalized": false,
+    "excluded_groups": []
+  },
+  "body_modifiers": [
+    {
+      "name": "Armature",
+      "type": "ARMATURE",
+      "show_viewport": true,
+      "show_render": true,
+      "object": "Human.rig",
+      "use_deform_preserve_volume": false,
+      "use_multi_modifier": false,
+      "vertex_group": "",
+      "invert_vertex_group": false,
+      "use_vertex_groups": true,
+      "use_bone_envelopes": false
+    },
+    {
+      "name": "Delete.female_sportsuit01",
+      "type": "MASK",
+      "show_viewport": true,
+      "show_render": true,
+      "vertex_group": "Delete.female_sportsuit01",
+      "invert_vertex_group": true
+    }
+  ],
+  "garment_modifiers": [
+    {
+      "name": "Armature",
+      "type": "ARMATURE",
+      "show_viewport": true,
+      "show_render": true,
+      "object": "Human.rig",
+      "use_deform_preserve_volume": false,
+      "use_multi_modifier": false,
+      "vertex_group": "",
+      "invert_vertex_group": false,
+      "use_vertex_groups": true,
+      "use_bone_envelopes": false
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "neutral__neutral",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "neutral",
+      "path": ".work/b1-pose-reference/run1/neutral__neutral.json",
+      "sha256": "6fc8117fb618cdd9e455b2d83af44781aa4ad3eed6d1ab8c677d05d6e79f9c42",
+      "bytes": 12016564,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "c593b6757c3971e95d5660a9f59d6385c95bebef70ccb139b8d30fb992aba5f9",
+          "normals_sha256": "5bbdd222cd6a989e64297669c2071baaae73a33f4cead8893895f79dc5c38bf3",
+          "tangents_sha256": "fbf0c95c26298a91c39890edc45334bcaca377c2b8b99ad1ff16f7d42782e3ee"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "c43cef349ffc36bde24f1961a9cd22be7a339edb1a036ecff9253f46bce540c3",
+          "normals_sha256": "2424c5fde7d3e55448adacb6fa83b92dba139dd4f420f49dae3906aa81023ad2",
+          "tangents_sha256": "eb9475de89a542826ee82db2c5a3b1e3b6340ec45009d59345d894453d719cd3"
+        }
+      }
+    },
+    {
+      "case_id": "neutral__shoulder",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "shoulder",
+      "path": ".work/b1-pose-reference/run1/neutral__shoulder.json",
+      "sha256": "1e0b98ec76b37d88b64a39b44288a585dec93cc948d1e3fe48b41a3166fbea69",
+      "bytes": 12013733,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.34241389483213425,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "0c6da652166e73c11dffadea421b99fe1f917e2ff7957ec17c37bd5072a720d1",
+          "normals_sha256": "72f7ac6c3eee967ec644455d93c35b0497b5b5793105f3ddc4a22f7b848b6ac3",
+          "tangents_sha256": "7c20f72588bde7149eace150660b976a5bcaa143a6155be30ea521960e3b58ab"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.08858749270439148,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "8c3ae8b1f7bd0d4b2894f6eb730ce1f5bbbfea4be18704c9cd0c742a76324d74",
+          "normals_sha256": "00e9ea591a8640a4c0a57c59c3becd35f895f1921847f476651c8db753a6e2ec",
+          "tangents_sha256": "5848c0e1d0304381654fc8f865cdbfc0d085d659930e86f1902120e81409a9bb"
+        }
+      }
+    },
+    {
+      "case_id": "neutral__elbow",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "elbow",
+      "path": ".work/b1-pose-reference/run1/neutral__elbow.json",
+      "sha256": "e0ff78723dec2428640624e9f7bba08f6d82d1fe4d530a720a2856c9c9c88af2",
+      "bytes": 12009924,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.43392278254032135,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "296c923f04cc0a1ec45806ec68277394e0e0c3efec6da739387c1d608b9eb572",
+          "normals_sha256": "1d2f617361e73f9701787bb60f551331f60fdc9d1e3a6275b2cb42d59e19ea71",
+          "tangents_sha256": "75bf53f0f084013d8c5f59517a0c39519f03f6707ad515fab151e7bf03e9fc21"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0013670027256011963,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "591f5bae539ca73c6bfce5c01ff6d23193268f67ea34394df7d8b847bcad7af1",
+          "normals_sha256": "8190ee8ed2f8e577091299cfdaf55dbdd943b24313955c1fbcad2c64a4dfbd59",
+          "tangents_sha256": "d26c0d6efc200035aaf434550caacae276ec7d94aaee6334e1789b2661800a90"
+        }
+      }
+    },
+    {
+      "case_id": "neutral__knee",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "knee",
+      "path": ".work/b1-pose-reference/run1/neutral__knee.json",
+      "sha256": "156964748c8fc5120330dd3aa066efd632fb3814f0b1c74a70f6ed686fae02c0",
+      "bytes": 12011619,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4593714392496793e-07
+          },
+          "max_displacement_from_rest": 0.49989935755729675,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "fd92cc41ec1f861342643c188c42b2105c2da765907997583ba4821675747749",
+          "normals_sha256": "1d486c1b17fd3fb44cad9403f654c33108da513edcf729b6bfa96e4c1cad3a26",
+          "tangents_sha256": "d6427d37a7beae59c00ea973a9ced1e4b277794b245a2c1f7636d9eed56454fd"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "6b14ab283f7893f3e2c66501351b470b0905b07b391c13a598de2bda35625954",
+          "normals_sha256": "45dc05e1fcac00d4a83fbda1dfbd07b1715faec561fd07fa4d7a9f7eadd81d6d",
+          "tangents_sha256": "e3766a44cf7eec9d652a62b6b73d4411a930586a473eac97533b83dafb9e9304"
+        }
+      }
+    },
+    {
+      "case_id": "neutral__combined",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "combined",
+      "path": ".work/b1-pose-reference/run1/neutral__combined.json",
+      "sha256": "18be3f0e262d4f9af7f4ce167ec18e3e62f3db160470a4a88901a1b1c5f2a37e",
+      "bytes": 12007181,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4572851991800917e-07
+          },
+          "max_displacement_from_rest": 0.748887412250042,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "b433d22841d72020357645d82e4a9d984018109e11c3c6fdb8326c836e6a659b",
+          "normals_sha256": "3c622e959fb84f04e03cefe70c3555bc006729d836f04851eff60eaf75ffeb23",
+          "tangents_sha256": "b8c5da73336fb2420fbb7c0be57c0055e6ef11f5acc5613e7411d0b273983c7a"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "d1169ba1f088e4ed83981a132692a9d3d9aec4c113083f14cc187edddc1ed85d",
+          "normals_sha256": "2ef7a9e1f54f18162164493ff2cd21c1319a8d7340193bb111875f94c09a6c86",
+          "tangents_sha256": "862dd9888bac3e118e04071afdb26e362f8298ece66c2c76a903a79e2aca09fc"
+        }
+      }
+    },
+    {
+      "case_id": "body-negative__neutral",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "neutral",
+      "path": ".work/b1-pose-reference/run1/body-negative__neutral.json",
+      "sha256": "3978fa91d0c1f9c2bd27385d206296a609c52fdb297fd4e958c033b2d0080936",
+      "bytes": 12017033,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.177072426195025e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.5625952021203204e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "fdf7283bfef90a6197d8cedcd34b2c5057237e5d4030433b100ff99abd257080",
+          "normals_sha256": "74b31bdd34e1179b9815dff04de3e0b56cdb7d1aa77b2ae5656a789ab49f4c05",
+          "tangents_sha256": "7936a4401cea45c489df7023ac518c2d37ddfe261b77d1e3083fcf529858f974"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.361344604822179e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "b46861001fb804305d0ee1c25a94e51f5c1d41b4169a8507461e5fea65004fe9",
+          "normals_sha256": "307bbe9b3d43b9e95952635dcdd8c7cd9fbd46c4d80756b74e6210ec4aa1bd2b",
+          "tangents_sha256": "d690492a786b00ab5a3436ef56e28058dcffcb7a0b57b5d3bbcaf2701d32214a"
+        }
+      }
+    },
+    {
+      "case_id": "body-negative__shoulder",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "shoulder",
+      "path": ".work/b1-pose-reference/run1/body-negative__shoulder.json",
+      "sha256": "c79a7d787365d15572c3e56fc549846156f61ae2ffedeb2fb9fc172bb3187fc8",
+      "bytes": 12014666,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1480053474510754e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.3424138203263283,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "bc265085df10082afd6d9a6713d92c25b5f3adaa225431fc301b9f458db9af2c",
+          "normals_sha256": "d78f11bd821257c70a648d1666f325670332c429b684bf564e41e9a80c4d50ef",
+          "tangents_sha256": "99b3c4ff94cab65959de83170a0a839fc81afd20fcaa519a092ec8cb29f88c45"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.361344604822179e-07
+          },
+          "max_displacement_from_rest": 0.08858746290206909,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "3bd854d4fd21a28082b620af968135b08a34d932a6122228fc20abd0e1541f99",
+          "normals_sha256": "8ee58aa124b24a711fab5bc451f147413df3da72d2d8c339d8111771e1723fd8",
+          "tangents_sha256": "56f545977bc4383f55b9acf4c47f9f42db5a447bb54ecb62e529c78a9b69e83c"
+        }
+      }
+    },
+    {
+      "case_id": "body-negative__elbow",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "elbow",
+      "path": ".work/b1-pose-reference/run1/body-negative__elbow.json",
+      "sha256": "ed0409f41796b79bae41d39bb6faba651b6800e034340f9f3973e6dc28943f67",
+      "bytes": 12010869,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.177072426195025e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.57909896714159e-07
+          },
+          "max_displacement_from_rest": 0.43392280489206314,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "bcfa412eb2b522b4a9f5e1254b5685d7316146ccbe7aec20e2e0b8da01a743be",
+          "normals_sha256": "2d17ad77ec7b056dced67c8772ff56a6b7d4e3bc9cad621187568f0a7e5f937d",
+          "tangents_sha256": "73a5bf07f6561e12aa6a29f38b114ae748624cd66a45ada05ba9ed2214cb41eb"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.361344604822179e-07
+          },
+          "max_displacement_from_rest": 0.0013670027256011963,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "a232494f616e23123765f51558dc380ddb20cdc44659c33a0287b2acc8620e75",
+          "normals_sha256": "85030a24a8eca8849c73204a8f40eefb1612fffa3757a1bcbe47f774c368feea",
+          "tangents_sha256": "5dfd49890201b9985831edaca5004a0443ae2d367298182d1ae8819846a66ff4"
+        }
+      }
+    },
+    {
+      "case_id": "body-negative__knee",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "knee",
+      "path": ".work/b1-pose-reference/run1/body-negative__knee.json",
+      "sha256": "7e43612fc03cf55d6f21c4ee1b009868a5364950f230fda465c252e3de0e93bd",
+      "bytes": 12012372,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.177072426195025e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.57909896714159e-07
+          },
+          "max_displacement_from_rest": 0.49989935755729675,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "2d3b6e64cb6da94df01b1d25bdc4c53b1f2c4ef809d05503b0c33b7587690401",
+          "normals_sha256": "ba052ec5e2317ee7ff1e2308d2fedc556154494548e66e631e27b92ea8eb5f71",
+          "tangents_sha256": "30e0fb87dafae7aa0678aa22764ab01b89c9d798a19c24c5396c9972b70198ff"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.232104738235762e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "500c316604ef2c1acbc34b784a10561987a9493cd905e099833a089051b35fda",
+          "normals_sha256": "ad72ed748a7d925dafa915ff0d9791835600cd70dfc12c0459262891ed5ec63d",
+          "tangents_sha256": "8ddbdc5cf3fec54ddb0c5acf53d314d1faaff685c993f93c74cc87655d66fa60"
+        }
+      }
+    },
+    {
+      "case_id": "body-negative__combined",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "combined",
+      "path": ".work/b1-pose-reference/run1/body-negative__combined.json",
+      "sha256": "3645ca26efe07cbc2405e6f4bab9aca82362bac79077c2204709cf48b6d6ee70",
+      "bytes": 12007677,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1300431457250681e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.57909896714159e-07
+          },
+          "max_displacement_from_rest": 0.7488872781395912,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "358479c47f44904b70175d8525d8488724849e9954b24a12ce11dd4a9ee62355",
+          "normals_sha256": "814b62dcc553c6ff30718c164aee71ce6efd0a2d55bcc842c009679aa65834d6",
+          "tangents_sha256": "f80a8c4f56cf9bd55d3c1bfb9f1e2501db23b90c8fe91a79117da8a712c250bb"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.232104738235762e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "581e8a911f200d8f62fd365607e03e941fb091709c858d841683fbdfb9ae9533",
+          "normals_sha256": "1b437a29a065355d3c24a122e7793721c4dc987e3b4d92710585bf1554efc8b6",
+          "tangents_sha256": "bcb1489d89d9818fd51b671baeaa70c68074308855ccf27466ddd14af4fedcfb"
+        }
+      }
+    },
+    {
+      "case_id": "body-half__neutral",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "neutral",
+      "path": ".work/b1-pose-reference/run1/body-half__neutral.json",
+      "sha256": "1b44dad81b528a7134aa3dcf74ea81ff0b31b982c669ff1b6d31d27de8fad766",
+      "bytes": 12014500,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285437844816727e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4702802353383504e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "d0762e6da6766a0284e1df5331ae562ab98d840bd0e25267be245b2cf46538bb",
+          "normals_sha256": "6366f48851635cc045a344e1f4b5abe10efc49246084e7797bb82d4aa1182430",
+          "tangents_sha256": "ab215da8cdbceec569883a1f03c9f7df202d6404bea0431c18c2584f440d9fe1"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1706202951433653e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "8e1476e65787c857c99574c3b8c082e8fae50d3f6911ed6336056abf8d9aa60a",
+          "normals_sha256": "84d9e5a109e8accc0706485587e948d20e9f7d6ff6f0d7e3575a03c700c42e94",
+          "tangents_sha256": "c2f782adce9e38377e5ed0695ac234d0b216918e02cc60e7c6c02eb6fabfc328"
+        }
+      }
+    },
+    {
+      "case_id": "body-half__shoulder",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "shoulder",
+      "path": ".work/b1-pose-reference/run1/body-half__shoulder.json",
+      "sha256": "db5e3272552d4963e0ea64c4eddff2a457981bb780b3fad428e52d582fb3a2ca",
+      "bytes": 12011298,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285356454366791e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.5164854172411424e-07
+          },
+          "max_displacement_from_rest": 0.34241393208503723,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "0bc4ac87b84e6013e1d5eb8eacfaae703102e23b19b6bee7628b91de9fa0449e",
+          "normals_sha256": "23445afbaee422b7ac52406cc51d3f94b101b70fa134df726b85ff58e0c2d9e6",
+          "tangents_sha256": "0724bee5bbf625a257084e44dcc201c2d85b641c3eabcdb4a147e2d91cec4c09"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.08858758211135864,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "c9e478e1af3a09e34875b028bfcf1c8a0d053e29bf9863acb9ae16f19d2a7d50",
+          "normals_sha256": "76a15eee7ad25d46ed680f28fa9ac8643d84c690e00bb5d1d7bdefc7e4c665d9",
+          "tangents_sha256": "d3471be43ca89b034859157a62ac645a7ec227974f4e538eb52570fe9390916d"
+        }
+      }
+    },
+    {
+      "case_id": "body-half__elbow",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "elbow",
+      "path": ".work/b1-pose-reference/run1/body-half__elbow.json",
+      "sha256": "aaef8653e361b22f18f4c973cd2055e9c75c525847fa1fb8e22c73c70c6f6b68",
+      "bytes": 12008201,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285356454366791e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.475065263267794e-07
+          },
+          "max_displacement_from_rest": 0.43392275273799896,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "455070a1523b7f1a7c172812e30734c2c8b45f41e68001f28eb8f2316eb1d3ad",
+          "normals_sha256": "c8a7610ca7023192be38dbf80355d5250cf12e05c925eeba2e2bd1d19a0410be",
+          "tangents_sha256": "4025bdfe1e55244cf7d52139d13805693cb3acab53d3523410054e904c00ffa1"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1706202951433653e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0013670027256011963,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "68e239d29a152ab2bd91104db5a6112aa2c48fd57dc10c7344c78b6394480dd2",
+          "normals_sha256": "92d2ae1a9f60b7d34b0d98e602b4d3c1901eff67a6c0f60f896b8b7da8d6c276",
+          "tangents_sha256": "a4db4a176aab93e0b7caf771003b6b0d4c21c6cc0551328fbf8b2aaf2472ad38"
+        }
+      }
+    },
+    {
+      "case_id": "body-half__knee",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "knee",
+      "path": ".work/b1-pose-reference/run1/body-half__knee.json",
+      "sha256": "dca05b0d5a0b308737174b49870f0eafd5080bcd7f2bcf16423f0da013bcf7bd",
+      "bytes": 12009725,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285437844816727e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.475065263267794e-07
+          },
+          "max_displacement_from_rest": 0.49989935755729675,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "6466cd727ea9f60729c45c0e7690e6d8a6000687296e7f6e4200b56211fc5e91",
+          "normals_sha256": "45c1f0d186de0bf5ee9e1e1861b0e09405a6749c4aa663a05c67d566faec39b2",
+          "tangents_sha256": "09a9c171ce5d271b39c83e2ab494d5fd1bbfb2cd4dddcea16e716faf4463d663"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1706202951433653e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "e751bd9488c3a8f7c292e4e35d91ebe112ea36842919d4b0c2b791d1df285cc4",
+          "normals_sha256": "027c654c59b11e0cd3f339f117dbdc84d01b5f826b0a0ed4fefe6ed3f7ccf555",
+          "tangents_sha256": "7ea6e6896ddba9192994afe500a123a609cd683ede7c48e8865a909931abf7c3"
+        }
+      }
+    },
+    {
+      "case_id": "body-half__combined",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "combined",
+      "path": ".work/b1-pose-reference/run1/body-half__combined.json",
+      "sha256": "506a833e7c3df90dead1371a91bbf58301c83273f96ceddca3152753c20e2aba",
+      "bytes": 12005354,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285356454366791e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.475065263267794e-07
+          },
+          "max_displacement_from_rest": 0.7488873898983002,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "fd47c6bda21c8cdf919d2481450001bfcaa040ab9477717120522866ce913c5d",
+          "normals_sha256": "0e0587a847e3ac1a71a798283209323655afafd5cd12a1ce6dfa75f64822ecdf",
+          "tangents_sha256": "da8fb63b80e1cbd565df92c871a2c7a48a39b77ad43d811d195b122fedee3dc0"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "f3ee1e8a0449526ec43c1aa00a00b0f6de87ee16a59ce57035dd2c5036da302e",
+          "normals_sha256": "0f0d8c899995bce0492dcde791b2bb64d602017211a0733539c6e9efa258c960",
+          "tangents_sha256": "ba2428413320627b0c15291a794bcdafb895ce9dfa02dd00d8cddf17cb5aa0f3"
+        }
+      }
+    },
+    {
+      "case_id": "body-positive__neutral",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "neutral",
+      "path": ".work/b1-pose-reference/run1/body-positive__neutral.json",
+      "sha256": "b028ed695950bd21579b4518b5241c90955c60737c1d4759c6e40cdd335e36d5",
+      "bytes": 12012643,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.217443710288535e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.547300843007804e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "fc11031ef7ed59c4e996e517d7b00f43bcad0412866db825a604a65ffd200114",
+          "normals_sha256": "ea28018792d4fb121e515eb76e2161d30576f57948b58b9f5029dbf7fb9f39b5",
+          "tangents_sha256": "38623c2269b31f048f5c7e576f39b60b0ff8b41e5f0ea5c826efe8cf24020cca"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1971713620440028e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "c0105c177e61650de52e13c829fb3f36a354f1e766e8f9ac58896f9d9dd54dc4",
+          "normals_sha256": "647b4077a6d8cb585eb79d676c1edea430b60fb017eb2795dceab07fc8136914",
+          "tangents_sha256": "afc36d87ace47b15b79bac95fc3001272cb2367488d509400efdd81963a78ade"
+        }
+      }
+    },
+    {
+      "case_id": "body-positive__shoulder",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "shoulder",
+      "path": ".work/b1-pose-reference/run1/body-positive__shoulder.json",
+      "sha256": "f3f7f2bc95b6093ce88cbee3189c1aeee1a2743fff2f89888ffc959b5282aaf5",
+      "bytes": 12009355,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.190597496147916e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4927028502143003e-07
+          },
+          "max_displacement_from_rest": 0.3424137830734253,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "627032c3a4647a862f31e1ef425a53215e645f384260ac4fc56c85153e91dea0",
+          "normals_sha256": "907ba5896ca5be369648b93aaaf37b70b8a261a69489918567d307cab6145be3",
+          "tangents_sha256": "9604e3126042f20cc292185ed69787d3aa4c6778688763c99e1e05cf9d4f6116"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1971713620440028e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.08858752250671387,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "e8fa94780921433741668e4c037bba1529d15043c3c84438213911b92922a6de",
+          "normals_sha256": "799c02d402ab59f77839346adb06f87a2bfe6066f20a11fdbdda3c795a3b1fe0",
+          "tangents_sha256": "f8ce5bac8f243735266fd2d41f2ab7b370b8ea57c0daa537b51f1e38cac55b93"
+        }
+      }
+    },
+    {
+      "case_id": "body-positive__elbow",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "elbow",
+      "path": ".work/b1-pose-reference/run1/body-positive__elbow.json",
+      "sha256": "fcdca1925c05ac4d3597378d5201bea2249ec2a8c7f503b8dc4018588225cf2d",
+      "bytes": 12006575,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.217443710288535e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.43392282724380493,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "a6a2835add23b2f94ed69a496fe18ee83e8cb7c9fdb2ef2c9ec8dfdee89f9023",
+          "normals_sha256": "fb6cbf5a7544acd0841ddb06efab969b0bed59880db1a0116bddabf628d1e38e",
+          "tangents_sha256": "26e45dfa20aa73b30d12229ae519301e41965f5b8b39b61663cba03808409df4"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1971713620440028e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4549821736320467e-07
+          },
+          "max_displacement_from_rest": 0.001367032527923584,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "e1a81b7038f6b495acfcfeac1c627b82d7a441519e8230be0f84db128dd8da5e",
+          "normals_sha256": "22056210837637c8903921686568d0935c0737537a51460ac2aaa2dd55cf52c9",
+          "tangents_sha256": "193f252e6e51597e9544f3a3c124e6a8062df728f5fd988ad28fdd811dab9181"
+        }
+      }
+    },
+    {
+      "case_id": "body-positive__knee",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "knee",
+      "path": ".work/b1-pose-reference/run1/body-positive__knee.json",
+      "sha256": "60d179d2a2077c107f51165cd027c11f38d55f23365f6826afb32348b66b5182",
+      "bytes": 12007612,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.217443710288535e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.49989935755729675,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "6e9022cb48fa055e0678fdf823803df8825138771f708c1aee40d41a66e46d51",
+          "normals_sha256": "e130befa8262f4708753987399ce4960f24b8ca086bd8aa4cd67b73f7d4d8511",
+          "tangents_sha256": "a552ceeb0228e914f0122445fa3f1bc60f25c29f877ac76400ba30a6dc7dbddd"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1971713620440028e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "57e3d10cca5bfd3700449bfd4675b4c795b3acdca5fc2e3be79435552c550443",
+          "normals_sha256": "6f2598a9187a12faa341e0e5b11ea7b827bdc398cfc0623a6ad6715f22feff17",
+          "tangents_sha256": "409ee993cba8279d5c35ce8352041c6624146422174f096014ab9ac55dafe71e"
+        }
+      }
+    },
+    {
+      "case_id": "body-positive__combined",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "combined",
+      "path": ".work/b1-pose-reference/run1/body-positive__combined.json",
+      "sha256": "a7934b6c674e54f2211d1e55d99b6d143f515ec5d85e2cbd21967c1671e6c13c",
+      "bytes": 12003566,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.190597496147916e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4593714392496793e-07
+          },
+          "max_displacement_from_rest": 0.7488872408866882,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "1cd9d2693b26e9d28a9b8f8eb5ab7003b41c81ab5b1b3ec9a1be39964d134de6",
+          "normals_sha256": "162670e884d5e385ee21f5e59a2d08e20fd1bdfed21036d8d19b35430f054438",
+          "tangents_sha256": "a248db4cae3458c17b6ac2b83656a85c79aeb2cb046f8b2c7e7361756e1cda50"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1971713620440028e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "feb6f09f09d27e9462cda91073a7d4ef490dc50ea8a3ef32cf0fad8fbcb65987",
+          "normals_sha256": "84855c1fed2ace13f07f716d7a82daed35166640d0860c63be2bb702373cdb04",
+          "tangents_sha256": "384f3c42231f07e77296dd1b4091166760a3d49a2431a5271b3fc4027feaca41"
+        }
+      }
+    },
+    {
+      "case_id": "face-negative__neutral",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "neutral",
+      "path": ".work/b1-pose-reference/run1/face-negative__neutral.json",
+      "sha256": "4bec59a5f083aa850e152d1b8cf98f264d1c30a512e724c31e17977b905dac9a",
+      "bytes": 12016406,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "ea529eaee40b701ec99ffc273cf06caaa3bbd1fb398092b4ed4a958f1e81a96f",
+          "normals_sha256": "31e4434cb05c3a56b21373bc98a0f3361ed4d1f8ac4d3a63a58ffec75dff6d2b",
+          "tangents_sha256": "3ca404b79f3f4ec573147c63b4a7d98620552e4a421120990187bc776057cec0"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "c43cef349ffc36bde24f1961a9cd22be7a339edb1a036ecff9253f46bce540c3",
+          "normals_sha256": "2424c5fde7d3e55448adacb6fa83b92dba139dd4f420f49dae3906aa81023ad2",
+          "tangents_sha256": "eb9475de89a542826ee82db2c5a3b1e3b6340ec45009d59345d894453d719cd3"
+        }
+      }
+    },
+    {
+      "case_id": "face-negative__shoulder",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "shoulder",
+      "path": ".work/b1-pose-reference/run1/face-negative__shoulder.json",
+      "sha256": "bbd3ab2338d11aeb3910b8074d3ff75ab5ca547975d5199ba58dc876dfe955c7",
+      "bytes": 12013697,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.34241389483213425,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "f8ba12355ca5e8b37d5b8fc9f7f8ddaa9214fcca61301098b21fc591ad2ab35c",
+          "normals_sha256": "1f3d8f57d997ccd3c2d3fa214f7091606908ec01a5285278fcddcb664512c88a",
+          "tangents_sha256": "69c078545c177a7f7c412c9841b0ae7f86fd225720cf4ecb4df6772df09b11b7"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.08858749270439148,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "8c3ae8b1f7bd0d4b2894f6eb730ce1f5bbbfea4be18704c9cd0c742a76324d74",
+          "normals_sha256": "00e9ea591a8640a4c0a57c59c3becd35f895f1921847f476651c8db753a6e2ec",
+          "tangents_sha256": "5848c0e1d0304381654fc8f865cdbfc0d085d659930e86f1902120e81409a9bb"
+        }
+      }
+    },
+    {
+      "case_id": "face-negative__elbow",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "elbow",
+      "path": ".work/b1-pose-reference/run1/face-negative__elbow.json",
+      "sha256": "31001576a85d44d7bb47d91b61f9cc600fee691f4166e7728edd0718abb42ccd",
+      "bytes": 12009913,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.43392278254032135,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "d9f06780abaae0b10ea58486250b3368fbfe0ed9c01de316a1c37c09287468c3",
+          "normals_sha256": "8bcec34e31d834df653f77ca5b8bb517172b2680446b68ad851c9733c514b60d",
+          "tangents_sha256": "532c3f73f7017aeb6442856c96817dab7a3be6e1563cc0a300c7630f77ffd588"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0013670027256011963,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "591f5bae539ca73c6bfce5c01ff6d23193268f67ea34394df7d8b847bcad7af1",
+          "normals_sha256": "8190ee8ed2f8e577091299cfdaf55dbdd943b24313955c1fbcad2c64a4dfbd59",
+          "tangents_sha256": "d26c0d6efc200035aaf434550caacae276ec7d94aaee6334e1789b2661800a90"
+        }
+      }
+    },
+    {
+      "case_id": "face-negative__knee",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "knee",
+      "path": ".work/b1-pose-reference/run1/face-negative__knee.json",
+      "sha256": "ced869e45d01833d6ed5cfa9d0e69fa90571f216c8ea4611a7d2fa3cfc67f674",
+      "bytes": 12011836,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.49989935755729675,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "037cb113840c892135b7c4faa3b231b3507fc5a0b105cf6a6487da37ec9fc8db",
+          "normals_sha256": "26c29503ed4a68a98bce78316b4dbad011c6fce0ed2ad2a2ac2bf3f30b8b41dc",
+          "tangents_sha256": "020e12d366795a639cb6edffd8b4adc1f68a69b0ab55c7ad8aea47223d0237cb"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "6b14ab283f7893f3e2c66501351b470b0905b07b391c13a598de2bda35625954",
+          "normals_sha256": "45dc05e1fcac00d4a83fbda1dfbd07b1715faec561fd07fa4d7a9f7eadd81d6d",
+          "tangents_sha256": "e3766a44cf7eec9d652a62b6b73d4411a930586a473eac97533b83dafb9e9304"
+        }
+      }
+    },
+    {
+      "case_id": "face-negative__combined",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "combined",
+      "path": ".work/b1-pose-reference/run1/face-negative__combined.json",
+      "sha256": "76d89e294414fcd299e4307b6e3acd5f6402db3537c2948425d741ff6c61d173",
+      "bytes": 12007159,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4593714392496793e-07
+          },
+          "max_displacement_from_rest": 0.748887412250042,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "cc00ce96188c2ece8bbb9e8fbda3bff8aba268bbadd346b3d2a407a5b2778bc5",
+          "normals_sha256": "2c31a20b4415c0b525d6d0a9062c5eb1c11fdf6f7084843471d351f960c25dae",
+          "tangents_sha256": "0782114c8e369a21d47618aa102396cf026f24e2d26439b27a977f6871c9541c"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "d1169ba1f088e4ed83981a132692a9d3d9aec4c113083f14cc187edddc1ed85d",
+          "normals_sha256": "2ef7a9e1f54f18162164493ff2cd21c1319a8d7340193bb111875f94c09a6c86",
+          "tangents_sha256": "862dd9888bac3e118e04071afdb26e362f8298ece66c2c76a903a79e2aca09fc"
+        }
+      }
+    },
+    {
+      "case_id": "face-half__neutral",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "neutral",
+      "path": ".work/b1-pose-reference/run1/face-half__neutral.json",
+      "sha256": "cf69d72b962a48cee5c8102aa5eddc4daeb9925ab110a08a2c1e51265ee45d75",
+      "bytes": 12016891,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "1b60489bab166d484eb8be3f676905065e4fa7da9cbc2dc3a9d375e8ee654fb9",
+          "normals_sha256": "6d920ee0772d52bbd1a1be288f765efe4ebfe6eb71defa8b5ea62906b3ba355b",
+          "tangents_sha256": "f3802c8cda1077b0eb7cd3ff1ea64dbc6e48e9e5171728c6568b786833d799de"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "c43cef349ffc36bde24f1961a9cd22be7a339edb1a036ecff9253f46bce540c3",
+          "normals_sha256": "2424c5fde7d3e55448adacb6fa83b92dba139dd4f420f49dae3906aa81023ad2",
+          "tangents_sha256": "eb9475de89a542826ee82db2c5a3b1e3b6340ec45009d59345d894453d719cd3"
+        }
+      }
+    },
+    {
+      "case_id": "face-half__shoulder",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "shoulder",
+      "path": ".work/b1-pose-reference/run1/face-half__shoulder.json",
+      "sha256": "9c63ea9bd9dba5a7993ecfdb06362928f5820a034fbb8be64af43ed195c04ae1",
+      "bytes": 12013557,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.34241389483213425,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "9e67998cbd44b2335a61341cb9b63544d8295cc0c09466635ebac7e2e780b423",
+          "normals_sha256": "562cd7c74610284300d4fcfc97579bbe8ba603c047c616b99b7c20656c32fb78",
+          "tangents_sha256": "d30a9b650ee9b14543eb652a2fd4585a2ba6ff3921a113f6fa3fee9150ddc19a"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.08858749270439148,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "8c3ae8b1f7bd0d4b2894f6eb730ce1f5bbbfea4be18704c9cd0c742a76324d74",
+          "normals_sha256": "00e9ea591a8640a4c0a57c59c3becd35f895f1921847f476651c8db753a6e2ec",
+          "tangents_sha256": "5848c0e1d0304381654fc8f865cdbfc0d085d659930e86f1902120e81409a9bb"
+        }
+      }
+    },
+    {
+      "case_id": "face-half__elbow",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "elbow",
+      "path": ".work/b1-pose-reference/run1/face-half__elbow.json",
+      "sha256": "46922ed064ee5b2197e6d9f30d3d57ef4bed3f825bd6acb8ac54b190cdb84210",
+      "bytes": 12009859,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.43392278254032135,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "2c6e3619342bbf5baab35c8e20818248d3b28340d6cda9ed30f1e4032a15a6cf",
+          "normals_sha256": "1221133da0fb0077ebf4b1549868149e4b67d866a25bf6d63beb255f87275766",
+          "tangents_sha256": "c1ab4ba9230dffba9fae4ecd9ae71dc42bc9004389ebac6dfcb46e90a9172eae"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0013670027256011963,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "591f5bae539ca73c6bfce5c01ff6d23193268f67ea34394df7d8b847bcad7af1",
+          "normals_sha256": "8190ee8ed2f8e577091299cfdaf55dbdd943b24313955c1fbcad2c64a4dfbd59",
+          "tangents_sha256": "d26c0d6efc200035aaf434550caacae276ec7d94aaee6334e1789b2661800a90"
+        }
+      }
+    },
+    {
+      "case_id": "face-half__knee",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "knee",
+      "path": ".work/b1-pose-reference/run1/face-half__knee.json",
+      "sha256": "6b9fa780ae2fb0d4c367e2994495584c9bda5749e516b7e38aa13715f6bcd75f",
+      "bytes": 12011770,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.49989935755729675,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "fc64d544ae3003e5da7ce98b6e3cf7c7c5d25d934a31a219ef519319a0202c17",
+          "normals_sha256": "a09cb053c74c9759d1f8f1ef60a4af949f231f2e7e0089fe8387e6d1e53db34b",
+          "tangents_sha256": "47333c73f35cae53c37f8be14c7183da6820f7fe20c0b0a0c0131414a9b60566"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "6b14ab283f7893f3e2c66501351b470b0905b07b391c13a598de2bda35625954",
+          "normals_sha256": "45dc05e1fcac00d4a83fbda1dfbd07b1715faec561fd07fa4d7a9f7eadd81d6d",
+          "tangents_sha256": "e3766a44cf7eec9d652a62b6b73d4411a930586a473eac97533b83dafb9e9304"
+        }
+      }
+    },
+    {
+      "case_id": "face-half__combined",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "combined",
+      "path": ".work/b1-pose-reference/run1/face-half__combined.json",
+      "sha256": "83096dc2e674302f95b11008bb1bfb7e172f6358c49dd6adee0a9e89c09e3906",
+      "bytes": 12007091,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4593714392496793e-07
+          },
+          "max_displacement_from_rest": 0.748887412250042,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "fc2c5fc669fd8fa32bebe0a8e34a8ce2f0ff0983d2e5f17f23e62aea5eb837c8",
+          "normals_sha256": "98be434e5eb0114aff9ce4ed7ffbc7e6247d166d2150cd4ad49ddb2a9071fdf3",
+          "tangents_sha256": "eae1e89749735129fdffb9c91a1784a21fc11defaca0855346dcb3229d8b9cdd"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "d1169ba1f088e4ed83981a132692a9d3d9aec4c113083f14cc187edddc1ed85d",
+          "normals_sha256": "2ef7a9e1f54f18162164493ff2cd21c1319a8d7340193bb111875f94c09a6c86",
+          "tangents_sha256": "862dd9888bac3e118e04071afdb26e362f8298ece66c2c76a903a79e2aca09fc"
+        }
+      }
+    },
+    {
+      "case_id": "face-positive__neutral",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "neutral",
+      "path": ".work/b1-pose-reference/run1/face-positive__neutral.json",
+      "sha256": "79046546d78579c1bc9c884315a5d66dc91ee76f7a01eed92b72ab3a6fb153e1",
+      "bytes": 12016577,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "c943c661f3d2698eb49998c23b0cc7a665b259c0f104a856846580fb1735fca2",
+          "normals_sha256": "332d64ec672e2aae28aa50eed36d03d2c817e8652a39458cca7cde9a3347e5f6",
+          "tangents_sha256": "95895b207a2b340ee93b603e06e3153bbb7d37fc905890e3e2cf8daf209a4a0b"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "c43cef349ffc36bde24f1961a9cd22be7a339edb1a036ecff9253f46bce540c3",
+          "normals_sha256": "2424c5fde7d3e55448adacb6fa83b92dba139dd4f420f49dae3906aa81023ad2",
+          "tangents_sha256": "eb9475de89a542826ee82db2c5a3b1e3b6340ec45009d59345d894453d719cd3"
+        }
+      }
+    },
+    {
+      "case_id": "face-positive__shoulder",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "shoulder",
+      "path": ".work/b1-pose-reference/run1/face-positive__shoulder.json",
+      "sha256": "e1f0c8370bd2d6091d3864bf6aef036b14f94f328b4f7e93e935f758c1fdbbb7",
+      "bytes": 12013853,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.34241389483213425,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "3f297605e335fc47d34a97e1384d1a3d074b1f0097f5b4298bd8079b9bbeaf38",
+          "normals_sha256": "fa840cf092b6e3abd881911d7a606318c3996517b919240c1047c81c402f19a9",
+          "tangents_sha256": "dfbbd24abb65cb5bca26f1b4978852f834880fc16de20e9090ce146c38ad00a5"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.08858749270439148,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "8c3ae8b1f7bd0d4b2894f6eb730ce1f5bbbfea4be18704c9cd0c742a76324d74",
+          "normals_sha256": "00e9ea591a8640a4c0a57c59c3becd35f895f1921847f476651c8db753a6e2ec",
+          "tangents_sha256": "5848c0e1d0304381654fc8f865cdbfc0d085d659930e86f1902120e81409a9bb"
+        }
+      }
+    },
+    {
+      "case_id": "face-positive__elbow",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "elbow",
+      "path": ".work/b1-pose-reference/run1/face-positive__elbow.json",
+      "sha256": "68ef58d9770588698b743c2bd8b168a8120d15f20442903006df896765983a8e",
+      "bytes": 12009901,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.43392278254032135,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "bfbbdbe1feb839b1c85314f755d23975b2e3fb5fc17cfcfd914bf13e6b3a4f03",
+          "normals_sha256": "13a159516cc9a17e1d63a0539c132639d51e676179a19d78ff21a9bd27356298",
+          "tangents_sha256": "6fe9c40f263288cf5c7ae230c915c845c34f9dac9050844d9d07d20b5de5b413"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0013670027256011963,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "591f5bae539ca73c6bfce5c01ff6d23193268f67ea34394df7d8b847bcad7af1",
+          "normals_sha256": "8190ee8ed2f8e577091299cfdaf55dbdd943b24313955c1fbcad2c64a4dfbd59",
+          "tangents_sha256": "d26c0d6efc200035aaf434550caacae276ec7d94aaee6334e1789b2661800a90"
+        }
+      }
+    },
+    {
+      "case_id": "face-positive__knee",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "knee",
+      "path": ".work/b1-pose-reference/run1/face-positive__knee.json",
+      "sha256": "8a2f3e77ce85d80c111a93cc17886e35bf5fa8d6ebd1c8af67bb81966df2b9e6",
+      "bytes": 12011693,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4565119954568218e-07
+          },
+          "max_displacement_from_rest": 0.49989935755729675,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "7f2e63f5e466c2430cf59f886c557daa119da33a5486d4b77eab12d8dc22bfe4",
+          "normals_sha256": "7a277be3ebf1a9672cd660d3d47028f0106afa65a274f6ce1dd1c744ac7bdd26",
+          "tangents_sha256": "5e8f28b8ff3e41ee1f87da071c7c7e3f3ebdf0eb7f04fe7779626d15bc4bc816"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1872612826202555e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "6b14ab283f7893f3e2c66501351b470b0905b07b391c13a598de2bda35625954",
+          "normals_sha256": "45dc05e1fcac00d4a83fbda1dfbd07b1715faec561fd07fa4d7a9f7eadd81d6d",
+          "tangents_sha256": "e3766a44cf7eec9d652a62b6b73d4411a930586a473eac97533b83dafb9e9304"
+        }
+      }
+    },
+    {
+      "case_id": "face-positive__combined",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "combined",
+      "path": ".work/b1-pose-reference/run1/face-positive__combined.json",
+      "sha256": "abacddeeefb4023d93b76d945f3d6e59162636cde679298faac3dbcec421d10d",
+      "bytes": 12007206,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.269416021187908e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4572851991800917e-07
+          },
+          "max_displacement_from_rest": 0.748887412250042,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "5f2d687d2a4d3a59801e8186cae545fd08e061b773eeca25d1e3b3c551e8fb21",
+          "normals_sha256": "b25410b7fdf93b6fae77a45056291088af61b349f324f0608dcf32e8479d5af1",
+          "tangents_sha256": "57883c7d0747d83c051b99cf763e170b96ce0a5e68394a6913af0b9d7d51fbe3"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "d1169ba1f088e4ed83981a132692a9d3d9aec4c113083f14cc187edddc1ed85d",
+          "normals_sha256": "2ef7a9e1f54f18162164493ff2cd21c1319a8d7340193bb111875f94c09a6c86",
+          "tangents_sha256": "862dd9888bac3e118e04071afdb26e362f8298ece66c2c76a903a79e2aca09fc"
+        }
+      }
+    },
+    {
+      "case_id": "combined__neutral",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "neutral",
+      "path": ".work/b1-pose-reference/run1/combined__neutral.json",
+      "sha256": "38c7412a88bda1f917737d9630fec11fa0bd74d43e386dd208cb16ae984e2c41",
+      "bytes": 12014396,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285437844816727e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4702802353383504e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "6f47db51ecb4ad7c8be02d58986bce923623568e3a0b1b381dad9206dc270a4b",
+          "normals_sha256": "9dca2947e9bc2eb5dc0f3e6a533603679dfbc8fa01eb0d78978fac53619103f4",
+          "tangents_sha256": "52d933ca0b3ada8213a2bcea839cdfc1a8a05bdb12b0b9a68c836e2b6254b66c"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1706202951433653e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "8e1476e65787c857c99574c3b8c082e8fae50d3f6911ed6336056abf8d9aa60a",
+          "normals_sha256": "84d9e5a109e8accc0706485587e948d20e9f7d6ff6f0d7e3575a03c700c42e94",
+          "tangents_sha256": "c2f782adce9e38377e5ed0695ac234d0b216918e02cc60e7c6c02eb6fabfc328"
+        }
+      }
+    },
+    {
+      "case_id": "combined__shoulder",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "shoulder",
+      "path": ".work/b1-pose-reference/run1/combined__shoulder.json",
+      "sha256": "c6657c643de08d7e25fe03cf6d739061895f91927b19ae0a4938505408e600ad",
+      "bytes": 12011079,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285356454366791e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.5164854172411424e-07
+          },
+          "max_displacement_from_rest": 0.34241393208503723,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "e0b292851ef1c533a502424798b2384d948cd3b06ab0db35644ee29dbf5e384b",
+          "normals_sha256": "10f0a684be23db9780f562fd3ac061b24d0d6056fea47e7373f918913d1ebb50",
+          "tangents_sha256": "d3d9af15b77bf0fe10f6c019dd6c1dff21ac591b22a5a9cb5819d8ae6dc3de69"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.08858758211135864,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "c9e478e1af3a09e34875b028bfcf1c8a0d053e29bf9863acb9ae16f19d2a7d50",
+          "normals_sha256": "76a15eee7ad25d46ed680f28fa9ac8643d84c690e00bb5d1d7bdefc7e4c665d9",
+          "tangents_sha256": "d3471be43ca89b034859157a62ac645a7ec227974f4e538eb52570fe9390916d"
+        }
+      }
+    },
+    {
+      "case_id": "combined__elbow",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "elbow",
+      "path": ".work/b1-pose-reference/run1/combined__elbow.json",
+      "sha256": "e4b4d5ce4b7748af9758e335f7bd9e3a8625cfbe5ad8b61397271a013f779e26",
+      "bytes": 12008253,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285356454366791e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4702802353383504e-07
+          },
+          "max_displacement_from_rest": 0.43392275273799896,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "1830e115f326007265e9765b6320567bd5de378de88227fb33697ec2143075b5",
+          "normals_sha256": "2cc4f01073afb7011d30d0314f37d449f2ead6896b27a31cd25ea7b612a093e9",
+          "tangents_sha256": "0393ede280d4931a673c293b256c748de1d4e6bdbb7423e6f964870e695efb27"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1706202951433653e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.0013670027256011963,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "68e239d29a152ab2bd91104db5a6112aa2c48fd57dc10c7344c78b6394480dd2",
+          "normals_sha256": "92d2ae1a9f60b7d34b0d98e602b4d3c1901eff67a6c0f60f896b8b7da8d6c276",
+          "tangents_sha256": "a4db4a176aab93e0b7caf771003b6b0d4c21c6cc0551328fbf8b2aaf2472ad38"
+        }
+      }
+    },
+    {
+      "case_id": "combined__knee",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "knee",
+      "path": ".work/b1-pose-reference/run1/combined__knee.json",
+      "sha256": "fac3ef3f5ecc2b6f72e9e0559517458db75d3edcfa19a8088a45655fe5d183a6",
+      "bytes": 12009709,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285437844816727e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4702802353383504e-07
+          },
+          "max_displacement_from_rest": 0.49989935755729675,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "36d898842b5887dc82b7fa1009eda68bd8098cb1bbfae4ce4ac0da57d6e8f684",
+          "normals_sha256": "63919a2b7d79951b7c7f0047b332fb2a29876ae1997fdec84c487cc044978362",
+          "tangents_sha256": "c2776d915b60a3ffb9a773f95e36e995d2c67af0fd3a17b80415f00ced4b717d"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.1706202951433653e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "e751bd9488c3a8f7c292e4e35d91ebe112ea36842919d4b0c2b791d1df285cc4",
+          "normals_sha256": "027c654c59b11e0cd3f339f117dbdc84d01b5f826b0a0ed4fefe6ed3f7ccf555",
+          "tangents_sha256": "7ea6e6896ddba9192994afe500a123a609cd683ede7c48e8865a909931abf7c3"
+        }
+      }
+    },
+    {
+      "case_id": "combined__combined",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "combined",
+      "path": ".work/b1-pose-reference/run1/combined__combined.json",
+      "sha256": "7783a2aa7087c122ff3792b99153e71b4da271823d96825e8d106bdaf15b78ff",
+      "bytes": 12005459,
+      "stats": {
+        "body": {
+          "normals": {
+            "vectors": 19158,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.2285356454366791e-07
+          },
+          "tangents": {
+            "vectors": 73944,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4702802353383504e-07
+          },
+          "max_displacement_from_rest": 0.7488873898983002,
+          "weights_sha256": "bcf97bfdba5167f25c52c7c21ce112fce1755d0660d8a3d389920d3325e97c1a",
+          "source_ids_sha256": "a6819e4e92b6378fbd12f81a1891c2dda8e49d0f7d65627b7d110bf1c66325ab",
+          "positions_sha256": "2365d90f4b104d6d8f34609ed45f7c7484004ca479055fceb05e57f15ffa9f56",
+          "normals_sha256": "49eb28a356fb5d4b0fb0da5335afc7ad704eba05362a54ea615700c4115d5289",
+          "tangents_sha256": "095785ae02722788457ec79ae416e0f2db4f198afefc7b0554d8bc2e86b0b921"
+        },
+        "garment": {
+          "normals": {
+            "vectors": 1797,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.155940997366045e-07
+          },
+          "tangents": {
+            "vectors": 6872,
+            "zero_vectors": 0,
+            "max_nonzero_unit_length_error": 1.4051100605261269e-07
+          },
+          "max_displacement_from_rest": 0.33356407657265663,
+          "weights_sha256": "f2c917c8a92a9a8b50eba7b912090b2bebda7e69606ae34f7317a8935e4388a8",
+          "source_ids_sha256": "63f9800db34d4e65723f2a361411ecf86be0da346770072564ecf93124fd729e",
+          "positions_sha256": "f3ee1e8a0449526ec43c1aa00a00b0f6de87ee16a59ce57035dd2c5036da302e",
+          "normals_sha256": "0f0d8c899995bce0492dcde791b2bb64d602017211a0733539c6e9efa258c960",
+          "tangents_sha256": "ba2428413320627b0c15291a794bcdafb895ce9dfa02dd00d8cddf17cb5aa0f3"
+        }
+      }
+    }
+  ],
+  "conventions": {
+    "matrices": "row-major arrays, column vectors, Blender Z-up metres",
+    "deformation": "matrix_pose @ inverse(matrix_local)",
+    "pose": "bone-local matrix_basis postrotation; original source rolls retained",
+    "body_capture": "full cage before active clothing visibility MASK modifiers; restored",
+    "weights": "original untruncated and unnormalized deform vertex-group values",
+    "normal": "evaluated mesh-local; inverse-transpose world transform then normalize",
+    "tangent": "evaluated UV-corner xyz+bitangent sign; linear world transform then normalize"
+  },
+  "graphics_executed": false,
+  "candidate_comparison_executed": false
+}

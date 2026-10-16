@@ -32,6 +32,18 @@ jobs:
         run: bash experiments/27-ci-baseline/check.sh portable
       - name: Check bounded diagnostic controls
         run: bash experiments/27-ci-baseline/check.sh diagnostics
+      - name: Check authenticated B1 source bundle and rejection controls
+        timeout-minutes: 3
+        run: |
+          python3 -B -m unittest discover -s experiments/59-b1-ci-inputs -p 'test_*.py' -v
+          python3 -B -O -m unittest discover -s experiments/59-b1-ci-inputs -p 'test_*.py' -v
+          python3 -B -m unittest discover -s experiments/57-b1-pose-runtime -p 'test_prepare_ci.py' -v
+          python3 -B -O -m unittest discover -s experiments/57-b1-pose-runtime -p 'test_prepare_ci.py' -v
+          python3 -B experiments/59-b1-ci-inputs/prepare_ci_inputs.py --out "$RUNNER_TEMP/nvwa-b1-portable-seed"
+          python3 -B experiments/57-b1-pose-runtime/prepare.py --ci-inputs "$RUNNER_TEMP/nvwa-b1-portable-seed"
+          python3 -B experiments/58-b1-desktop-web/prepare.py --ci-inputs "$RUNNER_TEMP/nvwa-b1-portable-seed"
+          python3 -B -m unittest discover -s experiments/58-b1-desktop-web -p 'test_*.py' -v
+          python3 -B -O -m unittest discover -s experiments/58-b1-desktop-web -p 'test_*.py' -v
       - name: Prepare locked importer dependencies and check offline motion controls
         timeout-minutes: 6
         run: |
@@ -110,3 +122,28 @@ jobs:
           bash experiments/27-ci-baseline/check.sh wasm
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+      - name: Prepare pinned B1 inputs without asset or tool downloads
+        run: |
+          mkdir -p .work
+          python3 -B experiments/59-b1-ci-inputs/prepare_ci_inputs.py --out "$RUNNER_TEMP/nvwa-b1-seed"
+          python3 -B experiments/57-b1-pose-runtime/prepare.py --ci-inputs "$RUNNER_TEMP/nvwa-b1-seed"
+          python3 -B experiments/58-b1-desktop-web/prepare.py --ci-inputs "$RUNNER_TEMP/nvwa-b1-seed"
+          cargo fetch --locked --manifest-path experiments/57-b1-pose-runtime/adapter/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/58-b1-desktop-web/Cargo.toml
+      - name: Execute real B1 source and sampled pose regression
+        env:
+          B1_CI_INPUTS: ${{ runner.temp }}/nvwa-b1-seed
+          # Match the existing optimized Bevy dependency build in this job.
+          CARGO_PROFILE_DEV_OPT_LEVEL: '1'
+          CARGO_PROFILE_TEST_OPT_LEVEL: '1'
+        run: |
+          cargo fmt --manifest-path experiments/57-b1-pose-runtime/adapter/Cargo.toml --package b1-pose-adapter --check
+          cargo fmt --manifest-path experiments/58-b1-desktop-web/Cargo.toml --package b1-desktop-web --check
+          cargo test --manifest-path experiments/57-b1-pose-runtime/adapter/Cargo.toml --test sampled --locked --offline -- --nocapture
+          cargo test --manifest-path experiments/58-b1-desktop-web/Cargo.toml --lib --locked --offline
+          cargo build --manifest-path experiments/58-b1-desktop-web/Cargo.toml --bin b1-desktop-web --locked --offline
+          python3 -B -O experiments/58-b1-desktop-web/verify_native.py --binary "$CARGO_TARGET_DIR/debug/b1-desktop-web" --asset-root "$GITHUB_WORKSPACE/.work/b1-pose-viewer/site/assets" --out "$RUNNER_TEMP/nvwa-b1-viewer-runtime"
+      - name: Check the same B1 viewer for native and Web
+        run: |
+          cargo check --manifest-path experiments/58-b1-desktop-web/Cargo.toml --locked --offline
+          cargo check --manifest-path experiments/58-b1-desktop-web/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline

@@ -1,0 +1,55 @@
+{
+  "native_web_original_cpu_diagnostic_frame_parity": true,
+  "gpu_vertex_parity_claimed": false,
+  "state": {
+    "backend": "full-weight-cpu",
+    "camera_yaw": 45.0,
+    "format": "nvwa-b1-pose-prototype",
+    "pose": "combined",
+    "recipe": "combined",
+    "schema_version": 1
+  },
+  "maximum_component_error": {
+    "matrix": 8.344650268554688e-07,
+    "position": 2.980232238769531e-07,
+    "normal": 3.5762786865234375e-07,
+    "tangent": 3.5762786865234375e-07,
+    "weight": 1.1920928955078125e-07
+  },
+  "coverage": {
+    "body": {
+      "vertices": 22077,
+      "source_ids": 19158,
+      "bones": 53,
+      "frame_validation": {
+        "passed": true,
+        "present_finite": true,
+        "normal_min_length": 0.9999998860297048,
+        "tangent_min_length": 0.9999998775826634,
+        "max_frame_identity_error": 1.0810219741586025e-07,
+        "appearance_acceptance": "NOT-RUN"
+      },
+      "legacy_four_slot_negative_weight_components": 0,
+      "legacy_four_slot_vertices_with_negative_weights": 0,
+      "legacy_four_slot_min_weight": 0.0,
+      "weight_quality_acceptance": false
+    },
+    "garment": {
+      "vertices": 1986,
+      "source_ids": 1797,
+      "bones": 53,
+      "frame_validation": {
+        "passed": true,
+        "present_finite": true,
+        "normal_min_length": 0.9999998805126133,
+        "tangent_min_length": 0.9999998643478213,
+        "max_frame_identity_error": 1.0810219741586025e-07,
+        "appearance_acceptance": "NOT-RUN"
+      },
+      "legacy_four_slot_negative_weight_components": 3,
+      "legacy_four_slot_vertices_with_negative_weights": 2,
+      "legacy_four_slot_min_weight": -0.0020712660625576973,
+      "weight_quality_acceptance": false
+    }
+  }
+}

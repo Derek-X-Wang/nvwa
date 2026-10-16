@@ -1,0 +1,91 @@
+--- a/src/morphs.rs
++++ b/src/morphs.rs
+@@ -66,7 +66,8 @@
+     composite_handle: Handle<CompositeTargetsAsset>,
+     #[allow(dead_code)]
+     macro_handle: Handle<MacroDataAsset>,
+-    targets_handle: Handle<LoadedFolder>,
++    targets_handle: Option<Handle<LoadedFolder>>,
++    explicit_targets: Vec<Handle<TargetAsset>>,
+ }
+ 
+ impl MakeHumanMorphs {
+@@ -83,7 +84,26 @@
+             categories: default(),
+             composite_handle: asset_server.load::<CompositeTargetsAsset>(composite_path),
+             macro_handle: asset_server.load::<MacroDataAsset>(macro_path),
+-            targets_handle: asset_server.load_folder(targets_folder),
++            targets_handle: Some(asset_server.load_folder(targets_folder)),
++            explicit_targets: Vec::new(),
++        }
++    }
++
++    /// Explicit typed target paths for HTTP/Wasm, where directory listing is unavailable.
++    /// An omitted target remains absent and compute_target_weights returns TargetNotFound.
++    pub fn new_explicit(
++        asset_server: &AssetServer,
++        composite_path: impl Into<AssetPath<'static>>,
++        macro_path: impl Into<AssetPath<'static>>,
++        target_paths: Vec<String>,
++    ) -> Self {
++        assert!(!target_paths.is_empty(), "explicit target list must not be empty");
++        Self {
++            targets: default(), macros: default(), composites: default(), categories: default(),
++            composite_handle: asset_server.load(composite_path),
++            macro_handle: asset_server.load(macro_path),
++            targets_handle: None,
++            explicit_targets: target_paths.into_iter().map(|path| asset_server.load(path)).collect(),
+         }
+     }
+ 
+@@ -91,10 +111,13 @@
+         if !self.macros.read().unwrap().is_some() || !self.composites.read().unwrap().is_some() {
+             return false;
+         }
+-        matches!(
+-            asset_server.get_load_state(&self.targets_handle),
+-            Some(LoadState::Loaded)
+-        )
++        if let Some(folder) = &self.targets_handle {
++            matches!(asset_server.get_load_state(folder), Some(LoadState::Loaded))
++        } else {
++            !self.explicit_targets.is_empty() && self.explicit_targets.iter().all(|handle| {
++                matches!(asset_server.get_load_state(handle), Some(LoadState::Loaded))
++            }) && self.targets.read().unwrap().len() >= self.explicit_targets.len()
++        }
+     }
+ 
+     pub fn has_targets_for_shapes(&self, shapes: &[CharacterMorphShape]) -> bool {
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -136,6 +136,30 @@
+     commands.insert_resource(RigAssetHandles {
+         config: config_handle,
+         weights: weights_handle,
++    });
++}
++
++/// Same core algorithms as the folder loader, with explicit typed target paths.
++/// Suitable for HTTP assets: no load_folder request is made by this route.
++pub fn load_and_insert_humentity_assets_explicit(
++    commands: &mut Commands,
++    asset_server: &AssetServer,
++    base_mesh_path: impl Into<AssetPath<'static>>,
++    vertex_groups_path: impl Into<AssetPath<'static>>,
++    target_composites_path: impl Into<AssetPath<'static>>,
++    target_macros_path: impl Into<AssetPath<'static>>,
++    target_paths: Vec<String>,
++    rig_config_path: impl Into<AssetPath<'static>>,
++    rig_weights_path: impl Into<AssetPath<'static>>,
++) {
++    commands.insert_resource(basemesh::BaseMesh::new(asset_server, base_mesh_path));
++    commands.insert_resource(basemesh::VertexGroups::new(asset_server, vertex_groups_path));
++    commands.insert_resource(morphs::MakeHumanMorphs::new_explicit(
++        asset_server, target_composites_path, target_macros_path, target_paths,
++    ));
++    commands.insert_resource(RigAssetHandles {
++        config: asset_server.load(rig_config_path),
++        weights: asset_server.load(rig_weights_path),
+     });
+ }
+ 
