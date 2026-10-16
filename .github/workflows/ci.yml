@@ -87,6 +87,22 @@ jobs:
           # Repository-only reproduction; optional source-cache byte audit is NOT-RUN here.
           python3 -B experiments/49-runtime-pose-parity/attribution/directions.py
           python3 -B experiments/49-runtime-pose-parity/attribution/directions.py --capture web
+      - name: Check frozen upper-arm comparison and retained runtime captures
+        timeout-minutes: 5
+        run: |
+          python3 -B experiments/50-upper-arm-neutral-ab/test_candidate.py
+          python3 -B -O experiments/50-upper-arm-neutral-ab/test_candidate.py
+          python3 -B experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py
+          python3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py
+          python3 -B experiments/50-upper-arm-neutral-ab/test_runtime_measure.py
+          python3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_measure.py
+          python3 -B experiments/50-upper-arm-neutral-ab/runtime_evidence.py
+          mkdir -p .work/ci-neutral50
+          for platform in native web; do
+            for variant in baseline candidate; do
+              python3 -B experiments/50-upper-arm-neutral-ab/probe/compare.py "experiments/50-upper-arm-neutral-ab/results/$platform-$variant.json" --variant "$variant" --output ".work/ci-neutral50/$platform-$variant.json"
+            done
+          done
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     # Reject cheap portable failures before spending a cold graphical compile.
@@ -107,8 +123,11 @@ jobs:
         run: |
           bash experiments/27-ci-baseline/check.sh native
           cargo fmt --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --all --check
+          cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --all --check
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --locked --offline
+          cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --locked --offline
       - name: Compile the actual Web target
         run: |
           bash experiments/27-ci-baseline/check.sh wasm
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
