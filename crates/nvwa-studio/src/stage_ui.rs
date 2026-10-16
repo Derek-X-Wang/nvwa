@@ -68,7 +68,7 @@ pub(super) fn draw(ctx: &egui::Context, state: &mut StageUi, stage: &StageSettin
         egui::Window::new("试演舞台 / Rehearsal stage")
             .id(egui::Id::new("rehearsal_stage"))
             .open(&mut state.open)
-            .default_pos(egui::pos2(195.0, 72.0))
+            .default_pos(egui::pos2(12.0, 72.0))
             .default_width(320.0)
             .max_width(360.0)
             .max_height((ctx.viewport_rect().height() - 110.0).max(120.0))
@@ -419,21 +419,21 @@ mod tests {
             let out = h.frame(vec![]);
             let lux = label(&out, "强度 / Lux");
             let before = h.editor.document().unwrap().clone();
-            // Window starts at x195; the slider is the first 100pt in its body.
-            let start = egui::pos2(220.0, lux.center().y);
+            // The slider is in the first 100pt of the floating window body.
+            let start = egui::pos2(37.0, lux.center().y);
             h.frame(vec![
                 egui::Event::PointerMoved(start),
                 pointer(start, true, egui::PointerButton::Primary),
             ])
             .drop_without_applying_deltas();
-            for x in [245.0, 265.0, 285.0] {
+            for x in [62.0, 82.0, 102.0] {
                 h.frame(vec![egui::Event::PointerMoved(egui::pos2(x, start.y))])
                     .drop_without_applying_deltas();
                 assert!(h.guard.pointer);
                 assert!(h.editor.preview.is_some());
                 assert_eq!(h.editor.document(), Some(&before));
             }
-            let end = egui::pos2(285.0, start.y);
+            let end = egui::pos2(102.0, start.y);
             h.frame(vec![pointer(end, false, egui::PointerButton::Primary)])
                 .drop_without_applying_deltas();
             let edited = h.editor.document().unwrap().clone();
@@ -464,7 +464,7 @@ mod tests {
                 pointer(start, true, egui::PointerButton::Primary),
             ])
             .drop_without_applying_deltas();
-            h.frame(vec![egui::Event::PointerMoved(egui::pos2(250.0, start.y))])
+            h.frame(vec![egui::Event::PointerMoved(egui::pos2(67.0, start.y))])
                 .drop_without_applying_deltas();
             assert!(h.editor.preview.is_some());
             h.frame(vec![key(egui::Key::Escape)])
@@ -526,7 +526,7 @@ mod tests {
         h.frame(vec![]).drop_without_applying_deltas();
         let out = h.frame(vec![]);
         let lux = label(&out, "强度 / Lux");
-        let start = egui::pos2(220.0, lux.center().y);
+        let start = egui::pos2(37.0, lux.center().y);
         let before = h.editor.document().unwrap().clone();
         h.frame(vec![
             egui::Event::PointerMoved(start),

@@ -83,3 +83,9 @@ Corrected product source: `db0139e0ffb195abf681620e6f691eb103ce2dd3`. Native and
 - Web dev build: **27.32 s**, followed by successful pinned `wasm-bindgen 0.2.129 --target web`. Browser module: 114,643,468 bytes, SHA-256 `f98eb1f4f9748918edb8cc26231202a6a13fe3cad2ecad48a0e1c8dd294c2f78`. JS SHA-256 `05c8adc45f6c2a95f833e1a6e81d58c46aa602094b7b308aa3499fe7b2e4c930`.
 
 Corrected artifacts are kept in a distinct private `framing-v2` cohort so the earlier images and artifact hashes remain traceable. All worker build/bindgen processes finished. The worker performed no GPU/browser/native launch; root owns corrected pixel/input acceptance and final CI.
+
+## Final initial-window placement polish
+
+Root's fresh 1024×768 Web observation confirmed the corrected full-body frame, but opening the movable Stage window at its original x=195 covered the character. The sole production change moves the initial Stage window to `(12,72)`, over the left sidebar. Camera, schema, panel layout, quality and file behavior are unchanged. Existing real-control test inputs were translated to the moved sliders; no test that merely mirrors the position constant was added.
+
+All **five focused Stage UI tests** passed (8.37 s compile), including actual slider release/Escape, presets, pointer/IME ownership, wheel history and Player orbit. Formatting and whitespace checks passed. The earlier 137-test full-suite gate remains recorded against source `db0139e`; final-head CI and root's actual fresh 1024 view check remain separate. This change does not address or work around the live IAB resize limitation tracked by #3.
