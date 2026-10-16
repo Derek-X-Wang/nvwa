@@ -77,6 +77,11 @@ jobs:
           python3 -B experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/native-visual.json
           python3 -B experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/web.json
           python3 -B experiments/49-runtime-pose-parity/verify_native_failure.py
+          # Measure the full cross-platform numerical delta before the strict
+          # retained-golden assertion; this diagnostic grants no tolerance waiver.
+          python3 -B experiments/49-runtime-pose-parity/attribution/diagnose_reproduction.py --self-test
+          python3 -B -O experiments/49-runtime-pose-parity/attribution/diagnose_reproduction.py --self-test
+          python3 -B experiments/49-runtime-pose-parity/attribution/diagnose_reproduction.py
           python3 -B experiments/49-runtime-pose-parity/attribution/test_port.py
           python3 -B -O experiments/49-runtime-pose-parity/attribution/test_port.py
           # Repository-only reproduction; optional source-cache byte audit is NOT-RUN here.
@@ -84,6 +89,8 @@ jobs:
           python3 -B experiments/49-runtime-pose-parity/attribution/directions.py --capture web
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
+    # Reject cheap portable failures before spending a cold graphical compile.
+    needs: portable
     runs-on: macos-14
     timeout-minutes: 45
     env:
