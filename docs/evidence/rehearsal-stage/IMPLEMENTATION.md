@@ -73,3 +73,13 @@ Red/green proof uses the production UI draw path, production fit system and real
 High retains 4× MSAA and the 4096 PBR key-light shadow map. The optional contact pass and its depth prepass are disabled. CLI discovery, the UI hint and production component tests reflect this actual profile. The key shadow maps, fixed ground height and scaled cascade/depth-bias behavior remain intact. This removes an implementation choice that degraded the observed image; it does not remove the user's lighting/shadow or quality controls.
 
 Final stable-checkout `CARGO_BUILD_JOBS=1 cargo test --workspace --offline --locked` passed **137 tests** (36 core/CLI, 42 runtime, 59 Studio), compiling in **54.63 s**. Strict core/CLI Clippy passed in **2.15 s**, and formatting/whitespace checks passed. The standalone Studio+CLI dev build completed in **3.29 s** with `cargo build -p nvwa-studio --bin nvwa-studio -p nvwa-cli --bin nvwa-cli --offline --locked`. The corrected artifact cohort and source hashes follow; root owns the graphical recheck and final CI.
+
+## Corrected artifact cohort: framing-v2
+
+Corrected product source: `db0139e0ffb195abf681620e6f691eb103ce2dd3`. Native and Web manifests verify the same complete Rust/workspace/Web-index source map, canonical SHA-256 `2e7db5c84a81d3152b8a234f5624ce4f6132a8fa7bf654ebe5c35b0863ea6cc7`. Original fixture bytes remain unchanged.
+
+- Native Studio: 156,147,200 bytes, SHA-256 `60e8daf6d7eb4014a5a97e184a671850b67f7b533df3541d8b5fac24c8fb6114`.
+- Native CLI: 1,540,088 bytes, SHA-256 `5201bd01c67e9c24f1cc57d81af4ddd649a0981cf31c0c196d3cf36cdd95bbaa`. The CLI artifact is copied separately for root's real file/capability acceptance.
+- Web dev build: **27.32 s**, followed by successful pinned `wasm-bindgen 0.2.129 --target web`. Browser module: 114,643,468 bytes, SHA-256 `f98eb1f4f9748918edb8cc26231202a6a13fe3cad2ecad48a0e1c8dd294c2f78`. JS SHA-256 `05c8adc45f6c2a95f833e1a6e81d58c46aa602094b7b308aa3499fe7b2e4c930`.
+
+Corrected artifacts are kept in a distinct private `framing-v2` cohort so the earlier images and artifact hashes remain traceable. All worker build/bindgen processes finished. The worker performed no GPU/browser/native launch; root owns corrected pixel/input acceptance and final CI.
