@@ -1,0 +1,12 @@
+[package]
+name = "compiled-character-probe"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = { version = "=1.0.152", features = ["float_roundtrip"] }
+sha2 = "=0.10.9"

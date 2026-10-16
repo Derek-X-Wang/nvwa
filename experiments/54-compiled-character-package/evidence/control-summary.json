@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "sample_class": "nvwa-existing-fixture-control",
+  "route_id": "compiled-package",
+  "status": "passed",
+  "independent_oracle": "Python stdlib direct GLB POSITION/morph decode; all f64 output bytes, bounds and node/primitive identity compared",
+  "cases": [
+    {
+      "case_id": "neutral",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.0,
+      "result": "neutral.result.json",
+      "result_sha256": "e332b88b91031b93dabf85e39e7257bad794b9d7c436846fae54af572c6cf80e"
+    },
+    {
+      "case_id": "jaw_width-0.25",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.01721518486738205,
+      "result": "jaw_width-0.25.result.json",
+      "result_sha256": "9106fbf9af62647e1a1b9697e0c9a17a30d46dbd95e0b590402ca3dc8cd59629"
+    },
+    {
+      "case_id": "jaw_width-0.5",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.0344303697347641,
+      "result": "jaw_width-0.5.result.json",
+      "result_sha256": "7a9c0294e7eca41a5c227408cab0e66719003a75de59d37d6e3796d0e2d96aa5"
+    },
+    {
+      "case_id": "jaw_width-1.0",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.0688607394695282,
+      "result": "jaw_width-1.0.result.json",
+      "result_sha256": "10fe96d6656f37c91e96c665f745cdfb87db67cf9efd714525d204b2d33c7b59"
+    },
+    {
+      "case_id": "nose_width-0.25",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.017361914426569418,
+      "result": "nose_width-0.25.result.json",
+      "result_sha256": "74367efeed524e22738460839de25e9b56347d1fa9606552821468944f3a7db7"
+    },
+    {
+      "case_id": "nose_width-0.5",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.034723828853138836,
+      "result": "nose_width-0.5.result.json",
+      "result_sha256": "b54e2899676e2bfd806c58c84bf793d2bcc6c6ea6706d374116da5169d0173e1"
+    },
+    {
+      "case_id": "nose_width-1.0",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.06944765770627767,
+      "result": "nose_width-1.0.result.json",
+      "result_sha256": "65a687d11a270945f781cbf6ecefaa8d7b648e93ecfd3ec7e2d75665ff808baa"
+    },
+    {
+      "case_id": "smile-0.25",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.009814490149128292,
+      "result": "smile-0.25.result.json",
+      "result_sha256": "7f9cf0f7b37be4106992f76bc41b6912a1328d2d4c9599e2175a2d6e48236c63"
+    },
+    {
+      "case_id": "smile-0.5",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.019628980298256583,
+      "result": "smile-0.5.result.json",
+      "result_sha256": "403bf65d4541f7f008579f9fd969f47763a338fc4dc6e03a0f64619b222b4fa9"
+    },
+    {
+      "case_id": "smile-1.0",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.03925796059651317,
+      "result": "smile-1.0.result.json",
+      "result_sha256": "0cbc14d6aa0a5fe41e7dfc5fc7f00438abf6205d447b9bc319e9baa706ca85da"
+    },
+    {
+      "case_id": "shoulder_width-0.25",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.022470995783805847,
+      "result": "shoulder_width-0.25.result.json",
+      "result_sha256": "0ac8cc72345f44c5750d41f39e3c6e80b96cbf217ee5a28a512ededd3cb05a15"
+    },
+    {
+      "case_id": "shoulder_width-0.5",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.044941991567611694,
+      "result": "shoulder_width-0.5.result.json",
+      "result_sha256": "75ec133921c28deb2d73bd0ee82407c5165b64d61418ff2630e5b96e9f52d910"
+    },
+    {
+      "case_id": "shoulder_width-1.0",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.08988398313522339,
+      "result": "shoulder_width-1.0.result.json",
+      "result_sha256": "e15d7a99c18c8401c3a98db7ae3617d257aef3d07972d304816269d35b761ebf"
+    },
+    {
+      "case_id": "combination",
+      "status": "passed",
+      "vertices": 24736,
+      "max_displacement_local": 0.045212225640352544,
+      "result": "combination.result.json",
+      "result_sha256": "320c6ef2e7f5d5190bcc829212632f1eda7b4587d4f28092697da894f47806f6"
+    }
+  ],
+  "failure_controls": [
+    {
+      "case_id": "wrong-profile-hash",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "recipe profile/schema mismatch",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "wrong-asset-hash",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "asset/profile hash mismatch",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "wrong-manifest-hash",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "source manifest hash mismatch",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "wrong-profile-id",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "recipe profile/schema mismatch",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "invalid-node-binding",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "binding node/mesh mismatch",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "missing-primitive-binding",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "morph target lacks explicit node/primitive binding",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "duplicate-binding",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "duplicate/conflicting binding",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "out-of-range",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "recipe missing/unknown/out-of-range/non-finite parameter",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "unknown-parameter",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "recipe missing/unknown/out-of-range/non-finite parameter",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "missing-parameter",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "recipe missing/unknown/out-of-range/non-finite parameter",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "inverted-profile-bounds",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "invalid/duplicate parameter bounds or target",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "non-finite-recipe",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "expected value at line 1 column 24",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "non-finite-real-position",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "non-finite accessor value",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "unsupported-sparse-accessor",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "unsupported float accessor 23",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "non-finite-accessor-bound",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "diagnostic": {
+        "error": "number out of range at line 1 column 26445",
+        "status": "failed"
+      },
+      "no_new_output": true,
+      "existing_output_preserved": true
+    },
+    {
+      "case_id": "valid-input-existing-output",
+      "status": "passed-rejection-control",
+      "exit_code": 2,
+      "existing_output_preserved": true
+    }
+  ],
+  "original_inputs_preserved": true,
+  "private_case_evidence_path": "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/54-compiled-character-package/.work/final-receipts/cases",
+  "duration_seconds": 11.690478041069582,
+  "approved_makehuman_sample": {
+    "status": "not_run",
+    "reason": "approved sample unavailable"
+  },
+  "reference_pipeline_run": false,
+  "graphical_execution_run": false
+}

@@ -1,0 +1,48 @@
+test_existing_output_preserved (test_preflight.OutputPreservationControls.test_existing_output_preserved) ... ok
+test_log_is_input (test_preflight.OutputPreservationControls.test_log_is_input) ... ok
+test_log_symlink_alias (test_preflight.OutputPreservationControls.test_log_symlink_alias) ... ok
+test_receipt_hardlink_alias (test_preflight.OutputPreservationControls.test_receipt_hardlink_alias) ... ok
+test_receipt_is_approval (test_preflight.OutputPreservationControls.test_receipt_is_approval) ... ok
+test_receipt_is_sample (test_preflight.OutputPreservationControls.test_receipt_is_sample) ... ok
+test_receipt_is_source (test_preflight.OutputPreservationControls.test_receipt_is_source) ... ok
+test_receipt_symlink_alias (test_preflight.OutputPreservationControls.test_receipt_symlink_alias) ... ok
+test_run_command_never_truncates_log_alias (test_preflight.OutputPreservationControls.test_run_command_never_truncates_log_alias) ... ok
+test_absent_approval (test_preflight.PreflightControls.test_absent_approval) ... ok
+test_escaping_input_path (test_preflight.PreflightControls.test_escaping_input_path) ... ok
+test_fixture_substitution (test_preflight.PreflightControls.test_fixture_substitution) ... ok
+test_missing_approval_digest (test_preflight.PreflightControls.test_missing_approval_digest) ... ok
+test_missing_basis (test_preflight.PreflightControls.test_missing_basis) ... ok
+test_missing_candidate (test_preflight.PreflightControls.test_missing_candidate) ... ok
+test_missing_common_case (test_preflight.PreflightControls.test_missing_common_case) ... ok
+test_missing_data_roles (test_preflight.PreflightControls.test_missing_data_roles) ... ok
+test_missing_input_bytes (test_preflight.PreflightControls.test_missing_input_bytes) ... ok
+test_missing_inventory_approval (test_preflight.PreflightControls.test_missing_inventory_approval) ... ok
+test_missing_provenance (test_preflight.PreflightControls.test_missing_provenance) ... ok
+test_missing_reference_identity (test_preflight.PreflightControls.test_missing_reference_identity) ... ok
+test_source_not_approved (test_preflight.PreflightControls.test_source_not_approved) ... ok
+test_symlink_escape (test_preflight.PreflightControls.test_symlink_escape) ... ok
+test_tampered_input_bytes (test_preflight.PreflightControls.test_tampered_input_bytes) ... ok
+test_tree_digest_changes_with_content (test_preflight.PreflightControls.test_tree_digest_changes_with_content) ... ok
+test_tree_digest_excludes_build_and_git_metadata (test_preflight.PreflightControls.test_tree_digest_excludes_build_and_git_metadata) ... ok
+test_tree_symlink_rejected (test_preflight.PreflightControls.test_tree_symlink_rejected) ... ok
+test_unapproved_sample (test_preflight.PreflightControls.test_unapproved_sample) ... ok
+test_wrong_approval_digest (test_preflight.PreflightControls.test_wrong_approval_digest) ... ok
+test_wrong_candidate_path (test_preflight.PreflightControls.test_wrong_candidate_path) ... ok
+test_wrong_commit_approval (test_preflight.PreflightControls.test_wrong_commit_approval) ... ok
+test_wrong_sample_digest (test_preflight.PreflightControls.test_wrong_sample_digest) ... ok
+test_approved_sha_mismatch (test_preflight.SourceInventoryControls.test_approved_sha_mismatch) ... ok
+test_directory_symlink (test_preflight.SourceInventoryControls.test_directory_symlink) ... ok
+test_exact_inventory_without_git_or_lock (test_preflight.SourceInventoryControls.test_exact_inventory_without_git_or_lock) ... ok
+test_extra_directory (test_preflight.SourceInventoryControls.test_extra_directory) ... ok
+test_extra_file (test_preflight.SourceInventoryControls.test_extra_file) ... ok
+test_false_source_even_when_free_sha_matches (test_preflight.SourceInventoryControls.test_false_source_even_when_free_sha_matches) ... ok
+test_inventory_traversal (test_preflight.SourceInventoryControls.test_inventory_traversal) ... ok
+test_missing_file (test_preflight.SourceInventoryControls.test_missing_file) ... ok
+test_nonregular_fifo (test_preflight.SourceInventoryControls.test_nonregular_fifo) ... ok
+test_oversize_before_read (test_preflight.SourceInventoryControls.test_oversize_before_read) ... ok
+test_source_symlink (test_preflight.SourceInventoryControls.test_source_symlink) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 0.271s
+
+OK
