@@ -1,6 +1,8 @@
-# Path A — offline compiled character package preparation
+# Path A — offline compiled character package experiment
 
-This is an isolated CPU experiment, not product integration or a MakeHuman implementation.
+This is an isolated CPU experiment. The actual approved MakeHuman source-compiled
+comparison is in [REPORT.md](REPORT.md); body/joint-endpoint/garment numeric parity
+passes while rig/skin/graphics acceptance remains incomplete.
 The package consists of the **existing pinned original GLB**, the existing character profile,
 and a small explicit sidecar binding each parameter to `(node, mesh, primitive, target)`.
 No model is copied into this experiment. No preset mesh switching is used.
@@ -12,7 +14,8 @@ experiments/54-compiled-character-package/run.sh
 ```
 
 The script uses `cargo build --locked --offline -j 1`, its own lockfile and target,
-then runs the independent Python process controls. It prints case and rejection-control
+then runs the independent Python process controls and the separate handwritten
+signed/helper/proxy controls. It prints case and rejection-control
 counts. A fresh private directory under `.work/` retains build/control logs, recipes,
 complete JSON receipts and `cases/summary.json`. Existing output is never overwritten.
 An optional first argument names an **absolute, absent** private run directory.
@@ -39,13 +42,11 @@ four controls and one combination. Rejection controls invoke the same binary and
 check both absent-output and existing-output preservation. Deliberately corrupted
 input copies are temporary and are removed after the control run.
 
-## Explicit support boundary
+## Existing GLB binary support boundary
 
-Only `nvwa-existing-fixture-control` is admitted. The future common approved sample
-must supply the same manifest digest/reference case IDs to both A and B. Its package
-can use the same explicit node/primitive binding interface, but the admission gate,
-reference comparison and any required adaptation rules need separate work after
-approval. A profile is not a general Blender/MPFB rule engine.
+The original `compiled-character-probe` admits only `nvwa-existing-fixture-control`. The separate `compiled-numeric-probe` executes the approved common MakeHuman sample
+with the same frozen manifest and case IDs as path B. Its actual supported operators and missing rig/skin/graphics gates are listed in
+[ADAPTATION.md](ADAPTATION.md). A profile is not a general Blender/MPFB rule engine.
 
 The bounded decoder accepts one embedded GLB buffer and finite f32 VEC3 POSITION /
 morph accessors, including byte offsets and strides. It rejects sparse accessors,
@@ -62,3 +63,6 @@ Work, run desktop/Web or assess character quality. Garment state remains `null`.
 
 See [REPORT.md](REPORT.md) and compact [control evidence](evidence/control-summary.json).
 The full receipts are private `.work/` evidence; the summary records their hashes.
+
+Approved-sample continuation and current numeric operator scope are in
+[ADAPTATION.md](ADAPTATION.md). This does not upgrade the old fixture evidence.

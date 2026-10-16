@@ -182,14 +182,13 @@ impl Glb {
                 }
             }
         }
-        if let (Some(min), Some(max)) = (a["min"].as_array(), a["max"].as_array()) {
-            if min
+        if let (Some(min), Some(max)) = (a["min"].as_array(), a["max"].as_array())
+            && min
                 .iter()
                 .zip(max)
                 .any(|(a, b)| a.as_f64().unwrap() > b.as_f64().unwrap())
-            {
-                return Err("inverted accessor bounds".into());
-            }
+        {
+            return Err("inverted accessor bounds".into());
         }
         let mut rows = Vec::with_capacity(count);
         for i in 0..count {
@@ -308,14 +307,13 @@ fn evaluate(package_path: &Path, recipe_path: &Path, command: &[String]) -> Resu
         let mi = mi.as_u64().ok_or("invalid mesh index")? as usize;
         let mesh = indexed(&g.json, "meshes", mi)?;
         for owner in [n, mesh] {
-            if let Some(w) = owner.get("weights") {
-                if w.as_array()
+            if let Some(w) = owner.get("weights")
+                && w.as_array()
                     .ok_or("invalid default weights")?
                     .iter()
                     .any(|x| x.as_f64() != Some(0.0))
-                {
-                    return Err("nonzero default weights unsupported".into());
-                }
+            {
+                return Err("nonzero default weights unsupported".into());
             }
         }
         for (pi, prim) in mesh["primitives"]

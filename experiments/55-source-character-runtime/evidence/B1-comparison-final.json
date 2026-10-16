@@ -1,0 +1,1112 @@
+{
+  "schema_version": 1,
+  "route_id": "source-runtime",
+  "sample_class": "makehuman-approved-sample",
+  "common_manifest_sha256": "2e8566a4f12de710ead88f6aa2d71fc44e0680761a4f2fdc48a844b6f3534ab7",
+  "comparison_executed": true,
+  "status": "within_numeric_tolerance",
+  "cases": [
+    {
+      "case_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "candidate_output_sha256": "2fdf2178500742b6c072c7cb0f55bc5a2269625ed67486e1763e2cb62c743508",
+      "reference_sha256": "c5671e6d808cbd96b42840e6fa9c33477b4951fcc9d25a902228e1d967a86c7b",
+      "measures": {
+        "helpers": {
+          "compared_points": 19158,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.76257354720326e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          }
+        },
+        "body": {
+          "compared_points": 22077,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.8118870697544226e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          },
+          "mesh_vertices": 22077,
+          "reference_source_vertices": 19158,
+          "mapped_source_vertices": 19158,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "garment": {
+          "compared_points": 1986,
+          "max_component_error_metres": 7.581710815385279e-06,
+          "rms_distance_metres": 2.337827655393629e-06,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 1497,
+            "candidate": [
+              -0.23700661659240724,
+              0.039707607030868536,
+              -0.7285619258880616
+            ],
+            "reference": [
+              -0.2370089888572693,
+              0.03970792889595032,
+              -0.728569507598877
+            ],
+            "component_errors": [
+              2.3722648620494446e-06,
+              3.2186508178155826e-07,
+              7.581710815385279e-06
+            ]
+          },
+          "mesh_vertices": 1986,
+          "reference_source_vertices": 1797,
+          "mapped_source_vertices": 1797,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "joint_heads": {
+          "compared_points": 53,
+          "max_component_error_metres": 3.4570693963065224e-07,
+          "rms_distance_metres": 1.5995806292665902e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": "ball_l",
+            "candidate": [
+              0.21985998153686526,
+              -0.12084497213363649,
+              -0.8101498603820801
+            ],
+            "reference": [
+              0.2198600471019745,
+              -0.12084509432315826,
+              -0.8101502060890198
+            ],
+            "component_errors": [
+              6.556510923072523e-08,
+              1.2218952177844855e-07,
+              3.4570693963065224e-07
+            ]
+          }
+        }
+      },
+      "all_measured_geometry_within_tolerance": true,
+      "rest_inverse_bind_state_recorded": true,
+      "rest_inverse_bind_parity": "not_run: exact local-frame convention comparison not established",
+      "joint_tails": "not_run: candidate public API does not expose fitted tail positions",
+      "graphics": "not_run",
+      "poses": "not_run"
+    },
+    {
+      "case_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "candidate_output_sha256": "9d42f49225c1f6b60e289e9841cfe31b35803a0a1180966a0dde1084fe366ca4",
+      "reference_sha256": "69716d6e6f8121ea39b6bdec1855503c075d599d53939ca5de65a42d135798f9",
+      "measures": {
+        "helpers": {
+          "compared_points": 19158,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.650496056113089e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          }
+        },
+        "body": {
+          "compared_points": 22077,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.705763373473653e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          },
+          "mesh_vertices": 22077,
+          "reference_source_vertices": 19158,
+          "mapped_source_vertices": 19158,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "garment": {
+          "compared_points": 1986,
+          "max_component_error_metres": 7.581710815385279e-06,
+          "rms_distance_metres": 2.2479978927054525e-06,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 1497,
+            "candidate": [
+              -0.23700661659240724,
+              0.039707607030868536,
+              -0.7285619258880616
+            ],
+            "reference": [
+              -0.2370089888572693,
+              0.03970792889595032,
+              -0.728569507598877
+            ],
+            "component_errors": [
+              2.3722648620494446e-06,
+              3.2186508178155826e-07,
+              7.581710815385279e-06
+            ]
+          },
+          "mesh_vertices": 1986,
+          "reference_source_vertices": 1797,
+          "mapped_source_vertices": 1797,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "joint_heads": {
+          "compared_points": 53,
+          "max_component_error_metres": 3.4570693963065224e-07,
+          "rms_distance_metres": 1.548522009600929e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": "ball_l",
+            "candidate": [
+              0.21985998153686526,
+              -0.12084497213363649,
+              -0.8101498603820801
+            ],
+            "reference": [
+              0.2198600471019745,
+              -0.12084509432315826,
+              -0.8101502060890198
+            ],
+            "component_errors": [
+              6.556510923072523e-08,
+              1.2218952177844855e-07,
+              3.4570693963065224e-07
+            ]
+          }
+        }
+      },
+      "all_measured_geometry_within_tolerance": true,
+      "rest_inverse_bind_state_recorded": true,
+      "rest_inverse_bind_parity": "not_run: exact local-frame convention comparison not established",
+      "joint_tails": "not_run: candidate public API does not expose fitted tail positions",
+      "graphics": "not_run",
+      "poses": "not_run"
+    },
+    {
+      "case_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "candidate_output_sha256": "b53a893695b2c63dbe5dd7a1a4f0f6d618b38f1b3befedd2c918f217cc9d4c95",
+      "reference_sha256": "3b428f67d144c6ac9cb64821a475e81b5b2a7f9baa08c219b5a9653cd45cfba7",
+      "measures": {
+        "helpers": {
+          "compared_points": 19158,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.77262145610892e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          }
+        },
+        "body": {
+          "compared_points": 22077,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.8199686615459646e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          },
+          "mesh_vertices": 22077,
+          "reference_source_vertices": 19158,
+          "mapped_source_vertices": 19158,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "garment": {
+          "compared_points": 1986,
+          "max_component_error_metres": 7.581710815385279e-06,
+          "rms_distance_metres": 2.47420274981451e-06,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 1497,
+            "candidate": [
+              -0.23700661659240724,
+              0.039707607030868536,
+              -0.7285619258880616
+            ],
+            "reference": [
+              -0.2370089888572693,
+              0.03970792889595032,
+              -0.728569507598877
+            ],
+            "component_errors": [
+              2.3722648620494446e-06,
+              3.2186508178155826e-07,
+              7.581710815385279e-06
+            ]
+          },
+          "mesh_vertices": 1986,
+          "reference_source_vertices": 1797,
+          "mapped_source_vertices": 1797,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "joint_heads": {
+          "compared_points": 53,
+          "max_component_error_metres": 3.4570693963065224e-07,
+          "rms_distance_metres": 1.6069387043923037e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": "ball_l",
+            "candidate": [
+              0.21985998153686526,
+              -0.12084497213363649,
+              -0.8101498603820801
+            ],
+            "reference": [
+              0.2198600471019745,
+              -0.12084509432315826,
+              -0.8101502060890198
+            ],
+            "component_errors": [
+              6.556510923072523e-08,
+              1.2218952177844855e-07,
+              3.4570693963065224e-07
+            ]
+          }
+        }
+      },
+      "all_measured_geometry_within_tolerance": true,
+      "rest_inverse_bind_state_recorded": true,
+      "rest_inverse_bind_parity": "not_run: exact local-frame convention comparison not established",
+      "joint_tails": "not_run: candidate public API does not expose fitted tail positions",
+      "graphics": "not_run",
+      "poses": "not_run"
+    },
+    {
+      "case_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "candidate_output_sha256": "01046c4c01ffe02e22c34bd5fbd179e56517d030df7a90483741867bbd1fa878",
+      "reference_sha256": "7ee2f6fd2204a239f77aadd4ed4eb56d071d1ee1ce74ec931eb3cbd210d4a9bf",
+      "measures": {
+        "helpers": {
+          "compared_points": 19158,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.7486797205693843e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          }
+        },
+        "body": {
+          "compared_points": 22077,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.79842747933897e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          },
+          "mesh_vertices": 22077,
+          "reference_source_vertices": 19158,
+          "mapped_source_vertices": 19158,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "garment": {
+          "compared_points": 1986,
+          "max_component_error_metres": 7.581710815385279e-06,
+          "rms_distance_metres": 2.6151557503063254e-06,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 1497,
+            "candidate": [
+              -0.23700661659240724,
+              0.039707607030868536,
+              -0.7285619258880616
+            ],
+            "reference": [
+              -0.2370089888572693,
+              0.03970792889595032,
+              -0.728569507598877
+            ],
+            "component_errors": [
+              2.3722648620494446e-06,
+              3.2186508178155826e-07,
+              7.581710815385279e-06
+            ]
+          },
+          "mesh_vertices": 1986,
+          "reference_source_vertices": 1797,
+          "mapped_source_vertices": 1797,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "joint_heads": {
+          "compared_points": 53,
+          "max_component_error_metres": 3.4570693963065224e-07,
+          "rms_distance_metres": 1.618475779110296e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": "ball_l",
+            "candidate": [
+              0.21985998153686526,
+              -0.12084497213363649,
+              -0.8101498603820801
+            ],
+            "reference": [
+              0.2198600471019745,
+              -0.12084509432315826,
+              -0.8101502060890198
+            ],
+            "component_errors": [
+              6.556510923072523e-08,
+              1.2218952177844855e-07,
+              3.4570693963065224e-07
+            ]
+          }
+        }
+      },
+      "all_measured_geometry_within_tolerance": true,
+      "rest_inverse_bind_state_recorded": true,
+      "rest_inverse_bind_parity": "not_run: exact local-frame convention comparison not established",
+      "joint_tails": "not_run: candidate public API does not expose fitted tail positions",
+      "graphics": "not_run",
+      "poses": "not_run"
+    },
+    {
+      "case_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "candidate_output_sha256": "d4f1eb9d5bc01d006bfd9182bee80da9e0ff81bb9f039e64570ff4f134f8dde8",
+      "reference_sha256": "aed47ee3686ac0be87b878734fabadf839e84c789d566bb3bcc5b514bd7574cc",
+      "measures": {
+        "helpers": {
+          "compared_points": 19158,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.7627182426916288e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          }
+        },
+        "body": {
+          "compared_points": 22077,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.8120092172060728e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          },
+          "mesh_vertices": 22077,
+          "reference_source_vertices": 19158,
+          "mapped_source_vertices": 19158,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "garment": {
+          "compared_points": 1986,
+          "max_component_error_metres": 7.581710815385279e-06,
+          "rms_distance_metres": 2.337827655393629e-06,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 1497,
+            "candidate": [
+              -0.23700661659240724,
+              0.039707607030868536,
+              -0.7285619258880616
+            ],
+            "reference": [
+              -0.2370089888572693,
+              0.03970792889595032,
+              -0.728569507598877
+            ],
+            "component_errors": [
+              2.3722648620494446e-06,
+              3.2186508178155826e-07,
+              7.581710815385279e-06
+            ]
+          },
+          "mesh_vertices": 1986,
+          "reference_source_vertices": 1797,
+          "mapped_source_vertices": 1797,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "joint_heads": {
+          "compared_points": 53,
+          "max_component_error_metres": 3.4570693963065224e-07,
+          "rms_distance_metres": 1.5995806292665902e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": "ball_l",
+            "candidate": [
+              0.21985998153686526,
+              -0.12084497213363649,
+              -0.8101498603820801
+            ],
+            "reference": [
+              0.2198600471019745,
+              -0.12084509432315826,
+              -0.8101502060890198
+            ],
+            "component_errors": [
+              6.556510923072523e-08,
+              1.2218952177844855e-07,
+              3.4570693963065224e-07
+            ]
+          }
+        }
+      },
+      "all_measured_geometry_within_tolerance": true,
+      "rest_inverse_bind_state_recorded": true,
+      "rest_inverse_bind_parity": "not_run: exact local-frame convention comparison not established",
+      "joint_tails": "not_run: candidate public API does not expose fitted tail positions",
+      "graphics": "not_run",
+      "poses": "not_run"
+    },
+    {
+      "case_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "candidate_output_sha256": "b7fe1d0308f03c4ee5017f77da7d92a50faba2ed798a09269a4c2a16308c1638",
+      "reference_sha256": "40aa8fa197bcb6b3fdbb2191e0cb41f6ac5dcb4f99963a4e9dad481bba20c4f7",
+      "measures": {
+        "helpers": {
+          "compared_points": 19158,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.762579410263082e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          }
+        },
+        "body": {
+          "compared_points": 22077,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.8118920191331577e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          },
+          "mesh_vertices": 22077,
+          "reference_source_vertices": 19158,
+          "mapped_source_vertices": 19158,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "garment": {
+          "compared_points": 1986,
+          "max_component_error_metres": 7.581710815385279e-06,
+          "rms_distance_metres": 2.337827655393629e-06,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 1497,
+            "candidate": [
+              -0.23700661659240724,
+              0.039707607030868536,
+              -0.7285619258880616
+            ],
+            "reference": [
+              -0.2370089888572693,
+              0.03970792889595032,
+              -0.728569507598877
+            ],
+            "component_errors": [
+              2.3722648620494446e-06,
+              3.2186508178155826e-07,
+              7.581710815385279e-06
+            ]
+          },
+          "mesh_vertices": 1986,
+          "reference_source_vertices": 1797,
+          "mapped_source_vertices": 1797,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "joint_heads": {
+          "compared_points": 53,
+          "max_component_error_metres": 3.4570693963065224e-07,
+          "rms_distance_metres": 1.5995806292665902e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": "ball_l",
+            "candidate": [
+              0.21985998153686526,
+              -0.12084497213363649,
+              -0.8101498603820801
+            ],
+            "reference": [
+              0.2198600471019745,
+              -0.12084509432315826,
+              -0.8101502060890198
+            ],
+            "component_errors": [
+              6.556510923072523e-08,
+              1.2218952177844855e-07,
+              3.4570693963065224e-07
+            ]
+          }
+        }
+      },
+      "all_measured_geometry_within_tolerance": true,
+      "rest_inverse_bind_state_recorded": true,
+      "rest_inverse_bind_parity": "not_run: exact local-frame convention comparison not established",
+      "joint_tails": "not_run: candidate public API does not expose fitted tail positions",
+      "graphics": "not_run",
+      "poses": "not_run"
+    },
+    {
+      "case_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "candidate_output_sha256": "ce23a15e307fbd2aa8f8b578fd44b640eb074d6087959a78c11e80019116fd6e",
+      "reference_sha256": "3524399fa1294f4bd5aca5f8067f31d56a92feb8bcd6d0b4887ff18eb6c72dff",
+      "measures": {
+        "helpers": {
+          "compared_points": 19158,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.7626463100685703e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          }
+        },
+        "body": {
+          "compared_points": 22077,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.8119484936885525e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          },
+          "mesh_vertices": 22077,
+          "reference_source_vertices": 19158,
+          "mapped_source_vertices": 19158,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "garment": {
+          "compared_points": 1986,
+          "max_component_error_metres": 7.581710815385279e-06,
+          "rms_distance_metres": 2.337827655393629e-06,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 1497,
+            "candidate": [
+              -0.23700661659240724,
+              0.039707607030868536,
+              -0.7285619258880616
+            ],
+            "reference": [
+              -0.2370089888572693,
+              0.03970792889595032,
+              -0.728569507598877
+            ],
+            "component_errors": [
+              2.3722648620494446e-06,
+              3.2186508178155826e-07,
+              7.581710815385279e-06
+            ]
+          },
+          "mesh_vertices": 1986,
+          "reference_source_vertices": 1797,
+          "mapped_source_vertices": 1797,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "joint_heads": {
+          "compared_points": 53,
+          "max_component_error_metres": 3.4570693963065224e-07,
+          "rms_distance_metres": 1.5995806292665902e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": "ball_l",
+            "candidate": [
+              0.21985998153686526,
+              -0.12084497213363649,
+              -0.8101498603820801
+            ],
+            "reference": [
+              0.2198600471019745,
+              -0.12084509432315826,
+              -0.8101502060890198
+            ],
+            "component_errors": [
+              6.556510923072523e-08,
+              1.2218952177844855e-07,
+              3.4570693963065224e-07
+            ]
+          }
+        }
+      },
+      "all_measured_geometry_within_tolerance": true,
+      "rest_inverse_bind_state_recorded": true,
+      "rest_inverse_bind_parity": "not_run: exact local-frame convention comparison not established",
+      "joint_tails": "not_run: candidate public API does not expose fitted tail positions",
+      "graphics": "not_run",
+      "poses": "not_run"
+    },
+    {
+      "case_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "candidate_output_sha256": "c1a7906bbcaf7f642fef7d7cfbc03103df6baad5b5c2fb0803efb30f80cad308",
+      "reference_sha256": "918cac1170915feb2bd2832479d4bf760ec25d9bf169fdf5d3f64499d681ba24",
+      "measures": {
+        "helpers": {
+          "compared_points": 19158,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.7726976379077245e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          }
+        },
+        "body": {
+          "compared_points": 22077,
+          "max_component_error_metres": 4.0531158440604287e-07,
+          "rms_distance_metres": 1.820033051049412e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 4904,
+            "candidate": [
+              -0.18526999950408937,
+              -0.1857100009918213,
+              -0.8010799407958985
+            ],
+            "reference": [
+              -0.18527008593082428,
+              -0.1857101023197174,
+              -0.8010803461074829
+            ],
+            "component_errors": [
+              8.642673490766306e-08,
+              1.0132789610151072e-07,
+              4.0531158440604287e-07
+            ]
+          },
+          "mesh_vertices": 22077,
+          "reference_source_vertices": 19158,
+          "mapped_source_vertices": 19158,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "garment": {
+          "compared_points": 1986,
+          "max_component_error_metres": 7.581710815385279e-06,
+          "rms_distance_metres": 2.47420274981451e-06,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": 1497,
+            "candidate": [
+              -0.23700661659240724,
+              0.039707607030868536,
+              -0.7285619258880616
+            ],
+            "reference": [
+              -0.2370089888572693,
+              0.03970792889595032,
+              -0.728569507598877
+            ],
+            "component_errors": [
+              2.3722648620494446e-06,
+              3.2186508178155826e-07,
+              7.581710815385279e-06
+            ]
+          },
+          "mesh_vertices": 1986,
+          "reference_source_vertices": 1797,
+          "mapped_source_vertices": 1797,
+          "missing_source_ids": [],
+          "joint_indices_present": true,
+          "joint_weights_present": true,
+          "coverage_complete": true
+        },
+        "joint_heads": {
+          "compared_points": 53,
+          "max_component_error_metres": 3.4570693963065224e-07,
+          "rms_distance_metres": 1.6069387043923037e-07,
+          "points_over_tolerance": 0,
+          "tolerance_metres": 1e-05,
+          "within_tolerance": true,
+          "worst": {
+            "id": "ball_l",
+            "candidate": [
+              0.21985998153686526,
+              -0.12084497213363649,
+              -0.8101498603820801
+            ],
+            "reference": [
+              0.2198600471019745,
+              -0.12084509432315826,
+              -0.8101502060890198
+            ],
+            "component_errors": [
+              6.556510923072523e-08,
+              1.2218952177844855e-07,
+              3.4570693963065224e-07
+            ]
+          }
+        }
+      },
+      "all_measured_geometry_within_tolerance": true,
+      "rest_inverse_bind_state_recorded": true,
+      "rest_inverse_bind_parity": "not_run: exact local-frame convention comparison not established",
+      "joint_tails": "not_run: candidate public API does not expose fitted tail positions",
+      "graphics": "not_run",
+      "poses": "not_run"
+    }
+  ],
+  "variant": "B1",
+  "candidate_algorithms_changed": true,
+  "source_patch": {
+    "path": "src/loaders/target.rs",
+    "before": "const DELTA_SQ_THRESHOLD: f32 = 1e-6;",
+    "after": "const DELTA_SQ_THRESHOLD: f32 = 0.0;",
+    "before_sha256": "92d25bb92ac004a10261815e39a77c3d03f9782034c2dbbcbf9f802620cc7dba",
+    "after_sha256": "7aed4c8fe21e15cba592c1a2f2acaedcac02b51ea3f5cdd3a503d36df019339f"
+  },
+  "source_patch_sha256": "9a7cc3f9b0ea52d2dc3dcccbe58c37228ec6a462cea2fedfd4b6381dd242756c",
+  "comparator_sha256": "c61e5d20ce871d440c3f8887afed064b53142e6d1264c0380fa73619054aea91",
+  "tolerances": {
+    "body_max_component": 1e-05,
+    "joint_endpoint_max_component": 1e-05,
+    "garment_max_component": 1e-05,
+    "scope": "metre component numeric parity only; not rest/skin/visual-quality acceptance"
+  },
+  "rest_inverse_bind_parity_executed": false,
+  "joint_tail_parity_executed": false,
+  "native_graphical_executed": false,
+  "web_graphical_executed": false,
+  "new_character_admitted": false
+}

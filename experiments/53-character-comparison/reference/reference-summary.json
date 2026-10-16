@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "status": "reference_geometry_passed",
+  "full_sample_status": "reference_geometry_only",
+  "blender_version": "5.2.2 LTS",
+  "mpfb_version": [
+    2,
+    0,
+    18
+  ],
+  "mpfb_build": "20261010",
+  "base_sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+  "baseline": "raw hm08, scale .1, no macros, no grounding, all helpers retained",
+  "raw_obj_to_reference": [
+    [
+      0.1,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      -0.1,
+      0.0
+    ],
+    [
+      0.0,
+      0.1,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "fitted_transform": [
+    [
+      0.10000002383482602,
+      4.711404242677344e-19,
+      6.86932721152028e-19,
+      7.965235541327901e-19
+    ],
+    [
+      -1.938253882869446e-18,
+      7.59038837798264e-09,
+      -0.10000002309487806,
+      -1.2474709161847872e-10
+    ],
+    [
+      5.8967655528606086e-18,
+      0.10000002383028699,
+      6.565098821345631e-09,
+      -2.6025498970760103e-09
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "basis_fit_max_abs": 7.805163837470985e-08,
+  "declared_transform_max_abs": 2.72274017332208e-07,
+  "parameter_semantics": "signed pair: negative selects decr, positive selects incr, zero is raw basis",
+  "driver_sha256": "f3cef6aa9d7cd2c9610d3332260835a2cdfee8ef293b7d0c3a118c141cb2321c",
+  "garment_mhclo_sha256": "6df057d3116db93afbbbb6d692f92cce84aa16db699f47dd14e825d07c6fd42f",
+  "garment_material_policy": "neutral geometry comparison; legacy shader/material parity NOT-RUN",
+  "cases": [
+    {
+      "case_id": "neutral",
+      "path": "neutral.json",
+      "sha256": "c5671e6d808cbd96b42840e6fa9c33477b4951fcc9d25a902228e1d967a86c7b",
+      "vertices": 19158,
+      "bones": 53
+    },
+    {
+      "case_id": "body-negative",
+      "path": "body-negative.json",
+      "sha256": "69716d6e6f8121ea39b6bdec1855503c075d599d53939ca5de65a42d135798f9",
+      "vertices": 19158,
+      "bones": 53
+    },
+    {
+      "case_id": "body-half",
+      "path": "body-half.json",
+      "sha256": "3b428f67d144c6ac9cb64821a475e81b5b2a7f9baa08c219b5a9653cd45cfba7",
+      "vertices": 19158,
+      "bones": 53
+    },
+    {
+      "case_id": "body-positive",
+      "path": "body-positive.json",
+      "sha256": "7ee2f6fd2204a239f77aadd4ed4eb56d071d1ee1ce74ec931eb3cbd210d4a9bf",
+      "vertices": 19158,
+      "bones": 53
+    },
+    {
+      "case_id": "face-negative",
+      "path": "face-negative.json",
+      "sha256": "aed47ee3686ac0be87b878734fabadf839e84c789d566bb3bcc5b514bd7574cc",
+      "vertices": 19158,
+      "bones": 53
+    },
+    {
+      "case_id": "face-half",
+      "path": "face-half.json",
+      "sha256": "40aa8fa197bcb6b3fdbb2191e0cb41f6ac5dcb4f99963a4e9dad481bba20c4f7",
+      "vertices": 19158,
+      "bones": 53
+    },
+    {
+      "case_id": "face-positive",
+      "path": "face-positive.json",
+      "sha256": "3524399fa1294f4bd5aca5f8067f31d56a92feb8bcd6d0b4887ff18eb6c72dff",
+      "vertices": 19158,
+      "bones": 53
+    },
+    {
+      "case_id": "combined",
+      "path": "combined.json",
+      "sha256": "918cac1170915feb2bd2832479d4bf760ec25d9bf169fdf5d3f64499d681ba24",
+      "vertices": 19158,
+      "bones": 53
+    }
+  ],
+  "garment_executed": true,
+  "graphics_executed": false,
+  "reference_pipeline_executed": true
+}

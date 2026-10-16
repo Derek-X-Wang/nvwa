@@ -1,84 +1,95 @@
-# Path A preparation checkpoint — 2026-10-16
+# Path A — actual shared MakeHuman numeric comparison
 
-**PARTIAL — the offline Rust package probe executes continuous morph evaluation on
-Nvwa's real existing fixture. It does not establish MakeHuman compatibility or select
-a character foundation.** The approved common MakeHuman/MPFB sample is unavailable.
+**PARTIAL — the source-compiled Rust package matches the independent MPFB reference
+for body positions, helper-derived joint endpoints and the selected garment across
+all eight frozen cases. Rest matrices, skinning, poses and graphical acceptance are
+not verified. No character foundation or production dependency is selected.**
 
-## Actual scope and evidence
+## Frozen inputs and execution
 
-Only `experiments/54-compiled-character-package/` was changed. Product code, root
-Cargo/lock, old experiments, original assets and the shared comparison contract were
-not changed by this worker. There were no downloads, installs, new libraries, GPU/UI
-tasks, commits, pushes or external writes.
+Common manifest SHA-256:
+`2e8566a4f12de710ead88f6aa2d71fc44e0680761a4f2fdc48a844b6f3534ab7`.
 
-The probe reads `assets/fixtures/nvwa-humanoid.glb` with SHA-256
-`f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6` and the existing
-hashed character profile. Its sidecar explicitly binds four parameters to node 22,
-mesh 4, primitives 0–4. Four eye primitives remain separate and unchanged.
+Root owns `.work/character-approved-20261016/common-sample.json`, the approved source
+files and `reference-full-run3/`. Its Blender 5.2.2 / MPFB 2.0.18 reference retains all
+19,158 hm08 vertex IDs/helpers and captures body geometry before clothing visibility
+MASK modifiers. Baseline: raw hm08, scale .1, no macro defaults or grounding. The
+measured raw-to-reference mapping is `.1*x, -.1*z, .1*y`, in Blender mesh-local metres.
 
-The actual Rust process passed **14 cases**: neutral; `.25`, `.5`, `1` for jaw width,
-nose width, smile and shoulder width; and one mixed recipe. For each case, an
-independent Python GLB decoder compared all **24,736 primitive vertex entries**
-(including duplicated topology entries) through the complete little-endian f64
-POSITION fingerprint, local bounds and source node/primitive identities. Intermediate
-maximum displacements scale by `.25` and `.5` within `1e-12` local units.
+The A compiler reads **source paths and parameters from that manifest**, checks their
+byte counts/SHA-256/license and independently checks MPFB/garment extraction receipts.
+It compiles raw OBJ basis positions, four sparse source targets, GameEngine helper
+index rules and MHCLO weighted proxy/scaling rules. In full-sample mode it never
+opens reference geometry to construct the package or recipes. Reference files are
+opened only by the independent comparison step and checked against frozen hashes.
 
-| Control | Maximum local displacement at weight 1 |
-| --- | ---: |
-| jaw_width | 0.0688607394695282 |
-| nose_width | 0.06944765770627767 |
-| smile | 0.03925796059651317 |
-| shoulder_width | 0.08988398313522339 |
+The actual Rust binary evaluates signed `torso_length` and `jaw_drop` continuously.
+It recomputes joint CUBE/MEAN centroids from deformed vertices and refits all 1,797
+`female_sportsuit01` vertices from proxy triples plus dynamic source-axis scales.
+It does not interpolate endpoint skeletons/garments or switch preset meshes.
 
-These are mesh-local geometric distances, not world-space body measurements or
-visual quality scores. No rest/skin/world transform was applied.
+| Compared channel, all 8 cases | Entries per case | Maximum absolute component error |
+| --- | ---: | ---: |
+| Body positions | 19,158 vertices | `3.807830809554602e-7 m` |
+| Joint heads/tails | 53 bone pairs | `2.539825438852006e-7 m` |
+| Garment positions | 1,797 vertices | `3.0110187632104157e-7 m` |
 
-**16 failure controls passed.** They cover wrong profile hash/ID, asset hash,
-manifest hash, wrong node binding, missing/duplicate primitive bindings, missing/
-unknown/out-of-range values, inverted profile bounds, non-finite recipe JSON,
-non-finite real POSITION data, sparse accessors, non-finite accessor bounds and
-valid input with an existing output. Invalid cases returned exit 2, created no new
-result, and preserved a pre-existing result sentinel. Original asset, profile,
-package and manifest hashes were unchanged after the suite. The non-finite geometry,
-sparse-accessor and bound controls assert the specific rejection diagnostic, so an
-earlier unrelated hash failure cannot satisfy those controls.
+All are below the root's **predeclared `1e-5 m` component tolerance**. Cases are
+neutral, each parameter's negative/positive endpoints and positive midpoint, plus a
+midpoint combination. All seven non-neutral cases change real body vertices. Positive
+body strength 1 moves 12,865 body entries, 81 joint endpoints and 913 garment entries;
+maximum displacements are .1028 m, .1028 m and .102801028 m respectively. Positive jaw
+strength 1 moves 42 body entries by up to .005632051 m; this local target does not move
+the selected rig's endpoints or garment. Half-strength linearity error across the
+measured channels is at most `2.220446049250313e-16 m`.
 
-The first independent run caught a source node JSON float-rounding difference in
-serde_json defaults. Enabling its cached `float_roundtrip` feature fixed this; the
-final suite compares the preserved node metadata exactly. This was a numeric
-serialization issue, not proof of skeletal evaluation.
+## Failure preservation and retained controls
 
-## Reproduction and retained evidence
+Eight corrupt-real-package controls passed: wrong recipe package/common digest,
+out-of-domain value, invalid unselected target index, invalid helper index, unknown
+bone parent, garment proxy index and zero garment scale denominator. Every case
+returned exit 2, created no new result, preserved an existing result sentinel and
+left the real package/recipe/common manifest unchanged. Diagnostics are asserted.
 
-From repository root:
+Separate retained controls remain green: existing original GLB 14 cases + 16 rejection
+controls; handwritten numeric 7 cases + 6 rejection controls; 10 analytic unit controls.
+Those are separate sample classes. Strict offline Clippy, formatting and changed-file
+whitespace checks pass. No checks lasted five minutes; no wefty execution was needed.
+
+## Reproduce and inspect
+
+From repository root, one command reruns the actual full comparison:
 
 ```sh
-experiments/54-compiled-character-package/run.sh
+experiments/54-compiled-character-package/run-common.sh \
+  "$PWD/.work/character-approved-20261016/common-sample.json" \
+  "$PWD/.work/character-approved-20261016/reference-full-run3" \
+  "$PWD/.work/character-approved-20261016/system-assets/clothes/female_sportsuit01/female_sportsuit01.mhclo"
 ```
 
-The script forces network-offline locked Cargo and one compilation job. Rust 1.95.0
-and Python 3.14.7 were used. The first cold build took 12.94 seconds with cached
-sources; subsequent bounded builds took seconds. End-to-end control duration is
-recorded in [control-summary.json](evidence/control-summary.json). This is control
-wall time, not an engine/runtime performance benchmark. Peak memory was not measured.
+The script builds with `--locked --offline -j 1` and uses only this experiment's
+Cargo/lock/target. Rust/Cargo 1.95.0 and Python 3.14.7 were used. Final receipts are
+private under `.work/full-common-run1/`: compiled package, exact recipes, Rust outputs,
+comparison, preservation controls and logs. Compact summaries plus result hashes are
+in `evidence/common-{comparison,failure,continuity}-summary.json`.
 
-The final exact run and all full receipts are retained under
-`.work/final-receipts/`; the compact summary records the absolute private evidence
-path and each result hash. Earlier failed/green debug runs are also private under
-`.work/`. No per-vertex arrays or duplicate GLBs are retained. The isolated target
-cache is intentionally retained for offline reproduction; no processes or servers
-remain owned by this experiment. Integration owner controls later cache cleanup.
+The package is **2,117,964 bytes** uncompressed JSON, SHA-256
+`dcdc82b42a86d9b8ffd6e57803171eae73df4a564bcec04cc4d13d30183ef022`.
+Eight evaluation/comparison cases took 3.529 seconds including process launch and
+Python comparison; this is not an engine performance benchmark. Peak memory was not
+measured. No duplicate GLB or large generated arrays are tracked.
 
-## Not run and comparison limits
+## Limits and ownership
 
-- **NOT-RUN — approved MakeHuman/MPFB common sample, its actual source rules, exporter
-  and shared offline reference.** `evidence/approved-sample.not-run.json` is a blocked
-  receipt with no fabricated recipe or measured positions.
-- **NOT-RUN — body-proportion joint relocation, inverse-bind recomputation, skinning,
-  garment fitting, shoulder/elbow/knee poses, normals/tangents and style suitability.**
-  Source nodes, skin joint metadata and inverse-bind matrices are preserved only.
-- **NOT-RUN — desktop/Web, actual rendering, full-Work save exchange, performance
-  acceptance and production integration.** No character or Rust library is adopted.
+- **NOT-RUN:** bone rest matrices, inverse-bind recomputation, weight transfer, posed
+  skinning, shoulder/elbow/knee poses and animation quality. Output preserves endpoint
+  parent/roll identity, but emits no fabricated matrices or inverse binds.
+- **NOT-RUN:** native/Web graphics, materials, clothing intersections, style suitability,
+  full-Work save exchange, production integration and performance acceptance.
+- Only `experiments/54-compiled-character-package/` changed. No product/root Cargo,
+  source asset, old experiment or shared contract edits; no additional downloads,
+  installs, GPU tasks, commits, pushes or external writes by this worker.
+- Private receipts and isolated target cache are retained for root review/reproduction.
+  No owned checks/processes or servers remain active. Root owns later cache cleanup.
 
-This proves a bounded explicit-binding position evaluator and its failure preservation
-boundary. Existing M2 quality HOLD and #3/#4 boundaries remain unchanged.
+Existing M2 quality HOLD and #3/#4 boundaries remain unchanged.

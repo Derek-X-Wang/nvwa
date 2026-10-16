@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "status": "installed_and_executed",
+  "authorization": "Explicit human request to upgrade the system Blender with Homebrew and retain it; no old project compatibility requirement.",
+  "supersedes": "Original approved standalone Blender 4.2.23 DMG; not downloaded",
+  "command": "HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1 brew upgrade --cask blender",
+  "command_exit_code": 0,
+  "before": "3.3.1",
+  "installed": "5.2.2 LTS",
+  "installed_path": "/Applications/Blender.app",
+  "cli_path": "/opt/homebrew/bin/blender",
+  "build_hash": "d13f752e3b9c",
+  "homebrew_packages_upgraded": [
+    "blender"
+  ],
+  "download_url": "https://download.blender.org/release/Blender5.2/blender-5.2.2-macos-arm64.dmg",
+  "download_bytes": 346286611,
+  "download_sha256": "dc4125399b8bfefe283cc1624d6cfc7809d1cac20ace51072127eb371f31f210",
+  "standalone_4_2_downloaded": false,
+  "background_offline_smoke_passed": true,
+  "actual_mpfb_reference_passed": true,
+  "mpfb_version": [
+    2,
+    0,
+    18
+  ],
+  "reference_summary_sha256": "65bf0da652df743614cd6ec04c8eb5d2bc52869876819b4cc5f4ae2393021302",
+  "graphics_executed": false,
+  "user_preferences_changed": false,
+  "non_blender_approved_transfer_budget_bytes": 327316919
+}

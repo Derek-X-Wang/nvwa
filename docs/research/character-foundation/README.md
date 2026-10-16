@@ -1,6 +1,8 @@
 # 人物基础选型：先复用成熟人体，再验证 Rust 执行路径
 
-研究日期：2026-10-16。Nvwa 基线：`1a91178e894bad13bf51223b33b49cf33ea91a1c`。状态：**研究完成后的候选建议，尚未选择或准入新的生产角色**。
+研究日期：2026-10-16。Nvwa 基线：`1a91178e894bad13bf51223b33b49cf33ea91a1c`。状态：**已进入获准的同样本 A/B 实验；尚未准入新的生产角色**。
+
+当前执行证据见[实验整合入口](../../../experiments/53-character-comparison/README.md)。系统 Blender 已按人的授权升级到 5.2.2 LTS，实际运行 MPFB 2.0.18 的八组身体/骨架/衣物参考；A、B 的最新实测结论以该入口为准。以下分报告保留最初研究时点的发现，不能把历史“未运行”视为当前执行状态。
 
 ## 建议先改哪一步
 
@@ -16,11 +18,11 @@
 |---|---|---|
 | MakeHuman 是否开源、能否复用人体？ | 是。MakeHuman 代码 AGPL，MPFB 代码 GPL；核心图形数据 CC0。官方明确允许用核心 mesh / targets / system assets 建立自己的生成器。 | 可以优先复用人体数据与成熟设计；代码和可选素材分别核查，不能把全部生态说成 CC0。 |
 | 这是不是只提供一个漂亮模型？ | MPFB 有宏/局部形变、随体型定位关节、权重、衣物/proxy 拟合和制作接口。 | 研究对象应包括这套参数关系与数据，不能只拿一个静态导出。 |
-| 能否用于纯 agent？ | MPFB 官方有 Blender 后台测试和制作脚本；这证明存在自动化入口。本机未运行。 | 离线制作可以使用成熟工具。用户端不必启动 Blender；最终可编辑能力仍需 Rust 执行路径。 |
+| 能否用于纯 agent？ | MPFB 官方有 Blender 后台测试和制作脚本；本轮后续已在本机后台实际执行八组几何参考。 | 离线制作可以使用成熟工具。用户端不必启动 Blender；最终可编辑能力仍需 Rust 执行路径。 |
 | VaM 最值得学什么？ | 官方区分外观、姿态、动画与包；morph 有类别、来源、范围和 formula，也明确警告骨骼 morph 与动画通道冲突。 | 学参数目录、状态边界、控制优先级和依赖诊断。其内部体型适配算法仍未知，不据此承诺复制。 |
 | agent 是否迫使我们重造人体系统？ | 当前没有这个必要性的证据。现有 Nvwa CLI 已有发现、共享命令和文件创作；缺少更丰富的参数绑定与正式视觉反馈。 | 新增价值放在“能知道、能修改、能看到、能纠正”的闭环。 |
 | 成熟方案是否已解决动漫造型？ | MPFB 有官方列出的 cartoon/anime/chibi targets；本轮未下载或检查实际质量。 | 有可验证入口，仍需审美门；不能把写实人体能力等同于任意动漫角色。 |
-| 是否有 Rust 现成实现？ | Humentity 公布了 MakeHuman 数据与 Bevy 的运行时方案；OxiHuman 公布了 Rust/Wasm 参数身体生成方案。 | 都是候选；未编译运行。不能因语言相同或 README 完整就作为成熟依赖采用。 |
+| 是否有 Rust 现成实现？ | Humentity 公布了 MakeHuman 数据与 Bevy 的运行时方案；OxiHuman 公布了 Rust/Wasm 参数身体生成方案。 | Humentity 已进入实际离线编译与同样本执行；OxiHuman 未执行。是否采用仍由实测准入门决定。 |
 
 依据：[MakeHuman/MPFB 许可](https://static.makehumancommunity.org/about/license.html)、[官方允许另建生成器](https://static.makehumancommunity.org/mpfb/faq/build_other_chargen.html)、[MPFB rig 数据](https://static.makehumancommunity.org/mpfb/developer/rigging_and_posing.html)、[headless 入口](https://github.com/makehumancommunity/mpfb2/blob/3af0cd5a2ffba072e93a34e5f6f494fdc4813ddf/test/README.md)、[VaM Morphs](https://hub.virtamate.com/wiki/person_female_morphs/)、[VaM Animation](https://hub.virtamate.com/wiki/person_animation/)、[cartoon01](https://static.makehumancommunity.org/assets/assetpacks/cartoon01.html)。具体许可范围、版本、未知项与两条 Rust 候选的限制见分报告。
 
@@ -56,7 +58,7 @@ agent 应能查询“眼距控制什么、范围多少、会影响哪些部件�
 
 “结合两个人物”也要限定输入。两份同一基础的配方可以先做特征选择/混合；两张参考图到可编辑配方、任意两份网格的对应则是独立能力，本轮没有证明。新参数也不能只把所有底层 morph 暴露成几千个没有说明的滑杆。[当前接口与格式分析](agent-runtime-contract.md)
 
-## 下一轮的有界对照
+## 已启动的有界对照与后续准入门
 
 本节是立即实验范围的整合入口。各分报告提供来源与技术要求；其中“同基础两份配方组合成第三份”的 agent 实验属于人物基础通过后的条件阶段，不与本节同时扩大实施。先复用候选；只有记录了实际缺口，才补必要的 Rust 计算。
 
@@ -83,7 +85,7 @@ MPFB 的[公开维护者答复](https://github.com/makehumancommunity/mpfb2/issu
 
 通过人物基础与参数域的准入后，再按[agent 接口分报告](agent-runtime-contract.md)做固定 rig 的两配方特征组合、预览和纠错闭环。它验证 agent 接口，不代替前面的体型/骨架/衣物门。
 
-**资源门**：本轮只读公开文本和现有资产元数据。下一轮若需要安装/下载 MPFB、人体包、衣物或其他新内容，先整理固定版本、逐项 URL、许可、大小和校验方式，按用户要求申请具体范围。没有新增模型运行、下载或算力授权；也没有提前要求真人验收。
+**资源门**：固定下载清单已获批准，且人随后授权通过 Homebrew 升级、保留系统 Blender，代替独立 Blender DMG。实际来源与字节见[交付报告](../../../experiments/53-character-comparison/delivery/README.md)。未知后续依赖、其他素材、新模型运行与额外算力仍需另行确认。
 
 ## 研究产物与限制
 
@@ -94,4 +96,4 @@ MPFB 的[公开维护者答复](https://github.com/makehumancommunity/mpfb2/issu
 
 三项分研究由独立 Sol high worker 并行完成，整合负责人补查 Rust 候选并形成此建议。全文仅研究，不修改产品、依赖、资产、历史实验、路线图验收状态或 issue 关闭状态。
 
-**PARTIAL —** 官方来源、固定仓库版本、许可边界和当前 Nvwa 合同已核查；新人物、生成/导出、桌面/Web/CLI 集成、质量与性能均未运行，候选尚未准入。
+**PARTIAL —** 来源与许可已核查，已批准样本及实际离线参考到位，两条 Rust 路径进入实测；桌面/Web 图形、正式 CLI 集成、姿态蒙皮、质量与性能准入仍待验证。

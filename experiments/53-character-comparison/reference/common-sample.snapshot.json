@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "parameter_schema": "paired-local-targets-v1",
+  "sample_class": "makehuman-approved-sample",
+  "approved": true,
+  "authorization_manifest_sha256": "234584fae55334e4a7a20f76e4aecd88e604200789b75d0e7ac7d4c67328b4ce",
+  "reference_manifest_sha256": "65bf0da652df743614cd6ec04c8eb5d2bc52869876819b4cc5f4ae2393021302",
+  "reference_directory": "reference-full-run3",
+  "reference_driver_sha256": "f3cef6aa9d7cd2c9610d3332260835a2cdfee8ef293b7d0c3a118c141cb2321c",
+  "basis": "Blender mesh-local Z-up",
+  "units": "metres",
+  "transforms": {
+    "raw_obj_to_reference": [
+      [
+        0.1,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -0.1,
+        0.0
+      ],
+      [
+        0.0,
+        0.1,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "baseline": "raw hm08, scale .1, no macros, no grounding, all helpers retained",
+  "all_helper_vertices_retained": true,
+  "body_capture": "complete evaluated cage before clothing visibility MASK modifiers",
+  "material_policy": "neutral geometry comparison; legacy shader/material parity NOT-RUN",
+  "parameters": {
+    "torso_length": {
+      "default": 0.0,
+      "min": -1.0,
+      "max": 1.0,
+      "targets": {
+        "decr": "mpfb-addon/data/targets/torso/torso-scale-vert-decr.target.gz",
+        "incr": "mpfb-addon/data/targets/torso/torso-scale-vert-incr.target.gz"
+      }
+    },
+    "jaw_drop": {
+      "default": 0.0,
+      "min": -1.0,
+      "max": 1.0,
+      "targets": {
+        "decr": "mpfb-addon/data/targets/chin/chin-jaw-drop-decr.target.gz",
+        "incr": "mpfb-addon/data/targets/chin/chin-jaw-drop-incr.target.gz"
+      }
+    }
+  },
+  "source_paths": {
+    "basemesh": "mpfb-addon/data/3dobjs/base.obj",
+    "vertex_groups": "mpfb-addon/data/mesh_metadata/basemesh_vertex_groups.json",
+    "rig": "mpfb-addon/data/rigs/standard/rig.game_engine.json",
+    "weights": "mpfb-addon/data/rigs/standard/weights.game_engine.json",
+    "garment_mhclo": "system-assets/clothes/female_sportsuit01/female_sportsuit01.mhclo",
+    "garment_obj": "system-assets/clothes/female_sportsuit01/female_sportsuit01.obj"
+  },
+  "files": [
+    {
+      "role": "basemesh",
+      "path": "mpfb-addon/data/3dobjs/base.obj",
+      "sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+      "bytes": 1749303,
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/makehumancommunity/mpfb2/blob/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/3dobjs/base.obj"
+    },
+    {
+      "role": "vertex_groups",
+      "path": "mpfb-addon/data/mesh_metadata/basemesh_vertex_groups.json",
+      "sha256": "8cb1417bc55ae5ec8aa99f90734e81ed5fbb556511ff6a2c00e0534b70911444",
+      "bytes": 81984,
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/makehumancommunity/mpfb2/blob/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/mesh_metadata/basemesh_vertex_groups.json"
+    },
+    {
+      "role": "rig",
+      "path": "mpfb-addon/data/rigs/standard/rig.game_engine.json",
+      "sha256": "b324ddb4b707721c19630bfadb87c3e3b38eed3b6e4590bb3cead43ea918f799",
+      "bytes": 40936,
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/makehumancommunity/mpfb2/blob/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/rigs/standard/rig.game_engine.json"
+    },
+    {
+      "role": "weights",
+      "path": "mpfb-addon/data/rigs/standard/weights.game_engine.json",
+      "sha256": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473",
+      "bytes": 3026778,
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/makehumancommunity/mpfb2/blob/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/rigs/standard/weights.game_engine.json"
+    },
+    {
+      "role": "target",
+      "path": "mpfb-addon/data/targets/torso/torso-scale-vert-decr.target.gz",
+      "sha256": "c6624bda038ce3cc91e7d29e1324a7fadd1e51a095c32ce04c95b0cab91c46a5",
+      "bytes": 39045,
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/makehumancommunity/mpfb2/blob/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/torso/torso-scale-vert-decr.target.gz"
+    },
+    {
+      "role": "target",
+      "path": "mpfb-addon/data/targets/torso/torso-scale-vert-incr.target.gz",
+      "sha256": "da8f03a324d03fddca48d6304288763d3fe7700f8c7f3454308b943d07f8c67f",
+      "bytes": 36386,
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/makehumancommunity/mpfb2/blob/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/torso/torso-scale-vert-incr.target.gz"
+    },
+    {
+      "role": "target",
+      "path": "mpfb-addon/data/targets/chin/chin-jaw-drop-decr.target.gz",
+      "sha256": "9176198f2ddcbb48d21d26b5c61e646bb656c6fc96508d4406272efa2aeab40c",
+      "bytes": 374,
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/makehumancommunity/mpfb2/blob/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/chin/chin-jaw-drop-decr.target.gz"
+    },
+    {
+      "role": "target",
+      "path": "mpfb-addon/data/targets/chin/chin-jaw-drop-incr.target.gz",
+      "sha256": "b750b941a75badd7281db378356438dd8647ef043e3470f9e34bbf873e711e71",
+      "bytes": 288,
+      "license": "CC0-1.0",
+      "source_url": "https://github.com/makehumancommunity/mpfb2/blob/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/chin/chin-jaw-drop-incr.target.gz"
+    },
+    {
+      "role": "garment",
+      "path": "system-assets/clothes/female_sportsuit01/female_sportsuit01.mhclo",
+      "sha256": "6df057d3116db93afbbbb6d692f92cce84aa16db699f47dd14e825d07c6fd42f",
+      "bytes": 124049,
+      "license": "CC0-1.0",
+      "source_url": "https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip"
+    },
+    {
+      "role": "garment",
+      "path": "system-assets/clothes/female_sportsuit01/female_sportsuit01.mhmat",
+      "sha256": "1153d5ad8a074f0f02c7102375d6d3ae0b82302b6f3909b5b64609a2d5cfdd6b",
+      "bytes": 1400,
+      "license": "CC0-1.0",
+      "source_url": "https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip"
+    },
+    {
+      "role": "garment",
+      "path": "system-assets/clothes/female_sportsuit01/female_sportsuit01.obj",
+      "sha256": "fd529bb8dd6a994c1e9a3fb2fd8b236f52c0cc7cebb1f6fd9328953d9df6d6ff",
+      "bytes": 142064,
+      "license": "CC0-1.0",
+      "source_url": "https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip"
+    },
+    {
+      "role": "garment",
+      "path": "system-assets/clothes/female_sportsuit01/female_sportsuit01_ao.png",
+      "sha256": "6faffbb99e3d20faeaf87cdddece43fee7d6b7262de3e55817545809f0368524",
+      "bytes": 1692805,
+      "license": "CC0-1.0",
+      "source_url": "https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip"
+    },
+    {
+      "role": "garment",
+      "path": "system-assets/clothes/female_sportsuit01/female_sportsuit01_diffuse.png",
+      "sha256": "00910e3e85b3dcf48d1aa827b4c075cdc77689989423ff4f75bc67f2e86cc588",
+      "bytes": 1396429,
+      "license": "CC0-1.0",
+      "source_url": "https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip"
+    },
+    {
+      "role": "garment",
+      "path": "system-assets/clothes/female_sportsuit01/female_sportsuit01_normal.png",
+      "sha256": "2bc78509fc4e74b2346dbb54f7f627644125a41573ee458d624246e337f1d28f",
+      "bytes": 250945,
+      "license": "CC0-1.0",
+      "source_url": "https://files2.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/neutral.json",
+      "sha256": "c5671e6d808cbd96b42840e6fa9c33477b4951fcc9d25a902228e1d967a86c7b",
+      "bytes": 1334701,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/body-negative.json",
+      "sha256": "69716d6e6f8121ea39b6bdec1855503c075d599d53939ca5de65a42d135798f9",
+      "bytes": 1335019,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/body-half.json",
+      "sha256": "3b428f67d144c6ac9cb64821a475e81b5b2a7f9baa08c219b5a9653cd45cfba7",
+      "bytes": 1333954,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/body-positive.json",
+      "sha256": "7ee2f6fd2204a239f77aadd4ed4eb56d071d1ee1ce74ec931eb3cbd210d4a9bf",
+      "bytes": 1332944,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/face-negative.json",
+      "sha256": "aed47ee3686ac0be87b878734fabadf839e84c789d566bb3bcc5b514bd7574cc",
+      "bytes": 1334688,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/face-half.json",
+      "sha256": "40aa8fa197bcb6b3fdbb2191e0cb41f6ac5dcb4f99963a4e9dad481bba20c4f7",
+      "bytes": 1334683,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/face-positive.json",
+      "sha256": "3524399fa1294f4bd5aca5f8067f31d56a92feb8bcd6d0b4887ff18eb6c72dff",
+      "bytes": 1334697,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/combined.json",
+      "sha256": "918cac1170915feb2bd2832479d4bf760ec25d9bf169fdf5d3f64499d681ba24",
+      "bytes": 1333943,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    },
+    {
+      "role": "reference",
+      "path": "reference-full-run3/summary.json",
+      "sha256": "65bf0da652df743614cd6ec04c8eb5d2bc52869876819b4cc5f4ae2393021302",
+      "bytes": 3359,
+      "license": "CC0-1.0",
+      "source_url": "local:executed-mpfb-reference"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "neutral",
+      "kind": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "reference_path": "reference-full-run3/neutral.json"
+    },
+    {
+      "case_id": "body-negative",
+      "kind": "body",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "reference_path": "reference-full-run3/body-negative.json"
+    },
+    {
+      "case_id": "body-half",
+      "kind": "body",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "reference_path": "reference-full-run3/body-half.json"
+    },
+    {
+      "case_id": "body-positive",
+      "kind": "body",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "reference_path": "reference-full-run3/body-positive.json"
+    },
+    {
+      "case_id": "face-negative",
+      "kind": "face",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "reference_path": "reference-full-run3/face-negative.json"
+    },
+    {
+      "case_id": "face-half",
+      "kind": "face",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "reference_path": "reference-full-run3/face-half.json"
+    },
+    {
+      "case_id": "face-positive",
+      "kind": "face",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "reference_path": "reference-full-run3/face-positive.json"
+    },
+    {
+      "case_id": "combined",
+      "kind": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "reference_path": "reference-full-run3/combined.json"
+    }
+  ],
+  "tolerances": {
+    "body_max_component": 1e-05,
+    "joint_endpoint_max_component": 1e-05,
+    "garment_max_component": 1e-05,
+    "scope": "metre component numeric parity only; not rest/skin/visual-quality acceptance"
+  },
+  "adoption_status": "not_selected",
+  "graphics_executed": false
+}

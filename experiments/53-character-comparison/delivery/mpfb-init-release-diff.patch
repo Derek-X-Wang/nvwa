@@ -1,0 +1,29 @@
+--- v2.0.18-tag/src/mpfb/__init__.py
++++ published-zip/__init__.py
+@@ -27,7 +27,7 @@
+ - get_preference(): Return a preference key from the MPFB preference panel
+ - set_preference(): Assign a value to a preference key in the MPFB preference panel
+ - VERSION: A tuple representing the version of MPFB
+-- BUILD_INFO: Build information of MPFB. It defaults to "FROM_SOURCE" if not a build, otherwise it contains the build date
++- BUILD_INFO: Build information of MPFB. It defaults to "20261010" if not a build, otherwise it contains the build date
+ - DEBUG: A boolean indicating whether debug mode is enabled. If DEBUG is True, some early initialization info is printed to the console
+ - MPFB_CONTEXTUAL_INFORMATION: A dictionary containing contextual information of the addon, such as in which package it was loaded
+ - ClassManager: A singleton object that manages the registration and unregistering of classes such as panels and operators
+@@ -46,7 +46,7 @@
+ 
+ # These are constants that can be imported from submodules
+ VERSION = fake_bl_info["version"]
+-BUILD_INFO = "FROM_SOURCE"
++BUILD_INFO = "20261010"
+ 
+ # Don't import this log object. Instead, get a local logger via LogService
+ _LOG = None
+@@ -197,7 +197,7 @@
+ 
+     from .services import LogService  # This will also cascade import the other services
+     _LOG = LogService.get_logger("mpfb.init")
+-    _LOG.info("Build info", "FROM_SOURCE")
++    _LOG.info("Build info", "20261010")
+     _LOG.reset_timer()
+ 
+     # ClassManager is a singleton to which all modules can add their

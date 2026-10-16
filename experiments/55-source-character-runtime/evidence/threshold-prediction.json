@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "common_manifest_sha256": "2e8566a4f12de710ead88f6aa2d71fc44e0680761a4f2fdc48a844b6f3534ab7",
+  "status": "body_helper_threshold_cause_supported",
+  "method": "f32 target parse \u00d7f32(0.1), f32 squared length <=f32(1e-6); exact discarded raw rows weighted by the frozen recipe and declared basis",
+  "scope": "Posthoc body/helper causal prediction only; no candidate algorithm changed and no garment propagation prediction",
+  "target_rows": {
+    "mpfb-addon/data/targets/torso/torso-scale-vert-decr.target.gz": {
+      "raw_rows": 13196,
+      "dropped_rows": 131,
+      "retained_rows": 13065
+    },
+    "mpfb-addon/data/targets/torso/torso-scale-vert-incr.target.gz": {
+      "raw_rows": 12865,
+      "dropped_rows": 29,
+      "retained_rows": 12836
+    },
+    "mpfb-addon/data/targets/chin/chin-jaw-drop-decr.target.gz": {
+      "raw_rows": 60,
+      "dropped_rows": 28,
+      "retained_rows": 32
+    },
+    "mpfb-addon/data/targets/chin/chin-jaw-drop-incr.target.gz": {
+      "raw_rows": 46,
+      "dropped_rows": 14,
+      "retained_rows": 32
+    }
+  },
+  "cases": [
+    {
+      "case_id": "neutral",
+      "observed_max_component_metres": 4.0531158440604287e-07,
+      "predicted_max_component_metres": 0.0,
+      "residual_max_component_metres": 4.0531158440604287e-07,
+      "within_predeclared_tolerance": true,
+      "worst_residual": {
+        "source_vertex_id": 4904,
+        "observed_reference_minus_candidate": [
+          -8.642673490766306e-08,
+          -1.0132789610151072e-07,
+          -4.0531158440604287e-07
+        ],
+        "predicted_dropped_rows": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "case_id": "body-negative",
+      "observed_max_component_metres": 0.000900053977966303,
+      "predicted_max_component_metres": 0.0009,
+      "residual_max_component_metres": 4.0531158440604287e-07,
+      "within_predeclared_tolerance": true,
+      "worst_residual": {
+        "source_vertex_id": 4904,
+        "observed_reference_minus_candidate": [
+          -8.642673490766306e-08,
+          -1.0132789610151072e-07,
+          -4.0531158440604287e-07
+        ],
+        "predicted_dropped_rows": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "case_id": "body-half",
+      "observed_max_component_metres": 0.0004500448703765869,
+      "predicted_max_component_metres": 0.00045,
+      "residual_max_component_metres": 4.0531158440604287e-07,
+      "within_predeclared_tolerance": true,
+      "worst_residual": {
+        "source_vertex_id": 4904,
+        "observed_reference_minus_candidate": [
+          -8.642673490766306e-08,
+          -1.0132789610151072e-07,
+          -4.0531158440604287e-07
+        ],
+        "predicted_dropped_rows": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "case_id": "body-positive",
+      "observed_max_component_metres": 0.0009000599384307861,
+      "predicted_max_component_metres": 0.0009,
+      "residual_max_component_metres": 4.0531158440604287e-07,
+      "within_predeclared_tolerance": true,
+      "worst_residual": {
+        "source_vertex_id": 4904,
+        "observed_reference_minus_candidate": [
+          -8.642673490766306e-08,
+          -1.0132789610151072e-07,
+          -4.0531158440604287e-07
+        ],
+        "predicted_dropped_rows": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "case_id": "face-negative",
+      "observed_max_component_metres": 0.0009001374244689275,
+      "predicted_max_component_metres": 0.0009,
+      "residual_max_component_metres": 4.0531158440604287e-07,
+      "within_predeclared_tolerance": true,
+      "worst_residual": {
+        "source_vertex_id": 4904,
+        "observed_reference_minus_candidate": [
+          -8.642673490766306e-08,
+          -1.0132789610151072e-07,
+          -4.0531158440604287e-07
+        ],
+        "predicted_dropped_rows": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "case_id": "face-half",
+      "observed_max_component_metres": 0.000399839878082342,
+      "predicted_max_component_metres": 0.0004,
+      "residual_max_component_metres": 4.0531158440604287e-07,
+      "within_predeclared_tolerance": true,
+      "worst_residual": {
+        "source_vertex_id": 4904,
+        "observed_reference_minus_candidate": [
+          -8.642673490766306e-08,
+          -1.0132789610151072e-07,
+          -4.0531158440604287e-07
+        ],
+        "predicted_dropped_rows": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "case_id": "face-positive",
+      "observed_max_component_metres": 0.0007998466491699885,
+      "predicted_max_component_metres": 0.0008,
+      "residual_max_component_metres": 4.0531158440604287e-07,
+      "within_predeclared_tolerance": true,
+      "worst_residual": {
+        "source_vertex_id": 4904,
+        "observed_reference_minus_candidate": [
+          -8.642673490766306e-08,
+          -1.0132789610151072e-07,
+          -4.0531158440604287e-07
+        ],
+        "predicted_dropped_rows": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "case_id": "combined",
+      "observed_max_component_metres": 0.0004500448703765869,
+      "predicted_max_component_metres": 0.00045,
+      "residual_max_component_metres": 4.0531158440604287e-07,
+      "within_predeclared_tolerance": true,
+      "worst_residual": {
+        "source_vertex_id": 4904,
+        "observed_reference_minus_candidate": [
+          -8.642673490766306e-08,
+          -1.0132789610151072e-07,
+          -4.0531158440604287e-07
+        ],
+        "predicted_dropped_rows": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  ]
+}

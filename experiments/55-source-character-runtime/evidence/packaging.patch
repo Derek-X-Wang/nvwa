@@ -1,0 +1,100 @@
+--- upstream/Cargo.toml
++++ derived/Cargo.toml
+@@ -1,10 +1,14 @@
+ [package]
++autobins = false
++autoexamples = false
++autotests = false
++autobenches = false
+ name = "humentity"
+ version = "0.19.0"
+ edition = "2024"
+ 
+ [dependencies]
+-bevy = "0.19.1"
++bevy = { version = "=0.19.1", default-features = false, features = ["std", "async_executor", "reflect_auto_register", "bevy_asset", "bevy_scene", "bevy_world_serialization", "bevy_gltf", "bevy_animation", "bevy_render", "bevy_core_pipeline", "bevy_pbr", "bevy_light", "bevy_camera", "bevy_mesh", "bevy_image", "bevy_shader", "bevy_log", "bevy_color", "bevy_material", "morph", "morph_animation", "gltf_animation", "multi_threaded", "bevy_gizmos"] }
+ ahash = { version = ">=0.8.12", features = ["serde"] }
+ serde = { version = ">=1.0.228", features = ["derive"] }
+ walkdir = ">=2.5.0"
+@@ -15,51 +19,6 @@
+ crossbeam-channel = ">=0.5.15"
+ toml = ">=1.1.2"
+ thiserror = ">=2.0.18"
+-avian3d = { optional = true, version = "0.7.0" }
+-bevy_boxddd = { optional = true, version = "0.4.0" }
+-bevy_jolt = { workspace = true, optional = true }
+-
+-[dev-dependencies]
+-bevy = { version = "0.19.0", features = ["bevy_feathers", "bevy_dev_tools"] }
+-bevy-inspector-egui = "0.37.0"
+-bevy_egui = "0.40.0"
+-
+-[[example]]
+-name = "ragdoll_avian"
+-required-features = ["avian"]
+-
+-[[example]]
+-name = "ragdoll_avian_partial"
+-required-features = ["avian"]
+-
+-[[example]]
+-name = "stress_test_ragdoll_avian"
+-required-features = ["avian"]
+-
+-[[example]]
+-name = "ragdoll_dof"
+-required-features = ["avian"]
+-
+-[[example]]
+-name = "ragdoll_jolt"
+-required-features = ["jolt"]
+-
+-[[example]]
+-name = "ragdoll_joints_jolt"
+-required-features = ["jolt"]
+-
+-[[example]]
+-name = "ragdoll_boxddd"
+-required-features = ["boxddd"]
+-
+-
+-
+-[features]
+-default = []
+-debug = ["bevy/debug"]
+-avian = ["dep:avian3d"]
+-jolt = ["dep:bevy_jolt"]
+-boxddd = ["dep:bevy_boxddd", "bevy_boxddd/debug-gizmos"]
+ 
+ [lints.clippy]
+ all = "deny"
+@@ -83,3 +42,20 @@
+ nonstandard-style = "deny"
+ future-incompatible = "deny"
+ non_local_definitions = "deny"
++
++[workspace]
++
++[lib]
++test = false
++doctest = false
++
++[features]
++default = []
++debug = ["bevy/debug"]
++avian = []
++jolt = []
++boxddd = []
++
++[patch.crates-io]
++bevy_obj = { path = "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/.deps/bevy_obj-0.19.0" }
++wobj = { path = "/Users/derekxwang/.codex/worktrees/character-foundation-research/nvwa/experiments/55-source-character-runtime/.deps/wobj-0.3.0" }
+--- upstream/src/lib.rs
++++ derived/src/lib.rs
+@@ -388,3 +388,6 @@
+         }
+     }
+ }
++
++#[cfg(any(feature = "avian", feature = "jolt", feature = "boxddd"))]
++compile_error!("Nvwa CPU probe disables physics features");

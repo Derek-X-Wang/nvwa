@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "sample_class": "makehuman-approved-sample",
+  "source_input_manifest_sha256": "2e8566a4f12de710ead88f6aa2d71fc44e0680761a4f2fdc48a844b6f3534ab7",
+  "status": "passed",
+  "basis": "same root-frozen reference-local metres",
+  "comparison_summary_sha256": "4854ed5c7ee2f7b87401f4c80fe52022bb0ad729dd868a88472b6a4ab82ae121",
+  "cases": [
+    {
+      "case_id": "body-negative",
+      "body": {
+        "changed_entries_above_1e-12_metres": 13175,
+        "max_displacement_metres": 0.04785446687614437
+      },
+      "joint_endpoints": {
+        "changed_entries_above_1e-12_metres": 83,
+        "max_displacement_metres": 0.04310000000000036
+      },
+      "garment": {
+        "changed_entries_above_1e-12_metres": 1053,
+        "max_displacement_metres": 0.04771114071299756
+      }
+    },
+    {
+      "case_id": "body-half",
+      "body": {
+        "changed_entries_above_1e-12_metres": 12865,
+        "max_displacement_metres": 0.05140000000000006
+      },
+      "joint_endpoints": {
+        "changed_entries_above_1e-12_metres": 81,
+        "max_displacement_metres": 0.05140000000000011
+      },
+      "garment": {
+        "changed_entries_above_1e-12_metres": 913,
+        "max_displacement_metres": 0.051400514000000175
+      }
+    },
+    {
+      "case_id": "body-positive",
+      "body": {
+        "changed_entries_above_1e-12_metres": 12865,
+        "max_displacement_metres": 0.10280000000000006
+      },
+      "joint_endpoints": {
+        "changed_entries_above_1e-12_metres": 81,
+        "max_displacement_metres": 0.10280000000000011
+      },
+      "garment": {
+        "changed_entries_above_1e-12_metres": 913,
+        "max_displacement_metres": 0.10280102800000018
+      }
+    },
+    {
+      "case_id": "face-negative",
+      "body": {
+        "changed_entries_above_1e-12_metres": 50,
+        "max_displacement_metres": 0.004259107887809353
+      },
+      "joint_endpoints": {
+        "changed_entries_above_1e-12_metres": 0,
+        "max_displacement_metres": 0.0
+      },
+      "garment": {
+        "changed_entries_above_1e-12_metres": 0,
+        "max_displacement_metres": 0.0
+      }
+    },
+    {
+      "case_id": "face-half",
+      "body": {
+        "changed_entries_above_1e-12_metres": 42,
+        "max_displacement_metres": 0.0028160255680657687
+      },
+      "joint_endpoints": {
+        "changed_entries_above_1e-12_metres": 0,
+        "max_displacement_metres": 0.0
+      },
+      "garment": {
+        "changed_entries_above_1e-12_metres": 0,
+        "max_displacement_metres": 0.0
+      }
+    },
+    {
+      "case_id": "face-positive",
+      "body": {
+        "changed_entries_above_1e-12_metres": 42,
+        "max_displacement_metres": 0.005632051136131539
+      },
+      "joint_endpoints": {
+        "changed_entries_above_1e-12_metres": 0,
+        "max_displacement_metres": 0.0
+      },
+      "garment": {
+        "changed_entries_above_1e-12_metres": 0,
+        "max_displacement_metres": 0.0
+      }
+    },
+    {
+      "case_id": "combined",
+      "body": {
+        "changed_entries_above_1e-12_metres": 12865,
+        "max_displacement_metres": 0.05140000000000006
+      },
+      "joint_endpoints": {
+        "changed_entries_above_1e-12_metres": 81,
+        "max_displacement_metres": 0.05140000000000011
+      },
+      "garment": {
+        "changed_entries_above_1e-12_metres": 913,
+        "max_displacement_metres": 0.051400514000000175
+      }
+    }
+  ],
+  "positive_half_linearity_max_component_error": {
+    "body:body": 1.1102230246251565e-16,
+    "body:joint_endpoints": 2.220446049250313e-16,
+    "body:garment": 2.220446049250313e-16,
+    "face:body": 1.1102230246251565e-16
+  },
+  "interpretation": "body changes relocate helper-derived joint endpoints and refit actual proxy garment; local jaw changes need not move this rig/garment; these are numeric observations only"
+}
