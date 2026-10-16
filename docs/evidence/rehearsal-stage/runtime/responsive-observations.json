@@ -1,0 +1,39 @@
+{
+  "source_commit": "db0139e0ffb195abf681620e6f691eb103ce2dd3",
+  "renderer": "ordinary Web without benchmark override",
+  "evidence_kind": "CUA DOM geometry and inline screenshots; no persisted PNG available from ordinary page controls",
+  "cases": [
+    {
+      "mode": "player",
+      "css": [
+        1024,
+        768
+      ],
+      "buffer": [
+        1024,
+        768
+      ],
+      "fresh_boot": "PASS full head/feet, saved Black/High stage",
+      "wheel": "PASS temporary zoom",
+      "escape_after_completed_wheel": "does not reset completed view; current gesture cancellation only",
+      "open_saved_work": "PASS restored saved view; nine-second completion visible"
+    },
+    {
+      "mode": "studio",
+      "css": [
+        1024,
+        768
+      ],
+      "buffer": [
+        1024,
+        768
+      ],
+      "fresh_boot": "PASS full head/feet, controls reachable",
+      "live_viewport_resize": "PARTIAL displayed content at reduced extent until reload; not attributed, no workaround, #3 remains blocked",
+      "stage_initial_window": "FAIL at V2: x195..526 covers actor at x462; corrected by V3 position-only commit b43757d, independently recorded in web-v3-receipt.json"
+    }
+  ],
+  "physical_dpi_migration": "NOT-RUN",
+  "native_window": "NOT-RUN locked",
+  "viewport_override": "reset after closing all owned tabs"
+}

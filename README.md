@@ -14,9 +14,13 @@ cargo run -p nvwa-studio --locked
 
 The toolbar File field names the local JSON file on native. In the packaged app, enter an absolute writable path such as /Users/your-name/Downloads/scene.nvwa.json. Open reads that path; Save writes it atomically. In the browser, Open invokes a local file picker and Save downloads JSON using the basename in that field. No account, model service or network command bridge is needed.
 
-Select the character, drag the four sliders, choose a clip, and use Play/Pause or the seek slider. One completed parameter drag commits one undoable command. A saved document includes all parameter values, scale, asset hash and animation settings. Playback cursor and undo history are session state.
+Select the character, drag the four sliders, choose a clip, and use Play/Pause or the seek slider. One completed parameter drag commits one undoable command. A saved document includes all parameter values, scale, asset hash, animation settings and rehearsal stage settings. Playback cursor and undo history are session state.
 
 The inspector separates editable **Shape** parameters from read-only **Profile** details. Drag the thin separator above Animation to change the timeline height; Escape cancels a current separator drag. **Lock timeline height** prevents resizing and **Reset layout** restores Shape and the initial height while retaining the lock. Layout changes belong to this session and do not change the saved work or Undo/Redo history. The timeline scrolls when its content does not fit.
+
+Open **Stage / 试演舞台** in the toolbar to adjust the key and fill lights, ambient light, background, floor, camera and requested quality. White studio and Black space provide starting points; Full body and Detail change framing. Right-drag the canvas to orbit, and use the wheel to change camera distance. In Studio, one completed stage gesture creates one Undo step; Escape cancels the current gesture. Player camera changes are temporary; reopen the Work to restore its saved view.
+
+Stage settings travel with the Work through native, Web and CLI. New saves use schema 2. Existing schema 1 Works open with the default white stage and keep their character, timeline and revision; saving them writes schema 2, which earlier Nvwa versions cannot read. Keep a copy when exchanging with older builds. Room import and physics are later stages.
 
 ```sh
 python3 scripts/install-web-tools.py

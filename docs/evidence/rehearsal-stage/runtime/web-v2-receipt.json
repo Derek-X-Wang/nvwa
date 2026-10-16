@@ -1,0 +1,132 @@
+{
+  "status": "PASS_WEB_FUNCTIONAL_AND_VISUAL",
+  "source_commit": "db0139e0ffb195abf681620e6f691eb103ce2dd3",
+  "wasm_sha256": "f98eb1f4f9748918edb8cc26231202a6a13fe3cad2ecad48a0e1c8dd294c2f78",
+  "js_sha256": "05c8adc45f6c2a95f833e1a6e81d58c46aa602094b7b308aa3499fe7b2e4c930",
+  "url": "http://127.0.0.1:9205/?work=works/white-high.nvwa.json&benchmark=1",
+  "final_animation_seconds": 9.0,
+  "saved_revision": 20,
+  "work_checks": {
+    "stage_matches_real_cli_variant": true,
+    "character_profile_timeline_unchanged": true
+  },
+  "observed_cases": [
+    "full-body fits available scene, head and feet visible",
+    "High is free of former contact speckle; real ground shadow",
+    "Low shadow absent, Balanced/High shadow present",
+    "light drag10000\u219256000 oneUndo\u219210000 Redo\u219256000 Undo\u219210000",
+    "wheel3.8\u219216.039 oneUndo\u21923.8, one committed revision",
+    "actual chest click triggers wave then restores paused9s with revision unchanged",
+    "Detail1.65 keeps head inside scene",
+    "background red0.008\u21920.3 thenUndo",
+    "floor hide/show and shadow hide/show independently thenUndo",
+    "Save downloads schema2 with stage and no character/timeline changes",
+    "invalid-stage camera.distance0 rejected visibly; original character/stage/revision20 retained",
+    "real picker Open saved stage then Save byte-identical; error cleared and nine-second sequence completes"
+  ],
+  "not_run": [
+    "native window input and visual acceptance",
+    "physical right-drag and mid-drag Escape",
+    "physical DPI/monitor migration",
+    "formal performance and human preference"
+  ],
+  "files": [
+    {
+      "download_basename": "nvwa-web-canvas (5).png",
+      "preserved_as": "web-v2-white-high.png",
+      "sha256": "f1cdea1b7d06e2c4c1db1b7097640eeb1761e987c97cf4d71237635ba7adafea",
+      "bytes": 415034,
+      "canvas_dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "download_basename": "nvwa-web-canvas (6).png",
+      "preserved_as": "web-v2-white-low.png",
+      "sha256": "a124e46da5aa87dfcb26e1df384e65aa458f82f8fb7e23a2939ee4c6863b6efb",
+      "bytes": 370292,
+      "canvas_dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "download_basename": "nvwa-web-canvas (7).png",
+      "preserved_as": "web-v2-white-balanced.png",
+      "sha256": "8cc91d145df3da350c46962411f2873447efcece2913072fd8fb7b56a9dd57e4",
+      "bytes": 433202,
+      "canvas_dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "download_basename": "nvwa-web-canvas (8).png",
+      "preserved_as": "web-v2-detail.png",
+      "sha256": "29125e3fabec70e6392fa552aa41f3a3789c8b7fa5a8921069e410ee6bcdf44a",
+      "bytes": 370692,
+      "canvas_dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "download_basename": "nvwa-web-canvas (9).png",
+      "preserved_as": "web-v2-black-high.png",
+      "sha256": "7c8cb6012887e819da4a2bd8a73b9566567e90b68a39c8a5a8a4e68a9e756e5e",
+      "bytes": 425606,
+      "canvas_dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "download_basename": "white-high.nvwa.json",
+      "preserved_as": "web-v2-saved.nvwa.json",
+      "sha256": "76ba77bb2a8992767917efd8993ba8e3d7c6375e4c5cb2157a99ccb20317444c",
+      "bytes": 2872
+    },
+    {
+      "preserved_as": "web-v2-invalid-stage.png",
+      "sha256": "835d1288e1ad65e30f824b5861ff1e0bbac6352b9d53aa849c9900d38f573f2b",
+      "bytes": 429988
+    },
+    {
+      "preserved_as": "web-v2-recovered.png",
+      "sha256": "4a0586409e0b5b05e56d9dbb6ce4eb776c1acf7f8508cc3512729be0c5844c51",
+      "bytes": 434028
+    },
+    {
+      "preserved_as": "web-v2-roundtrip.nvwa.json",
+      "sha256": "76ba77bb2a8992767917efd8993ba8e3d7c6375e4c5cb2157a99ccb20317444c",
+      "bytes": 2872
+    }
+  ],
+  "initial_nvwa_evidence": {
+    "ready": true,
+    "error": null,
+    "stage_error": null,
+    "completed": true,
+    "animation_seconds": 9,
+    "document_revision": 2,
+    "build_profile": "dev",
+    "physical_window": {
+      "height": 720,
+      "scale_factor": 1,
+      "width": 1280
+    },
+    "gpu": {
+      "backend": "BrowserWebGpu",
+      "name": ""
+    },
+    "capture_callback": true,
+    "skins": 9,
+    "joints": 18,
+    "morph_weights": 4,
+    "quality": "high",
+    "clock": "bevy_TimeReal_since_first_update",
+    "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+    "recording": "selected fields transcribed from actual CUA dev.logs output; not a new performance measurement"
+  }
+}

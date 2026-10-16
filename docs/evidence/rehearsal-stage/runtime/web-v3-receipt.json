@@ -1,0 +1,41 @@
+{
+  "status": "PASS_BOUNDED_POSITION_DELTA",
+  "source_commit": "b43757d87dde8294525769a98db17eab57a886fc",
+  "wasm_sha256": "ae1118cc1d35d73b910c693865274b42a8e2fd403b880c764341b6b571545d9d",
+  "kind": "actual CUA browser functional/visual smoke, not performance",
+  "cases": [
+    {
+      "mode": "ordinary Studio",
+      "fresh_css_and_buffer": [
+        1024,
+        768
+      ],
+      "result": "PASS opening Stage at x12..343 leaves full head/feet/character visible around x462; stage controls reachable",
+      "evidence": "CUA inline screenshot and read-only DOM geometry; no persisted PNG export on ordinary page"
+    },
+    {
+      "mode": "benchmark Studio",
+      "canvas": [
+        1280,
+        720
+      ],
+      "result": "PASS fresh startup, complete9s, real shadow, full head/feet and Stage window simultaneously visible",
+      "evidence": "actual app canvas PNG downloaded through visible button"
+    }
+  ],
+  "files": [
+    {
+      "preserved_as": "web-v3-stage.png",
+      "sha256": "449c6fc33d6ec89c83b1775db3d6d4e485d6f9267cd46fb99e0d72d3c7122a46",
+      "bytes": 413783
+    }
+  ],
+  "scope_limit": "Only default window position changed since V2. Existing V2 stage control/history/persistence results retain their V2 source attribution; they are not relabeled as V3 runs.",
+  "not_run": [
+    "native visual/window input, Mac remains locked",
+    "formal performance",
+    "physical DPI migration",
+    "physical right-drag and mid-drag Escape"
+  ],
+  "cleanup": "all root-owned Web tabs closed and viewport override reset; only exact task download moved from Downloads"
+}

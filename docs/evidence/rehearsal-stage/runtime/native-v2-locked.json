@@ -1,0 +1,16 @@
+{
+  "status": "NOT-RUN_VISUAL_ACCEPTANCE",
+  "reason": "Mac GUI tool explicitly reported lock; product smoke CLI exited0 and produced an all-black actual readback. No further native cases attempted while locked.",
+  "source_commit": "db0139e0ffb195abf681620e6f691eb103ce2dd3",
+  "binary_sha256": "60e8daf6d7eb4014a5a97e184a671850b67f7b533df3541d8b5fac24c8fb6114",
+  "exit": {
+    "exit_code": 0,
+    "wall_seconds": 13.4935935420217
+  },
+  "png_sha256": "7f0fcfad3151bf17c4ba0faa396039ee753bfd086f998f751361bedcb6a3e4b4",
+  "png_bytes": 15057,
+  "native_log": "2026-10-16T10:16:22.973562Z  WARN bevy_egui::render: Bindless textures are not yet supported on metal. Disabling bindless mode. See https://github.com/bevyengine/bevy/issues/18149 for more information\n2026-10-16T10:16:34.745578Z  WARN bevy_winit::state: Skipped event Destroyed for unknown winit Window Id WindowId(507037287680)\n",
+  "first_physical_presentation": "NOT-RUN",
+  "native_window_input": "NOT-RUN",
+  "formal_performance": "NOT-RUN"
+}
