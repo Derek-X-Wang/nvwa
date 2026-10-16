@@ -1,6 +1,6 @@
 {
-  "status": "DECLARED_DIAGNOSTIC_ONLY_CHANGE_AFTER_BUILD",
-  "scope": "Only the Python offline evaluator adds a final exact candidate-byte/no-extra-roll guard. No Rust, Cargo, probe, Work or GLB build input changed. New helpers/docs are not retrospective compiled inputs.",
+  "status": "DECLARED_OFFLINE_GUARD_AND_FORMAT_ONLY_CHANGES_AFTER_BUILD",
+  "scope": "The Python offline evaluator adds a final exact candidate-byte/no-extra-roll guard. The probe lib.rs later changes whitespace only to satisfy cargo fmt; whitespace-stripped old/current bytes are identical. No runtime behavior, Cargo, Work or GLB changed. New helpers/docs are not retrospective compiled inputs.",
   "archived_evaluator": "probe/build-inputs/evaluate-at-build.py.txt",
   "archive_method": "Reverse the two explicitly recorded diagnostic additions and require exact SHA256 equality with both actual build receipts",
   "archive_sha256": "364778369b7004f30c6424ad850b89e308c6533ef9ba84403245665654817a85",
@@ -9,13 +9,30 @@
       "experiments/50-upper-arm-neutral-ab/evaluate.py": {
         "compiled_snapshot_sha256": "364778369b7004f30c6424ad850b89e308c6533ef9ba84403245665654817a85",
         "current_sha256": "ca604662c810986f3dd2bf30d67a5f4fa6e10324834dfa401b3ffc6da3a9d75c"
+      },
+      "experiments/50-upper-arm-neutral-ab/probe/src/lib.rs": {
+        "compiled_snapshot_sha256": "81af7ec1135e146f851f28e6b26abaf57f2c7fb64177415b6d1a76b8e2385234",
+        "current_sha256": "2cd3233ed7cc7eb7dcb5b2fcd362c44da62f8cbe0a3b4f2828e77179db446514",
+        "change": "cargo fmt whitespace only"
       }
     },
     "web": {
       "experiments/50-upper-arm-neutral-ab/evaluate.py": {
         "compiled_snapshot_sha256": "364778369b7004f30c6424ad850b89e308c6533ef9ba84403245665654817a85",
         "current_sha256": "ca604662c810986f3dd2bf30d67a5f4fa6e10324834dfa401b3ffc6da3a9d75c"
+      },
+      "experiments/50-upper-arm-neutral-ab/probe/src/lib.rs": {
+        "compiled_snapshot_sha256": "81af7ec1135e146f851f28e6b26abaf57f2c7fb64177415b6d1a76b8e2385234",
+        "current_sha256": "2cd3233ed7cc7eb7dcb5b2fcd362c44da62f8cbe0a3b4f2828e77179db446514",
+        "change": "cargo fmt whitespace only"
       }
     }
+  },
+  "archived_probe_source": {
+    "path": "probe/build-inputs/lib-at-build.rs.txt",
+    "sha256": "81af7ec1135e146f851f28e6b26abaf57f2c7fb64177415b6d1a76b8e2385234",
+    "method": "Exact source bytes copied before cargo fmt; hash authenticated against both actual build receipts",
+    "current_sha256": "2cd3233ed7cc7eb7dcb5b2fcd362c44da62f8cbe0a3b4f2828e77179db446514",
+    "semantic_diff": "whitespace only; whitespace-stripped bytes identical"
   }
 }

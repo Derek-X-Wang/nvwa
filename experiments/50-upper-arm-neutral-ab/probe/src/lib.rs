@@ -131,7 +131,10 @@ fn sample(world: &mut World) -> Result<Value, String> {
         .document()
         .ok_or("missing Work")?;
     require(
-        matches!(doc.profile.id.as_str(), "nvwa-experiment48-genuine44-calibrated47" | "nvwa-experiment50-upper-arm-neutral-ab"),
+        matches!(
+            doc.profile.id.as_str(),
+            "nvwa-experiment48-genuine44-calibrated47" | "nvwa-experiment50-upper-arm-neutral-ab"
+        ),
         "wrong Work/profile",
     )?;
     let work = serde_json::to_value(doc).map_err(|e| e.to_string())?;

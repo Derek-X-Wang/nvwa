@@ -159,9 +159,12 @@ The six existing original source-cache texts were freshly read and matched
 pinned SHA256, byte counts and archived URL receipts. This verifies the retained
 metadata convention; official decoder execution parity and arbitrary rigs
 remain unverified. The [post-build diagnostic record](results/post-build-diagnostics.json)
-identifies one Python evaluator tightening after the build. Its exact build-time
-bytes are retained and match both actual build receipts. Rust, Cargo, probe,
-Work and GLB inputs did not change; no retrospective rebuild is claimed.
+identifies the Python evaluator tightening and a later format-only probe edit.
+Exact build-time evaluator and `lib.rs` bytes are retained and authenticated
+against both actual build receipts. `cargo fmt` only expands the profile
+`matches!` expression; whitespace-stripped old/current Rust bytes are identical.
+The format check passes. Runtime behavior, Cargo, Work and GLB are unchanged;
+no retrospective rebuild or new runtime capture is claimed.
 
 These are historical captures of the production-source snapshot at base
 `50eae1979cac47c7eb53dada69f06b716436bf92`, before StageA. The capsule does not
