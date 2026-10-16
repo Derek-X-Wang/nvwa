@@ -51,7 +51,10 @@ node. They used the existing lock/dependency cache and no network downloads.
 Do not start new builds or renderers without the applicable shared resource
 lease. [Build receipts](results/build-native.json) bind actual snapshot inputs;
 [post-build-diagnostics.json](results/post-build-diagnostics.json) explains the
-one later evaluator-only guard and authenticates its archived build-time bytes.
+later evaluator-only guard and format-only probe edit. Exact build-time evaluator
+and `lib.rs` bytes are archived and authenticated against both build receipts;
+only whitespace changes in Rust, with no rebuild or runtime recapture claimed.
+`cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --all --check` passes.
 
 For an already-built artifact, `probe/prepare.py --variant baseline|candidate
 --stage .work/m2-neutral-ab/<fresh stage> --binary /absolute/existing/probe`
