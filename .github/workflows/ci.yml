@@ -99,7 +99,9 @@ jobs:
     # Reject cheap portable failures before spending a cold graphical compile.
     needs: portable
     runs-on: macos-14
-    timeout-minutes: 45
+    # The measured original lane already takes about 30 minutes cold. Keep a
+    # finite bound for the real B1 source build, tests, recovery and Web check.
+    timeout-minutes: 60
     env:
       CARGO_BUILD_JOBS: '1'
       # Reuse this run's root outputs for the isolated probe; no remote cache.
@@ -139,7 +141,9 @@ jobs:
         run: |
           cargo fmt --manifest-path experiments/57-b1-pose-runtime/adapter/Cargo.toml --package b1-pose-adapter --check
           cargo fmt --manifest-path experiments/58-b1-desktop-web/Cargo.toml --package b1-desktop-web --check
-          cargo test --manifest-path experiments/57-b1-pose-runtime/adapter/Cargo.toml --test sampled --locked --offline -- --nocapture
+          # Run the original adapter integration test through the viewer graph;
+          # this shares its real Bevy features instead of compiling a third stack.
+          cargo test --manifest-path experiments/58-b1-desktop-web/Cargo.toml --package b1-pose-adapter --test sampled --locked --offline -- --nocapture
           cargo test --manifest-path experiments/58-b1-desktop-web/Cargo.toml --lib --locked --offline
           cargo build --manifest-path experiments/58-b1-desktop-web/Cargo.toml --bin b1-desktop-web --locked --offline
           python3 -B -O experiments/58-b1-desktop-web/verify_native.py --binary "$CARGO_TARGET_DIR/debug/b1-desktop-web" --asset-root "$GITHUB_WORKSPACE/.work/b1-pose-viewer/site/assets" --out "$RUNNER_TEMP/nvwa-b1-viewer-runtime"
