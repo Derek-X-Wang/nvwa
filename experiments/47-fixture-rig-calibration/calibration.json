@@ -1,0 +1,2542 @@
+{
+  "anatomical_twist_recovered": false,
+  "authorities": {
+    "chains": "authored collapse of omitted rotations into next mapped descendant; omitted moving translations stay omitted",
+    "front": "source41 +Z declaration, source eye/jaw/toe geometry; fixture negative Blender Y nose/eyes maps to +Z glTF",
+    "neutral": "pinned static source rest and exact target bind, independently distinct from animated frame zero",
+    "side": "root selects physical identity and sourceLeft->target.R / sourceRight->target.L from independent original-source face/up audit; named reflection is rejected comparator",
+    "twist": "authored projected-front gauge (feet projected-up); no claim of recovered anatomical palm/sole normal",
+    "up": "source41 +Y declaration and source torso rest; fixture generator +Z Blender maps to +Y glTF"
+  },
+  "basis": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "basis_authority": "INDEPENDENT_DOCUMENTED_AXES_AND_FACE_UP_PHYSICAL_SIDE_REFERENCE",
+  "candidate": "physical_sides_identity",
+  "delta_policy": "collapsed-chain parent-local neutral-relative gauge conjugation",
+  "implementation_selection": "ROOT_SELECTED_PENDING_R2",
+  "independent_authority_first_report_sha256": "9ddd992efb4af47cd524ec55124a28889448208541f4a73ab08f7a74462a19d2",
+  "independent_static_physical_side_supported": true,
+  "input_sha256": {
+    "assets/fixtures/nvwa-humanoid.glb": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "assets/fixtures/provenance-manifest.json": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f",
+    "experiments/41-real-short-motion/source-skeleton.json": "d137f3ea5522deeb70257d2fd5522ca6d5436c0145ea001a1e8b4fc646cddd9a",
+    "experiments/43-rig-mapping/spike.py": "063aefdd56d988256154b291b7f783d874f513b714303c546a36d8bf695bfe93",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json": "554fd2e64e316d218fd699bbbe8d3e45351a7b3a3e08ef077cdc2c6cfaaa52c9",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/process/receipt.json": "f67726f84982d6e5bd7c22e944131a7991016508e541d88972da6e20abc6410b",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/process/stdout.txt": "d8cafdcca9f05b92f112232345c7435335858a1f019cabc2067d30ba4e71d5d1",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32": "67914c5d72c54429bf8a70d3f9ef43157fb5181fa36ab2c5f8ce7f9dc69d3a55",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32": "dcc221d506999a803b1d0fddef87abc0131b1e8f4e64187bc57fde3a63c204af",
+    "tools/blender/generate_fixture.py": "bc54eec314ccba2ca2a77499b03d96b1ec9afb8c38cfbb9ac9e1fb04f5736f0e"
+  },
+  "neutral": "pinned static source rest and exact target bind; never frame zero",
+  "root_policy": "source Hips delta once on root; pelvis bind rotation; absolute Hips world position once",
+  "root_policy_decision_sha256": "c5c1b0ef3deac7410f0b6da1e05490d347fd0189219b7898a741ac6dcb0f8d67",
+  "rows": [
+    {
+      "delta_basis": [
+        [
+          0.9999962370761132,
+          0.002743325284072593,
+          0.0
+        ],
+        [
+          -0.0027431671618402004,
+          0.9999385984000478,
+          -0.010736594603034739
+        ],
+        [
+          -2.945397143934254e-05,
+          0.010736554202046443,
+          0.9999423611070442
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 1.7881393449270533e-09,
+      "generator_tail_bind_rotation_axis_residual": 0.0,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          0.0,
+          0.1,
+          0.0
+        ],
+        "secondary": [
+          0.0,
+          0.0,
+          0.1
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "Hips",
+      "source_distal": "Spine1",
+      "source_frame": [
+        [
+          -0.0027431671618402004,
+          -2.945397143934254e-05,
+          0.9999962370761132
+        ],
+        [
+          0.9999385984000478,
+          0.010736554202046443,
+          0.002743325284072593
+        ],
+        [
+          -0.010736594603034739,
+          0.9999423611070442,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.999942361107044,
+      "source_primary_m": [
+        -0.00013727,
+        0.0500376256,
+        -0.00053726669
+      ],
+      "source_primary_start": "Hips",
+      "source_rest_gauge": [
+        [
+          -0.0027431671618402004,
+          -2.945397143934254e-05,
+          0.9999962370761132
+        ],
+        [
+          0.9999385984000478,
+          0.010736554202046443,
+          0.002743325284072593
+        ],
+        [
+          -0.010736594603034739,
+          0.9999423611070442,
+          0.0
+        ]
+      ],
+      "target": "root",
+      "target_frame": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        0,
+        0.08,
+        0
+      ],
+      "target_parent": null,
+      "target_primary_m": [
+        0,
+        0.2,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_tail_m": [
+        0,
+        0.28,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          0.9999962370761132,
+          0.002743325284072593,
+          0.0
+        ],
+        [
+          -0.0027431671618402004,
+          0.9999385984000478,
+          -0.010736594603034739
+        ],
+        [
+          -2.945397143934254e-05,
+          0.010736554202046443,
+          0.9999423611070442
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 6.139278407868431e-08,
+      "generator_tail_bind_rotation_axis_residual": 0.0,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          0.0,
+          0.1,
+          0.0
+        ],
+        "secondary": [
+          0.0,
+          0.0,
+          0.1
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "Hips",
+      "source_distal": "Spine1",
+      "source_frame": [
+        [
+          -0.0027431671618402004,
+          -2.945397143934254e-05,
+          0.9999962370761132
+        ],
+        [
+          0.9999385984000478,
+          0.010736554202046443,
+          0.002743325284072593
+        ],
+        [
+          -0.010736594603034739,
+          0.9999423611070442,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.999942361107044,
+      "source_primary_m": [
+        -0.00013727,
+        0.0500376256,
+        -0.00053726669
+      ],
+      "source_primary_start": "Hips",
+      "source_rest_gauge": [
+        [
+          -0.0027431671618402004,
+          -2.945397143934254e-05,
+          0.9999962370761132
+        ],
+        [
+          0.9999385984000478,
+          0.010736554202046443,
+          0.002743325284072593
+        ],
+        [
+          -0.010736594603034739,
+          0.9999423611070442,
+          0.0
+        ]
+      ],
+      "target": "pelvis",
+      "target_frame": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        0,
+        0.83,
+        0
+      ],
+      "target_parent": "root",
+      "target_primary_m": [
+        0,
+        0.17000000000000004,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_tail_m": [
+        0,
+        1.0,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          0.9999999999999998,
+          2.6184731394043833e-08,
+          2.5849394142282115e-26
+        ],
+        [
+          -2.618450201031264e-08,
+          0.9999912397905577,
+          -0.004185730777632007
+        ],
+        [
+          -1.096022361000763e-10,
+          0.004185730777632004,
+          0.9999912397905579
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 1.4901161193847656e-08,
+      "generator_tail_bind_rotation_axis_residual": 0.0,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          0.0,
+          0.1,
+          0.0
+        ],
+        "secondary": [
+          0.0,
+          0.0,
+          0.1
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "Spine1",
+      "source_distal": "Spine2",
+      "source_frame": [
+        [
+          -2.618450201031264e-08,
+          -1.096022361000763e-10,
+          0.9999999999999998
+        ],
+        [
+          0.9999912397905577,
+          0.004185730777632004,
+          2.6184731394043833e-08
+        ],
+        [
+          -0.004185730777632007,
+          0.9999912397905579,
+          2.5849394142282115e-26
+        ]
+      ],
+      "source_guide_projection_sine": 0.999991239790558,
+      "source_primary_m": [
+        -1.865741029987572e-09,
+        0.0712530139,
+        -0.00029824854599999997
+      ],
+      "source_primary_start": "Spine1",
+      "source_rest_gauge": [
+        [
+          -2.618450201031264e-08,
+          -1.096022361000763e-10,
+          0.9999999999999998
+        ],
+        [
+          0.9999912397905577,
+          0.004185730777632004,
+          2.6184731394043833e-08
+        ],
+        [
+          -0.004185730777632007,
+          0.9999912397905579,
+          2.5849394142282115e-26
+        ]
+      ],
+      "target": "spine",
+      "target_frame": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        0,
+        1.0,
+        0
+      ],
+      "target_parent": "pelvis",
+      "target_primary_m": [
+        0,
+        0.18999999999999995,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_tail_m": [
+        0,
+        1.19,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          0.9999761621211681,
+          0.00690472225505375,
+          0.0
+        ],
+        [
+          -0.006903195869759058,
+          0.9997551034235809,
+          -0.02102567633368175
+        ],
+        [
+          -0.00014517645530872928,
+          0.021025175126156946,
+          0.9997789360327168
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 7.212162023151336e-08,
+      "generator_tail_bind_rotation_axis_residual": 0.0,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          0.0,
+          0.1,
+          0.0
+        ],
+        "secondary": [
+          0.0,
+          0.0,
+          0.1
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "Chest",
+      "source_distal": "Neck1",
+      "source_frame": [
+        [
+          -0.006903195869759058,
+          -0.00014517645530872928,
+          0.9999761621211681
+        ],
+        [
+          0.9997551034235809,
+          0.021025175126156946,
+          0.00690472225505375
+        ],
+        [
+          -0.02102567633368175,
+          0.9997789360327168,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.9997789360327167,
+      "source_primary_m": [
+        -0.0018167651699999999,
+        0.26311295300000004,
+        -0.005533482920000001
+      ],
+      "source_primary_start": "Chest",
+      "source_rest_gauge": [
+        [
+          -0.006903195869759058,
+          -0.00014517645530872928,
+          0.9999761621211681
+        ],
+        [
+          0.9997551034235809,
+          0.021025175126156946,
+          0.00690472225505375
+        ],
+        [
+          -0.02102567633368175,
+          0.9997789360327168,
+          0.0
+        ]
+      ],
+      "target": "chest",
+      "target_frame": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        0,
+        1.19,
+        0
+      ],
+      "target_parent": "spine",
+      "target_primary_m": [
+        0,
+        0.18999999999999995,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_tail_m": [
+        0,
+        1.38,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          0.9999999999999317,
+          3.698113410323414e-07,
+          1.3234889800848443e-23
+        ],
+        [
+          -3.54344217081028e-07,
+          0.958175636506548,
+          0.2861807988058353
+        ],
+        [
+          1.0583290498409262e-07,
+          -0.28618079880581576,
+          0.9581756365066136
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 1.0132789718397817e-08,
+      "generator_tail_bind_rotation_axis_residual": 0.0,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          0.0,
+          0.1,
+          0.0
+        ],
+        "secondary": [
+          0.0,
+          0.0,
+          0.1
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "Neck1",
+      "source_distal": "Neck2",
+      "source_frame": [
+        [
+          -3.54344217081028e-07,
+          1.0583290498409262e-07,
+          0.9999999999999317
+        ],
+        [
+          0.958175636506548,
+          -0.28618079880581576,
+          3.698113410323414e-07
+        ],
+        [
+          0.2861807988058353,
+          0.9581756365066136,
+          1.3234889800848443e-23
+        ]
+      ],
+      "source_guide_projection_sine": 0.9581756365066135,
+      "source_primary_m": [
+        -2.851022309988821e-08,
+        0.07709396639999999,
+        0.0230258546
+      ],
+      "source_primary_start": "Neck1",
+      "source_rest_gauge": [
+        [
+          -3.54344217081028e-07,
+          1.0583290498409262e-07,
+          0.9999999999999317
+        ],
+        [
+          0.958175636506548,
+          -0.28618079880581576,
+          3.698113410323414e-07
+        ],
+        [
+          0.2861807988058353,
+          0.9581756365066136,
+          1.3234889800848443e-23
+        ]
+      ],
+      "target": "neck",
+      "target_frame": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        0,
+        1.38,
+        0
+      ],
+      "target_parent": "chest",
+      "target_primary_m": [
+        0,
+        0.10000000000000009,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_tail_m": [
+        0,
+        1.48,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          0.9999999999997187,
+          7.501397861393318e-07,
+          0.0
+        ],
+        [
+          -7.147061791222387e-07,
+          0.9527639945620581,
+          0.30371165711187237
+        ],
+        [
+          2.2782619751392199e-07,
+          -0.30371165711178694,
+          0.9527639945623262
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 3.3974647539736225e-08,
+      "generator_tail_bind_rotation_axis_residual": 0.0,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          0.0,
+          0.1,
+          0.0
+        ],
+        "secondary": [
+          0.0,
+          0.0,
+          0.1
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "Head",
+      "source_distal": "Head",
+      "source_frame": [
+        [
+          -7.147061791222387e-07,
+          2.2782619751392199e-07,
+          0.9999999999997187
+        ],
+        [
+          0.9527639945620581,
+          -0.30371165711178694,
+          7.501397861393318e-07
+        ],
+        [
+          0.30371165711187237,
+          0.9527639945623262,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.9527639945623262,
+      "source_primary_m": [
+        -4.597543700000234e-08,
+        0.06128915950000002,
+        0.0195370861
+      ],
+      "source_primary_start": "Neck2",
+      "source_rest_gauge": [
+        [
+          -7.147061791222387e-07,
+          2.2782619751392199e-07,
+          0.9999999999997187
+        ],
+        [
+          0.9527639945620581,
+          -0.30371165711178694,
+          7.501397861393318e-07
+        ],
+        [
+          0.30371165711187237,
+          0.9527639945623262,
+          0.0
+        ]
+      ],
+      "target": "head",
+      "target_frame": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        0,
+        1.48,
+        0
+      ],
+      "target_parent": "neck",
+      "target_primary_m": [
+        0,
+        0.3500000000000001,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_tail_m": [
+        0,
+        1.83,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          7.354555832711478e-08,
+          0.9999999999999971,
+          1.6671425918077883e-08
+        ],
+        [
+          -0.9999999959161147,
+          7.354706460734681e-08,
+          -9.037568910696572e-05
+        ],
+        [
+          -9.037568910819161e-05,
+          -1.6664779119479125e-08,
+          0.9999999959161173
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 5.781957768368055e-08,
+      "generator_tail_bind_rotation_axis_residual": 8.254780658870747e-09,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          -8.254782205008304e-10,
+          0.10000000596046485,
+          -1.1832839517862255e-16
+        ],
+        "secondary": [
+          1.6670682935605848e-09,
+          1.3208968381795425e-16,
+          0.09999999999999999
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "RightArm",
+      "source_distal": "RightForeArm",
+      "source_frame": [
+        [
+          -0.9999999959161152,
+          -9.037568910828644e-05,
+          6.529228418166343e-08
+        ],
+        [
+          6.52922839150174e-08,
+          5.900835176371914e-12,
+          0.9999999999999979
+        ],
+        [
+          -9.037568910828662e-05,
+          0.9999999959161174,
+          8.077935669463163e-28
+        ]
+      ],
+      "source_guide_projection_sine": 0.9999999959161173,
+      "source_primary_m": [
+        -0.287366393,
+        1.8762808196015612e-08,
+        -2.597093590000002e-05
+      ],
+      "source_primary_start": "RightArm",
+      "source_rest_gauge": [
+        [
+          -0.9999999959161152,
+          -9.037568910828644e-05,
+          6.529228418166343e-08
+        ],
+        [
+          6.52922839150174e-08,
+          5.900835176371914e-12,
+          0.9999999999999979
+        ],
+        [
+          -9.037568910828662e-05,
+          0.9999999959161174,
+          8.077935669463163e-28
+        ]
+      ],
+      "target": "upper_arm.L",
+      "target_frame": [
+        [
+          -0.6981001361295396,
+          0.0,
+          -0.7160001396200412
+        ],
+        [
+          -0.7160001396200412,
+          0.0,
+          0.6981001361295396
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        -0.235,
+        1.33,
+        0
+      ],
+      "target_parent": "chest",
+      "target_primary_m": [
+        -0.195,
+        -0.20000000000000018,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          -8.254780803351736e-09,
+          1.6670679954655443e-08,
+          0.9999999999999998
+        ],
+        [
+          1.0,
+          1.3208967598268644e-15,
+          8.254780692329433e-09
+        ],
+        [
+          -1.1832839507522497e-15,
+          0.9999999999999999,
+          -1.6670679954655456e-08
+        ]
+      ],
+      "target_tail_m": [
+        -0.43,
+        1.13,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          3.224573952182533e-08,
+          0.9999999999999984,
+          4.147227855680678e-08
+        ],
+        [
+          -0.9999999953645756,
+          3.224174602376292e-08,
+          9.628524225431213e-05
+        ],
+        [
+          9.628524225297617e-05,
+          -4.147538314535486e-08,
+          0.9999999953645753
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 1.1125672495778284e-07,
+      "generator_tail_bind_rotation_axis_residual": 3.6841400058452513e-08,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          -5.274063805197525e-09,
+          0.1000000061740365,
+          2.0465418183908402e-10
+        ],
+        "secondary": [
+          4.216202475787771e-09,
+          -7.278586546411586e-10,
+          0.10000000597154922
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "RightForeArm",
+      "source_distal": "RightHand",
+      "source_frame": [
+        [
+          -0.9999999953641271,
+          9.628990481719231e-05,
+          -4.3034214441089455e-09
+        ],
+        [
+          -4.3034214241588306e-09,
+          4.143760412415146e-13,
+          1.0
+        ],
+        [
+          9.628990481719231e-05,
+          0.9999999953641271,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.9999999953641271,
+      "source_primary_m": [
+        -0.271336198,
+        -1.1676740130361907e-09,
+        2.61269368e-05
+      ],
+      "source_primary_start": "RightForeArm",
+      "source_rest_gauge": [
+        [
+          -0.9999999953641271,
+          9.628990481719231e-05,
+          -4.3034214441089455e-09
+        ],
+        [
+          -4.3034214241588306e-09,
+          4.143760412415146e-13,
+          1.0
+        ],
+        [
+          9.628990481719231e-05,
+          0.9999999953641271,
+          0.0
+        ]
+      ],
+      "target": "forearm.L",
+      "target_frame": [
+        [
+          -0.5926672593342224,
+          0.025112117722907272,
+          -0.8050558373533679
+        ],
+        [
+          -0.8043341376678732,
+          0.03408073119537415,
+          0.5931990380498501
+        ],
+        [
+          0.04233337566673018,
+          0.9991035408328106,
+          3.4694469519536134e-18
+        ]
+      ],
+      "target_guide_projection_sine": 0.9991035408328106,
+      "target_head_m": [
+        -0.43,
+        1.13,
+        0
+      ],
+      "target_parent": "upper_arm.L",
+      "target_primary_m": [
+        -0.13999999999999996,
+        -0.18999999999999995,
+        0.01
+      ],
+      "target_rest_gauge": [
+        [
+          -3.654516743474222e-08,
+          4.1475797679777125e-08,
+          0.9999999999999983
+        ],
+        [
+          0.9999999999999994,
+          -4.662562901741607e-09,
+          3.654516744792368e-08
+        ],
+        [
+          4.6625644161552016e-09,
+          0.9999999999999992,
+          -4.1475797501331126e-08
+        ]
+      ],
+      "target_tail_m": [
+        -0.57,
+        0.94,
+        0.01
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          -0.016134818909197803,
+          0.9998698253366479,
+          1.6910078119807455e-07
+        ],
+        [
+          -0.9998684452509595,
+          -0.016134796357870965,
+          -0.0016614866594917288
+        ],
+        [
+          -0.001661267647618499,
+          -2.697686490612799e-05,
+          0.9999986197300734
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 1.7559006062639675e-07,
+      "generator_tail_bind_rotation_axis_residual": 2.3588452780283308e-07,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          -2.7037941193549005e-08,
+          0.10000002492793221,
+          -5.237411637194767e-10
+        ],
+        "secondary": [
+          1.6999324362204033e-08,
+          -8.206520207311441e-11,
+          0.10000000597717654
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "RightHand",
+      "source_distal": "RightHandMiddleEnd",
+      "source_frame": [
+        [
+          -0.9998684414414755,
+          -0.001661272577821218,
+          -0.016135054472085686
+        ],
+        [
+          -0.01613503220129626,
+          -2.6808213388185768e-05,
+          0.9998698215353752
+        ],
+        [
+          -0.0016614888678910314,
+          0.9999986197264185,
+          -3.3881317890172006e-21
+        ]
+      ],
+      "source_guide_projection_sine": 0.9999986197264185,
+      "source_primary_m": [
+        -0.190005945,
+        -0.003066155419999994,
+        -0.00031573430000000034
+      ],
+      "source_primary_start": "RightHand",
+      "source_rest_gauge": [
+        [
+          -0.9998684414414755,
+          -0.001661272577821218,
+          -0.016135054472085686
+        ],
+        [
+          -0.01613503220129626,
+          -2.6808213388185768e-05,
+          0.9998698215353752
+        ],
+        [
+          -0.0016614888678910314,
+          0.9999986197264185,
+          -3.3881317890172006e-21
+        ]
+      ],
+      "target": "hand.L",
+      "target_frame": [
+        [
+          -0.4466625002869191,
+          0.02219483808092378,
+          -0.8944271909999157
+        ],
+        [
+          -0.8933250005738371,
+          0.044389676161847504,
+          0.4472135954999584
+        ],
+        [
+          0.049629166698546515,
+          0.9987677136415694,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 0.9987677136415695,
+      "target_head_m": [
+        -0.57,
+        0.94,
+        0.01
+      ],
+      "target_parent": "forearm.L",
+      "target_primary_m": [
+        -0.04500000000000004,
+        -0.08999999999999997,
+        0.004999999999999999
+      ],
+      "target_rest_gauge": [
+        [
+          -2.3587419029184418e-07,
+          1.687091117214151e-07,
+          0.9999999999999579
+        ],
+        [
+          0.9999999999999724,
+          2.208402304776369e-09,
+          2.3587418979120756e-07
+        ],
+        [
+          -2.2083625084851066e-09,
+          0.9999999999999858,
+          -1.687091122359874e-07
+        ]
+      ],
+      "target_tail_m": [
+        -0.615,
+        0.85,
+        0.015
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          1.6961505699095183e-08,
+          -0.9999999999999997,
+          -1.667142320213087e-08
+        ],
+        [
+          0.9999999959458035,
+          1.69630067245195e-08,
+          -9.004661411748638e-05
+        ],
+        [
+          9.004661411776915e-05,
+          -1.6669895808383108e-08,
+          0.9999999959458036
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 5.781957768368055e-08,
+      "generator_tail_bind_rotation_axis_residual": 8.254780658870747e-09,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          8.254782205008304e-10,
+          0.10000000596046485,
+          -1.1832839517862255e-16
+        ],
+        "secondary": [
+          -1.6670682935605848e-09,
+          1.3208968381795425e-16,
+          0.09999999999999999
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "LeftArm",
+      "source_distal": "LeftForeArm",
+      "source_frame": [
+        [
+          0.9999999959458036,
+          9.004661411880728e-05,
+          8.708226067494927e-09
+        ],
+        [
+          8.708226032190068e-09,
+          7.841462723590543e-13,
+          -1.0
+        ],
+        [
+          -9.004661411880728e-05,
+          0.9999999959458037,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.9999999959458036,
+      "source_primary_m": [
+        0.287393078,
+        2.5026838934572027e-09,
+        -2.5878773699999913e-05
+      ],
+      "source_primary_start": "LeftArm",
+      "source_rest_gauge": [
+        [
+          0.9999999959458036,
+          9.004661411880728e-05,
+          8.708226067494927e-09
+        ],
+        [
+          8.708226032190068e-09,
+          7.841462723590543e-13,
+          -1.0
+        ],
+        [
+          -9.004661411880728e-05,
+          0.9999999959458037,
+          0.0
+        ]
+      ],
+      "target": "upper_arm.R",
+      "target_frame": [
+        [
+          0.6981001361295396,
+          0.0,
+          -0.7160001396200412
+        ],
+        [
+          -0.7160001396200412,
+          0.0,
+          -0.6981001361295396
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        0.235,
+        1.33,
+        0
+      ],
+      "target_parent": "chest",
+      "target_primary_m": [
+        0.195,
+        -0.20000000000000018,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          8.254780803351736e-09,
+          -1.6670679954655443e-08,
+          0.9999999999999998
+        ],
+        [
+          1.0,
+          1.3208967598268644e-15,
+          -8.254780692329433e-09
+        ],
+        [
+          -1.1832839507522497e-15,
+          0.9999999999999999,
+          1.6670679954655456e-08
+        ]
+      ],
+      "target_tail_m": [
+        0.43,
+        1.13,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          1.0468641486507484e-08,
+          -0.999999999999999,
+          -4.1472278427848556e-08
+        ],
+        [
+          0.9999999953642363,
+          1.0464647943071301e-08,
+          9.628877060390001e-05
+        ],
+        [
+          -9.628877060346725e-05,
+          -4.147328624015968e-08,
+          0.9999999953642356
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 1.1125672495778284e-07,
+      "generator_tail_bind_rotation_axis_residual": 3.6841400058452513e-08,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          5.274063805197525e-09,
+          0.1000000061740365,
+          2.0465418183908402e-10
+        ],
+        "secondary": [
+          -4.216202475787771e-09,
+          -7.278586546411586e-10,
+          0.10000000597154922
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "LeftForeArm",
+      "source_distal": "LeftHand",
+      "source_frame": [
+        [
+          0.9999999953637869,
+          -9.629343316678016e-05,
+          -2.608051962575551e-08
+        ],
+        [
+          -2.608051950484067e-08,
+          2.5113827735375872e-12,
+          -0.9999999999999997
+        ],
+        [
+          9.629343316678019e-05,
+          0.9999999953637874,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.9999999953637873,
+      "source_primary_m": [
+        0.27093981199999995,
+        -7.066251084264508e-09,
+        2.6089724799999506e-05
+      ],
+      "source_primary_start": "LeftForeArm",
+      "source_rest_gauge": [
+        [
+          0.9999999953637869,
+          -9.629343316678016e-05,
+          -2.608051962575551e-08
+        ],
+        [
+          -2.608051950484067e-08,
+          2.5113827735375872e-12,
+          -0.9999999999999997
+        ],
+        [
+          9.629343316678019e-05,
+          0.9999999953637874,
+          0.0
+        ]
+      ],
+      "target": "forearm.R",
+      "target_frame": [
+        [
+          0.5926672593342224,
+          -0.025112117722907272,
+          -0.8050558373533679
+        ],
+        [
+          -0.8043341376678732,
+          0.03408073119537415,
+          -0.5931990380498501
+        ],
+        [
+          0.04233337566673018,
+          0.9991035408328106,
+          -3.4694469519536134e-18
+        ]
+      ],
+      "target_guide_projection_sine": 0.9991035408328106,
+      "target_head_m": [
+        0.43,
+        1.13,
+        0
+      ],
+      "target_parent": "upper_arm.R",
+      "target_primary_m": [
+        0.13999999999999996,
+        -0.18999999999999995,
+        0.01
+      ],
+      "target_rest_gauge": [
+        [
+          3.654516743474222e-08,
+          -4.1475797679777125e-08,
+          0.9999999999999983
+        ],
+        [
+          0.9999999999999994,
+          -4.662562901741607e-09,
+          -3.654516744792368e-08
+        ],
+        [
+          4.6625644161552016e-09,
+          0.9999999999999992,
+          4.1475797501331126e-08
+        ]
+      ],
+      "target_tail_m": [
+        0.57,
+        0.94,
+        0.01
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          -0.016454461152730394,
+          -0.9998646161896843,
+          -1.6913007710264652e-07
+        ],
+        [
+          0.9998630217945824,
+          -0.016454434612185608,
+          -0.001785841370430641
+        ],
+        [
+          0.0017855968134815002,
+          -2.9554164364651706e-05,
+          0.9999984053840142
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 1.7559006062639675e-07,
+      "generator_tail_bind_rotation_axis_residual": 2.3588452780283308e-07,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          2.7037941193549005e-08,
+          0.10000002492793221,
+          -5.237411637194767e-10
+        ],
+        "secondary": [
+          -1.6999324362204033e-08,
+          -8.206520207311441e-11,
+          0.10000000597717654
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "LeftHand",
+      "source_distal": "LeftHandMiddleEnd",
+      "source_frame": [
+        [
+          0.9998630179094284,
+          0.0017856017975987992,
+          -0.01645469669336355
+        ],
+        [
+          -0.0164546704543765,
+          -2.9385514431429862e-05,
+          -0.9998646123134519
+        ],
+        [
+          -0.0017858435788294738,
+          0.9999984053800846,
+          3.3881317890172014e-21
+        ]
+      ],
+      "source_guide_projection_sine": 0.9999984053800847,
+      "source_primary_m": [
+        0.19011959499999997,
+        -0.003128783869999985,
+        -0.0003395703729999998
+      ],
+      "source_primary_start": "LeftHand",
+      "source_rest_gauge": [
+        [
+          0.9998630179094284,
+          0.0017856017975987992,
+          -0.01645469669336355
+        ],
+        [
+          -0.0164546704543765,
+          -2.9385514431429862e-05,
+          -0.9998646123134519
+        ],
+        [
+          -0.0017858435788294738,
+          0.9999984053800846,
+          3.3881317890172014e-21
+        ]
+      ],
+      "target": "hand.R",
+      "target_frame": [
+        [
+          0.4466625002869191,
+          -0.02219483808092378,
+          -0.8944271909999157
+        ],
+        [
+          -0.8933250005738371,
+          0.044389676161847504,
+          -0.4472135954999584
+        ],
+        [
+          0.049629166698546515,
+          0.9987677136415694,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 0.9987677136415695,
+      "target_head_m": [
+        0.57,
+        0.94,
+        0.01
+      ],
+      "target_parent": "forearm.R",
+      "target_primary_m": [
+        0.04500000000000004,
+        -0.08999999999999997,
+        0.004999999999999999
+      ],
+      "target_rest_gauge": [
+        [
+          2.3587419029184418e-07,
+          -1.687091117214151e-07,
+          0.9999999999999579
+        ],
+        [
+          0.9999999999999724,
+          2.208402304776369e-09,
+          -2.3587418979120756e-07
+        ],
+        [
+          -2.2083625084851066e-09,
+          0.9999999999999858,
+          1.687091122359874e-07
+        ]
+      ],
+      "target_tail_m": [
+        0.615,
+        0.85,
+        0.015
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          -0.9999999999999951,
+          -9.519616616348548e-08,
+          -2.0903398097375304e-08
+        ],
+        [
+          9.556800663232622e-08,
+          -0.9998274852777942,
+          -0.018574167089596614
+        ],
+        [
+          -1.9131602456849805e-08,
+          -0.01857416708959853,
+          0.9998274852777989
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 2.9206275953264083e-08,
+      "generator_tail_bind_rotation_axis_residual": 7.25104277090354e-08,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          7.251026347063205e-09,
+          0.09999999999999974,
+          9.433441269692935e-17
+        ],
+        "secondary": [
+          -1.9559907374236347e-09,
+          4.7495633533827946e-17,
+          0.09999999999999998
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "RightLeg",
+      "source_distal": "RightShin",
+      "source_frame": [
+        [
+          2.3057578921544995e-08,
+          4.2834922011706334e-10,
+          -0.9999999999999998
+        ],
+        [
+          -0.9998274852777989,
+          -0.018574167089597138,
+          -2.3061557379709878e-08
+        ],
+        [
+          -0.018574167089597145,
+          0.9998274852777991,
+          1.0339757656912848e-25
+        ]
+      ],
+      "source_guide_projection_sine": 0.9998274852777992,
+      "source_primary_m": [
+        9.999999994736442e-09,
+        -0.43362205899999995,
+        -0.00805555828
+      ],
+      "source_primary_start": "RightLeg",
+      "source_rest_gauge": [
+        [
+          2.3057578921544995e-08,
+          4.2834922011706334e-10,
+          -0.9999999999999998
+        ],
+        [
+          -0.9998274852777989,
+          -0.018574167089597138,
+          -2.3061557379709878e-08
+        ],
+        [
+          -0.018574167089597145,
+          0.9998274852777991,
+          1.0339757656912848e-25
+        ]
+      ],
+      "target": "thigh.L",
+      "target_frame": [
+        [
+          -0.05547001962252288,
+          0.0,
+          -0.9984603532054125
+        ],
+        [
+          -0.9984603532054123,
+          0.0,
+          0.0554700196225229
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 0.9999999999999998,
+      "target_head_m": [
+        -0.125,
+        0.86,
+        0
+      ],
+      "target_parent": "pelvis",
+      "target_primary_m": [
+        -0.01999999999999999,
+        -0.36,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          7.251042771078131e-08,
+          -1.955995167696691e-08,
+          0.999999999999997
+        ],
+        [
+          0.999999999999997,
+          4.749563352514336e-16,
+          -7.251042771078131e-08
+        ],
+        [
+          9.43344126865896e-16,
+          0.9999999999999998,
+          1.9559951676966895e-08
+        ]
+      ],
+      "target_tail_m": [
+        -0.145,
+        0.5,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          -0.999999999999999,
+          -2.5910480333394986e-08,
+          -2.0850949449287014e-08
+        ],
+        [
+          2.7538763116198633e-08,
+          -0.996606946084852,
+          -0.08230792802290347
+        ],
+        [
+          -1.8647563103303628e-08,
+          -0.08230792802290403,
+          0.9966069460848525
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 2.69266896335223e-08,
+      "generator_tail_bind_rotation_axis_residual": 1.9786431750048672e-08,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          4.29840505073234e-09,
+          0.10000000578637165,
+          5.157426468317156e-17
+        ],
+        "secondary": [
+          -2.255602064763738e-09,
+          -2.0027103332484532e-16,
+          0.09999999999999998
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "RightShin",
+      "source_distal": "RightFoot",
+      "source_frame": [
+        [
+          4.732519486618937e-08,
+          3.908500485591151e-09,
+          -0.9999999999999989
+        ],
+        [
+          -0.9966069460848517,
+          -0.08230792802290265,
+          -4.7486318505109054e-08
+        ],
+        [
+          -0.08230792802290274,
+          0.9966069460848528,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.9966069460848528,
+      "source_primary_m": [
+        2.000000000335067e-08,
+        -0.421173943,
+        -0.0347839785
+      ],
+      "source_primary_start": "RightShin",
+      "source_rest_gauge": [
+        [
+          4.732519486618937e-08,
+          3.908500485591151e-09,
+          -0.9999999999999989
+        ],
+        [
+          -0.9966069460848517,
+          -0.08230792802290265,
+          -4.7486318505109054e-08
+        ],
+        [
+          -0.08230792802290274,
+          0.9966069460848528,
+          0.0
+        ]
+      ],
+      "target": "shin.L",
+      "target_frame": [
+        [
+          -0.027767067240353313,
+          0.0,
+          -0.9996144206527183
+        ],
+        [
+          -0.9996144206527183,
+          0.0,
+          0.027767067240353313
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        -0.145,
+        0.5,
+        0
+      ],
+      "target_parent": "thigh.L",
+      "target_primary_m": [
+        -0.010000000000000009,
+        -0.36,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          -1.9786431743051835e-08,
+          -2.255606358889481e-08,
+          0.9999999999999991
+        ],
+        [
+          0.9999999999999994,
+          -7.744514098877405e-16,
+          1.978643174999073e-08
+        ],
+        [
+          3.2814739710535625e-16,
+          0.9999999999999997,
+          2.255606358889482e-08
+        ]
+      ],
+      "target_tail_m": [
+        -0.155,
+        0.14,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          -0.9999999999999953,
+          -5.1793479442273234e-08,
+          -7.532951308865352e-08
+        ],
+        [
+          -5.1862510263328384e-08,
+          -0.35715939816679165,
+          0.9340434488294064
+        ],
+        [
+          -7.528200372034328e-08,
+          0.934043448829406,
+          0.35715939816678777
+        ]
+      ],
+      "foot_down_marker": "negative secondary",
+      "generator_head_bind_residual_m": 4.149785954425594e-08,
+      "generator_tail_bind_rotation_axis_residual": 4.491863062837559e-08,
+      "guide": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          2.212582055754212e-09,
+          0.10000000083212361,
+          -5.452306744979651e-09
+        ],
+        "secondary": [
+          -1.8116479832032485e-08,
+          1.611736244466755e-09,
+          0.09999999251049972
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "RightFoot",
+      "source_distal": "RightToeBase",
+      "source_frame": [
+        [
+          -2.4110655024412978e-08,
+          -9.219429738998495e-09,
+          -0.9999999999999997
+        ],
+        [
+          -0.35715943115741156,
+          0.934043436214459,
+          0.0
+        ],
+        [
+          0.9340434362144586,
+          0.3571594311574115,
+          -2.5813205349560535e-08
+        ]
+      ],
+      "source_guide_projection_sine": 0.934043436214459,
+      "source_primary_m": [
+        -3.429076689265287e-09,
+        -0.0507960932,
+        0.132841956
+      ],
+      "source_primary_start": "RightFoot",
+      "source_rest_gauge": [
+        [
+          -2.4110655024412978e-08,
+          -9.219429738998495e-09,
+          -0.9999999999999997
+        ],
+        [
+          -0.35715943115741156,
+          0.934043436214459,
+          0.0
+        ],
+        [
+          0.9340434362144586,
+          0.3571594311574115,
+          -2.5813205349560535e-08
+        ]
+      ],
+      "target": "foot.L",
+      "target_frame": [
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          -0.39760743763430056,
+          0.9175556253099241,
+          0.0
+        ],
+        [
+          0.9175556253099241,
+          0.39760743763430056,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 0.9175556253099241,
+      "target_head_m": [
+        -0.155,
+        0.14,
+        0
+      ],
+      "target_parent": "shin.L",
+      "target_primary_m": [
+        0.0,
+        -0.06500000000000002,
+        0.15
+      ],
+      "target_rest_gauge": [
+        [
+          -2.775185257400971e-08,
+          -6.606257581687366e-08,
+          0.999999999999997
+        ],
+        [
+          0.9999999999999988,
+          3.5320219804457764e-08,
+          2.7751854913283162e-08
+        ],
+        [
+          -3.532022130325885e-08,
+          0.9999999999999967,
+          6.606257483293852e-08
+        ]
+      ],
+      "target_tail_m": [
+        -0.155,
+        0.075,
+        0.15
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          -0.9999999999999951,
+          9.527112269065615e-08,
+          2.0903341722869737e-08
+        ],
+        [
+          -9.56429342306931e-08,
+          -0.9998274997935358,
+          -0.018573385706358917
+        ],
+        [
+          1.9130228583695364e-08,
+          -0.018573385706360836,
+          0.9998274997935406
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 2.9206275953264083e-08,
+      "generator_tail_bind_rotation_axis_residual": 7.25104277090354e-08,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          -7.251026347063205e-09,
+          0.09999999999999974,
+          9.433441269692935e-17
+        ],
+        "secondary": [
+          1.9559907374236347e-09,
+          4.7495633533827946e-17,
+          0.09999999999999998
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "LeftLeg",
+      "source_distal": "LeftShin",
+      "source_frame": [
+        [
+          -2.313250651991188e-08,
+          -4.2972309327150775e-10,
+          -0.9999999999999998
+        ],
+        [
+          -0.9998274997935405,
+          -0.018573385706359444,
+          2.3136497570519544e-08
+        ],
+        [
+          -0.018573385706359448,
+          0.9998274997935408,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.9998274997935407,
+      "source_primary_m": [
+        -9.999999994736442e-09,
+        -0.432217537,
+        -0.00802912805
+      ],
+      "source_primary_start": "LeftLeg",
+      "source_rest_gauge": [
+        [
+          -2.313250651991188e-08,
+          -4.2972309327150775e-10,
+          -0.9999999999999998
+        ],
+        [
+          -0.9998274997935405,
+          -0.018573385706359444,
+          2.3136497570519544e-08
+        ],
+        [
+          -0.018573385706359448,
+          0.9998274997935408,
+          0.0
+        ]
+      ],
+      "target": "thigh.R",
+      "target_frame": [
+        [
+          0.05547001962252288,
+          0.0,
+          -0.9984603532054125
+        ],
+        [
+          -0.9984603532054123,
+          0.0,
+          -0.0554700196225229
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 0.9999999999999998,
+      "target_head_m": [
+        0.125,
+        0.86,
+        0
+      ],
+      "target_parent": "pelvis",
+      "target_primary_m": [
+        0.01999999999999999,
+        -0.36,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          -7.251042771078131e-08,
+          1.955995167696691e-08,
+          0.999999999999997
+        ],
+        [
+          0.999999999999997,
+          4.749563352514336e-16,
+          7.251042771078131e-08
+        ],
+        [
+          9.43344126865896e-16,
+          0.9999999999999998,
+          -1.9559951676966895e-08
+        ]
+      ],
+      "target_tail_m": [
+        0.145,
+        0.5,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          -0.9999999999999982,
+          -4.529776821885823e-08,
+          2.0850943641632623e-08
+        ],
+        [
+          4.342786589046188e-08,
+          -0.9966069239296651,
+          -0.08230819628353106
+        ],
+        [
+          2.450857240148198e-08,
+          -0.08230819628353006,
+          0.9966069239296661
+        ]
+      ],
+      "foot_down_marker": null,
+      "generator_head_bind_residual_m": 2.69266896335223e-08,
+      "generator_tail_bind_rotation_axis_residual": 1.9786431750048672e-08,
+      "guide": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          -4.29840505073234e-09,
+          0.10000000578637165,
+          5.157426468317156e-17
+        ],
+        "secondary": [
+          2.255602064763738e-09,
+          -2.0027103332484532e-16,
+          0.09999999999999998
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "LeftShin",
+      "source_distal": "LeftFoot",
+      "source_frame": [
+        [
+          2.364143414047117e-08,
+          1.952508812587161e-09,
+          -0.9999999999999997
+        ],
+        [
+          -0.9966069239296662,
+          -0.0823081962835303,
+          -2.372192443461251e-08
+        ],
+        [
+          -0.08230819628353032,
+          0.9966069239296664,
+          4.1359030627651375e-25
+        ]
+      ],
+      "source_guide_projection_sine": 0.9966069239296664,
+      "source_primary_m": [
+        9.999999994736442e-09,
+        -0.42155095900000006,
+        -0.0348152298
+      ],
+      "source_primary_start": "LeftShin",
+      "source_rest_gauge": [
+        [
+          2.364143414047117e-08,
+          1.952508812587161e-09,
+          -0.9999999999999997
+        ],
+        [
+          -0.9966069239296662,
+          -0.0823081962835303,
+          -2.372192443461251e-08
+        ],
+        [
+          -0.08230819628353032,
+          0.9966069239296664,
+          4.1359030627651375e-25
+        ]
+      ],
+      "target": "shin.R",
+      "target_frame": [
+        [
+          0.027767067240353313,
+          0.0,
+          -0.9996144206527183
+        ],
+        [
+          -0.9996144206527183,
+          0.0,
+          -0.027767067240353313
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 1.0,
+      "target_head_m": [
+        0.145,
+        0.5,
+        0
+      ],
+      "target_parent": "thigh.R",
+      "target_primary_m": [
+        0.010000000000000009,
+        -0.36,
+        0
+      ],
+      "target_rest_gauge": [
+        [
+          1.9786431743051835e-08,
+          2.255606358889481e-08,
+          0.9999999999999991
+        ],
+        [
+          0.9999999999999994,
+          -7.744514098877405e-16,
+          -1.978643174999073e-08
+        ],
+        [
+          3.2814739710535625e-16,
+          0.9999999999999997,
+          -2.255606358889482e-08
+        ]
+      ],
+      "target_tail_m": [
+        0.155,
+        0.14,
+        0
+      ]
+    },
+    {
+      "delta_basis": [
+        [
+          -0.9999999999999933,
+          -1.1172246563657938e-07,
+          -1.1689540006582425e-08
+        ],
+        [
+          2.8984199273694167e-08,
+          -0.35715947517633595,
+          0.9340434193825053
+        ],
+        [
+          -1.0852866380825847e-07,
+          0.934043419382499,
+          0.35715947517633717
+        ]
+      ],
+      "foot_down_marker": "negative secondary",
+      "generator_head_bind_residual_m": 4.149785954425594e-08,
+      "generator_tail_bind_rotation_axis_residual": 4.496126451771071e-08,
+      "guide": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "marker_authority": "AUTHORED_0.1_METRE_GAUGE_MARKERS_INVERTED_THROUGH_EXACT_AFFINE_BIND",
+      "orientation_markers_local_m": {
+        "primary": [
+          -2.0893466695041266e-09,
+          0.10000000083212365,
+          -5.3574809519285616e-09
+        ],
+        "secondary": [
+          6.573541530477582e-10,
+          1.5169100558987125e-09,
+          0.09999999251050139
+        ]
+      },
+      "primary_authority": "PINNED_SOURCE_STATIC_DISTAL / PINNED_TARGET_GENERATOR_HEAD_TAIL",
+      "recovered_anatomical_twist": false,
+      "roll_authority": "AUTHORED_ENGINEERING_GAUGE",
+      "source": "LeftFoot",
+      "source_distal": "LeftToeBase",
+      "source_frame": [
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          -0.3571595072812372,
+          0.934043407106235,
+          0.0
+        ],
+        [
+          0.9340434071062349,
+          0.3571595072812372,
+          0.0
+        ]
+      ],
+      "source_guide_projection_sine": 0.9340434071062349,
+      "source_primary_m": [
+        0.0,
+        -0.05059472060000003,
+        0.132315294
+      ],
+      "source_primary_start": "LeftFoot",
+      "source_rest_gauge": [
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          -0.3571595072812372,
+          0.934043407106235,
+          0.0
+        ],
+        [
+          0.9340434071062349,
+          0.3571595072812372,
+          0.0
+        ]
+      ],
+      "target": "foot.R",
+      "target_frame": [
+        [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        [
+          -0.39760743763430056,
+          0.9175556253099241,
+          0.0
+        ],
+        [
+          0.9175556253099241,
+          0.39760743763430056,
+          0.0
+        ]
+      ],
+      "target_guide_projection_sine": 0.9175556253099241,
+      "target_head_m": [
+        0.155,
+        0.14,
+        0
+      ],
+      "target_parent": "shin.R",
+      "target_primary_m": [
+        0.0,
+        -0.06500000000000002,
+        0.15
+      ],
+      "target_rest_gauge": [
+        [
+          2.8984203003752765e-08,
+          -1.0852866280259516e-07,
+          0.9999999999999933
+        ],
+        [
+          0.9999999999999988,
+          3.437195805755522e-08,
+          -2.8984199273694167e-08
+        ],
+        [
+          -3.437195461586384e-08,
+          0.9999999999999932,
+          1.0852866380825847e-07
+        ]
+      ],
+      "target_tail_m": [
+        0.155,
+        0.075,
+        0.15
+      ]
+    }
+  ],
+  "runtime_decoder_parity_verified": false,
+  "scale_policy": "exact fixture bind scales preserved / unit scene-root scale / 1 metre per metre; no endpoint fitting or contact guarantee",
+  "schema": "nvwa.fixture-calibration-candidate.v1",
+  "scope": "exact SOMA30 metadata / exact Nvwa18 fixture / existing 90 frames only",
+  "singularity_rule": "static-only gauge; secondary is +Z except feet +Y; reject projection sine <=1e-12; no fallback or per-frame frame reconstruction",
+  "status": "PROPOSED_NOT_ADMITTED",
+  "translation_policy": "target bind translations fixed; omitted moving source links not transferred"
+}

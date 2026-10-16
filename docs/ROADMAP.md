@@ -2,6 +2,10 @@
 
 ## 当前阶段：M1.2 真人独立验收待完成；M2 已有一个真实原始动作样本（2026-10-15）
 
+本轮新增 [47 当前角色标定](../experiments/47-fixture-rig-calibration/REPORT.md) 和 [独立来源核查](../experiments/47-fixture-rig-calibration/reference/REPORT.md)。实际眼睛/脸部几何与缓存的固定版本源资料均支持 +Y 上、+Z 前、身体左侧 +X；当前 fixture 的 `.L/.R` 名称与身体左右相反。候选因此保留资产名称，使用恒等坐标基，将 source Left 对应 target `.R`。静态 T→A 中立对应、手脚滚转和末端方向标记是明确的工程约定，不宣称恢复掌面、足底或接触解剖。89 项正向、43 项拒绝和 8 项测量控制通过；来源核查另有普通/优化模式的实际拒绝控制。候选仍为 `PROPOSED_NOT_ADMITTED`，须独立审查后记录准入，才能开展现有真实样本的 CLI、桌面/Web 播放和保存交换；数值闭合不代替此门。#12/M2、#3 阻塞和 #4 缺口不变。
+
+[#49 无引导真人试用材料](m12-unassisted-trial/README.md) 已准备：参与者任务、观察表和空白结果表分开，应用包使用源输入匹配的既有构建。复制的 CLI 已对手工作品完成校验和逐字节保存往返；全新编译、新包桌面/Web 启动和真人试用分别为 NOT-RUN。现阶段准备不关闭 #49。
+
 Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。桌面、Web 和无需窗口的 CLI 是正式支持的三种入口；人和 agent 使用同一份 Work 和同一套 Rust 命令。当前 CLI 的正式范围是离线文件创作、能力发现和校验，详见 [CLI 支持范围](CLI-SUPPORT.md)。逐帧骨骼采样、离屏图像导出、运行中 Studio 控制和并发共享写入仍需单独实现与验收。
 
 M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/milestone/2) 的离线 CLI 创作、双端继续编辑和交接已由 [PR #50](https://github.com/Derek-X-Wang/nvwa/pull/50) 交付，合并 main 为 `9502dd370b262761bf4f4f10f2418163c7574946`。保存反馈 #51 已由 [PR #52](https://github.com/Derek-X-Wang/nvwa/pull/52) 交付，合并 main 为 `f7b15eb166ed8a616dd73965cf23d1b7dcad61f6`。这些技术交付和后续引导式真人观察不等于完整 Alpha 关闭。

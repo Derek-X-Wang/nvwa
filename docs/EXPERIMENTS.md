@@ -1,5 +1,14 @@
 # Experiment conclusions
 
+## 2026-10-15：当前角色的独立方向依据与显式标定
+
+| 实验 | 决定 | 实际证据与限制 |
+| --- | --- | --- |
+| [47 当前 fixture 标定](../experiments/47-fixture-rig-calibration/REPORT.md) | 根负责人选择恒等基和身体左右对应；独立准入待审 | 复用 44 的同一 90 帧。实际脸部几何及固定来源支持 +Y 上/+Z 前/身体左 +X；fixture 名称左右相反，因此 source Left→target `.R`。T→A、投影正面滚转和手脚末端标记为工程约定。精确 bind TRS/仿射保留，89 正向/43 拒绝/8 测量控制通过普通与优化模式。非通用解剖、接触、质量或目标播放验收。 |
+| [47 独立来源 capsule](../experiments/47-fixture-rig-calibration/reference/REPORT.md) | 保留先于候选的来源/几何核查及可离线复核记录 | 原缓存资料与实际 GLB/generator 独立读取，21 项输入/8 项历史收据匹配；public 检查含源 claim 身份与实际眼睛几何变异拒绝。CI 不具原缓存全文，故不宣称重新检查上游原文；官方 decoder 运行一致性未验证。 |
+
+候选、来源核查和 #49 准备分别留证。旧 41–46、全部角色资产、产品代码、依赖/锁文件及既有 Alpha/CLI 证据保持原字节。新检查只加入原 portable job 的有界步骤，不增加 runner。#59 的标定准入、后续真实 Work/双端交换和 #49 真人试用分别验收；#3 阻塞、#4 缺口保留。[无引导试用准备](m12-unassisted-trial/README.md) 尚不构成真人结果。
+
 ## 2026-10-15：CLI 第三入口与同一样本的有界校准
 
 CLI 已明确为与桌面、Web 并列的正式入口，支持范围是现有离线文件操作；[实际六次调用](evidence/cli-third-entry/README.md) 保留能力发现、命令、真实资产校验和完整保存回读。数据编辑不要求窗口、GPU 或本地动作权重。逐帧姿态、离屏图像导出、运行中桥接与并发共享写入未交付，详见 [CLI 支持范围](CLI-SUPPORT.md)。
