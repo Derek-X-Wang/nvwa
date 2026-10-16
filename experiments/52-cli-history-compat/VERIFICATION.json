@@ -1,0 +1,94 @@
+{
+  "adapter_controls": {
+    "normal": {
+      "duplicate_keys_archive_aliasing": "actual_adapter_entrypoint_rejected_then_restored_green",
+      "nested_original_assertion_tripwire": "PASS",
+      "seconds": 21.806,
+      "source_receipt_manifest_mutations": "actual_adapter_entrypoint_rejected_then_restored_green",
+      "status": "PASS",
+      "tests": 18
+    },
+    "optimized": {
+      "duplicate_keys_archive_aliasing": "actual_adapter_entrypoint_rejected_then_restored_green",
+      "nested_original_assertion_tripwire": "PASS",
+      "seconds": 21.738,
+      "source_receipt_manifest_mutations": "actual_adapter_entrypoint_rejected_then_restored_green",
+      "status": "PASS",
+      "tests": 18
+    }
+  },
+  "adapter_source_sha256": {
+    "MANIFEST.json": "29dfda68a974addc2c71685343b79e1f193c126922ac40c299322303a4bbd075",
+    "audit.py": "ace7b5121514676950ba8d433c50e9a6a7f7a441e48f863582eebe8945fe3356",
+    "test_controls.py": "e32a40913027590b7dc167f6434670c0d931df1aa665bde99e19dbe38bfcec31"
+  },
+  "assertion_policy": {
+    "bootstrap": "refuses optimize!=0 or false __debug__",
+    "nested_children": "PYTHONOPTIMIZE removed; tested with optimization tripwire and all5 original controls",
+    "original_scripts": "always normal Python with assertions; never claimed optimized-safe",
+    "wrapper_optimization_and_environment": "tested -O and PYTHONOPTIMIZE=2"
+  },
+  "cleanup": {
+    "builds_started": 0,
+    "downloads": 0,
+    "gpu_processes_started": 0,
+    "servers_started": 0,
+    "temporary_contexts": "removed by TemporaryDirectory"
+  },
+  "expected_current_source_rejection": {
+    "exit_code": 1,
+    "rejection": "source hash mismatch: crates/nvwa-cli/src/main.rs",
+    "scope": "expected original verifier rejection of changed current source; not a current product test failure"
+  },
+  "input_counts": {
+    "archived_sources": 8,
+    "authenticated_inputs": 182,
+    "retained_files": 174,
+    "source_archive_bytes": 71075,
+    "temporary_context_bytes": 329483
+  },
+  "limits": {
+    "child_timeout_test": "mocked subprocess TimeoutExpired propagation; no waiting child spawned",
+    "current_product_tests": "NOT-RUN",
+    "fresh_binary_execution": "NOT-RUN",
+    "hosted_ci": "NOT-RUN",
+    "network_model_gpu": "NOT-RUN"
+  },
+  "provenance": {
+    "all_eight_match_accepted_source_manifest": true,
+    "archive_source_blobs": 8,
+    "git_blobs_checked": 182,
+    "original_experiment38_tracked_bytes_unchanged": true,
+    "source_commit": "50eae1979cac47c7eb53dada69f06b716436bf92",
+    "source_tree": "0bb87d9dc2ff324390de6e184852a87d513017fa"
+  },
+  "recorded_utc": "2026-10-16T10:52:40.699116+00:00",
+  "runs": {
+    "normal": {
+      "original_mutation_red_and_restored_green": 5,
+      "original_scripts": "normal_assertions_enforced",
+      "original_source_manifests": 2,
+      "result_sha256": "c775ac29697af59b8d031959de99b36cb51187fe820e9ea7890b1ada08ef01bd",
+      "retained_process_receipts": [
+        9,
+        9
+      ],
+      "status": "PASS_HISTORICAL38",
+      "wrapper_optimized": false
+    },
+    "optimized_wrapper_hostile_environment": {
+      "original_mutation_red_and_restored_green": 5,
+      "original_scripts": "normal_assertions_enforced",
+      "original_source_manifests": 2,
+      "result_sha256": "c5a3d4dd5b5c4dc40c2ff881c62c49fd7ad8e2726f500ece678822a6060aa280",
+      "retained_process_receipts": [
+        9,
+        9
+      ],
+      "status": "PASS_HISTORICAL38",
+      "wrapper_optimized": true
+    }
+  },
+  "schema_version": 1,
+  "scope": "Local historical CLI source/receipt verification only; current product, hosted CI, binary rebuild, GUI/model/runtime execution NOT-RUN"
+}
