@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: accepted
 ---
 
 # Save the rehearsal stage with the Work
@@ -9,3 +9,5 @@ People and offline agents need to exchange the same character presentation. Save
 Store camera distance and target height in character-relative units so ordinary character scaling retains useful framing. Projection conversion must produce finite values or report unsupported extreme rendering scale; it must not silently rewrite the character. Stage sliders and Studio orbit preview during a gesture and commit one history step, with Escape restoring the prior state. Player orbit is temporary. Quality is an explicit portable request whose actual rendered effects and cost are verified separately on each target. Bevy entities and GPU handles remain outside the document. Studio and Player fit the saved camera into the scene area left by their actual controls; window layout and DPI do not edit the Work. The same computed projection drives rendering and picking. High requests a 4096 key-light shadow map and 4× MSAA. Experimental screen-space contact shadows remain disabled because the actual same-pose Web comparison produced visible skin speckle.
 
 Room import, collision, physics, a running-Studio bridge and multiplayer are later boundaries. Historical captures remain bound to their archived source; they cannot establish that a changed renderer was run. Current compilation, runtime use, visual evidence and performance measurements remain separate acceptance gates.
+
+Bounded acceptance: [Stage A evidence](../evidence/rehearsal-stage/ACCEPTANCE.md) records actual native/Web/CLI use, real GPU images and byte-identical native → Web → native exchange. Physical drag/DPI migration, quality cost and first physical presentation remain unverified. Final-head and merged-main CI are separate PR gates.

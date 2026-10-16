@@ -1,12 +1,12 @@
 # Nvwa 路线图
 
-## 当前阶段：试演舞台与 M2 动作对照并行实施；动作质量保持 HOLD（2026-10-16）
+## 当前阶段：试演舞台 A 已完成双端验收；M2 动作质量保持 HOLD（2026-10-16）
 
-用户已授权并行推进 [#69 人物试演室](https://github.com/Derek-X-Wang/nvwa/issues/69)的 [#70 第一阶段](https://github.com/Derek-X-Wang/nvwa/issues/70)：可调灯光、相机、背景/地面和画质，使用共享 Rust 命令与可保存的舞台配置。目标是完成度高、可反复使用的人物展示与动作试演。房间导入和物理分别留在后续阶段；Relais 与多人服务不是舞台交付的前置条件。当前正在开发与验证，编译、实际启动、功能、画面和性能结果分别记录，未完成项不视为通过。
+用户已授权并行推进 [#69 人物试演室](https://github.com/Derek-X-Wang/nvwa/issues/69)的 [#70 第一阶段](https://github.com/Derek-X-Wang/nvwa/issues/70)：可调灯光、相机、背景/地面和画质，使用共享 Rust 命令与可保存的舞台配置。目标是完成度高、可反复使用的人物展示与动作试演。房间导入和物理分别留在后续阶段；Relais 与多人服务不是舞台交付的前置条件。阶段 A 已完成共享命令、CLI、实际桌面/Web 操作与画面验收，以及原生→Web→原生的完整文件往返；独立复审和最终 CI 通过后合并。编译、实际启动、功能、画面和性能结果分别记录，未完成项不视为通过。
 
-[#68 上臂中立策略对照](https://github.com/Derek-X-Wang/nvwa/issues/68)复用现有角色与真实样本，候选只调整两个上臂通道；数值、表面指标和桌面/Web 同帧效果分别验收。[PR #71](https://github.com/Derek-X-Wang/nvwa/pull/71) 已经在独立审查与 CI 通过后合并，#68 已关闭；合并后 main CI 单独验证。它与舞台展示独立，不以灯光改善替代动作质量，生产映射保持原样。
+[#68 上臂中立策略对照](https://github.com/Derek-X-Wang/nvwa/issues/68)复用现有角色与真实样本，候选只调整两个上臂通道；数值、表面指标和桌面/Web 同帧效果分别验收。[PR #71](https://github.com/Derek-X-Wang/nvwa/pull/71) 已经在独立审查与 CI 通过后合并，#68 已关闭；精确合并 main `96a58a65` 的 [CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38889505232) 已通过。它与舞台展示独立，不以灯光改善替代动作质量，生产映射保持原样。
 
-试演舞台的 [草稿 PR #72](https://github.com/Derek-X-Wang/nvwa/pull/72) 已有 137 项测试、双端构建及实际 Web/CLI 操作和文件证据。原生窗口与画面因 Mac 锁定尚未验收；黑色读回不算通过。当前继续修复历史 CLI 来源校验的 CI 适配，#70 保持开放。详细边界见[舞台验收记录](evidence/rehearsal-stage/ACCEPTANCE.md)。
+试演舞台 [PR #72](https://github.com/Derek-X-Wang/nvwa/pull/72) 已有 137 项测试、双端构建、实际桌面/Web/CLI 操作及五组原生画面证据。原生保存、自定义舞台在 Web 打开/下载、原生再打开/保存后整份文件逐字节相同。早期锁屏黑图作为失败证据保留。历史来源适配已通过独立复审和两项 CI；最终证据 head 与合并 main 各自核验，结果记录于 PR。#70 在最终门通过后关闭，#69 保留房间/物理后续范围。详细边界见[舞台验收记录](evidence/rehearsal-stage/ACCEPTANCE.md)。
 
 [#59 当前角色标定](https://github.com/Derek-X-Wang/nvwa/issues/59) 已补齐 [47 标定](../experiments/47-fixture-rig-calibration/REPORT.md) 的 [独立来源依据](../experiments/47-fixture-rig-calibration/reference/REPORT.md)：实际眼睛/脸部几何与缓存的固定版本源资料支持 +Y 上、+Z 前、身体左侧 +X。当前 fixture 的 `.L/.R` 名称与身体左右相反，因此保留资产名称，采用恒等坐标基、source Left→target `.R`。静态 T→A 中立对应、投影正面/上方滚转及手脚末端标记是工程约定，不宣称恢复掌面、足底或接触解剖。89 项正向、43 项拒绝和 8 项测量控制通过。47 的 `PROPOSED_NOT_ADMITTED` 是保留的候选快照；两次独立审查后，负责人在 [48 的独立准入记录](../experiments/48-genuine-fixture-work/admission.json)中明确采用这一有界工程策略，再开始后续导出。准入只覆盖当前角色和 44 的原有 90 帧，不是通用骨骼或动作质量认证。[PR #63](https://github.com/Derek-X-Wang/nvwa/pull/63) 已合并；其合并后 main CI 单独核验。
 
@@ -45,7 +45,7 @@ M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/mil
 | M1.1：界面与稳定性 | 窄 UI 组件整合、中文/输入恢复、有界历史/加载、永久 CPU 绘制回归、Web 构建 A/B | 技术范围已关闭；残余 #3/#4 保持开放，不宣称性能或原始 DPR 故障已解决 |
 | M1.2：真实 agent 创作 Alpha | 能力发现→实际 CLI 命令→错误回读/纠正→保存→桌面/Web 继续编辑与播放 | #46→#47→#48 技术交付完成；引导式真人检查已补齐，#49 未引导完整 Alpha 门仍开放 |
 | M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 一个真实样本在限定角色上完成工程标定、CLI 校验和双端播放/保存交换；动作质量 HOLD、官方兼容性及产品 provider 未完成，#12 保持开放；单次模型授权已用完 |
-| 人物试演室 | A：可调展示舞台；B：静态房间导入；C：按动作需求加入接触与物理 | #70 阶段 A 正在实施；#69 保留 B/C，独立于多人服务与 Relais，不承诺完整世界编辑器 |
+| 人物试演室 | A：可调展示舞台；B：静态房间导入；C：按动作需求加入接触与物理 | #70 阶段 A 双端功能/画面/文件往返验收通过，最终审查及 CI 后合并；#69 保留 B/C，独立于多人服务与 Relais，不承诺完整世界编辑器 |
 | 内容与沙盒扩展 | Blender 工具、更多角色/服装、指定版本 VRM、IK/接触、只读 VaM 与有限迁移 | 后续逐项定范围，不承诺任意 rig/VAR/插件兼容 |
 
 ## M1.2 交付与实验索引
