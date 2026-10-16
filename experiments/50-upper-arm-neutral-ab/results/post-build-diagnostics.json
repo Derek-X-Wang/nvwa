@@ -1,0 +1,21 @@
+{
+  "status": "DECLARED_DIAGNOSTIC_ONLY_CHANGE_AFTER_BUILD",
+  "scope": "Only the Python offline evaluator adds a final exact candidate-byte/no-extra-roll guard. No Rust, Cargo, probe, Work or GLB build input changed. New helpers/docs are not retrospective compiled inputs.",
+  "archived_evaluator": "probe/build-inputs/evaluate-at-build.py.txt",
+  "archive_method": "Reverse the two explicitly recorded diagnostic additions and require exact SHA256 equality with both actual build receipts",
+  "archive_sha256": "364778369b7004f30c6424ad850b89e308c6533ef9ba84403245665654817a85",
+  "differences": {
+    "native": {
+      "experiments/50-upper-arm-neutral-ab/evaluate.py": {
+        "compiled_snapshot_sha256": "364778369b7004f30c6424ad850b89e308c6533ef9ba84403245665654817a85",
+        "current_sha256": "ca604662c810986f3dd2bf30d67a5f4fa6e10324834dfa401b3ffc6da3a9d75c"
+      }
+    },
+    "web": {
+      "experiments/50-upper-arm-neutral-ab/evaluate.py": {
+        "compiled_snapshot_sha256": "364778369b7004f30c6424ad850b89e308c6533ef9ba84403245665654817a85",
+        "current_sha256": "ca604662c810986f3dd2bf30d67a5f4fa6e10324834dfa401b3ffc6da3a9d75c"
+      }
+    }
+  }
+}

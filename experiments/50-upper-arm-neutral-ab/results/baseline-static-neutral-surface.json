@@ -1,0 +1,52 @@
+{
+  "status": "MEASURED",
+  "space": "serialized expected scene, CPU linear blend skinning",
+  "glb_sha256": "c343f6cf47dc0a7c0b09f13ad7d21cf2706a08fb1cfdaca233f14edab02e44fc",
+  "criterion": "Noncoplanar strict triangle surface crossing between arm-weighted and torso-weighted partitions. Each triangle vertex has >=0.8 actual total skin weight in its named node-index set. Segment t and triangle barycentrics strictly interior with epsilon1e-8; determinant abs>1e-14. Weight-transition triangles excluded.",
+  "joint_node_sets": {
+    "left_arm_weighted": [
+      2,
+      3,
+      4
+    ],
+    "right_arm_weighted": [
+      5,
+      6,
+      7
+    ],
+    "torso_weighted": [
+      8,
+      9,
+      16
+    ]
+  },
+  "partition_triangle_counts": {
+    "left_arm_weighted": 3958,
+    "right_arm_weighted": 3958,
+    "torso_weighted": 8436
+  },
+  "samples": [
+    {
+      "key_index": 0,
+      "time_seconds": 0.0,
+      "pairs": {
+        "left_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 0,
+          "examples": [],
+          "bvh_pairs_visited": 1
+        },
+        "right_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 0,
+          "examples": [],
+          "bvh_pairs_visited": 1
+        }
+      }
+    }
+  ],
+  "limits": [
+    "not anatomical quality",
+    "not runtime/GPU deformation readback",
+    "not signed penetration depth or enclosed-volume test",
+    "coplanarity, containment, transition triangles, and lower-weight surfaces excluded; zero crossings cannot prove no intersection"
+  ]
+}

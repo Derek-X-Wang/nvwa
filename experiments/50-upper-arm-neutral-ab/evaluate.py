@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+"""Full FK direction gate, untouched-byte gate and fixed-key observations.
+
+Expected directions use the retained independent source parent-local FK, not
+candidate correction matrices. Target FK/skin use the independent glTF oracle.
+"""
+import argparse
+import copy
+import json
+import math
+from pathlib import Path
+import struct
+import time
+import sys
+import candidate as c
+sys.path.insert(0,str(c.ROOT/"experiments/49-runtime-pose-parity/offline"))
+
+D = c.module('source_fk49','experiments/49-runtime-pose-parity/attribution/directions.py')
+E = c.module('target_fk49','experiments/49-runtime-pose-parity/offline/evaluator.py')
+KEYS=[0,15,30,45,60,75,89]
+LOWERED=[0,75,89]
+
+
+def points(global_, node):
+    return [global_[node][i][3] for i in range(3)]
+
+def m3(matrix):
+    return [row[:3] for row in matrix[:3]]
+
+def direction(global_, parent, child, chest=8):
+    return D.norm(D.mv(D.inverse(m3(global_[chest])),D.sub(points(global_,child),points(global_,parent))))
+
+def binary_gate(base, changed):
+    original=E.Asset()
+    d,b=c.export48.decode_glb(changed)
+    old,ob=c.export48.decode_glb(base)
+    c.need(d==old,'unchanged complete GLB JSON: hierarchy/TRS/skin/mesh/old clips')
+    allowed=set()
+    for ch in old['animations'][3]['channels']:
+        if ch['target']['node'] in (4,7) and ch['target']['path']=='rotation':
+            a=old['accessors'][old['animations'][3]['samplers'][ch['sampler']]['output']]
+            v=old['bufferViews'][a['bufferView']];start=v.get('byteOffset',0)+a.get('byteOffset',0)
+            allowed.update(range(start,start+90*16))
+    c.need(len(b)==len(ob),'unchanged binary length')
+    changed_bytes=[i for i,(x,y) in enumerate(zip(ob,b)) if x!=y]
+    c.need(all(i in allowed for i in changed_bytes),'untouched channels/root/geometry bytes')
+    c.need(all(any(i in changed_bytes for i in range(start,start+90*16)) for start in (min(allowed),max(allowed)-90*16+1)),'both upper-arm channels corrected')
+    return {'changed_bytes':len(changed_bytes),'allowed_rotation_bytes':len(allowed),'all_other_bytes_identical':True,'json_identical':True}
+
+def source_frames():
+    meta=json.loads((c.ROOT/'experiments/41-real-short-motion/source-skeleton.json').read_text())
+    raw=c.ROOT/'experiments/44-approved-cpu-motion-trial/evidence/run/raw'
+    qs=struct.unpack('<10800f',(raw/'local_rotations_xyzw.f32').read_bytes())
+    roots=struct.unpack('<270f',(raw/'root_positions.f32').read_bytes())
+    frames=[[qs[(key*30+j)*4:(key*30+j+1)*4] for j in range(30)] for key in range(90)]
+    return meta,frames,[roots[key*3:key*3+3] for key in range(90)]
+
+def proper(q):
+    c.need(len(q)==4 and all(math.isfinite(v) for v in q),'finite quaternion')
+    c.need(abs(sum(v*v for v in q)-1)<2e-6,'proper serialized rotation')
+
+def gate(path, require_byte_gate=True):
+    contract,base,_,_,cal,_=c.inputs()
+    data=Path(path).read_bytes()
+    bytes_result=binary_gate(base,data) if require_byte_gate else None
+    before=E.Asset(); after=c.candidate_asset(path)
+    meta,frames,roots=source_frames(); si={name:i for i,name in enumerate(meta['joint_names'])}
+    source_neutral,source_neutral_points=D.fk(meta,meta['rest_local_rotations_xyzw'],[0,0,0])
+    rows={r['target']:r for r in cal['rows']}
+    measurements=[];maximum_component=0.;maximum_angle=0.;maximum_pelvis=0.
+    max_unchanged=0.
+    for key in range(90):
+        sg,sp=D.fk(meta,frames[key],roots[key])
+        bl,bg=before.pose(key);al,ag=after.pose(key)
+        for node in bl:
+            for channel in ('translation','rotation','scale'):
+                if node not in (4,7) or channel!='rotation':
+                    c.need(al[node][channel]==bl[node][channel],'untouched local TRS/root')
+                elif channel=='rotation':proper(al[node][channel])
+        pelvis_error=max(abs(x-y) for x,y in zip(points(ag,16),roots[key]))
+        maximum_pelvis=max(maximum_pelvis,pelvis_error)
+        c.need(pelvis_error<=2e-6,'root applied once: source hips equals target pelvis')
+        arms={}
+        for side,target,index,child,hand in [('Left','upper_arm.R',7,6,5),('Right','upper_arm.L',4,3,2)]:
+            source_world=D.norm(D.sub(sp[si[side+'ForeArm']],sp[si[side+'Arm']]))
+            expected=D.norm(D.mv(D.tr(sg[si['Chest']]),source_world))
+            actual=direction(ag,index,child);baseline=direction(bg,index,child)
+            component=max(abs(x-y) for x,y in zip(expected,actual));angle=D.angle(expected,actual)
+            maximum_component=max(maximum_component,component);maximum_angle=max(maximum_angle,angle)
+            c.need(component<=contract['direction_component_tolerance'],'source chest direction component gate')
+            c.need(angle<=contract['direction_angle_tolerance_deg'],'source chest direction angle gate')
+            source_lower=D.norm(D.sub(sp[si[side+'Hand']],sp[si[side+'ForeArm']]))
+            lower_candidate=D.norm(D.sub(points(ag,hand),points(ag,child)))
+            lower_baseline=D.norm(D.sub(points(bg,hand),points(bg,child)))
+            upper_candidate=D.norm(D.sub(points(ag,child),points(ag,index)))
+            upper_baseline=D.norm(D.sub(points(bg,child),points(bg,index)))
+            arms[target]={'source_joint':side+'Arm','source_chest_relative':expected,'baseline_chest_relative':baseline,'candidate_chest_relative':actual,
+                         'component_error':component,'angle_error_deg':angle,'baseline_source_angle_deg':D.angle(expected,baseline),
+                         'source_world':source_world,'baseline_world':upper_baseline,'candidate_world':upper_candidate,
+                         'source_forearm_world':source_lower,'baseline_forearm_world':lower_baseline,'candidate_forearm_world':lower_candidate,
+                         'source_elbow_deflection_deg':D.angle(source_world,source_lower),'baseline_elbow_deflection_deg':D.angle(upper_baseline,lower_baseline),
+                         'candidate_elbow_deflection_deg':D.angle(upper_candidate,lower_candidate),
+                         'source_excursion_static_neutral_deg':D.angle(D.norm(rows[target]['source_primary_m']),source_world),
+                         'baseline_excursion_target_bind_deg':D.angle(D.norm(rows[target]['target_primary_m']),upper_baseline),
+                         'candidate_excursion_target_bind_deg':D.angle(D.norm(rows[target]['target_primary_m']),upper_candidate)}
+        entry={'key_index':key,'time_seconds':after.times[key],'arms':arms,'pelvis_error_m':pelvis_error}
+        if key in KEYS:
+            joints={}
+            for row in cal['rows']:
+                target=next(i for i,n in enumerate(after.nodes) if n.get('name')==row['target'])
+                src=D.norm(D.sub(sp[si[row['source_distal']]],sp[si[row['source_primary_start']]]))
+                joints[row['target']]={'source_joint':row['source'],'source_world':src}
+                for label,global_ in [('baseline',bg),('candidate',ag)]:
+                    for axis in ('primary','secondary'):
+                        joints[row['target']][label+'_'+axis+'_world']=D.norm(D.mv(m3(global_[target]),row['orientation_markers_local_m'][axis]))
+                joints[row['target']]['secondary_authority']='authored projected-front gauge; no recovered anatomical roll'
+            entry['all_joint_signed_directions']=joints
+        measurements.append(entry)
+    c.need(data==c.construct()[0], 'exact frozen candidate rotation bytes; no additional per-key roll or fitting')
+    neutral={}
+    static_before=copy.deepcopy(before);static_before.channels={}
+    static_after=copy.deepcopy(static_before)
+    _,corrections=c.construct()
+    for name,index in c.UPPER.items():
+        q=static_before.nodes[index].get('rotation',[0,0,0,1])
+        static_after.nodes[index]['rotation']=c.export48.quaternion(c.math47.mm(corrections[name],c.math47.rotation(q)))
+    for label,asset in [('baseline_target_bind',static_before),('candidate_source_rest',static_after)]:
+        gl=asset.pose(0)[1];neutral[label]={}
+        for side,index,child in [('Left',7,6),('Right',4,3)]:
+            expected=D.norm(D.sub(source_neutral_points[si[side+'ForeArm']],source_neutral_points[si[side+'Arm']]))
+            actual=direction(gl,index,child)
+            neutral[label][side]={'source_static_direction':expected,'target_static_direction':actual,'angle_deg':D.angle(expected,actual),
+                                  'component_error':max(abs(x-y) for x,y in zip(expected,actual))}
+            if label=='candidate_source_rest':
+                c.need(neutral[label][side]['component_error']<=2e-6 and neutral[label][side]['angle_deg']<=.001,'static neutral direction gate')
+    return {'status':'NUMERIC_GATE_PASS','quality':'HOLD','contract_sha256':c.sha((c.HERE/'CONTRACT.json').read_bytes()),'candidate_glb_sha256':c.sha(data),
+            'gate':{'keys':90,'directions':180,'maximum_component_error':maximum_component,'maximum_angle_error_deg':maximum_angle,
+                    'maximum_pelvis_error_m':maximum_pelvis,'untouched_local_TRS':True,'proper_serialized_rotations':True,'binary':bytes_result,'exact_frozen_candidate_bytes':True},
+            'static_neutral_controls':neutral,'runtime_keys':KEYS,'lowered_intrusion_keys':LOWERED,'samples':measurements,
+            'limits':['source agreement is a frozen candidate gate, not anatomical quality','joint limits are not defined or enforced by this fixture; no joint-limit pass claimed',
+                      'roll is an authored projected guide; terminal roll and anatomical twist remain unresolved','relative-neutral excursion is descriptive because objectives differ',
+                      'official decoder/runtime parity and general rigs unverified','semantic motion quality, contacts, hand anatomy, and floor fit not established']}
+
+def surface(path, neutral=False):
+    s=c.module('surface49','experiments/49-runtime-pose-parity/offline/surface.py')
+    asset=c.candidate_asset(path)
+    s.Asset=lambda:asset
+    if neutral:
+        asset.channels={}
+        _,corrections=c.construct()
+        for name,index in c.UPPER.items():
+            asset.nodes[index]['rotation']=c.export48.quaternion(c.math47.mm(corrections[name],c.math47.rotation(asset.nodes[index]['rotation'])))
+    return s.analyze(keys=[0] if neutral else KEYS,budget_seconds=60)
+
+def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);parser.add_argument('--surface',action='store_true')
+    args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=True)
+    temporary=c.ROOT/'.work/m2-neutral-ab/candidate-before-gate.glb';temporary.parent.mkdir(parents=True,exist_ok=True)
+    temporary.write_bytes(c.construct()[0])
+    result=gate(temporary)
+    (args.output/'numeric.json').write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
+    # Only a passing complete offline gate may authorize this isolated Work export.
+    artifact=c.HERE/'artifacts/assets/generated/genuine44-upper-arm-neutral50.glb'
+    work=c.HERE/'artifacts/genuine44-upper-arm-neutral50.nvwa.json'
+    c.export(artifact,work)
+    if args.surface:
+        (args.output/'candidate-surface.json').write_text(json.dumps(surface(artifact),indent=2)+'\n')
+    print(json.dumps({'status':result['status'],'gate':result['gate'],'artifact':str(artifact)}))
+
+if __name__=='__main__':main()
