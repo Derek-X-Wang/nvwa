@@ -2,17 +2,19 @@
 
 ## Status
 
-- **Protocol:** PREPARED.
-- **Physical-human trial:** NOT-RUN.
-- **Artifact packet:** PREPARED for owner review.
-- **Readiness:** PARTIAL. The owner must independently review the copied trial packages and select the test machine/browser before the session.
+- **Revised participant protocol:** PREPARED; the [Chinese participant brief](PARTICIPANT-BRIEF.md) is the task sheet.
+- **Physical-human independent attempt:** PAUSED at a help request before Work creation. Complete unassisted Alpha acceptance remains NOT-RUN.
+- **Guided follow-on:** participant-reported success editing and exchanging a supplied Work; see [dated results](RESULTS-2026-10-15.md). This does not complete creation or independent acceptance.
+- **Next-session readiness:** PARTIAL. The revised external authoring-agent entry, app entries, empty folder, machine and browser must be reviewed before any later trial. No new trial is requested or started by this revision.
 - **Issue:** [#49](https://github.com/Derek-X-Wang/nvwa/issues/49) remains OPEN.
 
-This packet prepares a physical human to follow the existing [M1.2 Alpha guide](../M1.2-ALPHA.md) without live product coaching. It covers one Work from creation through save, find, reopen, Studio continuation, Player use, and native/Web file exchange. The observer records the participant's actions, words, errors, recovery, and help requests. Do not add an error beyond the guide's documented task. Mark any recovery condition that does not occur as NOT-RUN.
+The earlier handoff concentrated on developer reproduction. The participant asked for concrete steps. The revised packet supplies a short Chinese task: ask the prepared external agent to create a new Work using the supported offline CLI, then personally edit, save, find, reopen, use Player, and exchange the same Work between native and Web. This preserves creation from scratch; a supplied nine-second Work is not the participant input. The external agent is a task executor, not a new built-in Nvwa feature or a live product coach.
 
-The participant receives only [Participant brief](PARTICIPANT-BRIEF.md), a session entry sheet, and the existing Alpha guide. The entry sheet supplies the selected app, CLI, Web URL, repository working directory, pinned guide inputs, fresh trial folder, and any path substitutions. It contains setup information only; it does not coach product actions or show expected results. The observer keeps [Observer checklist](OBSERVER-CHECKLIST.md) and [Results template](RESULTS-TEMPLATE.md) private from the participant. The guide remains the procedure and source of task wording. This packet does not replace or edit it.
+The participant receives only the [Chinese participant brief](PARTICIPANT-BRIEF.md) and a completed private [session entry sheet](ENTRY-SHEET-TEMPLATE.md). The [M1.2 Alpha guide](../M1.2-ALPHA.md) remains the developer/authoring-agent reproduction reference, including its deterministic stale-revision recovery exercise. It is not required participant reading. The observer keeps the [checklist](OBSERVER-CHECKLIST.md), [results template](RESULTS-TEMPLATE.md), prior results and reference Works private. Record any normal-use error and recovery; do not inject an error into the human task. A recovery condition that does not occur is NOT-RUN.
 
 ## Readiness and evidence boundary
+
+The following is the retained artifact-preparation record, not a readiness claim for the revised protocol or a new runtime check. Historical hashes and reference files remain unchanged.
 
 The existing [native/Web handoff report](../evidence/m12-agent-loop/REPORT.md) records guided operation on its exact historical artifact cohort. The [independent operator report](../evidence/m12-alpha-operator/REPORT.md) records an agent following the guide. Neither report establishes physical-human usability.
 
@@ -30,6 +32,12 @@ The current bundled character profile and fixture still match the hashes recorde
 
 ## Trial boundary
 
-Use the supported macOS arm64 and WebGPU browser environment described by the Alpha guide. The native app, offline CLI, Web Studio page, and fresh trial folder are supplied and prepared. A session entry sheet supplies the selected local URL, repository working directory, pinned guide inputs, and exact path substitutions for the supplied artifacts and trial folder. Skip the guide's build/setup section and begin at its Work creation task. Use only the trial-owned folder and packages recorded in the results form. Save or download trial-owned Work JSON files, including the guide's `.json` paths and browser `.nvwa.json` exports, as needed for the documented handoff. Do not download or install software, model weights, dependencies, or unrelated files. If sign-in or a machine-wide change is requested, stop and record the exact prompt.
+Use the supported macOS arm64 and WebGPU browser environment described by the technical Alpha guide. Supply reviewed native Studio, a separately identified Player entry that starts without a reference Work, Web Studio, the offline CLI/profile, and a fresh empty trial folder. Complete the session entry sheet with participant-visible launch labels and destinations; the checked entry points are prerequisites, not something a nontechnical participant must discover through build commands.
 
-This is a usability observation. Build, runtime, issue, and historical guided evidence stay separate. A script, replay, agent run, or previously guided human observation cannot be counted as this trial.
+Prepare an external authoring-agent session with the reviewed CLI, profile, writable trial folder and developer references. It waits for the participant's creation request. It must inspect capabilities, create a new Work and report the exact saved file location; it must not copy a completed reference Work, operate the participant's GUI, or give live advice for later product steps. Record its identity, fixed setup instructions, actual tool calls, outputs and any errors privately. Agent-handled CLI recovery is agent evidence, not human error-recovery evidence. Human discovery here means finding and using the supplied task entries; it does not establish unaided knowledge of CLI syntax or an unprompted product feature discovery.
+
+Only the participant may carry out the Studio, save/find/reopen, Player and native/Web steps during the independent part. If the participant asks for help, pause that part and record the exact request. Any later live guidance is ASSISTED. Fixed written steps do not prove that every control is self-explanatory; record any resulting confusion without changing the task after it starts.
+
+Use only trial-owned files. Saving or downloading the participant's Work JSON files for exchange is allowed. Do not download or install software, model weights, dependencies or unrelated files. Stop and record any sign-in or machine-wide-change request. No setup, app/server launch or new human trial was performed for this documentation revision.
+
+Build, runtime and historical guided evidence stay separate. A script, replay, authoring-agent success or previously guided observation cannot be counted as independent human completion.

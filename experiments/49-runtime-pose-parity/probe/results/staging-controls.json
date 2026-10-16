@@ -1,0 +1,47 @@
+{
+  "commands": [
+    [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "experiments/49-runtime-pose-parity/probe",
+      "-p",
+      "test_*staging.py",
+      "-v"
+    ],
+    [
+      "python3",
+      "-O",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "experiments/49-runtime-pose-parity/probe",
+      "-p",
+      "test_*staging.py",
+      "-v"
+    ]
+  ],
+  "native_tests": 3,
+  "normal": {
+    "status": "PASS",
+    "tests": 9
+  },
+  "optimized": {
+    "status": "PASS",
+    "tests": 9
+  },
+  "schema_version": 1,
+  "scope": "packaging only; fake executables/tools/assets; no renderer evidence",
+  "web_controls": [
+    "explicit existing pinned0.2.129 tool and custom paths containing spaces",
+    "required tool argument",
+    "missing executable",
+    "wrong version",
+    "failed version probe",
+    "missing Wasm before stage creation"
+  ],
+  "web_tests": 6
+}

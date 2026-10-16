@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Nvwa runtime pose probe</title>
+<style>
+html,body{margin:0;width:100%;height:100%;background:#101721;color:#edf4ff;font:16px system-ui;overflow:hidden}
+canvas{display:block;width:100%;height:100%;outline:none}
+#probe-status{position:fixed;left:12px;top:12px;z-index:3;background:#172331;padding:8px}
+#probe-downloads{position:fixed;left:12px;bottom:12px;z-index:3;display:flex;gap:12px;background:#172331;padding:8px}
+#nvwa-pose-result{display:none}a{color:#8de0ff}button{padding:8px}
+</style></head><body>
+<canvas id="nvwa" aria-label="Nvwa diagnostic actual WebGPU canvas" tabindex="0"></canvas>
+<div id="probe-status" role="status">Loading diagnostic…</div>
+<div id="probe-downloads"></div>
+<script type="module">
+import init from './nvwa_runtime_pose_probe.js';
+const status=document.getElementById('probe-status');
+try {
+ if(!navigator.gpu) throw new Error('WebGPU unavailable');
+ if(!await navigator.gpu.requestAdapter()) throw new Error('No WebGPU adapter');
+ await init(); status.textContent='Waiting for seven actual runtime samples…';
+ const observer=new MutationObserver(()=>{
+  const result=document.getElementById('nvwa-pose-result');if(!result)return;
+  observer.disconnect();
+  const raw=result.textContent, value=JSON.parse(raw);
+  status.textContent=`Runtime pose ${value.status}: ${value.samples.length}/7 samples; last source key ${value.samples.at(-1)?.source_key_index??'none'}${value.error?'; '+value.error:''}`;
+  const link=document.createElement('a');link.textContent='Download raw runtime pose JSON';
+  link.download='nvwa-runtime-pose-web.json';link.href=URL.createObjectURL(new Blob([raw],{type:'application/json'}));
+  document.getElementById('probe-downloads').append(link);
+  const pixels=document.createElement('button');pixels.textContent='Download actual final canvas PNG';
+  pixels.onclick=()=>document.getElementById('nvwa').toBlob(blob=>{
+   if(!blob){status.textContent+='; canvas export failed';return;}
+   const a=document.createElement('a');a.download='nvwa-runtime-pose-web.png';a.href=URL.createObjectURL(blob);a.click();
+  },'image/png');
+  document.getElementById('probe-downloads').append(pixels);
+ });
+ observer.observe(document.body,{childList:true});
+} catch(error){status.textContent='Diagnostic startup failed: '+error;console.error(error);}
+</script></body></html>

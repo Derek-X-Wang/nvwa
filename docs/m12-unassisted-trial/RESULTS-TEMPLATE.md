@@ -5,6 +5,7 @@ Leave blank until a physical session occurs. Do not fill a field from prior guid
 ## Trial state
 
 - Trial status: NOT-RUN
+- Participant brief revision/identity:
 - Readiness at start: PARTIAL / READY / NOT-READY
 - Date and local time:
 - Observer code:
@@ -30,7 +31,11 @@ Leave blank until a physical session occurs. Do not fill a field from prior guid
 - Trial folder identifier (omit private home paths):
 - Session entry sheet identity and SHA-256:
 - Repository working directory and source-input identity:
-- Guide path substitutions supplied for this session:
+- Developer guide/path substitutions supplied to the authoring agent only:
+- External authoring-agent entry, identity and fixed setup instructions:
+- Agent CLI tool record and created-file provenance:
+- Agent gave GUI/product guidance: no / exact wording and affected tasks:
+- Separate Player launch entry and initial no-Work state:
 - Supplied native app name and participant-visible entry point:
 - Supplied offline CLI path or command alias:
 - Supplied Web Studio URL:
@@ -43,17 +48,16 @@ Leave blank until a physical session occurs. Do not fill a field from prior guid
 
 | Task | Status | Completed? | First action and notable pauses/backtracking | Participant words | Error or recovery | Assistance and exact wording |
 |---|---|---|---|---|---|---|
-| Find and start from the Alpha guide | | | | | | |
-| Create one Work | | | | | | |
+| Understand the Chinese task and use the prepared entries | | | | | | |
+| Request a NEW Work through the external authoring agent | | | | | | |
 | Save and identify the saved file | | | | | | |
 | Find and reopen that same Work | | | | | | |
 | Continue the Work in Studio | | | | | | |
 | Use Player with the same Work | | | | | | |
 | Exchange the same Work between native and Web | | | | | | |
-| Follow the guide's stale-revision step and continue | | | | | | |
-| Recover from another error, if one occurs | NOT-RUN | | | | | |
+| Recover from an error, if one occurs | NOT-RUN | | | | | |
 
-Use only INDEPENDENT, ASSISTED, BLOCKED, NOT-REACHED, or NOT-RUN for task status. If a task was assisted, name the point where help began. If no error occurred, leave error recovery NOT-RUN.
+Use only INDEPENDENT, ASSISTED, BLOCKED, NOT-REACHED, or NOT-RUN for task status. If a task was assisted, name the point where help began. If no error occurred, leave error recovery NOT-RUN. Record authoring-agent execution and any CLI recovery separately; it does not demonstrate manual human creation or human recovery. A supplied completed Work is a deviation, not successful creation.
 
 ## Event notes
 
@@ -107,6 +111,8 @@ Record each Work file the participant created, saved, reopened, or exchanged. Us
 
 - Screenshots or recordings: none / list only with separate authorization:
 - CLI or app logs retained:
+- New Work came from the participant-requested creation, not a reference copy: evidence / unknown:
+- Authoring-agent errors/recovery (agent evidence only):
 - Cleanup performed and owner:
 
 ## Reviewer conclusion

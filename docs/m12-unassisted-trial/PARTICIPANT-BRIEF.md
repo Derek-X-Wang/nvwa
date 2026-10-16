@@ -1,11 +1,23 @@
-# Participant brief
+# Nvwa 试用：做一件自己的作品
 
-Please use the existing [M1.2 Alpha guide](../M1.2-ALPHA.md) to complete one Work in the trial folder provided for this session. Work as you normally would. The task is complete when you believe you have created and saved the Work, found and reopened it, and finished the Studio and Player steps in the guide, including the native/Web file handoff.
+**目标：** 从头做一件角色作品，保存后能找到、重新打开，并在电脑和网页中继续使用。Work 就是保存角色外形和动作的作品文件。我们想知道任务说明和操作是否清楚。
 
-The native app, offline CLI, Web Studio page, and trial folder are supplied and prepared. You will also receive a session entry sheet with their locations and any path substitutions for the guide. Skip the guide's build/setup section and begin at its Work creation task. You may save or download trial-owned Work JSON files, including the guide's `.json` paths and browser `.nvwa.json` exports, for this session. Do not download or install software, model weights, dependencies, or unrelated files. Stop and tell the observer if you are asked to sign in or change system settings.
+**从哪里开始：** 使用随本页提供的「本次入口单」。里面列出创作助手、电脑 Studio（编辑器）、Player（播放器）、网页 Studio 和空的试用文件夹。入口未准备好时，请先停下。不要打开别人做好的九秒作品。
 
-If an error appears, try to continue as you normally would. You do not need to create an error. Please tell the observer when you think you are done or when you cannot continue.
+1. **创建自己的作品。** 打开入口单中的创作助手，发送：
+   > 请用本次提供的 Nvwa 创作工具，在空的试用文件夹中新建一件作品。先查看工具支持的外形和动作，把下巴调窄一点、加一点笑容，再按 idle（站立）、wave（挥手）、turn（转身）的顺序各安排三秒。保存后告诉我文件名和位置。不要使用已有作品代替新建。
 
-The observer will watch and take notes. They will not explain product steps or point out controls. You can ask for help or stop at any time. If you ask for help, the observer will pause the unassisted part and record where you are and what you asked. A help request is not a judgment about you. Do not use personal files during this session.
+   这是准备好的**外部助手**，它通过命令行工具创建文件；不是 Nvwa 内置聊天功能。你不用写代码或运行命令。助手完成创作后，由你操作下面的步骤。
+2. **在电脑中继续编辑。** 打开电脑 Studio。把助手给出的完整文件位置填入上方「作品 / Work」框，按 `Open…`。调整一次 `jaw width`（下巴宽度），用 `Undo` 撤销，再用 `Redo` 恢复。按 `Save`，看看是否能判断保存结果和位置。
+3. **找到并重开。** 在文件夹中找到刚保存的文件。记住它的名字和位置，再从 Studio 的 `Open…` 打开同一文件，看看下巴的修改和动作是否保留。
+4. **播放自己的作品。** 打开入口单中的 Player，用 `Open…` 打开刚保存的同一文件；电脑 Player 也要先填写完整文件位置。用 `Restart` 从头播放，再暂停、点一下角色胸部，看看挥手后能否回到暂停位置，再继续播放。
+5. **在电脑和网页间交换。** 打开网页 Studio，用 `Open…` 选择电脑上刚保存的文件。看看外形和动作是否保留。按 `Save` 后，在浏览器下载处找到导出的作品，再用电脑 Studio 打开这个下载文件。网页的「下载已开始」只表示开始下载，请自己确认文件是否出现。
 
-Please use the guide and any ordinary resources you would choose on your own. Do not share account credentials or private files. You may speak aloud while working, but you do not need to.
+**什么时候算完成：** 请逐项确认后告诉观察者。没有完成的项也请照实说明。
+
+- [ ] 我发起了新作品的创作，没有使用别人做好的作品。
+- [ ] 我在 Studio 修改、保存，并找到和重新打开了同一作品。
+- [ ] 我用 Player 播放了这件作品，也尝试了暂停和点击角色。
+- [ ] 我把同一作品从电脑带到网页，再从网页带回电脑。
+
+如果出错，先按自己的理解尝试继续，不用故意制造错误。请告诉观察者哪里不清楚、何时无法继续。你可以随时求助或停止；求助时会暂停「独立操作」记录。只用本次试用文件；如果要求安装软件、登录或改系统设置，请停下。

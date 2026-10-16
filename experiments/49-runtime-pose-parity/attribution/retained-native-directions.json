@@ -1,0 +1,5548 @@
+{
+  "status": "MEASURED_RETAINED_NOT_ADMITTED",
+  "method": "Independent source parent-local quaternion FK against captured actual native signed affine primary directions, expressed in declared static source/target geometric neutral frames; elbow deflection additionally uses actual directed segments",
+  "limits": [
+    "static gauge direction equality is a diagnostic invariant, not an admitted retarget policy",
+    "EXISTING_POLICY_PREDICTION uses existing static calibration without fitted angles; no runtime intervention or fix",
+    "forearm global gauge errors are descriptive only: local hierarchy transfer does not promise global neutral-gauge equality",
+    "does not identify anatomical twist or weights as cause",
+    "source decoder implementation inspected statically, no official decoder/runtime parity"
+  ],
+  "cached_source_hashes": {
+    "cached-original-source/cpp-src__motion_decode.cpp": "d9f0076d3254cd6d89719a0097c09aa265fea8ad3404bf303d527b90ce5714ff",
+    "cached-original-source/cpp-src__motion_rep.cpp": "a2194f392cbfa2260896733c8c69f5ef27c8811a01e890d90b222127708381dd",
+    "cached-original-source/cpp-src__skeleton.hpp": "6c1e1d98170a99105bd325c32caff5421bfb20d1e16160980a9f2c3258e244a3",
+    "cached-original-source/cpp-scripts__export_glb.py": "574a5f1f20476268e33b0007aa2ec212eb5f28767895d810130cc7a639b0cabb",
+    "cached-original-source/official-output-formats.md": "f3f9dcdc1fa21846469791d59977f5d06213225aea63960f9001654379ea163d",
+    "cached-original-source/official-skeleton.md": "88c94293365af8ed2017d8c238a65b7d4efeac189cb78c128ad50ca04ddf7987"
+  },
+  "native_sha256": "731db999bca820dd0bda4ae5b5b3893211953317e017c0b8da5016857013365e",
+  "source_receipt_sha256": "94dfed7555b1e62134add3f5964ff66cba2615781513fbabb750d2d45b83d5f1",
+  "verified_url_byte_receipts": {
+    "cpp-src__motion_decode.cpp": {
+      "url": "https://raw.githubusercontent.com/localai-org/kimodo.cpp/5679ff19ba0a522c0b0516e9a9d402fe1af2c027/src/motion_decode.cpp",
+      "bytes": 2702,
+      "sha256": "d9f0076d3254cd6d89719a0097c09aa265fea8ad3404bf303d527b90ce5714ff"
+    },
+    "cpp-src__motion_rep.cpp": {
+      "url": "https://raw.githubusercontent.com/localai-org/kimodo.cpp/5679ff19ba0a522c0b0516e9a9d402fe1af2c027/src/motion_rep.cpp",
+      "bytes": 2596,
+      "sha256": "a2194f392cbfa2260896733c8c69f5ef27c8811a01e890d90b222127708381dd"
+    },
+    "cpp-src__skeleton.hpp": {
+      "url": "https://raw.githubusercontent.com/localai-org/kimodo.cpp/5679ff19ba0a522c0b0516e9a9d402fe1af2c027/src/skeleton.hpp",
+      "bytes": 6872,
+      "sha256": "6c1e1d98170a99105bd325c32caff5421bfb20d1e16160980a9f2c3258e244a3"
+    },
+    "cpp-scripts__export_glb.py": {
+      "url": "https://raw.githubusercontent.com/localai-org/kimodo.cpp/5679ff19ba0a522c0b0516e9a9d402fe1af2c027/scripts/export_glb.py",
+      "bytes": 11923,
+      "sha256": "574a5f1f20476268e33b0007aa2ec212eb5f28767895d810130cc7a639b0cabb"
+    },
+    "official-output-formats.md": {
+      "url": "https://raw.githubusercontent.com/nv-tlabs/kimodo/58e781898b3d7e328a676a75d3e338c45dce3ad9/docs/source/user_guide/output_formats.md",
+      "bytes": 4312,
+      "sha256": "f3f9dcdc1fa21846469791d59977f5d06213225aea63960f9001654379ea163d"
+    },
+    "official-skeleton.md": {
+      "url": "https://raw.githubusercontent.com/nv-tlabs/kimodo/58e781898b3d7e328a676a75d3e338c45dce3ad9/docs/source/key_concepts/skeleton.md",
+      "bytes": 3233,
+      "sha256": "88c94293365af8ed2017d8c238a65b7d4efeac189cb78c128ad50ca04ddf7987"
+    }
+  },
+  "numerical_controls": {
+    "known_positive_z90_maps_x_to_y": true,
+    "known_parent_rotation_transports_child_offset": true,
+    "quaternion_sign_equivalent": true,
+    "identity_source_rest_offsets_add": true
+  },
+  "counts": {
+    "cached_source_pins_and_receipt_matches": 6,
+    "raw_frames_retained": 90,
+    "sampled_keys": 7,
+    "signed_primary_directions": 126,
+    "actual_arm_child_segment_checks": 28,
+    "elbow_comparisons": 14
+  },
+  "calibration_sha256": "d730f372adc92d83931c23da84d8709dd8bfa7eb75d57964817577f4b034a6d0",
+  "samples": [
+    {
+      "key_index": 0,
+      "time_seconds": 0.0,
+      "directions": {
+        "root": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.010490889422510842,
+            0.9998446894111536,
+            -0.014161154452883358
+          ],
+          "target_actual_world": [
+            -0.007747950499435513,
+            0.9999641181872193,
+            -0.003425142495589724
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349271730833124,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 0.48537357450564317,
+          "target_excursion_from_declared_neutral_deg": 0.4853735618897007,
+          "source_neutral_gauge_direction": [
+            0.9999641181853539,
+            -0.003425142519769152,
+            -0.007747950729485114
+          ],
+          "target_neutral_gauge_direction": [
+            0.9999641181872193,
+            -0.003425142495589724,
+            -0.007747950499435513
+          ]
+        },
+        "pelvis": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.010490889422510842,
+            0.9998446894111536,
+            -0.014161154452883358
+          ],
+          "target_actual_world": [
+            -0.007747950499435513,
+            0.9999641181872193,
+            -0.003425142495589724
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349271730833124,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 0.48537357450564317,
+          "target_excursion_from_declared_neutral_deg": 0.4853735618897007,
+          "source_neutral_gauge_direction": [
+            0.9999641181853539,
+            -0.003425142519769152,
+            -0.007747950729485114
+          ],
+          "target_neutral_gauge_direction": [
+            0.9999641181872193,
+            -0.003425142495589724,
+            -0.007747950499435513
+          ]
+        },
+        "spine": {
+          "source_joint": "Spine1",
+          "source_world": [
+            -0.013032925985376973,
+            0.9979240765938601,
+            -0.06306885280827065
+          ],
+          "target_actual_world": [
+            -0.01303358096331858,
+            0.998179375897477,
+            -0.05889023094025026
+          ],
+          "neutral_source_world": [
+            -2.618450201031264e-08,
+            0.9999912397905577,
+            -0.004185730777632007
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.23986400607156091,
+          "neutral_world_angle_deg": 0.2398254080471018,
+          "neutral_gauge_direction_error_deg": 7.070359321062852e-05,
+          "source_excursion_from_declared_neutral_deg": 3.457959166498705,
+          "target_excursion_from_declared_neutral_deg": 3.45791000949025,
+          "source_neutral_gauge_direction": [
+            0.9981793241495118,
+            -0.058891258789343426,
+            -0.013032899855003072
+          ],
+          "target_neutral_gauge_direction": [
+            0.998179375897477,
+            -0.05889023094025026,
+            -0.01303358096331858
+          ]
+        },
+        "chest": {
+          "source_joint": "Chest",
+          "source_world": [
+            -0.0028230196540266587,
+            0.998884553442131,
+            0.047134694809108424
+          ],
+          "target_actual_world": [
+            0.00405489705013837,
+            0.9976682788414564,
+            0.06812901880578513
+          ],
+          "neutral_source_world": [
+            -0.006903195869759058,
+            0.9997551034235809,
+            -0.02102567633368175
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 1.2677352203064327,
+          "neutral_world_angle_deg": 1.2680542987805223,
+          "neutral_gauge_direction_error_deg": 0.0011085743682398566,
+          "source_excursion_from_declared_neutral_deg": 3.9133710190326303,
+          "target_excursion_from_declared_neutral_deg": 3.913455149772213,
+          "source_neutral_gauge_direction": [
+            0.9976683790552278,
+            0.06812640752939776,
+            0.004074068047155103
+          ],
+          "target_neutral_gauge_direction": [
+            0.9976682788414564,
+            0.06812901880578513,
+            0.00405489705013837
+          ]
+        },
+        "neck": {
+          "source_joint": "Neck1",
+          "source_world": [
+            0.03159882265811002,
+            0.9373561895484864,
+            0.34693643268149754
+          ],
+          "target_actual_world": [
+            0.03720943519173005,
+            0.9972495542701559,
+            0.06409980062908041
+          ],
+          "neutral_source_world": [
+            -3.54344217081028e-07,
+            0.958175636506548,
+            0.2861807988058353
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 16.626092474957503,
+          "neutral_world_angle_deg": 16.629443534253504,
+          "neutral_gauge_direction_error_deg": 0.32165414794302705,
+          "source_excursion_from_declared_neutral_deg": 4.10191092617517,
+          "target_excursion_from_declared_neutral_deg": 4.250487687554567,
+          "source_neutral_gauge_direction": [
+            0.9974383977967513,
+            0.06417269746556153,
+            0.031599169303057346
+          ],
+          "target_neutral_gauge_direction": [
+            0.9972495542701559,
+            0.06409980062908041,
+            0.03720943519173005
+          ]
+        },
+        "head": {
+          "source_joint": "Head",
+          "source_world": [
+            0.042524462647960906,
+            0.951353650916062,
+            0.3051522586598074
+          ],
+          "target_actual_world": [
+            0.05391404564377899,
+            0.99140773059494,
+            -0.11918048245795648
+          ],
+          "neutral_source_world": [
+            -7.147061791222387e-07,
+            0.9527639945620581,
+            0.30371165711187237
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 24.618199333997467,
+          "neutral_world_angle_deg": 17.68067089786443,
+          "neutral_gauge_direction_error_deg": 6.9805987248994565,
+          "source_excursion_from_declared_neutral_deg": 2.439433957145263,
+          "target_excursion_from_declared_neutral_deg": 7.516281356411526,
+          "source_neutral_gauge_direction": [
+            0.9990937724444896,
+            0.0018009007795552325,
+            0.04252517629617318
+          ],
+          "target_neutral_gauge_direction": [
+            0.99140773059494,
+            -0.11918048245795648,
+            0.05391404564377899
+          ]
+        },
+        "upper_arm.L": {
+          "source_joint": "RightArm",
+          "source_world": [
+            -0.34279693511785114,
+            -0.9370780548900219,
+            -0.06614363398952852
+          ],
+          "target_actual_world": [
+            0.43285709974257713,
+            -0.9001119106612917,
+            -0.049328282841828185
+          ],
+          "neutral_source_world": [
+            -0.9999999959161152,
+            6.52922839150174e-08,
+            -9.037568910828662e-05
+          ],
+          "neutral_target_world": [
+            -0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.70476334278171,
+          "neutral_world_angle_deg": 45.725228268171065,
+          "neutral_gauge_direction_error_deg": 0.9646309471052916,
+          "source_excursion_from_declared_neutral_deg": 69.95226884736105,
+          "target_excursion_from_declared_neutral_deg": 69.98277359690819,
+          "source_neutral_gauge_direction": [
+            0.3428028503104435,
+            -0.06611265321569976,
+            -0.9370780772720149
+          ],
+          "target_neutral_gauge_direction": [
+            0.3423026534522161,
+            -0.049328282841828185,
+            -0.938293991215679
+          ],
+          "actual_child_segment_world": [
+            0.43285690769806423,
+            -0.900112010727202,
+            -0.049328142096606825
+          ],
+          "marker_vs_actual_child_angle_deg": 1.4787793334711022e-05,
+          "source_body_relative": [
+            -0.3392966714306998,
+            -0.9406708344572059,
+            0.0040187009880956895
+          ],
+          "target_actual_body_relative": [
+            0.43665753443718264,
+            -0.899618696503153,
+            0.004049508761413492
+          ],
+          "body_relative_world_angle_deg": 45.72484342671975,
+          "existing_policy_prediction": [
+            0.4366577095442744,
+            -0.8996186121560283,
+            0.00404936513662574
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.3819533748532954e-05
+        },
+        "forearm.L": {
+          "source_joint": "RightForeArm",
+          "source_world": [
+            0.052455051475950996,
+            -0.9287423772545621,
+            0.36699600034087576
+          ],
+          "target_actual_world": [
+            0.7619858572215433,
+            -0.5368537346531941,
+            0.36216794582523165
+          ],
+          "neutral_source_world": [
+            -0.9999999953641271,
+            -4.3034214241588306e-09,
+            9.628990481719231e-05
+          ],
+          "neutral_target_world": [
+            -0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 47.81837244125209,
+          "neutral_world_angle_deg": 53.65319562419398,
+          "neutral_gauge_direction_error_deg": 2.765069582145335,
+          "source_excursion_from_declared_neutral_deg": 93.00480528848693,
+          "target_excursion_from_declared_neutral_deg": 90.25568281948708,
+          "source_neutral_gauge_direction": [
+            -0.052419709226065085,
+            0.3670010495310579,
+            -0.9287423774802983
+          ],
+          "target_neutral_gauge_direction": [
+            -0.00446249222980852,
+            0.36268198777792404,
+            -0.9319022813066576
+          ],
+          "actual_child_segment_world": [
+            0.7619855785171784,
+            -0.5368540205694426,
+            0.3621681083837524
+          ],
+          "marker_vs_actual_child_angle_deg": 2.468572484316022e-05
+        },
+        "hand.L": {
+          "source_joint": "RightHand",
+          "source_world": [
+            0.024572267451688314,
+            -0.969193782287551,
+            0.24507063481256555
+          ],
+          "target_actual_world": [
+            0.8642355104648068,
+            -0.4812892576440173,
+            0.1464842412278715
+          ],
+          "neutral_source_world": [
+            -0.9998684414414755,
+            -0.01613503220129626,
+            -0.0016614888678910314
+          ],
+          "neutral_target_world": [
+            -0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 58.42610642712197,
+          "neutral_world_angle_deg": 62.55253525330448,
+          "neutral_gauge_direction_error_deg": 6.832709556494887,
+          "source_excursion_from_declared_neutral_deg": 90.53504974603004,
+          "target_excursion_from_declared_neutral_deg": 87.06540104013376,
+          "source_neutral_gauge_direction": [
+            -0.009338244004685001,
+            0.24505545766768042,
+            -0.9694640890028846
+          ],
+          "target_neutral_gauge_direction": [
+            0.05119602324667906,
+            0.14412102362723828,
+            -0.9882348393739022
+          ]
+        },
+        "upper_arm.R": {
+          "source_joint": "LeftArm",
+          "source_world": [
+            0.3426910681695885,
+            -0.9384266858397017,
+            -0.0437971129265406
+          ],
+          "target_actual_world": [
+            -0.43354571410067333,
+            -0.8994427911360777,
+            -0.05514326122274024
+          ],
+          "neutral_source_world": [
+            0.9999999959458036,
+            8.708226032190068e-09,
+            -9.004661411880728e-05
+          ],
+          "neutral_target_world": [
+            0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.740918264749105,
+          "neutral_world_angle_deg": 45.725225024485,
+          "neutral_gauge_direction_error_deg": 0.656474259632297,
+          "source_excursion_from_declared_neutral_deg": 69.95884650627475,
+          "target_excursion_from_declared_neutral_deg": 70.04129161062023,
+          "source_neutral_gauge_direction": [
+            0.3426950023899471,
+            -0.04376625457933694,
+            0.938426688823933
+          ],
+          "target_neutral_gauge_direction": [
+            0.34134284200161263,
+            -0.05514326122274024,
+            0.9383199267605815
+          ],
+          "actual_child_segment_world": [
+            -0.43354556943754174,
+            -0.8994428697443037,
+            -0.0551431164082097
+          ],
+          "marker_vs_actual_child_angle_deg": 1.2547858734911261e-05,
+          "source_body_relative": [
+            0.34647631055491634,
+            -0.9379517198226465,
+            0.014168186404504015
+          ],
+          "target_actual_body_relative": [
+            -0.4296991606085572,
+            -0.9028604569486549,
+            0.014199529948822757
+          ],
+          "body_relative_world_angle_deg": 45.720424062279214,
+          "existing_policy_prediction": [
+            -0.42969930226296343,
+            -0.9028603918048348,
+            0.014199385364965761
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.2164402004367092e-05
+        },
+        "forearm.R": {
+          "source_joint": "LeftForeArm",
+          "source_world": [
+            -0.11084737275727409,
+            -0.9096396495966085,
+            0.40033556903498985
+          ],
+          "target_actual_world": [
+            -0.7868170674862491,
+            -0.4943462104556789,
+            0.36951417634571043
+          ],
+          "neutral_source_world": [
+            0.9999999953637869,
+            -2.608051950484067e-08,
+            9.629343316678019e-05
+          ],
+          "neutral_target_world": [
+            0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 46.778296645070526,
+          "neutral_world_angle_deg": 53.65319436756713,
+          "neutral_gauge_direction_error_deg": 3.811448457004865,
+          "source_excursion_from_declared_neutral_deg": 96.36194136552093,
+          "target_excursion_from_declared_neutral_deg": 93.04145055283847,
+          "source_neutral_gauge_direction": [
+            -0.11080879883312628,
+            0.4003462410507449,
+            0.9096396524875652
+          ],
+          "target_neutral_gauge_direction": [
+            -0.05305839964679034,
+            0.37209388448403435,
+            0.926677369614961
+          ],
+          "actual_child_segment_world": [
+            -0.7868167970150435,
+            -0.49434651380068345,
+            0.3695143464442193
+          ],
+          "marker_vs_actual_child_angle_deg": 2.522608571055896e-05
+        },
+        "hand.R": {
+          "source_joint": "LeftHand",
+          "source_world": [
+            -0.13130887837710226,
+            -0.9472922312362926,
+            0.29222492552606416
+          ],
+          "target_actual_world": [
+            -0.9033469824097334,
+            -0.39750134758425043,
+            0.16111147705838247
+          ],
+          "neutral_source_world": [
+            0.9998630179094284,
+            -0.0164546704543765,
+            -0.0017858435788294738
+          ],
+          "neutral_target_world": [
+            0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 57.16318443226796,
+          "neutral_world_angle_deg": 62.5346531704899,
+          "neutral_gauge_direction_error_deg": 8.818126260312301,
+          "source_excursion_from_declared_neutral_deg": 96.67430801084718,
+          "target_excursion_from_declared_neutral_deg": 92.31523638011123,
+          "source_neutral_gauge_direction": [
+            -0.11622537793027198,
+            0.292017830838639,
+            0.9493246272994615
+          ],
+          "target_neutral_gauge_direction": [
+            -0.04039750187899401,
+            0.16331762549532908,
+            0.9857461108442195
+          ]
+        },
+        "thigh.L": {
+          "source_joint": "RightLeg",
+          "source_world": [
+            -0.11964845617828794,
+            -0.9916594596910907,
+            -0.047914120458654244
+          ],
+          "target_actual_world": [
+            -0.17448320135214365,
+            -0.9842175559646913,
+            -0.029519738765732224
+          ],
+          "neutral_source_world": [
+            2.3057578921544995e-08,
+            -0.9998274852777989,
+            -0.018574167089597145
+          ],
+          "neutral_target_world": [
+            -0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.3416500875661326,
+          "neutral_world_angle_deg": 3.3530377589315856,
+          "neutral_gauge_direction_error_deg": 0.002507500059697685,
+          "source_excursion_from_declared_neutral_deg": 7.078454898371145,
+          "target_excursion_from_declared_neutral_deg": 7.077316033136746,
+          "source_neutral_gauge_direction": [
+            0.9923783459554303,
+            -0.0294866061184432,
+            0.11964847904749944
+          ],
+          "target_neutral_gauge_direction": [
+            0.9923807951622774,
+            -0.029519738765732224,
+            0.1196199917082795
+          ]
+        },
+        "shin.L": {
+          "source_joint": "RightShin",
+          "source_world": [
+            -0.09369398921852075,
+            -0.985657580647178,
+            -0.14035871934821645
+          ],
+          "target_actual_world": [
+            -0.13962283834752146,
+            -0.9887618104203901,
+            -0.053437302195884634
+          ],
+          "neutral_source_world": [
+            4.732519486618937e-08,
+            -0.9966069460848517,
+            -0.08230792802290274
+          ],
+          "neutral_target_world": [
+            -0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.637810901202528,
+          "neutral_world_angle_deg": 4.981575093701561,
+          "neutral_gauge_direction_error_deg": 1.1023611618705123,
+          "source_excursion_from_declared_neutral_deg": 6.349478560713017,
+          "target_excursion_from_declared_neutral_deg": 7.13443160764547,
+          "source_neutral_gauge_direction": [
+            0.993865822269581,
+            -0.05875504180907363,
+            0.09369403602377047
+          ],
+          "target_neutral_gauge_direction": [
+            0.9922574810275958,
+            -0.053437302195884634,
+            0.11211398699000936
+          ]
+        },
+        "foot.L": {
+          "source_joint": "RightFoot",
+          "source_world": [
+            -0.4074447461059902,
+            -0.3286450983358131,
+            0.8520452911732267
+          ],
+          "target_actual_world": [
+            -0.4095894524286239,
+            -0.35655960252393076,
+            0.839703358518469
+          ],
+          "neutral_source_world": [
+            -2.4110655024412978e-08,
+            -0.35715943115741156,
+            0.9340434362144586
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.7531157069007408,
+          "neutral_world_angle_deg": 2.502843706908775,
+          "neutral_gauge_direction_error_deg": 0.5531519834482537,
+          "source_excursion_from_declared_neutral_deg": 24.044958928919826,
+          "target_excursion_from_declared_neutral_deg": 24.1824982330664,
+          "source_neutral_gauge_direction": [
+            0.9132260177758399,
+            -0.0026527816724327444,
+            0.40744472411197
+          ],
+          "target_neutral_gauge_direction": [
+            0.9122452901237019,
+            0.006709031699341617,
+            0.4095894524286239
+          ]
+        },
+        "thigh.R": {
+          "source_joint": "LeftLeg",
+          "source_world": [
+            0.12151692441823893,
+            -0.9909902129627362,
+            -0.05632082112330185
+          ],
+          "target_actual_world": [
+            0.1763652959036895,
+            -0.9835936267540382,
+            -0.037932305619901095
+          ],
+          "neutral_source_world": [
+            -2.313250651991188e-08,
+            -0.9998274997935405,
+            -0.018573385706359448
+          ],
+          "neutral_target_world": [
+            0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.3419480831583397,
+          "neutral_world_angle_deg": 3.353023565050765,
+          "neutral_gauge_direction_error_deg": 0.0018439830804609196,
+          "source_excursion_from_declared_neutral_deg": 7.313114574829657,
+          "target_excursion_from_declared_neutral_deg": 7.314512526216453,
+          "source_neutral_gauge_direction": [
+            0.9918653324694315,
+            -0.037905062365664564,
+            -0.12151694734628156
+          ],
+          "target_neutral_gauge_direction": [
+            0.9918622264039391,
+            -0.037932305619901095,
+            -0.12153379786453995
+          ]
+        },
+        "shin.R": {
+          "source_joint": "LeftShin",
+          "source_world": [
+            0.10250933131352381,
+            -0.9833407457805604,
+            -0.1501093424187361
+          ],
+          "target_actual_world": [
+            0.14362023300072677,
+            -0.9875498068014468,
+            -0.06417638007275074
+          ],
+          "neutral_source_world": [
+            2.364143414047117e-08,
+            -0.9966069239296662,
+            -0.08230819628353032
+          ],
+          "neutral_target_world": [
+            0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.46542694939599,
+          "neutral_world_angle_deg": 4.981588406295889,
+          "neutral_gauge_direction_error_deg": 0.8252788519929843,
+          "source_excursion_from_declared_neutral_deg": 7.087245735766116,
+          "target_excursion_from_declared_neutral_deg": 7.625344357820558,
+          "source_neutral_gauge_direction": [
+            0.9923594274703288,
+            -0.06866300668359179,
+            -0.10250930798678892
+          ],
+          "target_neutral_gauge_direction": [
+            0.9911569406583386,
+            -0.06417638007275074,
+            -0.11614349411637621
+          ]
+        },
+        "foot.R": {
+          "source_joint": "LeftFoot",
+          "source_world": [
+            0.28486921243651075,
+            -0.35505742649055033,
+            0.8903840495537358
+          ],
+          "target_actual_world": [
+            0.2890286941100638,
+            -0.3854796502368337,
+            0.8762806931767466
+          ],
+          "neutral_source_world": [
+            0.0,
+            -0.3571595072812372,
+            0.9340434071062349
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.9360771147924978,
+          "neutral_world_angle_deg": 2.5028390373462215,
+          "neutral_gauge_direction_error_deg": 0.5384646035788905,
+          "source_excursion_from_declared_neutral_deg": 16.5705107751123,
+          "target_excursion_from_declared_neutral_deg": 16.80270412279977,
+          "source_neutral_gauge_direction": [
+            0.9584694867801272,
+            -0.013629919927920231,
+            -0.28486921243651075
+          ],
+          "target_neutral_gauge_direction": [
+            0.9573058553656373,
+            -0.005283300454893836,
+            -0.2890286941100638
+          ]
+        }
+      },
+      "elbow_and_reach": {
+        "Left": {
+          "source_elbow_deflection_deg": 37.049985579258625,
+          "target_elbow_deflection_deg": 40.05909296931456,
+          "source_neutral_elbow_deflection_deg": 0.010676498519172654,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            0.06845407480886267,
+            -0.5161549316062979,
+            0.09587985717162642
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.3069641813635826,
+            -0.3680156469345093,
+            0.0718836854211986
+          ]
+        },
+        "Right": {
+          "source_elbow_deflection_deg": 34.10123802367056,
+          "target_elbow_deflection_deg": 37.326387794856075,
+          "source_neutral_elbow_deflection_deg": 0.010695151498789045,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            -0.0842753648792075,
+            -0.5212861684269106,
+            0.08057184227822964
+          ],
+          "target_hand_minus_shoulder_m": [
+            0.30090615898370743,
+            -0.37824368476867676,
+            0.0717726363800466
+          ]
+        }
+      }
+    },
+    {
+      "key_index": 15,
+      "time_seconds": 0.5,
+      "directions": {
+        "root": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.0111592556914538,
+            0.9988736019669265,
+            -0.04611939186536089
+          ],
+          "target_actual_world": [
+            -0.00841897832313934,
+            0.9993380463918721,
+            -0.03539194594354997
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349349152218696,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 2.084852567291416,
+          "target_excursion_from_declared_neutral_deg": 2.084852654392395,
+          "source_neutral_gauge_direction": [
+            0.999338046447176,
+            -0.03539194434176028,
+            -0.008418978492155466
+          ],
+          "target_neutral_gauge_direction": [
+            0.9993380463918721,
+            -0.03539194594354997,
+            -0.00841897832313934
+          ]
+        },
+        "pelvis": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.0111592556914538,
+            0.9988736019669265,
+            -0.04611939186536089
+          ],
+          "target_actual_world": [
+            -0.00841897832313934,
+            0.9993380463918721,
+            -0.03539194594354997
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349349152218696,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 2.084852567291416,
+          "target_excursion_from_declared_neutral_deg": 2.084852654392395,
+          "source_neutral_gauge_direction": [
+            0.999338046447176,
+            -0.03539194434176028,
+            -0.008418978492155466
+          ],
+          "target_neutral_gauge_direction": [
+            0.9993380463918721,
+            -0.03539194594354997,
+            -0.00841897832313934
+          ]
+        },
+        "spine": {
+          "source_joint": "Spine1",
+          "source_world": [
+            -0.01979854095837485,
+            0.9956808221542335,
+            -0.090706770255529
+          ],
+          "target_actual_world": [
+            -0.01999415116442626,
+            0.9960552015983656,
+            -0.0864538564093768
+          ],
+          "neutral_source_world": [
+            -2.618450201031264e-08,
+            0.9999912397905577,
+            -0.004185730777632007
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.24487312141147052,
+          "neutral_world_angle_deg": 0.2398254080471018,
+          "neutral_gauge_direction_error_deg": 0.012210863200362054,
+          "source_excursion_from_declared_neutral_deg": 5.09309296844026,
+          "target_excursion_from_declared_neutral_deg": 5.090880553737232,
+          "source_neutral_gauge_direction": [
+            0.9960517744201068,
+            -0.08653832378106488,
+            -0.019798514886739966
+          ],
+          "target_neutral_gauge_direction": [
+            0.9960552015983656,
+            -0.0864538564093768,
+            -0.01999415116442626
+          ]
+        },
+        "chest": {
+          "source_joint": "Chest",
+          "source_world": [
+            0.04475118082363808,
+            0.9989922048433447,
+            0.0034505763464361262
+          ],
+          "target_actual_world": [
+            0.05204900812413809,
+            0.9983492062036258,
+            0.024285041195838845
+          ],
+          "neutral_source_world": [
+            -0.006903195869759058,
+            0.9997551034235809,
+            -0.02102567633368175
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 1.2654022699914234,
+          "neutral_world_angle_deg": 1.2680542987805223,
+          "neutral_gauge_direction_error_deg": 0.024811061282773106,
+          "source_excursion_from_declared_neutral_deg": 3.275762557796399,
+          "target_excursion_from_declared_neutral_deg": 3.2926366398265237,
+          "source_neutral_gauge_direction": [
+            0.9983660782044558,
+            0.02444730278703369,
+            0.051647877759819084
+          ],
+          "target_neutral_gauge_direction": [
+            0.9983492062036258,
+            0.024285041195838845,
+            0.05204900812413809
+          ]
+        },
+        "neck": {
+          "source_joint": "Neck1",
+          "source_world": [
+            0.16547371939854166,
+            0.8797160372883289,
+            0.4457781308298247
+          ],
+          "target_actual_world": [
+            0.1539108905441522,
+            0.9727085849166522,
+            0.17363595998913908
+          ],
+          "neutral_source_world": [
+            -3.54344217081028e-07,
+            0.958175636506548,
+            0.2861807988058353
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 16.54856311983764,
+          "neutral_world_angle_deg": 16.629443534253504,
+          "neutral_gauge_direction_error_deg": 0.6818755584828329,
+          "source_excursion_from_declared_neutral_deg": 13.95259427798022,
+          "target_excursion_from_declared_neutral_deg": 13.416627010611979,
+          "source_neutral_gauge_direction": [
+            0.9704955569101585,
+            0.17537592348769945,
+            0.16547404472749785
+          ],
+          "target_neutral_gauge_direction": [
+            0.9727085849166522,
+            0.17363595998913908,
+            0.1539108905441522
+          ]
+        },
+        "head": {
+          "source_joint": "Head",
+          "source_world": [
+            0.17739106524053605,
+            0.8979769426171027,
+            0.40270314190588136
+          ],
+          "target_actual_world": [
+            0.2535748150176093,
+            0.9671171179601894,
+            0.019603401163122695
+          ],
+          "neutral_source_world": [
+            -7.147061791222387e-07,
+            0.9527639945620581,
+            0.30371165711187237
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 22.879417723845613,
+          "neutral_world_angle_deg": 17.68067089786443,
+          "neutral_gauge_direction_error_deg": 6.84714526629325,
+          "source_excursion_from_declared_neutral_deg": 12.077463781968278,
+          "target_excursion_from_declared_neutral_deg": 14.733973309565128,
+          "source_neutral_gauge_direction": [
+            0.977865610642397,
+            0.11095502922896243,
+            0.17739173884871784
+          ],
+          "target_neutral_gauge_direction": [
+            0.9671171179601894,
+            0.019603401163122695,
+            0.2535748150176093
+          ]
+        },
+        "upper_arm.L": {
+          "source_joint": "RightArm",
+          "source_world": [
+            -0.8006993066611304,
+            0.13347271713787076,
+            0.5840082654314226
+          ],
+          "target_actual_world": [
+            -0.6558073070113811,
+            -0.5074681535756526,
+            0.558921147548559
+          ],
+          "neutral_source_world": [
+            -0.9999999959161152,
+            6.52922839150174e-08,
+            -9.037568910828662e-05
+          ],
+          "neutral_target_world": [
+            -0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 38.39147464981615,
+          "neutral_world_angle_deg": 45.725228268171065,
+          "neutral_gauge_direction_error_deg": 2.132042175541586,
+          "source_excursion_from_declared_neutral_deg": 36.80811396442128,
+          "target_excursion_from_declared_neutral_deg": 34.79827018919502,
+          "source_neutral_gauge_direction": [
+            0.800646531956472,
+            0.584080626798797,
+            0.1334726648583838
+          ],
+          "target_neutral_gauge_direction": [
+            0.8211664391122836,
+            0.558921147548559,
+            0.11529453629142294
+          ],
+          "actual_child_segment_world": [
+            -0.6558074498519452,
+            -0.5074680239613166,
+            0.5589210976296074
+          ],
+          "marker_vs_actual_child_angle_deg": 1.1390761175093017e-05,
+          "source_body_relative": [
+            -0.8387159165872323,
+            0.10499213777444483,
+            0.5343521893552892
+          ],
+          "target_actual_body_relative": [
+            -0.6606484954046382,
+            -0.5271910225487944,
+            0.5344279102587592
+          ],
+          "body_relative_world_angle_deg": 38.34233417267163,
+          "existing_policy_prediction": [
+            -0.6606483310700902,
+            -0.5271911509910852,
+            0.5344279867026048
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.2663509647306462e-05
+        },
+        "forearm.L": {
+          "source_joint": "RightForeArm",
+          "source_world": [
+            -0.21202357503400887,
+            0.1819088276743235,
+            0.9601849728276064
+          ],
+          "target_actual_world": [
+            -0.17896152897139847,
+            -0.11048243323804524,
+            0.977633061579865
+          ],
+          "neutral_source_world": [
+            -0.9999999953641271,
+            -4.3034214241588306e-09,
+            9.628990481719231e-05
+          ],
+          "neutral_target_world": [
+            -0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 16.95090918615518,
+          "neutral_world_angle_deg": 53.65319562419398,
+          "neutral_gauge_direction_error_deg": 6.104556914081468,
+          "source_excursion_from_declared_neutral_deg": 77.75361413617348,
+          "target_excursion_from_declared_neutral_deg": 76.33079441762038,
+          "source_neutral_gauge_direction": [
+            0.21211602938790464,
+            0.9601645526465272,
+            0.1819088285867503
+          ],
+          "target_neutral_gauge_direction": [
+            0.23631593922778826,
+            0.9684972283672663,
+            0.07853595044189299
+          ],
+          "actual_child_segment_world": [
+            -0.17896174762610512,
+            -0.11048220476954151,
+            0.977633047373027
+          ],
+          "marker_vs_actual_child_angle_deg": 1.8111274045886075e-05
+        },
+        "hand.L": {
+          "source_joint": "RightHand",
+          "source_world": [
+            -0.2691197857365698,
+            0.27697189814790946,
+            0.9224213291991068
+          ],
+          "target_actual_world": [
+            -0.16818815995831843,
+            -0.18695257061851092,
+            0.9678643909086466
+          ],
+          "neutral_source_world": [
+            -0.9998684414414755,
+            -0.01613503220129626,
+            -0.0016614888678910314
+          ],
+          "neutral_target_world": [
+            -0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 27.592908924847027,
+          "neutral_world_angle_deg": 62.55253525330448,
+          "neutral_gauge_direction_error_deg": 12.54307336549165,
+          "source_excursion_from_declared_neutral_deg": 74.74693424483627,
+          "target_excursion_from_declared_neutral_deg": 73.1320425252203,
+          "source_neutral_gauge_direction": [
+            0.2630828374600476,
+            0.9228597122037603,
+            0.2812781047738399
+          ],
+          "target_neutral_gauge_direction": [
+            0.2901670524986928,
+            0.9546400317781351,
+            0.06682433217669909
+          ]
+        },
+        "upper_arm.R": {
+          "source_joint": "LeftArm",
+          "source_world": [
+            0.3436596795670536,
+            -0.9387621581239579,
+            -0.024972687366785172
+          ],
+          "target_actual_world": [
+            -0.4303613008992884,
+            -0.9024434591559793,
+            0.019620237380377877
+          ],
+          "neutral_source_world": [
+            0.9999999959458036,
+            8.708226032190068e-09,
+            -9.004661411880728e-05
+          ],
+          "neutral_target_world": [
+            0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.669836043164885,
+          "neutral_world_angle_deg": 45.725225024485,
+          "neutral_gauge_direction_error_deg": 2.556384934036059,
+          "source_excursion_from_declared_neutral_deg": 69.8998643025488,
+          "target_excursion_from_declared_neutral_deg": 69.77459095025,
+          "source_neutral_gauge_direction": [
+            0.3436619187047795,
+            -0.024941741875722956,
+            0.9387621611166241
+          ],
+          "target_neutral_gauge_direction": [
+            0.3457143600121951,
+            0.019620237380377877,
+            0.9381346532169548
+          ],
+          "actual_child_segment_world": [
+            -0.4303611232938171,
+            -0.9024435411415527,
+            0.019620362106204384
+          ],
+          "marker_vs_actual_child_angle_deg": 1.325413123547268e-05,
+          "source_body_relative": [
+            0.39230092758477525,
+            -0.9196257794599806,
+            0.019708068620446828
+          ],
+          "target_actual_body_relative": [
+            -0.3845879465873288,
+            -0.9228771881498429,
+            0.019743528873563218
+          ],
+          "body_relative_world_angle_deg": 45.71590771617915,
+          "existing_policy_prediction": [
+            -0.3845881035676079,
+            -0.9228771256192141,
+            0.019743393910070003
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.2372355563799738e-05
+        },
+        "forearm.R": {
+          "source_joint": "LeftForeArm",
+          "source_world": [
+            -0.05785660819513216,
+            -0.8773630786291539,
+            0.47632619195938386
+          ],
+          "target_actual_world": [
+            -0.7299345054451221,
+            -0.4832281615478416,
+            0.48341096558485136
+          ],
+          "neutral_source_world": [
+            0.9999999953637869,
+            -2.608051950484067e-08,
+            9.629343316678019e-05
+          ],
+          "neutral_target_world": [
+            0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 45.856374163727814,
+          "neutral_world_angle_deg": 53.65319436756713,
+          "neutral_gauge_direction_error_deg": 2.034970880658989,
+          "source_excursion_from_declared_neutral_deg": 93.31415793047786,
+          "target_excursion_from_declared_neutral_deg": 91.34468110175477,
+          "source_neutral_gauge_direction": [
+            -0.05781071796048068,
+            0.47633176096026547,
+            0.877363080138084
+          ],
+          "target_neutral_gauge_direction": [
+            -0.023466958212706352,
+            0.48483903954423613,
+            0.8742885150830164
+          ],
+          "actual_child_segment_world": [
+            -0.7299343622065124,
+            -0.4832281481176497,
+            0.4834111952954325
+          ],
+          "marker_vs_actual_child_angle_deg": 1.5509568494356516e-05
+        },
+        "hand.R": {
+          "source_joint": "LeftHand",
+          "source_world": [
+            -0.03822444689654902,
+            -0.9301423109991156,
+            0.365204289334993
+          ],
+          "target_actual_world": [
+            -0.8520757213001408,
+            -0.441658030745478,
+            0.28090060350392876
+          ],
+          "neutral_source_world": [
+            0.9998630179094284,
+            -0.0164546704543765,
+            -0.0017858435788294738
+          ],
+          "neutral_target_world": [
+            0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 56.90963709376216,
+          "neutral_world_angle_deg": 62.5346531704899,
+          "neutral_gauge_direction_error_deg": 5.9473719093830955,
+          "source_excursion_from_declared_neutral_deg": 91.35037014929271,
+          "target_excursion_from_declared_neutral_deg": 88.40154113408984,
+          "source_neutral_gauge_direction": [
+            -0.023566223363809445,
+            0.36516278604217245,
+            0.9306453528634233
+          ],
+          "target_neutral_gauge_direction": [
+            0.027894751336461753,
+            0.2798610792300278,
+            0.9596351698328284
+          ]
+        },
+        "thigh.L": {
+          "source_joint": "RightLeg",
+          "source_world": [
+            -0.12999220379194076,
+            -0.9905706866767033,
+            -0.043263629646146086
+          ],
+          "target_actual_world": [
+            -0.1838132317875321,
+            -0.9826763204431579,
+            -0.02366315828707291
+          ],
+          "neutral_source_world": [
+            2.3057578921544995e-08,
+            -0.9998274852777989,
+            -0.018574167089597145
+          ],
+          "neutral_target_world": [
+            -0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.313328475481073,
+          "neutral_world_angle_deg": 3.3530377589315856,
+          "neutral_gauge_direction_error_deg": 0.08863174683176979,
+          "source_excursion_from_declared_neutral_deg": 7.605265553598753,
+          "target_excursion_from_declared_neutral_deg": 7.537390917681219,
+          "source_neutral_gauge_direction": [
+            0.9912033815385152,
+            -0.024857140640388273,
+            0.12999222663604346
+          ],
+          "target_neutral_gauge_direction": [
+            0.9913594695704041,
+            -0.02366315828707291,
+            0.12902114955683708
+          ]
+        },
+        "shin.L": {
+          "source_joint": "RightShin",
+          "source_world": [
+            -0.10205465603653499,
+            -0.9852413124105368,
+            -0.13742053522246106
+          ],
+          "target_actual_world": [
+            -0.14779062041582133,
+            -0.9877996286824071,
+            -0.04908997954781821
+          ],
+          "neutral_source_world": [
+            4.732519486618937e-08,
+            -0.9966069460848517,
+            -0.08230792802290274
+          ],
+          "neutral_target_world": [
+            -0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.703388295937135,
+          "neutral_world_angle_deg": 4.981575093701561,
+          "neutral_gauge_direction_error_deg": 1.1195286671791465,
+          "source_excursion_from_declared_neutral_deg": 6.681075940492656,
+          "target_excursion_from_declared_neutral_deg": 7.4658575582204065,
+          "source_neutral_gauge_direction": [
+            0.993209130210299,
+            -0.055861089309206934,
+            0.10205470282201765
+          ],
+          "target_neutral_gauge_direction": [
+            0.9915224656409143,
+            -0.04908997954781821,
+            0.12030533669524662
+          ]
+        },
+        "foot.L": {
+          "source_joint": "RightFoot",
+          "source_world": [
+            -0.39709828471420705,
+            -0.34016569086940857,
+            0.8524085024402164
+          ],
+          "target_actual_world": [
+            -0.40020896489789326,
+            -0.36653104060074526,
+            0.8399332001364701
+          ],
+          "neutral_source_world": [
+            -2.4110655024412978e-08,
+            -0.35715943115741156,
+            0.9340434362144586
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.6807332573030904,
+          "neutral_world_angle_deg": 2.502843706908775,
+          "neutral_gauge_direction_error_deg": 0.6553653061563667,
+          "source_excursion_from_declared_neutral_deg": 23.41076940889381,
+          "target_excursion_from_declared_neutral_deg": 23.591673501180768,
+          "source_neutral_gauge_direction": [
+            0.917679960902166,
+            -0.01328379127561938,
+            0.3970982627108112
+          ],
+          "target_neutral_gauge_direction": [
+            0.9164209005364805,
+            -0.002348930663673976,
+            0.40020896489789326
+          ]
+        },
+        "thigh.R": {
+          "source_joint": "LeftLeg",
+          "source_world": [
+            0.11204238428519707,
+            -0.9928860038834656,
+            -0.04029748647262024
+          ],
+          "target_actual_world": [
+            0.1677306196304327,
+            -0.9855449682798819,
+            -0.023823407325519023
+          ],
+          "neutral_source_world": [
+            -2.313250651991188e-08,
+            -0.9998274997935405,
+            -0.018573385706359448
+          ],
+          "neutral_target_world": [
+            0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.354345912625829,
+          "neutral_world_angle_deg": 3.353023565050765,
+          "neutral_gauge_direction_error_deg": 0.12147225196412877,
+          "source_excursion_from_declared_neutral_deg": 6.554769936716181,
+          "target_excursion_from_declared_neutral_deg": 6.620490297822119,
+          "source_neutral_gauge_direction": [
+            0.9934631890102366,
+            -0.021849280483457623,
+            -0.11204240725710166
+          ],
+          "target_neutral_gauge_direction": [
+            0.9933315978907458,
+            -0.023823407325519023,
+            -0.11280417499020076
+          ]
+        },
+        "shin.R": {
+          "source_joint": "LeftShin",
+          "source_world": [
+            0.09176759252248422,
+            -0.9853545933488408,
+            -0.1437185942352897
+          ],
+          "target_actual_world": [
+            0.13406676767963144,
+            -0.9891854712006943,
+            -0.05948281574871896
+          ],
+          "neutral_source_world": [
+            2.364143414047117e-08,
+            -0.9966069239296662,
+            -0.08230819628353032
+          ],
+          "neutral_target_world": [
+            0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.407146405045902,
+          "neutral_world_angle_deg": 4.981588406295889,
+          "neutral_gauge_direction_error_deg": 0.863624401450621,
+          "source_excursion_from_declared_neutral_deg": 6.362619876405817,
+          "target_excursion_from_declared_neutral_deg": 7.009137827260291,
+          "source_neutral_gauge_direction": [
+            0.9938404306907842,
+            -0.06212818665491637,
+            -0.09176756914797699
+          ],
+          "target_neutral_gauge_direction": [
+            0.9925267026652254,
+            -0.05948281574871896,
+            -0.1065482948108471
+          ]
+        },
+        "foot.R": {
+          "source_joint": "LeftFoot",
+          "source_world": [
+            0.2948017918050386,
+            -0.3456884955937481,
+            0.8908374529411467
+          ],
+          "target_actual_world": [
+            0.30001844824496315,
+            -0.3772872302589761,
+            0.876152541853412
+          ],
+          "neutral_source_world": [
+            0.0,
+            -0.3571595072812372,
+            0.9340434071062349
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 2.0187869984316826,
+          "neutral_world_angle_deg": 2.5028390373462215,
+          "neutral_gauge_direction_error_deg": 0.5041751891031468,
+          "source_excursion_from_declared_neutral_deg": 17.147914941002227,
+          "target_excursion_from_declared_neutral_deg": 17.459188071920487,
+          "source_neutral_gauge_direction": [
+            0.955546782482044,
+            -0.00471699446168089,
+            -0.2948017918050386
+          ],
+          "target_neutral_gauge_direction": [
+            0.9539309022826006,
+            0.002182746661390289,
+            -0.30001844824496315
+          ]
+        }
+      },
+      "elbow_and_reach": {
+        "Left": {
+          "source_elbow_deflection_deg": 37.64059669107007,
+          "target_elbow_deflection_deg": 40.56168766591623,
+          "source_neutral_elbow_deflection_deg": 0.010676498519172654,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            0.08308975487566117,
+            -0.5075063359085742,
+            0.12187875198111225
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.29263782501220703,
+            -0.366227388381958,
+            0.11967204511165619
+          ]
+        },
+        "Right": {
+          "source_elbow_deflection_deg": 40.99184456400853,
+          "target_elbow_deflection_deg": 43.95787047112547,
+          "source_neutral_elbow_deflection_deg": 0.010695151498789045,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            -0.28762374357528353,
+            0.08771402335706657,
+            0.42835729051616345
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.22546078264713287,
+            -0.16784894466400146,
+            0.38705988228321075
+          ]
+        }
+      }
+    },
+    {
+      "key_index": 30,
+      "time_seconds": 1.0,
+      "directions": {
+        "root": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.019822799463288358,
+            0.9988499304767872,
+            -0.043656305477625536
+          ],
+          "target_actual_world": [
+            -0.017082553548730024,
+            0.9993116967848157,
+            -0.032928999883193914
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349202735578485,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 2.12594702511,
+          "target_excursion_from_declared_neutral_deg": 2.1259470474299698,
+          "source_neutral_gauge_direction": [
+            0.9993116967992667,
+            -0.03292899889806368,
+            -0.017082554602331632
+          ],
+          "target_neutral_gauge_direction": [
+            0.9993116967848157,
+            -0.032928999883193914,
+            -0.017082553548730024
+          ]
+        },
+        "pelvis": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.019822799463288358,
+            0.9988499304767872,
+            -0.043656305477625536
+          ],
+          "target_actual_world": [
+            -0.017082553548730024,
+            0.9993116967848157,
+            -0.032928999883193914
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349202735578485,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 2.12594702511,
+          "target_excursion_from_declared_neutral_deg": 2.1259470474299698,
+          "source_neutral_gauge_direction": [
+            0.9993116967992667,
+            -0.03292899889806368,
+            -0.017082554602331632
+          ],
+          "target_neutral_gauge_direction": [
+            0.9993116967848157,
+            -0.032928999883193914,
+            -0.017082553548730024
+          ]
+        },
+        "spine": {
+          "source_joint": "Spine1",
+          "source_world": [
+            -0.030567299826816396,
+            0.9965602859907492,
+            -0.07702750526489625
+          ],
+          "target_actual_world": [
+            -0.031398904801493197,
+            0.9968783051625002,
+            -0.07244137956726034
+          ],
+          "neutral_source_world": [
+            -2.618450201031264e-08,
+            0.9999912397905577,
+            -0.004185730777632007
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.2676718251454709,
+          "neutral_world_angle_deg": 0.2398254080471018,
+          "neutral_gauge_direction_error_deg": 0.05323029737874639,
+          "source_excursion_from_declared_neutral_deg": 4.531554257672338,
+          "target_excursion_from_declared_neutral_deg": 4.528411618051083,
+          "source_neutral_gauge_direction": [
+            0.9968739731138231,
+            -0.07285549742362986,
+            -0.030567273732152983
+          ],
+          "target_neutral_gauge_direction": [
+            0.9968783051625002,
+            -0.07244137956726034,
+            -0.031398904801493197
+          ]
+        },
+        "chest": {
+          "source_joint": "Chest",
+          "source_world": [
+            0.0725538440037853,
+            0.9973601520211138,
+            0.002943956639490677
+          ],
+          "target_actual_world": [
+            0.08091856084182067,
+            0.9964511155555993,
+            0.02318104439602057
+          ],
+          "neutral_source_world": [
+            -0.006903195869759058,
+            0.9997551034235809,
+            -0.02102567633368175
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 1.2557501551631975,
+          "neutral_world_angle_deg": 1.2680542987805223,
+          "neutral_gauge_direction_error_deg": 0.09451348926808488,
+          "source_excursion_from_declared_neutral_deg": 4.758539249377912,
+          "target_excursion_from_declared_neutral_deg": 4.828498285523427,
+          "source_neutral_gauge_direction": [
+            0.9965531498587226,
+            0.023902444586959382,
+            0.07943860931200714
+          ],
+          "target_neutral_gauge_direction": [
+            0.9964511155555993,
+            0.02318104439602057,
+            0.08091856084182067
+          ]
+        },
+        "neck": {
+          "source_joint": "Neck1",
+          "source_world": [
+            0.2445062864338424,
+            0.8786055639598942,
+            0.41020597127912223
+          ],
+          "target_actual_world": [
+            0.1906142877591187,
+            0.9711931422825112,
+            0.14300375409584803
+          ],
+          "neutral_source_world": [
+            -3.54344217081028e-07,
+            0.958175636506548,
+            0.2861807988058353
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 16.55169668912351,
+          "neutral_world_angle_deg": 16.629443534253504,
+          "neutral_gauge_direction_error_deg": 3.1641105133934397,
+          "source_excursion_from_declared_neutral_deg": 16.412687160990295,
+          "target_excursion_from_declared_neutral_deg": 13.785854137826842,
+          "source_neutral_gauge_direction": [
+            0.9592514313816602,
+            0.14160935137672043,
+            0.24450661135212756
+          ],
+          "target_neutral_gauge_direction": [
+            0.9711931422825112,
+            0.14300375409584803,
+            0.1906142877591187
+          ]
+        },
+        "head": {
+          "source_joint": "Head",
+          "source_world": [
+            0.24949126047989442,
+            0.897899570587062,
+            0.36267130033092404
+          ],
+          "target_actual_world": [
+            0.2588741594395031,
+            0.9626554755116271,
+            -0.07923764914467034
+          ],
+          "neutral_source_world": [
+            -7.147061791222387e-07,
+            0.9527639945620581,
+            0.30371165711187237
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 25.813321092368913,
+          "neutral_world_angle_deg": 17.68067089786443,
+          "neutral_gauge_direction_error_deg": 8.739978065073304,
+          "source_excursion_from_declared_neutral_deg": 15.064532437355675,
+          "target_excursion_from_declared_neutral_deg": 15.707678017969421,
+          "source_neutral_gauge_direction": [
+            0.9656337048855629,
+            0.07283764715409091,
+            0.24949193403001607
+          ],
+          "target_neutral_gauge_direction": [
+            0.9626554755116271,
+            -0.07923764914467034,
+            0.2588741594395031
+          ]
+        },
+        "upper_arm.L": {
+          "source_joint": "RightArm",
+          "source_world": [
+            -0.6092788433759023,
+            0.3957012549962104,
+            0.6871679618615427
+          ],
+          "target_actual_world": [
+            -0.6863493320145961,
+            -0.26241886650285623,
+            0.6782779171891663
+          ],
+          "neutral_source_world": [
+            -0.9999999959161152,
+            6.52922839150174e-08,
+            -9.037568910828662e-05
+          ],
+          "neutral_target_world": [
+            -0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 38.700082570592045,
+          "neutral_world_angle_deg": 45.725228268171065,
+          "neutral_gauge_direction_error_deg": 6.032091296136991,
+          "source_excursion_from_declared_neutral_deg": 52.467108614970876,
+          "target_excursion_from_declared_neutral_deg": 48.16155663841248,
+          "source_neutral_gauge_direction": [
+            0.60921676344583,
+            0.6872230230528936,
+            0.3957012152150022
+          ],
+          "target_neutral_gauge_direction": [
+            0.6670325071667861,
+            0.6782779171891663,
+            0.3082315711219694
+          ],
+          "actual_child_segment_world": [
+            -0.6863494701872602,
+            -0.26241877016850707,
+            0.6782778146430234
+          ],
+          "marker_vs_actual_child_angle_deg": 1.1262047877356564e-05,
+          "source_body_relative": [
+            -0.7702401543858031,
+            0.35833717707125134,
+            0.5275647563099161
+          ],
+          "target_actual_body_relative": [
+            -0.7942410389334748,
+            -0.301302694212175,
+            0.5276342090258737
+          ],
+          "body_relative_world_angle_deg": 38.54218603288883,
+          "existing_policy_prediction": [
+            -0.7942409188361222,
+            -0.3013027374042386,
+            0.5276343651422495
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.1486349657968266e-05
+        },
+        "forearm.L": {
+          "source_joint": "RightForeArm",
+          "source_world": [
+            0.6125707681499174,
+            0.3984005181437491,
+            0.682666888863824
+          ],
+          "target_actual_world": [
+            0.23263704791740183,
+            0.594149056981683,
+            0.7699785075078741
+          ],
+          "neutral_source_world": [
+            -0.9999999953641271,
+            -4.3034214241588306e-09,
+            9.628990481719231e-05
+          ],
+          "neutral_target_world": [
+            -0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 25.196268600533433,
+          "neutral_world_angle_deg": 53.65319562419398,
+          "neutral_gauge_direction_error_deg": 14.978125584109717,
+          "source_excursion_from_declared_neutral_deg": 127.77085440398602,
+          "target_excursion_from_declared_neutral_deg": 125.67416237088918,
+          "source_neutral_gauge_direction": [
+            -0.612505033094852,
+            0.6827258700801911,
+            0.3984005155075989
+          ],
+          "target_neutral_gauge_direction": [
+            -0.5831749415887136,
+            0.7953792964512691,
+            0.1651628356492004
+          ],
+          "actual_child_segment_world": [
+            0.2326368672697229,
+            0.5941492614112105,
+            0.7699784043409544
+          ],
+          "marker_vs_actual_child_angle_deg": 1.668685248064749e-05
+        },
+        "hand.L": {
+          "source_joint": "RightHand",
+          "source_world": [
+            0.6670948929764885,
+            0.7377650147646511,
+            0.1033788506126938
+          ],
+          "target_actual_world": [
+            0.03291459884492832,
+            0.9221289154301834,
+            0.38548008056244776
+          ],
+          "neutral_source_world": [
+            -0.9998684414414755,
+            -0.01613503220129626,
+            -0.0016614888678910314
+          ],
+          "neutral_target_world": [
+            -0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 42.087498833311415,
+          "neutral_world_angle_deg": 62.55253525330448,
+          "neutral_gauge_direction_error_deg": 28.55140825310317,
+          "source_excursion_from_declared_neutral_deg": 132.77200787748592,
+          "target_excursion_from_declared_neutral_deg": 145.0179277986172,
+          "source_neutral_gauge_direction": [
+            -0.6790827560136553,
+            0.10225070330714484,
+            0.7269053612115493
+          ],
+          "target_neutral_gauge_direction": [
+            -0.819331475744634,
+            0.42666859684500713,
+            0.38294887559625107
+          ]
+        },
+        "upper_arm.R": {
+          "source_joint": "LeftArm",
+          "source_world": [
+            0.28154723392617,
+            -0.9482260912699642,
+            -0.14696405990380143
+          ],
+          "target_actual_world": [
+            -0.4712499556554027,
+            -0.8818188476040171,
+            0.017860551646134006
+          ],
+          "neutral_source_world": [
+            0.9999999959458036,
+            8.708226032190068e-09,
+            -9.004661411880728e-05
+          ],
+          "neutral_target_world": [
+            0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.503984732607904,
+          "neutral_world_angle_deg": 45.725225024485,
+          "neutral_gauge_direction_error_deg": 9.532457752412347,
+          "source_excursion_from_declared_neutral_deg": 73.6466401779745,
+          "target_excursion_from_declared_neutral_deg": 72.39802424766366,
+          "source_neutral_gauge_direction": [
+            0.28156045814334657,
+            -0.14693870693359426,
+            0.9482260937217412
+          ],
+          "target_neutral_gauge_direction": [
+            0.30240275980998393,
+            0.017860551646134006,
+            0.9530128915991645
+          ],
+          "actual_child_segment_world": [
+            -0.4712497811686997,
+            -0.881818939543467,
+            0.01786061619563926
+          ],
+          "marker_vs_actual_child_angle_deg": 1.1891690845819462e-05,
+          "source_body_relative": [
+            0.37867245628094215,
+            -0.9243310566254782,
+            -0.047109113893016814
+          ],
+          "target_actual_body_relative": [
+            -0.3974667452430219,
+            -0.9164082821091567,
+            -0.04707490741003135
+          ],
+          "body_relative_world_angle_deg": 45.67138897940321,
+          "existing_policy_prediction": [
+            -0.39746692002065814,
+            -0.9164082007501475,
+            -0.04707501553020386
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.2634696163675251e-05
+        },
+        "forearm.R": {
+          "source_joint": "LeftForeArm",
+          "source_world": [
+            0.0512988380115398,
+            -0.9063702997267113,
+            0.4193582108317151
+          ],
+          "target_actual_world": [
+            -0.6397379185156248,
+            -0.5318490249495349,
+            0.554862154299178
+          ],
+          "neutral_source_world": [
+            0.9999999953637869,
+            -2.608051950484067e-08,
+            9.629343316678019e-05
+          ],
+          "neutral_target_world": [
+            0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 47.00611127839396,
+          "neutral_world_angle_deg": 53.65319436756713,
+          "neutral_gauge_direction_error_deg": 8.859408374134032,
+          "source_excursion_from_declared_neutral_deg": 87.05718435572531,
+          "target_excursion_from_declared_neutral_deg": 85.86413469166872,
+          "source_neutral_gauge_direction": [
+            0.05133924285416341,
+            0.4193532691439754,
+            0.9063702983888107
+          ],
+          "target_neutral_gauge_direction": [
+            0.07212179601464623,
+            0.552304113300175,
+            0.8305170756651117
+          ],
+          "actual_child_segment_world": [
+            -0.63973762906491,
+            -0.5318493573548229,
+            0.5548621694075652
+          ],
+          "marker_vs_actual_child_angle_deg": 2.5269392327350652e-05
+        },
+        "hand.R": {
+          "source_joint": "LeftHand",
+          "source_world": [
+            0.034092968330628005,
+            -0.9559591258216975,
+            0.2915129830189773
+          ],
+          "target_actual_world": [
+            -0.8034027946920876,
+            -0.46056635931481354,
+            0.3773891600833831
+          ],
+          "neutral_source_world": [
+            0.9998630179094284,
+            -0.0164546704543765,
+            -0.0017858435788294738
+          ],
+          "neutral_target_world": [
+            0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 58.472612549871215,
+          "neutral_world_angle_deg": 62.5346531704899,
+          "neutral_gauge_direction_error_deg": 5.21189107973789,
+          "source_excursion_from_declared_neutral_deg": 87.1743048748408,
+          "target_excursion_from_declared_neutral_deg": 85.91047707156086,
+          "source_neutral_gauge_direction": [
+            0.049297693998932295,
+            0.29160148598279334,
+            0.9552687112739611
+          ],
+          "target_neutral_gauge_direction": [
+            0.07131505172053233,
+            0.3743111119705196,
+            0.9245568424134295
+          ]
+        },
+        "thigh.L": {
+          "source_joint": "RightLeg",
+          "source_world": [
+            -0.11768380960889854,
+            -0.9914798545062953,
+            -0.05584101596597326
+          ],
+          "target_actual_world": [
+            -0.16822230155399817,
+            -0.985256384349781,
+            -0.03116270780712799
+          ],
+          "neutral_source_world": [
+            2.3057578921544995e-08,
+            -0.9998274852777989,
+            -0.018574167089597145
+          ],
+          "neutral_target_world": [
+            -0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.242528255199454,
+          "neutral_world_angle_deg": 3.3530377589315856,
+          "neutral_gauge_direction_error_deg": 0.43913868841287573,
+          "source_excursion_from_declared_neutral_deg": 7.093475112503115,
+          "target_excursion_from_declared_neutral_deg": 6.748890953076312,
+          "source_neutral_gauge_direction": [
+            0.9923460072821282,
+            -0.03741547013545685,
+            0.11768383247396808
+          ],
+          "target_neutral_gauge_direction": [
+            0.993070731883916,
+            -0.03116270780712799,
+            0.11331110765353411
+          ]
+        },
+        "shin.L": {
+          "source_joint": "RightShin",
+          "source_world": [
+            -0.09450076288172334,
+            -0.9841817136719647,
+            -0.14985312905804515
+          ],
+          "target_actual_world": [
+            -0.13353220259429455,
+            -0.9894002224088102,
+            -0.05706444398846985
+          ],
+          "neutral_source_world": [
+            4.732519486618937e-08,
+            -0.9966069460848517,
+            -0.08230792802290274
+          ],
+          "neutral_target_world": [
+            -0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.777801611823466,
+          "neutral_world_angle_deg": 4.981575093701561,
+          "neutral_gauge_direction_error_deg": 0.9233903390654066,
+          "source_excursion_from_declared_neutral_deg": 6.697161589020367,
+          "target_excursion_from_declared_neutral_deg": 6.914680380444727,
+          "source_neutral_gauge_direction": [
+            0.993176428143422,
+            -0.0683387120307849,
+            0.09450080961688954
+          ],
+          "target_neutral_gauge_direction": [
+            0.9927265277650418,
+            -0.05706444398846985,
+            0.1060079728315312
+          ]
+        },
+        "foot.L": {
+          "source_joint": "RightFoot",
+          "source_world": [
+            -0.39114820090392965,
+            -0.34493900956321105,
+            0.8532409768706435
+          ],
+          "target_actual_world": [
+            -0.3941729215275554,
+            -0.3702064726779869,
+            0.8411746997632267
+          ],
+          "neutral_source_world": [
+            -2.4110655024412978e-08,
+            -0.35715943115741156,
+            0.9340434362144586
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.6137090618457701,
+          "neutral_world_angle_deg": 2.502843706908775,
+          "neutral_gauge_direction_error_deg": 0.7240922477961795,
+          "source_excursion_from_declared_neutral_deg": 23.05017003278959,
+          "target_excursion_from_declared_neutral_deg": 23.216562408661677,
+          "source_neutral_gauge_direction": [
+            0.920162363825674,
+            -0.017444952231357294,
+            0.391148178879045
+          ],
+          "target_neutral_gauge_direction": [
+            0.9190214246332622,
+            -0.0052277145561729355,
+            0.3941729215275554
+          ]
+        },
+        "thigh.R": {
+          "source_joint": "LeftLeg",
+          "source_world": [
+            0.12469613763438672,
+            -0.9916237752971134,
+            -0.03366246462405852
+          ],
+          "target_actual_world": [
+            0.1827479751362127,
+            -0.9828844624329395,
+            -0.023266093172812956
+          ],
+          "neutral_source_world": [
+            -2.313250651991188e-08,
+            -0.9998274997935405,
+            -0.018573385706359448
+          ],
+          "neutral_target_world": [
+            0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.416447605495178,
+          "neutral_world_angle_deg": 3.353023565050765,
+          "neutral_gauge_direction_error_deg": 0.4972637730308342,
+          "source_excursion_from_declared_neutral_deg": 7.216784491585354,
+          "target_excursion_from_declared_neutral_deg": 7.472144877845693,
+          "source_neutral_gauge_direction": [
+            0.9920779430458996,
+            -0.015238847041356158,
+            -0.12469616057708777
+          ],
+          "target_neutral_gauge_direction": [
+            0.9915082012876865,
+            -0.023266093172812956,
+            -0.12794598738424884
+          ]
+        },
+        "shin.R": {
+          "source_joint": "LeftShin",
+          "source_world": [
+            0.10130493622216045,
+            -0.9866184432152918,
+            -0.1277550680186817
+          ],
+          "target_actual_world": [
+            0.14851763731688775,
+            -0.9876940341121258,
+            -0.049020469042270295
+          ],
+          "neutral_source_world": [
+            2.364143414047117e-08,
+            -0.9966069239296662,
+            -0.08230819628353032
+          ],
+          "neutral_target_world": [
+            0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.262255040069408,
+          "neutral_world_angle_deg": 4.981588406295889,
+          "neutral_gauge_direction_error_deg": 1.1505623731041743,
+          "source_excursion_from_declared_neutral_deg": 6.390666964991425,
+          "target_excursion_from_declared_neutral_deg": 7.503406640718632,
+          "source_neutral_gauge_direction": [
+            0.9937860633947595,
+            -0.046114800675609566,
+            -0.10130491281767227
+          ],
+          "target_neutral_gauge_direction": [
+            0.9914370989128952,
+            -0.049020469042270295,
+            -0.12103500532514407
+          ]
+        },
+        "foot.R": {
+          "source_joint": "LeftFoot",
+          "source_world": [
+            0.29867251200339767,
+            -0.3520917527183664,
+            0.8870322024826884
+          ],
+          "target_actual_world": [
+            0.30353375304770924,
+            -0.3865767746440696,
+            0.8708763735838518
+          ],
+          "neutral_source_world": [
+            0.0,
+            -0.3571595072812372,
+            0.9340434071062349
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 2.1997701577339432,
+          "neutral_world_angle_deg": 2.5028390373462215,
+          "neutral_gauge_direction_error_deg": 0.35763721921255875,
+          "source_excursion_from_declared_neutral_deg": 17.39249370344344,
+          "target_excursion_from_declared_neutral_deg": 17.67702544280485,
+          "source_neutral_gauge_direction": [
+            0.9542794975385569,
+            -0.012056995941761295,
+            -0.29867251200339767
+          ],
+          "target_neutral_gauge_direction": [
+            0.9527833163465311,
+            -0.008438770791905637,
+            -0.30353375304770924
+          ]
+        }
+      },
+      "elbow_and_reach": {
+        "Left": {
+          "source_elbow_deflection_deg": 35.68302004078144,
+          "target_elbow_deflection_deg": 38.70451780461473,
+          "source_neutral_elbow_deflection_deg": 0.010676498519172654,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            0.0948136240795755,
+            -0.5180854158636696,
+            0.07138438162780691
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.28275299072265625,
+            -0.371951699256897,
+            0.13605868816375732
+          ]
+        },
+        "Right": {
+          "source_elbow_deflection_deg": 75.31362082415374,
+          "target_elbow_deflection_deg": 78.07253504112396,
+          "source_neutral_elbow_deflection_deg": 0.010695151498789045,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            -0.008873640260898569,
+            0.22181172519371284,
+            0.38270121837526533
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.13676413893699646,
+            0.06704878807067871,
+            0.37134754471480846
+          ]
+        }
+      }
+    },
+    {
+      "key_index": 45,
+      "time_seconds": 1.5,
+      "directions": {
+        "root": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.01745165827793103,
+            0.99901446877136,
+            -0.040810915314748425
+          ],
+          "target_actual_world": [
+            -0.014710971019446637,
+            0.9994391707374572,
+            -0.030082076512246647
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349266315880858,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 1.918992405870991,
+          "target_excursion_from_declared_neutral_deg": 1.918992433530958,
+          "source_neutral_gauge_direction": [
+            0.999439170753623,
+            -0.030082076005532338,
+            -0.01471097095733441
+          ],
+          "target_neutral_gauge_direction": [
+            0.9994391707374572,
+            -0.030082076512246647,
+            -0.014710971019446637
+          ]
+        },
+        "pelvis": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.01745165827793103,
+            0.99901446877136,
+            -0.040810915314748425
+          ],
+          "target_actual_world": [
+            -0.014710971019446637,
+            0.9994391707374572,
+            -0.030082076512246647
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349266315880858,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 1.918992405870991,
+          "target_excursion_from_declared_neutral_deg": 1.918992433530958,
+          "source_neutral_gauge_direction": [
+            0.999439170753623,
+            -0.030082076005532338,
+            -0.01471097095733441
+          ],
+          "target_neutral_gauge_direction": [
+            0.9994391707374572,
+            -0.030082076512246647,
+            -0.014710971019446637
+          ]
+        },
+        "spine": {
+          "source_joint": "Spine1",
+          "source_world": [
+            -0.031589659464408844,
+            0.995320393736338,
+            -0.09132035494600181
+          ],
+          "target_actual_world": [
+            -0.0320551221183496,
+            0.9956978372119762,
+            -0.0869384041570278
+          ],
+          "neutral_source_world": [
+            -2.618450201031264e-08,
+            0.9999912397905577,
+            -0.004185730777632007
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.2534044301532938,
+          "neutral_world_angle_deg": 0.2398254080471018,
+          "neutral_gauge_direction_error_deg": 0.029379015222028126,
+          "source_excursion_from_declared_neutral_deg": 5.319058358859476,
+          "target_excursion_from_declared_neutral_deg": 5.316635335873664,
+          "source_neutral_gauge_direction": [
+            0.9956939177687079,
+            -0.08715341175143687,
+            -0.03158963340221167
+          ],
+          "target_neutral_gauge_direction": [
+            0.9956978372119762,
+            -0.0869384041570278,
+            -0.0320551221183496
+          ]
+        },
+        "chest": {
+          "source_joint": "Chest",
+          "source_world": [
+            0.04893164712939286,
+            0.9987617213319671,
+            -0.008984314732381786
+          ],
+          "target_actual_world": [
+            0.05671306732359907,
+            0.9983229635245857,
+            0.011614150603369016
+          ],
+          "neutral_source_world": [
+            -0.006903195869759058,
+            0.9997551034235809,
+            -0.02102567633368175
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 1.2618859075528004,
+          "neutral_world_angle_deg": 1.2680542987805223,
+          "neutral_gauge_direction_error_deg": 0.055675647128082824,
+          "source_excursion_from_declared_neutral_deg": 3.2735896458812475,
+          "target_excursion_from_declared_neutral_deg": 3.318712240636955,
+          "source_neutral_gauge_direction": [
+            0.9983682445550333,
+            0.01200970775310018,
+            0.05582665298749417
+          ],
+          "target_neutral_gauge_direction": [
+            0.9983229635245857,
+            0.011614150603369016,
+            0.05671306732359907
+          ]
+        },
+        "neck": {
+          "source_joint": "Neck1",
+          "source_world": [
+            0.1859979800523379,
+            0.8882322918959499,
+            0.42005731400574176
+          ],
+          "target_actual_world": [
+            0.15264609867379825,
+            0.9771190787214391,
+            0.14811304654970547
+          ],
+          "neutral_source_world": [
+            -3.54344217081028e-07,
+            0.958175636506548,
+            0.2861807988058353
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 16.5610524801956,
+          "neutral_world_angle_deg": 16.629443534253504,
+          "neutral_gauge_direction_error_deg": 1.9399796911321097,
+          "source_excursion_from_declared_neutral_deg": 13.761386848651833,
+          "target_excursion_from_declared_neutral_deg": 12.280214920705511,
+          "source_neutral_gauge_direction": [
+            0.9712948134121598,
+            0.14829367708151317,
+            0.1859983085307002
+          ],
+          "target_neutral_gauge_direction": [
+            0.9771190787214391,
+            0.14811304654970547,
+            0.15264609867379825
+          ]
+        },
+        "head": {
+          "source_joint": "Head",
+          "source_world": [
+            0.19180565122268536,
+            0.9071649395567107,
+            0.3745161740140355
+          ],
+          "target_actual_world": [
+            0.2391252149961879,
+            0.9706497496626969,
+            -0.025655311979607052
+          ],
+          "neutral_source_world": [
+            -7.147061791222387e-07,
+            0.9527639945620581,
+            0.30371165711187237
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 23.537821024940964,
+          "neutral_world_angle_deg": 17.68067089786443,
+          "neutral_gauge_direction_error_deg": 6.718791248341846,
+          "source_excursion_from_declared_neutral_deg": 12.024424317178644,
+          "target_excursion_from_declared_neutral_deg": 13.915907025901848,
+          "source_neutral_gauge_direction": [
+            0.9780588822790166,
+            0.08130900261368125,
+            0.19180633172314515
+          ],
+          "target_neutral_gauge_direction": [
+            0.9706497496626969,
+            -0.025655311979607052,
+            0.2391252149961879
+          ]
+        },
+        "upper_arm.L": {
+          "source_joint": "RightArm",
+          "source_world": [
+            -0.6536525815632053,
+            0.392461991555917,
+            0.6470795065521087
+          ],
+          "target_actual_world": [
+            -0.7204660895225107,
+            -0.2560758325291085,
+            0.6444794658037334
+          ],
+          "neutral_source_world": [
+            -0.9999999959161152,
+            6.52922839150174e-08,
+            -9.037568910828662e-05
+          ],
+          "neutral_target_world": [
+            -0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 38.050859387672574,
+          "neutral_world_angle_deg": 45.725228268171065,
+          "neutral_gauge_direction_error_deg": 3.688818288015042,
+          "source_excursion_from_declared_neutral_deg": 49.186865220564364,
+          "target_excursion_from_declared_neutral_deg": 46.661454248457254,
+          "source_neutral_gauge_direction": [
+            0.6535941242621908,
+            0.647138578214324,
+            0.39246194887744607
+          ],
+          "target_neutral_gauge_direction": [
+            0.6863078070165417,
+            0.6444794658037334,
+            0.3370872471415669
+          ],
+          "actual_child_segment_world": [
+            -0.7204661993688346,
+            -0.2560757114363892,
+            0.6444793911207509
+          ],
+          "marker_vs_actual_child_angle_deg": 1.024528375501914e-05,
+          "source_body_relative": [
+            -0.7552570851000081,
+            0.36056098466271297,
+            0.547341311930037
+          ],
+          "target_actual_body_relative": [
+            -0.7853723020372186,
+            -0.2890210210826528,
+            0.547409532767836
+          ],
+          "body_relative_world_angle_deg": 37.94809710295795,
+          "existing_policy_prediction": [
+            -0.7853722357903463,
+            -0.2890211370649268,
+            0.5474095665764068
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 7.824964720612764e-06
+        },
+        "forearm.L": {
+          "source_joint": "RightForeArm",
+          "source_world": [
+            0.493341216463353,
+            0.3726711420716174,
+            0.7859584365635982
+          ],
+          "target_actual_world": [
+            0.1636986638833996,
+            0.5228082230721399,
+            0.836584908620124
+          ],
+          "neutral_source_world": [
+            -0.9999999953641271,
+            -4.3034214241588306e-09,
+            9.628990481719231e-05
+          ],
+          "neutral_target_world": [
+            -0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 21.07415898462386,
+          "neutral_world_angle_deg": 53.65319562419398,
+          "neutral_gauge_direction_error_deg": 11.90763056924967,
+          "source_excursion_from_declared_neutral_deg": 119.55544270862869,
+          "target_excursion_from_declared_neutral_deg": 118.82368466460912,
+          "source_neutral_gauge_direction": [
+            -0.4932655359169998,
+            0.7860059366989248,
+            0.3726711399485622
+          ],
+          "target_neutral_gauge_direction": [
+            -0.4821158765371184,
+            0.8577634510454346,
+            0.17834277008466706
+          ],
+          "actual_child_segment_world": [
+            0.16369847274307633,
+            0.5228084466158913,
+            0.8365848063219072
+          ],
+          "marker_vs_actual_child_angle_deg": 1.7847749574042878e-05
+        },
+        "hand.L": {
+          "source_joint": "RightHand",
+          "source_world": [
+            0.7303382251773263,
+            0.6279170859854568,
+            0.26893532674672105
+          ],
+          "target_actual_world": [
+            0.148348035730015,
+            0.8756041476678331,
+            0.4596849321893568
+          ],
+          "neutral_source_world": [
+            -0.9998684414414755,
+            -0.01613503220129626,
+            -0.0016614888678910314
+          ],
+          "neutral_target_world": [
+            -0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 38.576475092789664,
+          "neutral_world_angle_deg": 62.55253525330448,
+          "neutral_gauge_direction_error_deg": 25.13038218500964,
+          "source_excursion_from_declared_neutral_deg": 137.80135130185855,
+          "target_excursion_from_declared_neutral_deg": 145.6541218190306,
+          "source_neutral_gauge_direction": [
+            -0.7408204383868784,
+            0.2677048313411415,
+            0.616051297657009
+          ],
+          "target_neutral_gauge_direction": [
+            -0.8256468001412073,
+            0.5012788139118401,
+            0.25889556222485577
+          ]
+        },
+        "upper_arm.R": {
+          "source_joint": "LeftArm",
+          "source_world": [
+            0.32712974048809196,
+            -0.9416729334910534,
+            -0.07898239815647329
+          ],
+          "target_actual_world": [
+            -0.4398578555522456,
+            -0.8977363239069851,
+            0.024383593807163918
+          ],
+          "neutral_source_world": [
+            0.9999999959458036,
+            8.708226032190068e-09,
+            -9.004661411880728e-05
+          ],
+          "neutral_target_world": [
+            0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.608484114188606,
+          "neutral_world_angle_deg": 45.725225024485,
+          "neutral_gauge_direction_error_deg": 5.943774790712796,
+          "source_excursion_from_declared_neutral_deg": 70.9049146499846,
+          "target_excursion_from_declared_neutral_deg": 70.38400756158362,
+          "source_neutral_gauge_direction": [
+            0.327136843059072,
+            -0.07895294091149303,
+            0.9416729363397731
+          ],
+          "target_neutral_gauge_direction": [
+            0.3357145044207138,
+            0.024383593807163918,
+            0.9416481359162785
+          ],
+          "actual_child_segment_world": [
+            -0.4398576460140806,
+            -0.8977364236623482,
+            0.024383700967827257
+          ],
+          "marker_vs_actual_child_angle_deg": 1.463916852406315e-05,
+          "source_body_relative": [
+            0.38749804740396016,
+            -0.9217065718464015,
+            -0.017385588091076834
+          ],
+          "target_actual_body_relative": [
+            -0.3894282812311097,
+            -0.9208933554976525,
+            -0.01735054977970711
+          ],
+          "body_relative_world_angle_deg": 45.71784000034644,
+          "existing_policy_prediction": [
+            -0.3894285107190679,
+            -0.9208932557128922,
+            -0.017350695134168623
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.6533255566816085e-05
+        },
+        "forearm.R": {
+          "source_joint": "LeftForeArm",
+          "source_world": [
+            -0.013430952086883349,
+            -0.87334842305619,
+            0.48691081469947456
+          ],
+          "target_actual_world": [
+            -0.6821339820218943,
+            -0.4820343969101721,
+            0.5498509532286006
+          ],
+          "neutral_source_world": [
+            0.9999999953637869,
+            -2.608051950484067e-08,
+            9.629343316678019e-05
+          ],
+          "neutral_target_world": [
+            0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 45.74331219835099,
+          "neutral_world_angle_deg": 53.65319436756713,
+          "neutral_gauge_direction_error_deg": 4.385109027412175,
+          "source_excursion_from_declared_neutral_deg": 90.76687206935732,
+          "target_excursion_from_declared_neutral_deg": 89.61523931547191,
+          "source_neutral_gauge_direction": [
+            -0.013384042933240565,
+            0.48691210575234634,
+            0.8733484234064759
+          ],
+          "target_neutral_gauge_direction": [
+            0.00671529030507681,
+            0.5500597784523004,
+            0.835098284637877
+          ],
+          "actual_child_segment_world": [
+            -0.6821337502511049,
+            -0.4820345633029879,
+            0.549851094888117
+          ],
+          "marker_vs_actual_child_angle_deg": 1.8251595920314006e-05
+        },
+        "hand.R": {
+          "source_joint": "LeftHand",
+          "source_world": [
+            -0.027815706585962493,
+            -0.9331675536866599,
+            0.35836378613578984
+          ],
+          "target_actual_world": [
+            -0.8390765839248482,
+            -0.4190924931563295,
+            0.3468601569638968
+          ],
+          "neutral_source_world": [
+            0.9998630179094284,
+            -0.0164546704543765,
+            -0.0017858435788294738
+          ],
+          "neutral_target_world": [
+            0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 57.403104038277725,
+          "neutral_world_angle_deg": 62.5346531704899,
+          "neutral_gauge_direction_error_deg": 1.8616599639898193,
+          "source_excursion_from_declared_neutral_deg": 90.75041931801913,
+          "target_excursion_from_declared_neutral_deg": 89.03646088751003,
+          "source_neutral_gauge_direction": [
+            -0.013096913424048564,
+            0.3583409685146939,
+            0.9334989133055881
+          ],
+          "target_neutral_gauge_direction": [
+            0.016816137332334564,
+            0.346452514788823,
+            0.9379167727051909
+          ]
+        },
+        "thigh.L": {
+          "source_joint": "RightLeg",
+          "source_world": [
+            -0.11994785638968687,
+            -0.9910612156757969,
+            -0.05839673390465231
+          ],
+          "target_actual_world": [
+            -0.17246108161906568,
+            -0.9843368950405604,
+            -0.03657939841892663
+          ],
+          "neutral_source_world": [
+            2.3057578921544995e-08,
+            -0.9998274852777989,
+            -0.018574167089597145
+          ],
+          "neutral_target_world": [
+            -0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.281276687191465,
+          "neutral_world_angle_deg": 3.3530377589315856,
+          "neutral_gauge_direction_error_deg": 0.2380607806828155,
+          "source_excursion_from_declared_neutral_deg": 7.26362519193385,
+          "target_excursion_from_declared_neutral_deg": 7.074065509584832,
+          "source_neutral_gauge_direction": [
+            0.9919749109528148,
+            -0.03997852304372336,
+            0.11994787924510193
+          ],
+          "target_neutral_gauge_direction": [
+            0.992387783476848,
+            -0.03657939841892663,
+            0.11759436558448666
+          ]
+        },
+        "shin.L": {
+          "source_joint": "RightShin",
+          "source_world": [
+            -0.09580824373909134,
+            -0.9842951370500733,
+            -0.14826956400828947
+          ],
+          "target_actual_world": [
+            -0.13852122817949966,
+            -0.9886563168524312,
+            -0.058056493964312186
+          ],
+          "neutral_source_world": [
+            4.732519486618937e-08,
+            -0.9966069460848517,
+            -0.08230792802290274
+          ],
+          "neutral_target_world": [
+            -0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.726750010360334,
+          "neutral_world_angle_deg": 4.981575093701561,
+          "neutral_gauge_direction_error_deg": 1.0054529126678333,
+          "source_excursion_from_declared_neutral_deg": 6.705656393384759,
+          "target_excursion_from_declared_neutral_deg": 7.1969189297311225,
+          "source_neutral_gauge_direction": [
+            0.9931591266498817,
+            -0.06675118446449,
+            0.09580829047964362
+          ],
+          "target_neutral_gauge_direction": [
+            0.9921214396521698,
+            -0.058056493964312186,
+            0.11101573082711204
+          ]
+        },
+        "foot.L": {
+          "source_joint": "RightFoot",
+          "source_world": [
+            -0.3928687251293019,
+            -0.34288634397679213,
+            0.8532778679477783
+          ],
+          "target_actual_world": [
+            -0.39624923438358867,
+            -0.368842941368789,
+            0.8407980904193586
+          ],
+          "neutral_source_world": [
+            -2.4110655024412978e-08,
+            -0.35715943115741156,
+            0.9340434362144586
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.6615544634540418,
+          "neutral_world_angle_deg": 2.502843706908775,
+          "neutral_gauge_direction_error_deg": 0.6848910211312714,
+          "source_excursion_from_declared_neutral_deg": 23.15219699519381,
+          "target_excursion_from_declared_neutral_deg": 23.34524912120528,
+          "source_neutral_gauge_direction": [
+            0.9194636928624078,
+            -0.01551449740163287,
+            0.39286870310346494
+          ],
+          "target_neutral_gauge_direction": [
+            0.9181337144212673,
+            -0.004126341409336709,
+            0.39624923438358867
+          ]
+        },
+        "thigh.R": {
+          "source_joint": "LeftLeg",
+          "source_world": [
+            0.11863844571457302,
+            -0.9918766464192544,
+            -0.04588722574446735
+          ],
+          "target_actual_world": [
+            0.17538292810759373,
+            -0.9839829765230584,
+            -0.031911290184331996
+          ],
+          "neutral_source_world": [
+            -2.313250651991188e-08,
+            -0.9998274997935405,
+            -0.018573385706359448
+          ],
+          "neutral_target_world": [
+            0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.3792763896341165,
+          "neutral_world_angle_deg": 3.353023565050765,
+          "neutral_gauge_direction_error_deg": 0.2780826583227669,
+          "source_excursion_from_declared_neutral_deg": 6.994509313316889,
+          "target_excursion_from_declared_neutral_deg": 7.162515840867161,
+          "source_neutral_gauge_direction": [
+            0.9925578258913068,
+            -0.02745680271245915,
+            -0.11863846866312461
+          ],
+          "target_neutral_gauge_direction": [
+            0.9921964847509095,
+            -0.031911290184331996,
+            -0.12053134532854495
+          ]
+        },
+        "shin.R": {
+          "source_joint": "LeftShin",
+          "source_world": [
+            0.09726083077358161,
+            -0.985385153837044,
+            -0.1398443041198959
+          ],
+          "target_actual_world": [
+            0.1414519233496114,
+            -0.9882484716624398,
+            -0.057933683100144136
+          ],
+          "neutral_source_world": [
+            2.364143414047117e-08,
+            -0.9966069239296662,
+            -0.08230819628353032
+          ],
+          "neutral_target_world": [
+            0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.337025126832696,
+          "neutral_world_angle_deg": 4.981588406295889,
+          "neutral_gauge_direction_error_deg": 0.9620793412763728,
+          "source_excursion_from_declared_neutral_deg": 6.510040970336015,
+          "target_excursion_from_declared_neutral_deg": 7.344646759481881,
+          "source_neutral_gauge_direction": [
+            0.993552001783517,
+            -0.05826452691121548,
+            -0.09726080739834943
+          ],
+          "target_neutral_gauge_direction": [
+            0.99179512852871,
+            -0.057933683100144136,
+            -0.11395662064650716
+          ]
+        },
+        "foot.R": {
+          "source_joint": "LeftFoot",
+          "source_world": [
+            0.30201451565894244,
+            -0.35380356005700286,
+            0.8852176417256296
+          ],
+          "target_actual_world": [
+            0.30706274874449163,
+            -0.3866343308847574,
+            0.869612765841655
+          ],
+          "neutral_source_world": [
+            0.0,
+            -0.3571595072812372,
+            0.9340434071062349
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 2.1028468398207556,
+          "neutral_world_angle_deg": 2.5028390373462215,
+          "neutral_gauge_direction_error_deg": 0.4290722745454812,
+          "source_excursion_from_declared_neutral_deg": 17.598988195252055,
+          "target_excursion_from_declared_neutral_deg": 17.890235472626827,
+          "source_neutral_gauge_direction": [
+            0.9531960072922602,
+            -0.014303985926573781,
+            -0.30201451565894244
+          ],
+          "target_neutral_gauge_direction": [
+            0.951646770743873,
+            -0.008994001680870223,
+            -0.30706274874449163
+          ]
+        }
+      },
+      "elbow_and_reach": {
+        "Left": {
+          "source_elbow_deflection_deg": 38.77991946645272,
+          "target_elbow_deflection_deg": 41.73866272512511,
+          "source_neutral_elbow_deflection_deg": 0.010676498519172654,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            0.09037584375509627,
+            -0.5072551425728553,
+            0.10922453060103147
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.28399907797574997,
+            -0.36463069915771484,
+            0.13669705763459206
+          ]
+        },
+        "Right": {
+          "source_elbow_deflection_deg": 70.58773127616247,
+          "target_elbow_deflection_deg": 73.3009937099195,
+          "source_neutral_elbow_deflection_deg": 0.010695151498789045,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            -0.053976454793639134,
+            0.21389955862640853,
+            0.39920787949332565
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.16257858276367188,
+            0.05196845531463623,
+            0.37764042988419533
+          ]
+        }
+      }
+    },
+    {
+      "key_index": 60,
+      "time_seconds": 2.0,
+      "directions": {
+        "root": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.018502309013776738,
+            0.9992814252780876,
+            -0.03308017012278648
+          ],
+          "target_actual_world": [
+            -0.015760885712464215,
+            0.9996259910585492,
+            -0.02234888099596708
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349136358712267,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 1.5670834863675498,
+          "target_excursion_from_declared_neutral_deg": 1.567083578000567,
+          "source_neutral_gauge_direction": [
+            0.9996259911022856,
+            -0.022348879266324145,
+            -0.015760885391126717
+          ],
+          "target_neutral_gauge_direction": [
+            0.9996259910585492,
+            -0.02234888099596708,
+            -0.015760885712464215
+          ]
+        },
+        "pelvis": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.018502309013776738,
+            0.9992814252780876,
+            -0.03308017012278648
+          ],
+          "target_actual_world": [
+            -0.015760885712464215,
+            0.9996259910585492,
+            -0.02234888099596708
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349136358712267,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 1.5670834863675498,
+          "target_excursion_from_declared_neutral_deg": 1.567083578000567,
+          "source_neutral_gauge_direction": [
+            0.9996259911022856,
+            -0.022348879266324145,
+            -0.015760885391126717
+          ],
+          "target_neutral_gauge_direction": [
+            0.9996259910585492,
+            -0.02234888099596708,
+            -0.015760885712464215
+          ]
+        },
+        "spine": {
+          "source_joint": "Spine1",
+          "source_world": [
+            -0.024637623659133308,
+            0.9972339352785999,
+            -0.07012464494874811
+          ],
+          "target_actual_world": [
+            -0.024889604637246952,
+            0.9975198464362864,
+            -0.06583816178121077
+          ],
+          "neutral_source_world": [
+            -2.618450201031264e-08,
+            0.9999912397905577,
+            -0.004185730777632007
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.24656635512120523,
+          "neutral_world_angle_deg": 0.2398254080471018,
+          "neutral_gauge_direction_error_deg": 0.015794246443591706,
+          "source_excursion_from_declared_neutral_deg": 4.037059138031438,
+          "target_excursion_from_declared_neutral_deg": 4.0361445979341495,
+          "source_neutral_gauge_direction": [
+            0.9975187228302204,
+            -0.06594987786407625,
+            -0.024637597546830568
+          ],
+          "target_neutral_gauge_direction": [
+            0.9975198464362864,
+            -0.06583816178121077,
+            -0.024889604637246952
+          ]
+        },
+        "chest": {
+          "source_joint": "Chest",
+          "source_world": [
+            0.0366776860931714,
+            0.9990258636561349,
+            0.024537136934948394
+          ],
+          "target_actual_world": [
+            0.04410349286692374,
+            0.9979992097391576,
+            0.04530407572122289
+          ],
+          "neutral_source_world": [
+            -0.006903195869759058,
+            0.9997551034235809,
+            -0.02102567633368175
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 1.2650334289051695,
+          "neutral_world_angle_deg": 1.2680542987805223,
+          "neutral_gauge_direction_error_deg": 0.032973994118889176,
+          "source_excursion_from_declared_neutral_deg": 3.6133214196071513,
+          "target_excursion_from_declared_neutral_deg": 3.6250236992647027,
+          "source_neutral_gauge_direction": [
+            0.9980121024918712,
+            0.04553108166058628,
+            0.04357480788909529
+          ],
+          "target_neutral_gauge_direction": [
+            0.9979992097391576,
+            0.04530407572122289,
+            0.04410349286692374
+          ]
+        },
+        "neck": {
+          "source_joint": "Neck1",
+          "source_world": [
+            0.10178654195743538,
+            0.8923459289432883,
+            0.4397251902889882
+          ],
+          "target_actual_world": [
+            0.0889225621082276,
+            0.9821973056102392,
+            0.16547274941843068
+          ],
+          "neutral_source_world": [
+            -3.54344217081028e-07,
+            0.958175636506548,
+            0.2861807988058353
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 16.609854570544737,
+          "neutral_world_angle_deg": 16.629443534253504,
+          "neutral_gauge_direction_error_deg": 0.7415475684588734,
+          "source_excursion_from_declared_neutral_deg": 11.226563588132771,
+          "target_excursion_from_declared_neutral_deg": 10.82746809779384,
+          "source_neutral_gauge_direction": [
+            0.9808649985937403,
+            0.1659617041094005,
+            0.10178687195707307
+          ],
+          "target_neutral_gauge_direction": [
+            0.9821973056102392,
+            0.16547274941843068,
+            0.0889225621082276
+          ]
+        },
+        "head": {
+          "source_joint": "Head",
+          "source_world": [
+            0.11060983437449719,
+            0.9110647918524325,
+            0.3971478434871959
+          ],
+          "target_actual_world": [
+            0.13057935686863273,
+            0.9904724104025888,
+            -0.04374283702573392
+          ],
+          "neutral_source_world": [
+            -7.147061791222387e-07,
+            0.9527639945620581,
+            0.30371165711187237
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 25.913409132789234,
+          "neutral_world_angle_deg": 17.68067089786443,
+          "neutral_gauge_direction_error_deg": 8.418931055432267,
+          "source_excursion_from_declared_neutral_deg": 8.641397230967625,
+          "target_excursion_from_declared_neutral_deg": 7.915431044370837,
+          "source_neutral_gauge_direction": [
+            0.9886480810005444,
+            0.10168719332278471,
+            0.1106105178004142
+          ],
+          "target_neutral_gauge_direction": [
+            0.9904724104025888,
+            -0.04374283702573392,
+            0.13057935686863273
+          ]
+        },
+        "upper_arm.L": {
+          "source_joint": "RightArm",
+          "source_world": [
+            -0.9295288392091012,
+            -0.06055785441111266,
+            0.36374288082064693
+          ],
+          "target_actual_world": [
+            -0.6120865424023086,
+            -0.7256486744251266,
+            0.31429932534932886
+          ],
+          "neutral_source_world": [
+            -0.9999999959161152,
+            6.52922839150174e-08,
+            -9.037568910828662e-05
+          ],
+          "neutral_target_world": [
+            -0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 43.34616284023615,
+          "neutral_world_angle_deg": 45.725228268171065,
+          "neutral_gauge_direction_error_deg": 3.040187407465089,
+          "source_excursion_from_declared_neutral_deg": 21.643620101660535,
+          "target_excursion_from_declared_neutral_deg": 18.76209545039574,
+          "source_neutral_gauge_direction": [
+            0.9294959579455395,
+            0.3638268861441959,
+            -0.06055791510217366
+          ],
+          "target_neutral_gauge_direction": [
+            0.9468622507775992,
+            0.31429932534932886,
+            -0.06832138857879955
+          ],
+          "actual_child_segment_world": [
+            -0.6120866542507318,
+            -0.7256486289996592,
+            0.31429921240604525
+          ],
+          "marker_vs_actual_child_angle_deg": 9.35262170110869e-06,
+          "source_body_relative": [
+            -0.9458023027744774,
+            -0.08563036085937938,
+            0.31324981303360483
+          ],
+          "target_actual_body_relative": [
+            -0.5989336645889636,
+            -0.7369528792035779,
+            0.31333515483518903
+          ],
+          "body_relative_world_angle_deg": 43.30352532973422,
+          "existing_policy_prediction": [
+            -0.5989335518404232,
+            -0.736952913669648,
+            0.3133352892886975
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.0173887179578492e-05
+        },
+        "forearm.L": {
+          "source_joint": "RightForeArm",
+          "source_world": [
+            -0.004762213632638903,
+            0.28296627133325847,
+            0.9591180378916194
+          ],
+          "target_actual_world": [
+            -0.16556811515462527,
+            0.15158904465003034,
+            0.974478301855016
+          ],
+          "neutral_source_world": [
+            -0.9999999953641271,
+            -4.3034214241588306e-09,
+            9.628990481719231e-05
+          ],
+          "neutral_target_world": [
+            -0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 11.95163004371948,
+          "neutral_world_angle_deg": 53.65319562419398,
+          "neutral_gauge_direction_error_deg": 3.610288526730103,
+          "source_excursion_from_declared_neutral_deg": 89.72185277707106,
+          "target_excursion_from_declared_neutral_deg": 89.00005116561437,
+          "source_neutral_gauge_direction": [
+            0.004854565777415807,
+            0.95911757489229,
+            0.2829662713537523
+          ],
+          "target_neutral_gauge_direction": [
+            0.017451513564851487,
+            0.9746132213320494,
+            0.2232140530501195
+          ],
+          "actual_child_segment_world": [
+            -0.16556834617780353,
+            0.15158920375430998,
+            0.9744782378529965
+          ],
+          "marker_vs_actual_child_angle_deg": 1.6444841801656834e-05
+        },
+        "hand.L": {
+          "source_joint": "RightHand",
+          "source_world": [
+            -0.3669914946812954,
+            0.6368677271535763,
+            0.6780241448074152
+          ],
+          "target_actual_world": [
+            -0.5773745815450122,
+            0.03151000548523366,
+            0.8158711369695846
+          ],
+          "neutral_source_world": [
+            -0.9998684414414755,
+            -0.01613503220129626,
+            -0.0016614888678910314
+          ],
+          "neutral_target_world": [
+            -0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 38.266408956469625,
+          "neutral_world_angle_deg": 62.55253525330448,
+          "neutral_gauge_direction_error_deg": 10.80351581448238,
+          "source_excursion_from_declared_neutral_deg": 69.17340742208795,
+          "target_excursion_from_declared_neutral_deg": 74.32181407666728,
+          "source_neutral_gauge_direction": [
+            0.3555408029549162,
+            0.6786158085690785,
+            0.6427062484481612
+          ],
+          "target_neutral_gauge_direction": [
+            0.27023390318802704,
+            0.8034497336871745,
+            0.5305112279733318
+          ]
+        },
+        "upper_arm.R": {
+          "source_joint": "LeftArm",
+          "source_world": [
+            0.36221662969753543,
+            -0.9275937982557471,
+            -0.09148146592635589
+          ],
+          "target_actual_world": [
+            -0.41245717693440104,
+            -0.909774604418727,
+            -0.04678938287745404
+          ],
+          "neutral_source_world": [
+            0.9999999959458036,
+            8.708226032190068e-09,
+            -9.004661411880728e-05
+          ],
+          "neutral_target_world": [
+            0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.670571238140674,
+          "neutral_world_angle_deg": 45.725225024485,
+          "neutral_gauge_direction_error_deg": 2.5651596751471506,
+          "source_excursion_from_declared_neutral_deg": 68.76310482703192,
+          "target_excursion_from_declared_neutral_deg": 68.68701738869099,
+          "source_neutral_gauge_direction": [
+            0.3622248577476029,
+            -0.09144884917511766,
+            0.9275938014100114
+          ],
+          "target_neutral_gauge_direction": [
+            0.3634623324210653,
+            -0.04678938287745404,
+            0.9304331714642305
+          ],
+          "actual_child_segment_world": [
+            -0.412457084436437,
+            -0.9097746521055704,
+            -0.0467892710392249
+          ],
+          "marker_vs_actual_child_angle_deg": 8.706816964856289e-06,
+          "source_body_relative": [
+            0.4056640324476591,
+            -0.9136334651716852,
+            -0.02665678331464321
+          ],
+          "target_actual_body_relative": [
+            -0.3709657589720243,
+            -0.9282649268648584,
+            -0.02662012815313431
+          ],
+          "body_relative_world_angle_deg": 45.70794445112584,
+          "existing_policy_prediction": [
+            -0.37096590589473727,
+            -0.9282648645253169,
+            -0.0266202545346961
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.1643920115677384e-05
+        },
+        "forearm.R": {
+          "source_joint": "LeftForeArm",
+          "source_world": [
+            -0.027726859645672824,
+            -0.9071455431485386,
+            0.4199025896561393
+          ],
+          "target_actual_world": [
+            -0.7263753914486917,
+            -0.5289143752896928,
+            0.43889449109059675
+          ],
+          "neutral_source_world": [
+            0.9999999953637869,
+            -2.608051950484067e-08,
+            9.629343316678019e-05
+          ],
+          "neutral_target_world": [
+            0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 46.82449780514863,
+          "neutral_world_angle_deg": 53.65319436756713,
+          "neutral_gauge_direction_error_deg": 2.6413728035096073,
+          "source_excursion_from_declared_neutral_deg": 91.58651671558692,
+          "target_excursion_from_declared_neutral_deg": 89.22620494990737,
+          "source_neutral_gauge_direction": [
+            -0.02768640199634455,
+            0.41990525762160963,
+            0.9071455438716691
+          ],
+          "target_neutral_gauge_direction": [
+            0.013504860820454441,
+            0.4387160757920948,
+            0.89852424762819
+          ],
+          "actual_child_segment_world": [
+            -0.7263752357030494,
+            -0.5289144046679745,
+            0.43889471344738423
+          ],
+          "marker_vs_actual_child_angle_deg": 1.5649929441225564e-05
+        },
+        "hand.R": {
+          "source_joint": "LeftHand",
+          "source_world": [
+            -0.024927215519898644,
+            -0.9522875506852412,
+            0.30418260097567806
+          ],
+          "target_actual_world": [
+            -0.8542521194844584,
+            -0.46260002787258525,
+            0.23718037559754776
+          ],
+          "neutral_source_world": [
+            0.9998630179094284,
+            -0.0164546704543765,
+            -0.0017858435788294738
+          ],
+          "neutral_target_world": [
+            0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 57.72601416312069,
+          "neutral_world_angle_deg": 62.5346531704899,
+          "neutral_gauge_direction_error_deg": 5.099022948195631,
+          "source_excursion_from_declared_neutral_deg": 90.5613612673081,
+          "target_excursion_from_declared_neutral_deg": 87.50909231633877,
+          "source_neutral_gauge_direction": [
+            -0.009797445658217663,
+            0.3041655892987667,
+            0.9525687924476154
+          ],
+          "target_neutral_gauge_direction": [
+            0.04346084699856068,
+            0.23531342349872927,
+            0.9709473453794883
+          ]
+        },
+        "thigh.L": {
+          "source_joint": "RightLeg",
+          "source_world": [
+            -0.12226171337275853,
+            -0.9913024944159592,
+            -0.04869741274292057
+          ],
+          "target_actual_world": [
+            -0.17586540304801576,
+            -0.9840013702637819,
+            -0.02850725047700313
+          ],
+          "neutral_source_world": [
+            2.3057578921544995e-08,
+            -0.9998274852777989,
+            -0.018574167089597145
+          ],
+          "neutral_target_world": [
+            -0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.3089150965974286,
+          "neutral_world_angle_deg": 3.3530377589315856,
+          "neutral_gauge_direction_error_deg": 0.12466075822462988,
+          "source_excursion_from_declared_neutral_deg": 7.235893140922134,
+          "target_excursion_from_declared_neutral_deg": 7.141748192510281,
+          "source_neutral_gauge_direction": [
+            0.9920359912035768,
+            -0.030276393607043563,
+            0.12226173623373786
+          ],
+          "target_neutral_gauge_direction": [
+            0.9922416130661816,
+            -0.02850725047700313,
+            0.12101205712681265
+          ]
+        },
+        "shin.L": {
+          "source_joint": "RightShin",
+          "source_world": [
+            -0.09584844897679133,
+            -0.9857022116060538,
+            -0.1385793089305828
+          ],
+          "target_actual_world": [
+            -0.1412952677995736,
+            -0.9887196536728567,
+            -0.04968997623739467
+          ],
+          "neutral_source_world": [
+            4.732519486618937e-08,
+            -0.9966069460848517,
+            -0.08230792802290274
+          ],
+          "neutral_target_world": [
+            -0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.725031421691349,
+          "neutral_world_angle_deg": 4.981575093701561,
+          "neutral_gauge_direction_error_deg": 1.1127352728813023,
+          "source_excursion_from_declared_neutral_deg": 6.402095291530617,
+          "target_excursion_from_declared_neutral_deg": 7.132448565173777,
+          "source_neutral_gauge_direction": [
+            0.9937638421066689,
+            -0.056977995553594146,
+            0.0958484957841604
+          ],
+          "target_neutral_gauge_direction": [
+            0.9922617789958835,
+            -0.04968997623739467,
+            0.1137869421570484
+          ]
+        },
+        "foot.L": {
+          "source_joint": "RightFoot",
+          "source_world": [
+            -0.4044038598261391,
+            -0.3319306214368627,
+            0.8522203827122764
+          ],
+          "target_actual_world": [
+            -0.4070105793079701,
+            -0.3581277474732531,
+            0.8402897743166486
+          ],
+          "neutral_source_world": [
+            -2.4110655024412978e-08,
+            -0.35715943115741156,
+            0.9340434362144586
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.6561176165974814,
+          "neutral_world_angle_deg": 2.502843706908775,
+          "neutral_gauge_direction_error_deg": 0.6601022772051024,
+          "source_excursion_from_declared_neutral_deg": 23.85625438398668,
+          "target_excursion_from_declared_neutral_deg": 24.01951562123831,
+          "source_neutral_gauge_direction": [
+            0.9145630163671336,
+            -0.005659067393046807,
+            0.4044038378275992
+          ],
+          "target_neutral_gauge_direction": [
+            0.9134068653332316,
+            0.005503334762692047,
+            0.4070105793079701
+          ]
+        },
+        "thigh.R": {
+          "source_joint": "LeftLeg",
+          "source_world": [
+            0.11920602746306676,
+            -0.9919615987469479,
+            -0.04245126179365891
+          ],
+          "target_actual_world": [
+            0.1751343397299629,
+            -0.9841896944483214,
+            -0.026431201052354508
+          ],
+          "neutral_source_world": [
+            -2.313250651991188e-08,
+            -0.9998274997935405,
+            -0.018573385706359448
+          ],
+          "neutral_target_world": [
+            0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.363418633321524,
+          "neutral_world_angle_deg": 3.353023565050765,
+          "neutral_gauge_direction_error_deg": 0.15144083617265486,
+          "source_excursion_from_declared_neutral_deg": 6.98456506191273,
+          "target_excursion_from_declared_neutral_deg": 7.073455212330575,
+          "source_neutral_gauge_direction": [
+            0.9925789460678452,
+            -0.024019853614036614,
+            -0.11920605041358386
+          ],
+          "target_neutral_gauge_direction": [
+            0.9923890952013964,
+            -0.026431201052354508,
+            -0.12027167304184226
+          ]
+        },
+        "shin.R": {
+          "source_joint": "LeftShin",
+          "source_world": [
+            0.09754156639135673,
+            -0.9859899415172106,
+            -0.13531251994109017
+          ],
+          "target_actual_world": [
+            0.14190732629265004,
+            -0.9885577456065876,
+            -0.05114581454716029
+          ],
+          "neutral_source_world": [
+            2.364143414047117e-08,
+            -0.9966069239296662,
+            -0.08230819628353032
+          ],
+          "neutral_target_world": [
+            0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.455387355885575,
+          "neutral_world_angle_deg": 4.981588406295889,
+          "neutral_gauge_direction_error_deg": 0.9817689310724242,
+          "source_excursion_from_declared_neutral_deg": 6.3928949477285135,
+          "target_excursion_from_declared_neutral_deg": 7.198981809211165,
+          "source_neutral_gauge_direction": [
+            0.9937817343980117,
+            -0.05369834043722563,
+            -0.09754154300177782
+          ],
+          "target_neutral_gauge_direction": [
+            0.9921169284273531,
+            -0.05114581454716029,
+            -0.11440326036517343
+          ]
+        },
+        "foot.R": {
+          "source_joint": "LeftFoot",
+          "source_world": [
+            0.29065778982689655,
+            -0.35511034931308033,
+            0.8884901175723261
+          ],
+          "target_actual_world": [
+            0.2944260514326195,
+            -0.3858491508861934,
+            0.8743190110012478
+          ],
+          "neutral_source_world": [
+            0.0,
+            -0.3571595072812372,
+            0.9340434071062349
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.9514290716518212,
+          "neutral_world_angle_deg": 2.5028390373462215,
+          "neutral_gauge_direction_error_deg": 0.5079507416703126,
+          "source_excursion_from_declared_neutral_deg": 16.918558386480235,
+          "target_excursion_from_declared_neutral_deg": 17.12729696889701,
+          "source_neutral_gauge_direction": [
+            0.9567193739886025,
+            -0.014355787954694332,
+            -0.29065778982689655
+          ],
+          "target_neutral_gauge_direction": [
+            0.9556528190568342,
+            -0.006402317277522496,
+            -0.2944260514326195
+          ]
+        }
+      },
+      "elbow_and_reach": {
+        "Left": {
+          "source_elbow_deflection_deg": 37.5326653259831,
+          "target_elbow_deflection_deg": 40.51322785453124,
+          "source_neutral_elbow_deflection_deg": 0.010676498519172654,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            0.09658624235901925,
+            -0.5123658819520142,
+            0.08747718904808476
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.2867959514260292,
+            -0.37906718254089355,
+            0.09060618095099926
+          ]
+        },
+        "Right": {
+          "source_elbow_deflection_deg": 70.35671641842323,
+          "target_elbow_deflection_deg": 72.68531934264989,
+          "source_neutral_elbow_deflection_deg": 0.010695151498789045,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            -0.268407511750999,
+            0.059376700320730835,
+            0.36477092310892373
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.21008451282978058,
+            -0.16688668727874756,
+            0.3179845903068781
+          ]
+        }
+      }
+    },
+    {
+      "key_index": 75,
+      "time_seconds": 2.5,
+      "directions": {
+        "root": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.009702762211931466,
+            0.9999523748521583,
+            0.001050920067083685
+          ],
+          "target_actual_world": [
+            -0.006959531509608487,
+            0.9999063091672362,
+            0.011787188329797952
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349141511842302,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 0.7843132620971769,
+          "target_excursion_from_declared_neutral_deg": 0.7843132838157372,
+          "source_neutral_gauge_direction": [
+            0.9999063091724248,
+            0.011787188150160766,
+            -0.006959531068375409
+          ],
+          "target_neutral_gauge_direction": [
+            0.9999063091672362,
+            0.011787188329797952,
+            -0.006959531509608487
+          ]
+        },
+        "pelvis": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.009702762211931466,
+            0.9999523748521583,
+            0.001050920067083685
+          ],
+          "target_actual_world": [
+            -0.006959531509608487,
+            0.9999063091672362,
+            0.011787188329797952
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349141511842302,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 0.7843132620971769,
+          "target_excursion_from_declared_neutral_deg": 0.7843132838157372,
+          "source_neutral_gauge_direction": [
+            0.9999063091724248,
+            0.011787188150160766,
+            -0.006959531068375409
+          ],
+          "target_neutral_gauge_direction": [
+            0.9999063091672362,
+            0.011787188329797952,
+            -0.006959531509608487
+          ]
+        },
+        "spine": {
+          "source_joint": "Spine1",
+          "source_world": [
+            -0.018345565669556134,
+            0.9988196200200803,
+            -0.0449756254342999
+          ],
+          "target_actual_world": [
+            -0.01852166708512192,
+            0.9989990297100273,
+            -0.040717152243397524
+          ],
+          "neutral_source_world": [
+            -2.618450201031264e-08,
+            0.9999912397905577,
+            -0.004185730777632007
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.24441751682419563,
+          "neutral_world_angle_deg": 0.2398254080471018,
+          "neutral_gauge_direction_error_deg": 0.011020250826963464,
+          "source_excursion_from_declared_neutral_deg": 2.5636778845540915,
+          "target_excursion_from_declared_neutral_deg": 2.5638018516004717,
+          "source_neutral_gauge_direction": [
+            0.998999126491007,
+            -0.040794441411569834,
+            -0.01834553951573267
+          ],
+          "target_neutral_gauge_direction": [
+            0.9989990297100273,
+            -0.040717152243397524,
+            -0.01852166708512192
+          ]
+        },
+        "chest": {
+          "source_joint": "Chest",
+          "source_world": [
+            -0.003490854581984549,
+            0.9981598094342293,
+            0.06053766401596666
+          ],
+          "target_actual_world": [
+            0.0037123810000792975,
+            0.996676384504574,
+            0.08137814693270497
+          ],
+          "neutral_source_world": [
+            -0.006903195869759058,
+            0.9997551034235809,
+            -0.02102567633368175
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 1.2662662313680302,
+          "neutral_world_angle_deg": 1.2680542987805223,
+          "neutral_gauge_direction_error_deg": 0.019398122976544266,
+          "source_excursion_from_declared_neutral_deg": 4.679516694555594,
+          "target_excursion_from_declared_neutral_deg": 4.672651344161959,
+          "source_neutral_gauge_direction": [
+            0.9966666162375152,
+            0.08151127290692957,
+            0.003401244882884729
+          ],
+          "target_neutral_gauge_direction": [
+            0.996676384504574,
+            0.08137814693270497,
+            0.0037123810000792975
+          ]
+        },
+        "neck": {
+          "source_joint": "Neck1",
+          "source_world": [
+            -0.004256533777803741,
+            0.9424509541639858,
+            0.334317335649217
+          ],
+          "target_actual_world": [
+            -0.0061129225802102165,
+            0.9987027263977651,
+            0.05055191849177414
+          ],
+          "neutral_source_world": [
+            -3.54344217081028e-07,
+            0.958175636506548,
+            0.2861807988058353
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 16.63362668097518,
+          "neutral_world_angle_deg": 16.629443534253504,
+          "neutral_gauge_direction_error_deg": 0.10646250318632346,
+          "source_excursion_from_declared_neutral_deg": 2.911991606748107,
+          "target_excursion_from_declared_neutral_deg": 2.9187734137958317,
+          "source_neutral_gauge_direction": [
+            0.9987087465612903,
+            0.05062335853244963,
+            -0.004256185248752234
+          ],
+          "target_neutral_gauge_direction": [
+            0.9987027263977651,
+            0.05055191849177414,
+            -0.0061129225802102165
+          ]
+        },
+        "head": {
+          "source_joint": "Head",
+          "source_world": [
+            0.007140999076216656,
+            0.9560960748580567,
+            0.2929663833500542
+          ],
+          "target_actual_world": [
+            -0.03219799794910641,
+            0.9902498425926717,
+            -0.1355305802144241
+          ],
+          "neutral_source_world": [
+            -7.147061791222387e-07,
+            0.9527639945620581,
+            0.30371165711187237
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 24.927998808660195,
+          "neutral_world_angle_deg": 17.68067089786443,
+          "neutral_gauge_direction_error_deg": 7.494821830659741,
+          "source_excursion_from_declared_neutral_deg": 0.7634979635538042,
+          "target_excursion_from_declared_neutral_deg": 8.007499978878721,
+          "source_neutral_gauge_direction": [
+            0.9999112161284675,
+            -0.011249699953233381,
+            0.00714171628191977
+          ],
+          "target_neutral_gauge_direction": [
+            0.9902498425926717,
+            -0.1355305802144241,
+            -0.03219799794910641
+          ]
+        },
+        "upper_arm.L": {
+          "source_joint": "RightArm",
+          "source_world": [
+            -0.47277825158117304,
+            -0.8785737603901727,
+            -0.06774121629938991
+          ],
+          "target_actual_world": [
+            0.30072132194593365,
+            -0.9504273715029126,
+            -0.07908538439657985
+          ],
+          "neutral_source_world": [
+            -0.9999999959161152,
+            6.52922839150174e-08,
+            -9.037568910828662e-05
+          ],
+          "neutral_target_world": [
+            -0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.71696120757948,
+          "neutral_world_angle_deg": 45.725228268171065,
+          "neutral_gauge_direction_error_deg": 0.664756162127263,
+          "source_excursion_from_declared_neutral_deg": 61.78481526878882,
+          "target_excursion_from_declared_neutral_deg": 61.92853256733224,
+          "source_neutral_gauge_direction": [
+            0.4727843144454178,
+            -0.06769848836764499,
+            -0.8785737912589427
+          ],
+          "target_neutral_gauge_direction": [
+            0.4705725349072828,
+            -0.07908538439657985,
+            -0.8788099859274355
+          ],
+          "actual_child_segment_world": [
+            0.30072112277295,
+            -0.9504274471646498,
+            -0.07908523246639099
+          ],
+          "marker_vs_actual_child_angle_deg": 1.4983666681503355e-05,
+          "source_body_relative": [
+            -0.46964726579934657,
+            -0.8828539685417276,
+            0.0005621008098971774
+          ],
+          "target_actual_body_relative": [
+            0.30426258353187446,
+            -0.9525880088433202,
+            0.0006047068941460296
+          ],
+          "body_relative_world_angle_deg": 45.725206907991094,
+          "existing_policy_prediction": [
+            0.30426284355184413,
+            -0.9525879258937137,
+            0.0006045454976764863
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.8151476701449225e-05
+        },
+        "forearm.L": {
+          "source_joint": "RightForeArm",
+          "source_world": [
+            -0.030625875984861446,
+            -0.9299188728371283,
+            0.36648730627606296
+          ],
+          "target_actual_world": [
+            0.7088616611821708,
+            -0.6173911854553921,
+            0.34109129192642706
+          ],
+          "neutral_source_world": [
+            -0.9999999953641271,
+            -4.3034214241588306e-09,
+            9.628990481719231e-05
+          ],
+          "neutral_target_world": [
+            -0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 47.35765264163887,
+          "neutral_world_angle_deg": 53.65319562419398,
+          "neutral_gauge_direction_error_deg": 3.851137023263663,
+          "source_excursion_from_declared_neutral_deg": 88.24296905570345,
+          "target_excursion_from_declared_neutral_deg": 84.78408201319792,
+          "source_neutral_gauge_direction": [
+            0.030661168872554607,
+            0.36648435561400555,
+            -0.9299188727053322
+          ],
+          "target_neutral_gauge_direction": [
+            0.09090925457483925,
+            0.3375453919618948,
+            -0.9369090755233069
+          ],
+          "actual_child_segment_world": [
+            0.7088615426090321,
+            -0.6173911966866942,
+            0.34109151801784093
+          ],
+          "marker_vs_actual_child_angle_deg": 1.463916852406315e-05
+        },
+        "hand.L": {
+          "source_joint": "RightHand",
+          "source_world": [
+            -0.06472131093646129,
+            -0.9771605492843853,
+            0.2024065533348769
+          ],
+          "target_actual_world": [
+            0.8171706443445376,
+            -0.5713980689108691,
+            0.07573892570180185
+          ],
+          "neutral_source_world": [
+            -0.9998684414414755,
+            -0.01613503220129626,
+            -0.0016614888678910314
+          ],
+          "neutral_target_world": [
+            -0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 58.61478553108167,
+          "neutral_world_angle_deg": 62.55253525330448,
+          "neutral_gauge_direction_error_deg": 8.672473315596063,
+          "source_excursion_from_declared_neutral_deg": 85.40321359887167,
+          "target_excursion_from_declared_neutral_deg": 81.4192256558901,
+          "source_neutral_gauge_direction": [
+            0.08014301698747449,
+            0.2025399896260377,
+            -0.9759890621469229
+          ],
+          "target_neutral_gauge_direction": [
+            0.14920355684291123,
+            0.06841838855410999,
+            -0.9864366288480386
+          ]
+        },
+        "upper_arm.R": {
+          "source_joint": "LeftArm",
+          "source_world": [
+            0.3605275865705139,
+            -0.9320217163932589,
+            -0.03681547898648733
+          ],
+          "target_actual_world": [
+            -0.41561824768197564,
+            -0.9090675116333097,
+            -0.029287053224697372
+          ],
+          "neutral_source_world": [
+            0.9999999959458036,
+            8.708226032190068e-09,
+            -9.004661411880728e-05
+          ],
+          "neutral_target_world": [
+            0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.69265435030859,
+          "neutral_world_angle_deg": 45.725225024485,
+          "neutral_gauge_direction_error_deg": 0.42979559104813414,
+          "source_excursion_from_declared_neutral_deg": 68.86719650107578,
+          "target_excursion_from_declared_neutral_deg": 68.8537791598319,
+          "source_neutral_gauge_direction": [
+            0.3605308921018384,
+            -0.03678301454949389,
+            0.9320217195328147
+          ],
+          "target_neutral_gauge_direction": [
+            0.3607493099687852,
+            -0.029287053224697372,
+            0.9322028769910867
+          ],
+          "actual_child_segment_world": [
+            -0.4156180483872591,
+            -0.9090676075586799,
+            -0.029286903938518044
+          ],
+          "marker_vs_actual_child_angle_deg": 1.5248884911748957e-05,
+          "source_body_relative": [
+            0.3635499393938802,
+            -0.930630479467259,
+            0.041932711017124646
+          ],
+          "target_actual_body_relative": [
+            -0.4125397042520477,
+            -0.9099724613676091,
+            0.041965604585284436
+          ],
+          "body_relative_world_angle_deg": 45.68288387476077,
+          "existing_policy_prediction": [
+            -0.41253993596103017,
+            -0.9099723635755261,
+            0.041965447287496974
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.7011319387290267e-05
+        },
+        "forearm.R": {
+          "source_joint": "LeftForeArm",
+          "source_world": [
+            -0.10994270598402668,
+            -0.9051907837863117,
+            0.4105389705609356
+          ],
+          "target_actual_world": [
+            -0.7749871386220429,
+            -0.4901810441192278,
+            0.39889532330750876
+          ],
+          "neutral_source_world": [
+            0.9999999953637869,
+            -2.608051950484067e-08,
+            9.629343316678019e-05
+          ],
+          "neutral_target_world": [
+            0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 46.15787636893811,
+          "neutral_world_angle_deg": 53.65319436756713,
+          "neutral_gauge_direction_error_deg": 3.619220477023959,
+          "source_excursion_from_declared_neutral_deg": 96.30973260377647,
+          "target_excursion_from_declared_neutral_deg": 92.7600637151933,
+          "source_neutral_gauge_direction": [
+            -0.10990314965953892,
+            0.4105495554159272,
+            0.9051907866536743
+          ],
+          "target_neutral_gauge_direction": [
+            -0.0481535704703419,
+            0.40129356979530134,
+            0.9146828436632565
+          ],
+          "actual_child_segment_world": [
+            -0.774986937265027,
+            -0.49018120486345873,
+            0.3988955169805509
+          ],
+          "marker_vs_actual_child_angle_deg": 1.846994795519993e-05
+        },
+        "hand.R": {
+          "source_joint": "LeftHand",
+          "source_world": [
+            -0.0989379854071351,
+            -0.9489594943323135,
+            0.29947813469456724
+          ],
+          "target_actual_world": [
+            -0.8844706146974359,
+            -0.4285345202195299,
+            0.1845803259206059
+          ],
+          "neutral_source_world": [
+            0.9998630179094284,
+            -0.0164546704543765,
+            -0.0017858435788294738
+          ],
+          "neutral_target_world": [
+            0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 56.67088847670995,
+          "neutral_world_angle_deg": 62.5346531704899,
+          "neutral_gauge_direction_error_deg": 8.239613969710813,
+          "source_excursion_from_declared_neutral_deg": 94.80957883415182,
+          "target_excursion_from_declared_neutral_deg": 90.17639610208938,
+          "source_neutral_gauge_direction": [
+            -0.08384443802511123,
+            0.29932887895909116,
+            0.9504590114430748
+          ],
+          "target_neutral_gauge_direction": [
+            -0.0030786879056586176,
+            0.18496104360676632,
+            0.9827410310090221
+          ]
+        },
+        "thigh.L": {
+          "source_joint": "RightLeg",
+          "source_world": [
+            -0.11264890273136832,
+            -0.9925969227516004,
+            -0.04540455547048366
+          ],
+          "target_actual_world": [
+            -0.16675976008353105,
+            -0.9856686877780544,
+            -0.02546409925309183
+          ],
+          "neutral_source_world": [
+            2.3057578921544995e-08,
+            -0.9998274852777989,
+            -0.018574167089597145
+          ],
+          "neutral_target_world": [
+            -0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.328365033840722,
+          "neutral_world_angle_deg": 3.3530377589315856,
+          "neutral_gauge_direction_error_deg": 0.09806446545459725,
+          "source_excursion_from_declared_neutral_deg": 6.651509559652982,
+          "target_excursion_from_declared_neutral_deg": 6.585773740676475,
+          "source_neutral_gauge_direction": [
+            0.9932690343717409,
+            -0.026960061468654914,
+            0.11264892562219918
+          ],
+          "target_neutral_gauge_direction": [
+            0.9934012733064721,
+            -0.02546409925309183,
+            0.1118279475010972
+          ]
+        },
+        "shin.L": {
+          "source_joint": "RightShin",
+          "source_world": [
+            -0.0866970108828218,
+            -0.9864644039563049,
+            -0.13918192422551157
+          ],
+          "target_actual_world": [
+            -0.13149338952690412,
+            -0.9900152961922366,
+            -0.05078584267415439
+          ],
+          "neutral_source_world": [
+            4.732519486618937e-08,
+            -0.9966069460848517,
+            -0.08230792802290274
+          ],
+          "neutral_target_world": [
+            -0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.6839203245363,
+          "neutral_world_angle_deg": 4.981575093701561,
+          "neutral_gauge_direction_error_deg": 1.0637981311753386,
+          "source_excursion_from_declared_neutral_deg": 5.971895425971127,
+          "target_excursion_from_declared_neutral_deg": 6.643729990817077,
+          "source_neutral_gauge_direction": [
+            0.994573048746596,
+            -0.057515831633464666,
+            0.08669705772638459
+          ],
+          "target_neutral_gauge_direction": [
+            0.9932847525291875,
+            -0.05078584267415439,
+            0.10395286709325034
+          ]
+        },
+        "foot.L": {
+          "source_joint": "RightFoot",
+          "source_world": [
+            -0.4020299384725828,
+            -0.32822671731665637,
+            0.8547743273000558
+          ],
+          "target_actual_world": [
+            -0.4029291065869627,
+            -0.3555648574978726,
+            0.8433396511356203
+          ],
+          "neutral_source_world": [
+            -2.4110655024412978e-08,
+            -0.35715943115741156,
+            0.9340434362144586
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.6987001609034669,
+          "neutral_world_angle_deg": 2.502843706908775,
+          "neutral_gauge_direction_error_deg": 0.5960579783590928,
+          "source_excursion_from_declared_neutral_deg": 23.705268798806216,
+          "target_excursion_from_declared_neutral_deg": 23.767805878241365,
+          "source_neutral_gauge_direction": [
+            0.9156256271999331,
+            -0.0012872946869077607,
+            0.4020299164081174
+          ],
+          "target_neutral_gauge_direction": [
+            0.9151862728489316,
+            0.009067582583744405,
+            0.4029291065869627
+          ]
+        },
+        "thigh.R": {
+          "source_joint": "LeftLeg",
+          "source_world": [
+            0.12802319504159274,
+            -0.9907670480757912,
+            -0.04461746270828729
+          ],
+          "target_actual_world": [
+            0.18361513364764948,
+            -0.9826083925591934,
+            -0.027680852006285325
+          ],
+          "neutral_source_world": [
+            -2.313250651991188e-08,
+            -0.9998274997935405,
+            -0.018573385706359448
+          ],
+          "neutral_target_world": [
+            0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.362859547856692,
+          "neutral_world_angle_deg": 3.353023565050765,
+          "neutral_gauge_direction_error_deg": 0.09650106160590528,
+          "source_excursion_from_declared_neutral_deg": 7.508785688138988,
+          "target_excursion_from_declared_neutral_deg": 7.571737713400201,
+          "source_neutral_gauge_direction": [
+            0.9914248349380675,
+            -0.026207867712710105,
+            -0.1280232179644721
+          ],
+          "target_neutral_gauge_direction": [
+            0.9912806577636819,
+            -0.027680852006285325,
+            -0.12882712437917698
+          ]
+        },
+        "shin.R": {
+          "source_joint": "LeftShin",
+          "source_world": [
+            0.10811517702067412,
+            -0.9845500730396005,
+            -0.13773983510773324
+          ],
+          "target_actual_world": [
+            0.1505104776491195,
+            -0.9871825074415568,
+            -0.05307817931348717
+          ],
+          "neutral_source_world": [
+            2.364143414047117e-08,
+            -0.9966069239296662,
+            -0.08230819628353032
+          ],
+          "neutral_target_world": [
+            0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.429089733895198,
+          "neutral_world_angle_deg": 4.981588406295889,
+          "neutral_gauge_direction_error_deg": 0.8787309985148042,
+          "source_excursion_from_declared_neutral_deg": 6.999817561516492,
+          "target_excursion_from_declared_neutral_deg": 7.700895781780253,
+          "source_neutral_gauge_direction": [
+            0.9925465396868307,
+            -0.05623593249549415,
+            -0.10811515366525165
+          ],
+          "target_neutral_gauge_direction": [
+            0.9909811048079503,
+            -0.05307817931348717,
+            -0.12304128085475823
+          ]
+        },
+        "foot.R": {
+          "source_joint": "LeftFoot",
+          "source_world": [
+            0.28057651098806,
+            -0.35136790899833786,
+            0.8932062550205875
+          ],
+          "target_actual_world": [
+            0.28379792825048317,
+            -0.3827808957733628,
+            0.879168653758581
+          ],
+          "neutral_source_world": [
+            0.0,
+            -0.3571595072812372,
+            0.9340434071062349
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.980086418150223,
+          "neutral_world_angle_deg": 2.5028390373462215,
+          "neutral_gauge_direction_error_deg": 0.4714385144036425,
+          "source_excursion_from_declared_neutral_deg": 16.303569861024663,
+          "target_excursion_from_declared_neutral_deg": 16.48729803242134,
+          "source_neutral_gauge_direction": [
+            0.9597878029403151,
+            -0.009175772924928938,
+            -0.28057651098806
+          ],
+          "target_neutral_gauge_direction": [
+            0.958882674996148,
+            -0.001658768508673747,
+            -0.28379792825048317
+          ]
+        }
+      },
+      "elbow_and_reach": {
+        "Left": {
+          "source_elbow_deflection_deg": 37.91661654746606,
+          "target_elbow_deflection_deg": 40.88507563193762,
+          "source_neutral_elbow_deflection_deg": 0.010676498519172654,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            0.0738252770002931,
+            -0.5131088128432822,
+            0.10065083815127926
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.29916203022003174,
+            -0.3697202205657959,
+            0.08604649780318141
+          ]
+        },
+        "Right": {
+          "source_elbow_deflection_deg": 36.22958197722557,
+          "target_elbow_deflection_deg": 39.37775382085777,
+          "source_neutral_elbow_deflection_deg": 0.010695151498789045,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            -0.14417049018924272,
+            -0.5047932261126374,
+            0.07997472369631792
+          ],
+          "target_hand_minus_shoulder_m": [
+            0.25144775211811066,
+            -0.41132283210754395,
+            0.058481866493821144
+          ]
+        }
+      }
+    },
+    {
+      "key_index": 89,
+      "time_seconds": 2.9666666984558105,
+      "directions": {
+        "root": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.0032965974546320777,
+            0.9999173320958873,
+            -0.012428250861059241
+          ],
+          "target_actual_world": [
+            -0.0005534865915968241,
+            0.9999984157808516,
+            -0.0016917707823274873
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349357206858386,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 0.10198711643878348,
+          "target_excursion_from_declared_neutral_deg": 0.10198711735363451,
+          "source_neutral_gauge_direction": [
+            0.99999841578088,
+            -0.0016917707789377897,
+            -0.0005534865506657111
+          ],
+          "target_neutral_gauge_direction": [
+            0.9999984157808516,
+            -0.0016917707823274873,
+            -0.0005534865915968241
+          ]
+        },
+        "pelvis": {
+          "source_joint": "Hips",
+          "source_world": [
+            -0.0032965974546320777,
+            0.9999173320958873,
+            -0.012428250861059241
+          ],
+          "target_actual_world": [
+            -0.0005534865915968241,
+            0.9999984157808516,
+            -0.0016917707823274873
+          ],
+          "neutral_source_world": [
+            -0.0027431671618402004,
+            0.9999385984000478,
+            -0.010736594603034739
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.6349357206858386,
+          "neutral_world_angle_deg": 0.6349356267205577,
+          "neutral_gauge_direction_error_deg": 0.0,
+          "source_excursion_from_declared_neutral_deg": 0.10198711643878348,
+          "target_excursion_from_declared_neutral_deg": 0.10198711735363451,
+          "source_neutral_gauge_direction": [
+            0.99999841578088,
+            -0.0016917707789377897,
+            -0.0005534865506657111
+          ],
+          "target_neutral_gauge_direction": [
+            0.9999984157808516,
+            -0.0016917707823274873,
+            -0.0005534865915968241
+          ]
+        },
+        "spine": {
+          "source_joint": "Spine1",
+          "source_world": [
+            -0.011349895041655003,
+            0.9977892555501545,
+            -0.06548115294656881
+          ],
+          "target_actual_world": [
+            -0.01129199841070758,
+            0.9980537866790541,
+            -0.061328049597990764
+          ],
+          "neutral_source_world": [
+            -2.618450201031264e-08,
+            0.9999912397905577,
+            -0.004185730777632007
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 0.23846074719572244,
+          "neutral_world_angle_deg": 0.2398254080471018,
+          "neutral_gauge_direction_error_deg": 0.0035887198944938776,
+          "source_excursion_from_declared_neutral_deg": 3.5744757252813297,
+          "target_excursion_from_declared_neutral_deg": 3.5752244491703498,
+          "source_neutral_gauge_direction": [
+            0.9980546014817313,
+            -0.06130410212016371,
+            -0.011349868914811356
+          ],
+          "target_neutral_gauge_direction": [
+            0.9980537866790541,
+            -0.061328049597990764,
+            -0.01129199841070758
+          ]
+        },
+        "chest": {
+          "source_joint": "Chest",
+          "source_world": [
+            -0.018058775300049845,
+            0.9986062966402041,
+            0.04959178304113592
+          ],
+          "target_actual_world": [
+            -0.011264930181379758,
+            0.9974403346203358,
+            0.07061076561319284
+          ],
+          "neutral_source_world": [
+            -0.006903195869759058,
+            0.9997551034235809,
+            -0.02102567633368175
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 1.2674331264732142,
+          "neutral_world_angle_deg": 1.2680542987805223,
+          "neutral_gauge_direction_error_deg": 0.0061014722648571815,
+          "source_excursion_from_declared_neutral_deg": 4.09765859207081,
+          "target_excursion_from_declared_neutral_deg": 4.10035924616105,
+          "source_neutral_gauge_direction": [
+            0.9974437038609975,
+            0.0705793140627608,
+            -0.011163245696703968
+          ],
+          "target_neutral_gauge_direction": [
+            0.9974403346203358,
+            0.07061076561319284,
+            -0.011264930181379758
+          ]
+        },
+        "neck": {
+          "source_joint": "Neck1",
+          "source_world": [
+            -0.046961468688464895,
+            0.9304632027489095,
+            0.3633632463374139
+          ],
+          "target_actual_world": [
+            -0.03653378022530298,
+            0.995988763917473,
+            0.08168026109528172
+          ],
+          "neutral_source_world": [
+            -3.54344217081028e-07,
+            0.958175636506548,
+            0.2861807988058353
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 16.639342278704532,
+          "neutral_world_angle_deg": 16.629443534253504,
+          "neutral_gauge_direction_error_deg": 0.5981266896494916,
+          "source_excursion_from_declared_neutral_deg": 5.416530226758709,
+          "target_excursion_from_declared_neutral_deg": 5.1335999284060385,
+          "source_neutral_gauge_direction": [
+            0.9955347722739051,
+            0.08188510225029176,
+            -0.0469611245926169
+          ],
+          "target_neutral_gauge_direction": [
+            0.995988763917473,
+            0.08168026109528172,
+            -0.03653378022530298
+          ]
+        },
+        "head": {
+          "source_joint": "Head",
+          "source_world": [
+            -0.036097377420031114,
+            0.9458192602813037,
+            0.3226808116766839
+          ],
+          "target_actual_world": [
+            -0.05664105354899413,
+            0.9939760109772506,
+            -0.09382686531379288
+          ],
+          "neutral_source_world": [
+            -7.147061791222387e-07,
+            0.9527639945620581,
+            0.30371165711187237
+          ],
+          "neutral_target_world": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "raw_world_angle_deg": 24.23212701255688,
+          "neutral_world_angle_deg": 17.68067089786443,
+          "neutral_gauge_direction_error_deg": 6.64778553497748,
+          "source_excursion_from_declared_neutral_deg": 2.3701839799777105,
+          "target_excursion_from_declared_neutral_deg": 6.292134141644824,
+          "source_neutral_gauge_direction": [
+            0.9991444863908943,
+            0.020182316009483527,
+            -0.03609666792336332
+          ],
+          "target_neutral_gauge_direction": [
+            0.9939760109772506,
+            -0.09382686531379288,
+            -0.05664105354899413
+          ]
+        },
+        "upper_arm.L": {
+          "source_joint": "RightArm",
+          "source_world": [
+            -0.3340751727303044,
+            -0.9323034117763055,
+            -0.13857895711643203
+          ],
+          "target_actual_world": [
+            0.4393427895014747,
+            -0.8919238784606284,
+            -0.107003309971295
+          ],
+          "neutral_source_world": [
+            -0.9999999959161152,
+            6.52922839150174e-08,
+            -9.037568910828662e-05
+          ],
+          "neutral_target_world": [
+            -0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.60519441917802,
+          "neutral_world_angle_deg": 45.725228268171065,
+          "neutral_gauge_direction_error_deg": 1.8335759957665985,
+          "source_excursion_from_declared_neutral_deg": 70.4829329644822,
+          "target_excursion_from_declared_neutral_deg": 70.61511085122028,
+          "source_neutral_gauge_direction": [
+            0.3340876346625061,
+            -0.13854876428204374,
+            -0.9323034335888346
+          ],
+          "target_neutral_gauge_direction": [
+            0.33191236034974736,
+            -0.107003309971295,
+            -0.937221679594666
+          ],
+          "actual_child_segment_world": [
+            0.4393425706455285,
+            -0.8919240061045982,
+            -0.10700314459352821
+          ],
+          "marker_vs_actual_child_angle_deg": 1.7308668332453254e-05,
+          "source_body_relative": [
+            -0.34764040230975746,
+            -0.9357271087017103,
+            -0.059673517766657955
+          ],
+          "target_actual_body_relative": [
+            0.42728902842986216,
+            -0.9021457351190427,
+            -0.05964192141427393
+          ],
+          "body_relative_world_angle_deg": 45.63888127112887,
+          "existing_policy_prediction": [
+            0.4272892233154487,
+            -0.9021456310546838,
+            -0.059642099287559265
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.624415146845831e-05
+        },
+        "forearm.L": {
+          "source_joint": "RightForeArm",
+          "source_world": [
+            0.07737406204857354,
+            -0.938899223411345,
+            0.33538262149323855
+          ],
+          "target_actual_world": [
+            0.7795122328839972,
+            -0.5212521883769446,
+            0.3473569272325672
+          ],
+          "neutral_source_world": [
+            -0.9999999953641271,
+            -4.3034214241588306e-09,
+            9.628990481719231e-05
+          ],
+          "neutral_target_world": [
+            -0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 48.224412412879374,
+          "neutral_world_angle_deg": 53.65319562419398,
+          "neutral_gauge_direction_error_deg": 2.9319384864714655,
+          "source_excursion_from_declared_neutral_deg": 94.43578645071382,
+          "target_excursion_from_declared_neutral_deg": 91.60596219557432,
+          "source_neutral_gauge_direction": [
+            -0.07734176368869726,
+            0.33539007027912826,
+            -0.9388992237443182
+          ],
+          "target_neutral_gauge_direction": [
+            -0.028025657944219816,
+            0.3488560831724169,
+            -0.9367571700982026
+          ],
+          "actual_child_segment_world": [
+            0.7795121119763994,
+            -0.5212522451424216,
+            0.34735711338056435
+          ],
+          "marker_vs_actual_child_angle_deg": 1.3115919625095442e-05
+        },
+        "hand.L": {
+          "source_joint": "RightHand",
+          "source_world": [
+            0.03498615459748479,
+            -0.9777338793825447,
+            0.20691164803857812
+          ],
+          "target_actual_world": [
+            0.8716369139377151,
+            -0.47363894195433737,
+            0.1261556297812819
+          ],
+          "neutral_source_world": [
+            -0.9998684414414755,
+            -0.01613503220129626,
+            -0.0016614888678910314
+          ],
+          "neutral_target_world": [
+            -0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 58.6884643932899,
+          "neutral_world_angle_deg": 62.55253525330448,
+          "neutral_gauge_direction_error_deg": 5.885802441939398,
+          "source_excursion_from_declared_neutral_deg": 91.12017896297499,
+          "target_excursion_from_declared_neutral_deg": 87.70486310613163,
+          "source_neutral_gauge_direction": [
+            -0.01954956564113504,
+            0.20687945220313575,
+            -0.9781711029975143
+          ],
+          "target_neutral_gauge_direction": [
+            0.040046983551731384,
+            0.12432133083887376,
+            -0.9914335307053411
+          ]
+        },
+        "upper_arm.R": {
+          "source_joint": "LeftArm",
+          "source_world": [
+            0.37128675333267935,
+            -0.9276540563627406,
+            -0.04005119865162099
+          ],
+          "target_actual_world": [
+            -0.4056663896450437,
+            -0.9115464427011745,
+            -0.0672150512250805
+          ],
+          "neutral_source_world": [
+            0.9999999959458036,
+            8.708226032190068e-09,
+            -9.004661411880728e-05
+          ],
+          "neutral_target_world": [
+            0.6981001361295396,
+            -0.7160001396200412,
+            0.0
+          ],
+          "raw_world_angle_deg": 45.75937532898273,
+          "neutral_world_angle_deg": 45.725225024485,
+          "neutral_gauge_direction_error_deg": 1.5625707760448408,
+          "source_excursion_from_declared_neutral_deg": 68.20478144948592,
+          "target_excursion_from_declared_neutral_deg": 68.31696568139063,
+          "source_neutral_gauge_direction": [
+            0.37129035022401874,
+            -0.04001776537496821,
+            0.9276540595959896
+          ],
+          "target_neutral_gauge_direction": [
+            0.36947161840980897,
+            -0.0672150512250805,
+            0.9268078873630967
+          ],
+          "actual_child_segment_world": [
+            -0.40566619672321913,
+            -0.911546539896707,
+            -0.06721489744438898
+          ],
+          "marker_vs_actual_child_angle_deg": 1.5177012312529227e-05,
+          "source_body_relative": [
+            0.3608890047485882,
+            -0.9325220472595066,
+            0.012718397167572176
+          ],
+          "target_actual_body_relative": [
+            -0.4157498895944866,
+            -0.9093895973959389,
+            0.012751056827743263
+          ],
+          "body_relative_world_angle_deg": 45.72135733839068,
+          "existing_policy_prediction": [
+            -0.41575006113271223,
+            -0.9093895212567974,
+            0.01275089394822838
+          ],
+          "actual_vs_existing_policy_prediction_angle_deg": 1.4209625421253986e-05
+        },
+        "forearm.R": {
+          "source_joint": "LeftForeArm",
+          "source_world": [
+            -0.09318160094448684,
+            -0.9132202895813861,
+            0.39666849123961384
+          ],
+          "target_actual_world": [
+            -0.7798465344047517,
+            -0.5171365365585242,
+            0.35271686284207127
+          ],
+          "neutral_source_world": [
+            0.9999999953637869,
+            -2.608051950484067e-08,
+            9.629343316678019e-05
+          ],
+          "neutral_target_world": [
+            0.5926672593342224,
+            -0.8043341376678732,
+            0.04233337566673018
+          ],
+          "raw_world_angle_deg": 46.777085348628326,
+          "neutral_world_angle_deg": 53.65319436756713,
+          "neutral_gauge_direction_error_deg": 4.4653989054811865,
+          "source_excursion_from_declared_neutral_deg": 95.34446947782337,
+          "target_excursion_from_declared_neutral_deg": 91.79406602421389,
+          "source_neutral_gauge_direction": [
+            -0.09314338012436696,
+            0.39667746217454386,
+            0.9132202920116104
+          ],
+          "target_neutral_gauge_direction": [
+            -0.031307242598920426,
+            0.3543598732609698,
+            0.9345849007892871
+          ],
+          "actual_child_segment_world": [
+            -0.7798463172876497,
+            -0.5171367556886715,
+            0.3527170216032759
+          ],
+          "marker_vs_actual_child_angle_deg": 1.983990668017933e-05
+        },
+        "hand.R": {
+          "source_joint": "LeftHand",
+          "source_world": [
+            -0.08818799672383289,
+            -0.9503092739769685,
+            0.29855512225919717
+          ],
+          "target_actual_world": [
+            -0.8837227555208714,
+            -0.442850004365589,
+            0.1513868059244129
+          ],
+          "neutral_source_world": [
+            0.9998630179094284,
+            -0.0164546704543765,
+            -0.0017858435788294738
+          ],
+          "neutral_target_world": [
+            0.4466625002869191,
+            -0.8933250005738371,
+            0.049629166698546515
+          ],
+          "raw_world_angle_deg": 57.04531852600625,
+          "neutral_world_angle_deg": 62.5346531704899,
+          "neutral_gauge_direction_error_deg": 9.883524729304074,
+          "source_excursion_from_declared_neutral_deg": 94.19045566307503,
+          "target_excursion_from_declared_neutral_deg": 89.5189180185241,
+          "source_neutral_gauge_direction": [
+            -0.07307206336266277,
+            0.2984251028586614,
+            0.9516317205409456
+          ],
+          "target_neutral_gauge_direction": [
+            0.008396365889798613,
+            0.15115636921377815,
+            0.9884742045627457
+          ]
+        },
+        "thigh.L": {
+          "source_joint": "RightLeg",
+          "source_world": [
+            -0.10918899255254923,
+            -0.9924974324608423,
+            -0.0550146386336865
+          ],
+          "target_actual_world": [
+            -0.16437071979751477,
+            -0.9857026540591841,
+            -0.03704786436392081
+          ],
+          "neutral_source_world": [
+            2.3057578921544995e-08,
+            -0.9998274852777989,
+            -0.018574167089597145
+          ],
+          "neutral_target_world": [
+            -0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.3482355134590494,
+          "neutral_world_angle_deg": 3.3530377589315856,
+          "neutral_gauge_direction_error_deg": 0.03103723351855372,
+          "source_excursion_from_declared_neutral_deg": 6.612303933701291,
+          "target_excursion_from_declared_neutral_deg": 6.634852213275012,
+          "source_neutral_gauge_direction": [
+            0.9933480606147181,
+            -0.03657033469883281,
+            0.10918901544108568
+          ],
+          "target_neutral_gauge_direction": [
+            0.9933026671799816,
+            -0.03704786436392081,
+            0.10944070138301865
+          ]
+        },
+        "shin.L": {
+          "source_joint": "RightShin",
+          "source_world": [
+            -0.0816572590580412,
+            -0.9858948751182194,
+            -0.1460937618748955
+          ],
+          "target_actual_world": [
+            -0.12967582161083593,
+            -0.9897739625228723,
+            -0.05942797658785518
+          ],
+          "neutral_source_world": [
+            4.732519486618937e-08,
+            -0.9966069460848517,
+            -0.08230792802290274
+          ],
+          "neutral_target_world": [
+            -0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.683514312491788,
+          "neutral_world_angle_deg": 4.981575093701561,
+          "neutral_gauge_direction_error_deg": 1.2119111681445902,
+          "source_excursion_from_declared_neutral_deg": 5.971177880343034,
+          "target_excursion_from_declared_neutral_deg": 6.7866626384044055,
+          "source_neutral_gauge_direction": [
+            0.9945743516248232,
+            -0.06445109376396574,
+            0.08165730587455916
+          ],
+          "target_neutral_gauge_direction": [
+            0.9929930433825626,
+            -0.05942797658785518,
+            0.10214270112205746
+          ]
+        },
+        "foot.L": {
+          "source_joint": "RightFoot",
+          "source_world": [
+            -0.40999651575307494,
+            -0.32792545405382095,
+            0.8510979694805609
+          ],
+          "target_actual_world": [
+            -0.41156386283867935,
+            -0.3551036457763831,
+            0.839354863905384
+          ],
+          "neutral_source_world": [
+            -2.4110655024412978e-08,
+            -0.35715943115741156,
+            0.9340434362144586
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.6987745535427263,
+          "neutral_world_angle_deg": 2.502843706908775,
+          "neutral_gauge_direction_error_deg": 0.5942184364085398,
+          "source_excursion_from_declared_neutral_deg": 24.20502650682359,
+          "target_excursion_from_declared_neutral_deg": 24.307886116871845,
+          "source_neutral_gauge_direction": [
+            0.9120841504859547,
+            -0.0023189475077784083,
+            0.40999649378350816
+          ],
+          "target_neutral_gauge_direction": [
+            0.9113466276993769,
+            0.007906388953123844,
+            0.41156386283867935
+          ]
+        },
+        "thigh.R": {
+          "source_joint": "LeftLeg",
+          "source_world": [
+            0.13189525218717232,
+            -0.9893755509190055,
+            -0.061152773397422616
+          ],
+          "target_actual_world": [
+            0.18636711876249454,
+            -0.9815703662102059,
+            -0.04227189636305246
+          ],
+          "neutral_source_world": [
+            -2.313250651991188e-08,
+            -0.9998274997935405,
+            -0.018573385706359448
+          ],
+          "neutral_target_world": [
+            0.05547001962252288,
+            -0.9984603532054123,
+            0.0
+          ],
+          "raw_world_angle_deg": 3.3337812732642496,
+          "neutral_world_angle_deg": 3.353023565050765,
+          "neutral_gauge_direction_error_deg": 0.032235711244388204,
+          "source_excursion_from_declared_neutral_deg": 7.970045219784411,
+          "target_excursion_from_declared_neutral_deg": 7.946793329991623,
+          "source_neutral_gauge_direction": [
+            0.9903406944284622,
+            -0.042766170872403884,
+            -0.13189527507785734
+          ],
+          "target_neutral_gauge_direction": [
+            0.9903968822769567,
+            -0.04227189636305246,
+            -0.13163245175090824
+          ]
+        },
+        "shin.R": {
+          "source_joint": "LeftShin",
+          "source_world": [
+            0.11324238969395699,
+            -0.9815466166655585,
+            -0.1540856920314061
+          ],
+          "target_actual_world": [
+            0.15360635008924486,
+            -0.9858036672690844,
+            -0.0677954188060277
+          ],
+          "neutral_source_world": [
+            2.364143414047117e-08,
+            -0.9966069239296662,
+            -0.08230819628353032
+          ],
+          "neutral_target_world": [
+            0.027767067240353313,
+            -0.9996144206527183,
+            0.0
+          ],
+          "raw_world_angle_deg": 5.465753762624955,
+          "neutral_world_angle_deg": 4.981588406295889,
+          "neutral_gauge_direction_error_deg": 0.7969720697583049,
+          "source_excursion_from_declared_neutral_deg": 7.736062022813367,
+          "target_excursion_from_declared_neutral_deg": 8.235063842005493,
+          "source_neutral_gauge_direction": [
+            0.9908986723900506,
+            -0.07277353574994294,
+            -0.11324236640978227
+          ],
+          "target_neutral_gauge_direction": [
+            0.9896887595859842,
+            -0.0677954188060277,
+            -0.12617424593819157
+          ]
+        },
+        "foot.R": {
+          "source_joint": "LeftFoot",
+          "source_world": [
+            0.2817084435268402,
+            -0.3563220655446688,
+            0.8908843575075643
+          ],
+          "target_actual_world": [
+            0.2867300622719396,
+            -0.38653371720222607,
+            0.8765714784633134
+          ],
+          "neutral_source_world": [
+            0.0,
+            -0.3571595072812372,
+            0.9340434071062349
+          ],
+          "neutral_target_world": [
+            0.0,
+            -0.39760743763430056,
+            0.9175556253099241
+          ],
+          "raw_world_angle_deg": 1.9370108417083698,
+          "neutral_world_angle_deg": 2.5028390373462215,
+          "neutral_gauge_direction_error_deg": 0.5711720943369664,
+          "source_excursion_from_declared_neutral_deg": 16.384874983851088,
+          "target_excursion_from_declared_neutral_deg": 16.666215253624387,
+          "source_neutral_gauge_direction": [
+            0.959388473987381,
+            -0.014632457956510359,
+            -0.2817084435268402
+          ],
+          "target_neutral_gauge_direction": [
+            0.9579917719062887,
+            -0.0061348471357494105,
+            -0.2867300622719396
+          ]
+        }
+      },
+      "elbow_and_reach": {
+        "Left": {
+          "source_elbow_deflection_deg": 37.18687803211095,
+          "target_elbow_deflection_deg": 40.178017220566545,
+          "source_neutral_elbow_deflection_deg": 0.010676498519172654,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            0.08145863773470255,
+            -0.5140290903790217,
+            0.09596284963630927
+          ],
+          "target_hand_minus_shoulder_m": [
+            -0.29753003269433975,
+            -0.37678003311157227,
+            0.06454379484057426
+          ]
+        },
+        "Right": {
+          "source_elbow_deflection_deg": 36.58118501882305,
+          "target_elbow_deflection_deg": 39.62617053027306,
+          "source_neutral_elbow_deflection_deg": 0.010695151498789045,
+          "target_neutral_elbow_deflection_deg": 8.252769653207634,
+          "source_hand_minus_shoulder_m": [
+            -0.07500759385301722,
+            -0.5226700164844846,
+            0.05117851059823651
+          ],
+          "target_hand_minus_shoulder_m": [
+            0.3068578913807869,
+            -0.3722710609436035,
+            0.05216363351792097
+          ]
+        }
+      }
+    }
+  ],
+  "source_text_audit": {
+    "status": "RETAINED_PRIOR_AUDIT_NOT_FRESH",
+    "scope": "Six source files were read and pinned in the private predecessor; this retained record does not claim a fresh public-reproducer cache audit"
+  }
+}

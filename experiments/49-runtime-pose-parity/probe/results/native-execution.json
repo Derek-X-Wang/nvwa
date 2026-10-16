@@ -1,0 +1,89 @@
+{
+  "human_trial": "NOT-RUN",
+  "launch_route": "worker CUA native app API; separate owned .app bundles; fresh outputs removed before each recapture",
+  "launched_binary_sha256": {
+    "NvwaPoseNegative.app": "6441b4f0ad6f6e4c4239a95decf22abc063e5a08adf9130d75ceed4d576df0a4",
+    "NvwaPoseProbe.app": "6441b4f0ad6f6e4c4239a95decf22abc063e5a08adf9130d75ceed4d576df0a4"
+  },
+  "native": {
+    "native": {
+      "child_os_exit_code": 0,
+      "error": null,
+      "raw": "native.json",
+      "raw_sha256": "731db999bca820dd0bda4ae5b5b3893211953317e017c0b8da5016857013365e",
+      "sample_count": 7,
+      "source_keys": [
+        0,
+        15,
+        30,
+        45,
+        60,
+        75,
+        89
+      ],
+      "status": "complete"
+    },
+    "native-negative": {
+      "child_os_exit_code": 1,
+      "error": "wrong Work/profile",
+      "raw": "native-negative.json",
+      "raw_sha256": "3515821694bb39d3552f534775216162a8c9a3acc1f2c012a1cd9694585cb3a1",
+      "sample_count": 0,
+      "source_keys": [],
+      "status": "failed"
+    },
+    "native-visual": {
+      "child_os_exit_code": 0,
+      "error": null,
+      "raw": "native-visual.json",
+      "raw_sha256": "731db999bca820dd0bda4ae5b5b3893211953317e017c0b8da5016857013365e",
+      "sample_count": 7,
+      "source_keys": [
+        0,
+        15,
+        30,
+        45,
+        60,
+        75,
+        89
+      ],
+      "status": "complete"
+    }
+  },
+  "native_visual": {
+    "file": "native-canvas.png",
+    "method": "existing product --capture without --smoke; native screenshot callback",
+    "observed": {
+      "active_animations": 1,
+      "animation_seconds": 2.9666666984558105,
+      "capture_callback": true,
+      "capture_file_bytes": 1113736,
+      "clip": "genuine44_calibrated47",
+      "document_revision": 0,
+      "error": null,
+      "gpu": {
+        "backend": "Metal",
+        "name": "Apple M2 Pro"
+      },
+      "joints": 18,
+      "meshes": 9,
+      "paused_animations": 1,
+      "physical_window": {
+        "height": 1440,
+        "scale_factor": 2.0,
+        "width": 2560
+      },
+      "players": 1,
+      "playing": false,
+      "ready": true,
+      "skins": 9
+    },
+    "sha256": "8f7748321050aa7eccfea2704a4fd6e7f11a2f04c64f348ff178691c06a8f00a"
+  },
+  "operator_notes": [
+    "Refreshed negative CUA RHS opened the failed diagnostic window, then the REPL variable assignment raised a binding error. The action was not replayed; fresh failed JSON and actual child OS exit1 verified execution.",
+    "Predecessor e9a5 positive/visual/negative evidence and app binaries retained privately before source/data changes."
+  ],
+  "performance_claim": false,
+  "schema_version": 1
+}
