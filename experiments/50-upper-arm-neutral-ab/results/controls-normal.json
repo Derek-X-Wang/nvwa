@@ -1,0 +1,91 @@
+{
+  "all_passed": true,
+  "tests": 12,
+  "controls": [
+    {
+      "control": "reversed_multiplication",
+      "status": "REJECTED",
+      "error": "source chest direction component gate",
+      "failed_glb_sha256": "22dff342b0199fb843ad1c82aea9bcabe55de4ec448a97a3418ee17dc52ed0ed",
+      "retained_private_path": ".work/m2-neutral-ab/failed-controls/reversed_multiplication.glb"
+    },
+    {
+      "control": "double_correction",
+      "status": "REJECTED",
+      "error": "source chest direction component gate",
+      "failed_glb_sha256": "cf7814666febaed10cbc950b5d6ba33965eb0896d6c2c7afcab2f3cabb6c7435",
+      "retained_private_path": ".work/m2-neutral-ab/failed-controls/double_correction.glb"
+    },
+    {
+      "control": "correct_descendants",
+      "status": "REJECTED",
+      "error": "untouched channels/root/geometry bytes",
+      "failed_glb_sha256": "faec338ecb802fcb8e81565817dd048e0970583e3762a86d94a5332a36c83034",
+      "retained_private_path": ".work/m2-neutral-ab/failed-controls/correct_descendants.glb"
+    },
+    {
+      "control": "wrong_physical_sides",
+      "status": "REJECTED",
+      "error": "source chest direction component gate",
+      "failed_glb_sha256": "e4070ac1272c17ca446a44b0975355821bcc57cee9ff5753ea190baec7f7a24f",
+      "retained_private_path": ".work/m2-neutral-ab/failed-controls/wrong_physical_sides.glb"
+    },
+    {
+      "control": "duplicated_root",
+      "status": "REJECTED",
+      "error": "untouched channels/root/geometry bytes",
+      "failed_glb_sha256": "8339ef11ab4b1dece74783a61d1201d0df98a542b62efe18c72fe8bba2634d63",
+      "retained_private_path": ".work/m2-neutral-ab/failed-controls/duplicated_root.glb"
+    },
+    {
+      "control": "animated_key0_neutral",
+      "status": "REJECTED",
+      "error": "pinned static source rest, never animated key0"
+    },
+    {
+      "control": "changed_parent",
+      "status": "REJECTED",
+      "error": "exact pinned target hierarchy and static TRS"
+    },
+    {
+      "control": "changed_chest_frame",
+      "status": "REJECTED",
+      "error": "exact pinned target hierarchy and static TRS"
+    },
+    {
+      "control": "changed_static_frame",
+      "status": "REJECTED",
+      "error": "pinned static geometric frames"
+    },
+    {
+      "control": "restored_candidate",
+      "status": "NUMERIC_GATE_PASS",
+      "gate": {
+        "keys": 90,
+        "directions": 180,
+        "maximum_component_error": 2.828015423228525e-07,
+        "maximum_angle_error_deg": 1.7704227144513012e-05,
+        "maximum_pelvis_error_m": 7.375408506149483e-09,
+        "untouched_local_TRS": true,
+        "proper_serialized_rotations": true,
+        "binary": {
+          "changed_bytes": 2459,
+          "allowed_rotation_bytes": 2880,
+          "all_other_bytes_identical": true,
+          "json_identical": true
+        },
+        "exact_frozen_candidate_bytes": true
+      }
+    },
+    {
+      "control": "extra_per_key_roll",
+      "status": "REJECTED",
+      "error": "exact frozen candidate rotation bytes; no additional per-key roll or fitting",
+      "failed_glb_sha256": "12c1d3bb9a0e3f77ba8b9f172ddd786052824223eeb30792a04219422522d95f"
+    },
+    {
+      "control": "known_positive_z90_and_parent_child_transport",
+      "status": "PASS"
+    }
+  ]
+}

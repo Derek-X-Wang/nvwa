@@ -1,0 +1,83 @@
+{
+  "status": "PASS",
+  "platform": "native",
+  "glb_sha256": "2779b012405a915cbc84b38dc18e5eb7a91215661b54ac0c7753ecebb49feae7",
+  "work_sha256": "033344a831e3a8c6a9bb2fd1e03ce84c78662e568572c528302b86bfaab50fcf",
+  "thresholds": {
+    "local_translation_m": 2e-06,
+    "local_rotation_component": 2e-06,
+    "local_scale": 2e-06,
+    "global_matrix_component": 2e-05,
+    "inverse_bind_component": 2e-06,
+    "skinned_vertex_m": 3e-05
+  },
+  "max_errors": {
+    "local_translation_m": 0.0,
+    "local_rotation_component": 0.0,
+    "local_scale": 0.0,
+    "global_matrix_component": 1.6733794006018599e-07,
+    "inverse_bind_component": 0.0,
+    "skinned_vertex_m": 1.5129057828744408e-07
+  },
+  "samples": [
+    {
+      "key_index": 0,
+      "time_seconds": 0.0,
+      "frame": 5,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 15,
+      "time_seconds": 0.5,
+      "frame": 7,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 30,
+      "time_seconds": 1.0,
+      "frame": 9,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 45,
+      "time_seconds": 1.5,
+      "frame": 11,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 60,
+      "time_seconds": 2.0,
+      "frame": 13,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 75,
+      "time_seconds": 2.5,
+      "frame": 15,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    },
+    {
+      "key_index": 89,
+      "time_seconds": 2.9666666984558105,
+      "frame": 17,
+      "glb_nodes": 24,
+      "primitive_skins": 9
+    }
+  ],
+  "cpu_reconstructed_vertices_compared": 173152,
+  "expectation_space": "serialized scene under independently expected identity CharacterRoot; no observed-root fitting",
+  "not_run": [
+    "GPU deformed vertex readback",
+    "anatomical/semantic quality",
+    "official decoder parity"
+  ],
+  "variant": "candidate",
+  "adapter": "Only explicit Work identity and candidate GLB hash differ; unchanged49 pose/skin thresholds and assertions",
+  "capture_sha256": "fed703d52aa35a54ab5ff1f4d1ed51b97893991ba94bfeed19f7bff6b9a1715d"
+}

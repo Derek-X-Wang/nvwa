@@ -1,0 +1,61 @@
+{
+  "schema": "nvwa.upper-arm-neutral-ab.v1",
+  "frozen_before_evaluation": true,
+  "issue": 68,
+  "baseline": "complete unchanged experiment48 genuine44_calibrated47",
+  "candidate": "C_j=F_s,j*transpose(F_t,j); R_candidate,j=C_j*R_baseline,j",
+  "channels": [
+    "upper_arm.R/rotation",
+    "upper_arm.L/rotation"
+  ],
+  "physical_sides": {
+    "LeftArm": "upper_arm.R",
+    "RightArm": "upper_arm.L"
+  },
+  "neutral": "pinned source static rest, never animated key0",
+  "assumptions": [
+    "identity source rest global rotations",
+    "identity static target chest global rotation with exact affine scales inspected",
+    "upper arms immediate target parent chest",
+    "pinned frames guide +Z, source and target +Y up / +Z front / bodily left +X",
+    "no intermediate scaled/sheared parent"
+  ],
+  "unchanged": "all local TRS except the two upper-arm rotation channels; original scene root and all original assets",
+  "runtime_keys": [
+    0,
+    15,
+    30,
+    45,
+    60,
+    75,
+    89
+  ],
+  "lowered_intrusion_keys": [
+    0,
+    75,
+    89
+  ],
+  "direction_component_tolerance": 2e-06,
+  "direction_angle_tolerance_deg": 0.001,
+  "controls": [
+    "reversed_multiplication",
+    "double_correction",
+    "correct_descendants",
+    "wrong_physical_sides",
+    "duplicated_root",
+    "animated_key0_neutral",
+    "changed_parent",
+    "changed_chest_frame",
+    "changed_static_frame"
+  ],
+  "quality": "HOLD",
+  "production_policy": "unchanged",
+  "input_sha256": {
+    "experiments/48-genuine-fixture-work/artifacts/assets/generated/genuine44-calibrated47.glb": "c343f6cf47dc0a7c0b09f13ad7d21cf2706a08fb1cfdaca233f14edab02e44fc",
+    "experiments/48-genuine-fixture-work/artifacts/genuine44-calibrated47.nvwa.json": "7668eb7a2a2f87070500cbf49fa27d6794aa1fb83f5392b75a0ff51667cde779",
+    "experiments/47-fixture-rig-calibration/calibration.json": "d730f372adc92d83931c23da84d8709dd8bfa7eb75d57964817577f4b034a6d0",
+    "experiments/41-real-short-motion/source-skeleton.json": "d137f3ea5522deeb70257d2fd5522ca6d5436c0145ea001a1e8b4fc646cddd9a",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32": "67914c5d72c54429bf8a70d3f9ef43157fb5181fa36ab2c5f8ce7f9dc69d3a55",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32": "dcc221d506999a803b1d0fddef87abc0131b1e8f4e64187bc57fde3a63c204af"
+  }
+}
