@@ -213,12 +213,11 @@ pub(super) fn apply_stage(
         StageQuality::High => 4096,
     };
     let shadows = stage.floor.shadows && stage.quality != StageQuality::Low;
-    let contact = shadows && stage.quality == StageQuality::High;
     for (mut light, mut transform, mut cascades) in &mut mirror.key {
         light.color = color(stage.key_light.color_srgb);
         light.illuminance = stage.key_light.illuminance_lux;
         light.shadow_maps_enabled = shadows;
-        light.contact_shadows_enabled = contact;
+        light.contact_shadows_enabled = false;
         // Tight cascade and modest normal bias keep contact near the feet.
         light.shadow_depth_bias = 0.02 * scale;
         light.shadow_normal_bias = 0.6;
@@ -260,17 +259,11 @@ pub(super) fn apply_stage(
         } else {
             Msaa::Sample4
         };
-        if contact {
-            commands.entity(entity).insert(ContactShadows {
-                linear_steps: 16,
-                thickness: 0.04 * scale,
-                length: 0.25 * scale,
-            });
-        } else {
-            commands
-                .entity(entity)
-                .remove::<(ContactShadows, DepthPrepass)>();
-        }
+        // Actual Web comparison showed stable face/body speckle from the
+        // optional screen-space pass. High retains the 4096 PBR shadow map.
+        commands
+            .entity(entity)
+            .remove::<(ContactShadows, DepthPrepass)>();
     }
     *prior = Some((stage, editor.document_generation, scale));
 }
@@ -306,7 +299,7 @@ mod tests {
         for (quality, size, msaa, shadows, contact) in [
             (StageQuality::Low, 1024, Msaa::Off, false, false),
             (StageQuality::Balanced, 2048, Msaa::Sample4, true, false),
-            (StageQuality::High, 4096, Msaa::Sample4, true, true),
+            (StageQuality::High, 4096, Msaa::Sample4, true, false),
         ] {
             let mut stage = StageSettings::black_space();
             stage.quality = quality;
@@ -553,19 +546,25 @@ mod scale_tests {
                 .single(world)
                 .unwrap();
             assert!(key.shadow_maps_enabled);
-            assert!(key.contact_shadows_enabled);
+            assert!(!key.contact_shadows_enabled);
             assert_eq!(key.shadow_depth_bias, 0.02 * scale);
             assert_eq!(cascades.minimum_distance, 0.05 * scale);
             assert_eq!(cascades.bounds, vec![40.0 * scale]);
             // The full-body subject distance must remain inside the cascade,
             // including both accepted rendering-scale boundaries.
             assert!(cascades.minimum_distance < 3.8 * scale && cascades.bounds[0] > 3.8 * scale);
-            let contact = world
-                .query_filtered::<&ContactShadows, With<SceneCamera>>()
-                .single(world)
-                .unwrap();
-            assert_eq!(contact.length, 0.25 * scale);
-            assert_eq!(contact.thickness, 0.04 * scale);
+            assert!(
+                world
+                    .query_filtered::<&ContactShadows, With<SceneCamera>>()
+                    .single(world)
+                    .is_err()
+            );
+            assert!(
+                world
+                    .query_filtered::<&DepthPrepass, With<SceneCamera>>()
+                    .single(world)
+                    .is_err()
+            );
         }
         let old_transform = *app
             .world_mut()

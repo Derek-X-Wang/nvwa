@@ -177,6 +177,10 @@ fn legacy_stage_discovery_apply_validation_and_file_recovery_use_actual_binary()
         caps["cli_contract"]["set_stage"]["quality"],
         json!(["low", "balanced", "high"])
     );
+    assert_eq!(
+        caps["cli_contract"]["set_stage"]["profiles"]["high"]["contact_shadows"],
+        false
+    );
     let mut command = caps["cli_contract"]["command_examples"]
         .as_array()
         .unwrap()

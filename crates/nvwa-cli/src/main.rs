@@ -174,7 +174,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "profiles": {
                 "low": {"msaa_samples": 1, "key_shadow_maps": false, "shadow_map_size": 1024, "contact_shadows": false},
                 "balanced": {"msaa_samples": 4, "key_shadow_maps": "floor_shadows_request", "shadow_map_size": 2048, "contact_shadows": false},
-                "high": {"msaa_samples": 4, "key_shadow_maps": "floor_shadows_request", "shadow_map_size": 4096, "contact_shadows": "floor_shadows_request"}
+                "high": {"msaa_samples": 4, "key_shadow_maps": "floor_shadows_request", "shadow_map_size": 4096, "contact_shadows": false}
             },
             "fill_shadows": false,
             "quality_effects": "requested_shared_runtime_settings_actual_platform_rendering_and_performance_need_separate_acceptance"

@@ -32,7 +32,7 @@ pub struct StageAmbient {
 pub struct StageFloor {
     pub visible: bool,
     pub color_srgb: [f32; 3],
-    /// Enables key-light shadow maps (and high-profile contact shadows).
+    /// Enables key-light shadow maps.
     /// Low quality overrides this request. Fill-light shadows stay off.
     pub shadows: bool,
 }
@@ -104,7 +104,7 @@ impl StageCamera {
             azimuth_degrees: 8.0,
             elevation_degrees: 3.0,
             distance: 1.25,
-            target_height: 1.52,
+            target_height: 1.65,
             fov_degrees: 30.0,
         }
     }

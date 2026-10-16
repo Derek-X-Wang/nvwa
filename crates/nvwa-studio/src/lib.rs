@@ -2,6 +2,7 @@
 mod editor_layout;
 mod fonts;
 pub mod platform;
+mod scene_view;
 mod stage_ui;
 #[cfg(any(target_arch = "wasm32", test))]
 mod web_input;
@@ -106,6 +107,7 @@ impl SaveNotice {
 pub struct UiInputGuard {
     pub pointer: bool,
     pub keyboard: bool,
+    scene_view: Option<scene_view::SceneViewport>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -235,7 +237,15 @@ fn build_app_for_mode(config: LaunchConfig, smoke: SmokeRun) -> App {
     .add_systems(Update, poll_files)
     .add_systems(
         PostUpdate,
+        scene_view::fit_scene_camera
+            .after(bevy_egui::EguiPostUpdateSet::EndPass)
+            .after(nvwa_runtime::RuntimeSystems::Mirror)
+            .before(bevy::camera::CameraUpdateSystems),
+    )
+    .add_systems(
+        PostUpdate,
         scene_click
+            .after(bevy::camera::CameraUpdateSystems)
             .after(bevy_egui::EguiPostUpdateSet::EndPass)
             .after(bevy::transform::TransformSystems::Propagate),
     )
@@ -1036,6 +1046,10 @@ fn draw_editor_ui(
     if ctx.will_discard() {
         return Ok(());
     }
+    guard.scene_view = Some(scene_view::SceneViewport {
+        canvas: ctx.viewport_rect(),
+        scene: viewport_ui.available_rect_before_wrap(),
+    });
     state.layout = layout;
     state.stage = stage_ui;
     state.save_notice = save_notice;
@@ -1184,6 +1198,10 @@ fn draw_player(
     if ctx.will_discard() {
         return;
     }
+    guard.scene_view = Some(scene_view::SceneViewport {
+        canvas: ctx.viewport_rect(),
+        scene: viewport.available_rect_before_wrap(),
+    });
     *playback = next;
     state.stage = stage_ui;
     if orbit_intent.cancel {

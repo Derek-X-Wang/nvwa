@@ -107,7 +107,7 @@ pub(super) fn draw(ctx: &egui::Context, state: &mut StageUi, stage: &StageSettin
                 ui.small(match next.quality {
                     StageQuality::Low => "MSAA off · shadows off",
                     StageQuality::Balanced => "MSAA 4× · 2048 shadow map",
-                    StageQuality::High => "MSAA 4× · 4096 + contact shadows",
+                    StageQuality::High => "MSAA 4× · 4096 shadow map",
                 });
                 ui.collapsing("背景与地面 / Background & floor", |ui| {
                     ui.label("背景 / Background");
