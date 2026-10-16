@@ -1,0 +1,186 @@
+{
+  "schema": "nvwa.experiment48.transformation-ledger.v1",
+  "experiment_only": true,
+  "provenance_kind": "generated",
+  "admission_sha256": "94676288d6e3f22886e4b08512aa9094e6e18cf21d50eac1d52e711d1cb365d6",
+  "calibration_sha256": "d730f372adc92d83931c23da84d8709dd8bfa7eb75d57964817577f4b034a6d0",
+  "input_sha256": {
+    "experiments/48-genuine-fixture-work/CONTRACT.json": "58e82af4ab212627844a80a5279e855d5d3b67a535a586e930e3983c5a8d0b26",
+    "experiments/48-genuine-fixture-work/admission.json": "94676288d6e3f22886e4b08512aa9094e6e18cf21d50eac1d52e711d1cb365d6",
+    "experiments/47-fixture-rig-calibration/SHA256SUMS.json": "b4fbb24bffcaf8c061d2b9acd6abf046dd90fd07c013f5f8551c6693575a2957",
+    "experiments/47-fixture-rig-calibration/calibration.json": "d730f372adc92d83931c23da84d8709dd8bfa7eb75d57964817577f4b034a6d0",
+    "experiments/47-fixture-rig-calibration/calibrate.py": "15f620bb1ceabb4d6d32a398b284b28657e2ac7244a04eca0ca945618d4e1eca",
+    "assets/character.profile.json": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353",
+    "assets/fixtures/nvwa-humanoid.glb": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6",
+    "assets/fixtures/provenance-manifest.json": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f",
+    "experiments/41-real-short-motion/source-skeleton.json": "d137f3ea5522deeb70257d2fd5522ca6d5436c0145ea001a1e8b4fc646cddd9a",
+    "experiments/43-rig-mapping/spike.py": "063aefdd56d988256154b291b7f783d874f513b714303c546a36d8bf695bfe93",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json": "554fd2e64e316d218fd699bbbe8d3e45351a7b3a3e08ef077cdc2c6cfaaa52c9",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/process/receipt.json": "f67726f84982d6e5bd7c22e944131a7991016508e541d88972da6e20abc6410b",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/process/stdout.txt": "d8cafdcca9f05b92f112232345c7435335858a1f019cabc2067d30ba4e71d5d1",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32": "67914c5d72c54429bf8a70d3f9ef43157fb5181fa36ab2c5f8ce7f9dc69d3a55",
+    "experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32": "dcc221d506999a803b1d0fddef87abc0131b1e8f4e64187bc57fde3a63c204af",
+    "tools/blender/generate_fixture.py": "bc54eec314ccba2ca2a77499b03d96b1ec9afb8c38cfbb9ac9e1fb04f5736f0e"
+  },
+  "exporter_sha256": "5cc3d8254a0e2ec2e92c92367d7dcf3a4f9b28a7f856c0010ae1086d7a3b425f",
+  "source_generation": {
+    "receipt_path": "experiments/44-approved-cpu-motion-trial/evidence/run/generation-receipt.json",
+    "receipt_sha256": "554fd2e64e316d218fd699bbbe8d3e45351a7b3a3e08ef077cdc2c6cfaaa52c9",
+    "returncode": 0,
+    "reason": "exited",
+    "raw_complete": true,
+    "code_revision": "5679ff19ba0a522c0b0516e9a9d402fe1af2c027",
+    "request": {
+      "code_revision": "5679ff19ba0a522c0b0516e9a9d402fe1af2c027",
+      "ggml_revision": "8c63e70982c95ceb862e3a1073a2c1beef75d60a",
+      "artifacts": [
+        {
+          "repository": "LocalAI-io/Kimodo-SOMA-RP-v1.1-GGML",
+          "revision": "65f8b8ab34ee7524161cc87b20ae4cb4f5d3a12d",
+          "path": "models/kimodo-soma-rp-v1.1-f32.gguf",
+          "bytes": 1133166784,
+          "sha256": "3bf1229f4c1eff1d28f5196a854113da2df9a11a5e21c60694630903bf948ee4",
+          "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Kimodo-SOMA-RP-v1.1-GGML/resolve/65f8b8ab34ee7524161cc87b20ae4cb4f5d3a12d/models/kimodo-soma-rp-v1.1-f32.gguf"
+        },
+        {
+          "repository": "LocalAI-io/Llama-3-Kimodo-GGML",
+          "revision": "3e8d958803beaddb6011ac534f2be972e2710c7d",
+          "path": "Llama-3-Kimodo-Q4_K_M.gguf",
+          "bytes": 5058327904,
+          "sha256": "c06f2cb6a7615e949bcbb5b582ad35a191338b68b5a51abe17d259ebe574c005",
+          "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Llama-3-Kimodo-GGML/resolve/3e8d958803beaddb6011ac534f2be972e2710c7d/Llama-3-Kimodo-Q4_K_M.gguf"
+        },
+        {
+          "repository": "LocalAI-io/Llama-3-Kimodo-GGML",
+          "revision": "3e8d958803beaddb6011ac534f2be972e2710c7d",
+          "path": "tokenizer.gguf",
+          "bytes": 7295054,
+          "sha256": "81614aca62a98846c02b72cc2e5378e5bdce8b4d507b88f96eb1faa90dae607e",
+          "download_url_after_approval_only": "https://huggingface.co/LocalAI-io/Llama-3-Kimodo-GGML/resolve/3e8d958803beaddb6011ac534f2be972e2710c7d/tokenizer.gguf"
+        }
+      ],
+      "prompt": "A person stands in place and waves their right hand.",
+      "seed": 42,
+      "frames": 90,
+      "fps": 30,
+      "diffusion_steps": 25,
+      "text_cfg": 2.0,
+      "constraint_cfg": 2.0
+    },
+    "raw_sha256": {
+      "experiments/44-approved-cpu-motion-trial/evidence/run/raw/local_rotations_xyzw.f32": "67914c5d72c54429bf8a70d3f9ef43157fb5181fa36ab2c5f8ce7f9dc69d3a55",
+      "experiments/44-approved-cpu-motion-trial/evidence/run/raw/root_positions.f32": "dcc221d506999a803b1d0fddef87abc0131b1e8f4e64187bc57fde3a63c204af"
+    }
+  },
+  "transformation": {
+    "new_generation": false,
+    "mapper": "pinned47 map_frame; exact current fixture only",
+    "candidate": "physical_sides_identity",
+    "basis": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "root_policy": "source Hips delta once on root; pelvis bind rotation; absolute Hips world position once",
+    "neutral": "pinned static source rest and exact target bind; never frame zero",
+    "delta_policy": "collapsed-chain parent-local neutral-relative gauge conjugation",
+    "scale_policy": "exact fixture bind scales preserved / unit scene-root scale / 1 metre per metre; no endpoint fitting or contact guarantee",
+    "translation_policy": "target bind translations fixed; omitted moving source links not transferred",
+    "roll": "authored static projected front/up engineering gauges",
+    "source_shape": [
+      90,
+      30,
+      4
+    ],
+    "target_shape": [
+      90,
+      18,
+      4
+    ],
+    "fps": 30,
+    "nominal_duration_seconds": 3.0,
+    "last_key_seconds": 2.9666666984558105,
+    "time_keys": "binary32(i/30), i=0..89",
+    "quaternions": "proper matrix -> normalized XYZW -> hemisphere continuity -> binary32",
+    "hemisphere_flips": 0,
+    "interpolation": "LINEAR; no extra frame, blend, resample or loop",
+    "animation_index": 3,
+    "clip_id": "genuine44_calibrated47",
+    "joint_rotation_nodes": [
+      17,
+      16,
+      9,
+      8,
+      1,
+      0,
+      4,
+      3,
+      2,
+      7,
+      6,
+      5,
+      12,
+      11,
+      10,
+      15,
+      14,
+      13
+    ],
+    "translation_nodes": [
+      17
+    ]
+  },
+  "license_scope": {
+    "fixture": "CC0-1.0 original fixture only",
+    "generated_motion": "Retained upstream terms; no CC0 or new redistribution rights claimed",
+    "retained_source_notice": "experiments/41-real-short-motion/REPORT.md:33",
+    "motion_model_terms": "https://huggingface.co/nvidia/Kimodo-SOMA-RP-v1.1/blob/6c9233af1180b8151e3c4703477104af5dce9dd5/LICENSE",
+    "encoder_terms": "https://huggingface.co/LocalAI-io/Llama-3-Kimodo-GGML/blob/3e8d958803beaddb6011ac534f2be972e2710c7d/LICENSE-META-LLAMA-3.txt"
+  },
+  "outputs": {
+    "assets/generated/genuine44-calibrated47.glb": {
+      "sha256": "c343f6cf47dc0a7c0b09f13ad7d21cf2706a08fb1cfdaca233f14edab02e44fc",
+      "bytes": 3859752
+    },
+    "character.profile.json": {
+      "sha256": "af8638e626c0ade115d94663f191621ab5753c1f970e8a337ecc03aad16429b0",
+      "bytes": 1330
+    },
+    "genuine44-calibrated47.nvwa.json": {
+      "sha256": "7668eb7a2a2f87070500cbf49fa27d6794aa1fb83f5392b75a0ff51667cde779",
+      "bytes": 1977
+    }
+  },
+  "not_run": [
+    "independent decoded verification",
+    "native/Web playback and save exchange",
+    "official decoder parity",
+    "product provider",
+    "general rigs",
+    "certified anatomy/contact",
+    "prompt meaning/human quality",
+    "performance"
+  ],
+  "primary_reload": {
+    "status": "PASS",
+    "frames": 90,
+    "channels": 19,
+    "original_BIN_prefix_bytes": 3770416,
+    "max_rotation_matrix_error": 7.871245816248873e-08,
+    "max_pelvis_world_error_m": 7.409786746280263e-09,
+    "max_joint_position_error_m": 3.3445869382219576e-08,
+    "hemisphere_flips": 0
+  }
+}

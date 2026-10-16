@@ -1,12 +1,16 @@
 # Nvwa 路线图
 
-## 当前阶段：M1.2 真人独立验收待完成；M2 已有一个真实原始动作样本（2026-10-15）
+## 当前阶段：M1.2 等待无引导真人试用；M2 单一样本已完成双端文件闭环（2026-10-15）
 
-本轮新增 [47 当前角色标定](../experiments/47-fixture-rig-calibration/REPORT.md) 和 [独立来源核查](../experiments/47-fixture-rig-calibration/reference/REPORT.md)。实际眼睛/脸部几何与缓存的固定版本源资料均支持 +Y 上、+Z 前、身体左侧 +X；当前 fixture 的 `.L/.R` 名称与身体左右相反。候选因此保留资产名称，使用恒等坐标基，将 source Left 对应 target `.R`。静态 T→A 中立对应、手脚滚转和末端方向标记是明确的工程约定，不宣称恢复掌面、足底或接触解剖。89 项正向、43 项拒绝和 8 项测量控制通过；来源核查另有普通/优化模式的实际拒绝控制。候选仍为 `PROPOSED_NOT_ADMITTED`，须独立审查后记录准入，才能开展现有真实样本的 CLI、桌面/Web 播放和保存交换；数值闭合不代替此门。#12/M2、#3 阻塞和 #4 缺口不变。
+[#59 当前角色标定](https://github.com/Derek-X-Wang/nvwa/issues/59) 已补齐 [47 标定](../experiments/47-fixture-rig-calibration/REPORT.md) 的 [独立来源依据](../experiments/47-fixture-rig-calibration/reference/REPORT.md)：实际眼睛/脸部几何与缓存的固定版本源资料支持 +Y 上、+Z 前、身体左侧 +X。当前 fixture 的 `.L/.R` 名称与身体左右相反，因此保留资产名称，采用恒等坐标基、source Left→target `.R`。静态 T→A 中立对应、投影正面/上方滚转及手脚末端标记是工程约定，不宣称恢复掌面、足底或接触解剖。89 项正向、43 项拒绝和 8 项测量控制通过。47 的 `PROPOSED_NOT_ADMITTED` 是保留的候选快照；两次独立审查后，负责人在 [48 的独立准入记录](../experiments/48-genuine-fixture-work/admission.json)中明确采用这一有界工程策略，再开始后续导出。准入只覆盖当前角色和 44 的原有 90 帧，不是通用骨骼或动作质量认证。[PR #63](https://github.com/Derek-X-Wang/nvwa/pull/63) 已合并；其合并后 main CI 单独核验。
 
-[#49 无引导真人试用材料](m12-unassisted-trial/README.md) 已准备：参与者任务、观察表和空白结果表分开，应用包使用源输入匹配的既有构建。复制的 CLI 已对手工作品完成校验和逐字节保存往返；全新编译、新包桌面/Web 启动和真人试用分别为 NOT-RUN。现阶段准备不关闭 #49。
+[48 真实 Work 实验](../experiments/48-genuine-fixture-work/README.md)对应 [#64](https://github.com/Derek-X-Wang/nvwa/issues/64)：现有 genuine 样本已实际导出、通过 CLI 校验和保存，分别在桌面/Web 播放、定位，并完成桌面保存→Web 打开/修改/下载→桌面打开/保存。独立序列化检查覆盖全部 90 帧、18 个旋转通道和一次 root 平移；保留旧 GLB 字节及未选中的原动作。完整文件交换证据见 [运行记录](../experiments/48-genuine-fixture-work/runtime/REPORT.md)。**动作质量仍为 HOLD**：画面出现手臂与躯干相交，尚未区分原样本、映射和权重的影响；运行时逐骨骼数值采样、官方 decoder 一致性、解剖/接触和语义质量均未验收。这里没有新增模型运行、下载、产品 provider 或通用导入器。
+
+[#49 无引导真人试用材料](m12-unassisted-trial/README.md)及本次私有路径交接单已准备，参与者 Work 文件夹保持空白。使用源输入匹配的既有构建，CLI 准备检查、复制后的原生与 Web 实际启动已通过；全新编译、参与者同意及实际无引导真人试用分别为 NOT-RUN。旧准备文档保留其当时状态，现阶段不关闭 #49。#3 保持阻塞，#4 保留原测量缺口。
 
 Nvwa 的目标是：捏出角色、编排或生成动作、加入互动，再以桌面应用和网页分享。桌面、Web 和无需窗口的 CLI 是正式支持的三种入口；人和 agent 使用同一份 Work 和同一套 Rust 命令。当前 CLI 的正式范围是离线文件创作、能力发现和校验，详见 [CLI 支持范围](CLI-SUPPORT.md)。逐帧骨骼采样、离屏图像导出、运行中 Studio 控制和并发共享写入仍需单独实现与验收。
+
+以下段落按发生顺序保留此前进展。各旧实验的 HOLD、NOT-RUN 和“未交付”属于当时快照；当前范围以本页开头、阶段表及 48 的运行记录为准。
 
 M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/milestone/2) 的离线 CLI 创作、双端继续编辑和交接已由 [PR #50](https://github.com/Derek-X-Wang/nvwa/pull/50) 交付，合并 main 为 `9502dd370b262761bf4f4f10f2418163c7574946`。保存反馈 #51 已由 [PR #52](https://github.com/Derek-X-Wang/nvwa/pull/52) 交付，合并 main 为 `f7b15eb166ed8a616dd73965cf23d1b7dcad61f6`。这些技术交付和后续引导式真人观察不等于完整 Alpha 关闭。
 
@@ -32,7 +36,7 @@ M1.1 已按技术范围收束。 [M1.2](https://github.com/Derek-X-Wang/nvwa/mil
 | 薄 M1：可捏、可编排、可互动 | 三段 authored action、5–10 秒编排、播放/暂停/定位、点击触发与恢复、原生/Web Player | #14–#16 已按有界本地验收完成；完整发行目标未完成 |
 | M1.1：界面与稳定性 | 窄 UI 组件整合、中文/输入恢复、有界历史/加载、永久 CPU 绘制回归、Web 构建 A/B | 技术范围已关闭；残余 #3/#4 保持开放，不宣称性能或原始 DPR 故障已解决 |
 | M1.2：真实 agent 创作 Alpha | 能力发现→实际 CLI 命令→错误回读/纠正→保存→桌面/Web 继续编辑与播放 | #46→#47→#48 技术交付完成；引导式真人检查已补齐，#49 未引导完整 Alpha 门仍开放 |
-| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 隔离控制与一个真实原始样本已有证据；数值结构通过，坐标/rest/规范化/目标映射及生成播放未验收；产品 provider 未交付，#12 保持开放；本次单次授权已用完 |
+| M2：真实动作生成 provider | 精确授权模型/编码器、任务失败/取消、规范化结果、目标 rig 映射和实际生成播放 | 一个真实样本在限定角色上完成工程标定、CLI 校验和双端播放/保存交换；动作质量 HOLD、官方兼容性及产品 provider 未完成，#12 保持开放；单次模型授权已用完 |
 | 内容与沙盒扩展 | Blender 工具、更多角色/服装、指定版本 VRM、IK/接触、只读 VaM 与有限迁移 | 后续逐项定范围，不承诺任意 rig/VAR/插件兼容 |
 
 ## M1.2 交付与实验索引

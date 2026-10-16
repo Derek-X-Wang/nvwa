@@ -1,0 +1,114 @@
+{
+  "status": "PASS",
+  "scope": "existing native CLI only; no UI playback",
+  "cli_sha256": "c86518413dde4afe6000dda9092e09eaaf071d7a89924f621c0e051eeb5a102e",
+  "input_work_sha256": "7668eb7a2a2f87070500cbf49fa27d6794aa1fb83f5392b75a0ff51667cde779",
+  "saved_work_sha256": "b3c7ead0e48bb584e2e52e17687e9d14280b1885703fed85d26e54cc76417b91",
+  "whole_inspected_document_json_equal": true,
+  "source_input_float32_semantics_equal": true,
+  "source_wide_float_json_spelling_preserved": false,
+  "checks": [
+    {
+      "name": "inspect-source",
+      "exit_code": 0,
+      "argv": [
+        "<repository>/.work/m2-reference-gate/alpha-prep/ready-native/tools/nvwa-cli",
+        "inspect",
+        "<repository>/experiments/48-genuine-fixture-work/artifacts/genuine44-calibrated47.nvwa.json"
+      ],
+      "stdout_sha256": "018b0f5088cac9e8ed1cb633b776b99167c8ea28f8608b46782e8f395c60ffe3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "validate-source",
+      "exit_code": 0,
+      "argv": [
+        "<repository>/.work/m2-reference-gate/alpha-prep/ready-native/tools/nvwa-cli",
+        "validate",
+        "<repository>/experiments/48-genuine-fixture-work/artifacts/genuine44-calibrated47.nvwa.json",
+        "<repository>/experiments/48-genuine-fixture-work/artifacts/assets"
+      ],
+      "stdout_sha256": "cac968d97760ae89001c7baf8817ddab9e2b6213a15a4702aaec919b85c1cccb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "valid": true,
+        "asset_checked": true,
+        "revision": 0
+      }
+    },
+    {
+      "name": "save",
+      "exit_code": 0,
+      "argv": [
+        "<repository>/.work/m2-reference-gate/alpha-prep/ready-native/tools/nvwa-cli",
+        "save",
+        "<repository>/experiments/48-genuine-fixture-work/artifacts/genuine44-calibrated47.nvwa.json",
+        "<repository>/.work/m2-genuine-work/primary/cli-saved.nvwa.json"
+      ],
+      "stdout_sha256": "21a59941255a5ea1dd30e1fe304d2ba2345341dd76c0416dc829468b01da6d3c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "inspect-saved",
+      "exit_code": 0,
+      "argv": [
+        "<repository>/.work/m2-reference-gate/alpha-prep/ready-native/tools/nvwa-cli",
+        "inspect",
+        "<repository>/.work/m2-genuine-work/primary/cli-saved.nvwa.json"
+      ],
+      "stdout_sha256": "018b0f5088cac9e8ed1cb633b776b99167c8ea28f8608b46782e8f395c60ffe3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "validate-saved",
+      "exit_code": 0,
+      "argv": [
+        "<repository>/.work/m2-reference-gate/alpha-prep/ready-native/tools/nvwa-cli",
+        "validate",
+        "<repository>/.work/m2-genuine-work/primary/cli-saved.nvwa.json",
+        "<repository>/experiments/48-genuine-fixture-work/artifacts/assets"
+      ],
+      "stdout_sha256": "cac968d97760ae89001c7baf8817ddab9e2b6213a15a4702aaec919b85c1cccb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "result": {
+        "valid": true,
+        "asset_checked": true,
+        "revision": 0
+      }
+    },
+    {
+      "name": "missing-asset",
+      "exit_code": 1,
+      "argv": [
+        "<repository>/.work/m2-reference-gate/alpha-prep/ready-native/tools/nvwa-cli",
+        "validate",
+        "<repository>/.work/m2-genuine-work/primary/cli-saved.nvwa.json",
+        "<repository>/.work/m2-genuine-work/primary/missing-assets"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0176607defca3617afece4edff9e06db31616d9c03937a8747cac2b6d7b1a037",
+      "result_code": "asset_missing"
+    },
+    {
+      "name": "corrupt-asset",
+      "exit_code": 1,
+      "argv": [
+        "<repository>/.work/m2-reference-gate/alpha-prep/ready-native/tools/nvwa-cli",
+        "validate",
+        "<repository>/.work/m2-genuine-work/primary/cli-saved.nvwa.json",
+        "<repository>/.work/m2-genuine-work/primary/corrupt-assets"
+      ],
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d7379c60e643483c30fbbea1624b4bb3fd6723102c986a663affeeb458e4b632",
+      "result_code": "asset_hash_mismatch"
+    }
+  ],
+  "persistent_processes": 0,
+  "not_run": [
+    "native UI playback",
+    "Web playback",
+    "native/Web save exchange",
+    "official decoder parity",
+    "prompt quality"
+  ]
+}

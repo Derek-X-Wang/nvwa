@@ -1,0 +1,60 @@
+{
+  "classification": "retained root observation plus actual archived files; this verifier does not replay GUI",
+  "cli_revision1": {
+    "command": "native/reload-command.json",
+    "exit": 0,
+    "input_sha256": "b3c7ead0e48bb584e2e52e17687e9d14280b1885703fed85d26e54cc76417b91",
+    "output_sha256": "5da9940741b891a1b9c0d95e2c066fc9fed714b384ceda32b9abf1d5983db605"
+  },
+  "failures": [
+    {
+      "case": "relative --work startup",
+      "result": "rejected absolute-path requirement; operator supplied wrong argument; not a product failure or passing exchange"
+    },
+    {
+      "case": "early automation path edit",
+      "private_image": "excluded because it exposes a private home path",
+      "result": "path corruption during keyboard automation led to Save OS error 2; source Work unchanged; corrected valid-path Save later succeeded"
+    }
+  ],
+  "native_saved_revision0": "green Saved toast and actual file retained",
+  "native_sessions_exited_zero": [
+    60963,
+    8887,
+    54803,
+    75090,
+    45575
+  ],
+  "native_web_return_open": {
+    "clip": "genuine44_calibrated47",
+    "jaw_width": 0.62,
+    "joints": 18,
+    "morphs": 4,
+    "revision": 2
+  },
+  "native_web_return_save": "green Saved toast; actual saved file byte-identical to completed Web download",
+  "not_run": [
+    "fresh GUI replay by offline verifier",
+    "exact per-frame runtime world-pose numbers",
+    "official decoder parity",
+    "anatomy/contact/generalrig",
+    "semantic/human motion quality",
+    "performance",
+    "fresh local native/Wasm compile",
+    "unassisted Alpha49 trial"
+  ],
+  "observed_utc": "2026-10-16T00:25:35.546147+00:00",
+  "quality": "HOLD",
+  "seek_seconds": {
+    "native_early": 0.38,
+    "native_mid": 1.9,
+    "played_end": 2.9667,
+    "web_mid": 1.9
+  },
+  "visible_quality_issue": "arm/torso intersection; hand visible at waist. Attribution not established.",
+  "web_downloads_completed": true,
+  "web_revision2_single_edit": {
+    "jaw_width": 0.62,
+    "revision": 2
+  }
+}
