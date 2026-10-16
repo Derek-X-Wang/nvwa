@@ -221,12 +221,12 @@ fn slider_previews_are_one_committed_transaction() {
 fn unknown_fields_duplicate_keys_oversized_json_and_schema_are_rejected() {
     let original = document().to_json().unwrap();
     let mut value: serde_json::Value = serde_json::from_str(&original).unwrap();
-    value["schema_version"] = 2.into();
+    value["schema_version"] = 99.into();
     assert_eq!(
         code(SceneDocument::from_json(&value.to_string())),
         "unsupported_schema_version"
     );
-    value["schema_version"] = 1.into();
+    value["schema_version"] = nvwa_core::SCHEMA_VERSION.into();
     value["character"]["surprise"] = true.into();
     assert_eq!(
         code(SceneDocument::from_json(&value.to_string())),

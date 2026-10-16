@@ -1,4 +1,6 @@
 //! Shared native/Web renderer. The editor document is the source of truth.
+mod stage;
+pub use stage::StageViewOverride;
 use std::collections::{BTreeMap, BTreeSet};
 
 use bevy::{
@@ -14,7 +16,9 @@ use bevy::{
     prelude::*,
     world_serialization::WorldInstanceReady,
 };
-use nvwa_core::{CharacterProfile, Command, CommandEnvelope, Editor, SceneDocument, TimelineClip};
+use nvwa_core::{
+    CharacterProfile, Command, CommandEnvelope, Editor, SceneDocument, StageSettings, TimelineClip,
+};
 
 /// Launch-only policy; a requested work must never silently show the fixture.
 #[derive(Resource, Default, Clone, Copy)]
@@ -68,12 +72,36 @@ impl EditorState {
         self.preview = Some(preview);
         Ok(())
     }
+    pub fn preview_stage(&mut self, stage: StageSettings) -> Result<(), String> {
+        let preview = self
+            .editor
+            .as_ref()
+            .ok_or("No document is open")?
+            .preview(&Command::SetStage { stage })
+            .map_err(|e| e.to_string())?;
+        self.preview = Some(preview);
+        Ok(())
+    }
+    pub fn cancel_preview(&mut self) {
+        self.preview = None;
+    }
     pub fn commit_preview(&mut self) -> Result<(), String> {
         if let Some(preview) = self.preview.take() {
-            self.apply(Command::SetParameters {
-                character_id: preview.character.id,
-                values: preview.character.parameters,
-            })?;
+            if self
+                .document()
+                .is_some_and(|document| document.stage != preview.stage)
+            {
+                self.apply(Command::SetStage {
+                    stage: preview.stage,
+                })?;
+            } else if self.document().is_some_and(|document| {
+                document.character.parameters != preview.character.parameters
+            }) {
+                self.apply(Command::SetParameters {
+                    character_id: preview.character.id,
+                    values: preview.character.parameters,
+                })?;
+            }
         }
         Ok(())
     }
@@ -83,6 +111,8 @@ impl EditorState {
 pub struct RuntimeStatus {
     pub phase: String,
     pub error: Option<String>,
+    /// Presentation conversion errors leave the Work unchanged.
+    pub stage_error: Option<String>,
     pub ready: bool,
     pub meshes: usize,
     pub skins: usize,
@@ -320,13 +350,14 @@ impl Plugin for NvwaRuntimePlugin {
             .init_resource::<RuntimeStatus>()
             .init_resource::<Playback>()
             .init_resource::<CharacterAsset>()
-            .add_systems(Startup, (open_default_document, setup_environment))
+            .init_resource::<StageViewOverride>()
+            .add_systems(Startup, (open_default_document, stage::setup_environment))
             .add_systems(Update, load_character)
             // Override user morph channels after skeletal animation evaluation.
             // The joints and recipe morphs therefore remain active together.
             .add_systems(
                 PostUpdate,
-                (apply_recipe, collect_evidence)
+                (stage::apply_stage, apply_recipe, collect_evidence)
                     .chain()
                     .after(AnimationSystems)
                     .in_set(RuntimeSystems::Mirror)
@@ -376,34 +407,6 @@ fn open_default_document(
         status.error = Some(error);
         status.phase = "Profile error".into();
     }
-}
-fn setup_environment(
-    mut commands: Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-) {
-    commands.insert_resource(ClearColor(Color::srgb(0.055, 0.07, 0.095)));
-    commands.insert_resource(GlobalAmbientLight {
-        brightness: 450.0,
-        ..default()
-    });
-    commands.spawn((
-        SceneCamera,
-        Camera3d::default(),
-        bevy::core_pipeline::tonemapping::Tonemapping::Reinhard,
-        Transform::from_xyz(3.1, 2.0, 4.8).looking_at(Vec3::new(0.0, 0.95, 0.0), Vec3::Y),
-    ));
-    commands.spawn((
-        DirectionalLight {
-            illuminance: 8000.0,
-            ..default()
-        },
-        Transform::from_rotation(Quat::from_euler(EulerRot::XYZ, -0.65, -0.5, 0.0)),
-    ));
-    commands.spawn((
-        Mesh3d(meshes.add(Plane3d::default().mesh().size(200.0, 200.0))),
-        MeshMaterial3d(materials.add(Color::srgb(0.1, 0.13, 0.17))),
-    ));
 }
 
 #[derive(SystemParam)]

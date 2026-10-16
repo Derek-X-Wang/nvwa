@@ -62,6 +62,7 @@ fn discovered_examples_execute_and_keep_existing_profile_contract() {
             "set_parameters",
             "set_scale",
             "set_timeline",
+            "set_stage",
             "undo",
             "redo"
         ]
@@ -81,9 +82,9 @@ fn discovered_examples_execute_and_keep_existing_profile_contract() {
     );
     assert!(applied.stderr.is_empty());
     let results: Value = serde_json::from_slice(&applied.stdout).unwrap();
-    assert_eq!(results.as_array().unwrap().len(), 5);
+    assert_eq!(results.as_array().unwrap().len(), 6);
     let loaded: Value = serde_json::from_slice(&std::fs::read(&saved).unwrap()).unwrap();
-    assert_eq!(loaded["revision"], 28);
+    assert_eq!(loaded["revision"], 29);
     assert_eq!(loaded["character"], input_json["character"]);
     assert_eq!(loaded["timeline"], input_json["timeline"]);
     std::fs::remove_dir_all(dir).unwrap();
@@ -156,5 +157,74 @@ fn stale_second_envelope_is_atomic_and_correctable_after_inspection() {
     let error: Value = serde_json::from_slice(&undo.stderr).unwrap();
     assert_eq!(error["code"], "nothing_to_undo");
     assert!(!undone.exists());
+    std::fs::remove_dir_all(dir).unwrap();
+}
+
+#[test]
+fn legacy_stage_discovery_apply_validation_and_file_recovery_use_actual_binary() {
+    let (dir, input) = setup("stage");
+    let mut legacy: Value = serde_json::from_slice(&std::fs::read(&input).unwrap()).unwrap();
+    legacy["schema_version"] = json!(1);
+    legacy.as_object_mut().unwrap().remove("stage");
+    std::fs::write(&input, serde_json::to_vec(&legacy).unwrap()).unwrap();
+    let before = std::fs::read(&input).unwrap();
+    let discovered = cli(&["describe-capabilities".as_ref(), &input]);
+    assert!(discovered.status.success());
+    let caps: Value = serde_json::from_slice(&discovered.stdout).unwrap();
+    assert_eq!(caps["cli_contract"]["work_schema"]["writes"], 2);
+    assert_eq!(caps["cli_contract"]["work_schema"]["reads"], json!([1, 2]));
+    assert_eq!(
+        caps["cli_contract"]["set_stage"]["quality"],
+        json!(["low", "balanced", "high"])
+    );
+    assert_eq!(
+        caps["cli_contract"]["set_stage"]["profiles"]["high"]["contact_shadows"],
+        false
+    );
+    let mut command = caps["cli_contract"]["command_examples"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|e| e["command"]["type"] == "set_stage")
+        .unwrap()
+        .clone();
+    command["command"]["stage"]["quality"] = json!("high");
+    command["command"]["stage"]["camera"]["distance"] = json!(2.0);
+    let requests = dir.join("stage-command.json");
+    let saved = dir.join("stage.json");
+    std::fs::write(&requests, serde_json::to_vec(&command).unwrap()).unwrap();
+    let applied = cli(&["apply".as_ref(), &input, &requests, &saved]);
+    assert!(
+        applied.status.success(),
+        "{}",
+        String::from_utf8_lossy(&applied.stderr)
+    );
+    let validated = cli(&["validate".as_ref(), &saved]);
+    assert!(validated.status.success());
+    let inspected = cli(&["inspect".as_ref(), &saved]);
+    assert!(inspected.status.success());
+    let work: Value = serde_json::from_slice(&inspected.stdout).unwrap();
+    assert_eq!(work["schema_version"], 2);
+    assert_eq!(work["revision"], 24);
+    assert_eq!(work["stage"]["quality"], "high");
+    assert_eq!(work["stage"]["camera"]["distance"], 2.0);
+    assert_eq!(work["character"], legacy["character"]);
+    assert_eq!(work["timeline"], legacy["timeline"]);
+    assert_eq!(std::fs::read(&input).unwrap(), before);
+    let saved_before = std::fs::read(&saved).unwrap();
+    command["command"]["stage"]["key_light"]["illuminance_lux"] = json!(-1);
+    std::fs::write(&requests, serde_json::to_vec(&command).unwrap()).unwrap();
+    let bad = cli(&["apply".as_ref(), &input, &requests, &saved]);
+    assert!(!bad.status.success());
+    assert_eq!(
+        serde_json::from_slice::<Value>(&bad.stderr).unwrap()["code"],
+        "out_of_range"
+    );
+    assert_eq!(std::fs::read(&saved).unwrap(), saved_before);
+    assert_eq!(std::fs::read(&input).unwrap(), before);
+    let mut broken = work;
+    broken["stage"]["camera"]["fov_degrees"] = json!(0);
+    std::fs::write(&saved, serde_json::to_vec(&broken).unwrap()).unwrap();
+    assert!(!cli(&["validate".as_ref(), &saved]).status.success());
     std::fs::remove_dir_all(dir).unwrap();
 }

@@ -5,8 +5,12 @@ Nvwa is a character creation and animation sandbox. This vocabulary describes th
 ## Language
 
 **Work**:
-A saved character creation with its appearance and selected animation settings.
+A saved character creation with its appearance, animation arrangement and rehearsal-stage settings.
 _Avoid_: screenshot, video
+
+**Rehearsal stage**:
+The adjustable presentation space used to observe a character and try its actions, including lighting, background and camera framing.
+_Avoid_: world editor, multiplayer server
 
 **Character profile**:
 The supported character's available appearance parameters and authored actions, together with its asset identity.

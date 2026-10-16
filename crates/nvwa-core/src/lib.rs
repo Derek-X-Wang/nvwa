@@ -2,13 +2,15 @@
 #![forbid(unsafe_code)]
 
 mod asset;
+mod stage;
+pub use stage::{StageAmbient, StageCamera, StageFloor, StageLight, StageQuality, StageSettings};
 #[cfg(test)]
 mod bounded_history_tests;
 
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
-pub const SCHEMA_VERSION: u32 = 1;
+pub const SCHEMA_VERSION: u32 = 2;
 pub const MAX_JSON_BYTES: usize = 2 * 1024 * 1024;
 
 /// Session retention limits. Bytes measure compact JSON payloads, not heap usage.
@@ -57,14 +59,62 @@ impl CoreError {
 
 type Result<T> = std::result::Result<T, CoreError>;
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct SceneDocument {
     pub schema_version: u32,
     pub revision: u64,
     pub profile: CharacterProfile,
     pub character: CharacterRecipe,
     pub timeline: Vec<TimelineClip>,
+    pub stage: StageSettings,
+}
+
+impl<'de> Deserialize<'de> for SceneDocument {
+    fn deserialize<D: serde::Deserializer<'de>>(
+        deserializer: D,
+    ) -> std::result::Result<Self, D::Error> {
+        // Unlike Option<StageSettings>, this distinguishes an absent field from
+        // explicit null, and decodes directly so duplicate fields stay errors.
+        #[derive(Default)]
+        struct StageField(Option<StageSettings>);
+        impl<'de> Deserialize<'de> for StageField {
+            fn deserialize<D: serde::Deserializer<'de>>(
+                deserializer: D,
+            ) -> std::result::Result<Self, D::Error> {
+                StageSettings::deserialize(deserializer).map(|stage| Self(Some(stage)))
+            }
+        }
+        #[derive(Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Wire {
+            schema_version: u32,
+            revision: u64,
+            profile: CharacterProfile,
+            character: CharacterRecipe,
+            timeline: Vec<TimelineClip>,
+            #[serde(default)]
+            stage: StageField,
+        }
+        let wire = Wire::deserialize(deserializer)?;
+        let stage = match (wire.schema_version, wire.stage.0) {
+            (1, None) => StageSettings::default(),
+            (1, Some(_)) => return Err(serde::de::Error::custom("schema 1 does not allow stage")),
+            (SCHEMA_VERSION, None) => return Err(serde::de::Error::missing_field("stage")),
+            (_, stage) => stage.unwrap_or_default(),
+        };
+        Ok(Self {
+            schema_version: if wire.schema_version == 1 {
+                SCHEMA_VERSION
+            } else {
+                wire.schema_version
+            },
+            revision: wire.revision,
+            profile: wire.profile,
+            character: wire.character,
+            timeline: wire.timeline,
+            stage,
+        })
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -139,6 +189,9 @@ pub enum Command {
     SetTimeline {
         clips: Vec<TimelineClip>,
     },
+    SetStage {
+        stage: StageSettings,
+    },
     Undo,
     Redo,
 }
@@ -164,6 +217,9 @@ impl<'de> Deserialize<'de> for Command {
             SetTimeline {
                 clips: Vec<TimelineClip>,
             },
+            SetStage {
+                stage: StageSettings,
+            },
             Undo {},
             Redo {},
         }
@@ -183,6 +239,7 @@ impl<'de> Deserialize<'de> for Command {
                 scale,
             },
             StrictCommand::SetTimeline { clips } => Self::SetTimeline { clips },
+            StrictCommand::SetStage { stage } => Self::SetStage { stage },
             StrictCommand::Undo {} => Self::Undo,
             StrictCommand::Redo {} => Self::Redo,
         })
@@ -380,6 +437,7 @@ impl SceneDocument {
             },
             profile,
             timeline,
+            stage: StageSettings::default(),
         };
         document.validate()?;
         Ok(document)
@@ -395,6 +453,7 @@ impl SceneDocument {
                 ),
             ));
         }
+        self.stage.validate()?;
         self.profile.validate()?;
         id(&self.character.id, "character id")?;
         if self.character.profile_id != self.profile.id {
@@ -538,6 +597,7 @@ impl CommandEnvelope {
                 }
             }
             Command::SetScale { scale, .. } => finite(*scale, "scale")?,
+            Command::SetStage { stage } => stage.validate()?,
             Command::SetTimeline { clips } => {
                 for clip in clips {
                     finite(clip.start_seconds, "start")?;
@@ -805,6 +865,10 @@ fn apply_edit(document: &mut SceneDocument, command: &Command) -> Result<()> {
             document.character.scale = *scale;
         }
         Command::SetTimeline { clips } => document.timeline = clips.clone(),
+        Command::SetStage { stage } => {
+            stage.validate()?;
+            document.stage = stage.clone();
+        }
         Command::Undo | Command::Redo => {
             return Err(CoreError::new(
                 "invalid_preview",
@@ -830,6 +894,7 @@ fn command_summary(command: &Command) -> String {
         Command::SetParameters { values, .. } => format!("Set {} parameter(s)", values.len()),
         Command::SetScale { scale, .. } => format!("Set scale to {scale}"),
         Command::SetTimeline { clips } => format!("Set {} timeline clip(s)", clips.len()),
+        Command::SetStage { .. } => "Set rehearsal stage".into(),
         Command::Undo => "Undo".into(),
         Command::Redo => "Redo".into(),
     }

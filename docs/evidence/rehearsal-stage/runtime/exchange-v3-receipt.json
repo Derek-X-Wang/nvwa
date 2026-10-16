@@ -1,0 +1,50 @@
+{
+  "status": "PASS_NATIVE_WEB_NATIVE_FILE_EXCHANGE",
+  "observed_utc": "2026-10-16T14:25:46.518822+00:00",
+  "source_commit": "b43757d87dde8294525769a98db17eab57a886fc",
+  "native_binary_sha256": "b319f513e31801bef6e007a3a3f642e8abf07ebaff6959ec2386ee787bd21b2a",
+  "web_wasm_sha256": "ae1118cc1d35d73b910c693865274b42a8e2fd403b880c764341b6b571545d9d",
+  "recording": "Actual root CUA observations and actual files; manual action trace, not raw browser input events or persisted OS screenshots. PNG is the actual Web canvas download.",
+  "actions": [
+    "Native custom Stage Save produced schema2 revision20",
+    "Actual Web file chooser opened that native file; red background, High shadow and camera azimuth52 visibly restored; nine-second sequence completed",
+    "Actual Web Save downloaded white-high.nvwa.json (filename retains existing toolbar basename); exact returned path was moved to this packet",
+    "Actual benchmark canvas button downloaded retained Web PNG with Stage panel open",
+    "Native GUI Open selected a short-path copy of the exact Web download; custom stage and revision20 restored, nine-second sequence completed",
+    "Native Save showed bottom-right green Saved with the path; resaved file remained byte-identical"
+  ],
+  "files": [
+    {
+      "path": "native-v3-saved.nvwa.json",
+      "bytes": 2870,
+      "sha256": "5d6211c2fc8a9d1bc2237a37405cb780ccee273ac5dd1833f7fd34e1fd314a19"
+    },
+    {
+      "path": "web-native-v3-roundtrip.nvwa.json",
+      "bytes": 2870,
+      "sha256": "5d6211c2fc8a9d1bc2237a37405cb780ccee273ac5dd1833f7fd34e1fd314a19"
+    },
+    {
+      "path": "native-v3-web-resaved.nvwa.json",
+      "bytes": 2870,
+      "sha256": "5d6211c2fc8a9d1bc2237a37405cb780ccee273ac5dd1833f7fd34e1fd314a19"
+    },
+    {
+      "path": "web-native-v3-exchange.png",
+      "bytes": 419466,
+      "sha256": "cfc2f00807d4ad1b1119a93bad582b6b02ed4eadc8ab739bb5b99f770d0c9b59"
+    }
+  ],
+  "checks": {
+    "native_to_web_byte_equal": true,
+    "web_to_native_resave_byte_equal": true,
+    "character_profile_timeline_preserved": true,
+    "stage_background_R_0_3_camera_azimuth52_high": true
+  },
+  "not_run": [
+    "physical drag or monitor/DPI migration",
+    "performance/GPU timestamps/memory/cold-start/first physical frame",
+    "Windows/Linux or other browser engines"
+  ],
+  "cleanup": "Owned IAB tab closed and owned server stopped before final native reopen; owned native window closed afterwards. No user files or tabs deleted."
+}

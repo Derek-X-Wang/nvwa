@@ -1,0 +1,610 @@
+{
+  "status": "PASS_FUNCTIONAL_READBACK",
+  "source_commit": "b43757d87dde8294525769a98db17eab57a886fc",
+  "binary_sha256": "b319f513e31801bef6e007a3a3f642e8abf07ebaff6959ec2386ee787bd21b2a",
+  "scope": "five sequential actual dev native Metal GPU readbacks; 1280x720 benchmark layout, not ordinary retina window. Images inspected separately.",
+  "performance_limit": "Frame fields are uncontrolled Bevy main-loop cadence, not GPU timestamps or first physical presentation; wall times include10s requested warmup. No comparative performance or cold startup claim.",
+  "cleanup": "all five smoke children exited0; no owned native process remains",
+  "cases": [
+    {
+      "case": "white-low",
+      "work_sha256": "1427c726f3aaee36fda7ce6d370f95bb16fefc9d9ef8057997eaab492b4e24f5",
+      "exit_code": 0,
+      "wall_seconds": 13.26153954199981,
+      "image": {
+        "file": "native-v3-white-low.png",
+        "sha256": "075ae8a9b0fd370813630ff60b686371c40fa8cf08f144a34b33b80737d7f5c3",
+        "bytes": 356457,
+        "dimensions": [
+          1280,
+          720
+        ]
+      },
+      "log": {
+        "file": "native-v3-white-low.log",
+        "sha256": "2358cef76abc32e876b0195add905b29272c18805702a5bb325676ae8ebe1d43",
+        "bytes": 2967
+      },
+      "actual_nvwa_evidence": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "dev",
+        "capture_callback": true,
+        "capture_callback_seconds": 10.238370625,
+        "capture_file_bytes": 356457,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 2,
+        "elapsed_seconds": 10.238370625,
+        "error": null,
+        "first_asset_ready_seconds": 0.197379833,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 10.238370625,
+        "frame_ms_p50": 8.332083702087402,
+        "frame_ms_p95": 13.857208251953125,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 1057,
+        "gpu": {
+          "backend": "Metal",
+          "name": "Apple M2 Pro"
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 1055,
+        "skins": 9,
+        "stage": {
+          "ambient": {
+            "brightness": 180.0,
+            "color_srgb": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "background_color_srgb": [
+            0.8799999952316284,
+            0.8999999761581421,
+            0.9300000071525574
+          ],
+          "camera": {
+            "azimuth_degrees": 16.0,
+            "distance": 3.799999952316284,
+            "elevation_degrees": 8.0,
+            "fov_degrees": 36.0,
+            "target_height": 0.949999988079071
+          },
+          "fill_light": {
+            "azimuth_degrees": 55.0,
+            "color_srgb": [
+              0.800000011920929,
+              0.8899999856948853,
+              1.0
+            ],
+            "elevation_degrees": 28.0,
+            "illuminance_lux": 3000.0
+          },
+          "floor": {
+            "color_srgb": [
+              0.7200000286102295,
+              0.75,
+              0.800000011920929
+            ],
+            "shadows": true,
+            "visible": true
+          },
+          "key_light": {
+            "azimuth_degrees": -35.0,
+            "color_srgb": [
+              1.0,
+              0.9399999976158142,
+              0.8600000143051147
+            ],
+            "elevation_degrees": 42.0,
+            "illuminance_lux": 10000.0
+          },
+          "quality": "low"
+        },
+        "stage_error": null,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "stage_binary32_matches_saved_work": true
+    },
+    {
+      "case": "white-balanced",
+      "work_sha256": "1de5587b0e0e3946569d73220b4cb613903564bb6dca50fad6e9805d14d4e455",
+      "exit_code": 0,
+      "wall_seconds": 10.892056209035218,
+      "image": {
+        "file": "native-v3-white-balanced.png",
+        "sha256": "80642d295e557f46803eebc03a125c3776177e48a6cea6d19746e6f5d5ae4b54",
+        "bytes": 420401,
+        "dimensions": [
+          1280,
+          720
+        ]
+      },
+      "log": {
+        "file": "native-v3-white-balanced.log",
+        "sha256": "e0619ab4c1dc2837a544dd702ee7c6143a5888a03e067523f9eb6f1b2bfa602c",
+        "bytes": 2977
+      },
+      "actual_nvwa_evidence": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "dev",
+        "capture_callback": true,
+        "capture_callback_seconds": 10.083833125,
+        "capture_file_bytes": 420401,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 2,
+        "elapsed_seconds": 10.083833125,
+        "error": null,
+        "first_asset_ready_seconds": 0.055315542,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 10.083833125,
+        "frame_ms_p50": 8.336959838867188,
+        "frame_ms_p95": 10.290082931518555,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 1178,
+        "gpu": {
+          "backend": "Metal",
+          "name": "Apple M2 Pro"
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 1176,
+        "skins": 9,
+        "stage": {
+          "ambient": {
+            "brightness": 180.0,
+            "color_srgb": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "background_color_srgb": [
+            0.8799999952316284,
+            0.8999999761581421,
+            0.9300000071525574
+          ],
+          "camera": {
+            "azimuth_degrees": 16.0,
+            "distance": 3.799999952316284,
+            "elevation_degrees": 8.0,
+            "fov_degrees": 36.0,
+            "target_height": 0.949999988079071
+          },
+          "fill_light": {
+            "azimuth_degrees": 55.0,
+            "color_srgb": [
+              0.800000011920929,
+              0.8899999856948853,
+              1.0
+            ],
+            "elevation_degrees": 28.0,
+            "illuminance_lux": 3000.0
+          },
+          "floor": {
+            "color_srgb": [
+              0.7200000286102295,
+              0.75,
+              0.800000011920929
+            ],
+            "shadows": true,
+            "visible": true
+          },
+          "key_light": {
+            "azimuth_degrees": -35.0,
+            "color_srgb": [
+              1.0,
+              0.9399999976158142,
+              0.8600000143051147
+            ],
+            "elevation_degrees": 42.0,
+            "illuminance_lux": 10000.0
+          },
+          "quality": "balanced"
+        },
+        "stage_error": null,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "stage_binary32_matches_saved_work": true
+    },
+    {
+      "case": "white-high",
+      "work_sha256": "11f500848734efa0639bb15ea6f3a7f4358de9ac4f478b2374e6b2057258120e",
+      "exit_code": 0,
+      "wall_seconds": 11.350146332988515,
+      "image": {
+        "file": "native-v3-white-high.png",
+        "sha256": "50021a10b84ff94ba0cb433db13757909bf009b503b29626fe2a755f895deec9",
+        "bytes": 383635,
+        "dimensions": [
+          1280,
+          720
+        ]
+      },
+      "log": {
+        "file": "native-v3-white-high.log",
+        "sha256": "9129fc1686227e59645d3d5eea97ecea3be52d0715f2e79d4d94b3a925c9ee84",
+        "bytes": 2968
+      },
+      "actual_nvwa_evidence": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "dev",
+        "capture_callback": true,
+        "capture_callback_seconds": 10.086448584,
+        "capture_file_bytes": 383635,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 2,
+        "elapsed_seconds": 10.086448584,
+        "error": null,
+        "first_asset_ready_seconds": 0.053623917,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 10.086448584,
+        "frame_ms_p50": 8.34445858001709,
+        "frame_ms_p95": 10.526667594909668,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 1171,
+        "gpu": {
+          "backend": "Metal",
+          "name": "Apple M2 Pro"
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 1169,
+        "skins": 9,
+        "stage": {
+          "ambient": {
+            "brightness": 180.0,
+            "color_srgb": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "background_color_srgb": [
+            0.8799999952316284,
+            0.8999999761581421,
+            0.9300000071525574
+          ],
+          "camera": {
+            "azimuth_degrees": 16.0,
+            "distance": 3.799999952316284,
+            "elevation_degrees": 8.0,
+            "fov_degrees": 36.0,
+            "target_height": 0.949999988079071
+          },
+          "fill_light": {
+            "azimuth_degrees": 55.0,
+            "color_srgb": [
+              0.800000011920929,
+              0.8899999856948853,
+              1.0
+            ],
+            "elevation_degrees": 28.0,
+            "illuminance_lux": 3000.0
+          },
+          "floor": {
+            "color_srgb": [
+              0.7200000286102295,
+              0.75,
+              0.800000011920929
+            ],
+            "shadows": true,
+            "visible": true
+          },
+          "key_light": {
+            "azimuth_degrees": -35.0,
+            "color_srgb": [
+              1.0,
+              0.9399999976158142,
+              0.8600000143051147
+            ],
+            "elevation_degrees": 42.0,
+            "illuminance_lux": 10000.0
+          },
+          "quality": "high"
+        },
+        "stage_error": null,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "stage_binary32_matches_saved_work": true
+    },
+    {
+      "case": "detail-high",
+      "work_sha256": "90ebe14355f53e9a4fc7849a1e385ee37bb4647bff2c4d0ad6cc7e92a9d6d1d2",
+      "exit_code": 0,
+      "wall_seconds": 11.88873887504451,
+      "image": {
+        "file": "native-v3-detail-high.png",
+        "sha256": "e1c86ebf1add4e2258c83c9c283c0caf27f7cea20f3940151028d33d18b55d72",
+        "bytes": 331049,
+        "dimensions": [
+          1280,
+          720
+        ]
+      },
+      "log": {
+        "file": "native-v3-detail-high.log",
+        "sha256": "c73658471141543e4979b5c917f258f2fca62bfdffe3ec07ec0e6583c0220715",
+        "bytes": 2973
+      },
+      "actual_nvwa_evidence": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "dev",
+        "capture_callback": true,
+        "capture_callback_seconds": 10.109484417000001,
+        "capture_file_bytes": 331049,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 2,
+        "elapsed_seconds": 10.109484417000001,
+        "error": null,
+        "first_asset_ready_seconds": 0.064772875,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 10.109484417000001,
+        "frame_ms_p50": 8.294792175292969,
+        "frame_ms_p95": 9.643875122070312,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 1175,
+        "gpu": {
+          "backend": "Metal",
+          "name": "Apple M2 Pro"
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 1173,
+        "skins": 9,
+        "stage": {
+          "ambient": {
+            "brightness": 180.0,
+            "color_srgb": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "background_color_srgb": [
+            0.8799999952316284,
+            0.8999999761581421,
+            0.9300000071525574
+          ],
+          "camera": {
+            "azimuth_degrees": 8.0,
+            "distance": 1.25,
+            "elevation_degrees": 3.0,
+            "fov_degrees": 30.0,
+            "target_height": 1.649999976158142
+          },
+          "fill_light": {
+            "azimuth_degrees": 55.0,
+            "color_srgb": [
+              0.800000011920929,
+              0.8899999856948853,
+              1.0
+            ],
+            "elevation_degrees": 28.0,
+            "illuminance_lux": 3000.0
+          },
+          "floor": {
+            "color_srgb": [
+              0.7200000286102295,
+              0.75,
+              0.800000011920929
+            ],
+            "shadows": true,
+            "visible": true
+          },
+          "key_light": {
+            "azimuth_degrees": -35.0,
+            "color_srgb": [
+              1.0,
+              0.9399999976158142,
+              0.8600000143051147
+            ],
+            "elevation_degrees": 42.0,
+            "illuminance_lux": 10000.0
+          },
+          "quality": "high"
+        },
+        "stage_error": null,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "stage_binary32_matches_saved_work": true
+    },
+    {
+      "case": "custom",
+      "work_sha256": "5d6211c2fc8a9d1bc2237a37405cb780ccee273ac5dd1833f7fd34e1fd314a19",
+      "exit_code": 0,
+      "wall_seconds": 11.634681291063316,
+      "image": {
+        "file": "native-v3-custom.png",
+        "sha256": "7f8a120f62fcf70eb36570cdab58270256bf988dc9f76e0e0ef1f2073d170a84",
+        "bytes": 398217,
+        "dimensions": [
+          1280,
+          720
+        ]
+      },
+      "log": {
+        "file": "native-v3-custom.log",
+        "sha256": "0255d11615dd8858e493f8da88030d34d3cec0c61ccb7893c2fcd186f882001b",
+        "bytes": 3015
+      },
+      "actual_nvwa_evidence": {
+        "active_animations": 1,
+        "animation_seconds": 9.0,
+        "build_profile": "dev",
+        "capture_callback": true,
+        "capture_callback_seconds": 10.079229708,
+        "capture_file_bytes": 398217,
+        "clip": "turn",
+        "clock": "bevy_TimeReal_since_first_update",
+        "completed": true,
+        "document_revision": 20,
+        "elapsed_seconds": 10.079229708,
+        "error": null,
+        "first_asset_ready_seconds": 0.048344042,
+        "first_visible_kind": "screenshot_callback_after_requested_warmup",
+        "first_visible_upper_bound_seconds": 10.079229708,
+        "frame_ms_p50": 8.34262466430664,
+        "frame_ms_p95": 10.22862434387207,
+        "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
+        "frame_sample_count": 600,
+        "frame_timing_kind": "main_loop_cadence_not_gpu_timestamp",
+        "frames": 1169,
+        "gpu": {
+          "backend": "Metal",
+          "name": "Apple M2 Pro"
+        },
+        "interaction_busy": false,
+        "joints": 18,
+        "meshes": 9,
+        "mode": "studio",
+        "morph_nodes": 1,
+        "morph_weights": 4,
+        "paused_animations": 1,
+        "physical_window": {
+          "height": 720,
+          "scale_factor": 1.0,
+          "width": 1280
+        },
+        "players": 1,
+        "playing": false,
+        "ready": true,
+        "ready_frames": 1167,
+        "skins": 9,
+        "stage": {
+          "ambient": {
+            "brightness": 95.0,
+            "color_srgb": [
+              0.800000011920929,
+              0.8799999952316284,
+              1.0
+            ]
+          },
+          "background_color_srgb": [
+            0.30000001192092896,
+            0.010999999940395355,
+            0.017999999225139618
+          ],
+          "camera": {
+            "azimuth_degrees": 52.0,
+            "distance": 3.799999952316284,
+            "elevation_degrees": 8.0,
+            "fov_degrees": 36.0,
+            "target_height": 0.949999988079071
+          },
+          "fill_light": {
+            "azimuth_degrees": 115.0,
+            "color_srgb": [
+              0.6499999761581421,
+              0.800000011920929,
+              1.0
+            ],
+            "elevation_degrees": 35.0,
+            "illuminance_lux": 4500.0
+          },
+          "floor": {
+            "color_srgb": [
+              0.03500000014901161,
+              0.04500000178813934,
+              0.06499999761581421
+            ],
+            "shadows": true,
+            "visible": true
+          },
+          "key_light": {
+            "azimuth_degrees": -42.0,
+            "color_srgb": [
+              1.0,
+              0.9200000166893005,
+              0.800000011920929
+            ],
+            "elevation_degrees": 38.0,
+            "illuminance_lux": 12000.0
+          },
+          "quality": "high"
+        },
+        "stage_error": null,
+        "timeline_count": 3,
+        "timeout": false
+      },
+      "stage_binary32_matches_saved_work": true
+    }
+  ]
+}

@@ -1,0 +1,926 @@
+{
+  "files": {
+    "crates/nvwa-cli/Cargo.toml": {
+      "archive_path": "sources/crates/nvwa-cli/Cargo.toml.txt",
+      "bytes": 236,
+      "git_blob": "f888ee698bea6d619080d23b4bfcc04ea5e4ae01",
+      "sha256": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508"
+    },
+    "crates/nvwa-cli/src/main.rs": {
+      "archive_path": "sources/crates/nvwa-cli/src/main.rs.txt",
+      "bytes": 14780,
+      "git_blob": "fce2b202dbd96fa5e444df89349bc2cde316909e",
+      "sha256": "600b8e55a4f842ce0a15a942fb8c53c70af3999bcd668738156baaa11e2351a3"
+    },
+    "crates/nvwa-cli/tests/discovery.rs": {
+      "archive_path": "sources/crates/nvwa-cli/tests/discovery.rs.txt",
+      "bytes": 6808,
+      "git_blob": "b96b40f9836db0ecd9dd1e2b5827d8488e153de5",
+      "sha256": "080eb7fa4b0fc48d01090783eed127d9ec3eddb159a75f8d15c096e7c1e394d0"
+    },
+    "crates/nvwa-cli/tests/response_transport.rs": {
+      "archive_path": "sources/crates/nvwa-cli/tests/response_transport.rs.txt",
+      "bytes": 3458,
+      "git_blob": "7eeba8e5738c15bfc261a50348decfa59da47380",
+      "sha256": "1e36e6b5c0d06718423369762850c81e2c97e27de199a49704819530aeb039c9"
+    },
+    "crates/nvwa-core/src/asset.rs": {
+      "archive_path": "sources/crates/nvwa-core/src/asset.rs.txt",
+      "bytes": 5849,
+      "git_blob": "1116b4ee1c6afc4894051b16c94a53d63d20c196",
+      "sha256": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a"
+    },
+    "crates/nvwa-core/src/lib.rs": {
+      "archive_path": "sources/crates/nvwa-core/src/lib.rs.txt",
+      "bytes": 30473,
+      "git_blob": "16bcf9f71355a9c2f36a8333a6102da0ad9e4234",
+      "sha256": "4c2f06d56b43e3849ee9040c8c5c5f999401816f8b64431d0dbfa240d952b797"
+    },
+    "docs/agents/cli-authoring.md": {
+      "archive_path": "sources/docs/agents/cli-authoring.md.txt",
+      "bytes": 4200,
+      "git_blob": "730da726537f57633e5a4e98ee8713a12ccab068",
+      "sha256": "989c228e88812bf405d5633fde2ceb77c1a904d6024a29985e54d3a04fa8cf92"
+    },
+    "docs/implementation/contract.md": {
+      "archive_path": "sources/docs/implementation/contract.md.txt",
+      "bytes": 5271,
+      "git_blob": "e7d902713853821af7392000c32335710a0cdd46",
+      "sha256": "293c8844fb3112ead9f72ca4817d216399dbbd6cb67a81418f8ec11e4dda47da"
+    },
+    "experiments/38-agent-cli/DECISIONS.md": {
+      "bytes": 3061,
+      "git_blob": "6728d989803674c22efbe6fef3a217c48ef2f501",
+      "sha256": "5601c40ea50a2af7c8a965ac6641306998e5f27c54e7d2aeed116cdff543446e"
+    },
+    "experiments/38-agent-cli/REPORT.md": {
+      "bytes": 5813,
+      "git_blob": "f17c2853549d17fc755a66c6eecb605c91871295",
+      "sha256": "64362b40316989bdfef6857ef9bab54e8f9d80c24e59e7bbddd5394d15eed2ed"
+    },
+    "experiments/38-agent-cli/TASK.md": {
+      "bytes": 1683,
+      "git_blob": "48cdb4126e065a75543124a88165225320e50d17",
+      "sha256": "d47387f6239fe14f1b3e9656b54e2dca11fb880a3606723dde1d79c5dab07034"
+    },
+    "experiments/38-agent-cli/accepted-run/DECISIONS.md": {
+      "bytes": 2821,
+      "git_blob": "523678f9f9fb30da44316c8561c37a6d77a53ad7",
+      "sha256": "c8ad63aa00de4791cac65d463deac085fd9a72c11ac5ac775c319f3bd80cba84"
+    },
+    "experiments/38-agent-cli/accepted-run/REPORT.md": {
+      "bytes": 2667,
+      "git_blob": "c91913accfae4dedd3ec4974ed7db062bedd82a3",
+      "sha256": "8d3b62c371cbb583ca59e98e3f7f8ba3c3d5d47e6e50349d96115fb6189d467e"
+    },
+    "experiments/38-agent-cli/accepted-run/agent-nine-second.nvwa.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/appearance.commands.json": {
+      "bytes": 205,
+      "git_blob": "4374c49e8dd53a3d3debc44cdea6a7f77997da45",
+      "sha256": "f94082c27a8b48150d17ab6c5c76ff947c3dfa4b21c1bf85d5503f656d68d524"
+    },
+    "experiments/38-agent-cli/accepted-run/appearance.nvwa.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/accepted-run/authored.nvwa.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/corrected-timeline.commands.json": {
+      "bytes": 544,
+      "git_blob": "c1398ce2269bf1f71b76d8f75a5fee8e8fa2b97f",
+      "sha256": "cf60825a4f3063c638e24b38cf04ce254f592168cf3f2eaa9758bf7b7e2c5921"
+    },
+    "experiments/38-agent-cli/accepted-run/initial.nvwa.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/01-new/argument-1.after.json": {
+      "bytes": 1064,
+      "git_blob": "ff08e37c97f9c1cffa0dc89bb723e23a654f9b02",
+      "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/01-new/argument-1.before.json": {
+      "bytes": 1064,
+      "git_blob": "ff08e37c97f9c1cffa0dc89bb723e23a654f9b02",
+      "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/01-new/argument-2.after.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/01-new/invocation.json": {
+      "bytes": 1383,
+      "git_blob": "4d91a2ac3a72f53386754f298166c63974cc5198",
+      "sha256": "c57ba7cc10ad192de174cb3445dd1a42129b874e010c5516ce0a785c7d2360b4"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/01-new/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/01-new/stdout.txt": {
+      "bytes": 81,
+      "git_blob": "9b2e48d324da8760c22c2910b824f361cbb09cfa",
+      "sha256": "730e3ed9c4e1895e07d7e300ec37c1d4c0600205607e16008f1f0ee4e6e2be8c"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/02-discover/argument-1.after.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/02-discover/argument-1.before.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/02-discover/invocation.json": {
+      "bytes": 1223,
+      "git_blob": "7a877b8d7535a2fed368cd16927c0d2723b626dd",
+      "sha256": "54cd9a11daad10c66132fb1fdbc1a824cc921989c4a5c35cbe11cd594744e592"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/02-discover/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/02-discover/stdout.txt": {
+      "bytes": 7363,
+      "git_blob": "99c4de47b4a9f9ae1a6559728ca36fa3146b3444",
+      "sha256": "15e9efc0b1973d879e71f22b61e260b68bed22086bc5ef151cb66e8cf637baae"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/03-appearance/argument-1.after.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/03-appearance/argument-1.before.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/03-appearance/argument-2.after.json": {
+      "bytes": 205,
+      "git_blob": "4374c49e8dd53a3d3debc44cdea6a7f77997da45",
+      "sha256": "f94082c27a8b48150d17ab6c5c76ff947c3dfa4b21c1bf85d5503f656d68d524"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/03-appearance/argument-2.before.json": {
+      "bytes": 205,
+      "git_blob": "4374c49e8dd53a3d3debc44cdea6a7f77997da45",
+      "sha256": "f94082c27a8b48150d17ab6c5c76ff947c3dfa4b21c1bf85d5503f656d68d524"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/03-appearance/argument-3.after.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/03-appearance/invocation.json": {
+      "bytes": 1957,
+      "git_blob": "261f3add85fe4e8dfd9a0ccca049cd75ca83bcbe",
+      "sha256": "fea17d47670c2ad48bc08986ffc0800445776295b5e8fe65cb598e34a30f42c2"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/03-appearance/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/03-appearance/stdout.txt": {
+      "bytes": 66,
+      "git_blob": "ebbc17ce8e0047586fdcfc7e26c7d909e768fb43",
+      "sha256": "3c60bd0b22ebd91818229bae9479d14bdf75b4dc569de4a8f5a6d672b9675265"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/04-stale-timeline/argument-1.after.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/04-stale-timeline/argument-1.before.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/04-stale-timeline/argument-2.after.json": {
+      "bytes": 540,
+      "git_blob": "f98ca058f4db2b08032f15ea6c3ba9129382bb1b",
+      "sha256": "255f055ddad45690b3be034deff73380d6aca5868912c9cc702ecc238b7caa04"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/04-stale-timeline/argument-2.before.json": {
+      "bytes": 540,
+      "git_blob": "f98ca058f4db2b08032f15ea6c3ba9129382bb1b",
+      "sha256": "255f055ddad45690b3be034deff73380d6aca5868912c9cc702ecc238b7caa04"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/04-stale-timeline/invocation.json": {
+      "bytes": 1783,
+      "git_blob": "000dd1b5c6929ebe3ad3caf44c83cac9f75811bb",
+      "sha256": "7db54dbb14ad86bc7b2867d946c735ed9b0ac3148461d01f74d35ace26aba8ce"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/04-stale-timeline/stderr.txt": {
+      "bytes": 84,
+      "git_blob": "85d176a8c7e659b31f19080cf546ef59f5eeea0d",
+      "sha256": "f5a9d4bf9f8f646d2db7cedf56667405990154376760f76bfeea42d8e3b873a2"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/04-stale-timeline/stdout.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/05-inspect-actual/argument-1.after.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/05-inspect-actual/argument-1.before.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/05-inspect-actual/invocation.json": {
+      "bytes": 1224,
+      "git_blob": "1b4ea4c161d56490202ddd48c78104467f296ee7",
+      "sha256": "5a233c0ce16411744ffec22d0a1e355820a4620d348ed4285ef8210b53a7f0f2"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/05-inspect-actual/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/05-inspect-actual/stdout.txt": {
+      "bytes": 1626,
+      "git_blob": "b17aabd8ac24cd51fb18bca5f4c76876f8761353",
+      "sha256": "61116681e24376abe156943848094220804034292d75a7c14a52d9c7557c67f0"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/06-corrected-timeline/argument-1.after.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/06-corrected-timeline/argument-1.before.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/06-corrected-timeline/argument-2.after.json": {
+      "bytes": 544,
+      "git_blob": "c1398ce2269bf1f71b76d8f75a5fee8e8fa2b97f",
+      "sha256": "cf60825a4f3063c638e24b38cf04ce254f592168cf3f2eaa9758bf7b7e2c5921"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/06-corrected-timeline/argument-2.before.json": {
+      "bytes": 544,
+      "git_blob": "c1398ce2269bf1f71b76d8f75a5fee8e8fa2b97f",
+      "sha256": "cf60825a4f3063c638e24b38cf04ce254f592168cf3f2eaa9758bf7b7e2c5921"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/06-corrected-timeline/argument-3.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/06-corrected-timeline/invocation.json": {
+      "bytes": 1994,
+      "git_blob": "1e7f476e15358f6ea282cc96582bfbd3fe84dee4",
+      "sha256": "cbb111b8b8fea96ff469c34d77827678f91aa173bd985d4e5e66652349c12fc6"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/06-corrected-timeline/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/06-corrected-timeline/stdout.txt": {
+      "bytes": 70,
+      "git_blob": "1811545ee29a7de2f1c55697c588d410d9c3fead",
+      "sha256": "e8b8f794c50f3bf70d994489a3e8a0098cecb1582ffda0948ce5fbf163e69846"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/07-validate-asset/argument-1.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/07-validate-asset/argument-1.before.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/07-validate-asset/invocation.json": {
+      "bytes": 1233,
+      "git_blob": "6a37b038384c0be2d565eb77b80393d98e064fcd",
+      "sha256": "d475548612ae50b78e9045b41f4a45b926e426b62441abe1475d2ee122b6590a"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/07-validate-asset/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/07-validate-asset/stdout.txt": {
+      "bytes": 49,
+      "git_blob": "2d9bf6da4f9a5b823b0c56071ff8d4cc9c370322",
+      "sha256": "2bb21917a2a3f9b93c7d7e1caacb8662215fad014a7af0c121f994621eeecf14"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/08-save-final/argument-1.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/08-save-final/argument-1.before.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/08-save-final/argument-2.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/08-save-final/invocation.json": {
+      "bytes": 1492,
+      "git_blob": "0b880b3ba71a43a2898119b0bde64071f5be978a",
+      "sha256": "05d52e4f51d7c5aa009d302b0b3d192d467b341d961bc9e9f52a2054a814ca4a"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/08-save-final/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/08-save-final/stdout.txt": {
+      "bytes": 91,
+      "git_blob": "d1c0313c46e76d2eb080c1db3f480799d438bd02",
+      "sha256": "a799a747b0ce580e93b610d0096b6fdd6e445a2c604ad040b787e5d89a734d0d"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/09-inspect-final/argument-1.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/09-inspect-final/argument-1.before.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/09-inspect-final/invocation.json": {
+      "bytes": 1244,
+      "git_blob": "8a48b0b0c3d0819609b21ca1ea786982a68fe50d",
+      "sha256": "9101b118bf6f2bcd4d64154960bb2a36b176039db54cb934afcb0d85945c2cd1"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/09-inspect-final/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/accepted-run/receipts/09-inspect-final/stdout.txt": {
+      "bytes": 1969,
+      "git_blob": "0909e9b48c46a2f95f8451a6544da1fd4e6c218b",
+      "sha256": "6d4a2f16782401b61d6ee4f1a52c4d364c1b5b8cbd36066ae6867a883b16c3fc"
+    },
+    "experiments/38-agent-cli/accepted-run/record.py": {
+      "bytes": 2633,
+      "git_blob": "ef9e9df35eba876d513d60f62656bef114489e00",
+      "sha256": "21c825c9b18e5cf0e754d7df8b64abbc4a39d4480b29d5940ff137477255caec"
+    },
+    "experiments/38-agent-cli/accepted-run/source-manifest.json": {
+      "bytes": 1252,
+      "git_blob": "d28584789dce605b6ebf941f851f7d063370e179",
+      "sha256": "54f1b9e728791957557d882b3a2a7d227058bbda6ed7a9ff5cdf2116caf45560"
+    },
+    "experiments/38-agent-cli/accepted-run/stale-timeline.commands.json": {
+      "bytes": 540,
+      "git_blob": "f98ca058f4db2b08032f15ea6c3ba9129382bb1b",
+      "sha256": "255f055ddad45690b3be034deff73380d6aca5868912c9cc702ecc238b7caa04"
+    },
+    "experiments/38-agent-cli/accepted-run/verify-controls.stdout": {
+      "bytes": 181,
+      "git_blob": "d9c0f429355b551e74a7798da4dc55bf99d86cf9",
+      "sha256": "79ceb73f636d6f2fdf6225003416e7f22b509276798df5dfe508595fa633db63"
+    },
+    "experiments/38-agent-cli/accepted-run/verify.stdout": {
+      "bytes": 1463,
+      "git_blob": "83fa71e6f3e15ffa7b6c2352a3a1896ad5e0221d",
+      "sha256": "be539400b7eb8fb2d38c107b782e9ce4e9babd4a17065d9e32a703cc1bbe6305"
+    },
+    "experiments/38-agent-cli/agent-nine-second.nvwa.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/appearance.commands.json": {
+      "bytes": 202,
+      "git_blob": "ea93da86c6806a3eb72ed3631254c974d741dd30",
+      "sha256": "5c56a1c64ce3a3b97dd1c99bbb4117b8424a3018e7131973c7cbadf888f1dc8b"
+    },
+    "experiments/38-agent-cli/appearance.nvwa.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/authored.nvwa.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/corrected-timeline.commands.json": {
+      "bytes": 541,
+      "git_blob": "329d12bcabf2e2f3bcf70f434512269c1616b195",
+      "sha256": "1fa0bcda3a03473749a8f5a96769bfd384ee3589688b547432f1454596a48e4c"
+    },
+    "experiments/38-agent-cli/historical-manifest.json": {
+      "bytes": 1033,
+      "git_blob": "6fb6fac4dd6ccd4f536cf10e7b6403ef201a22c6",
+      "sha256": "2dd39d8aba603e738e29e67cf419bc5301682c8dc1aea654b32690584604d1ab"
+    },
+    "experiments/38-agent-cli/historical-source/crates/nvwa-cli/src/main.rs": {
+      "bytes": 13609,
+      "git_blob": "c6d6e060ee0b120a3c01acf871bde18670698e13",
+      "sha256": "c6d074ac357f4a93d5f7e165c10978f397517d625865e601ff7b48a56eadb05b"
+    },
+    "experiments/38-agent-cli/historical-source/crates/nvwa-cli/tests/discovery.rs": {
+      "bytes": 6808,
+      "git_blob": "b96b40f9836db0ecd9dd1e2b5827d8488e153de5",
+      "sha256": "080eb7fa4b0fc48d01090783eed127d9ec3eddb159a75f8d15c096e7c1e394d0"
+    },
+    "experiments/38-agent-cli/historical-source/docs/agents/cli-authoring.md": {
+      "bytes": 3588,
+      "git_blob": "a46f5e8fd56d11920a488058f26cc717ae670adc",
+      "sha256": "64862c256dec809a827e284a33d5af6a1b546fa18dd322d83125888359f384a0"
+    },
+    "experiments/38-agent-cli/historical-source/docs/implementation/contract.md": {
+      "bytes": 4859,
+      "git_blob": "324c4623bbb422b2d287819859afe37086faae9b",
+      "sha256": "c45763c90b3799211305b1acfc5060bf8f6ea4cd257426a1a40418e736c7a30b"
+    },
+    "experiments/38-agent-cli/initial.nvwa.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/receipts/01-new/argument-1.after.json": {
+      "bytes": 1064,
+      "git_blob": "ff08e37c97f9c1cffa0dc89bb723e23a654f9b02",
+      "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353"
+    },
+    "experiments/38-agent-cli/receipts/01-new/argument-1.before.json": {
+      "bytes": 1064,
+      "git_blob": "ff08e37c97f9c1cffa0dc89bb723e23a654f9b02",
+      "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353"
+    },
+    "experiments/38-agent-cli/receipts/01-new/argument-2.after.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/receipts/01-new/invocation.json": {
+      "bytes": 1357,
+      "git_blob": "9e7c1545738109bc88f9d877368054f7d28de436",
+      "sha256": "e4a74436f4941f74e4fc548bc5e3a908a6be82c8aa4aba00d97e3dc737465d37"
+    },
+    "experiments/38-agent-cli/receipts/01-new/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/01-new/stdout.txt": {
+      "bytes": 68,
+      "git_blob": "bcfa6c8bf9cfd1bfe7683f47cc98a629e227f294",
+      "sha256": "807a35aab155051fb53279a884c1cb3f2bd90fbd93f3be07d043dc496fbc2d8c"
+    },
+    "experiments/38-agent-cli/receipts/02-discover/argument-1.after.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/receipts/02-discover/argument-1.before.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/receipts/02-discover/invocation.json": {
+      "bytes": 1184,
+      "git_blob": "a16acd3cbf5152746d024e49d1644d4a5a3f047c",
+      "sha256": "6c59598f7e96d940dc63630a1f431f9d78fdb1addb4fa75be73d9e4369b4b98e"
+    },
+    "experiments/38-agent-cli/receipts/02-discover/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/02-discover/stdout.txt": {
+      "bytes": 6804,
+      "git_blob": "c5f0ccd2d88fe11ddf6459ab65b77c6653a99972",
+      "sha256": "0a2483c00227175488f2b805eef9eb37e2d02f252df2dffed6e8026e447fb69a"
+    },
+    "experiments/38-agent-cli/receipts/03-appearance/argument-1.after.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/receipts/03-appearance/argument-1.before.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/receipts/03-appearance/argument-2.after.json": {
+      "bytes": 202,
+      "git_blob": "ea93da86c6806a3eb72ed3631254c974d741dd30",
+      "sha256": "5c56a1c64ce3a3b97dd1c99bbb4117b8424a3018e7131973c7cbadf888f1dc8b"
+    },
+    "experiments/38-agent-cli/receipts/03-appearance/argument-2.before.json": {
+      "bytes": 202,
+      "git_blob": "ea93da86c6806a3eb72ed3631254c974d741dd30",
+      "sha256": "5c56a1c64ce3a3b97dd1c99bbb4117b8424a3018e7131973c7cbadf888f1dc8b"
+    },
+    "experiments/38-agent-cli/receipts/03-appearance/argument-3.after.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/receipts/03-appearance/invocation.json": {
+      "bytes": 1853,
+      "git_blob": "67f72a6d239c2964cb20d23cefcd064900310508",
+      "sha256": "984fa63829c3eed7f0365c1adb3b4616065af599f98305759d79e7ff780dd3ee"
+    },
+    "experiments/38-agent-cli/receipts/03-appearance/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/03-appearance/stdout.txt": {
+      "bytes": 66,
+      "git_blob": "ebbc17ce8e0047586fdcfc7e26c7d909e768fb43",
+      "sha256": "3c60bd0b22ebd91818229bae9479d14bdf75b4dc569de4a8f5a6d672b9675265"
+    },
+    "experiments/38-agent-cli/receipts/04-stale-timeline/argument-1.after.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/receipts/04-stale-timeline/argument-1.before.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/receipts/04-stale-timeline/argument-2.after.json": {
+      "bytes": 537,
+      "git_blob": "e38e7d61de9b847a2bf88c19d9b9db3a9af11412",
+      "sha256": "c08903a0652b88ce8729efea514c65810ec7dd4371a390b7d114e49e37119c98"
+    },
+    "experiments/38-agent-cli/receipts/04-stale-timeline/argument-2.before.json": {
+      "bytes": 537,
+      "git_blob": "e38e7d61de9b847a2bf88c19d9b9db3a9af11412",
+      "sha256": "c08903a0652b88ce8729efea514c65810ec7dd4371a390b7d114e49e37119c98"
+    },
+    "experiments/38-agent-cli/receipts/04-stale-timeline/invocation.json": {
+      "bytes": 1692,
+      "git_blob": "e106224379c3fd39805f14d4132a0c210f471c88",
+      "sha256": "ce9cc6742462289f0f2e1d0df782ea226e9a29cdc55f21d6591f4ef97ed54713"
+    },
+    "experiments/38-agent-cli/receipts/04-stale-timeline/stderr.txt": {
+      "bytes": 84,
+      "git_blob": "85d176a8c7e659b31f19080cf546ef59f5eeea0d",
+      "sha256": "f5a9d4bf9f8f646d2db7cedf56667405990154376760f76bfeea42d8e3b873a2"
+    },
+    "experiments/38-agent-cli/receipts/04-stale-timeline/stdout.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/05-inspect-actual/argument-1.after.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/receipts/05-inspect-actual/argument-1.before.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/receipts/05-inspect-actual/invocation.json": {
+      "bytes": 1185,
+      "git_blob": "19a6a7384036333f17fdb264e4dfff940c24c515",
+      "sha256": "9ca3126fa998d884f91cd0a4a94ba4bc0258a0ce534877dc46fe77daede29a20"
+    },
+    "experiments/38-agent-cli/receipts/05-inspect-actual/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/05-inspect-actual/stdout.txt": {
+      "bytes": 1626,
+      "git_blob": "b17aabd8ac24cd51fb18bca5f4c76876f8761353",
+      "sha256": "61116681e24376abe156943848094220804034292d75a7c14a52d9c7557c67f0"
+    },
+    "experiments/38-agent-cli/receipts/06-corrected-timeline/argument-1.after.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/receipts/06-corrected-timeline/argument-1.before.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/receipts/06-corrected-timeline/argument-2.after.json": {
+      "bytes": 541,
+      "git_blob": "329d12bcabf2e2f3bcf70f434512269c1616b195",
+      "sha256": "1fa0bcda3a03473749a8f5a96769bfd384ee3589688b547432f1454596a48e4c"
+    },
+    "experiments/38-agent-cli/receipts/06-corrected-timeline/argument-2.before.json": {
+      "bytes": 541,
+      "git_blob": "329d12bcabf2e2f3bcf70f434512269c1616b195",
+      "sha256": "1fa0bcda3a03473749a8f5a96769bfd384ee3589688b547432f1454596a48e4c"
+    },
+    "experiments/38-agent-cli/receipts/06-corrected-timeline/argument-3.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/receipts/06-corrected-timeline/invocation.json": {
+      "bytes": 1890,
+      "git_blob": "ca704d55fcc48c3b8cfc148fc9f1b4b9c36d3e4f",
+      "sha256": "0c13626d12146815e72772a617fa5c286be3a3882c236d943be964f164bcfd45"
+    },
+    "experiments/38-agent-cli/receipts/06-corrected-timeline/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/06-corrected-timeline/stdout.txt": {
+      "bytes": 70,
+      "git_blob": "1811545ee29a7de2f1c55697c588d410d9c3fead",
+      "sha256": "e8b8f794c50f3bf70d994489a3e8a0098cecb1582ffda0948ce5fbf163e69846"
+    },
+    "experiments/38-agent-cli/receipts/07-validate-asset/argument-1.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/receipts/07-validate-asset/argument-1.before.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/receipts/07-validate-asset/invocation.json": {
+      "bytes": 1194,
+      "git_blob": "fdf3d42aa7626287fcc6a6c9f821f1dd1fdd9789",
+      "sha256": "acf84e6f4069e33ef1b0194cbbf56fbfdc24b200a5c818c88ffa9b20312db7d2"
+    },
+    "experiments/38-agent-cli/receipts/07-validate-asset/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/07-validate-asset/stdout.txt": {
+      "bytes": 49,
+      "git_blob": "2d9bf6da4f9a5b823b0c56071ff8d4cc9c370322",
+      "sha256": "2bb21917a2a3f9b93c7d7e1caacb8662215fad014a7af0c121f994621eeecf14"
+    },
+    "experiments/38-agent-cli/receipts/08-save-final/argument-1.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/receipts/08-save-final/argument-1.before.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/receipts/08-save-final/argument-2.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/receipts/08-save-final/invocation.json": {
+      "bytes": 1427,
+      "git_blob": "7b8c21f75a4dad2c0cdcc05186bed17c67806931",
+      "sha256": "d1d26fe676355638a74aad8a7effffeb53f10dd6b1affc026e834e9bb68d21c6"
+    },
+    "experiments/38-agent-cli/receipts/08-save-final/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/08-save-final/stdout.txt": {
+      "bytes": 78,
+      "git_blob": "a1acf0f790153ad45f3c1f9621ce66740930fb92",
+      "sha256": "5651f2297b3e5acde438bedf4f26e89ad8307efb1f6e908e700956a43b3da5d8"
+    },
+    "experiments/38-agent-cli/receipts/09-inspect-final/argument-1.after.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/receipts/09-inspect-final/argument-1.before.json": {
+      "bytes": 1968,
+      "git_blob": "9351df9111b81b394351947546445ab8b1ad0e34",
+      "sha256": "e33356b490cb8d6c01118958c3d22409f4546cfa6164a7d69d496be292eb25cc"
+    },
+    "experiments/38-agent-cli/receipts/09-inspect-final/invocation.json": {
+      "bytes": 1205,
+      "git_blob": "a8b3f49dd841fa2a07b4360b861ebbbbe2241a69",
+      "sha256": "24e19df29bb134bae22a7f94c2e7d496c046d6cc362fdfd51fd700e998bfcad1"
+    },
+    "experiments/38-agent-cli/receipts/09-inspect-final/stderr.txt": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/receipts/09-inspect-final/stdout.txt": {
+      "bytes": 1969,
+      "git_blob": "0909e9b48c46a2f95f8451a6544da1fd4e6c218b",
+      "sha256": "6d4a2f16782401b61d6ee4f1a52c4d364c1b5b8cbd36066ae6867a883b16c3fc"
+    },
+    "experiments/38-agent-cli/receipts/cargo-test.stderr": {
+      "bytes": 1657,
+      "git_blob": "7207e6671606bedbd953c3abbf067968973f962b",
+      "sha256": "8bbc35da2d57b5c92992e2fb1571797c07bf3f58ccd1cfa6860340f0b5723ad8"
+    },
+    "experiments/38-agent-cli/receipts/cargo-test.stdout": {
+      "bytes": 1214,
+      "git_blob": "4d8204c7f55ae56b1ae8570aa59db7f55e3d4be9",
+      "sha256": "85b93883bde7613ee383e201f547f2279aa43c151f4bda546e6a06b585697f60"
+    },
+    "experiments/38-agent-cli/receipts/verify.stdout": {
+      "bytes": 428,
+      "git_blob": "52bf39debab707e8e476de9eafc97560af859b2b",
+      "sha256": "7dff9baea5874898f5fae1c27c31af1f38940089513fb7df9ebd4082c600dc43"
+    },
+    "experiments/38-agent-cli/record.py": {
+      "bytes": 2633,
+      "git_blob": "ef9e9df35eba876d513d60f62656bef114489e00",
+      "sha256": "21c825c9b18e5cf0e754d7df8b64abbc4a39d4480b29d5940ff137477255caec"
+    },
+    "experiments/38-agent-cli/review-response/REPORT.md": {
+      "bytes": 5022,
+      "git_blob": "33b98c3ccfdbddc61c75117167ce527fb8bd3542",
+      "sha256": "2d915b4995c2dc93ea7a83d0f838026bacc781e3ae894d4da93fe55182f1217a"
+    },
+    "experiments/38-agent-cli/review-response/check_transport.py": {
+      "bytes": 4058,
+      "git_blob": "1e477c13015ff2a923f9cff976606f8b06cf4ce3",
+      "sha256": "63f870966559c60b1de0e0c7132abb0dae84faf54685a6768abfdb370dfdd65b"
+    },
+    "experiments/38-agent-cli/review-response/final-tests.stderr": {
+      "bytes": 1001,
+      "git_blob": "22675938e854eda2cf5f01ee397205d252b893ac",
+      "sha256": "798e15af5527bf5b9c2c2d2d216a291bf12cef8d7bb6ec844d24b9a975ea1fcc"
+    },
+    "experiments/38-agent-cli/review-response/final-tests.stdout": {
+      "bytes": 1476,
+      "git_blob": "814a9bd15d4989398bbfa526af9f0c029d4e9503",
+      "sha256": "8b0aef4228ef5d7ab3f2bc65583e94bebed3d473d050b757e5e8fe826d86243a"
+    },
+    "experiments/38-agent-cli/review-response/green-tests.stderr": {
+      "bytes": 1001,
+      "git_blob": "7f041a7b9e6f7a52497e7c5314e35826c0702cc0",
+      "sha256": "bd83838d5eea176c42fbeedfdfaa969e214d59db6c2bc837193ba05b9e0b0a2c"
+    },
+    "experiments/38-agent-cli/review-response/green-tests.stdout": {
+      "bytes": 1476,
+      "git_blob": "6ae41fc3b6e33bf215b4924c36dde544cc54b221",
+      "sha256": "dc597e9491f99286c81d555736daae337da607c1d095adec5640e4d01c6d931e"
+    },
+    "experiments/38-agent-cli/review-response/process-probe.stdout": {
+      "bytes": 233,
+      "git_blob": "1e19588d837567507a3e8af0ce2257c69f76d671",
+      "sha256": "88223608aa38f0e400af25e68e5e513eb603f6d5d50060ba876a28405c2ca62f"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/original-apply.nvwa.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/original-apply.stderr": {
+      "bytes": 253,
+      "git_blob": "d3b7b610a65756127fadb5f238add0edd13421d4",
+      "sha256": "eca9dcf5d0776ad31fce6581da333503e3c6804437b90b529d0a24e65c70000f"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/original-new.nvwa.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/original-new.stderr": {
+      "bytes": 253,
+      "git_blob": "c0eb20af0e4aa553e008590320548aa722caf9e2",
+      "sha256": "e0a835892110e3e42a296408414e19e30dea5a363a538ce2a2c2c7f25a897ac9"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/original-save.nvwa.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/original-save.stderr": {
+      "bytes": 253,
+      "git_blob": "3525c114216713635c945f040c8cbba2578b1b4e",
+      "sha256": "b60b324a9dc505f3c8b43e7e1fee53f26355a4c1c5aa09a4a53aea68d7ce2ed2"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/results.json": {
+      "bytes": 7133,
+      "git_blob": "d5c3bfb5bac0779efb88620673be0ee5137f27d7",
+      "sha256": "d2e4780bce0e4c878f1e1c2e6fdcbbda46411d6239527090df33d2340052f8da"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-apply.nvwa.json": {
+      "bytes": 1625,
+      "git_blob": "3d383d0bc90e5b280cebaec40f26119434b6dc48",
+      "sha256": "28c29a3323d654596b98ab2e1f62ef1640bda4bc050640aaf11759cf97a4888d"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-apply.stderr": {
+      "bytes": 172,
+      "git_blob": "12ffa1c43fe22dda893398eaf43d9ea839101974",
+      "sha256": "16883b2d13de5e483327c4e6c37798748ca2d8abb341314cf2e79ea2f081e326"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-describe-capabilities.stderr": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-describe-capabilities.stdout": {
+      "bytes": 7835,
+      "git_blob": "e2feabdad47ceede8324f5f9ed7c2725dc3585f0",
+      "sha256": "dc5ba3d3dddd478814d0ed24d19806f1496c20b95907d71d62d7a1d412cae50e"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-inspect.stderr": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-inspect.stdout": {
+      "bytes": 1969,
+      "git_blob": "0909e9b48c46a2f95f8451a6544da1fd4e6c218b",
+      "sha256": "6d4a2f16782401b61d6ee4f1a52c4d364c1b5b8cbd36066ae6867a883b16c3fc"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-new.nvwa.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-new.stderr": {
+      "bytes": 172,
+      "git_blob": "12ffa1c43fe22dda893398eaf43d9ea839101974",
+      "sha256": "16883b2d13de5e483327c4e6c37798748ca2d8abb341314cf2e79ea2f081e326"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-save.nvwa.json": {
+      "bytes": 1624,
+      "git_blob": "bad36336f5e25a07d7c8c308dad14b0fb94dce7f",
+      "sha256": "ff0b8e36adfc3ebadc5fc700a4c760f6f551273b56e85bf336563e18b63eb445"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-save.stderr": {
+      "bytes": 172,
+      "git_blob": "12ffa1c43fe22dda893398eaf43d9ea839101974",
+      "sha256": "16883b2d13de5e483327c4e6c37798748ca2d8abb341314cf2e79ea2f081e326"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-validate.stderr": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "experiments/38-agent-cli/review-response/process-probe/revised-validate.stdout": {
+      "bytes": 49,
+      "git_blob": "2d9bf6da4f9a5b823b0c56071ff8d4cc9c370322",
+      "sha256": "2bb21917a2a3f9b93c7d7e1caacb8662215fad014a7af0c121f994621eeecf14"
+    },
+    "experiments/38-agent-cli/review-response/red-tests.stderr": {
+      "bytes": 396,
+      "git_blob": "45f91db97c07c3aabea611843e67df0a093bf2f4",
+      "sha256": "940b110377f4a183abed1b434bb5559edc4e8be5c5f552e6cbe6fe9d40c03d2e"
+    },
+    "experiments/38-agent-cli/review-response/red-tests.stdout": {
+      "bytes": 1354,
+      "git_blob": "49efbe80e6725f03c7de49c3f7155ebf62cae788",
+      "sha256": "dc45fbb75bdd8685dddfa2875df688d7ac4cc11491358d79426486aec58d1c79"
+    },
+    "experiments/38-agent-cli/review-response/source-hashes.sha256": {
+      "bytes": 796,
+      "git_blob": "fb26013506cee1db6426806a5e25521e3cab3ce7",
+      "sha256": "94338384a6a205a2216765ad5851ea8252e4c2599c31b04decb48d1ebb095191"
+    },
+    "experiments/38-agent-cli/review-response/stderr-controls.json": {
+      "bytes": 837,
+      "git_blob": "70d398688158ad1c0fd9a5c7b7745f5d8cc9f20d",
+      "sha256": "767a4ba5b81226ac123d5daaf2256609437ca983c4e7b42508c2f1d4fbdfff52"
+    },
+    "experiments/38-agent-cli/stale-timeline.commands.json": {
+      "bytes": 537,
+      "git_blob": "e38e7d61de9b847a2bf88c19d9b9db3a9af11412",
+      "sha256": "c08903a0652b88ce8729efea514c65810ec7dd4371a390b7d114e49e37119c98"
+    },
+    "experiments/38-agent-cli/verify.py": {
+      "bytes": 7813,
+      "git_blob": "f1bf9c4f8e8f7b9481b7b5a4cf551f2378e2ae87",
+      "sha256": "2fc55ccadf60687da481af684b263430e50225dea9b0ee4d947ffc825b45d837"
+    },
+    "experiments/38-agent-cli/verify_controls.py": {
+      "bytes": 1991,
+      "git_blob": "f82cb81bbb14eda21033a8be7eb0fdd4b8aac1e4",
+      "sha256": "fcfe7a02690ffb9ed5dae25d3e14137d0f41f6b8a2b9e914edfdd7aff9516805"
+    }
+  },
+  "historical_root": "experiments/38-agent-cli",
+  "schema_version": 1,
+  "source_commit": "50eae1979cac47c7eb53dada69f06b716436bf92",
+  "source_tree": "0bb87d9dc2ff324390de6e184852a87d513017fa"
+}

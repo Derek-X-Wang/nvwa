@@ -1,0 +1,251 @@
+{
+  "kind": "public projection of existing native/Web manifests; private absolute artifact paths omitted, source maps/identities retained",
+  "cohorts": [
+    {
+      "cohort": "framing-v2",
+      "source_commit": "db0139e0ffb195abf681620e6f691eb103ce2dd3",
+      "profile": "dev optimized+debuginfo",
+      "source_files": {
+        "Cargo.lock": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "Cargo.toml": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+        "crates/nvwa-cli/Cargo.toml": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+        "crates/nvwa-cli/src/lib.rs": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2",
+        "crates/nvwa-cli/src/main.rs": "dd247ab198ea48016949f637c435fba577e544e6525dfdd508e8275ecc9d0162",
+        "crates/nvwa-cli/tests/discovery.rs": "0b38915325e559cf368010bd288ebd85005cf8b9cc271ad7646e643e11c13407",
+        "crates/nvwa-cli/tests/offline.rs": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+        "crates/nvwa-cli/tests/response_transport.rs": "1e36e6b5c0d06718423369762850c81e2c97e27de199a49704819530aeb039c9",
+        "crates/nvwa-cli/tests/sequence.rs": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d",
+        "crates/nvwa-core/Cargo.toml": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+        "crates/nvwa-core/src/asset.rs": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+        "crates/nvwa-core/src/bounded_history_tests.rs": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+        "crates/nvwa-core/src/lib.rs": "d30a38d0ed5a378d2966cd8088cc354a6ae62f375bf49ce7c6fb9d13f8813be4",
+        "crates/nvwa-core/src/stage.rs": "27acf1d66321c39a5cbc88f0502204b6c689d5bc7f8c02d1c641a7fb529ba21a",
+        "crates/nvwa-core/tests/stage.rs": "1c1ca3f9739cfe0dd6886cb513fbd2edcacf2f2f72645b23042ece8ebeeb2b93",
+        "crates/nvwa-core/tests/transactions.rs": "c9315350435fc8fff2e0010cb944eafda4e59f3ad4f986b8fdbb39bbf715cf27",
+        "crates/nvwa-runtime/Cargo.toml": "e598645fa5ad82d1ff8e79431b2a4c6eb0847ac4d660b75d0e68e14cbfd74dd4",
+        "crates/nvwa-runtime/src/lib.rs": "3d3f6194c53ed6ddc5dd6614592a90ebfdd705c7339beec09223b8b5eb6f2c0d",
+        "crates/nvwa-runtime/src/loading_tests.rs": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804",
+        "crates/nvwa-runtime/src/stage.rs": "a59147dfa7dfccd5e987c9040b3f4573cb1ce85da0ce6a1d652f355fdad2488c",
+        "crates/nvwa-runtime/src/stalled_http_tests.rs": "7fa3c0055bc39e04f47f3f3f2cb532f4d2aac9945a89c5dcc625fc3feebe9b55",
+        "crates/nvwa-studio/Cargo.toml": "909d902e11f8c9e6c51f501cb332ceb81eddb8586ebc76ba25656acddea9538e",
+        "crates/nvwa-studio/src/editor_layout.rs": "923332b75506952c05cc2fe4a1d84ff78d4be0ba8d0f2f98d94a30c0d09025ae",
+        "crates/nvwa-studio/src/editor_layout_paint_tests.rs": "15a36a3b51a5f8fe79883e39353251edf6130ec145149380567667a77d1a2f6c",
+        "crates/nvwa-studio/src/fonts.rs": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2",
+        "crates/nvwa-studio/src/lib.rs": "9df356f1e150c674f75da142d5bdf84387eed7af9d400b9bdf883ea08404ca9d",
+        "crates/nvwa-studio/src/main.rs": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+        "crates/nvwa-studio/src/platform.rs": "4425db0f5b244be56f7cf1fa1cc8932c418df1f53e4e5eef4d27224ed18fb88a",
+        "crates/nvwa-studio/src/save_feedback_tests.rs": "55a3a69d82c2e839abc116743b6960af9b361a6b3235d27b1ba77155bf9d0c15",
+        "crates/nvwa-studio/src/scene_view.rs": "7f44aed40cf5a7e6b4b1e06821bf0fd6158724171a2ca562fdb34906d275ad54",
+        "crates/nvwa-studio/src/stage_ui.rs": "43d6376b21082f0aa23c470aa45e50db88c2833291493cbc409e8a3909965ab9",
+        "crates/nvwa-studio/src/web_input.rs": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+        "rust-toolchain.toml": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+        "web/index.html": "a03b7e9e7ae602967f3cd311c82ae56fc75ac00badbeadaa47a75cf3e96df382"
+      },
+      "source_file_count": 34,
+      "source_map_sha256": "2e7db5c84a81d3152b8a234f5624ce4f6132a8fa7bf654ebe5c35b0863ea6cc7",
+      "original_private_manifest_sha256": {
+        "native": "e4f52c6bcb8465b4de4a3d538b896db09b30c2bd0977fddb9a94f6876a893b3b",
+        "web": "6b0bd5a74c2f96e52a0f6190233dd47ebbbb04fe8771d42bf5366f313523bfd6"
+      },
+      "native_artifacts": {
+        "nvwa-studio": {
+          "bytes": 156147200,
+          "sha256": "60e8daf6d7eb4014a5a97e184a671850b67f7b533df3541d8b5fac24c8fb6114"
+        },
+        "nvwa-cli": {
+          "bytes": 1540088,
+          "sha256": "5201bd01c67e9c24f1cc57d81af4ddd649a0981cf31c0c196d3cf36cdd95bbaa"
+        }
+      },
+      "web_files": {
+        "assets/character.profile.json": {
+          "bytes": 1064,
+          "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353"
+        },
+        "assets/fixtures/LICENSE.txt": {
+          "bytes": 1069,
+          "sha256": "b10b199096d04791fe942e0de62eb4643edbd9d289791b88715789cad87fe151"
+        },
+        "assets/fixtures/nvwa-humanoid.glb": {
+          "bytes": 3827840,
+          "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+        },
+        "assets/fixtures/provenance-manifest.json": {
+          "bytes": 3579,
+          "sha256": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f"
+        },
+        "index.html": {
+          "bytes": 2665,
+          "sha256": "a03b7e9e7ae602967f3cd311c82ae56fc75ac00badbeadaa47a75cf3e96df382"
+        },
+        "licenses/craft-ui/LICENSE-MIT.txt": {
+          "bytes": 1102,
+          "sha256": "2f42c0cafc8ad394d91373fe1f342aee5453850b151a51405c68cae9ada86d26"
+        },
+        "licenses/fonts/NOTICE.md": {
+          "bytes": 948,
+          "sha256": "2a1118c4fd3a2939f03b2f176a5324010baec38dab1ada70c6d05cfcb574fac4"
+        },
+        "licenses/fonts/OFL.txt": {
+          "bytes": 4388,
+          "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+        },
+        "licenses/fonts/PROVENANCE.json": {
+          "bytes": 2687,
+          "sha256": "1c8eb96ee0efdb5b1da79621f1b0902848fe59167c1313ce1d481739ccd084aa"
+        },
+        "nvwa_studio.d.ts": {
+          "bytes": 5316,
+          "sha256": "5081c4e5871c4d0554425e4899dc3f4d9c7f3d735cc7a2cb9b890f4b1cc410c1"
+        },
+        "nvwa_studio.js": {
+          "bytes": 125643,
+          "sha256": "05c8adc45f6c2a95f833e1a6e81d58c46aa602094b7b308aa3499fe7b2e4c930"
+        },
+        "nvwa_studio.wasm": {
+          "bytes": 865893895,
+          "sha256": "95903629f71d5476d1e25916ec562a6f187a74a6630ac2de08be7894178386c6"
+        },
+        "nvwa_studio_bg.wasm": {
+          "bytes": 114643468,
+          "sha256": "f98eb1f4f9748918edb8cc26231202a6a13fe3cad2ecad48a0e1c8dd294c2f78"
+        },
+        "nvwa_studio_bg.wasm.d.ts": {
+          "bytes": 4294,
+          "sha256": "e1aa68d5ec04465f0a4bdecaeb4fa8fb88184d4be563fe2c0e39143ca708b4d4"
+        },
+        "works/m1-sequence.nvwa.json": {
+          "bytes": 1942,
+          "sha256": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa"
+        }
+      },
+      "native_build_seconds": 3.29,
+      "web_build_seconds": 27.32,
+      "wasm_bindgen_version": "0.2.129"
+    },
+    {
+      "cohort": "framing-v3",
+      "source_commit": "b43757d87dde8294525769a98db17eab57a886fc",
+      "profile": "dev optimized+debuginfo",
+      "source_files": {
+        "Cargo.lock": "457f603a78c6822b6dec754978c425ed6b61d4ed3acd0b856e606e180f5c4e73",
+        "Cargo.toml": "7c6fffcaef1e770d487658909ae425af2767f0575405b1b501679f87d9b2fce7",
+        "crates/nvwa-cli/Cargo.toml": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508",
+        "crates/nvwa-cli/src/lib.rs": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2",
+        "crates/nvwa-cli/src/main.rs": "dd247ab198ea48016949f637c435fba577e544e6525dfdd508e8275ecc9d0162",
+        "crates/nvwa-cli/tests/discovery.rs": "0b38915325e559cf368010bd288ebd85005cf8b9cc271ad7646e643e11c13407",
+        "crates/nvwa-cli/tests/offline.rs": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5",
+        "crates/nvwa-cli/tests/response_transport.rs": "1e36e6b5c0d06718423369762850c81e2c97e27de199a49704819530aeb039c9",
+        "crates/nvwa-cli/tests/sequence.rs": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d",
+        "crates/nvwa-core/Cargo.toml": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad",
+        "crates/nvwa-core/src/asset.rs": "6be8619b1cead3edf7fed00597d990e469ee2d15de810b4a369d92928044570a",
+        "crates/nvwa-core/src/bounded_history_tests.rs": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b",
+        "crates/nvwa-core/src/lib.rs": "d30a38d0ed5a378d2966cd8088cc354a6ae62f375bf49ce7c6fb9d13f8813be4",
+        "crates/nvwa-core/src/stage.rs": "27acf1d66321c39a5cbc88f0502204b6c689d5bc7f8c02d1c641a7fb529ba21a",
+        "crates/nvwa-core/tests/stage.rs": "1c1ca3f9739cfe0dd6886cb513fbd2edcacf2f2f72645b23042ece8ebeeb2b93",
+        "crates/nvwa-core/tests/transactions.rs": "c9315350435fc8fff2e0010cb944eafda4e59f3ad4f986b8fdbb39bbf715cf27",
+        "crates/nvwa-runtime/Cargo.toml": "e598645fa5ad82d1ff8e79431b2a4c6eb0847ac4d660b75d0e68e14cbfd74dd4",
+        "crates/nvwa-runtime/src/lib.rs": "3d3f6194c53ed6ddc5dd6614592a90ebfdd705c7339beec09223b8b5eb6f2c0d",
+        "crates/nvwa-runtime/src/loading_tests.rs": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804",
+        "crates/nvwa-runtime/src/stage.rs": "a59147dfa7dfccd5e987c9040b3f4573cb1ce85da0ce6a1d652f355fdad2488c",
+        "crates/nvwa-runtime/src/stalled_http_tests.rs": "7fa3c0055bc39e04f47f3f3f2cb532f4d2aac9945a89c5dcc625fc3feebe9b55",
+        "crates/nvwa-studio/Cargo.toml": "909d902e11f8c9e6c51f501cb332ceb81eddb8586ebc76ba25656acddea9538e",
+        "crates/nvwa-studio/src/editor_layout.rs": "923332b75506952c05cc2fe4a1d84ff78d4be0ba8d0f2f98d94a30c0d09025ae",
+        "crates/nvwa-studio/src/editor_layout_paint_tests.rs": "15a36a3b51a5f8fe79883e39353251edf6130ec145149380567667a77d1a2f6c",
+        "crates/nvwa-studio/src/fonts.rs": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2",
+        "crates/nvwa-studio/src/lib.rs": "9df356f1e150c674f75da142d5bdf84387eed7af9d400b9bdf883ea08404ca9d",
+        "crates/nvwa-studio/src/main.rs": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3",
+        "crates/nvwa-studio/src/platform.rs": "4425db0f5b244be56f7cf1fa1cc8932c418df1f53e4e5eef4d27224ed18fb88a",
+        "crates/nvwa-studio/src/save_feedback_tests.rs": "55a3a69d82c2e839abc116743b6960af9b361a6b3235d27b1ba77155bf9d0c15",
+        "crates/nvwa-studio/src/scene_view.rs": "7f44aed40cf5a7e6b4b1e06821bf0fd6158724171a2ca562fdb34906d275ad54",
+        "crates/nvwa-studio/src/stage_ui.rs": "ea02b0858709e46ea2a76f019f1ea82588739fa4019c669fbbbc375b67bce623",
+        "crates/nvwa-studio/src/web_input.rs": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7",
+        "rust-toolchain.toml": "f131eefe0e750faaa70183a0cd98184b93e932f00ca3aa4740661c63e7bf53a7",
+        "web/index.html": "a03b7e9e7ae602967f3cd311c82ae56fc75ac00badbeadaa47a75cf3e96df382"
+      },
+      "source_file_count": 34,
+      "source_map_sha256": "1e51c7c192191645552d5fdc5a918bf2e8ae26ced3537c74a0e37eae6a472ce6",
+      "original_private_manifest_sha256": {
+        "native": "bff71a95495867c427ca4cec4574093d5bd26b4c1a314e7ae3e13b6986d09c46",
+        "web": "0d7989d8bc465cd1ad04843251cefa079e993615f7abb54b0c0016a543b74207"
+      },
+      "native_artifacts": {
+        "nvwa-studio": {
+          "bytes": 156147200,
+          "sha256": "b319f513e31801bef6e007a3a3f642e8abf07ebaff6959ec2386ee787bd21b2a"
+        },
+        "nvwa-cli": {
+          "bytes": 1540088,
+          "sha256": "5201bd01c67e9c24f1cc57d81af4ddd649a0981cf31c0c196d3cf36cdd95bbaa"
+        }
+      },
+      "web_files": {
+        "assets/character.profile.json": {
+          "bytes": 1064,
+          "sha256": "b7604ebdfb8b090073adead456f78fbf09779c23823b419986e57159bd9e0353"
+        },
+        "assets/fixtures/LICENSE.txt": {
+          "bytes": 1069,
+          "sha256": "b10b199096d04791fe942e0de62eb4643edbd9d289791b88715789cad87fe151"
+        },
+        "assets/fixtures/nvwa-humanoid.glb": {
+          "bytes": 3827840,
+          "sha256": "f13e0189ae9a1bed17d7cf3e367e495d81ffd31b9a050b76dc1cf2e5bdff6eb6"
+        },
+        "assets/fixtures/provenance-manifest.json": {
+          "bytes": 3579,
+          "sha256": "8d9d507238470d22460b979c49659b5f3794551e006a4481420695905414f37f"
+        },
+        "index.html": {
+          "bytes": 2665,
+          "sha256": "a03b7e9e7ae602967f3cd311c82ae56fc75ac00badbeadaa47a75cf3e96df382"
+        },
+        "licenses/craft-ui/LICENSE-MIT.txt": {
+          "bytes": 1102,
+          "sha256": "2f42c0cafc8ad394d91373fe1f342aee5453850b151a51405c68cae9ada86d26"
+        },
+        "licenses/fonts/NOTICE.md": {
+          "bytes": 948,
+          "sha256": "2a1118c4fd3a2939f03b2f176a5324010baec38dab1ada70c6d05cfcb574fac4"
+        },
+        "licenses/fonts/OFL.txt": {
+          "bytes": 4388,
+          "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+        },
+        "licenses/fonts/PROVENANCE.json": {
+          "bytes": 2687,
+          "sha256": "1c8eb96ee0efdb5b1da79621f1b0902848fe59167c1313ce1d481739ccd084aa"
+        },
+        "nvwa_studio.d.ts": {
+          "bytes": 5316,
+          "sha256": "5081c4e5871c4d0554425e4899dc3f4d9c7f3d735cc7a2cb9b890f4b1cc410c1"
+        },
+        "nvwa_studio.js": {
+          "bytes": 125643,
+          "sha256": "05c8adc45f6c2a95f833e1a6e81d58c46aa602094b7b308aa3499fe7b2e4c930"
+        },
+        "nvwa_studio.wasm": {
+          "bytes": 865893894,
+          "sha256": "82bc1591c67af750c370df1ed3471b6024e9817758a13e4f7c2d9e606899b817"
+        },
+        "nvwa_studio_bg.wasm": {
+          "bytes": 114643468,
+          "sha256": "ae1118cc1d35d73b910c693865274b42a8e2fd403b880c764341b6b571545d9d"
+        },
+        "nvwa_studio_bg.wasm.d.ts": {
+          "bytes": 4294,
+          "sha256": "e1aa68d5ec04465f0a4bdecaeb4fa8fb88184d4be563fe2c0e39143ca708b4d4"
+        },
+        "works/m1-sequence.nvwa.json": {
+          "bytes": 1942,
+          "sha256": "ced53970e00031824b70b798e5cc145cbb265c1f7826a3a6f608fcab517c6caa"
+        }
+      },
+      "native_build_seconds": 6.34,
+      "web_build_seconds": 12.07,
+      "wasm_bindgen_version": "0.2.129",
+      "cli_reused_from_source_commit": "db0139e0ffb195abf681620e6f691eb103ce2dd3",
+      "cli_reuse_verification": "CLI and core source files, workspace manifest, lockfile and toolchain hashes unchanged; known binary SHA verified"
+    }
+  ]
+}

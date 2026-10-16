@@ -1,0 +1,59 @@
+{
+  "status": "PASS_NATIVE_FUNCTIONAL_AND_VISUAL",
+  "source_commit": "b43757d87dde8294525769a98db17eab57a886fc",
+  "binary_sha256": "b319f513e31801bef6e007a3a3f642e8abf07ebaff6959ec2386ee787bd21b2a",
+  "recording": "Root observed actual CUA native window screenshots; these observations are manually recorded, not raw native input telemetry or persisted OS screenshots. Separate product GPU readback images follow.",
+  "initial_work": "white-balanced.nvwa.json produced by real CLI",
+  "initial_revision": 2,
+  "saved_revision": 20,
+  "screenshot_physical_dimensions_including_title": [
+    2560,
+    1504
+  ],
+  "observed_cases": [
+    "real rigged/morphed character, complete head/feet and floor shadow visible",
+    "Stage panel opens beside character",
+    "Balanced -> High revision3 with sharper real shadow; Low revision4 removes shadow; oneUndo revision5 restores High",
+    "light click10000->61000 revision6; Undo10000 revision7; Redo61000 revision8; Undo10000 revision9",
+    "Black preset revision10 retains High and applies actual lights/floor/background",
+    "Detail revision11: full head visible, camera1.25/1.65/FOV30; Full body revision12 restores3.8/.95/FOV36",
+    "one actual wheel action clamps3.8->20 revision13; oneUndo revision14 restores3.8",
+    "background R.008->.3 revision15 visible red",
+    "floor hidden revision16; Undo17 restores floor",
+    "shadow hidden revision18; Undo19 restores shadow",
+    "camera azimuth16->52 revision20 changes actual view",
+    "Save to explicitly visible /tmp/nvwa-stage-v3.nvwa.json shows bottom-right green Saved with path",
+    "invalid camera.distance0 Work Open reports out_of_range, original scene and revision20 remain",
+    "Open valid saved Work clears error, restores stage and completes9seconds",
+    "native reopen/resave leaves Work byte-identical"
+  ],
+  "failed_or_unverified_automation": [
+    {
+      "action": "continuous slider drag through CUA",
+      "observation": "no value/revision change; not counted as a successful physical drag. Subsequent point-click edit/Undo/Redo did execute."
+    },
+    {
+      "action": "automated Command+A/paste long path replacement",
+      "observation": "field replacement was not confirmed; first Save showed Create temporary save: No such file or directory (os error2). No successful save is claimed for that attempt. Mouse triple-selection and typeText then displayed a known short path; that separate Save succeeded."
+    }
+  ],
+  "files": [
+    {
+      "preserved_as": "native-v3-saved.nvwa.json",
+      "sha256": "5d6211c2fc8a9d1bc2237a37405cb780ccee273ac5dd1833f7fd34e1fd314a19",
+      "bytes": 2870
+    }
+  ],
+  "work_checks": {
+    "stage_exact_black_high_with_background_R_0_3_and_camera_azimuth52": true,
+    "character_profile_timeline_preserved": true,
+    "native_reopen_resave_byte_equal": true
+  },
+  "not_run": [
+    "physical continuous drag/right-button drag/mid-drag Escape",
+    "physical monitor/DPI migration",
+    "formal performance/GPU timestamps/memory/cold startup/first physical presentation timing",
+    "human stage preference"
+  ],
+  "cross_platform_exchange": "PASS \u2014 see exchange-v3-receipt.json; actual Web picker/download and native GUI reopen/resave, whole Work bytes identical"
+}

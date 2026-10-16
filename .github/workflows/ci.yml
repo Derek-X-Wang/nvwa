@@ -59,34 +59,13 @@ jobs:
           python3 -B -O experiments/48-genuine-fixture-work/independent/check_serialized.py
           python3 -B experiments/48-genuine-fixture-work/independent/test_serialized.py
           python3 -B -O experiments/48-genuine-fixture-work/independent/test_serialized.py
-          # Run the unchanged historical48 verifier/26 controls against its
-          # authenticated source snapshot; current49 source is checked separately.
-          python3 -B experiments/49-runtime-pose-parity/historical48/audit.py
-          python3 -B experiments/49-runtime-pose-parity/historical48/audit.py --check controls
-          python3 -B -O experiments/49-runtime-pose-parity/historical48/audit.py --check controls
-          python3 -B experiments/49-runtime-pose-parity/historical48/test_audit.py
-          python3 -B -O experiments/49-runtime-pose-parity/historical48/test_audit.py
-          # Offline controls only; these do not launch either renderer.
-          python3 -B experiments/49-runtime-pose-parity/offline/test_evaluator.py
-          python3 -B -O experiments/49-runtime-pose-parity/offline/test_evaluator.py
-          python3 -B experiments/49-runtime-pose-parity/probe/test_native_staging.py
-          python3 -B experiments/49-runtime-pose-parity/probe/test_web_staging.py
-          python3 -B -O experiments/49-runtime-pose-parity/probe/test_web_staging.py
-          # Verify retained captures; hosted CI does not collect new GPU poses.
-          python3 -B experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/native.json
-          python3 -B experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/native-visual.json
-          python3 -B experiments/49-runtime-pose-parity/offline/compare.py experiments/49-runtime-pose-parity/probe/results/web.json
-          python3 -B experiments/49-runtime-pose-parity/verify_native_failure.py
-          # Preserve full cross-platform measurements, then apply the reviewed
-          # typed retained-angle bound; native/Web agreement remains bit-exact.
-          python3 -B experiments/49-runtime-pose-parity/attribution/diagnose_reproduction.py --self-test
-          python3 -B -O experiments/49-runtime-pose-parity/attribution/diagnose_reproduction.py --self-test
-          python3 -B experiments/49-runtime-pose-parity/attribution/diagnose_reproduction.py
-          python3 -B experiments/49-runtime-pose-parity/attribution/test_port.py
-          python3 -B -O experiments/49-runtime-pose-parity/attribution/test_port.py
-          # Repository-only reproduction; optional source-cache byte audit is NOT-RUN here.
-          python3 -B experiments/49-runtime-pose-parity/attribution/directions.py
-          python3 -B experiments/49-runtime-pose-parity/attribution/directions.py --capture web
+          # Preserve every original49 CPU family and rejection control in its
+          # authenticated historical context after current product source advances.
+          # These retained captures are not fresh rehearsal-runtime evidence.
+          python3 -B experiments/51-rehearsal-history-compat/audit.py
+          python3 -B -O experiments/51-rehearsal-history-compat/audit.py
+          python3 -B experiments/51-rehearsal-history-compat/test_controls.py
+          python3 -B -O experiments/51-rehearsal-history-compat/test_controls.py
       - name: Check frozen upper-arm comparison and retained runtime captures
         timeout-minutes: 5
         run: |
