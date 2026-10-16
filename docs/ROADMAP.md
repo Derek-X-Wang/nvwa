@@ -6,7 +6,7 @@
 
 [48 真实 Work 实验](../experiments/48-genuine-fixture-work/README.md)对应 [#64](https://github.com/Derek-X-Wang/nvwa/issues/64)：现有 genuine 样本已实际导出、通过 CLI 校验和保存，分别在桌面/Web 播放、定位，并完成桌面保存→Web 打开/修改/下载→桌面打开/保存。独立序列化检查覆盖全部 90 帧、18 个旋转通道和一次 root 平移；保留旧 GLB 字节及未选中的原动作。完整文件交换证据见 [运行记录](../experiments/48-genuine-fixture-work/runtime/REPORT.md)。该阶段发现手臂与躯干相交并保留质量 HOLD；其当时缺少的运行时数值证据由下一项单独补充。
 
-[#66 的 49 同帧实验](../experiments/49-runtime-pose-parity/README.md)复用相同 Work/GLB，在桌面和 Web 的七个精确关键帧采集实际骨架：24 个 GLB 节点、9 个皮肤实例均完整，局部变换一致，世界矩阵最大分量误差约 `1.76e-7`。离线重建已存在严格表面相交。进一步的[方向归因](../experiments/49-runtime-pose-parity/attribution/README.md)表明，既定 T→A 中立对应约 `45.7°` 的差异可以解释这些帧的上臂内折；这是当前相对中立姿势策略的效果，不是已证明的四元数空间或实现错误。**质量继续 HOLD**：尚未运行替代策略、验证改善效果，或完成全部关键帧/插值、GPU 顶点回读、官方 decoder 一致性、解剖/接触及语义验收。下一步是同样本/角色的中立策略对照。没有新增模型运行、模型/工具下载或产品 provider。
+[#66 的 49 同帧实验](../experiments/49-runtime-pose-parity/README.md)复用相同 Work/GLB，在桌面和 Web 的七个精确关键帧采集实际骨架：24 个 GLB 节点、9 个皮肤实例均完整，局部变换一致，世界矩阵最大分量误差约 `1.76e-7`。离线重建已存在严格表面相交。进一步的[方向归因](../experiments/49-runtime-pose-parity/attribution/README.md)表明，既定 T→A 中立对应约 `45.7°` 的差异可以解释这些帧的上臂内折；这是当前相对中立姿势策略的效果，不是已证明的四元数空间或实现错误。**质量继续 HOLD**：尚未运行替代策略、验证改善效果，或完成全部关键帧/插值、GPU 顶点回读、官方 decoder 一致性、解剖/接触及语义验收。下一步是 [#68](https://github.com/Derek-X-Wang/nvwa/issues/68) 的同样本/角色中立策略对照，只比较两个上臂通道；先验证数值与实际画面，再决定是否采用。没有新增模型运行、模型/工具下载或产品 provider。
 
 [#49 无引导真人试用](m12-unassisted-trial/README.md)已记录一次在创建前求助并暂停的尝试。随后四步有引导操作使用已有九秒作品，参与者报告播放、编辑、保存和 Web 保留修改正常；它不能代替独立创建、Player 和恢复验收。[本次结果](m12-unassisted-trial/RESULTS-2026-10-15.md)与[一页中文说明](m12-unassisted-trial/PARTICIPANT-BRIEF.md)已分开归档；开发者复现命令仍留在技术指南。新说明没有启动新试用，入口单尚待准备，#49 保持开放。#3 保持阻塞，#4 保留原测量缺口。
 

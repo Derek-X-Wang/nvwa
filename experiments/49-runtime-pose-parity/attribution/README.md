@@ -75,8 +75,10 @@ EXISTING_POLICY_PREDICTION = normalize(F_t * transpose(F_s) * source_body_direct
 
 Across all14 upper arms at the seven keys, the prediction matches actual
 native body-relative target directions within`2.60020e-7` maximum component
-error and`1.81515e-5°`. The retained Web measurements reproduce the same sample
-values exactly. After the declared neutral change, upper-arm directions agree.
+error and`1.81515e-5°`. Native and Web reproduce one another exactly. The original Mac reproduction
+matches retained samples exactly; actual Ubuntu reproduction differs only in
+the bounded derived angle scalars documented in[PORTABILITY.md](PORTABILITY.md).
+After the declared neutral change, upper-arm directions agree.
 
 At key0, source upper arms have moved about70° down from horizontal neutral.
 Applying that excursion from a target neutral already about45.7° down puts
@@ -153,8 +155,10 @@ Counts per capture:7 keys,126 signed primary directions,28 actual child-segment
 checks,14 elbow comparisons and14 upper-arm policy predictions. Source cache
 receipt count6 is archived provenance; a fresh six-file byte audit occurs only
 when `--source-cache` is supplied. Capture schema/key/type, input pin, missing
-cache, output protection and exact retained-sample reproduction controls pass
-normally and under`-O`. Numeric matching does not clear quality HOLD or authorize
+cache and output protection controls remain strict. Retained-angle comparison
+uses the measured, explicit two-ULP contract in[PORTABILITY.md](PORTABILITY.md);
+all other values and native/Web agreement remain exact. All 21 controls pass
+locally normally and under`-O`. Numeric matching does not clear quality HOLD or authorize
 a correction.
 
 The capture rebind preserves the complete previously reviewed attribution privately.
@@ -162,6 +166,16 @@ Current Web source SHA256 is
 `161442516dfb5d62476b3f3b2ab52f7b2b9f44a7177bcb2ae5ac978208f52e5f`,
 with actual frames10/12/14/16/18/20/22. All3330 numerical leaves retain digest
 `c564ad7a421adacc7e18515a5eaf1f1d41d7f992cb874a21dcc083779196d7f4`.
-Both fresh reproductions match the preserved sample values exactly. The168
+During that capture rebind on the Mac, both fresh reproductions matched the
+preserved sample values exactly. The168
 native/Web GLB-node comparisons have zero local/global component difference.
 This is a new capture-provenance binding, not a relabeling of old raw observations.
+
+Actual Ubuntu CPython3.12.3 measurement is retained in
+`portable-ubuntu-measurement.json` with its separate source receipt. It contains
+55 derived-angle differences (52 one-ULP, 3 two-ULP), with maximum absolute
+error`2.842170943040401e-14` degrees and no vector, position, structure or discrete
+differences. Native/Web are exact. The diagnostic and full measured values are
+unchanged;[PORTABILITY.md](PORTABILITY.md) defines the narrow retained-angle
+comparison and its mutation controls. Historical verification records below
+the capture rebind describe their original Mac runs, not a Linux exact claim.

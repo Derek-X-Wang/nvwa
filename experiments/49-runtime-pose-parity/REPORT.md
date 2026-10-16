@@ -220,6 +220,33 @@ Experiments41–48 and numerical thresholds remain unchanged. The existing
 experiment49 runtime source/artifacts are unchanged by this CI-only boundary
 correction; no further renderer launch is claimed.
 
+## Cross-platform angle reproduction boundary
+
+The [second candidate CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/38854484478)
+passed the historical source and skeleton checks, then rejected exact retained
+angle reproduction on Ubuntu. A separate [measurement-only run](https://github.com/Derek-X-Wang/nvwa/actions/runs/38855376620)
+kept that failing assertion unchanged and recorded every typed field difference.
+Its macOS job was skipped after the portable failure; that run did not pass.
+
+The [exact Ubuntu measurement](attribution/portable-ubuntu-measurement.json)
+compares 3,311 floating-point sample leaves per pair. Native and Web match
+exactly. Against the retained Mac result, each has 55 differing scalar angles:
+52 at one binary64 representable step and three at two steps. The maximum
+absolute difference is `2.842170943040401e-14` degrees. All direction vectors,
+positions, structure and discrete values agree. The measurement establishes
+the observed numeric bound, not which library operation caused it.
+
+The retained-sample assertion now uses an explicit, typed comparison: only
+ten named existing angle-field groups at known sample/joint paths may differ
+by at most two binary64 steps. It still rejects a third step, changed schema,
+types, times, vectors, positions, nonfinite values and invalid angles. Native
+versus Web remains bit-exact, including float bits. The original direction
+calculation, golden bytes, actual captures and quality thresholds stay
+unchanged. See the [comparison contract and rejection tests](attribution/README.md).
+This repairs the diagnostic's cross-platform reproduction rule; it does not
+change a character pose or improve motion quality. Final candidate CI and the
+separate merged-main CI are required independently of the earlier red runs.
+
 ## Cleanup and reproduction
 
 The owned native renderers exited. Root closed refreshed diagnostic tab 8,

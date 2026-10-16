@@ -154,5 +154,129 @@
         ]
       }
     }
-  ]
+  ],
+  "retained_angle_portability_addendum": {
+    "scope": "Narrow retained-angle comparison repair based on the retained actual Ubuntu measurement. Historical runs above are unchanged.",
+    "measurement": "portable-ubuntu-measurement.json",
+    "measurement_sha256": "38262a5a2b4799d701e1b60b9b0007fbf3f70de6c78de669f59e7e90baa1bd24",
+    "source_receipt": "portable-ubuntu-measurement-receipt.json",
+    "source_job_id": "116825528453",
+    "measured_retained_differences": 55,
+    "measured_ulp_histogram": {
+      "1": 52,
+      "2": 3
+    },
+    "measured_max_absolute_error_deg": 2.842170943040401e-14,
+    "comparison_contract": "PORTABILITY.md",
+    "retained_angle_bound": "<=2 binary64 ULP only at ten enumerated existing field groups; finite [0,180] angles; signs and signed zero exact; all other leaves and native/Web exact",
+    "comparison_called_by": "test_port.py retained-sample and native/Web checks; replay/mutation controls invoke the same helper",
+    "golden_original_numeric_leaf_count": 3330,
+    "golden_original_numeric_leaf_sha256": "c564ad7a421adacc7e18515a5eaf1f1d41d7f992cb874a21dcc083779196d7f4",
+    "new_hosted_repair_execution": "NOT-RUN; root owns review and the next hosted CI run",
+    "local_checks": [
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 experiments/49-runtime-pose-parity/attribution/test_port.py",
+        "exit_code": 0,
+        "result": {
+          "status": "PASS",
+          "tests": 21,
+          "names": [
+            "__main__.PortTests.test_actual_ubuntu_measurement_replayed_through_retained_comparison",
+            "__main__.PortTests.test_boolean_key_rejected",
+            "__main__.PortTests.test_default_does_not_claim_fresh_source_text_inspection",
+            "__main__.PortTests.test_direction_one_ulp_and_position_mutation_rejected",
+            "__main__.PortTests.test_existing_output_file_rejected",
+            "__main__.PortTests.test_known_angle_range_checked_before_ulp_or_exact_equality",
+            "__main__.PortTests.test_missing_source_cache_fails_without_fetch",
+            "__main__.PortTests.test_native_web_exact_mode_rejects_even_one_angle_ulp",
+            "__main__.PortTests.test_new_missing_and_reordered_keys_rejected",
+            "__main__.PortTests.test_nonfinite_expected_or_actual_and_signed_zero_rejected",
+            "__main__.PortTests.test_original_four_numeric_controls_pass",
+            "__main__.PortTests.test_partial_capture_rejected",
+            "__main__.PortTests.test_retained_angle_two_ulps_allowed_three_rejected",
+            "__main__.PortTests.test_retained_output_directory_rejected",
+            "__main__.PortTests.test_same_native_sample_values_as_retained_record",
+            "__main__.PortTests.test_types_discrete_key_time_and_list_order_exact",
+            "__main__.PortTests.test_unknown_angle_field_never_inherits_suffix_tolerance",
+            "__main__.PortTests.test_unmeasured_neutral_elbow_angle_remains_exact",
+            "__main__.PortTests.test_web_same_sample_direction_values",
+            "__main__.PortTests.test_wrong_input_pin_fails",
+            "__main__.PortTests.test_wrong_platform_rejected"
+          ]
+        }
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 -O experiments/49-runtime-pose-parity/attribution/test_port.py",
+        "exit_code": 0,
+        "result": {
+          "status": "PASS",
+          "tests": 21,
+          "names": [
+            "__main__.PortTests.test_actual_ubuntu_measurement_replayed_through_retained_comparison",
+            "__main__.PortTests.test_boolean_key_rejected",
+            "__main__.PortTests.test_default_does_not_claim_fresh_source_text_inspection",
+            "__main__.PortTests.test_direction_one_ulp_and_position_mutation_rejected",
+            "__main__.PortTests.test_existing_output_file_rejected",
+            "__main__.PortTests.test_known_angle_range_checked_before_ulp_or_exact_equality",
+            "__main__.PortTests.test_missing_source_cache_fails_without_fetch",
+            "__main__.PortTests.test_native_web_exact_mode_rejects_even_one_angle_ulp",
+            "__main__.PortTests.test_new_missing_and_reordered_keys_rejected",
+            "__main__.PortTests.test_nonfinite_expected_or_actual_and_signed_zero_rejected",
+            "__main__.PortTests.test_original_four_numeric_controls_pass",
+            "__main__.PortTests.test_partial_capture_rejected",
+            "__main__.PortTests.test_retained_angle_two_ulps_allowed_three_rejected",
+            "__main__.PortTests.test_retained_output_directory_rejected",
+            "__main__.PortTests.test_same_native_sample_values_as_retained_record",
+            "__main__.PortTests.test_types_discrete_key_time_and_list_order_exact",
+            "__main__.PortTests.test_unknown_angle_field_never_inherits_suffix_tolerance",
+            "__main__.PortTests.test_unmeasured_neutral_elbow_angle_remains_exact",
+            "__main__.PortTests.test_web_same_sample_direction_values",
+            "__main__.PortTests.test_wrong_input_pin_fails",
+            "__main__.PortTests.test_wrong_platform_rejected"
+          ]
+        }
+      }
+    ],
+    "local_diagnostic_after_repair": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 experiments/49-runtime-pose-parity/attribution/diagnose_reproduction.py",
+      "exit_code": 0,
+      "result": {
+        "status": "MEASUREMENTS",
+        "python": "3.14.7",
+        "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "scope": "All float64 leaf differences measured without thresholds or acceptance waiver; types, object keys, list positions and discrete values checked exactly",
+        "ulp_definition": "Distance in ordered IEEE754 binary64 bit encodings; -0 and +0 are distinct adjacent encodings",
+        "native_vs_retained": {
+          "typed_sample_equality": true,
+          "float_leaves_compared": 3311,
+          "float_difference_count": 0,
+          "structural_or_discrete_difference_count": 0,
+          "max_absolute_float_error": 0,
+          "max_binary64_ulp_distance": 0,
+          "float_differences": [],
+          "structural_or_discrete_differences": []
+        },
+        "web_vs_retained": {
+          "typed_sample_equality": true,
+          "float_leaves_compared": 3311,
+          "float_difference_count": 0,
+          "structural_or_discrete_difference_count": 0,
+          "max_absolute_float_error": 0,
+          "max_binary64_ulp_distance": 0,
+          "float_differences": [],
+          "structural_or_discrete_differences": []
+        },
+        "native_vs_web": {
+          "typed_sample_equality": true,
+          "float_leaves_compared": 3311,
+          "float_difference_count": 0,
+          "structural_or_discrete_difference_count": 0,
+          "max_absolute_float_error": 0,
+          "max_binary64_ulp_distance": 0,
+          "float_differences": [],
+          "structural_or_discrete_differences": []
+        }
+      }
+    }
+  }
 }
