@@ -132,6 +132,22 @@ jobs:
           bash experiments/27-ci-baseline/check.sh wasm
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+  b1-source-regression:
+    name: macOS B1 source regression and viewer checks
+    # Keep the independent cold B1 build inside its own finite budget.
+    needs: portable
+    runs-on: macos-14
+    timeout-minutes: 60
+    env:
+      CARGO_BUILD_JOBS: '1'
+      # This target directory belongs to this job's fresh runner only.
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
       - name: Prepare pinned B1 inputs without asset or tool downloads
         run: |
           mkdir -p .work
