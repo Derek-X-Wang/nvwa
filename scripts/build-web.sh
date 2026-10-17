@@ -36,3 +36,28 @@ cp examples/m1-sequence.nvwa.json dist/web/works/
 cp assets/fonts/OFL.txt assets/fonts/NOTICE.md assets/fonts/PROVENANCE.json dist/web/licenses/fonts/
 cp licenses/craft-ui/LICENSE-MIT.txt dist/web/licenses/craft-ui/
 python3 scripts/bundle-sizes.py
+if [[ -n "${NVWA_WEB_EXPORT:-}" ]]; then
+  python3 -B scripts/verify-b1-inputs.py --asset-root dist/web/assets/characters/mpfb-b1-v1
+  python3 - "$NVWA_WEB_EXPORT" <<'PY'
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import sys
+
+destination = Path(sys.argv[1])
+if destination.exists():
+    raise SystemExit('Web export destination must be new')
+destination.parent.mkdir(parents=True, exist_ok=True)
+shutil.copytree('dist/web', destination)
+files = [Path('Cargo.toml'), Path('Cargo.lock')]
+for directory in ['crates', 'vendor', 'assets', 'scripts', 'web']:
+    files += [p for p in Path(directory).rglob('*') if p.is_file() and '__pycache__' not in p.parts]
+receipt = {
+    'source_sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(files)},
+    'wasm_sha256': hashlib.sha256((destination/'nvwa_studio_bg.wasm').read_bytes()).hexdigest(),
+    'scope': 'Compiled Web package; browser launch and functional validation remain separate',
+}
+(destination/'build-receipt.json').write_text(json.dumps(receipt, indent=2)+'\n')
+PY
+fi

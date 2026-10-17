@@ -176,6 +176,36 @@ class CompatibilityControls(unittest.TestCase):
         finally:
             path.write_bytes(previous)
 
+    def test_archived_packaging_tools_tamper_then_restored_green(self):
+        for name in ['scripts/build-web.sh', 'scripts/package-native.py']:
+            relative = 'sources/'+name+'.txt'
+            with self.subTest(path=name):
+                self.mutate(self.material, relative,
+                            (self.material/relative).read_bytes()+b'\n',
+                            'input identity changed: '+name)
+
+    def test_current_packaging_tools_are_outside_historical_scope(self):
+        for name in ['scripts/build-web.sh', 'scripts/package-native.py']:
+            with self.subTest(path=name):
+                path = self.repo/name
+                previous = path.read_bytes()
+                try:
+                    path.write_bytes(b'current B1 packaging source; not historical capture evidence')
+                    self.restored()
+                    snapshot = audit.preflight(self.repo, self.material)
+                    with tempfile.TemporaryDirectory(prefix='nvwa-packaging-history-') as temporary:
+                        stage = Path(temporary).resolve()
+                        audit.stage(snapshot, stage)
+                        self.assertEqual((stage/name).read_bytes(), previous)
+                        # Original source bindings and capture checks both run
+                        # on original tool bytes, not this changed live source.
+                        for check in ['historical48', 'web-capture']:
+                            self.assertEqual(audit.run_staged(stage, check,
+                                                             bool(sys.flags.optimize))['exit_code'], 0)
+                finally:
+                    path.write_bytes(previous)
+                self.restored()
+
     def test_duplicate_manifest_key_refused(self):
         raw = (self.material/'MANIFEST.json').read_bytes()
         self.mutate(self.material, 'MANIFEST.json', raw.replace(b'{', b'{"files":{},', 1), 'duplicate JSON key')

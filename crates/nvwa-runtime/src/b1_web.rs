@@ -23,6 +23,9 @@ pub(super) async fn read(path: &str, max: usize) -> Result<Vec<u8>, String> {
     let url = web_sys::Url::new_with_base(&format!("assets/{path}"), &base).map_err(error)?;
     let guard = AbortOnDrop(web_sys::AbortController::new().map_err(error)?);
     let request = web_sys::RequestInit::new();
+    // Each explicit Open revalidates the current source, including recovery
+    // after a missing/corrupt response. Editing uses the authenticated snapshot.
+    request.set_cache(web_sys::RequestCache::NoStore);
     request.set_mode(web_sys::RequestMode::SameOrigin);
     request.set_redirect(web_sys::RequestRedirect::Error);
     request.set_credentials(web_sys::RequestCredentials::Omit);
