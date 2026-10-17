@@ -45,7 +45,7 @@ def verify_source(repo):
     # motion definitions. The version1 full inventory remains frozen evidence.
     # This is a pinned overlay, never a regenerated inventory or a broad ignore.
     extension_bytes = regular(repo / "scripts/b1-motion-source-inventory.json")
-    require(digest(extension_bytes) == "04d075463918d0ad3f5b8697f69b03eb0753e681e9eb76cfc61acd53d66c6806", "Admitted motion source extension changed")
+    require(digest(extension_bytes) == "9f1c722aafaa932aa6094ece5b390f7e494c90ab0166dc9deecefa70b61f4cf4", "Admitted motion source extension changed")
     extension = json.loads(extension_bytes)
     require(set(extension) == {"format", "schema_version", "base_inventory_sha256", "files"}, "Motion extension fields changed")
     require(extension["format"] == "nvwa-b1-motion-source-extension" and extension["schema_version"] == 2, "Unsupported motion source extension")

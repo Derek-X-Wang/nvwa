@@ -3,7 +3,7 @@
 import copy
 import math
 import unittest
-from checker import Checker,check_time_binding,I,CLIPS,check_bones,expected_fk,flatten,independent_lbs,inv,mul,rotation
+from checker import Checker,check_time_binding,check_region_floor,I,CLIPS,check_bones,expected_fk,flatten,independent_lbs,inv,mul,rotation
 from geometry import BVH,closest_triangle,strain,surface_queries
 
 class Controls(unittest.TestCase):
@@ -52,7 +52,8 @@ class Controls(unittest.TestCase):
  def bones(self,t):
   rest=[r[:] for r in I];rest[1][3]=.5
   bones=[{'name':'Root','parent':None,'canonical_rest':flatten(I),'frame_gauge':flatten(I),'rest':flatten(I),'inverse_bind':flatten(I)},
-    {'name':'calf_l','parent':'Root','canonical_rest':flatten(rest),'frame_gauge':flatten(I),'rest':flatten(rest),'inverse_bind':flatten(inv(rest))}]
+    {'name':'calf_l','parent':'Root','canonical_rest':flatten(rest),'frame_gauge':flatten(I),'rest':flatten(rest),'inverse_bind':flatten(inv(rest))},
+    {'name':'foot_l','parent':'calf_l','canonical_rest':flatten(I),'frame_gauge':flatten(I),'rest':flatten(I),'inverse_bind':flatten(I)}]
   canonical,raw=expected_fk(bones,CLIPS[1],t)
   for b in bones:b.update(posed=flatten(raw[b['name']]),canonical_posed=flatten(canonical[b['name']]),skin=flatten(mul(raw[b['name']],inv(__import__('checker').mat(b['rest'])))))
   return bones
@@ -69,6 +70,23 @@ class Controls(unittest.TestCase):
   result=independent_lbs([[0.,0.,0.]],[[[0,.1],[1,.2],[2,.3],[3,.4],[4,.5]]],[I,I,I,I,transform])
   self.assertAlmostEqual(result[0][0],1/3)
   with self.assertRaisesRegex(ValueError,'positive'):independent_lbs([[0.,0.,0.]],[[[0,-1.]]],[I])
+ def test_original_calf_only_sweep_fails_unchanged_floor_gate_counterrotation_passes(self):
+  # Authored geometry fixture: knee1m above floor, ankle at0, forward patch point20cm.
+  # This is comparator-only; the actual r2 measured failure remains separate evidence.
+  knee=[r[:] for r in I];knee[1][3]=1.
+  bones=[{'name':'Root','parent':None,'canonical_rest':flatten(I),'frame_gauge':flatten(I),'rest':flatten(I),'inverse_bind':flatten(I)},
+   {'name':'calf_l','parent':'Root','canonical_rest':flatten(knee),'frame_gauge':flatten(I),'rest':flatten(knee),'inverse_bind':flatten(inv(knee))},
+   {'name':'foot_l','parent':'calf_l','canonical_rest':flatten(I),'frame_gauge':flatten(I),'rest':flatten(I),'inverse_bind':flatten(I)}]
+  t=.4;angle=65*(1-math.cos(math.pi*t/2))/2
+  corrected,raw=expected_fk(bones,CLIPS[1],t)
+  local_ankle=inv(knee);original_foot=mul(mul(knee,rotation('x',angle)),local_ankle)
+  original_point=independent_lbs([[0.,0.,.2]],[[[0,1.]]],[original_foot])[0]
+  with self.assertRaisesRegex(ValueError,'foot region below floor'):check_region_floor(original_point[1],'left')
+  corrected_point=independent_lbs([[0.,0.,.2]],[[[0,1.]]],[raw['foot_l']])[0]
+  check_region_floor(corrected_point[1],'left')
+  self.assertGreater(corrected_point[1],0.)
+  for i in range(3):
+   for j in range(3):self.assertAlmostEqual(raw['foot_l'][i][j],I[i][j],places=12)
  def test_wrong_gauge_is_not_identity_shortcut(self):
   bones=self.bones(2.);bones[1]['frame_gauge']=flatten(rotation('z',30))
   with self.assertRaisesRegex(ValueError,'FK'):check_bones(bones,CLIPS[1],2.)

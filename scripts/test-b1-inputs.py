@@ -69,8 +69,8 @@ class B1InputControls(unittest.TestCase):
                 path = repo / "crates/nvwa-b1-adapter/src/motion.rs"
                 if action == "mutation":
                     original = path.read_bytes()
-                    self.assertEqual(original.count(b"65.0 * amplitude"), 1, "authored knee seam changed; update this control")
-                    path.write_bytes(original.replace(b"65.0 * amplitude", b"64.0 * amplitude"))
+                    self.assertEqual(original.count(b"degrees: 65.0 * amplitude,"), 1, "authored knee seam changed; update this control")
+                    path.write_bytes(original.replace(b"degrees: 65.0 * amplitude,", b"degrees: 64.0 * amplitude,"))
                 elif action == "missing":
                     path.unlink()
                 else:

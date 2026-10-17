@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Execute two bounded production-source faults in an owned disposable checkout.
+"""Execute three bounded production-source faults in an owned disposable checkout.
 
 Do not use on a human editing checkout. Each exact source is restored in finally;
 the commands still compile and execute the real production-plugin regression.
@@ -25,23 +25,28 @@ def main():
     out.mkdir(parents=True, exist_ok=False)
     # Match the preceding workspace test feature union. Selecting runtime alone
     # rebuilds a second Bevy graph before the exact semantic witness can run.
-    command = [
+    command_prefix = [
         'cargo', 'test', '--workspace', '--lib', '--locked', '--offline',
-        'b1::tests::actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit',
-        '--', '--exact', '--test-threads=1', '--nocapture',
     ]
+    movement_test = 'b1::tests::actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit'
+    movement_assertion = 'assertion failed: part_position_deltas(&rest, &middle)'
     cases = [
         ('omit-authored-arm-pose', 'crates/nvwa-b1-adapter/src/motion.rs', [
             ('degrees: 45.0 * amplitude,', 'degrees: 0.0 * amplitude,'),
             ('degrees: 75.0 * amplitude,', 'degrees: 0.0 * amplitude,'),
-        ]),
+        ], movement_test, movement_assertion),
         ('stale-garment-upload', 'crates/nvwa-runtime/src/b1.rs', [
             ('for (handle, frame) in active.display_meshes.iter().zip(frames) {',
              'for (handle, frame) in active.display_meshes.iter().zip(frames).take(1) {'),
-        ]),
+        ], movement_test, movement_assertion),
+        ('omit-authored-foot-counterrotation', 'crates/nvwa-b1-adapter/src/motion.rs', [
+            ('degrees: -65.0 * amplitude,', 'degrees: 0.0 * amplitude,'),
+        ], 'b1::tests::authored_knee_counterrotation_keeps_actual_early_and_full_cycle_feet_above_floor',
+         'actual moving foot dips below floor:'),
     ]
     results = []
-    for name, relative, replacements in cases:
+    for name, relative, replacements, test_name, intended_assertion in cases:
+        command = command_prefix + [test_name, '--', '--exact', '--test-threads=1', '--nocapture']
         path = root / relative
         original = path.read_bytes()
         mutated = original.decode()
@@ -58,13 +63,15 @@ def main():
                 red.returncode == 101
                 and 'running 1 test' in text
                 and 'test result: FAILED. 0 passed; 1 failed' in text
-                and 'assertion failed' in text
+                and test_name in text
+                and intended_assertion in text
                 and 'error[E' not in text
             )
             result = {
                 'name': name, 'source': relative, 'before_sha256': digest(original),
                 'mutant_sha256': digest(mutated.encode()), 'command': command,
                 'red_exit': red.returncode, 'semantic_test_failure': witnessed,
+                'intended_assertion': intended_assertion,
             }
         finally:
             path.write_bytes(original)

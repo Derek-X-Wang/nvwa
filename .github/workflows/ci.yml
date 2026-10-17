@@ -137,7 +137,9 @@ jobs:
         timeout-minutes: 12
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
       - name: Execute the actual B1 continuous motion matrix
-        timeout-minutes: 10
+        # Independent full-weight Python checks stream594frames; retain a finite
+        #20minute step within the existing60minute job, including probe linking.
+        timeout-minutes: 20
         run: |
           cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
           cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline

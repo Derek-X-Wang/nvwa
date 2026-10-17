@@ -41,16 +41,31 @@ def inv(a):
 def error(a,b):return max(abs(x-y) for ra,rb in zip(a,b) for x,y in zip(ra,rb))
 def point(m,p):return [sum(m[i][k]*p[k] for k in range(3))+m[i][3] for i in range(3)]
 def rotation(axis,degrees):
- a=math.radians(degrees);c=math.cos(a);s=math.sin(a);m=[r[:] for r in I]
- if axis=='x':m[1][1]=c;m[1][2]=-s;m[2][1]=s;m[2][2]=c
- else:m[0][0]=c;m[0][1]=-s;m[1][0]=s;m[1][1]=c
- return m
+ if isinstance(axis,str):
+  require(axis in ('x','z'),'unsupported authored axis')
+  axis=(1.,0.,0.) if axis=='x' else (0.,0.,1.)
+ require(len(axis)==3 and all(finite(x) for x in axis),'invalid authored axis')
+ length=norm(axis);require(length>1e-12,'zero authored axis');x,y,z=[v/length for v in axis]
+ a=math.radians(degrees);c=math.cos(a);s=math.sin(a);v=1-c
+ return [[c+x*x*v,x*y*v-z*s,x*z*v+y*s,0.],
+         [y*x*v+z*s,c+y*y*v,y*z*v-x*s,0.],
+         [z*x*v-y*s,z*y*v+x*s,c+z*z*v,0.],
+         [0.,0.,0.,1.]]
+
+def fitted_foot_counter_axis(bones):
+ # Independent f64 change of basis from actual fitted canonical REST frames.
+ byname={b['name']:b for b in bones};foot=mat(byname['foot_l']['canonical_rest']);calf=mat(byname['calf_l']['canonical_rest'])
+ axis=[sum(foot[r][i]*calf[r][0] for r in range(3)) for i in range(3)];length=norm(axis);require(length>1e-12,'invalid fitted foot counterrotation axis')
+ return [v/length for v in axis]
+
+def check_region_floor(minimum,label):
+ require(finite(minimum) and minimum>=-.001,label+' foot region below floor')
 
 def expected_fk(bones,clip,t):
  require(clip in CLIPS,'unknown authored clip')
  require(finite(t) and 0<=t<=4,'source time out of range')
  amplitude=FROZEN_AMPLITUDES.get(t,(1-math.cos(math.pi*t/2))/2)
- rotations={'upperarm_l':('z',45*amplitude),'lowerarm_l':('z',75*amplitude)} if clip==CLIPS[0] else {'calf_l':('x',65*amplitude)}
+ rotations={'upperarm_l':('z',45*amplitude),'lowerarm_l':('z',75*amplitude)} if clip==CLIPS[0] else {'calf_l':('x',65*amplitude),'foot_l':(fitted_foot_counter_axis(bones),-65*amplitude)}
  byname={b['name']:b for b in bones};canonical={};raw={};visiting=set()
  def visit(name):
   if name in canonical:return canonical[name]
@@ -183,7 +198,7 @@ class Checker:
   baseline=self.baselines[key];feet={}
   for side,label in [('l','left'),('r','right')]:
    patch=baseline['patches'][side];region=baseline['regions'][side];moving=clip==CLIPS[1] and side=='l' and 0<t<4;declared='moving' if moving else 'planted';require(frame['contacts'][label]==declared,'wrong authored contact declaration');points=[worldpoints[i] for i in patch];drift=max(norm(sub(worldpoints[i],baseline['points'][i])) for i in patch);minimum=min(worldpoints[i][1] for i in region);patchmin=min(p[1] for p in points)
-   require(minimum>=-.001,label+' foot region below floor')
+   check_region_floor(minimum,label)
    if not moving:require(drift<=.001 and abs(patchmin)<=.001,label+' planted geometric patch drift/contact failed')
    if moving and abs(t-2)<1e-6:require(minimum>=.020,'left moving apex clearance below20mm')
    feet[label]={'declared':declared,'patch_ids':patch,'patch_world_points':points,'region_vertices':len(region),'region_min_world_y':minimum,'patch_min_world_y':patchmin,'patch_max_world_y':max(p[1] for p in points),'max_patch_displacement_from_rest':drift,'anatomical_sole_claim':False}

@@ -1969,6 +1969,135 @@ mod tests {
         assert_eq!(initial["parts"].as_array().unwrap().len(), 2);
         assert_eq!(initial["bones"].as_array().unwrap().len(), 53);
     }
+    /// Same predeclared source-weight regions used by the independent contact
+    /// gate: visible body vertices with foot+ball aggregate >=0.5, no new patch.
+    fn source_foot_regions(app: &App) -> [BTreeSet<u16>; 2] {
+        let rig = app.world().resource::<RigData>().0.as_ref().unwrap();
+        ["l", "r"].map(|side| {
+            let mut sums = BTreeMap::<u16, f32>::new();
+            for bone in [format!("foot_{side}"), format!("ball_{side}")] {
+                for (&source, &weight) in &rig.original_weights()[bone.as_str()] {
+                    *sums.entry(source).or_default() += weight;
+                }
+            }
+            sums.into_iter()
+                .filter_map(|(source, weight)| (source < 13380 && weight >= 0.5).then_some(source))
+                .collect()
+        })
+    }
+    fn uploaded_foot_points(app: &App, region: &BTreeSet<u16>) -> BTreeMap<u16, Vec3> {
+        let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+        let display = active.displays[0];
+        let handle = &app.world().get::<Mesh3d>(display).unwrap().0;
+        let mesh = app.world().resource::<Assets<Mesh>>().get(handle).unwrap();
+        let positions = get_vertex_positions(mesh);
+        let transform = app.world().get::<GlobalTransform>(display).unwrap();
+        mesh.indices()
+            .unwrap()
+            .iter()
+            .filter_map(|i| {
+                let source = active.source_ids[0][i];
+                region
+                    .contains(&source)
+                    .then_some((source, transform.transform_point(positions[i])))
+            })
+            .collect()
+    }
+    #[test]
+    fn authored_knee_counterrotation_keeps_actual_early_and_full_cycle_feet_above_floor() {
+        let (mut app, _, _) = motion_app();
+        let regions = source_foot_regions(&app);
+        let character_id = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .id
+            .clone();
+        let mut entry = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .timeline[0]
+            .clone();
+        entry.clip_id = motion::CLIP_IDS[1].into();
+        entry.looping = false;
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetTimeline { clips: vec![entry] })
+            .unwrap();
+        for torso in [-1.0, 0.0, 1.0] {
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetParameters {
+                    character_id: character_id.clone(),
+                    values: [("torso_length".into(), torso)].into_iter().collect(),
+                })
+                .unwrap();
+            until(&mut app, |w| {
+                w.resource::<RuntimeStatus>().ready
+                    && w.resource::<B1Runtime>()
+                        .active
+                        .as_ref()
+                        .is_some_and(|s| s.selection.parameters["torso_length"] == torso)
+            });
+            motion_seek(&mut app, 0.0);
+            let right_rest = uploaded_foot_points(&app, &regions[1]);
+            assert!(!right_rest.is_empty());
+            let (character, handles, placement) = {
+                let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+                (
+                    active.character,
+                    active.display_meshes.clone(),
+                    active
+                        .display_transforms
+                        .iter()
+                        .map(Transform::to_matrix)
+                        .collect::<Vec<_>>(),
+                )
+            };
+            // Includes the original failed0.125/0.25/0.375s samples and all33
+            // frozen source times. Every assertion reads actual uploaded CPU buffers.
+            for k in 0..=32 {
+                let seconds = k as f32 / 8.0;
+                motion_seek(&mut app, seconds);
+                let left = uploaded_foot_points(&app, &regions[0]);
+                let right = uploaded_foot_points(&app, &regions[1]);
+                assert!(!left.is_empty());
+                let min_left = left.values().map(|p| p.y).fold(f32::INFINITY, f32::min);
+                let min_right = right.values().map(|p| p.y).fold(f32::INFINITY, f32::min);
+                assert!(
+                    min_left >= -0.001,
+                    "actual moving foot dips below floor: torso={torso}, source={seconds}, min_y={min_left}"
+                );
+                assert!(min_right >= -0.001, "actual planted foot below floor");
+                assert!(
+                    right
+                        .iter()
+                        .all(|(id, p)| p.distance(right_rest[id]) <= 0.001),
+                    "planted right foot drift"
+                );
+                if k == 16 {
+                    assert!(min_left >= 0.020, "moving apex clearance below20mm");
+                }
+                let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+                assert_eq!(active.character, character);
+                assert_eq!(active.display_meshes, handles);
+                assert_eq!(
+                    active
+                        .display_transforms
+                        .iter()
+                        .map(Transform::to_matrix)
+                        .collect::<Vec<_>>(),
+                    placement,
+                    "motion must not move the fitted-rest floor anchor"
+                );
+            }
+        }
+    }
+
     #[test]
     fn finite_motion_replay_speed_gaps_and_backward_seek_use_production_transport() {
         let (mut app, _, _) = motion_app();

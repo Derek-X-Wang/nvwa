@@ -1,6 +1,6 @@
 {
   "date": "2026-10-17",
-  "stage": "PARTIAL; CPU matrix, selected native/Web snapshots, final review and CI pending",
+  "stage": "REJECTED r2 candidate by full foot-floor matrix; approved correction awaits r4 execution",
   "base_commit": "ea02b0a05e7be96ba481fdf4898dc20e59af69bd",
   "workspace_tests": {
     "adapter": 1,
@@ -123,5 +123,13 @@
     "general IK/contact/cloth physics",
     "arbitrary shape/garment/rig",
     "near-loop derivative at epsilon.001, repeated-seek explicit mesh equality, double-deformation component-count fault family not established by this matrix/probe"
-  ]
+  ],
+  "baseline_rejection": "BASELINE-FAILURE.json",
+  "current_correction_pending": {
+    "runtime_source_sha256": "c2c1a673afe6ad9d3fa755414820bf4f5fbb43d7092ea8f50cf6a73e3f309856",
+    "motion_source_sha256": "8f10acdb1f66ecce57a23787472e6745df570e47ebaa20d2667290d0d256e8b7",
+    "checker_sha256": "cbdd941ee671dba23d3fa7b7e9b183664222597c7b69df6241897846048da22b",
+    "guard_thresholds_unchanged": true,
+    "expected_workspace_test_count": 171
+  }
 }

@@ -64,6 +64,8 @@ try{
  setInterval(()=>{
   try{
    const text=probe.b1_60_report();if(!text)return;lastReport=JSON.parse(text);
+   if(lastReport===null){$('probe-report').textContent='Ready. Sample an exact frame.';$('store-capture').disabled=true;lastReportText=text;return}
+   if(typeof lastReport!=='object'||Array.isArray(lastReport))throw new Error('Invalid Studio probe report.');
    if(text!==lastReportText){$('probe-report').textContent=JSON.stringify(lastReport,null,2);lastReportText=text}
    $('store-capture').disabled=busy||lastReport.phase!=='captured'||lastReport.request?.request_id!==$('request-id').value;
   }catch(error){$('probe-report').textContent=errorText(error);$('store-capture').disabled=true}

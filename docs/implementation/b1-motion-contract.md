@@ -15,7 +15,11 @@ The source actions are:
 | ID | Canonical bone-local peak rotation | Foot declaration |
 | --- | --- | --- |
 | `b1_arm_rehearsal_v1` | upperarm_l Z45 degrees; lowerarm_l Z75 degrees | Both planted |
-| `b1_knee_flex_v1` | calf_l X65 degrees | Right planted; left moving except neutral endpoints |
+| `b1_knee_flex_v1` | calf_l X+65 degrees; foot_l axis[0.9686015,-0.0100681,-0.2484144] -65 degrees | Right planted; left moving except neutral endpoints |
+
+The knee action uses a fixed authored ankle counterrotation. Let `L` be the canonical rest rotation from calf to foot. The foot-local axis is `inverse(L) * X`, frozen above for this exact rig. The foot angle opposes the calf angle, so the foot keeps its rest orientation while the ankle follows the calf arc. Both admitted shape parameters retain this lower-leg rest frame. This does not solve a contact constraint or adjust grounding.
+
+Pre-admission correction: the first unadmitted candidate used calf-only flex and actual sampled geometry dipped approximately20mm below the floor during early motion. The fixed foot counterrotation corrects the authored action. The profile and clip IDs remain unchanged by explicit root decision because no motion profile had been admitted or shipped; failed candidate evidence remains preserved. This exception does not change the rule that future changes to an admitted clip require a new profile identity.
 
 Every peak angle is multiplied by `(1-cos(2*pi*t/4))/2`. Source time is clamped to[0,4], with exact neutral endpoints. All other bones reset to their fitted rest transforms on every sample. These declarations describe the authored action; measured foot quality is a separate acceptance result. No per-frame foot clamping or posed-minimum grounding occurs.
 
