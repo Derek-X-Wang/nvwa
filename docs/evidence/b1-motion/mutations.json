@@ -1,0 +1,89 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "omit-authored-arm-pose",
+      "source": "crates/nvwa-b1-adapter/src/motion.rs",
+      "before_sha256": "8f10acdb1f66ecce57a23787472e6745df570e47ebaa20d2667290d0d256e8b7",
+      "mutant_sha256": "050335c87b9d263e84c17e90dbaffc0350a22774f6d6782da2699a4adaeaf18f",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--lib",
+        "--locked",
+        "--offline",
+        "b1::tests::actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit",
+        "--",
+        "--exact",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "red_exit": 101,
+      "semantic_test_failure": true,
+      "intended_assertion": "assertion failed: part_position_deltas(&rest, &middle)",
+      "restored_sha256": "8f10acdb1f66ecce57a23787472e6745df570e47ebaa20d2667290d0d256e8b7",
+      "restored_exit": 0,
+      "restored_green": true
+    },
+    {
+      "name": "stale-garment-upload",
+      "source": "crates/nvwa-runtime/src/b1.rs",
+      "before_sha256": "c2c1a673afe6ad9d3fa755414820bf4f5fbb43d7092ea8f50cf6a73e3f309856",
+      "mutant_sha256": "d60744d7000f03e73130570a5f4b8e90a52e34d4d19d0e60bbfcfbb86e900087",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--lib",
+        "--locked",
+        "--offline",
+        "b1::tests::actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit",
+        "--",
+        "--exact",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "red_exit": 101,
+      "semantic_test_failure": true,
+      "intended_assertion": "assertion failed: part_position_deltas(&rest, &middle)",
+      "restored_sha256": "c2c1a673afe6ad9d3fa755414820bf4f5fbb43d7092ea8f50cf6a73e3f309856",
+      "restored_exit": 0,
+      "restored_green": true
+    },
+    {
+      "name": "omit-authored-foot-counterrotation",
+      "source": "crates/nvwa-b1-adapter/src/motion.rs",
+      "before_sha256": "8f10acdb1f66ecce57a23787472e6745df570e47ebaa20d2667290d0d256e8b7",
+      "mutant_sha256": "f5c17b1fa203248d8e20610253fcbd665b08325aa5d21240689a538332b2fd8c",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--lib",
+        "--locked",
+        "--offline",
+        "b1::tests::authored_knee_counterrotation_keeps_actual_early_and_full_cycle_feet_above_floor",
+        "--",
+        "--exact",
+        "--test-threads=1",
+        "--nocapture"
+      ],
+      "red_exit": 101,
+      "semantic_test_failure": true,
+      "intended_assertion": "actual moving foot dips below floor:",
+      "restored_sha256": "8f10acdb1f66ecce57a23787472e6745df570e47ebaa20d2667290d0d256e8b7",
+      "restored_exit": 0,
+      "restored_green": true
+    }
+  ],
+  "scope": "Real Rust production seams; no graphics/GPU",
+  "hashes": {
+    "omit-authored-arm-pose-red.log": "28ac25e220408c8b5701a6ae9bfe0dae3d43e06bfdee2d57d21c73cdb925e49a",
+    "stale-garment-upload-red.log": "286f2d684a3ec7adb1f86e30323fb84f039bba1ec17ac3d80221b6a3cf888c8f",
+    "omit-authored-arm-pose-restored-green.log": "7472d64536fb66f8288fb345ce13d9c6d9e7b0104d6ec6c80188974e84a3594a",
+    "omit-authored-foot-counterrotation-red.log": "8015714d60239ff2c2b2fc21ab424a3a8fdb84d0b0be6bf7f4ac54ccfa6d3d91",
+    "stale-garment-upload-restored-green.log": "80bcfc363aee70f4112cbd0841828bd0616937c8aeb2a5c316d3a9d49e18af6b",
+    "omit-authored-foot-counterrotation-restored-green.log": "b30f8bf123b3b04c5d562217db06b0e637ed6e185b77cb291fdedba0b45bc197"
+  }
+}

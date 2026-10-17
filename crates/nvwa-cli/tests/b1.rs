@@ -397,3 +397,40 @@ fn b1_saved_output_survives_response_transport_failure_for_each_mutating_verb() 
     }
     std::fs::remove_dir_all(dir).unwrap();
 }
+
+#[test]
+fn explicit_motion_creation_authenticates_same_asset_and_roundtrips_timeline() {
+    let dir = directory("motion");
+    let input = dir.join("motion.json");
+    let output = dir.join("saved.json");
+    success(cli(&["new-b1-motion".as_ref(), &root(), &input]));
+    let work = success(cli(&["inspect".as_ref(), &input]));
+    assert_eq!(work["profile"]["id"], "nvwa-mpfb-b1-motion-v1");
+    assert_eq!(work["profile"]["backend"]["schema_version"], 2);
+    assert_eq!(work["timeline"][0]["clip_id"], "b1_arm_rehearsal_v1");
+    let caps = success(cli(&["describe-capabilities".as_ref(), &input]));
+    assert_eq!(
+        caps["cli_contract"]["diagnostic_poses"]["timeline_supported"],
+        true
+    );
+    assert!(
+        caps["cli_contract"]["command_examples"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|v| v["command"]["type"] == "set_timeline")
+    );
+    success(cli(&["save".as_ref(), &input, &output]));
+    assert_eq!(
+        std::fs::read(&input).unwrap(),
+        std::fs::read(&output).unwrap()
+    );
+    let assets = copy_assets(&dir);
+    std::fs::remove_file(assets.join("characters/mpfb-b1-v1/base.obj")).unwrap();
+    rejected(
+        cli(&["new-b1-motion".as_ref(), &assets, &output]),
+        "asset_missing",
+    );
+    assert_eq!(success(cli(&["inspect".as_ref(), &output])), work);
+    std::fs::remove_dir_all(dir).unwrap();
+}

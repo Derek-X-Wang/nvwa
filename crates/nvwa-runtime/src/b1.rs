@@ -19,9 +19,13 @@ use bevy::{
     },
 };
 use humentity::prelude::*;
-use nvwa_b1_adapter::{apply_pose_canonical, poses::diagnostic_pose, skin_mesh_frame_full_weights};
+use nvwa_b1_adapter::{
+    BoneFrame, DiagnosticPose, PreparedRig, PreparedSkin, apply_pose_canonical, motion,
+    poses::diagnostic_pose, skin_mesh_frame_full_weights,
+};
 use nvwa_core::{
     B1_ASSET_PATH, B1_MAX_ASSET_BYTES, B1_MAX_MANIFEST_BYTES, B1AssetManifest, SceneDocument,
+    TimelineClip,
 };
 use std::{
     collections::{BTreeMap, BTreeSet},
@@ -78,7 +82,11 @@ impl Selection {
     fn from_doc(doc: &SceneDocument) -> Self {
         Self {
             parameters: doc.character.parameters.clone(),
-            pose: doc.character.diagnostic_pose.clone().unwrap_or_default(),
+            pose: if doc.profile.backend.is_b1_motion() {
+                String::new()
+            } else {
+                doc.character.diagnostic_pose.clone().unwrap_or_default()
+            },
         }
     }
 }
@@ -103,6 +111,20 @@ struct Session {
     // 0: fit, 1: pose ready for propagation, 2: uploaded.
     phase: u8,
     joint_count: usize,
+    rig: Option<PreparedRig>,
+    skins: Vec<PreparedSkin>,
+    source_ids: Vec<Vec<u16>>,
+    last_sample: Option<FrameSample>,
+    pending_sample: Option<FrameSample>,
+    last_bones: Vec<BoneFrame>,
+    serial: u64,
+    frame_error: Option<String>,
+    published_binding: Option<PublishedBinding>,
+    skeleton_binding: Option<Entity>,
+    bone_bindings: Vec<(String, Entity)>,
+    hierarchy_bindings: Vec<(Entity, Entity)>,
+    display_indices: Vec<Vec<usize>>,
+    display_vertex_counts: Vec<usize>,
 }
 struct Candidate {
     document: SceneDocument,
@@ -118,6 +140,8 @@ struct B1Runtime {
     active: Option<Session>,
     initialized: bool,
     last_failed: Option<(u64, Selection)>,
+    timeline: Vec<TimelineClip>,
+    transport_generation: u64,
 }
 
 async fn bounded_read(reader: &mut dyn Reader, max: usize) -> Result<Vec<u8>, String> {
@@ -331,6 +355,15 @@ fn drive(world: &mut World) {
             elapsed: 0.0,
         });
     }
+    if let Some(active) = runtime.active.as_mut() {
+        if let Err(error) = validate_structure(world, active) {
+            frame_failure(world, active, error);
+        } else if active.rig.is_none() && active.frame_error.take().is_some() {
+            world.resource_mut::<RuntimeStatus>().error = None;
+            world.resource_mut::<Playback>().error = None;
+        }
+    }
+    update_motion_transport(world, &mut runtime);
     if let Some(mut c) = runtime.candidate.take() {
         c.elapsed += world.resource::<Time<Real>>().delta_secs();
         let mut error = None;
@@ -382,6 +415,7 @@ fn drive(world: &mut World) {
             }
         }
     }
+    animate_active(world, &mut runtime);
     refresh_active_status(world, &runtime);
     world.insert_resource(runtime);
 }
@@ -410,7 +444,12 @@ fn refresh_active_status(world: &mut World, runtime: &B1Runtime) {
     let joints = world
         .get::<CharacterSkeleton>(active.character)
         .map_or(0, |s| s.bone_map.len());
-    let ready = active.phase == 2 && meshes == 2 && joints == active.joint_count && joints == 53;
+    let ready = active.frame_error.is_none()
+        && active.phase == 2
+        && meshes == 2
+        && joints == active.joint_count
+        && joints == 53
+        && validate_structure(world, active).is_ok();
     let mut status = world.resource_mut::<RuntimeStatus>();
     status.ready = ready;
     status.meshes = meshes;
@@ -419,7 +458,12 @@ fn refresh_active_status(world: &mut World, runtime: &B1Runtime) {
         // Undo/Escape can return to the already uploaded selection while a newer
         // fit is still pending. That retained frame is current again immediately.
         status.error = None;
-        status.phase = "Ready · B1 positive aggregate CPU · static diagnostic pose".into();
+        status.phase = if active.rig.is_some() {
+            "Ready · B1 authored rehearsal · full-positive CPU"
+        } else {
+            "Ready · B1 positive aggregate CPU · static diagnostic pose"
+        }
+        .into();
     }
 }
 fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
@@ -490,6 +534,20 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             generation: c.request,
             phase: 0,
             joint_count: 0,
+            rig: None,
+            skins: Vec::new(),
+            source_ids: Vec::new(),
+            last_sample: None,
+            pending_sample: None,
+            last_bones: Vec::new(),
+            serial: 0,
+            frame_error: None,
+            published_binding: None,
+            skeleton_binding: None,
+            bone_bindings: Vec::new(),
+            hierarchy_bindings: Vec::new(),
+            display_indices: Vec::new(),
+            display_vertex_counts: Vec::new(),
         };
         for (name, path, obj) in [
             ("body", "body.mhclo", "base.obj"),
@@ -555,8 +613,30 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             };
             part.mesh = mesh;
         }
-        let pose = diagnostic_pose(&session.selection.pose)?;
-        apply_pose_canonical(world, session.character, &pose)?;
+        if c.document.profile.backend.is_b1_motion() {
+            let doc = if !c.is_open {
+                world
+                    .resource::<EditorState>()
+                    .visible_document()
+                    .cloned()
+                    .unwrap_or_else(|| c.document.clone())
+            } else {
+                c.document.clone()
+            };
+            let position = if c.is_open {
+                0.0
+            } else {
+                requested_position(&doc, world.resource::<Playback>())
+            };
+            let sample = frame_sample(&doc, position);
+            let rig = PreparedRig::new(world, session.character)?;
+            rig.apply(world, &sample_pose(&sample)?)?;
+            session.rig = Some(rig);
+            session.pending_sample = Some(sample);
+        } else {
+            let pose = diagnostic_pose(&session.selection.pose)?;
+            apply_pose_canonical(world, session.character, &pose)?;
+        }
         session.phase = 1;
     }
     Ok(())
@@ -616,7 +696,15 @@ fn upload(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             .get(&part.mapping)
             .ok_or("proxy mapping absent")?;
         let ids = source_ids(world, part)?;
-        let frame = skin_mesh_frame_full_weights(world, s.character, mesh, mapping, &ids)?;
+        let frame = if let Some(rig) = &s.rig {
+            let skin = PreparedSkin::new(world, s.character, mesh, mapping, &ids)?;
+            let frame = skin.evaluate(&rig.frames(world, s.character)?)?;
+            s.skins.push(skin);
+            s.source_ids.push(ids.clone());
+            frame
+        } else {
+            skin_mesh_frame_full_weights(world, s.character, mesh, mapping, &ids)?
+        };
         if frame.bones.len() != 53 {
             return Err("B1 full reference rig must have 53 bones".into());
         }
@@ -652,6 +740,11 @@ fn upload(world: &mut World, c: &mut Candidate) -> Result<(), String> {
     // diagnostics must not move the stage anchor. Both parts share this offset.
     let placement = Mat4::from_translation(Vec3::Y * -rest_min_y) * facing;
     s.joint_count = frames.first().map_or(0, |(frame, _)| frame.bones.len());
+    if let Some(rig) = &s.rig {
+        s.last_bones = rig.frames(world, s.character)?;
+    }
+    s.last_sample = s.pending_sample.take();
+    s.serial = 1;
     for (part, (frame, indices)) in s.parts.iter().zip(frames) {
         let mut mesh = Mesh::new(
             bevy::mesh::PrimitiveTopology::TriangleList,
@@ -661,6 +754,23 @@ fn upload(world: &mut World, c: &mut Candidate) -> Result<(), String> {
         mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, frame.normals);
         mesh.insert_attribute(Mesh::ATTRIBUTE_TANGENT, frame.tangents);
         mesh.insert_indices(indices);
+        s.display_vertex_counts
+            .push(match mesh.attribute(Mesh::ATTRIBUTE_POSITION) {
+                Some(bevy::mesh::VertexAttributeValues::Float32x3(v)) => v.len(),
+                _ => return Err("display positions absent".into()),
+            });
+        let cached_indices: Vec<_> = mesh
+            .indices()
+            .ok_or("display indices absent")?
+            .iter()
+            .collect();
+        if cached_indices
+            .iter()
+            .any(|i| *i >= s.display_vertex_counts[s.display_vertex_counts.len() - 1])
+        {
+            return Err("display index outside fitted vertex coverage".into());
+        }
+        s.display_indices.push(cached_indices);
         let handle = world.resource_mut::<Assets<Mesh>>().add(mesh);
         let material = world
             .resource_mut::<Assets<StandardMaterial>>()
@@ -692,7 +802,9 @@ fn upload(world: &mut World, c: &mut Candidate) -> Result<(), String> {
         s.display_meshes.push(handle);
         s.materials.push(material);
     }
+    capture_structure(world, s)?;
     s.phase = 2;
+    validate_structure(world, s)?;
     Ok(())
 }
 fn publish(world: &mut World) {
@@ -706,6 +818,11 @@ fn publish(world: &mut World) {
         if !selection_current(world, &c) {
             discard(world, c);
         } else {
+            if !c.is_open {
+                if let Some(doc) = world.resource::<EditorState>().visible_document() {
+                    c.document = doc.clone();
+                }
+            }
             match upload(world, &mut c) {
                 Err(error) => {
                     runtime.candidate = Some(c);
@@ -733,8 +850,38 @@ fn publish(world: &mut World) {
                     if let Some(root) = root {
                         let _ = world.despawn(root);
                     }
-                    world.resource_mut::<Playback>().playing = false;
+                    if c.is_open || !session_is_motion(world, &runtime) {
+                        *world.resource_mut::<Playback>() = Playback::default();
+                        if session_is_motion(world, &runtime) {
+                            if let (Some(doc), Some(sample)) = (
+                                world.resource::<EditorState>().document().cloned(),
+                                runtime.active.as_ref().and_then(|s| s.last_sample.as_ref()),
+                            ) {
+                                adopt_published_transport(
+                                    &doc,
+                                    &mut world.resource_mut::<Playback>(),
+                                    sample,
+                                );
+                            }
+                        }
+                    }
+                    if c.is_open {
+                        runtime.transport_generation = 0;
+                    } else if let Some(sample) =
+                        runtime.active.as_ref().and_then(|s| s.last_sample.as_ref())
+                    {
+                        if let Some(doc) =
+                            world.resource::<EditorState>().visible_document().cloned()
+                        {
+                            adopt_published_transport(
+                                &doc,
+                                &mut world.resource_mut::<Playback>(),
+                                sample,
+                            );
+                        }
+                    }
                     let now = world.resource::<Time<Real>>().elapsed_secs_f64();
+                    let session_is_motion_label = session_is_motion(world, &runtime);
                     let mut status = world.resource_mut::<RuntimeStatus>();
                     status.ready = uploaded_meshes == 2 && joint_count == 53;
                     status.error = None;
@@ -746,8 +893,12 @@ fn publish(world: &mut World) {
                     status.players = 0;
                     status.active_animations = 0;
                     status.paused_animations = 0;
-                    status.phase =
-                        "Ready · B1 positive aggregate CPU · static diagnostic pose".into();
+                    status.phase = if session_is_motion_label {
+                        "Ready · B1 authored rehearsal · full-positive CPU"
+                    } else {
+                        "Ready · B1 positive aggregate CPU · static diagnostic pose"
+                    }
+                    .into();
                     if c.is_open {
                         status.first_ready_seconds = Some(now);
                         status.ready_frames = 0;
@@ -758,6 +909,8 @@ fn publish(world: &mut World) {
             }
         }
     }
+    publish_active(world, &mut runtime);
+    bind_published_frame(world, &mut runtime);
     if world
         .resource::<EditorState>()
         .document()
@@ -1156,7 +1309,7 @@ mod tests {
         );
         let reads = Arc::new(AtomicUsize::new(0));
         let reader = ChangingReader {
-            inner: MemoryAssetReader { root: dir },
+            inner: MemoryAssetReader { root: dir.clone() },
             reads: reads.clone(),
             mutate: false,
         };
@@ -1200,6 +1353,62 @@ mod tests {
             "default GLB must not request any B1 input"
         );
         assert!(!app.world().contains_resource::<MakeHumanMorphs>());
+        assert!(app.world().resource::<B1Runtime>().candidate.is_none());
+        assert!(app.world().resource::<B1Runtime>().active.is_none());
+        fill(&dir);
+        app.world_mut().resource_mut::<Playback>().playing = true;
+        motion_tick(&mut app, 0.25);
+        assert!(
+            app.world().resource::<RuntimeStatus>().players > 0,
+            "transition starts from the actual GLB player"
+        );
+        assert!(!app.world().resource::<Playback>().clip_id.is_empty());
+        // Only the playback observation above advances simulated time. Async
+        // I/O/fitting waits retain the real 20s harness deadline, but must not
+        // spend another 250ms of the production 30s budget on every poll.
+        app.insert_resource(bevy::time::TimeUpdateStrategy::ManualDuration(
+            std::time::Duration::ZERO,
+        ));
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().pending_open.is_none()
+                && w.resource::<B1Runtime>().active.is_some()
+                && w.resource::<RuntimeStatus>().ready
+        });
+        assert_static_transport(&app);
+        assert_eq!(app.world().resource::<Time<Real>>().delta_secs(), 0.0);
+    }
+    #[test]
+    fn production_candidate_timeout_still_rejects_elapsed_clock_over_30_seconds() {
+        let (mut app, _, _) = harness(false);
+        motion_tick(&mut app, 0.0);
+        let committed = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        motion_tick(&mut app, 31.0);
+        assert_eq!(app.world().resource::<Time<Real>>().delta_secs(), 31.0);
+        assert!(
+            app.world()
+                .resource::<EditorState>()
+                .open_error
+                .as_deref()
+                .unwrap()
+                .contains("exceeded 30 seconds")
+        );
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&committed)
+        );
         assert!(app.world().resource::<B1Runtime>().candidate.is_none());
         assert!(app.world().resource::<B1Runtime>().active.is_none());
     }
@@ -1653,10 +1862,1315 @@ mod tests {
         assert!(app.world().resource::<B1Runtime>().candidate.is_none());
         assert!(app.world().resource::<B1Runtime>().active.is_none());
     }
+    fn motion_app() -> (App, Dir, Arc<AtomicUsize>) {
+        let (mut app, dir, reads) = harness(false);
+        super::super::add_playback_systems(&mut app);
+        app.insert_resource(bevy::time::TimeUpdateStrategy::ManualDuration(
+            std::time::Duration::ZERO,
+        ));
+        app.world_mut()
+            .resource_mut::<Time<Virtual>>()
+            .set_max_delta(std::time::Duration::from_secs(20));
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(
+                SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_motion()).unwrap(),
+            )
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().pending_open.is_none()
+                && w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.rig.is_some())
+                && w.resource::<RuntimeStatus>().ready
+        });
+        app.update();
+        (app, dir, reads)
+    }
+    fn motion_tick(app: &mut App, seconds: f32) {
+        app.insert_resource(bevy::time::TimeUpdateStrategy::ManualDuration(
+            std::time::Duration::from_secs_f32(seconds),
+        ));
+        app.update();
+    }
+    fn motion_seek(app: &mut App, seconds: f32) {
+        app.world_mut().resource_mut::<Playback>().seek_request = Some(seconds);
+        motion_tick(app, 0.0);
+    }
+    #[test]
+    fn actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit() {
+        assert_eq!(motion::CLIP_IDS, nvwa_core::B1_MOTION_CLIPS);
+        assert_eq!(
+            motion::DURATION_SECONDS,
+            nvwa_core::B1_MOTION_DURATION_SECONDS
+        );
+        let (mut app, _, reads) = motion_app();
+        let initial = b1_frame_snapshot(app.world()).unwrap();
+        let handles = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .display_meshes
+            .clone();
+        let character = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .character;
+        for id in motion::CLIP_IDS {
+            let mut timeline = app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .timeline
+                .clone();
+            timeline[0].clip_id = id.into();
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetTimeline { clips: timeline })
+                .unwrap();
+            motion_tick(&mut app, 0.0);
+            motion_seek(&mut app, 0.0);
+            let rest = uploaded_positions(&app);
+            let rest_bones = b1_frame_snapshot(app.world()).unwrap()["bones"].clone();
+            app.world_mut().resource_mut::<Playback>().playing = true;
+            motion_tick(&mut app, 1.0);
+            assert_eq!(app.world().resource::<Playback>().position_seconds, 1.0);
+            let middle = uploaded_positions(&app);
+            assert!(
+                part_position_deltas(&rest, &middle)
+                    .iter()
+                    .all(|delta| *delta > 1e-4)
+            );
+            let snap = b1_frame_snapshot(app.world()).unwrap();
+            assert_ne!(snap["bones"], rest_bones);
+            assert_eq!(snap["sample"]["source_seconds"], 1.0);
+            app.world_mut().resource_mut::<Playback>().playing = false;
+            motion_tick(&mut app, 0.5);
+            assert_eq!(uploaded_positions(&app), middle);
+            assert_eq!(app.world().resource::<Playback>().position_seconds, 1.0);
+            motion_seek(&mut app, 4.0);
+            assert!(position_delta(&rest, &uploaded_positions(&app)) < 1e-6);
+            assert_eq!(
+                b1_frame_snapshot(app.world()).unwrap()["sample"]["source_seconds"],
+                0.0
+            );
+            let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+            assert_eq!(active.display_meshes, handles);
+            assert_eq!(active.character, character);
+            assert_eq!(reads.load(Ordering::SeqCst), 14);
+        }
+        assert_eq!(initial["parts"].as_array().unwrap().len(), 2);
+        assert_eq!(initial["bones"].as_array().unwrap().len(), 53);
+    }
+    /// Same predeclared source-weight regions used by the independent contact
+    /// gate: visible body vertices with foot+ball aggregate >=0.5, no new patch.
+    fn source_foot_regions(app: &App) -> [BTreeSet<u16>; 2] {
+        let rig = app.world().resource::<RigData>().0.as_ref().unwrap();
+        ["l", "r"].map(|side| {
+            let mut sums = BTreeMap::<u16, f32>::new();
+            for bone in [format!("foot_{side}"), format!("ball_{side}")] {
+                for (&source, &weight) in &rig.original_weights()[bone.as_str()] {
+                    *sums.entry(source).or_default() += weight;
+                }
+            }
+            sums.into_iter()
+                .filter_map(|(source, weight)| (source < 13380 && weight >= 0.5).then_some(source))
+                .collect()
+        })
+    }
+    fn uploaded_foot_points(app: &App, region: &BTreeSet<u16>) -> BTreeMap<u16, Vec3> {
+        let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+        let display = active.displays[0];
+        let handle = &app.world().get::<Mesh3d>(display).unwrap().0;
+        let mesh = app.world().resource::<Assets<Mesh>>().get(handle).unwrap();
+        let positions = get_vertex_positions(mesh);
+        let transform = app.world().get::<GlobalTransform>(display).unwrap();
+        mesh.indices()
+            .unwrap()
+            .iter()
+            .filter_map(|i| {
+                let source = active.source_ids[0][i];
+                region
+                    .contains(&source)
+                    .then_some((source, transform.transform_point(positions[i])))
+            })
+            .collect()
+    }
+    #[test]
+    fn authored_knee_counterrotation_keeps_actual_early_and_full_cycle_feet_above_floor() {
+        let (mut app, _, _) = motion_app();
+        let regions = source_foot_regions(&app);
+        let character_id = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .id
+            .clone();
+        let mut entry = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .timeline[0]
+            .clone();
+        entry.clip_id = motion::CLIP_IDS[1].into();
+        entry.looping = false;
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetTimeline { clips: vec![entry] })
+            .unwrap();
+        for torso in [-1.0, 0.0, 1.0] {
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetParameters {
+                    character_id: character_id.clone(),
+                    values: [("torso_length".into(), torso)].into_iter().collect(),
+                })
+                .unwrap();
+            until(&mut app, |w| {
+                w.resource::<RuntimeStatus>().ready
+                    && w.resource::<B1Runtime>()
+                        .active
+                        .as_ref()
+                        .is_some_and(|s| s.selection.parameters["torso_length"] == torso)
+            });
+            motion_seek(&mut app, 0.0);
+            let right_rest = uploaded_foot_points(&app, &regions[1]);
+            assert!(!right_rest.is_empty());
+            let (character, handles, placement) = {
+                let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+                (
+                    active.character,
+                    active.display_meshes.clone(),
+                    active
+                        .display_transforms
+                        .iter()
+                        .map(Transform::to_matrix)
+                        .collect::<Vec<_>>(),
+                )
+            };
+            // Includes the original failed0.125/0.25/0.375s samples and all33
+            // frozen source times. Every assertion reads actual uploaded CPU buffers.
+            for k in 0..=32 {
+                let seconds = k as f32 / 8.0;
+                motion_seek(&mut app, seconds);
+                let left = uploaded_foot_points(&app, &regions[0]);
+                let right = uploaded_foot_points(&app, &regions[1]);
+                assert!(!left.is_empty());
+                let min_left = left.values().map(|p| p.y).fold(f32::INFINITY, f32::min);
+                let min_right = right.values().map(|p| p.y).fold(f32::INFINITY, f32::min);
+                assert!(
+                    min_left >= -0.001,
+                    "actual moving foot dips below floor: torso={torso}, source={seconds}, min_y={min_left}"
+                );
+                assert!(min_right >= -0.001, "actual planted foot below floor");
+                assert!(
+                    right
+                        .iter()
+                        .all(|(id, p)| p.distance(right_rest[id]) <= 0.001),
+                    "planted right foot drift"
+                );
+                if k == 16 {
+                    assert!(min_left >= 0.020, "moving apex clearance below20mm");
+                }
+                let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+                assert_eq!(active.character, character);
+                assert_eq!(active.display_meshes, handles);
+                assert_eq!(
+                    active
+                        .display_transforms
+                        .iter()
+                        .map(Transform::to_matrix)
+                        .collect::<Vec<_>>(),
+                    placement,
+                    "motion must not move the fitted-rest floor anchor"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn finite_motion_replay_speed_gaps_and_backward_seek_use_production_transport() {
+        let (mut app, _, _) = motion_app();
+        let mut entry = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .timeline[0]
+            .clone();
+        entry.looping = false;
+        entry.speed = 2.0;
+        entry.duration_seconds = 2.0;
+        let mut later = entry.clone();
+        later.id = "again".into();
+        later.start_seconds = 3.0;
+        later.speed = 0.5;
+        later.duration_seconds = 4.0;
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetTimeline {
+                clips: vec![later, entry],
+            })
+            .unwrap();
+        motion_tick(&mut app, 0.0);
+        motion_seek(&mut app, 1.0);
+        assert_eq!(
+            b1_frame_snapshot(app.world()).unwrap()["sample"]["source_seconds"],
+            2.0
+        );
+        motion_seek(&mut app, 2.5);
+        assert_eq!(
+            b1_frame_snapshot(app.world()).unwrap()["sample"]["source_seconds"],
+            4.0
+        );
+        motion_seek(&mut app, 3.0);
+        assert_eq!(
+            b1_frame_snapshot(app.world()).unwrap()["sample"]["source_seconds"],
+            0.0
+        );
+        motion_seek(&mut app, 7.0);
+        assert!(app.world().resource::<Playback>().completed);
+        assert!(!app.world().resource::<Playback>().playing);
+        app.world_mut().resource_mut::<Playback>().playing = true;
+        motion_tick(&mut app, 0.5);
+        assert_eq!(app.world().resource::<Playback>().position_seconds, 0.0);
+        motion_tick(&mut app, 0.5);
+        assert_eq!(
+            b1_frame_snapshot(app.world()).unwrap()["sample"]["source_seconds"],
+            1.0
+        );
+        motion_seek(&mut app, 0.25);
+        assert_eq!(
+            b1_frame_snapshot(app.world()).unwrap()["sample"]["source_seconds"],
+            0.5
+        );
+    }
+    #[test]
+    fn delayed_and_superseded_fit_retains_latest_seek_restart_and_live_pause_intent() {
+        let (mut app, _, reads) = motion_app();
+        motion_seek(&mut app, 1.25);
+        let character_id = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .id
+            .clone();
+        let set_shape = |app: &mut App, value| {
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetParameters {
+                    character_id: character_id.clone(),
+                    values: [("torso_length".into(), value)].into_iter().collect(),
+                })
+                .unwrap()
+        };
+        set_shape(&mut app, 0.25);
+        {
+            let mut playback = app.world_mut().resource_mut::<Playback>();
+            playback.playing = true;
+            playback.seek_request = Some(2.5);
+        }
+        motion_tick(&mut app, 0.25);
+        assert_eq!(app.world().resource::<Playback>().seek_request, Some(2.5));
+        assert_eq!(app.world().resource::<Playback>().position_seconds, 1.25);
+        assert!(app.world().resource::<B1Runtime>().candidate.is_some());
+        set_shape(&mut app, 0.5);
+        app.world_mut().resource_mut::<Playback>().seek_request = Some(3.0);
+        motion_tick(&mut app, 0.0);
+        assert_eq!(app.world().resource::<Playback>().seek_request, Some(3.0));
+        // Restart is an explicit seek0 + play; a subsequent Pause wins while fitting.
+        {
+            let mut playback = app.world_mut().resource_mut::<Playback>();
+            playback.seek_request = Some(0.0);
+            playback.playing = true;
+        }
+        app.world_mut().resource_mut::<Playback>().playing = false;
+        until(&mut app, |w| {
+            w.resource::<RuntimeStatus>().ready
+                && w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.selection.parameters["torso_length"] == 0.5)
+        });
+        assert_eq!(app.world().resource::<Playback>().seek_request, None);
+        assert_eq!(app.world().resource::<Playback>().position_seconds, 0.0);
+        assert!(!app.world().resource::<Playback>().playing);
+        assert_eq!(
+            b1_frame_snapshot(app.world()).unwrap()["sample"]["source_seconds"],
+            0.0
+        );
+        set_shape(&mut app, 0.75);
+        app.world_mut().resource_mut::<Playback>().seek_request = Some(1.75);
+        until(&mut app, |w| {
+            w.resource::<RuntimeStatus>().ready
+                && w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.selection.parameters["torso_length"] == 0.75)
+        });
+        assert_eq!(
+            b1_frame_snapshot(app.world()).unwrap()["sample"]["source_seconds"],
+            1.75
+        );
+        motion_tick(&mut app, 0.5);
+        assert_eq!(app.world().resource::<Playback>().position_seconds, 1.75);
+        assert_eq!(reads.load(Ordering::SeqCst), 14);
+    }
+    fn assert_static_transport(app: &App) {
+        let playback = app.world().resource::<Playback>();
+        assert!(!playback.playing);
+        assert!(playback.clip_id.is_empty());
+        assert!(playback.active_timeline_id.is_empty());
+        assert_eq!(playback.position_seconds, 0.0);
+        assert_eq!(playback.seek_request, None);
+        assert!(!playback.completed);
+        assert!(playback.error.is_none());
+        assert_eq!(
+            app.world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .profile,
+            nvwa_core::CharacterProfile::b1()
+        );
+    }
+    #[test]
+    fn successful_static_open_clears_all_prior_motion_transport_identity() {
+        let (mut app, _, _) = motion_app();
+        motion_seek(&mut app, 1.5);
+        {
+            let mut playback = app.world_mut().resource_mut::<Playback>();
+            playback.playing = true;
+            playback.error = Some("prior error".into());
+        }
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().pending_open.is_none()
+                && w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.rig.is_none())
+                && w.resource::<RuntimeStatus>().ready
+        });
+        assert_static_transport(&app);
+        motion_tick(&mut app, 0.5);
+        assert_static_transport(&app);
+    }
+    fn cached_positions(app: &App) -> Vec<Vec<[f32; 3]>> {
+        app.world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .display_meshes
+            .iter()
+            .map(|handle| {
+                match app
+                    .world()
+                    .resource::<Assets<Mesh>>()
+                    .get(handle)
+                    .unwrap()
+                    .attribute(Mesh::ATTRIBUTE_POSITION)
+                    .unwrap()
+                {
+                    bevy::mesh::VertexAttributeValues::Float32x3(v) => v.clone(),
+                    _ => panic!("cached CPU positions absent"),
+                }
+            })
+            .collect()
+    }
+    #[test]
+    fn actual_display_and_bone_bindings_guard_clock_publication_status_and_readback() {
+        let (mut app, _, _) = motion_app();
+        motion_seek(&mut app, 1.0);
+        let (display, correct, wrong, bone, parent) = {
+            let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+            let bone = active
+                .bone_bindings
+                .iter()
+                .find(|(name, _)| name == "calf_l")
+                .unwrap()
+                .1;
+            (
+                active.displays[0],
+                active.display_meshes[0].clone(),
+                active.display_meshes[1].clone(),
+                bone,
+                app.world().get::<ChildOf>(bone).unwrap().parent(),
+            )
+        };
+        for fault in [
+            "wrong_mesh",
+            "missing_mesh",
+            "missing_bone_transform",
+            "wrong_bone_parent",
+        ] {
+            let before = cached_positions(&app);
+            let transform = *app.world().get::<Transform>(bone).unwrap();
+            match fault {
+                "wrong_mesh" => {
+                    app.world_mut()
+                        .entity_mut(display)
+                        .insert(Mesh3d(wrong.clone()));
+                }
+                "missing_mesh" => {
+                    app.world_mut().entity_mut(display).remove::<Mesh3d>();
+                }
+                "missing_bone_transform" => {
+                    app.world_mut().entity_mut(bone).remove::<Transform>();
+                }
+                _ => {
+                    let character = app
+                        .world()
+                        .resource::<B1Runtime>()
+                        .active
+                        .as_ref()
+                        .unwrap()
+                        .character;
+                    app.world_mut().entity_mut(character).add_child(bone);
+                }
+            }
+            assert!(
+                b1_frame_snapshot(app.world()).is_err(),
+                "actual binding mutation must reject direct readback: {fault}"
+            );
+            app.world_mut().resource_mut::<Playback>().playing = true;
+            motion_tick(&mut app, 0.25);
+            assert_eq!(
+                app.world().resource::<Playback>().position_seconds,
+                1.0,
+                "clock must hold invalid binding: {fault}"
+            );
+            assert!(
+                !app.world().resource::<RuntimeStatus>().ready,
+                "invalid binding cannot remain Ready: {fault}"
+            );
+            assert!(app.world().resource::<RuntimeStatus>().error.is_some());
+            assert_eq!(
+                cached_positions(&app),
+                before,
+                "invalid binding must not update detached cached meshes: {fault}"
+            );
+            assert!(b1_frame_snapshot(app.world()).is_err());
+            app.world_mut()
+                .entity_mut(display)
+                .insert(Mesh3d(correct.clone()));
+            app.world_mut().entity_mut(bone).insert(transform);
+            app.world_mut().entity_mut(parent).add_child(bone);
+            motion_tick(&mut app, 0.0);
+            assert!(
+                app.world().resource::<RuntimeStatus>().ready,
+                "restored binding recovers: {fault}"
+            );
+            assert!(b1_frame_snapshot(app.world()).is_ok());
+        }
+    }
+
+    #[test]
+    fn snapshot_rejects_commands_and_queued_seek_before_publication_then_accepts_real_frame() {
+        let (mut app, _, _) = motion_app();
+        motion_seek(&mut app, 1.0);
+        let before = b1_frame_snapshot(app.world()).unwrap();
+        let mut timeline = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .timeline
+            .clone();
+        timeline[0].clip_id = motion::CLIP_IDS[1].into();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetTimeline { clips: timeline })
+            .unwrap();
+        assert!(
+            b1_frame_snapshot(app.world()).is_err(),
+            "new timeline cannot label old arm buffers"
+        );
+        motion_tick(&mut app, 0.0);
+        let changed = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(changed["sample"]["clip_id"], motion::CLIP_IDS[1]);
+        assert_ne!(changed["revision"], before["revision"]);
+        let id = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .id
+            .clone();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetDiagnosticPose {
+                character_id: id.clone(),
+                pose_id: "elbow".into(),
+            })
+            .unwrap();
+        assert!(
+            b1_frame_snapshot(app.world()).is_err(),
+            "new diagnostic cannot label old motion buffers"
+        );
+        motion_tick(&mut app, 0.0);
+        let diagnostic = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(diagnostic["mode"], "diagnostic");
+        assert_eq!(diagnostic["diagnostic_pose"], "elbow");
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::Undo)
+            .unwrap();
+        motion_tick(&mut app, 0.0);
+        app.world_mut().resource_mut::<Playback>().seek_request = Some(2.0);
+        assert!(
+            b1_frame_snapshot(app.world()).is_err(),
+            "queued seek is not a published frame"
+        );
+        motion_tick(&mut app, 0.0);
+        let sought = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(sought["sample"]["source_seconds"], 2.0);
+        let handles = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .display_meshes
+            .clone();
+        let positions = uploaded_positions(&app);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetScale {
+                character_id: id,
+                scale: 1.2,
+            })
+            .unwrap();
+        assert!(
+            b1_frame_snapshot(app.world()).is_err(),
+            "scale command awaits actual propagated display transform"
+        );
+        motion_tick(&mut app, 0.0);
+        assert!(b1_frame_snapshot(app.world()).is_ok());
+        assert_eq!(uploaded_positions(&app), positions);
+        assert_eq!(
+            app.world()
+                .resource::<B1Runtime>()
+                .active
+                .as_ref()
+                .unwrap()
+                .display_meshes,
+            handles
+        );
+        let mut stage = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .stage
+            .clone();
+        stage.camera.azimuth_degrees += 20.0;
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetStage { stage })
+            .unwrap();
+        assert!(
+            b1_frame_snapshot(app.world()).is_err(),
+            "stage revision awaits normal frame publication"
+        );
+        motion_tick(&mut app, 0.0);
+        assert!(b1_frame_snapshot(app.world()).is_ok());
+        assert_eq!(uploaded_positions(&app), positions);
+    }
+
+    #[test]
+    fn rejected_motion_open_preserves_committed_history_and_continuing_playback() {
+        let (mut app, dir, _) = motion_app();
+        let id = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .id
+            .clone();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetScale {
+                character_id: id,
+                scale: 1.1,
+            })
+            .unwrap();
+        motion_seek(&mut app, 1.0);
+        app.world_mut().resource_mut::<Playback>().playing = true;
+        let committed = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        let handles = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .display_meshes
+            .clone();
+        dir.remove_asset(Path::new("characters/mpfb-b1-v1/weights.game_engine.json"));
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(
+                SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_motion()).unwrap(),
+            )
+            .unwrap();
+        // The committed renderer advances despite a different pending candidate.
+        motion_tick(&mut app, 0.25);
+        assert_eq!(app.world().resource::<Playback>().position_seconds, 1.25);
+        motion_tick(&mut app, 0.0);
+        until(&mut app, |w| {
+            w.resource::<EditorState>().open_error.is_some()
+        });
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&committed)
+        );
+        assert!(app.world().resource::<Playback>().playing);
+        assert_eq!(app.world().resource::<Playback>().position_seconds, 1.25);
+        assert_eq!(
+            app.world()
+                .resource::<B1Runtime>()
+                .active
+                .as_ref()
+                .unwrap()
+                .display_meshes,
+            handles
+        );
+        assert!(b1_frame_snapshot(app.world()).is_ok());
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::Undo)
+            .unwrap();
+        assert_eq!(
+            app.world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .character
+                .scale,
+            1.0
+        );
+    }
+
+    #[test]
+    fn rejected_frame_keeps_both_uploaded_buffers_and_never_returns_inconsistent_snapshot() {
+        let (mut app, _, _) = motion_app();
+        motion_seek(&mut app, 1.0);
+        let before = uploaded_positions(&app);
+        let skin = app
+            .world_mut()
+            .resource_mut::<B1Runtime>()
+            .active
+            .as_mut()
+            .unwrap()
+            .skins
+            .pop()
+            .unwrap();
+        motion_seek(&mut app, 2.0);
+        assert_eq!(uploaded_positions(&app), before);
+        assert!(b1_frame_snapshot(app.world()).is_err());
+        assert!(!app.world().resource::<RuntimeStatus>().ready);
+        assert!(!app.world().resource::<Playback>().playing);
+        app.world_mut()
+            .resource_mut::<B1Runtime>()
+            .active
+            .as_mut()
+            .unwrap()
+            .skins
+            .push(skin);
+        motion_tick(&mut app, 0.0);
+        assert!(b1_frame_snapshot(app.world()).is_ok());
+        assert!(app.world().resource::<RuntimeStatus>().ready);
+        assert!(position_delta(&before, &uploaded_positions(&app)) > 1e-4);
+    }
+
     #[test]
     fn bounded_reader_stops_at_one_over_limit() {
         let mut reader = bevy::asset::io::VecReader::new(vec![0; 1025]);
         let error = future::block_on(bounded_read(&mut reader, 1024)).unwrap_err();
         assert!(error.contains("byte limit"));
     }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+struct FrameSample {
+    clip_id: String,
+    timeline_id: String,
+    position: f32,
+    source: f32,
+    diagnostic: String,
+}
+fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
+    if doc.timeline.is_empty() {
+        FrameSample {
+            clip_id: String::new(),
+            timeline_id: String::new(),
+            position: 0.0,
+            source: 0.0,
+            diagnostic: doc.character.diagnostic_pose.clone().unwrap_or_default(),
+        }
+    } else if doc.is_single_loop() {
+        FrameSample {
+            clip_id: doc.timeline[0].clip_id.clone(),
+            timeline_id: doc.timeline[0].id.clone(),
+            position,
+            source: position.rem_euclid(motion::DURATION_SECONDS),
+            diagnostic: String::new(),
+        }
+    } else {
+        let (entry, source) = super::sequence_sample(doc, position);
+        FrameSample {
+            clip_id: entry.clip_id.clone(),
+            timeline_id: entry.id.clone(),
+            position,
+            source,
+            diagnostic: String::new(),
+        }
+    }
+}
+fn sample_pose(sample: &FrameSample) -> Result<DiagnosticPose, String> {
+    if sample.clip_id.is_empty() {
+        diagnostic_pose(&sample.diagnostic)
+    } else {
+        motion::sample(&sample.clip_id, sample.source)
+    }
+}
+fn session_is_motion(_world: &World, runtime: &B1Runtime) -> bool {
+    runtime.active.as_ref().is_some_and(|s| s.rig.is_some())
+}
+
+fn requested_position(doc: &SceneDocument, playback: &Playback) -> f32 {
+    let duration = if doc.is_single_loop() {
+        motion::DURATION_SECONDS
+    } else {
+        doc.timeline_duration_seconds()
+    };
+    playback
+        .seek_request
+        .filter(|t| t.is_finite())
+        .map(|t| t.clamp(0.0, duration))
+        .unwrap_or(playback.position_seconds)
+}
+fn adopt_published_transport(doc: &SceneDocument, playback: &mut Playback, sample: &FrameSample) {
+    if playback
+        .seek_request
+        .is_some_and(|t| t.is_finite() && requested_position(doc, playback) == sample.position)
+    {
+        playback.seek_request = None;
+    }
+    playback.position_seconds = sample.position;
+    playback.clip_id = sample.clip_id.clone();
+    playback.active_timeline_id = sample.timeline_id.clone();
+    playback.completed = !doc.timeline.is_empty()
+        && !doc.is_single_loop()
+        && sample.position >= doc.timeline_duration_seconds();
+    if playback.completed {
+        playback.playing = false;
+    }
+}
+
+/// The real B1 transport. Tests drive the same Time resource and seek intents.
+fn advance_motion_transport(
+    doc: &SceneDocument,
+    playback: &mut Playback,
+    delta: f32,
+    changed: bool,
+    ready: bool,
+) {
+    if changed {
+        playback.position_seconds = 0.0;
+        playback.completed = false;
+    }
+    if doc.timeline.is_empty() {
+        playback.position_seconds = 0.0;
+        playback.playing = false;
+        playback.completed = false;
+        playback.seek_request = None;
+        playback.clip_id.clear();
+        playback.active_timeline_id.clear();
+        return;
+    }
+    let duration = if doc.is_single_loop() {
+        motion::DURATION_SECONDS
+    } else {
+        doc.timeline_duration_seconds()
+    };
+    if !ready {
+        if playback.seek_request.is_some_and(|t| !t.is_finite()) {
+            playback.error = Some("Seek time must be finite".into());
+            playback.seek_request = None;
+        }
+        let sample = frame_sample(doc, playback.position_seconds);
+        playback.clip_id = sample.clip_id;
+        playback.active_timeline_id = sample.timeline_id;
+        return;
+    }
+    let seek = playback.seek_request.take();
+    if let Some(position) = seek {
+        if !position.is_finite() {
+            playback.error = Some("Seek time must be finite".into());
+            return;
+        }
+        playback.position_seconds = position.clamp(0.0, duration);
+        playback.error = None;
+    } else if playback.completed && playback.playing {
+        playback.position_seconds = 0.0;
+    } else if playback.playing && !changed && ready {
+        let step = delta
+            * if doc.is_single_loop() {
+                doc.timeline[0].speed
+            } else {
+                1.0
+            };
+        playback.position_seconds = if doc.is_single_loop() {
+            (playback.position_seconds + step).rem_euclid(duration)
+        } else {
+            (playback.position_seconds + step).min(duration)
+        };
+    }
+    playback.completed = !doc.is_single_loop() && playback.position_seconds >= duration;
+    if playback.completed {
+        playback.playing = false;
+    }
+    let sample = frame_sample(doc, playback.position_seconds);
+    playback.clip_id = sample.clip_id;
+    playback.active_timeline_id = sample.timeline_id;
+}
+
+fn update_motion_transport(world: &mut World, runtime: &mut B1Runtime) {
+    let editor = world.resource::<EditorState>();
+    let Some(doc) = editor
+        .visible_document()
+        .filter(|d| d.profile.backend.is_b1_motion())
+        .cloned()
+    else {
+        return;
+    };
+    let generation = editor.document_generation;
+    let changed = runtime.transport_generation != generation || runtime.timeline != doc.timeline;
+    runtime.timeline = doc.timeline.clone();
+    runtime.transport_generation = generation;
+    let ready = runtime.active.as_ref().is_some_and(|s| {
+        s.rig.is_some()
+            && s.generation == generation
+            && s.selection == Selection::from_doc(&doc)
+            && s.frame_error.is_none()
+            && validate_structure(world, s).is_ok()
+    });
+    let delta = world.resource::<Time>().delta_secs();
+    advance_motion_transport(
+        &doc,
+        &mut world.resource_mut::<Playback>(),
+        delta,
+        changed,
+        ready,
+    );
+}
+fn animate_active(world: &mut World, runtime: &mut B1Runtime) {
+    let editor = world.resource::<EditorState>();
+    let Some(doc) = editor
+        .visible_document()
+        .filter(|d| d.profile.backend.is_b1_motion())
+        .cloned()
+    else {
+        return;
+    };
+    let generation = editor.document_generation;
+    let Some(active) = runtime.active.as_mut().filter(|s| {
+        s.rig.is_some() && s.generation == generation && s.selection == Selection::from_doc(&doc)
+    }) else {
+        return;
+    };
+    let sample = frame_sample(&doc, requested_position(&doc, world.resource::<Playback>()));
+    if active.last_sample.as_ref() == Some(&sample) && active.frame_error.is_none() {
+        return;
+    }
+    let result =
+        sample_pose(&sample).and_then(|pose| active.rig.as_ref().unwrap().apply(world, &pose));
+    match result {
+        Ok(()) => {
+            active.pending_sample = Some(sample);
+        }
+        Err(error) => frame_failure(world, active, error),
+    }
+}
+fn frame_failure(world: &mut World, session: &mut Session, error: String) {
+    session.frame_error = Some(error.clone());
+    session.pending_sample = None;
+    let mut playback = world.resource_mut::<Playback>();
+    playback.playing = false;
+    playback.error = Some(error.clone());
+    let mut status = world.resource_mut::<RuntimeStatus>();
+    status.ready = false;
+    status.error = Some(error);
+    status.phase = "B1 frame failed · last displayed frame preserved".into();
+}
+fn publish_active(world: &mut World, runtime: &mut B1Runtime) {
+    let Some(active) = runtime
+        .active
+        .as_mut()
+        .filter(|s| s.pending_sample.is_some())
+    else {
+        return;
+    };
+    let result = (|| {
+        validate_structure(world, active)?;
+        let bones = active
+            .rig
+            .as_ref()
+            .ok_or("prepared rig absent")?
+            .frames(world, active.character)?;
+        if bones.len() != 53 {
+            return Err("B1 motion requires all53 bones".to_string());
+        }
+        let frames = active
+            .skins
+            .iter()
+            .map(|skin| skin.evaluate(&bones))
+            .collect::<Result<Vec<_>, _>>()?;
+        if frames.len() != 2 || active.display_meshes.len() != 2 {
+            return Err("B1 motion requires both display parts".into());
+        }
+        // Validate every destination before mutating either one.
+        for handle in &active.display_meshes {
+            if world.resource::<Assets<Mesh>>().get(handle).is_none() {
+                return Err("B1 display mesh absent".into());
+            }
+        }
+        let mut meshes = world.resource_mut::<Assets<Mesh>>();
+        for (handle, frame) in active.display_meshes.iter().zip(frames) {
+            let mut mesh = meshes.get_mut(handle).unwrap();
+            mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, frame.positions);
+            mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, frame.normals);
+            mesh.insert_attribute(Mesh::ATTRIBUTE_TANGENT, frame.tangents);
+        }
+        active.last_bones = bones;
+        Ok(())
+    })();
+    match result {
+        Ok(()) => {
+            active.last_sample = active.pending_sample.take();
+            active.serial = active.serial.saturating_add(1);
+            active.frame_error = None;
+            if let Some(doc) = world.resource::<EditorState>().visible_document().cloned() {
+                adopt_published_transport(
+                    &doc,
+                    &mut world.resource_mut::<Playback>(),
+                    active.last_sample.as_ref().unwrap(),
+                );
+            }
+            world.resource_mut::<Playback>().error = None;
+            refresh_active_status(world, runtime);
+        }
+        Err(error) => frame_failure(world, active, error),
+    }
+}
+
+/// Pin the actual fitted ECS hierarchy once; roots may include source scene
+/// nodes, so retain those exact edges rather than inventing a direct-parent rig.
+fn capture_structure(world: &World, session: &mut Session) -> Result<(), String> {
+    let skeleton = world
+        .get::<CharacterSkeleton>(session.character)
+        .ok_or("B1 skeleton absent")?;
+    let rig = world
+        .resource::<RigData>()
+        .0
+        .as_ref()
+        .ok_or("B1 rig absent")?;
+    let reference = rig.reference_rig();
+    session.skeleton_binding = Some(skeleton.skeleton_entity);
+    let mut edges = BTreeMap::new();
+    for &name in &reference.bone_names {
+        let entity = *skeleton
+            .bone_map
+            .get(name)
+            .ok_or("B1 required bone absent")?;
+        session.bone_bindings.push((name.into(), entity));
+        if let Some(expected_parent) = skeleton.bone_map.get(reference.bone_parents[name].as_str())
+        {
+            if world.get::<ChildOf>(entity).map(ChildOf::parent) != Some(*expected_parent) {
+                return Err("B1 fitted bone parent differs from source rig".into());
+            }
+        }
+        let mut current = entity;
+        let mut seen = BTreeSet::new();
+        while current != session.character {
+            if !seen.insert(current) {
+                return Err("B1 hierarchy cycle".into());
+            }
+            let parent = world
+                .get::<ChildOf>(current)
+                .ok_or("B1 hierarchy parent absent")?
+                .parent();
+            edges.insert(current, parent);
+            current = parent;
+        }
+    }
+    session.hierarchy_bindings = edges.into_iter().collect();
+    Ok(())
+}
+
+/// Cheap structural guard shared by clock, pose/publication, readiness and QA.
+/// It checks bindings/counts only; full mesh arrays stay opt-in in readback.
+fn validate_structure(world: &World, session: &Session) -> Result<(), String> {
+    use bevy::mesh::VertexAttributeValues;
+    if session.parts.len() != 2
+        || session.displays.len() != 2
+        || session.display_meshes.len() != 2
+        || session.display_transforms.len() != 2
+        || session.display_indices.len() != 2
+        || session.display_vertex_counts.len() != 2
+        || session.bone_bindings.len() != 53
+        || session.joint_count != 53
+    {
+        return Err("B1 fitted part/bone coverage changed".into());
+    }
+    let skeleton = world
+        .get::<CharacterSkeleton>(session.character)
+        .ok_or("B1 actual skeleton absent")?;
+    if session.skeleton_binding != Some(skeleton.skeleton_entity)
+        || skeleton.bone_map.len() != 53
+        || skeleton.model_space_inv_bindposes.len() != 53
+        || world.get::<Transform>(skeleton.skeleton_entity).is_none()
+        || world
+            .get::<GlobalTransform>(skeleton.skeleton_entity)
+            .is_none()
+    {
+        return Err("B1 actual skeleton root or bone coverage absent".into());
+    }
+    for (name, entity) in &session.bone_bindings {
+        if skeleton.bone_map.get(name.as_str()) != Some(entity)
+            || world
+                .get::<Transform>(*entity)
+                .is_none_or(|t| !t.to_matrix().is_finite())
+            || world
+                .get::<GlobalTransform>(*entity)
+                .is_none_or(|t| !t.to_matrix().is_finite())
+        {
+            return Err(format!("B1 actual bone binding absent or changed: {name}"));
+        }
+    }
+    for (entity, parent) in &session.hierarchy_bindings {
+        if world.get::<ChildOf>(*entity).map(ChildOf::parent) != Some(*parent)
+            || world.get::<Transform>(*entity).is_none()
+            || world.get::<GlobalTransform>(*entity).is_none()
+        {
+            return Err("B1 actual bone hierarchy binding changed".into());
+        }
+    }
+    if session.rig.is_some()
+        && (session.skins.len() != 2
+            || session.source_ids.len() != 2
+            || session.last_bones.len() != 53
+            || session
+                .last_sample
+                .as_ref()
+                .is_none_or(|sample| !sample.position.is_finite() || !sample.source.is_finite())
+            || session
+                .source_ids
+                .iter()
+                .zip(&session.display_vertex_counts)
+                .any(|(ids, count)| ids.len() != *count))
+    {
+        return Err("B1 published sample/fitted cache coverage changed".into());
+    }
+    let meshes = world.resource::<Assets<Mesh>>();
+    for i in 0..2 {
+        let actual = world
+            .get::<Mesh3d>(session.displays[i])
+            .ok_or("B1 actual display binding absent")?;
+        if actual.0 != session.display_meshes[i]
+            || world.get::<Transform>(session.displays[i]).is_none()
+            || world.get::<GlobalTransform>(session.displays[i]).is_none()
+        {
+            return Err("B1 actual display points at a different mesh or lacks transform".into());
+        }
+        let mesh = meshes
+            .get(&actual.0)
+            .ok_or("B1 actual display mesh absent")?;
+        let count = session.display_vertex_counts[i];
+        if !matches!(mesh.attribute(Mesh::ATTRIBUTE_POSITION), Some(VertexAttributeValues::Float32x3(v)) if v.len() == count)
+            || !matches!(mesh.attribute(Mesh::ATTRIBUTE_NORMAL), Some(VertexAttributeValues::Float32x3(v)) if v.len() == count)
+            || !matches!(mesh.attribute(Mesh::ATTRIBUTE_TANGENT), Some(VertexAttributeValues::Float32x4(v)) if v.len() == count)
+            || mesh.indices().map(Indices::len) != Some(session.display_indices[i].len())
+        {
+            return Err("B1 actual part vertex/index coverage changed".into());
+        }
+    }
+    Ok(())
+}
+
+struct PublishedBinding {
+    document: SceneDocument,
+    transport: Playback,
+    display_transforms: Vec<[f32; 16]>,
+}
+
+/// A paused sample need not be skinned again for presentation-only changes, but
+/// its new document/transport identity is admitted only after this normal frame.
+fn bind_published_frame(world: &World, runtime: &mut B1Runtime) {
+    let Some(active) = runtime.active.as_mut().filter(|s| s.rig.is_some()) else {
+        return;
+    };
+    active.published_binding = None;
+    if validate_structure(world, active).is_err() {
+        return;
+    }
+    let editor = world.resource::<EditorState>();
+    let Some(doc) = editor.visible_document() else {
+        return;
+    };
+    let playback = world.resource::<Playback>();
+    if active.frame_error.is_some()
+        || active.pending_sample.is_some()
+        || active.phase != 2
+        || active.generation != editor.document_generation
+        || active.selection != Selection::from_doc(doc)
+        || !doc.profile.backend.is_b1_motion()
+        || playback.seek_request.is_some()
+        || active.last_sample.as_ref() != Some(&frame_sample(doc, playback.position_seconds))
+    {
+        return;
+    }
+    let mut transforms = Vec::new();
+    for (entity, base) in active.displays.iter().zip(&active.display_transforms) {
+        let Some(global) = world.get::<GlobalTransform>(*entity) else {
+            return;
+        };
+        let mut expected = *base;
+        expected.translation *= doc.character.scale;
+        expected.scale *= doc.character.scale;
+        if !global.to_matrix().abs_diff_eq(expected.to_matrix(), 1e-6) {
+            return;
+        }
+        transforms.push(global.to_matrix().to_cols_array());
+    }
+    if transforms.len() != 2 {
+        return;
+    }
+    active.published_binding = Some(PublishedBinding {
+        document: doc.clone(),
+        transport: playback.clone(),
+        display_transforms: transforms,
+    });
+}
+
+/// Read successful production bones and actual uploaded mesh buffers. Explicit QA only.
+/// Matrices are column-major; fitted/model arrays use metres, transforms map to stage/world.
+pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
+    use bevy::mesh::VertexAttributeValues;
+    let runtime = world
+        .get_resource::<B1Runtime>()
+        .ok_or("B1 runtime absent")?;
+    let active = runtime.active.as_ref().ok_or("B1 active session absent")?;
+    if active.frame_error.is_some() || active.phase != 2 || active.pending_sample.is_some() {
+        return Err("B1 frame not successfully published".into());
+    }
+    validate_structure(world, active)?;
+    let editor = world.resource::<EditorState>();
+    let doc = editor.visible_document().ok_or("Work absent")?;
+    if !doc.profile.backend.is_b1_motion()
+        || active.generation != editor.document_generation
+        || active.selection != Selection::from_doc(doc)
+    {
+        return Err("B1 displayed shape does not match visible Work".into());
+    }
+    let binding = active
+        .published_binding
+        .as_ref()
+        .ok_or("B1 frame has no published document/transport binding")?;
+    let playback = world.resource::<Playback>();
+    if &binding.document != doc
+        || playback.seek_request.is_some()
+        || !super::same_transport(playback, &binding.transport)
+    {
+        return Err("B1 document or transport changed since frame publication".into());
+    }
+    let sample = active
+        .last_sample
+        .as_ref()
+        .ok_or("published motion sample absent")?;
+    let bones = active
+        .rig
+        .as_ref()
+        .ok_or("prepared rig absent")?
+        .frames(world, active.character)?;
+    if serde_json::to_value(&bones).map_err(|e| e.to_string())?
+        != serde_json::to_value(&active.last_bones).map_err(|e| e.to_string())?
+    {
+        return Err("B1 bones differ from published mesh frame".into());
+    }
+    let mut parts = Vec::new();
+    for (i, part) in active.parts.iter().enumerate() {
+        let entity = active.displays[i];
+        let handle = &world.get::<Mesh3d>(entity).ok_or("display absent")?.0;
+        let mesh = world
+            .resource::<Assets<Mesh>>()
+            .get(handle)
+            .ok_or("display mesh absent")?;
+        let positions = match mesh.attribute(Mesh::ATTRIBUTE_POSITION) {
+            Some(VertexAttributeValues::Float32x3(v)) => v,
+            _ => return Err("uploaded positions absent".into()),
+        };
+        let normals = match mesh.attribute(Mesh::ATTRIBUTE_NORMAL) {
+            Some(VertexAttributeValues::Float32x3(v)) => v,
+            _ => return Err("uploaded normals absent".into()),
+        };
+        let tangents = match mesh.attribute(Mesh::ATTRIBUTE_TANGENT) {
+            Some(VertexAttributeValues::Float32x4(v)) => v,
+            _ => return Err("uploaded tangents absent".into()),
+        };
+        let frame = active.skins[i].evaluate(&bones)?;
+        if positions != &frame.positions || normals != &frame.normals || tangents != &frame.tangents
+        {
+            return Err("uploaded buffers differ from sampled full-positive frame".into());
+        }
+        let indices: Vec<_> = mesh
+            .indices()
+            .ok_or("display indices absent")?
+            .iter()
+            .collect();
+        if indices != active.display_indices[i] {
+            return Err("B1 uploaded triangle binding changed".into());
+        }
+        let transform = world
+            .get::<GlobalTransform>(entity)
+            .ok_or("display transform absent")?
+            .to_matrix()
+            .to_cols_array();
+        if binding.display_transforms.get(i) != Some(&transform) {
+            return Err("B1 presentation changed since frame publication".into());
+        }
+        parts.push(serde_json::json!({"name":part.name,"display_entity":format!("{entity:?}"),"mesh_handle":format!("{:?}",handle.id()),"source_ids":active.source_ids[i],"indices":indices,"positions":positions,"normals":normals,"tangents":tangents,"rest_positions":frame.rest_positions,"rest_normals":frame.rest_normals,"full_joint_influences":frame.full_joint_influences,"model_to_world":frame.model_to_world,"display_transform":transform}));
+    }
+    let (left, right) = if sample.clip_id.is_empty() {
+        ("diagnostic", "diagnostic")
+    } else {
+        motion::contacts(&sample.clip_id, sample.source)?
+    };
+    Ok(
+        serde_json::json!({"schema_version":1,"backend":doc.profile.backend,"profile_id":doc.profile.id,"asset_id":nvwa_core::B1_ASSET_ID,"generation":active.generation,"revision":doc.revision,"parameters":doc.character.parameters,"diagnostic_pose":doc.character.diagnostic_pose,"mode":if sample.clip_id.is_empty(){"diagnostic"}else{"motion"},"sample":{"serial":active.serial,"clip_id":sample.clip_id,"timeline_id":sample.timeline_id,"position_seconds":sample.position,"source_seconds":sample.source,"playing":playback.playing,"completed":playback.completed},"character_entity":format!("{:?}",active.character),"bones":bones,"parts":parts,"contacts":{"left":left,"right":right}}),
+    )
 }

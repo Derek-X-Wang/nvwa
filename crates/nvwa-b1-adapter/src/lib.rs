@@ -429,3 +429,172 @@ pub fn skin_mesh_frame_full_weights(
 
 /// Product-owned copies of the approved authored diagnostic poses.
 pub mod poses;
+
+pub mod motion;
+
+/// Fitted canonical frames cached for one shape, never rebuilt by the frame clock.
+pub struct PreparedRig {
+    rows: Vec<(String, Entity, Mat4, Mat4)>,
+}
+impl PreparedRig {
+    pub fn new(world: &World, character: Entity) -> Result<Self, String> {
+        let frames = bone_frames(world, character)?;
+        let gauges = canonical_frame_gauges(world, character)?;
+        let skeleton = world
+            .get::<CharacterSkeleton>(character)
+            .ok_or("skeleton absent")?;
+        Ok(Self {
+            rows: frames
+                .iter()
+                .zip(gauges)
+                .map(|(b, q)| {
+                    (
+                        b.name.clone(),
+                        skeleton.bone_map[b.name.as_str()],
+                        Mat4::from_cols_array(&b.local_rest),
+                        q,
+                    )
+                })
+                .collect(),
+        })
+    }
+    pub fn apply(&self, world: &mut World, pose: &DiagnosticPose) -> Result<(), String> {
+        let mut rotations = BTreeMap::new();
+        for r in &pose.rotations {
+            let axis = Vec3::from_array(r.axis);
+            if !r.degrees.is_finite()
+                || !axis.is_finite()
+                || axis.length() < 1e-6
+                || !self.rows.iter().any(|(n, ..)| n == &r.bone)
+                || rotations.insert(r.bone.as_str(), r).is_some()
+            {
+                return Err("invalid prepared canonical pose".into());
+            }
+        }
+        let rows: Vec<_> = self
+            .rows
+            .iter()
+            .map(|(name, entity, rest, gauge)| {
+                let rotation = rotations
+                    .get(name.as_str())
+                    .map(|r| {
+                        Mat4::from_quat(Quat::from_axis_angle(
+                            Vec3::from_array(r.axis).normalize(),
+                            r.degrees.to_radians(),
+                        ))
+                    })
+                    .unwrap_or(Mat4::IDENTITY);
+                (
+                    *entity,
+                    Transform::from_matrix(if rotation == Mat4::IDENTITY {
+                        *rest
+                    } else {
+                        *rest * gauge.inverse() * rotation * *gauge
+                    }),
+                )
+            })
+            .collect();
+        for (entity, transform) in rows {
+            *world
+                .get_mut::<Transform>(entity)
+                .ok_or("bone transform absent")? = transform;
+        }
+        Ok(())
+    }
+    pub fn frames(&self, world: &World, character: Entity) -> Result<Vec<BoneFrame>, String> {
+        let mut frames = bone_frames(world, character)?;
+        if frames.len() != self.rows.len() {
+            return Err("prepared bone count mismatch".into());
+        }
+        for (bone, (_, _, _, q)) in frames.iter_mut().zip(&self.rows) {
+            bone.canonical_rest =
+                Some((Mat4::from_cols_array(&bone.rest) * q.inverse()).to_cols_array());
+            bone.canonical_posed =
+                Some((Mat4::from_cols_array(&bone.posed) * q.inverse()).to_cols_array());
+            bone.frame_gauge = Some(q.to_cols_array());
+        }
+        Ok(frames)
+    }
+}
+
+/// Complete fitted morph and full positive influence data shared by every frame.
+pub struct PreparedSkin {
+    frame: SkinFrame,
+    rest_tangents: Vec<[f32; 4]>,
+    normalized: Vec<Vec<(u16, f32)>>,
+}
+impl PreparedSkin {
+    pub fn new(
+        world: &World,
+        character: Entity,
+        mesh: &Mesh,
+        mapping: &MhcloAsset,
+        ids: &[u16],
+    ) -> Result<Self, String> {
+        let frame = skin_mesh_frame_full_weights(world, character, mesh, mapping, ids)?;
+        let influences = frame
+            .full_joint_influences
+            .as_ref()
+            .ok_or("full influences absent")?;
+        let normalized = influences
+            .iter()
+            .map(|row| {
+                let sum: f32 = row.iter().map(|(_, w)| *w).sum();
+                row.iter().map(|(j, w)| (*j, *w / sum)).collect()
+            })
+            .collect();
+        let morph = mesh.morph_targets().ok_or("morph absent")?;
+        let base = match mesh.attribute(Mesh::ATTRIBUTE_TANGENT) {
+            Some(VertexAttributeValues::Float32x4(v)) => v,
+            _ => return Err("tangents absent".into()),
+        };
+        let rest_tangents = base
+            .iter()
+            .zip(morph)
+            .map(|(t, m)| {
+                [
+                    t[0] + m.tangent.x,
+                    t[1] + m.tangent.y,
+                    t[2] + m.tangent.z,
+                    t[3],
+                ]
+            })
+            .collect();
+        Ok(Self {
+            frame,
+            rest_tangents,
+            normalized,
+        })
+    }
+    pub fn evaluate(&self, bones: &[BoneFrame]) -> Result<SkinFrame, String> {
+        let mut frame = self.frame.clone();
+        frame.bones = bones.to_vec();
+        for (i, row) in self.normalized.iter().enumerate() {
+            let skin = blend_skin_matrix(bones, row.iter().copied())?;
+            frame.positions[i] = skin
+                .transform_point3(Vec3::from_array(frame.rest_positions[i]))
+                .to_array();
+            frame.normals[i] = skin
+                .transform_vector3(Vec3::from_array(frame.rest_normals[i]))
+                .normalize_or_zero()
+                .to_array();
+            let rest = self.rest_tangents[i];
+            let tangent = skin
+                .transform_vector3(Vec3::new(rest[0], rest[1], rest[2]))
+                .normalize_or_zero();
+            frame.tangents[i] = [tangent.x, tangent.y, tangent.z, rest[3]];
+        }
+        if frame
+            .positions
+            .iter()
+            .flatten()
+            .chain(frame.normals.iter().flatten())
+            .chain(frame.tangents.iter().flatten())
+            .any(|v| !v.is_finite())
+            || bones.iter().flat_map(|b| b.posed).any(|v| !v.is_finite())
+        {
+            return Err("nonfinite full-positive skin frame".into());
+        }
+        Ok(frame)
+    }
+}

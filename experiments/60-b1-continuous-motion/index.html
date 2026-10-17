@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nvwa Studio · B1 continuous probe</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#12151c}
+canvas{width:100%;height:100%;display:block}
+#probe-controls{position:fixed;z-index:100;right:12px;top:12px;width:350px;max-height:90vh;overflow:auto;background:#17202bef;color:#f3f5f8;border:1px solid #8395ac;border-radius:8px;padding:9px;font:13px system-ui}
+#probe-controls summary{cursor:pointer;font-weight:650}
+#probe-form{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
+#probe-form label{display:grid;gap:3px}#probe-form label:first-child,#probe-form label:nth-child(2){grid-column:1/-1}
+input,select,button{font:inherit;padding:5px;border-radius:4px;border:1px solid #8b9cb0}button{cursor:pointer}button:disabled{opacity:.55;cursor:wait}
+#probe-report,#store-report{white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0;font:12px ui-monospace,monospace;max-height:180px;overflow:auto}
+#store-capture{margin-top:8px;width:100%}.note{margin:8px 0 0;color:#d4dfea;font-size:12px}
+</style>
+<canvas id="nvwa"></canvas>
+<details id="probe-controls">
+<summary>Test-only B1 diagnostics</summary>
+<p class="note">Actual Studio commands/readback. Open a task-owned motion Work first. Collapse for fixed-camera images.</p>
+<form id="probe-form">
+<label>Request ID<input id="request-id" value="web-001" maxlength="64" pattern="[A-Za-z0-9_-]+" required></label>
+<label>Authored clip<select id="clip-id"><option value="b1_arm_rehearsal_v1">Arm rehearsal</option><option value="b1_knee_flex_v1">Knee flex</option></select></label>
+<label>Torso<input id="torso" type="number" value="0" min="-1" max="1" step="any" required></label>
+<label>Jaw<input id="jaw" type="number" value="0" min="-1" max="1" step="any" required></label>
+<label>Source seconds<input id="seconds" type="number" value="0" min="0" max="4" step="any" required></label>
+<button id="sample" type="submit" disabled>Sample exact frame</button>
+<button id="play" type="button" disabled>Play</button><button id="pause" type="button" disabled>Pause</button>
+<button id="snapshot" type="button" disabled>Snapshot current frame</button>
+</form>
+<pre id="probe-report" role="status">Loading the exact Studio probe…</pre>
+<button id="store-capture" type="button" disabled>Store exact capture</button>
+<pre id="store-report" role="status"></pre>
+</details>
+<script type="module">
+const $=id=>document.getElementById(id);
+let probe=null,lastReport=null,lastReportText='',busy=false;
+function errorText(error){return error instanceof Error?error.message:String(error)}
+function request(action){
+ if(!$('probe-form').reportValidity())return;
+ const request_id=$('request-id').value;
+ if(!/^[A-Za-z0-9_-]{1,64}$/.test(request_id))throw new Error('Use1..64 letters, digits, underscores or hyphens for Request ID.');
+ const value={request_id,action};
+ if(action==='sample')Object.assign(value,{clip_id:$('clip-id').value,torso_length:Number($('torso').value),jaw_drop:Number($('jaw').value),seconds:Number($('seconds').value)});
+ probe.b1_60_command(JSON.stringify(value));$('store-report').textContent='';lastReport=null;$('store-capture').disabled=true;
+}
+function send(action){try{if(!probe)throw new Error('Probe is not loaded.');request(action)}catch(error){$('probe-report').textContent=errorText(error)}}
+$('probe-form').addEventListener('submit',event=>{event.preventDefault();send('sample')});
+for(const action of ['play','pause','snapshot'])$(action).addEventListener('click',()=>send(action));
+$('request-id').addEventListener('input',()=>{$('store-capture').disabled=true});
+$('store-capture').addEventListener('click',async()=>{
+ if(busy)return;busy=true;$('store-capture').disabled=true;
+ try{
+  const report=JSON.parse(probe.b1_60_report());const record=JSON.parse(probe.b1_60_frame());const id=$('request-id').value;
+  if(report.phase!=='captured'||report.request?.request_id!==id||record.request?.request_id!==id||JSON.stringify(report.request)!==JSON.stringify(record.request))throw new Error('No completed capture matches the current Request ID. Sample or Snapshot and wait for captured.');
+  const response=await fetch('/__b1_capture/'+encodeURIComponent(id),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(record)});
+  const receipt=await response.json();if(!response.ok||!receipt.stored)throw new Error('Capture server: '+(receipt.error||response.status));
+  $('store-report').textContent=JSON.stringify(receipt,null,2);
+ }catch(error){$('store-report').textContent=errorText(error)}finally{busy=false}
+});
+try{
+ probe=await import('./pkg/b1_continuous_probe.js');await probe.default();window.b1_60=probe;
+ for(const id of ['sample','play','pause','snapshot'])$(id).disabled=false;
+ setInterval(()=>{
+  try{
+   const text=probe.b1_60_report();if(!text)return;lastReport=JSON.parse(text);
+   if(lastReport===null){$('probe-report').textContent='Ready. Sample an exact frame.';$('store-capture').disabled=true;lastReportText=text;return}
+   if(typeof lastReport!=='object'||Array.isArray(lastReport))throw new Error('Invalid Studio probe report.');
+   if(text!==lastReportText){$('probe-report').textContent=JSON.stringify(lastReport,null,2);lastReportText=text}
+   $('store-capture').disabled=busy||lastReport.phase!=='captured'||lastReport.request?.request_id!==$('request-id').value;
+  }catch(error){$('probe-report').textContent=errorText(error);$('store-capture').disabled=true}
+ },200);
+}catch(error){$('probe-report').textContent='Studio probe failed: '+errorText(error)}
+</script>
+</html>
