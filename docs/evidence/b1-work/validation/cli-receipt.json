@@ -1,0 +1,61 @@
+{
+  "cli_sha256": "ea8182093c2bfcfb0b78e733154e612b351c78b71b12e69818e59dbbe557feec",
+  "actions": [
+    {
+      "entry": "new-b1",
+      "exit": 0,
+      "stdout": {
+        "asset_checked": true,
+        "revision": 0,
+        "saved": "works/cli-created.nvwa.json"
+      }
+    },
+    {
+      "entry": "validate",
+      "exit": 0,
+      "stdout": {
+        "asset_checked": true,
+        "revision": 0,
+        "valid": true
+      }
+    },
+    {
+      "entry": "apply",
+      "exit": 0,
+      "stdout": [
+        {
+          "revision": 1,
+          "summary": "Set 2 parameter(s)",
+          "duplicate": false
+        },
+        {
+          "revision": 2,
+          "summary": "Set diagnostic pose to combined",
+          "duplicate": false
+        }
+      ]
+    },
+    {
+      "entry": "save",
+      "exit": 0,
+      "stdout": {
+        "asset_checked": false,
+        "revision": 2,
+        "saved": "works/cli-reloaded.nvwa.json"
+      }
+    },
+    {
+      "entry": "validate",
+      "exit": 0,
+      "stdout": {
+        "asset_checked": true,
+        "revision": 2,
+        "valid": true
+      }
+    }
+  ],
+  "saved_bytes_equal": true,
+  "combined_bytes_equal_original_cli_work": true,
+  "combined_sha256": "056b9418b9e45da010bfdde1a8e2d55862f85473a75f1e9a8082528d0003ddf0",
+  "scope": "Fresh native-build CLI and its bundled approved assets; GUI still separate"
+}

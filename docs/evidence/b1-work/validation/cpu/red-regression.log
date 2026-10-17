@@ -1,0 +1,15 @@
+running 1 test
+
+thread 'b1::tests::production_b1_neutral_visible_body_stands_on_stage_floor' (121823395) panicked at crates/nvwa-runtime/src/b1.rs:999:9:
+neutral body feet must meet the persisted stage floor at y=0; bounds=[(Vec3(-0.49627015, -0.8167598, -0.32147008), Vec3(0.49627015, 0.84912986, 0.09299983)), (Vec3(-0.26684728, -0.73365116, -0.18239708), Vec3(0.26991692, 0.58025134, 0.10692608))]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test b1::tests::production_b1_neutral_visible_body_stands_on_stage_floor ... FAILED
+
+failures:
+
+failures:
+    b1::tests::production_b1_neutral_visible_body_stands_on_stage_floor
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 48 filtered out; finished in 1.21s
+
+error: test failed, to rerun pass `-p nvwa-runtime --lib`

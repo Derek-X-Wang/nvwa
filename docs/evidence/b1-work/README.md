@@ -1,38 +1,29 @@
 # B1 production Work integration (#74)
 
-Status: implementation and bounded validation in progress. Actual native/Web launch, exchange, final-head CI and merged-main CI are separate pending gates. No B1 appearance, continuous-motion or performance acceptance is claimed.
+The corrected production Web build displayed the approved body and sportsuit above the existing floor, facing the camera. Its five static poses, both shape controls, Undo/Redo, Web → CLI → Web save exchange, rejected source loads and explicit recovery were exercised. The retained evidence is in [VALIDATION.md](VALIDATION.md).
+
+![Corrected neutral Web display](validation/images/web-grounded-neutral.jpg)
+
+| Boundary | Recorded result |
+| --- | --- |
+| Workspace CPU tests | 155 passed: 49 runtime, 59 Studio, 47 core/CLI. |
+| Native build/package | Passed; all 13 packaged raw inputs authenticated. Native GUI was **NOT-RUN** because the validation Mac was locked. |
+| Corrected Web | Built and used; poses, edits, history, file exchange and warm-cache source rejection/retry recorded. |
+| Startup | Initial bootstrap aborted; reload succeeded. Cause is unproven. **No fully cold startup pass.** |
+| Desktop GUI ↔ Web exchange | **NOT-RUN**. Web ↔ offline CLI exchange is separate evidence. |
+| Final-head / merged-main CI | **NOT-RUN at this publication**; no merge acceptance claimed. |
 
 ## Reproduce
 
 ```sh
 cargo build -p nvwa-cli --locked
-mkdir -p .work/b1-example
-target/debug/nvwa-cli new-b1 assets .work/b1-example/character.nvwa.json
-target/debug/nvwa-cli describe-capabilities .work/b1-example/character.nvwa.json
-target/debug/nvwa-cli validate .work/b1-example/character.nvwa.json assets
-cargo run -p nvwa-studio --locked -- --work "$PWD/.work/b1-example/character.nvwa.json"
+target/debug/nvwa-cli new-b1 assets character.nvwa.json
+target/debug/nvwa-cli validate character.nvwa.json assets
+cargo run -p nvwa-studio --locked -- --work "$PWD/character.nvwa.json"
 ```
 
-For the Web build, copy that Work to `dist/web/works/character.nvwa.json`, serve the existing static bundle, then open `/?work=works/character.nvwa.json`. Studio's New B1 button constructs the same canonical profile. Open/new candidates authenticate assets and build the real CPU display before replacing the current Work. Save during a pending candidate saves the committed Work. Editing cancels a pending candidate. The original GLB is the default entry and retains authored animation.
+The [diagnostic example](../../../examples/b1-diagnostic.nvwa.json) is an actual CLI-saved full Work. B1 uses the shared commands and stage, two signed parameters and five diagnostic poses. It has no continuous clips. GLB remains the default entry. Open/New authenticates B1 inputs before replacing the committed Work; Save during a pending candidate saves the committed Work, and editing cancels that candidate.
 
-```sh
-python3 -B scripts/verify-b1-inputs.py
-python3 -B scripts/test-b1-inputs.py
-python3 -B -O scripts/test-b1-inputs.py
-bash scripts/check-b1-work.sh
-```
+Run `python3 -B scripts/verify-b1-inputs.py`, `python3 -B scripts/test-b1-inputs.py` and its `-O` form for portable input checks. `bash scripts/check-b1-work.sh` runs the CPU/native/Web package gate with an existing wasm-bindgen0.2.129 tool; `NVWA_WASM_BINDGEN` selects that existing tool. Graphical use remains separate. See [source admission](SOURCE-ADMISSION.md) and [placement regression](STAGE-PLACEMENT.md).
 
-The last script is the full offline CPU/native/Web package gate and requires an existing wasm-bindgen0.2.129 tool. `NVWA_WASM_BINDGEN` can point to an existing tool; the script does not install it. Native/Web graphical launch remains separate. [Source admission](SOURCE-ADMISSION.md) preserves provenance, licenses, the frozen baseline and the narrow production lazy-resource scheduling adaptation.
-
-## Evidence recorded so far
-
-- Actual no-window CLI independently created a schema3 B1 Work, validated the descriptor and all thirteen raw files, and read back the expected two zero-default parameters, neutral pose and empty continuous timeline.
-- Core/CLI: 47 passing tests (30 core, 17 CLI), strict Clippy and formatting. Binary tests cover advertised command execution and asset rejection/output preservation. They are separate from renderer evidence.
-- Source input controls: 17 test methods, including28 real mutation cases, pass in normal and optimized Python. These reject an always-neutral pose lookup, changed adapter/dependency code, source inventory and provenance mutation, missing/extra files, asset corruption and symlinks using isolated copies. Every negative first verifies a valid complete copy.
-- Admitted source adapter compiled in a local immutable wefty snapshot (run `run_a5ba3a5ee7d9bc622fc33575470329a7`, 2m14s). This predates the scheduling-only production guard adaptation and is not current full product build proof.
-- Native runtime/Studio including test targets passed compile-only checks. The latest vertex-assertion strengthening and actual test execution remain separate pending gates.
-- Independent cross-model reviews found and statically re-reviewed legacy startup decoding, Web entropy feature, canceled-edit readiness, CLI asset-root requirement and source-integrity controls. Test execution and graphical acceptance remain integration-owner gates.
-
-## Retained limits
-
-Only the approved MakeHuman/MPFB body and sportsuit, two signed shape parameters and five authored static diagnostic poses are admitted. B1 GPU4 remains HOLD; A remains a numeric control. Original numeric8x5 and prototype native/Web results remain historical experiments53–59, not production Work evidence. Cloth folds/poke-through, appearance, normals at extreme folds, continuous B1 animation and performance are unaccepted. #3 remains blocked; #4 retains its measurement gaps; the older M2 action-quality HOLD is unchanged. Public binary release notice closure, signing/notarization and clean-machine launch remain unverified.
+Only the approved sample is admitted. B1 GPU4 remains HOLD; A remains a numeric control. Original eight-recipe/five-pose results remain historical experiments53–59. Appearance, cloth folds/poke-through, extreme-fold normals, continuous motion and performance remain unaccepted. #3 remains blocked; #4 retains its measurement gaps; M2 action quality remains HOLD. Full public release notices, signing/notarization and clean-machine launch remain unverified.

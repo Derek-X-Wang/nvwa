@@ -628,6 +628,29 @@ fn upload(world: &mut World, c: &mut Candidate) -> Result<(), String> {
         };
         frames.push((frame, indices));
     }
+    // Source display roots face -Z; the existing rehearsal stage views +Z.
+    // This backend-only placement keeps source geometry and bone frames intact.
+    let facing = Mat4::from_quat(Quat::from_xyzw(0.0, 1.0, 0.0, 0.0));
+    let (body, body_indices) = frames.first().ok_or("B1 body frame absent")?;
+    let body_to_stage = facing * Mat4::from_cols_array(&body.model_to_world);
+    let mut rest_min_y = f32::INFINITY;
+    for index in body_indices.iter() {
+        let rest = body
+            .rest_positions
+            .get(index)
+            .ok_or("B1 visible body rest vertex absent")?;
+        let p = body_to_stage.transform_point3(Vec3::from_array(*rest));
+        if !p.is_finite() {
+            return Err("B1 visible body rest bounds are nonfinite".into());
+        }
+        rest_min_y = rest_min_y.min(p.y);
+    }
+    if !rest_min_y.is_finite() {
+        return Err("B1 visible body rest bounds are empty".into());
+    }
+    // Ground the fitted rest shape, never the posed minimum: knee/combined
+    // diagnostics must not move the stage anchor. Both parts share this offset.
+    let placement = Mat4::from_translation(Vec3::Y * -rest_min_y) * facing;
     s.joint_count = frames.first().map_or(0, |(frame, _)| frame.bones.len());
     for (part, (frame, indices)) in s.parts.iter().zip(frames) {
         let mut mesh = Mesh::new(
@@ -651,7 +674,8 @@ fn upload(world: &mut World, c: &mut Candidate) -> Result<(), String> {
                 cull_mode: None,
                 ..default()
             });
-        let mut transform = Transform::from_matrix(Mat4::from_cols_array(&frame.model_to_world));
+        let mut transform =
+            Transform::from_matrix(placement * Mat4::from_cols_array(&frame.model_to_world));
         s.display_transforms.push(transform);
         transform.translation *= c.document.character.scale;
         transform.scale *= c.document.character.scale;
@@ -947,6 +971,180 @@ mod tests {
         part_position_deltas(a, b)
             .into_iter()
             .fold(0.0_f32, f32::max)
+    }
+    fn uploaded_visible_world_bounds(app: &App) -> Vec<(Vec3, Vec3)> {
+        let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+        active
+            .displays
+            .iter()
+            .map(|entity| {
+                let transform = app.world().get::<GlobalTransform>(*entity).unwrap();
+                let handle = &app.world().get::<Mesh3d>(*entity).unwrap().0;
+                let mesh = app.world().resource::<Assets<Mesh>>().get(handle).unwrap();
+                let positions = get_vertex_positions(mesh);
+                // Only uploaded triangles render: helper vertices and body faces
+                // deleted beneath the garment must not define the stage bounds.
+                let mut min = Vec3::splat(f32::INFINITY);
+                let mut max = Vec3::splat(f32::NEG_INFINITY);
+                let mut count = 0;
+                for index in mesh.indices().unwrap().iter() {
+                    let p = transform.transform_point(positions[index]);
+                    assert!(
+                        p.is_finite(),
+                        "actual indexed world positions must be finite"
+                    );
+                    min = min.min(p);
+                    max = max.max(p);
+                    count += 1;
+                }
+                assert!(count > 0);
+                (min, max)
+            })
+            .collect()
+    }
+    #[test]
+    fn production_b1_neutral_visible_body_stands_on_stage_floor() {
+        let (mut app, _, _) = harness(false);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>()
+                .document()
+                .is_some_and(|d| d.profile.backend.is_b1())
+                && w.resource::<RuntimeStatus>().ready
+        });
+        let bounds = uploaded_visible_world_bounds(&app);
+        assert_eq!(bounds.len(), 2);
+        let (body_min, body_max) = bounds[0];
+        let body_height = body_max.y - body_min.y;
+        assert!(
+            (1.3..2.2).contains(&body_height),
+            "default visible body must have a plausible full height in metres: {bounds:?}"
+        );
+        assert!(
+            body_min.y.abs() < 1e-4,
+            "neutral body feet must meet the persisted stage floor at y=0; bounds={bounds:?}"
+        );
+        assert!(
+            bounds[1].0.y >= -1e-4 && bounds[1].1.y <= body_max.y + 1e-4,
+            "actual indexed garment must remain above the floor and within body height: {bounds:?}"
+        );
+        let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+        let placement = active.display_transforms.clone();
+        assert_eq!(active.joint_count, 53);
+        for transform in &placement {
+            assert!(
+                (transform.rotation * Vec3::Z).abs_diff_eq(Vec3::Z, 1e-6),
+                "admitted model front +Z must face the existing stage camera's +Z side"
+            );
+        }
+        let document = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        let character_id = document.character.id.clone();
+        for pose in ["shoulder", "elbow", "knee", "combined", "neutral"] {
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetDiagnosticPose {
+                    character_id: character_id.clone(),
+                    pose_id: pose.into(),
+                })
+                .unwrap();
+            until(&mut app, |w| {
+                w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.selection.pose == pose)
+                    && w.resource::<RuntimeStatus>().ready
+            });
+            let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+            for (actual, expected) in active.display_transforms.iter().zip(&placement) {
+                assert!(
+                    actual.translation.abs_diff_eq(expected.translation, 1e-6),
+                    "{pose} must retain the fitted rest anchor, not ground its posed minimum"
+                );
+                assert!(actual.scale.abs_diff_eq(expected.scale, 1e-6));
+                assert!(actual.rotation.abs_diff_eq(expected.rotation, 1e-6));
+            }
+            // Every diagnostic still uploads finite indexed geometry for both parts.
+            assert_eq!(uploaded_visible_world_bounds(&app).len(), 2);
+        }
+        for torso in [-1.0, 1.0] {
+            let mut parameters = document.character.parameters.clone();
+            parameters.insert("torso_length".into(), torso);
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetParameters {
+                    character_id: character_id.clone(),
+                    values: parameters.clone(),
+                })
+                .unwrap();
+            until(&mut app, |w| {
+                w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.selection.parameters == parameters)
+                    && w.resource::<RuntimeStatus>().ready
+            });
+            let bounds = uploaded_visible_world_bounds(&app);
+            assert!(
+                bounds[0].0.y.abs() < 1e-4,
+                "signed torso={torso} neutral rest feet must meet floor: {bounds:?}"
+            );
+            assert!(bounds[1].0.y >= -1e-4);
+        }
+        let before_scale = uploaded_visible_world_bounds(&app);
+        let local_positions = uploaded_positions(&app);
+        let mesh_handles = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .display_meshes
+            .clone();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetScale {
+                character_id,
+                scale: 1.2,
+            })
+            .unwrap();
+        app.update();
+        for ((before_min, before_max), (after_min, after_max)) in
+            before_scale.iter().zip(uploaded_visible_world_bounds(&app))
+        {
+            assert!(after_min.abs_diff_eq(*before_min * 1.2, 1e-5));
+            assert!(after_max.abs_diff_eq(*before_max * 1.2, 1e-5));
+        }
+        assert_eq!(
+            position_delta(&local_positions, &uploaded_positions(&app)),
+            0.0
+        );
+        assert_eq!(
+            app.world()
+                .resource::<B1Runtime>()
+                .active
+                .as_ref()
+                .unwrap()
+                .display_meshes,
+            mesh_handles,
+            "scaling presentation must reuse uploaded CPU meshes"
+        );
+        assert_eq!(
+            app.world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .stage,
+            document.stage,
+            "backend placement must preserve the Work's floor and camera settings"
+        );
     }
     #[test]
     fn production_plugin_keeps_original_glb_ready_without_fetching_b1_assets() {
