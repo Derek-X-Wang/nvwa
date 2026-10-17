@@ -55,9 +55,9 @@
     "maximum_left_point_native_web_difference_m": 2.38419e-07
   },
   "diagnosis": "Calf-only authored flex initially sweeps toes down before ankle lift. Independent offline FK/LBS reproduces about19.914mm worst dip; this reconstructed extremum is distinct from the retained first3 actual failing captures.",
-  "approved_correction": "Fixed authored foot_l counterrotation about F_rest^T C_rest X by -65*amplitude, with existing calf+65*amplitude. No per-frame root/floor lift, no IK or threshold change.",
+  "approved_correction": "Fixed authored foot_l counterrotation about normalize(transpose(R_foot_canonical_rest)*R_calf_canonical_rest*unitX) by -65*amplitude, with existing calf+65*amplitude. No per-frame root/floor lift, no IK or threshold change.",
   "compatibility": "Motion v1 identifiers are still unadmitted candidates. Existing admitted staticB1 v1 unchanged. Corrected knee peak intentionally differs from the old calf-only static diagnostic.",
-  "corrected_execution": "NOT-RUN until fresh r4 gate",
+  "corrected_execution": "Current r4 full local numerical/build/mutation matrix PASS; actual native/Web14each PASS. Current native pixels/ordinary UI and CI remain pending. See RESULTS.json.",
   "hashes": {
     "summary.json": "db825687a22dcc4cc6192a468d41a3745bf706e57519ba34b1d7c5624fabb84b",
     "identity.json": "4ff92e6f949314843b615163e1194fb629910794bc9dca631d59728fac2f7baf",

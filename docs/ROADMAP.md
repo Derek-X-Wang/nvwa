@@ -6,7 +6,9 @@
 
 [#74 正式 Work 接入](https://github.com/Derek-X-Wang/nvwa/issues/74)已由 [PR #76](https://github.com/Derek-X-Wang/nvwa/pull/76) 交付，精确合并 main `ea02b0a` 的完整 CI 与 CLI 证据检查通过。当前准入同一个人体和运动服、两个形变参数与五个静态姿态，含共享命令、CLI、旧作品兼容、实际桌面/Web编辑、失败恢复及完整作品往返；不等于连续动作或外观质量已通过。
 
-本轮优先 [#78 同一 B1 人物的连续动作与体型验收](https://github.com/Derek-X-Wang/nvwa/issues/78)：复用已批准数据与完整正聚合影响 CPU 路径，先做明确标为预制的手臂活动和单腿屈膝，检验不同体型下的关节、支撑/摆动脚与衣物表现。版本、播放、静态姿态优先级、CLI和保存交换分别验收；已有穿插与 M2 质量 HOLD 不因连续播放成功而消除。连续运行和质量证据成立后再推进外观质量。 下一片已收束为 [#79 现有 CC0 外观小原型](https://github.com/Derek-X-Wang/nvwa/issues/79)，原生依赖 #78；只复用已批准容器中的皮肤、眼睛与一款短发，先验证适配和双端画面，再决定准入。现阶段仅静态库存已核对，尚未解包或渲染。
+[#78 同一 B1 人物连续动作](https://github.com/Derek-X-Wang/nvwa/issues/78)的当前候选已通过171项工作区测试、产品/探针双端构建、594帧＋16定位＋2暂停/30深度关键帧，以及实际Studio桌面/Web各14帧独立对照。首版曾出现145项脚部穿地失败；保留失败记录后，加入固定预制脚部反向旋转，在不放宽接地标准、不加逐帧抬高/IK的条件下通过完整矩阵。当前普通Web已验证播放、编辑/历史、真实下载和错误恢复；原生普通GUI与画面仍受锁屏阻断，Ready/退出0但黑图明确拒绝视觉通过。精确PR/main CI及最终验收仍待完成，main的既有静态准入不因此自动扩大。详细[分层证据与未完成项](evidence/b1-motion/ACCEPTANCE.md)分别记录构建、数值、画面和保存。
+
+衣物肩腰穿插/折叠由[#80](https://github.com/Derek-X-Wang/nvwa/issues/80)保留，M2质量HOLD不变；连续运行不等于衣物或动作审美通过。下一片为[#79 现有CC0外观原型](https://github.com/Derek-X-Wang/nvwa/issues/79)，依赖#78；[接入准备](research/b1-appearance-readiness.md)已完成独立复核，只复用既有皮肤、眼睛和短发。UV、四部件/纹理绑定和独立资产边界已有方案，尚未解包、实现或渲染，不用外观遮盖现有几何问题。
 
 [Honey Select 产品北极星参考 #77](https://github.com/Derek-X-Wang/nvwa/issues/77)用于校准内容、目标和“愿意捏人再游玩”的体验，不要求照搬其技术或逐功能复刻。完整[调查报告](research/honey-select-gap.md)区分游戏、Studio与社区扩展。联网按[WebSocket房间数据＋Relais语音](research/relais-network-direction.md)归档，暂不接入。世界编辑器和多人服务器仍不进入当前人物工具范围。
 
