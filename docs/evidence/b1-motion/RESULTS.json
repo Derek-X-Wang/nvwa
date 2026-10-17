@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-17",
+  "stage": "PARTIAL; CPU matrix, selected native/Web snapshots, final review and CI pending",
+  "base_commit": "ea02b0a05e7be96ba481fdf4898dc20e59af69bd",
+  "workspace_tests": {
+    "adapter": 1,
+    "core": 33,
+    "cli": 18,
+    "runtime": 58,
+    "studio": 60,
+    "total": 170
+  },
+  "normal_native_binary_sha256": "387e816222388cc44aec538cbbf96f0d2c6c88a9ce7d45c021a5bf44d8114fbf",
+  "exported_cli_sha256": "ce5ee95477caf319e2fa07dbf3488aad5631165969e64c6eb32cf81fdbc52cee",
+  "cli_checks": {
+    "passed": true,
+    "commands": 21,
+    "all174_source_manifest_entries_match": true,
+    "static_v1_unchanged": true,
+    "static_motion_rejected_without_upgrade": true,
+    "byte_identical_cli_save_of_both_gui_works": true
+  },
+  "actual_gui": {
+    "native": [
+      "New B1 motion profile",
+      "Open CLI eight-second Work",
+      "Restart/live arm motion, seek knee at6s, pause",
+      "torso0\u21920.75 at6s; one Undo0 and Redo0.75; phase retained",
+      "Save rev4, invalid Open retains character/history/phase; valid saved Open recovers",
+      "Web-saved rev7 reopened: torso0.75/jaw1, two timeline entries"
+    ],
+    "web": [
+      "Open actual desktop-saved rev4 through static work path",
+      "Restart/pause actual motion",
+      "jaw0\u21921, Undo0, Redo1, seek6s knee",
+      "Save actual download rev7; invalid picker Open retains character/phase6/rev7; actual valid picker Open recovers"
+    ]
+  },
+  "gui_limits": [
+    "CUA slider drag/click attempts not confirmed; no repeated physical input claim",
+    "IAB multi-character typeText retained first character in numeric editor; separate single-character entry succeeded; source of limitation not established",
+    "Initial background native screenshot after Web roundtrip was blank; only raised-window ready screenshot is successful proof"
+  ],
+  "source_mutation_red_and_restored_green": {
+    "passed": true,
+    "cases": [
+      {
+        "name": "omit-authored-arm-pose",
+        "source": "crates/nvwa-b1-adapter/src/motion.rs",
+        "before_sha256": "29a7519bccc0a84509d59697d95325adab0521601deb8d2e1219a0f11bfddc22",
+        "mutant_sha256": "134065b185df483941a877e6ec5645aa6de2647ef974220cd6b1287579ed125b",
+        "command": [
+          "cargo",
+          "test",
+          "-p",
+          "nvwa-runtime",
+          "--lib",
+          "--locked",
+          "--offline",
+          "b1::tests::actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit",
+          "--",
+          "--exact",
+          "--test-threads=1",
+          "--nocapture"
+        ],
+        "red_exit": 101,
+        "semantic_test_failure": true,
+        "restored_sha256": "29a7519bccc0a84509d59697d95325adab0521601deb8d2e1219a0f11bfddc22",
+        "restored_exit": 0,
+        "restored_green": true
+      },
+      {
+        "name": "stale-garment-upload",
+        "source": "crates/nvwa-runtime/src/b1.rs",
+        "before_sha256": "e5a68ef2c423a187cbfae73115dd364db1d292abf8cf20f4cf111713c8be9453",
+        "mutant_sha256": "4c37d9adf526fa4823afb1196d8680067892b9976cc42445b67904a0e49472d8",
+        "command": [
+          "cargo",
+          "test",
+          "-p",
+          "nvwa-runtime",
+          "--lib",
+          "--locked",
+          "--offline",
+          "b1::tests::actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit",
+          "--",
+          "--exact",
+          "--test-threads=1",
+          "--nocapture"
+        ],
+        "red_exit": 101,
+        "semantic_test_failure": true,
+        "restored_sha256": "e5a68ef2c423a187cbfae73115dd364db1d292abf8cf20f4cf111713c8be9453",
+        "restored_exit": 0,
+        "restored_green": true
+      }
+    ],
+    "scope": "Real Rust production seams; no graphics/GPU",
+    "hashes": {
+      "omit-authored-arm-pose-red.log": "e59935aaaa06df30d14156573b16c0070b10e226aee8fa451e8aee30cefd81dd",
+      "stale-garment-upload-red.log": "d02763725a4f5b2a02e1a47f093a9b9738425e32e5e5351371e907d1c14c9328",
+      "omit-authored-arm-pose-restored-green.log": "15fb93da52096174a321f20e8810a6ddb021757b65af31a65d4d6ddb638e576f",
+      "stale-garment-upload-restored-green.log": "66b2715dd49e3279d9624a7066533ffb37986c6a558ce4d7e6eb2aefd86edc82"
+    }
+  },
+  "runtime_source_sha256": "e5a68ef2c423a187cbfae73115dd364db1d292abf8cf20f4cf111713c8be9453",
+  "gui_work_sha256": {
+    "native-edited.nvwa.json": "41dd8e943c2f31a04b497ba23850bcbcd544f594b884e7e877f4214524aaec98",
+    "web-edited.nvwa.json": "92ab229ada8b521d912dab5ae85dbb439538eb262ca3a8d10dbdef93809cba77"
+  },
+  "build_config_delta_after_r2_snapshot": {
+    "scope": "After r2 snapshot: build configuration only; no Rust, checker, assets or lockfile change",
+    "mutation_selection_before": "cargo test -p nvwa-runtime --lib",
+    "mutation_selection_after": "cargo test --workspace --lib",
+    "same_exact_filter_and_semantic_checks": true,
+    "probe_change": "Mirror root profile.dev.package.* opt-level=1 to reuse dependency graph",
+    "actual_r2_proof": "Original captured build selection/profile; both production red/restored-green valid; current hosted selection/profile timing pending CI"
+  },
+  "quality": "HOLD; garments, M2 real motion and appearance not accepted",
+  "retained_gaps": [
+    "#3 blocked",
+    "#4 measurement gaps",
+    "general IK/contact/cloth physics",
+    "arbitrary shape/garment/rig",
+    "near-loop derivative at epsilon.001, repeated-seek explicit mesh equality, double-deformation component-count fault family not established by this matrix/probe"
+  ]
+}

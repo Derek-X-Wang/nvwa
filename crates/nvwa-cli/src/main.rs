@@ -211,7 +211,9 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         Command::Redo,
     ];
     if document.profile.backend.is_b1() {
-        commands.retain(|command| !matches!(command, Command::SetTimeline { .. }));
+        if !document.profile.backend.supports_timeline() {
+            commands.retain(|command| !matches!(command, Command::SetTimeline { .. }));
+        }
         commands.insert(
             2,
             Command::SetDiagnosticPose {
@@ -245,13 +247,14 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         "entrypoints": {
             "new": ["profile.json", "output.json"],
             "new-b1": ["asset_root", "output.json"],
+            "new-b1-motion": ["asset_root", "output.json"],
             "inspect": ["input.json"],
             "describe-capabilities": ["input.json"],
             "validate": ["input.json", "optional_asset_root"],
             "apply": ["input.json", "command_or_array.json", "output.json"],
             "save": ["input.json", "output.json"]
         },
-        "creation": {"new":"glb_profile_metadata_only", "new-b1":"exact_b1_manifest_and_thirteen_assets_verified_before_save"},
+        "creation": {"new":"glb_profile_metadata_only", "new-b1":"exact_b1_manifest_and_thirteen_assets_verified_before_save", "new-b1-motion":"same_authenticated_b1_asset_explicit_version2_authored_rehearsal"},
         "input": {
             "max_json_bytes": nvwa_core::MAX_JSON_BYTES,
             "unknown_fields": "rejected",
@@ -268,10 +271,11 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         "set_parameters": "updates_only_named_parameters_within_profile_min_max_inclusive",
         "set_scale": "finite_greater_than_zero",
         "character_backend": document.profile.backend,
-        "diagnostic_poses": if document.profile.backend.is_b1() { serde_json::json!({"ids":B1_DIAGNOSTIC_POSES,"current":document.character.diagnostic_pose,"meaning":"authored_static_diagnostic_pose_not_animation","command":"set_diagnostic_pose","renderer":"fixed_positive_final_aggregate_cpu_no_four_cap","morph_index":"inert_legacy_metadata_unused_on_b1","targets":{"torso_length":["torso-scale-vert-decr","torso-scale-vert-incr"],"jaw_drop":["chin-jaw-drop-decr","chin-jaw-drop-incr"]},"continuous_parameter_edits":true,"numeric_acceptance":"eight_reference_recipes_times_five_poses_only","timeline_supported":false}) } else { serde_json::json!({"ids":[],"current":null,"timeline_supported":true}) },
+        "authored_motion": {"supported":document.profile.backend.is_b1_motion(),"provenance":"Nvwa authored rehearsal; not AI-generated", "clips":document.profile.clips},
+        "diagnostic_poses": if document.profile.backend.is_b1() { serde_json::json!({"ids":B1_DIAGNOSTIC_POSES,"current":document.character.diagnostic_pose,"meaning":"authored_static_diagnostic_pose_not_animation","command":"set_diagnostic_pose","renderer":"fixed_positive_final_aggregate_cpu_no_four_cap","morph_index":"inert_legacy_metadata_unused_on_b1","targets":{"torso_length":["torso-scale-vert-decr","torso-scale-vert-incr"],"jaw_drop":["chin-jaw-drop-decr","chin-jaw-drop-incr"]},"continuous_parameter_edits":true,"numeric_acceptance":"eight_reference_recipes_times_five_poses_only","timeline_supported":document.profile.backend.supports_timeline()}) } else { serde_json::json!({"ids":[],"current":null,"timeline_supported":true}) },
         "set_timeline": {
-            "animation_supported": document.profile.backend.is_glb(),
-            "b1": "only_empty_timeline_allowed_diagnostic_pose_is_separate",
+            "animation_supported": document.profile.backend.supports_timeline(),
+            "b1": "v1_empty_only_v2_authored_timeline_exclusive_diagnostic_command_clears_timeline",
             "effect": "replaces_entire_timeline",
             "clip_id": "must_reference_profile_clips_id",
             "id": "nonblank_unique_timeline_entry_id",
@@ -360,8 +364,13 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             .ok_or_else(|| CoreError::new("usage", "Missing argument; run nvwa-cli help"))
     };
     match command {
-        "new-b1" => {
-            let document = SceneDocument::from_profile(CharacterProfile::b1())?;
+        "new-b1" | "new-b1-motion" => {
+            let profile = if command == "new-b1-motion" {
+                CharacterProfile::b1_motion()
+            } else {
+                CharacterProfile::b1()
+            };
+            let document = SceneDocument::from_profile(profile)?;
             validate_assets(&document, &arg(1)?)?;
             save(&document, &arg(2)?)?;
             respond(
@@ -373,7 +382,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             if profile.backend.is_b1() {
                 return Err(CoreError::new(
                     "unsupported_character_operation",
-                    "Use new-b1 <asset-root> <work.json> to authenticate all B1 assets before creation",
+                    "Use new-b1 or new-b1-motion <asset-root> <work.json> to authenticate all B1 assets before creation",
                 ));
             }
             let document = SceneDocument::from_profile(profile)?;
@@ -466,7 +475,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             )?;
         }
         "help" | "--help" | "-h" => respond(
-            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
+            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
         )?,
         _ => {
             return Err(CoreError::new(

@@ -1,10 +1,14 @@
 # Nvwa 路线图
 
-## 当前阶段：B1 接入正式 Work 进行中；M2 动作质量保持 HOLD（2026-10-16）
+## 当前阶段：B1 连续动作与体型验收；M2 动作质量保持 HOLD（2026-10-17）
 
 人物基础优先复用成熟 MakeHuman/MPFB 的数据设计，先验证相同小样的两条 Rust 路径，再决定正式后端。[53–55 的同样本对照](../experiments/53-character-comparison/RESULTS.md)已完成身体、关节端点和衣物数值检查：A 是编译数据包，B1 是修正小形变过滤后的实际 Humentity。[#73](https://github.com/Derek-X-Wang/nvwa/issues/73) 的 [56–59 完整姿态与双端实验](../experiments/56-b1-pose-reference/RESULTS.md)已通过 40 组数值门、最终原生/Web 六组完整骨架读回、原型状态往返和失败保护；原四权重 GPU 仍 HOLD。保留全部正的最终聚合影响、不受四权重限制的 CPU 桥接成为下一步接入候选，A 保留数值对照。它与 MPFB 的阈值策略不同，不宣称原库完整 GPU 能力。肩/腰穿插、服装折叠和法线角度/性能仍未验收；上述实验阶段未替换产品角色或根依赖，也未解除既有 M2 HOLD。发布审查、PR/main CI 按具体提交在 PR 中记录。
 
-当前 [#74 在同一样本上接入共享命令、CLI 与完整 Work 交换](https://github.com/Derek-X-Wang/nvwa/issues/74)正在实现：明确版本化后端、schema3 及旧 Work 迁移、共享姿态命令、CLI 真实资产校验、按需加载及失败保护。源数据/许可、核心/CLI、桌面/Web 接入分工推进；实际测试、双端启动与文件交换、独立审查、PR 和合并 main CI 分别记录，未完成的门不算通过。之后再扩展身体/脸部参数与组合校验，再做 agent 按描述创作角色和动作。原型 JSON 不是正式 Work；库/资产发布边界和外观质量分别保留准入门。房间导入、接触/物理及 Relais 属于后续独立工作；世界编辑器和多人服务器不进入当前人物工具范围。
+[#74 正式 Work 接入](https://github.com/Derek-X-Wang/nvwa/issues/74)已由 [PR #76](https://github.com/Derek-X-Wang/nvwa/pull/76) 交付，精确合并 main `ea02b0a` 的完整 CI 与 CLI 证据检查通过。当前准入同一个人体和运动服、两个形变参数与五个静态姿态，含共享命令、CLI、旧作品兼容、实际桌面/Web编辑、失败恢复及完整作品往返；不等于连续动作或外观质量已通过。
+
+本轮优先 [#78 同一 B1 人物的连续动作与体型验收](https://github.com/Derek-X-Wang/nvwa/issues/78)：复用已批准数据与完整正聚合影响 CPU 路径，先做明确标为预制的手臂活动和单腿屈膝，检验不同体型下的关节、支撑/摆动脚与衣物表现。版本、播放、静态姿态优先级、CLI和保存交换分别验收；已有穿插与 M2 质量 HOLD 不因连续播放成功而消除。连续运行和质量证据成立后再推进外观质量。 下一片已收束为 [#79 现有 CC0 外观小原型](https://github.com/Derek-X-Wang/nvwa/issues/79)，原生依赖 #78；只复用已批准容器中的皮肤、眼睛与一款短发，先验证适配和双端画面，再决定准入。现阶段仅静态库存已核对，尚未解包或渲染。
+
+[Honey Select 产品北极星参考 #77](https://github.com/Derek-X-Wang/nvwa/issues/77)用于校准内容、目标和“愿意捏人再游玩”的体验，不要求照搬其技术或逐功能复刻。完整[调查报告](research/honey-select-gap.md)区分游戏、Studio与社区扩展。联网按[WebSocket房间数据＋Relais语音](research/relais-network-direction.md)归档，暂不接入。世界编辑器和多人服务器仍不进入当前人物工具范围。
 
 用户已授权并行推进 [#69 人物试演室](https://github.com/Derek-X-Wang/nvwa/issues/69)的 [#70 第一阶段](https://github.com/Derek-X-Wang/nvwa/issues/70)：可调灯光、相机、背景/地面和画质，使用共享 Rust 命令与可保存的舞台配置。目标是完成度高、可反复使用的人物展示与动作试演。房间导入和物理分别留在后续阶段；Relais 与多人服务不是舞台交付的前置条件。阶段 A 已完成共享命令、CLI、实际桌面/Web 操作与画面验收，以及原生→Web→原生的完整文件往返；独立复审和最终 CI 通过后合并。编译、实际启动、功能、画面和性能结果分别记录，未完成项不视为通过。
 

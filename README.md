@@ -40,7 +40,7 @@ The local macOS bundle includes its fixture assets and demonstration work. It is
 
 ## Compose and play a work
 
-**New B1…** opens the admitted MakeHuman body and sportsuit through the full-influence CPU bridge. It exposes `torso_length`, `jaw_drop` and five fixed diagnostic poses. Its Work uses the same Undo/Redo, Save/Open and rehearsal stage as the original character. B1 has no continuous clips or click-to-wave interaction. Appearance quality, general character imports and continuous B1 motion remain separate gates. Assets are verified before a B1 Open replaces the current Work; rejected candidates leave the current Work and its history available. See [integration evidence](docs/evidence/b1-work/).
+**New B1…** opens the admitted MakeHuman body and sportsuit through the full-influence CPU bridge. The current motion profile exposes `torso_length`, `jaw_drop`, two Nvwa-authored four-second rehearsal clips and five fixed diagnostic poses. Use the shared timeline transport to play, pause or seek; choosing a diagnostic pose clears the timeline in one undoable edit. Existing static B1 Works keep their static profile. B1 has no click-to-wave interaction. Appearance quality, clothing contact, arbitrary imports and generated actions remain separate gates. Assets are verified before a B1 Open replaces the current Work; rejected candidates leave the current Work and its history available. See [static integration evidence](docs/evidence/b1-work/) and [continuous-motion acceptance](docs/evidence/b1-motion/ACCEPTANCE.md).
 
 The [B1 diagnostic Work](examples/b1-diagnostic.nvwa.json) was created and saved by the actual CLI. It contains torso length 0.35, jaw drop −0.5 and the combined static pose. Open it through Studio's file controls, or from the repository root:
 
@@ -48,7 +48,7 @@ The [B1 diagnostic Work](examples/b1-diagnostic.nvwa.json) was created and saved
 cargo run -p nvwa-studio --locked -- --work "$PWD/examples/b1-diagnostic.nvwa.json"
 ```
 
-In Studio, **Create 9s sequence** creates idle → wave → turn. The sequence rows change action, duration and order; each completed edit uses the same undoable command contract. The global transport can pause and seek across the whole work. Finite works stop and hold their final pose; Play/Replay restarts a completed work. The M0 single looping clip retains its previous behavior.
+For the original GLB character, **Create 9s sequence** creates idle → wave → turn. The sequence rows change action, duration and order; each completed edit uses the same undoable command contract. The global transport can pause and seek across the whole work. Finite works stop and hold their final pose; Play/Replay restarts a completed work. The M0 single looping clip retains its previous behavior.
 
 Click the original character's chest or head to play one authored wave. The interaction holds the sequence cursor, then restores its pose and playing/paused state. It does not change the saved document or undo history. Targets are conservative joint-following hotspots; this does not claim exact deformed-surface picking for arbitrary rigs.
 

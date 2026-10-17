@@ -36,6 +36,12 @@ jobs:
           python3 -B -O scripts/verify-b1-inputs.py
           python3 -B scripts/test-b1-inputs.py
           python3 -B -O scripts/test-b1-inputs.py
+      - name: Check independent B1 motion comparator controls
+        run: |
+          python3 -B experiments/60-b1-continuous-motion/test_controls.py
+          python3 -B -O experiments/60-b1-continuous-motion/test_controls.py
+          python3 -B experiments/60-b1-continuous-motion/test_serve.py
+          python3 -B -O experiments/60-b1-continuous-motion/test_serve.py
       - name: Check bounded diagnostic controls
         run: bash experiments/27-ci-baseline/check.sh diagnostics
       - name: Check authenticated B1 source bundle and rejection controls
@@ -127,11 +133,21 @@ jobs:
           cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --locked --offline
+      - name: Check B1 production-source mutation witnesses
+        timeout-minutes: 12
+        run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+      - name: Execute the actual B1 continuous motion matrix
+        timeout-minutes: 10
+        run: |
+          cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
+          cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline
+          python3 -B experiments/60-b1-continuous-motion/run_matrix.py --binary "$CARGO_TARGET_DIR/debug/matrix" --asset-root "$GITHUB_WORKSPACE/assets" --out "$RUNNER_TEMP/nvwa-b1-motion-matrix"
       - name: Compile the actual Web target
         run: |
           bash experiments/27-ci-baseline/check.sh wasm
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
   b1-source-regression:
     name: macOS B1 source regression and viewer checks
     # Keep the independent cold B1 build inside its own finite budget.

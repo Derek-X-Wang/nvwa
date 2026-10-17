@@ -24,7 +24,8 @@ def source_copy():
         for relative in ["vendor", "crates/nvwa-b1-adapter"]:
             shutil.copytree(REPO / relative, repo / relative, symlinks=True)
         (repo / "scripts").mkdir()
-        shutil.copy2(REPO / "scripts/b1-source-inventory.json", repo / "scripts/b1-source-inventory.json")
+        for name in ["b1-source-inventory.json", "b1-motion-source-inventory.json"]:
+            shutil.copy2(REPO / "scripts" / name, repo / "scripts" / name)
         # Every negative case first proves that its complete copied input passes.
         VERIFIER.verify_source(repo)
         yield repo
@@ -61,6 +62,57 @@ class B1InputControls(unittest.TestCase):
             append(repo / "crates/nvwa-b1-adapter/src/lib.rs", b"\npub fn unapproved_adapter_addition() {}\n")
             with self.assertRaises(ValueError):
                 VERIFIER.verify_source(repo)
+
+    def test_authored_motion_source_mutation_missing_and_identical_symlink_are_rejected(self):
+        for action in ["mutation", "missing", "symlink"]:
+            with self.subTest(action=action), source_copy() as repo:
+                path = repo / "crates/nvwa-b1-adapter/src/motion.rs"
+                if action == "mutation":
+                    original = path.read_bytes()
+                    self.assertEqual(original.count(b"65.0 * amplitude"), 1, "authored knee seam changed; update this control")
+                    path.write_bytes(original.replace(b"65.0 * amplitude", b"64.0 * amplitude"))
+                elif action == "missing":
+                    path.unlink()
+                else:
+                    outside = repo / "outside-motion.rs"
+                    path.rename(outside)
+                    path.symlink_to(outside)
+                with self.assertRaises(ValueError):
+                    VERIFIER.verify_source(repo)
+
+    def test_motion_extension_missing_corrupt_and_identical_symlink_are_rejected(self):
+        for action in ["missing", "corrupt", "symlink"]:
+            with self.subTest(action=action), source_copy() as repo:
+                path = repo / "scripts/b1-motion-source-inventory.json"
+                if action == "missing":
+                    path.unlink()
+                elif action == "corrupt":
+                    append(path, b" ")
+                else:
+                    outside = repo / "outside-motion-inventory.json"
+                    path.rename(outside)
+                    path.symlink_to(outside)
+                with self.assertRaises(ValueError):
+                    VERIFIER.verify_source(repo)
+
+    def test_motion_extension_cannot_admit_extra_files_or_rewrite_base_link(self):
+        for action in ["extra", "missing", "wrong_schema", "wrong_base", "wrong_file_base"]:
+            with self.subTest(action=action), source_copy() as repo:
+                path = repo / "scripts/b1-motion-source-inventory.json"
+                document = json.loads(path.read_bytes())
+                if action == "extra":
+                    document["files"]["vendor/humentity/src/lib.rs"] = dict(document["files"]["crates/nvwa-b1-adapter/src/lib.rs"])
+                elif action == "missing":
+                    del document["files"]["crates/nvwa-b1-adapter/src/motion.rs"]
+                elif action == "wrong_schema":
+                    document["schema_version"] = 3
+                elif action == "wrong_base":
+                    document["base_inventory_sha256"] = "0" * 64
+                else:
+                    document["files"]["crates/nvwa-b1-adapter/src/lib.rs"]["base_sha256"] = "0" * 64
+                path.write_text(json.dumps(document, indent=2) + "\n")
+                with self.assertRaises(ValueError):
+                    VERIFIER.verify_source(repo)
 
     def test_actual_pose_lookup_mutated_to_always_neutral_is_rejected(self):
         with source_copy() as repo:

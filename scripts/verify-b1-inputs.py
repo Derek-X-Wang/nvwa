@@ -41,10 +41,28 @@ def verify_source(repo):
     inventory_bytes = regular(repo / "scripts/b1-source-inventory.json")
     require(digest(inventory_bytes) == "bd86d7c597a464eb1b5ab484e3343c70b2fa0986a4c37d9dec3a8875dc90c5e0", "Admitted source inventory changed")
     inventory = json.loads(inventory_bytes)["files"]
+    # Version2 admits only the reviewed cached skinning extension and authored
+    # motion definitions. The version1 full inventory remains frozen evidence.
+    # This is a pinned overlay, never a regenerated inventory or a broad ignore.
+    extension_bytes = regular(repo / "scripts/b1-motion-source-inventory.json")
+    require(digest(extension_bytes) == "04d075463918d0ad3f5b8697f69b03eb0753e681e9eb76cfc61acd53d66c6806", "Admitted motion source extension changed")
+    extension = json.loads(extension_bytes)
+    require(set(extension) == {"format", "schema_version", "base_inventory_sha256", "files"}, "Motion extension fields changed")
+    require(extension["format"] == "nvwa-b1-motion-source-extension" and extension["schema_version"] == 2, "Unsupported motion source extension")
+    require(extension["base_inventory_sha256"] == digest(inventory_bytes), "Motion extension baseline mismatch")
+    allowed = {"crates/nvwa-b1-adapter/src/lib.rs", "crates/nvwa-b1-adapter/src/motion.rs"}
+    require(set(extension["files"]) == allowed, "Motion extension must contain exactly the two reviewed adapter files")
+    expected = dict(inventory)
+    for path, entry in extension["files"].items():
+        require(set(entry) == {"base_sha256", "bytes", "sha256"}, f"Motion extension entry fields changed: {path}")
+        require(entry["base_sha256"] == inventory.get(path), f"Motion extension source baseline mismatch: {path}")
+        data = regular(repo / path)
+        require(type(entry["bytes"]) is int and entry["bytes"] > 0 and len(data) == entry["bytes"] and digest(data) == entry["sha256"], f"Admitted motion source changed: {path}")
+        expected[path] = entry["sha256"]
     actual_files = {str(p.relative_to(repo)): digest(regular(p))
                     for directory in ["vendor/humentity", "vendor/bevy_obj", "vendor/wobj", "crates/nvwa-b1-adapter"]
                     for p in (repo / directory).rglob("*") if p.is_file() or p.is_symlink()}
-    require(actual_files == inventory, "Full admitted source file set or bytes changed")
+    require(actual_files == expected, "Full admitted source file set or bytes changed")
     vendor = repo / "vendor/humentity"
     provenance = json.loads(regular(vendor / "NVWA-PROVENANCE.json"))
     actual = {str(p.relative_to(vendor)): digest(regular(p)) for p in (vendor / "src").rglob("*") if p.is_file()}

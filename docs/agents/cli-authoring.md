@@ -69,19 +69,28 @@ call at a time and contains no preset or authoring sequence.
 
 ## B1 character Work
 
-Create the admitted body and sportsuit without opening a window:
+Create the admitted body and sportsuit without opening a window. Choose a new output path for each Work:
 
 ```sh
 nvwa-cli new-b1 assets my-character.nvwa.json
 nvwa-cli describe-capabilities my-character.nvwa.json
 nvwa-cli validate my-character.nvwa.json assets
+
+# Continuous authored rehearsal; same raw assets, distinct backend/profile.
+nvwa-cli new-b1-motion assets my-motion.nvwa.json
+nvwa-cli describe-capabilities my-motion.nvwa.json
+nvwa-cli validate my-motion.nvwa.json assets
 ```
 
 B1 creation authenticates the exact shipped descriptor and thirteen raw files
 before saving. Its two signed appearance values and five fixed diagnostic poses
 use the same atomic commands and history rules. Read discovery for command IDs
-and examples, including `set_diagnostic_pose`. B1 has no continuous timeline or
-authored clips. Apply/save edit the portable Work only; they do not inspect
+and examples, including `set_diagnostic_pose`. Static version1 has no timeline.
+Motion version2 provides `b1_arm_rehearsal_v1` and `b1_knee_flex_v1`, each four
+seconds, through the shared `set_timeline` command. They are authored actions,
+not AI-generated actions. A nonempty timeline owns the skeleton even when
+paused. `set_diagnostic_pose` atomically clears the timeline; Undo restores it
+and the previous diagnostic pose. Old static B1 Works are not upgraded. Apply/save edit the portable Work only; they do not inspect
 assets or claim that a renderer has opened it. Native/Web rendering is a
 separate check. Schema1/2 GLB Works upgrade to schema3 when saved; old readers
 will reject schema3.
