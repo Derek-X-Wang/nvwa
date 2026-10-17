@@ -1,17 +1,17 @@
 # B1 production Work integration (#74)
 
-The corrected production Web build displayed the approved body and sportsuit above the existing floor, facing the camera. Its five static poses, both shape controls, Undo/Redo, Web → CLI → Web save exchange, rejected source loads and explicit recovery were exercised. The retained evidence is in [VALIDATION.md](VALIDATION.md).
+The corrected production Web build displayed the approved body and sportsuit above the existing floor, facing the camera. Its five static poses, both shape controls, Undo/Redo, Web → CLI → Web save exchange, rejected source loads and explicit recovery were exercised. The earlier Web/CLI/CPU publication is retained in [VALIDATION.md](VALIDATION.md). A later [native GUI and desktop/Web follow-up](NATIVE-VALIDATION.md) exercised the same corrected binaries after the validation Mac became available; the earlier record keeps its original limits.
 
 ![Corrected neutral Web display](validation/images/web-grounded-neutral.jpg)
 
 | Boundary | Recorded result |
 | --- | --- |
 | Workspace CPU tests | 155 passed: 49 runtime, 59 Studio, 47 core/CLI. |
-| Native build/package | Passed; all 13 packaged raw inputs authenticated. Native GUI was **NOT-RUN** because the validation Mac was locked. |
+| Native build/package and GUI | Packaged inputs authenticated; later actual native controls, history, save/open, source rejection and recovery exercised. [Follow-up](NATIVE-VALIDATION.md). |
 | Corrected Web | Built and used; poses, edits, history, file exchange and warm-cache source rejection/retry recorded. |
 | Startup | Initial bootstrap aborted; reload succeeded. Cause is unproven. **No fully cold startup pass.** |
-| Desktop GUI ↔ Web exchange | **NOT-RUN**. Web ↔ offline CLI exchange is separate evidence. |
-| Final-head / merged-main CI | **NOT-RUN at this publication**; no merge acceptance claimed. |
+| Desktop GUI ↔ Web exchange | Actual native GUI Save → Web Open/Save/edit → native GUI Open/Save produced byte-identical full Works in both directions. |
+| CI | Run39001841383 passed portable, then failed a macOS formatter scope check. A CI-only fix passed local red/green checks; new final CI and merged-main CI remain pending. |
 
 ## Reproduce
 
