@@ -1,0 +1,24 @@
+{
+  "scope": "First isolated build, not product/main",
+  "source_commit": "ef075a9",
+  "observed_build_seconds": 905.1,
+  "command_exit": 1,
+  "web_export": false,
+  "native_build": "NOT-RUN after Web failure",
+  "errors": [
+    {
+      "code": "E0616",
+      "file": "src/lib.rs",
+      "line": 267,
+      "error": "private EditorState.document_generation access"
+    },
+    {
+      "code": "E0596",
+      "file": "src/lib.rs",
+      "line": 296,
+      "error": "missing mut for Assets<Mesh> mutable binding"
+    }
+  ],
+  "corrected_lib_sha256": "7720a9957d4d58db325a038cb685629b4c03501ca48a94441af47d64c9e9232b",
+  "retest": "Fresh separate run; no failed-run target reuse; compilation and actual rendering remain pending"
+}

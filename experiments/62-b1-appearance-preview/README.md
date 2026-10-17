@@ -8,7 +8,7 @@ An isolated technical preparation for issue79 while issue78's native acceptance 
 - Full RGB/RGBA PNG scanline decoding and alpha statistics. Skin is opaque RGB2048²; eyes and short04 hair retain their real alpha. Eyes/hair are preparation only, not rendered/fitted in this slice.
 - Eleven asset controls and nine loopback capture controls pass normally and with Python `-O` (20 unique tests,40 executions).
 - Independent fresh Astra/high R1 source review of Sol-authored preview: no remaining P1/P2 findings after fixing rejected-command stale success and transport freshness. Review has not yet certified runtime behavior or pixels.
-- Web/native compilation and actual rendering are pending the submitted bounded offline build. Native GUI will remain NOT-RUN while the user is away. No performance or appearance-quality result is claimed.
+- The first offline Web build failed with E0616(private field access) and E0596(missing mutable mesh binding); no Web export or native build was produced. The isolated preview was corrected and independently re-reviewed; a fresh bounded build is running. Native GUI will remain NOT-RUN while the user is away. No performance or appearance-quality result is claimed.
 
 ## Rendering contract
 

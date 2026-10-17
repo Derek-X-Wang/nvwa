@@ -8,7 +8,7 @@ use bevy::{
     render::render_resource::TextureFormat,
 };
 use nvwa_core::{Command, TimelineClip};
-use nvwa_runtime::{EditorState, Playback, b1_frame_snapshot};
+use nvwa_runtime::{EditorState, Playback, RuntimeStatus, b1_frame_snapshot};
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::collections::VecDeque;
@@ -259,12 +259,44 @@ fn command(world: &mut World, p: &mut Preview, v: &Value) -> Result<(), String> 
 }
 fn marker(world: &World) -> Result<Value, String> {
     let e = world.resource::<EditorState>();
+    if e.pending_open.is_some() {
+        return Err("B1 open verification is pending; previous appearance proof invalid".into());
+    }
+    if let Some(error) = &e.open_error {
+        return Err(format!("B1 open failed: {error}"));
+    }
+    let status = world.resource::<RuntimeStatus>();
+    if !status.ready || status.error.is_some() {
+        return Err(format!(
+            "B1 runtime is not currently ready: {} {:?}",
+            status.phase, status.error
+        ));
+    }
     let d = e.visible_document().ok_or("no actual Work open")?;
     if !d.profile.backend.is_b1_motion() {
         return Err("same B1 motion v2 Work required".into());
     }
+    let mut roots = Vec::new();
+    let mut meshes = Vec::new();
+    for entity in world.iter_entities() {
+        if let Some(shape) = entity.get::<humentity::prelude::CharacterShape>() {
+            roots.push((format!("{:?}", entity.id()), format!("{:?}", shape.0.id())));
+        }
+        if let Some(mesh) = entity.get::<Mesh3d>() {
+            meshes.push((
+                format!("{:?}", entity.id()),
+                format!("{:?}", mesh.0.id()),
+                world.resource::<Assets<Mesh>>().get(&mesh.0).is_some(),
+            ));
+        }
+    }
+    roots.sort();
+    meshes.sort();
+    if roots.is_empty() {
+        return Err("actual public character shape binding absent".into());
+    }
     Ok(
-        json!({"generation":e.document_generation,"document_sha256":hash(d)?,"parameters":d.character.parameters,"revision":d.revision}),
+        json!({"binding_identity_basis":"public current Work hash+RuntimeStatus+actual Entity/asset-handle generations; not private EditorState generation","document_sha256":hash(d)?,"parameters":d.character.parameters,"revision":d.revision,"character_shape_bindings":roots,"display_mesh_bindings":meshes,"runtime_ready":status.ready,"runtime_error":status.error}),
     )
 }
 fn transport(world: &World) -> Value {
@@ -281,6 +313,9 @@ fn uv_value(values: Option<&VertexAttributeValues>) -> Result<Value, String> {
 fn restore(world: &mut World, p: &mut Preview) -> Result<(), String> {
     if let Some(b) = &p.bound {
         if let Ok(e) = world.get_entity(b.entity) {
+            if e.get::<Mesh3d>().is_none_or(|mesh| mesh.0 != b.mesh) {
+                return Err("preview entity mesh changed outside overlay".into());
+            }
             let m = e
                 .get::<MeshMaterial3d<StandardMaterial>>()
                 .ok_or("preview material component disappeared")?;
@@ -293,7 +328,7 @@ fn restore(world: &mut World, p: &mut Preview) -> Result<(), String> {
         let mut mesh_present = false;
         let mut uv_verified = false;
         let expected_uv = uv_value(b.original_uv.as_ref())?;
-        if let Some(mesh) = world.resource_mut::<Assets<Mesh>>().get_mut(&b.mesh) {
+        if let Some(mut mesh) = world.resource_mut::<Assets<Mesh>>().get_mut(&b.mesh) {
             mesh_present = true;
             match b.original_uv.clone() {
                 Some(uv) => {
@@ -371,6 +406,7 @@ fn image(world: &mut World, p: &mut Preview) -> Result<Handle<Image>, String> {
     Ok(h)
 }
 fn capture(world: &mut World, p: &mut Preview, request: &Value) -> Result<(Value, Value), String> {
+    let _current_binding_identity = marker(world)?;
     let before = b1_frame_snapshot(world)?;
     if request["action"] == "sample" {
         for k in ["torso_length", "jaw_drop"] {
@@ -447,7 +483,7 @@ fn capture(world: &mut World, p: &mut Preview, request: &Value) -> Result<(Value
             proof.remove("uv_0");
         }
     }
-    let report = json!({"phase":"captured","request":request,"label":"Experimental appearance · not saved","desired":if p.desired{"skin"}else{"plain"},"applied":if p.bound.is_some(){"skin"}else{"plain"},"identity":marker(world)?,"requested_identity":p.requested_identity,"applied_generation":after["generation"],"sample":after["sample"],"parameters":after["parameters"],"geometry_before_sha256":geometry,"geometry_after_sha256":geometry,"geometry_equal":true,"appearance":compact});
+    let report = json!({"phase":"captured","request":request,"label":"Experimental appearance · not saved","desired":if p.desired{"skin"}else{"plain"},"applied":if p.bound.is_some(){"skin"}else{"plain"},"identity":marker(world)?,"requested_identity":p.requested_identity,"requested_published_generation":before["generation"],"applied_generation":after["generation"],"sample":after["sample"],"parameters":after["parameters"],"geometry_before_sha256":geometry,"geometry_after_sha256":geometry,"geometry_equal":true,"appearance":compact});
     let frame = json!({"request":request,"snapshot":after,"geometry_before_sha256":geometry,"geometry_after_sha256":geometry,"geometry_equal":true,"appearance":appearance});
     Ok((report, frame))
 }
