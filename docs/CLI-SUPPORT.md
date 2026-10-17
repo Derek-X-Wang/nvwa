@@ -8,18 +8,19 @@ The CLI supports these local operations:
 
 | Command | Operation |
 | --- | --- |
-| `new` | Create a Work from a character profile. |
+| `new` | Create a GLB Work from a character profile. |
+| `new-b1` | Authenticate the admitted B1 assets, then create a Work. |
 | `describe-capabilities` | Read the profile, current revision, supported parameters and authored clips, the saved stage, plus the CLI command contract. |
 | `inspect` | Read a Work as JSON. |
-| `apply` | Apply `set_parameters`, `set_scale`, `set_timeline`, `set_stage`, `undo` or `redo` commands and save the result to an output file. |
-| `validate` | Check a Work; with an asset root, also check the referenced asset's hash and structure. |
+| `apply` | Apply `set_parameters`, `set_scale`, `set_timeline`, `set_stage`, `set_diagnostic_pose` (B1), `undo` or `redo` commands and save the result to an output file. |
+| `validate` | Check a Work and optional GLB assets; B1 requires the explicit root and authenticates all thirteen raw files. |
 | `save` | Validate and reserialize a Work without changing its revision. |
 
 Successful machine-readable responses use JSON on stdout. Help uses text. Handled errors return exit code 1 and a `{ "code": "...", "message": "..." }` JSON diagnostic on stderr when stderr is writable. The exact response and recovery rules are in the [CLI authoring guide](agents/cli-authoring.md).
 
 ## Rehearsal stage files
 
-New and saved Works use schema 2. The strict schema 1 reader upgrades legacy Works to the default white studio stage without changing their revision, recipe, profile or timeline. Schema 2 requires an explicit `stage`; unknown fields, duplicate keys and invalid settings are rejected. Saving the upgrade writes schema 2, which older Nvwa versions cannot read. Original fixtures remain schema 1.
+New and saved Works use schema 3, including the explicit character backend and a present nullable diagnostic pose. Exact schema 1/2 Works upgrade to the original GLB backend without changing their revision, identity, timeline or saved stage; schema 1 receives the default white stage. Unknown fields, duplicate keys and missing schema 3 fields are rejected. Saving writes schema 3, which older Nvwa versions cannot read. Historical fixtures retain their original format. B1 has two signed parameters and five static diagnostic poses; it has no continuous timeline. Apply/save edit Work metadata without claiming asset or renderer readiness.
 
 `set_stage` replaces the complete stage through the same atomic command as Studio. `describe-capabilities` returns the loaded stage, a serialized command example, numeric bounds and the quality profiles. `inspect`, `validate`, `save` and `apply` use the shared validator. Light intensity is lux, colors are three sRGB channels in `[0,1]`, and angles are degrees. Camera distance and target height use character-relative units, multiplied by the character scale only in the runtime. The floor remains at world height zero. Core scale validation remains finite and positive; the fixed presentation runtime reports an explicit camera error outside scale `0.001..=100` and preserves the Work.
 

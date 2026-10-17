@@ -2,6 +2,8 @@
 #![forbid(unsafe_code)]
 
 mod asset;
+mod b1;
+pub use b1::*;
 mod stage;
 pub use stage::{StageAmbient, StageCamera, StageFloor, StageLight, StageQuality, StageSettings};
 #[cfg(test)]
@@ -10,7 +12,7 @@ mod bounded_history_tests;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
-pub const SCHEMA_VERSION: u32 = 2;
+pub const SCHEMA_VERSION: u32 = 3;
 pub const MAX_JSON_BYTES: usize = 2 * 1024 * 1024;
 
 /// Session retention limits. Bytes measure compact JSON payloads, not heap usage.
@@ -73,8 +75,6 @@ impl<'de> Deserialize<'de> for SceneDocument {
     fn deserialize<D: serde::Deserializer<'de>>(
         deserializer: D,
     ) -> std::result::Result<Self, D::Error> {
-        // Unlike Option<StageSettings>, this distinguishes an absent field from
-        // explicit null, and decodes directly so duplicate fields stay errors.
         #[derive(Default)]
         struct StageField(Option<StageSettings>);
         impl<'de> Deserialize<'de> for StageField {
@@ -89,30 +89,121 @@ impl<'de> Deserialize<'de> for SceneDocument {
         struct Wire {
             schema_version: u32,
             revision: u64,
-            profile: CharacterProfile,
-            character: CharacterRecipe,
+            profile: ProfileWire,
+            character: RecipeWire,
             timeline: Vec<TimelineClip>,
             #[serde(default)]
             stage: StageField,
         }
         let wire = Wire::deserialize(deserializer)?;
+        let legacy = match wire.schema_version {
+            1 | 2 => true,
+            SCHEMA_VERSION => false,
+            version => {
+                return Err(serde::de::Error::custom(format!(
+                    "unsupported_schema_version: schema version {version} is unsupported"
+                )));
+            }
+        };
         let stage = match (wire.schema_version, wire.stage.0) {
             (1, None) => StageSettings::default(),
             (1, Some(_)) => return Err(serde::de::Error::custom("schema 1 does not allow stage")),
-            (SCHEMA_VERSION, None) => return Err(serde::de::Error::missing_field("stage")),
-            (_, stage) => stage.unwrap_or_default(),
+            (_, None) => return Err(serde::de::Error::missing_field("stage")),
+            (_, Some(stage)) => stage,
         };
+        let profile = wire
+            .profile
+            .into_profile(legacy)
+            .map_err(serde::de::Error::custom)?;
+        let character = wire
+            .character
+            .into_recipe(legacy)
+            .map_err(serde::de::Error::custom)?;
         Ok(Self {
-            schema_version: if wire.schema_version == 1 {
-                SCHEMA_VERSION
-            } else {
-                wire.schema_version
-            },
+            schema_version: SCHEMA_VERSION,
             revision: wire.revision,
-            profile: wire.profile,
-            character: wire.character,
+            profile,
+            character,
             timeline: wire.timeline,
             stage,
+        })
+    }
+}
+
+// Presence wrappers preserve strict legacy/current shapes, including explicit null.
+#[derive(Default)]
+struct BackendField(Option<CharacterBackend>);
+impl<'de> Deserialize<'de> for BackendField {
+    fn deserialize<D: serde::Deserializer<'de>>(
+        deserializer: D,
+    ) -> std::result::Result<Self, D::Error> {
+        CharacterBackend::deserialize(deserializer).map(|backend| Self(Some(backend)))
+    }
+}
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct ProfileWire {
+    id: String,
+    asset_path: String,
+    asset_sha256: String,
+    license: String,
+    parameters: Vec<ParameterSpec>,
+    clips: Vec<ClipSpec>,
+    #[serde(default)]
+    backend: BackendField,
+}
+impl ProfileWire {
+    fn into_profile(self, legacy: bool) -> std::result::Result<CharacterProfile, String> {
+        let backend = match (legacy, self.backend.0) {
+            (true, None) => CharacterBackend::Glb { schema_version: 1 },
+            (true, Some(_)) => return Err("legacy schema does not allow backend".into()),
+            (false, None) => return Err("missing field `backend`".into()),
+            (false, Some(backend)) => backend,
+        };
+        Ok(CharacterProfile {
+            id: self.id,
+            asset_path: self.asset_path,
+            asset_sha256: self.asset_sha256,
+            license: self.license,
+            parameters: self.parameters,
+            clips: self.clips,
+            backend,
+        })
+    }
+}
+#[derive(Default)]
+struct PoseField(Option<Option<String>>);
+impl<'de> Deserialize<'de> for PoseField {
+    fn deserialize<D: serde::Deserializer<'de>>(
+        deserializer: D,
+    ) -> std::result::Result<Self, D::Error> {
+        Option::<String>::deserialize(deserializer).map(|pose| Self(Some(pose)))
+    }
+}
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RecipeWire {
+    id: String,
+    profile_id: String,
+    parameters: BTreeMap<String, f32>,
+    scale: f32,
+    #[serde(default)]
+    diagnostic_pose: PoseField,
+}
+impl RecipeWire {
+    fn into_recipe(self, legacy: bool) -> std::result::Result<CharacterRecipe, String> {
+        let diagnostic_pose = match (legacy, self.diagnostic_pose.0) {
+            (true, None) => None,
+            (true, Some(_)) => return Err("legacy schema does not allow diagnostic_pose".into()),
+            (false, None) => return Err("missing field `diagnostic_pose`".into()),
+            (false, Some(pose)) => pose,
+        };
+        Ok(CharacterRecipe {
+            id: self.id,
+            profile_id: self.profile_id,
+            parameters: self.parameters,
+            scale: self.scale,
+            diagnostic_pose,
         })
     }
 }
@@ -120,6 +211,7 @@ impl<'de> Deserialize<'de> for SceneDocument {
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CharacterProfile {
+    pub backend: CharacterBackend,
     pub id: String,
     pub asset_path: String,
     pub asset_sha256: String,
@@ -132,6 +224,7 @@ pub struct CharacterProfile {
 #[serde(deny_unknown_fields)]
 pub struct ParameterSpec {
     pub id: String,
+    /// GLB morph index. On B1 this is canonical inert compatibility metadata, never a mesh index.
     pub morph_index: usize,
     pub min: f32,
     pub max: f32,
@@ -146,13 +239,23 @@ pub struct ClipSpec {
     pub duration_seconds: f32,
 }
 
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
+#[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct CharacterRecipe {
     pub id: String,
     pub profile_id: String,
     pub parameters: BTreeMap<String, f32>,
     pub scale: f32,
+    pub diagnostic_pose: Option<String>,
+}
+
+impl<'de> Deserialize<'de> for CharacterRecipe {
+    fn deserialize<D: serde::Deserializer<'de>>(
+        deserializer: D,
+    ) -> std::result::Result<Self, D::Error> {
+        RecipeWire::deserialize(deserializer)?
+            .into_recipe(false)
+            .map_err(serde::de::Error::custom)
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -186,6 +289,10 @@ pub enum Command {
         character_id: String,
         scale: f32,
     },
+    SetDiagnosticPose {
+        character_id: String,
+        pose_id: String,
+    },
     SetTimeline {
         clips: Vec<TimelineClip>,
     },
@@ -214,6 +321,10 @@ impl<'de> Deserialize<'de> for Command {
                 character_id: String,
                 scale: f32,
             },
+            SetDiagnosticPose {
+                character_id: String,
+                pose_id: String,
+            },
             SetTimeline {
                 clips: Vec<TimelineClip>,
             },
@@ -237,6 +348,13 @@ impl<'de> Deserialize<'de> for Command {
             } => Self::SetScale {
                 character_id,
                 scale,
+            },
+            StrictCommand::SetDiagnosticPose {
+                character_id,
+                pose_id,
+            } => Self::SetDiagnosticPose {
+                character_id,
+                pose_id,
             },
             StrictCommand::SetTimeline { clips } => Self::SetTimeline { clips },
             StrictCommand::SetStage { stage } => Self::SetStage { stage },
@@ -309,7 +427,17 @@ fn parse_json<T: for<'de> Deserialize<'de>>(input: &str) -> Result<T> {
     // Reject duplicate object keys before typed decoding (maps otherwise overwrite).
     serde_json::from_str::<UniqueJson>(input)
         .map_err(|error| CoreError::new("invalid_json", error.to_string()))?;
-    serde_json::from_str(input).map_err(|error| CoreError::new("invalid_json", error.to_string()))
+    serde_json::from_str(input).map_err(|error| {
+        let message = error.to_string();
+        let code = [
+            "unsupported_character_backend",
+            "unsupported_schema_version",
+        ]
+        .into_iter()
+        .find(|code| message.starts_with(&format!("{code}:")))
+        .unwrap_or("invalid_json");
+        CoreError::new(code, message)
+    })
 }
 
 fn serialize_json<T: Serialize>(value: &T) -> Result<String> {
@@ -326,6 +454,10 @@ fn serialize_json<T: Serialize>(value: &T) -> Result<String> {
 
 impl CharacterProfile {
     pub fn validate(&self) -> Result<()> {
+        self.backend.validate()?;
+        if self.backend.is_b1() {
+            return self.validate_b1();
+        }
         id(&self.id, "profile id")?;
         if self.asset_path.is_empty()
             || self
@@ -392,7 +524,11 @@ impl CharacterProfile {
     }
 
     pub fn from_json(input: &str) -> Result<Self> {
-        let profile: Self = parse_json(input)?;
+        let wire: ProfileWire = parse_json(input)?;
+        let legacy = wire.backend.0.is_none();
+        let profile = wire
+            .into_profile(legacy)
+            .map_err(|message| CoreError::new("invalid_json", message))?;
         profile.validate()?;
         Ok(profile)
     }
@@ -434,6 +570,7 @@ impl SceneDocument {
                 profile_id: profile.id.clone(),
                 parameters,
                 scale: 1.0,
+                diagnostic_pose: profile.backend.is_b1().then(|| "neutral".into()),
             },
             profile,
             timeline,
@@ -463,6 +600,31 @@ impl SceneDocument {
             ));
         }
         positive(self.character.scale, "character scale")?;
+        match (
+            &self.profile.backend,
+            self.character.diagnostic_pose.as_deref(),
+        ) {
+            (CharacterBackend::Glb { .. }, None) => {}
+            (CharacterBackend::Glb { .. }, Some(_)) => {
+                return Err(CoreError::new(
+                    "unsupported_character_operation",
+                    "GLB characters do not support diagnostic poses",
+                ));
+            }
+            (CharacterBackend::B1Cpu { .. }, Some(pose)) => validate_b1_pose(pose)?,
+            (CharacterBackend::B1Cpu { .. }, None) => {
+                return Err(CoreError::new(
+                    "unsupported_pose",
+                    "B1 requires a diagnostic pose",
+                ));
+            }
+        }
+        if self.profile.backend.is_b1() && !self.timeline.is_empty() {
+            return Err(CoreError::new(
+                "unsupported_character_operation",
+                "B1 diagnostic characters do not support animation timelines",
+            ));
+        }
         for (parameter_id, value) in &self.character.parameters {
             self.validate_parameter(parameter_id, *value)?;
         }
@@ -605,7 +767,7 @@ impl CommandEnvelope {
                     finite(clip.speed, "speed")?;
                 }
             }
-            Command::Undo | Command::Redo => {}
+            Command::SetDiagnosticPose { .. } | Command::Undo | Command::Redo => {}
         }
         serialize_json(self)
     }
@@ -864,6 +1026,20 @@ fn apply_edit(document: &mut SceneDocument, command: &Command) -> Result<()> {
             positive(*scale, "character scale")?;
             document.character.scale = *scale;
         }
+        Command::SetDiagnosticPose {
+            character_id,
+            pose_id,
+        } => {
+            check_character(document, character_id)?;
+            if !document.profile.backend.is_b1() {
+                return Err(CoreError::new(
+                    "unsupported_character_operation",
+                    "GLB characters do not support diagnostic poses",
+                ));
+            }
+            validate_b1_pose(pose_id)?;
+            document.character.diagnostic_pose = Some(pose_id.clone());
+        }
         Command::SetTimeline { clips } => document.timeline = clips.clone(),
         Command::SetStage { stage } => {
             stage.validate()?;
@@ -893,6 +1069,7 @@ fn command_summary(command: &Command) -> String {
     match command {
         Command::SetParameters { values, .. } => format!("Set {} parameter(s)", values.len()),
         Command::SetScale { scale, .. } => format!("Set scale to {scale}"),
+        Command::SetDiagnosticPose { pose_id, .. } => format!("Set diagnostic pose to {pose_id}"),
         Command::SetTimeline { clips } => format!("Set {} timeline clip(s)", clips.len()),
         Command::SetStage { .. } => "Set rehearsal stage".into(),
         Command::Undo => "Undo".into(),

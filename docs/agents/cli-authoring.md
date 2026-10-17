@@ -56,8 +56,9 @@ only to one `apply` invocation; opening a saved work starts a fresh session.
 The discovered retention policy describes the bounded editor session.
 
 Run `nvwa-cli validate output.nvwa.json assets` to check the actual referenced
-asset's hash and structure. Without the asset root, `validate` checks the work
-document only. `save` validates and reserializes a work without changing its
+asset's hash and structure. For the original GLB backend, omitting the asset root checks the Work document
+only. B1 validation requires the explicit root and checks its descriptor and all
+thirteen raw files; omitting it returns `asset_root_required`. `save` validates and reserializes a work without changing its
 revision. Import the exact saved file into native Studio or Web Studio for
 separate rendering and continuing-edit proof.
 
@@ -65,3 +66,22 @@ The [M1.2 adaptive agent evidence](../../experiments/38-agent-cli/REPORT.md)
 records a real LLM authoring run. Its raw calls and input/output snapshots are
 separate from the synthetic integration tests. `record.py` records one chosen
 call at a time and contains no preset or authoring sequence.
+
+## B1 character Work
+
+Create the admitted body and sportsuit without opening a window:
+
+```sh
+nvwa-cli new-b1 assets my-character.nvwa.json
+nvwa-cli describe-capabilities my-character.nvwa.json
+nvwa-cli validate my-character.nvwa.json assets
+```
+
+B1 creation authenticates the exact shipped descriptor and thirteen raw files
+before saving. Its two signed appearance values and five fixed diagnostic poses
+use the same atomic commands and history rules. Read discovery for command IDs
+and examples, including `set_diagnostic_pose`. B1 has no continuous timeline or
+authored clips. Apply/save edit the portable Work only; they do not inspect
+assets or claim that a renderer has opened it. Native/Web rendering is a
+separate check. Schema1/2 GLB Works upgrade to schema3 when saved; old readers
+will reject schema3.

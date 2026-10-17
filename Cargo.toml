@@ -1,7 +1,7 @@
 [workspace]
 resolver = "3"
-members = ["crates/nvwa-core", "crates/nvwa-runtime", "crates/nvwa-studio", "crates/nvwa-cli"]
-exclude = ["experiments"]
+members = ["crates/nvwa-core", "crates/nvwa-runtime", "crates/nvwa-studio", "crates/nvwa-cli", "crates/nvwa-b1-adapter"]
+exclude = ["experiments", "vendor/humentity", "vendor/bevy_obj", "vendor/wobj"]
 
 [workspace.package]
 version = "0.1.0"
@@ -16,8 +16,14 @@ sha2 = "0.10"
 libc = "0.2"
 nvwa-core = { path = "crates/nvwa-core" }
 nvwa-runtime = { path = "crates/nvwa-runtime" }
+nvwa-b1-adapter = { path = "crates/nvwa-b1-adapter" }
+humentity = { path = "vendor/humentity" }
 bevy = { version = "=0.19.1", default-features = false, features = ["std", "async_executor", "reflect_auto_register", "bevy_asset", "bevy_scene", "bevy_world_serialization", "bevy_gltf", "bevy_animation", "bevy_render", "bevy_core_pipeline", "bevy_pbr", "bevy_light", "bevy_camera", "bevy_mesh", "bevy_image", "bevy_shader", "bevy_window", "bevy_winit", "bevy_log", "bevy_color", "bevy_material", "png", "webgpu", "morph", "morph_animation", "gltf_animation", "multi_threaded", "keyboard", "mouse", "touch"] }
 bevy_egui = { version = "=0.42.0", default-features = false, features = ["render", "default_fonts", "manage_clipboard"] }
+
+[patch.crates-io]
+bevy_obj = { path = "vendor/bevy_obj" }
+wobj = { path = "vendor/wobj" }
 
 [profile.dev]
 opt-level = 1

@@ -30,6 +30,12 @@ jobs:
         run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
       - name: Check portable source and real CLI paths
         run: bash experiments/27-ci-baseline/check.sh portable
+      - name: Verify admitted production character inputs and source
+        run: |
+          python3 -B scripts/verify-b1-inputs.py
+          python3 -B -O scripts/verify-b1-inputs.py
+          python3 -B scripts/test-b1-inputs.py
+          python3 -B -O scripts/test-b1-inputs.py
       - name: Check bounded diagnostic controls
         run: bash experiments/27-ci-baseline/check.sh diagnostics
       - name: Check authenticated B1 source bundle and rejection controls

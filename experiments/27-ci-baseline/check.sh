@@ -15,7 +15,9 @@ verify_lock() {
 trap verify_lock EXIT
 case "${1:-}" in
   portable)
-    cargo fmt --all --check
+    # Upstream vendor sources retain their admitted bytes. --all also traverses
+    # local path dependencies even when the workspace excludes those packages.
+    cargo fmt -p nvwa-core -p nvwa-cli -p nvwa-runtime -p nvwa-studio -p nvwa-b1-adapter --check
     cargo clippy -p nvwa-core -p nvwa-cli --all-targets --locked -- -D warnings
     cargo test -p nvwa-core -p nvwa-cli --locked
     ;;

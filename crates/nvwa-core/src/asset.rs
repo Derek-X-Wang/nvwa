@@ -7,6 +7,9 @@ impl CharacterProfile {
     /// the platform caller. This method has no filesystem, GPU, or Bevy dependency.
     pub fn validate_asset_bytes(&self, bytes: &[u8]) -> Result<()> {
         self.validate()?;
+        if self.backend.is_b1() {
+            return crate::B1AssetManifest::from_bytes(bytes).map(|_| ());
+        }
         if bytes.is_empty() {
             return Err(CoreError::new("missing_asset", "asset is empty or missing"));
         }

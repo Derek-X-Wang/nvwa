@@ -1,5 +1,7 @@
 //! Shared native/Web renderer. The editor document is the source of truth.
+mod b1;
 mod stage;
+pub use b1::register_b1_asset_source;
 pub use stage::StageViewOverride;
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -34,6 +36,10 @@ pub struct EditorState {
     /// A validated clone used during a drag. Never mutates editor history.
     pub preview: Option<SceneDocument>,
     pub message: String,
+    /// A candidate stays outside committed history until its verified CPU frame is ready.
+    pub pending_open: Option<SceneDocument>,
+    pub open_error: Option<String>,
+    open_request_sequence: u64,
     command_sequence: u64,
     document_generation: u64,
 }
@@ -44,14 +50,33 @@ impl EditorState {
     pub fn visible_document(&self) -> Option<&SceneDocument> {
         self.preview.as_ref().or_else(|| self.document())
     }
+    pub fn request_open(&mut self, document: SceneDocument) -> Result<(), String> {
+        document.validate().map_err(|e| e.to_string())?;
+        self.cancel_pending_open();
+        if document.profile.backend.is_b1() {
+            self.pending_open = Some(document);
+            self.open_error = None;
+            self.message = "Verifying B1 candidate · current Work remains active".into();
+            Ok(())
+        } else {
+            self.replace(document)
+        }
+    }
+    pub fn cancel_pending_open(&mut self) {
+        self.pending_open = None;
+        self.open_request_sequence = self.open_request_sequence.saturating_add(1);
+    }
     pub fn replace(&mut self, document: SceneDocument) -> Result<(), String> {
         self.editor = Some(Editor::new(document).map_err(|e| e.to_string())?);
+        self.cancel_pending_open();
+        self.open_error = None;
         self.preview = None;
         self.document_generation = self.document_generation.saturating_add(1);
         self.message = "Document opened".into();
         Ok(())
     }
     pub fn apply(&mut self, command: Command) -> Result<(), String> {
+        self.cancel_pending_open();
         self.preview = None;
         let editor = self.editor.as_mut().ok_or("No document is open")?;
         self.command_sequence += 1;
@@ -66,6 +91,7 @@ impl EditorState {
         Ok(())
     }
     pub fn preview_parameters(&mut self, values: BTreeMap<String, f32>) -> Result<(), String> {
+        self.cancel_pending_open();
         let mut preview = self.document().ok_or("No document is open")?.clone();
         preview.character.parameters = values;
         preview.validate().map_err(|e| e.to_string())?;
@@ -73,6 +99,7 @@ impl EditorState {
         Ok(())
     }
     pub fn preview_stage(&mut self, stage: StageSettings) -> Result<(), String> {
+        self.cancel_pending_open();
         let preview = self
             .editor
             .as_ref()
@@ -364,6 +391,7 @@ impl Plugin for NvwaRuntimePlugin {
                     .before(bevy::transform::TransformSystems::Propagate),
             );
         add_playback_systems(app);
+        b1::install(app);
     }
 }
 
@@ -397,12 +425,11 @@ fn open_default_document(
         status.phase = "Open a work to play".into();
         return;
     }
-    let result = serde_json::from_str::<CharacterProfile>(include_str!(
-        "../../../assets/character.profile.json"
-    ))
-    .map_err(|e| e.to_string())
-    .and_then(|profile| SceneDocument::from_profile(profile).map_err(|e| e.to_string()))
-    .and_then(|document| editor.replace(document));
+    let result =
+        CharacterProfile::from_json(include_str!("../../../assets/character.profile.json"))
+            .map_err(|e| e.to_string())
+            .and_then(|profile| SceneDocument::from_profile(profile).map_err(|e| e.to_string()))
+            .and_then(|document| editor.replace(document));
     if let Err(error) = result {
         status.error = Some(error);
         status.phase = "Profile error".into();
@@ -456,6 +483,9 @@ fn load_character(
     let Some(document) = editor.document() else {
         return;
     };
+    if !document.profile.backend.is_glb() {
+        return;
+    }
     let path = &document.profile.asset_path;
     let profile_key = serde_json::to_string(&document.profile).unwrap_or_default();
     if asset.path != *path
@@ -1162,6 +1192,9 @@ fn apply_recipe(
     let Some(document) = editor.visible_document() else {
         return;
     };
+    if !document.profile.backend.is_glb() {
+        return;
+    }
     for mut transform in &mut roots {
         transform.scale = Vec3::splat(document.character.scale);
     }
@@ -1198,6 +1231,9 @@ fn collect_evidence(
         morphs,
         players,
     } = scene;
+    if editor.document().is_some_and(|d| d.profile.backend.is_b1()) {
+        return;
+    }
     status.frames += 1;
     if status.frame_times_ms.len() >= 600 {
         status.frame_times_ms.remove(0);
@@ -1303,8 +1339,10 @@ mod tests {
         );
     }
     fn state() -> EditorState {
-        let profile: CharacterProfile =
-            serde_json::from_str(include_str!("../../../assets/character.profile.json")).unwrap();
+        let profile: CharacterProfile = nvwa_core::CharacterProfile::from_json(include_str!(
+            "../../../assets/character.profile.json"
+        ))
+        .unwrap();
         let mut state = EditorState::default();
         state
             .replace(SceneDocument::from_profile(profile).unwrap())
@@ -2270,8 +2308,10 @@ mod tests {
     }
     #[test]
     fn actual_async_reload_waits_for_fresh_bytes_and_recovers_hash_error() {
-        let profile: CharacterProfile =
-            serde_json::from_str(include_str!("../../../assets/character.profile.json")).unwrap();
+        let profile: CharacterProfile = nvwa_core::CharacterProfile::from_json(include_str!(
+            "../../../assets/character.profile.json"
+        ))
+        .unwrap();
         let correct = include_bytes!("../../../assets/fixtures/nvwa-humanoid.glb");
         let mut stale = correct.to_vec();
         *stale.last_mut().unwrap() ^= 1;

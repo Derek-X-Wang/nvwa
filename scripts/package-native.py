@@ -20,6 +20,18 @@ resources.mkdir(parents=True, exist_ok=True)
 for name in ['nvwa-humanoid.glb', 'LICENSE.txt', 'provenance-manifest.json']:
     shutil.copy2(root / 'assets/fixtures' / name, resources / name)
 shutil.copy2(root / 'assets/character.profile.json', resources.parent / 'character.profile.json')
+b1_assets = resources.parent / 'characters/mpfb-b1-v1'
+shutil.copytree(root / 'assets/characters/mpfb-b1-v1', b1_assets, dirs_exist_ok=True)
+b1_notices = contents / 'Resources/licenses/b1'
+for name in ['humentity', 'bevy_obj', 'wobj']:
+    source = root / 'vendor' / name
+    destination = b1_notices / name
+    destination.mkdir(parents=True, exist_ok=True)
+    for notice in source.glob('LICENSE*'):
+        if notice.is_file():
+            shutil.copy2(notice, destination / notice.name)
+    if (source / 'licenses').is_dir():
+        shutil.copytree(source / 'licenses', destination / 'licenses', dirs_exist_ok=True)
 font_notices = contents / 'Resources/licenses/fonts'
 font_notices.mkdir(parents=True, exist_ok=True)
 for name in ['OFL.txt', 'NOTICE.md', 'PROVENANCE.json']:

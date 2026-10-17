@@ -16,7 +16,7 @@ use bevy_egui::{EguiContexts, EguiPlugin, EguiPrimaryContextPass, egui};
 use nvwa_core::{Command, SceneDocument, TimelineClip};
 use nvwa_runtime::{
     CharacterInteraction, CharacterInteractionInput, EditorState, NvwaRuntimePlugin, Playback,
-    RuntimeStatus, SceneCamera, StageViewOverride, StartupDocumentPolicy,
+    RuntimeStatus, SceneCamera, StageViewOverride, StartupDocumentPolicy, register_b1_asset_source,
 };
 use platform::{FileCompletion, PlatformIo};
 use std::collections::BTreeMap;
@@ -201,6 +201,7 @@ fn build_app_for_mode(config: LaunchConfig, smoke: SmokeRun) -> App {
     } else {
         window
     };
+    register_b1_asset_source(&mut app);
     app.add_plugins(DefaultPlugins.set(asset_plugin).set(WindowPlugin {
         primary_window: Some(window),
         ..default()
@@ -588,7 +589,7 @@ fn accept_file_completion(
             ui.save_notice = None;
             match SceneDocument::from_json(&json)
                 .map_err(|e| e.to_string())
-                .and_then(|d| editor.replace(d))
+                .and_then(|d| editor.request_open(d))
             {
                 Ok(()) => ui.error = None,
                 Err(error) => ui.error = Some(error),
@@ -699,6 +700,7 @@ fn draw_editor_ui(
     let document = editor.visible_document().cloned();
     let mut next_playback = playback.clone();
     let mut file_action = None;
+    let mut new_b1 = false;
     let mut command = None;
     let mut preview: Option<BTreeMap<String, f32>> = None;
     let mut commit_drag = false;
@@ -720,6 +722,12 @@ fn draw_editor_ui(
             }
             ui.separator();
             ui.toggle_value(&mut stage_ui.open, "舞台 / Stage");
+            if ui
+                .add_enabled(!io.busy(), egui::Button::new("New B1…"))
+                .clicked()
+            {
+                new_b1 = true;
+            }
             ui.label("作品 / Work");
             let previous_path = state.file_path.clone();
             draw_work_path(ui, &mut state.file_path, 220.0);
@@ -740,6 +748,11 @@ fn draw_editor_ui(
             }
             if io.busy() {
                 ui.label("File operation pending…");
+            }
+            if editor.pending_open.is_some() {
+                ui.label(
+                    "B1 candidate pending · Save keeps current Work · editing cancels candidate",
+                );
             }
             if let Some(doc) = editor.document() {
                 ui.label(format!("Revision {}", doc.revision));
@@ -762,7 +775,11 @@ fn draw_editor_ui(
                     state.selected = true;
                 }
                 ui.small(&doc.profile.id);
-                ui.small("Skinned humanoid");
+                ui.small(if doc.profile.backend.is_b1() {
+                    "B1 positive aggregate CPU · diagnostic poses"
+                } else {
+                    "Skinned humanoid"
+                });
                 if ui.button("Clear selection").clicked() {
                     state.selected = false;
                 }
@@ -832,6 +849,25 @@ fn draw_editor_ui(
                 }
                 ui.separator();
                 ui.label(format!("Scale {:.2}", doc.character.scale));
+                if doc.profile.backend.is_b1() {
+                    ui.separator();
+                    ui.label("Static diagnostic poses");
+                    for pose in nvwa_core::B1_DIAGNOSTIC_POSES.iter() {
+                        if ui
+                            .selectable_label(
+                                doc.character.diagnostic_pose.as_deref() == Some(*pose),
+                                *pose,
+                            )
+                            .clicked()
+                        {
+                            command = Some(Command::SetDiagnosticPose {
+                                character_id: doc.character.id.clone(),
+                                pose_id: (*pose).into(),
+                            });
+                        }
+                    }
+                    ui.small("No continuous motion, cloth or appearance acceptance.");
+                }
                 ui.separator();
             }
             if layout.tab == editor_layout::InspectorTab::Profile {
@@ -847,7 +883,16 @@ fn draw_editor_ui(
             ui.disable();
         }
         ui.horizontal(|ui| {
-            ui.heading("Animation");
+            ui.heading(
+                if document
+                    .as_ref()
+                    .is_some_and(|doc| doc.profile.backend.is_b1())
+                {
+                    "B1 diagnostic pose"
+                } else {
+                    "Animation"
+                },
+            );
             ui.add_enabled_ui(
                 status.ready
                     && document
@@ -857,7 +902,7 @@ fn draw_editor_ui(
                     draw_transport_buttons(ui, &mut next_playback);
                 },
             );
-            if let Some(doc) = &document {
+            if let Some(doc) = document.as_ref().filter(|doc| doc.profile.backend.is_glb()) {
                 let has_sequence_actions = ["idle", "wave", "turn"]
                     .iter()
                     .all(|id| doc.profile.clips.iter().any(|clip| clip.id == *id));
@@ -909,7 +954,7 @@ fn draw_editor_ui(
                 ));
             }
         });
-        if let Some(doc) = &document {
+        if let Some(doc) = document.as_ref().filter(|doc| doc.profile.backend.is_glb()) {
             let mut ordered = doc.timeline.clone();
             ordered.sort_by(|a, b| a.start_seconds.total_cmp(&b.start_seconds));
             if !doc.is_single_loop() {
@@ -978,6 +1023,11 @@ fn draw_editor_ui(
         ui.small("Right-drag orbits · wheel zooms · Space plays/pauses without keyboard focus.");
         ui.small(if interaction.busy() {
             "Wave interaction · sequence cursor held"
+        } else if document
+            .as_ref()
+            .is_some_and(|doc| doc.profile.backend.is_b1())
+        {
+            "Static diagnostic pose · shape and pose edits use shared Work commands"
         } else {
             "Original fixture: Click chest/head to wave"
         });
@@ -991,6 +1041,9 @@ fn draw_editor_ui(
             ui.colored_label(egui::Color32::LIGHT_RED, error);
         }
         if let Some(error) = &state_error {
+            ui.colored_label(egui::Color32::LIGHT_RED, error);
+        }
+        if let Some(error) = &editor.open_error {
             ui.colored_label(egui::Color32::LIGHT_RED, error);
         }
         ui.label(&editor.message);
@@ -1054,6 +1107,14 @@ fn draw_editor_ui(
     state.stage = stage_ui;
     state.save_notice = save_notice;
     *playback = next_playback;
+    if new_b1 {
+        let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1())
+            .map_err(|e| e.to_string())
+            .and_then(|doc| editor.request_open(doc));
+        if let Err(error) = result {
+            state.error = Some(error);
+        }
+    }
     if let Some(save) = file_action {
         let result = if save {
             editor
@@ -1138,6 +1199,9 @@ fn draw_player(
                 if io.busy() {
                     ui.label("Opening work…");
                 }
+                if editor.pending_open.is_some() {
+                    ui.label("Verifying B1 candidate · current Work remains active");
+                }
                 ui.add_enabled_ui(
                     status.ready && !interaction.busy() && !next.clip_id.is_empty(),
                     |ui| {
@@ -1154,16 +1218,24 @@ fn draw_player(
                 next.clip_id,
                 if next.completed { " · complete" } else { "" }
             ));
-            ui.small(if interaction.busy() {
-                "Wave interaction · sequence cursor held"
-            } else {
-                "Original fixture: Click chest/head to wave"
-            });
+            ui.small(
+                if editor
+                    .document()
+                    .is_some_and(|doc| doc.profile.backend.is_b1())
+                {
+                    "B1 static diagnostic pose · no continuous motion"
+                } else if interaction.busy() {
+                    "Wave interaction · sequence cursor held"
+                } else {
+                    "Original fixture: Click chest/head to wave"
+                },
+            );
             for error in [
                 status.stage_error.as_ref(),
                 status.error.as_ref(),
                 next.error.as_ref(),
                 state.error.as_ref(),
+                editor.open_error.as_ref(),
             ]
             .into_iter()
             .flatten()
@@ -1408,6 +1480,7 @@ fn smoke_and_capture(
     let failed = status.error.is_some()
         || status.stage_error.is_some()
         || work.ui.error.is_some()
+        || work.editor.open_error.is_some()
         || now > smoke.timeout;
     if complete || failed {
         let mut times = status.warmed_frame_times_ms.clone();
@@ -1419,8 +1492,8 @@ fn smoke_and_capture(
         };
         let dimensions = windows.iter().next().map(|window| serde_json::json!({ "width": window.physical_width(), "height": window.physical_height(), "scale_factor": window.scale_factor() }));
         let gpu = adapter.as_ref().map(|adapter| serde_json::json!({ "name": adapter.name, "backend": format!("{:?}", adapter.backend) }));
-        let evidence = serde_json::json!({
-            "ready": status.ready, "error": status.error.as_ref().or(work.ui.error.as_ref()), "elapsed_seconds": now,
+        let mut evidence = serde_json::json!({
+            "ready": status.ready, "error": status.error.as_ref().or(work.ui.error.as_ref()).or(work.editor.open_error.as_ref()), "elapsed_seconds": now,
             "mode": work.config.mode.label(),
             "stage": work.editor.visible_document().map(|doc| &doc.stage),
             "stage_error": status.stage_error,
@@ -1444,6 +1517,20 @@ fn smoke_and_capture(
             "capture_file_bytes": capture_file_bytes, "frame_sample": "recent_up_to_600_frames_after_readiness_plus_1s_warmup",
             "timeout": now > smoke.timeout,
         });
+        let backend_evidence = serde_json::json!({
+            "character_backend": work.editor.document().map(|doc| &doc.profile.backend),
+            "diagnostic_pose": work.editor.document().and_then(|doc| doc.character.diagnostic_pose.as_ref()),
+            "pending_open": work.editor.pending_open.is_some(),
+        });
+        evidence
+            .as_object_mut()
+            .expect("evidence is an object")
+            .extend(
+                backend_evidence
+                    .as_object()
+                    .expect("backend evidence is an object")
+                    .clone(),
+            );
         info!("NVWA_EVIDENCE {evidence}");
         smoke.reported = true;
         if smoke.enabled {
@@ -1858,8 +1945,10 @@ mod tests {
         assert!(!scene_pointer_allowed(false, true, false));
     }
     fn editor() -> EditorState {
-        let profile =
-            serde_json::from_str(include_str!("../../../assets/character.profile.json")).unwrap();
+        let profile = nvwa_core::CharacterProfile::from_json(include_str!(
+            "../../../assets/character.profile.json"
+        ))
+        .unwrap();
         let mut editor = EditorState::default();
         editor
             .replace(SceneDocument::from_profile(profile).unwrap())
