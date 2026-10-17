@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "id": "rest-local-v1",
+  "source_profile": "nvwa-mpfb-b1-motion-v1",
+  "region_source_ids": [
+    22,
+    29,
+    79,
+    104,
+    110,
+    182,
+    191,
+    241,
+    244,
+    246,
+    255,
+    669,
+    677,
+    691,
+    697,
+    719
+  ],
+  "weight_overrides": [],
+  "offset_deltas": [
+    {
+      "source_id": 22,
+      "delta": [
+        0.0023555,
+        0.0014502500000000002,
+        0.0015845
+      ]
+    },
+    {
+      "source_id": 29,
+      "delta": [
+        6.724999999999998e-05,
+        0.00026274999999999996,
+        0.0008670000000000001
+      ]
+    },
+    {
+      "source_id": 79,
+      "delta": [
+        -8.575e-05,
+        0.00015174999999999998,
+        0.0003732499999999999
+      ]
+    },
+    {
+      "source_id": 104,
+      "delta": [
+        -0.0034677500000000003,
+        0.00141275,
+        0.001549
+      ]
+    },
+    {
+      "source_id": 110,
+      "delta": [
+        0.0013687500000000002,
+        0.00106025,
+        0.00100225
+      ]
+    },
+    {
+      "source_id": 182,
+      "delta": [
+        -0.0070525,
+        0.001821,
+        0.0024325
+      ]
+    },
+    {
+      "source_id": 191,
+      "delta": [
+        -1.7500000000000002e-06,
+        1.9999999999999995e-06,
+        8.5e-06
+      ]
+    },
+    {
+      "source_id": 241,
+      "delta": [
+        -4.1500000000000006e-05,
+        8.7e-05,
+        0.000295
+      ]
+    },
+    {
+      "source_id": 244,
+      "delta": [
+        0.0015675,
+        0.0040645,
+        0.002908
+      ]
+    },
+    {
+      "source_id": 246,
+      "delta": [
+        -0.0003365,
+        0.0005695,
+        0.001246
+      ]
+    },
+    {
+      "source_id": 255,
+      "delta": [
+        0.0029507500000000002,
+        0.0022855,
+        0.0021605
+      ]
+    },
+    {
+      "source_id": 669,
+      "delta": [
+        -0.00036925,
+        0.00019125000000000001,
+        0.0006182499999999999
+      ]
+    },
+    {
+      "source_id": 677,
+      "delta": [
+        4.874999999999999e-05,
+        0.00031675,
+        0.000539
+      ]
+    },
+    {
+      "source_id": 691,
+      "delta": [
+        -0.0019325000000000002,
+        0.0007270000000000002,
+        0.0008717500000000001
+      ]
+    },
+    {
+      "source_id": 697,
+      "delta": [
+        -0.0008077499999999999,
+        0.00032899999999999987,
+        0.00036074999999999996
+      ]
+    },
+    {
+      "source_id": 719,
+      "delta": [
+        -0.00011375000000000003,
+        6.675e-05,
+        0.00021275000000000005
+      ]
+    }
+  ],
+  "offset_scale_rules": [
+    {
+      "axis": 0,
+      "helper_ids": [
+        5399,
+        11998
+      ],
+      "reference": 0.1398
+    },
+    {
+      "axis": 1,
+      "helper_ids": [
+        791,
+        881
+      ],
+      "reference": 0.22048
+    },
+    {
+      "axis": 2,
+      "helper_ids": [
+        962,
+        5320
+      ],
+      "reference": 0.18461
+    }
+  ],
+  "rule": "Single fixed local original-offset retention:0.5 on core source IDs182,244,246;0.75 on one incident vertex ring (union of vertices of unchanged triangles touching core minus core);1 outside. Fixed exterior, max64 affected IDs. Delta=(retention-1)*original admitted MHCLO offset, before actual helper pair/reference scaling. Weights, signed coefficients, rig, motion, body, topology unchanged. No tuning, global offset deletion, source clamp or production admission.",
+  "provenance": {
+    "assets/characters/mpfb-b1-v1/manifest.json": "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18",
+    "assets/characters/mpfb-b1-v1/base.obj": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2",
+    "assets/characters/mpfb-b1-v1/garment/female_sportsuit01.mhclo": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7",
+    "assets/characters/mpfb-b1-v1/weights.game_engine.json": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473",
+    "experiments/61-b1-garment-ab/CONTRACT.md": "6e4d6e7a8273bded318e0a5598c83f68b7dda850da7440f4707870de39626793",
+    "experiments/61-b1-garment-ab/rest-fit/compare.py": "1af669211ac300c466a3a512258cd16b2511726cfed0f99ee2c17b38f663998e",
+    "experiments/60-b1-continuous-motion/checker.py": "cbdd941ee671dba23d3fa7b7e9b183664222597c7b69df6241897846048da22b",
+    "experiments/60-b1-continuous-motion/geometry.py": "26b676e5880bf5a0a228574676215db6b2aa31b5b5d3004458af33fea9d4f5aa"
+  }
+}

@@ -1,0 +1,415 @@
+{
+  "id": "weight-local-v1",
+  "offset_deltas": [],
+  "offset_scale_rules": [],
+  "provenance": {
+    "assets/characters/mpfb-b1-v1/base.obj": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2",
+    "assets/characters/mpfb-b1-v1/garment/female_sportsuit01.mhclo": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7",
+    "assets/characters/mpfb-b1-v1/garment/female_sportsuit01.obj": "f9f91788c1dd2918fceedd4dd4ada520f56fb8dfd68cbbeb9a4f6bfbd8e101a9",
+    "assets/characters/mpfb-b1-v1/weights.game_engine.json": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473",
+    "experiments/61-b1-garment-ab/weights/run.py": "f0bc761431687577ab8a977d96bea6bdedef06010184097f326ef80996f83c36"
+  },
+  "region_source_ids": [
+    22,
+    29,
+    79,
+    104,
+    110,
+    182,
+    191,
+    241,
+    244,
+    246,
+    255,
+    669,
+    677,
+    691,
+    697,
+    719
+  ],
+  "rule": "One simultaneous original-row source-topology neighbor-mean pass: core182,244,246 strength0.5; immediate one-edge ring strength0.25; outside exact identity. Positive union retained and normalized, no top4/no negative-source clamp. Rest/body/rig/motion unchanged. No tuning.",
+  "schema_version": 1,
+  "source_profile": "nvwa-mpfb-b1-motion-v1",
+  "weight_overrides": [
+    {
+      "source_id": 22,
+      "weights": [
+        [
+          "clavicle_l",
+          0.031088596194661654
+        ],
+        [
+          "spine_01",
+          4.919881268880768e-05
+        ],
+        [
+          "spine_02",
+          0.002092827534325314
+        ],
+        [
+          "spine_03",
+          0.039210693418630205
+        ],
+        [
+          "upperarm_l",
+          0.927558684039694
+        ]
+      ]
+    },
+    {
+      "source_id": 29,
+      "weights": [
+        [
+          "clavicle_l",
+          0.08808927767323102
+        ],
+        [
+          "spine_03",
+          0.06384468746785052
+        ],
+        [
+          "upperarm_l",
+          0.8480660348589184
+        ]
+      ]
+    },
+    {
+      "source_id": 79,
+      "weights": [
+        [
+          "clavicle_l",
+          0.1152137319873688
+        ],
+        [
+          "spine_01",
+          7.39935484158915e-06
+        ],
+        [
+          "spine_02",
+          0.0007921798966357434
+        ],
+        [
+          "spine_03",
+          0.36653423199725027
+        ],
+        [
+          "upperarm_l",
+          0.5174524567639037
+        ]
+      ]
+    },
+    {
+      "source_id": 104,
+      "weights": [
+        [
+          "clavicle_l",
+          0.005546735759018115
+        ],
+        [
+          "spine_01",
+          0.0009235271809592878
+        ],
+        [
+          "spine_02",
+          0.04226245557008391
+        ],
+        [
+          "spine_03",
+          0.7605397943170368
+        ],
+        [
+          "upperarm_l",
+          0.19072748717290194
+        ]
+      ]
+    },
+    {
+      "source_id": 110,
+      "weights": [
+        [
+          "clavicle_l",
+          0.0600256863345165
+        ],
+        [
+          "spine_03",
+          0.03180565979371186
+        ],
+        [
+          "upperarm_l",
+          0.9081686538717717
+        ]
+      ]
+    },
+    {
+      "source_id": 182,
+      "weights": [
+        [
+          "clavicle_l",
+          0.03496099114236008
+        ],
+        [
+          "spine_01",
+          0.0002211092032315809
+        ],
+        [
+          "spine_02",
+          0.013617523242109027
+        ],
+        [
+          "spine_03",
+          0.6332366622167187
+        ],
+        [
+          "upperarm_l",
+          0.31796371419558056
+        ]
+      ]
+    },
+    {
+      "source_id": 191,
+      "weights": [
+        [
+          "clavicle_l",
+          0.15251867774469907
+        ],
+        [
+          "spine_02",
+          2.092562351592483e-05
+        ],
+        [
+          "spine_03",
+          0.38870551079993815
+        ],
+        [
+          "upperarm_l",
+          0.4587548858318468
+        ]
+      ]
+    },
+    {
+      "source_id": 241,
+      "weights": [
+        [
+          "clavicle_l",
+          0.1345419001324219
+        ],
+        [
+          "spine_03",
+          0.20449905885071049
+        ],
+        [
+          "upperarm_l",
+          0.6609590410168676
+        ]
+      ]
+    },
+    {
+      "source_id": 244,
+      "weights": [
+        [
+          "clavicle_l",
+          0.07381331113137157
+        ],
+        [
+          "spine_01",
+          9.865806455452199e-06
+        ],
+        [
+          "spine_02",
+          0.001000438199471858
+        ],
+        [
+          "spine_03",
+          0.14062469724951415
+        ],
+        [
+          "upperarm_l",
+          0.7845516876131869
+        ]
+      ]
+    },
+    {
+      "source_id": 246,
+      "weights": [
+        [
+          "clavicle_l",
+          0.1067617321666827
+        ],
+        [
+          "spine_01",
+          9.865806455452199e-06
+        ],
+        [
+          "spine_02",
+          0.001000438199471858
+        ],
+        [
+          "spine_03",
+          0.23624258170009288
+        ],
+        [
+          "upperarm_l",
+          0.6559853821272972
+        ]
+      ]
+    },
+    {
+      "source_id": 255,
+      "weights": [
+        [
+          "clavicle_l",
+          0.0394776291904014
+        ],
+        [
+          "spine_01",
+          0.00019107367832275768
+        ],
+        [
+          "spine_02",
+          0.008349759904729913
+        ],
+        [
+          "spine_03",
+          0.1570412594972519
+        ],
+        [
+          "upperarm_l",
+          0.794940277729294
+        ]
+      ]
+    },
+    {
+      "source_id": 669,
+      "weights": [
+        [
+          "clavicle_l",
+          0.01592492900621183
+        ],
+        [
+          "spine_01",
+          9.889395080261655e-05
+        ],
+        [
+          "spine_02",
+          0.00838816041800418
+        ],
+        [
+          "spine_03",
+          0.826750231163907
+        ],
+        [
+          "upperarm_l",
+          0.14883778546107443
+        ]
+      ]
+    },
+    {
+      "source_id": 677,
+      "weights": [
+        [
+          "clavicle_l",
+          0.09647809967314007
+        ],
+        [
+          "spine_01",
+          7.492998540476066e-06
+        ],
+        [
+          "spine_02",
+          0.0013518487604419803
+        ],
+        [
+          "spine_03",
+          0.6232563550275232
+        ],
+        [
+          "upperarm_l",
+          0.27890620354035434
+        ]
+      ]
+    },
+    {
+      "source_id": 691,
+      "weights": [
+        [
+          "clavicle_l",
+          0.001370721921228175
+        ],
+        [
+          "pelvis",
+          5.263576730302009e-06
+        ],
+        [
+          "spine_01",
+          0.001367408373504753
+        ],
+        [
+          "spine_02",
+          0.05407263825896276
+        ],
+        [
+          "spine_03",
+          0.8279993623837747
+        ],
+        [
+          "upperarm_l",
+          0.1151846054857994
+        ]
+      ]
+    },
+    {
+      "source_id": 697,
+      "weights": [
+        [
+          "clavicle_l",
+          0.00590750076047299
+        ],
+        [
+          "pelvis",
+          4.701583377949638e-06
+        ],
+        [
+          "spine_01",
+          0.0004942565247740257
+        ],
+        [
+          "spine_02",
+          0.028284873717751027
+        ],
+        [
+          "spine_03",
+          0.8207221918821092
+        ],
+        [
+          "upperarm_l",
+          0.14458647553151482
+        ]
+      ]
+    },
+    {
+      "source_id": 719,
+      "weights": [
+        [
+          "clavicle_l",
+          0.002936083111532057
+        ],
+        [
+          "spine_01",
+          0.0004758204511939269
+        ],
+        [
+          "spine_02",
+          0.01843644453033401
+        ],
+        [
+          "spine_03",
+          0.900705604531066
+        ],
+        [
+          "upperarm_l",
+          0.07744604737587403
+        ]
+      ]
+    }
+  ]
+}

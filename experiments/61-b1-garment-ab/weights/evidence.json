@@ -1,0 +1,203 @@
+{
+  "actual_candidate_runtime_matrix": "NOT-RUN",
+  "affected_display_triangle_ids": [
+    8,
+    9,
+    52,
+    53,
+    54,
+    55,
+    58,
+    59,
+    128,
+    129,
+    130,
+    131,
+    144,
+    145,
+    146,
+    147,
+    200,
+    201,
+    202,
+    203,
+    208,
+    209,
+    412,
+    413,
+    414,
+    415,
+    440,
+    441,
+    442,
+    443,
+    444,
+    445,
+    1072,
+    1073,
+    1074,
+    1075,
+    1100,
+    1101,
+    1102,
+    1103,
+    1254,
+    1255,
+    1257,
+    1260,
+    1261,
+    1264,
+    1265,
+    1316,
+    1318,
+    1319,
+    1340,
+    1341
+  ],
+  "artifacts_sha256": {
+    "candidate.json": "a37c255239723c3219d169e73796a37afdae962239721e0b27f2d0d62ef6a10d",
+    "frames.json": "af60eddd5bc94bd4c33e427616c555606dd27a542ec9735076747e09aba3fed8",
+    "summary.json": "9b309e7ddda4a81985984e6c8462ecb5c8ec8ae8901181aa951e0d261e1587db",
+    "triangle-details.json": "66e0ac935a9a84cb2499bbd00fe4ed58326b0bd83c013afb663930a743a1455a"
+  },
+  "boundary_regressions": [
+    {
+      "candidate_boundary_max_area_ratio": 3.5473778742018327,
+      "original_boundary_max_area_ratio": 3.401896542508078,
+      "request": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "jaw_drop": 0.0,
+        "k": 8,
+        "seconds": 1.0,
+        "torso_length": 0.0
+      }
+    },
+    {
+      "candidate_boundary_max_area_ratio": 7.016048361444529,
+      "original_boundary_max_area_ratio": 6.7427448231175635,
+      "request": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "jaw_drop": 0.0,
+        "k": 16,
+        "seconds": 2.0,
+        "torso_length": 0.0
+      }
+    },
+    {
+      "candidate_boundary_max_area_ratio": 3.5473778742018327,
+      "original_boundary_max_area_ratio": 3.401896542508078,
+      "request": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "jaw_drop": 0.0,
+        "k": 24,
+        "seconds": 3.0,
+        "torso_length": 0.0
+      }
+    },
+    {
+      "candidate_boundary_max_area_ratio": 2.844129970321593,
+      "original_boundary_max_area_ratio": 2.7243609129872564,
+      "request": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "jaw_drop": 0.0,
+        "k": 8,
+        "seconds": 1.0,
+        "torso_length": 1.0
+      }
+    },
+    {
+      "candidate_boundary_max_area_ratio": 5.545430214025033,
+      "original_boundary_max_area_ratio": 5.315406116725644,
+      "request": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "jaw_drop": 0.0,
+        "k": 16,
+        "seconds": 2.0,
+        "torso_length": 1.0
+      }
+    },
+    {
+      "candidate_boundary_max_area_ratio": 2.844129970321593,
+      "original_boundary_max_area_ratio": 2.7243609129872564,
+      "request": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "jaw_drop": 0.0,
+        "k": 24,
+        "seconds": 3.0,
+        "torso_length": 1.0
+      }
+    }
+  ],
+  "candidate_sha256": "a37c255239723c3219d169e73796a37afdae962239721e0b27f2d0d62ef6a10d",
+  "captures_sha256": {
+    "t+0__b1_arm_rehearsal_v1__k00.json.gz": "ae267a277f9a1083d0a982041cefc5462c54b3bbcbfcafea4f0d8953beee56f2",
+    "t+0__b1_arm_rehearsal_v1__k08.json.gz": "b5751e767f11e4e55da5fe93954d57bbd308aae9ea24196b9ddbdfb4a615180f",
+    "t+0__b1_arm_rehearsal_v1__k16.json.gz": "a6338c433efad4441ee7a8e0d04902c80328b79b58e2056d4e295984a0d31e64",
+    "t+0__b1_arm_rehearsal_v1__k24.json.gz": "33ba75885561677f645b15ec55c9216c5e46f79e14aec22e8a2149963991e0d4",
+    "t+0__b1_arm_rehearsal_v1__k32.json.gz": "3d6642a03999ff226d3ebb39f9c26b11b8936c078a14022ec654654c1e36eec8",
+    "t+0__b1_knee_flex_v1__k00.json.gz": "057a22979cad786d71ebe58d6eda88203c21086392226df2dbeaf9a62e02ed9f",
+    "t+0__b1_knee_flex_v1__k08.json.gz": "77e97c7ed2ffa24d4ce123a3f80e3179a0cc5f6dec320b27a452a3424aa7b8c1",
+    "t+0__b1_knee_flex_v1__k16.json.gz": "c70843446b40e127c8fb9dbce9251eba702aa610b5cfe85db286fd121b1de8a0",
+    "t+0__b1_knee_flex_v1__k24.json.gz": "df3ceb65686e17e8a65f05fca9ff04b63badf794a13808db4cef368972f9b7d0",
+    "t+0__b1_knee_flex_v1__k32.json.gz": "d0bea5ac182bcf62df5e5a97171a3af41d0fb67ca6d9ea2b461dd381102f3b57",
+    "t+1__b1_arm_rehearsal_v1__k00.json.gz": "1a310480d1a9e3934bce23678c4a74c05d0e110eaf68f2674b172dee1b5009d3",
+    "t+1__b1_arm_rehearsal_v1__k08.json.gz": "0cf35a395c0eb6199019c402fae594e5d4a84e3cf3cbd92edc8b5ab8aea871a6",
+    "t+1__b1_arm_rehearsal_v1__k16.json.gz": "5df0c97e5c51b3e71741e115ca4040d441189dd5853a505c1076d9ed0a53ae5e",
+    "t+1__b1_arm_rehearsal_v1__k24.json.gz": "9939d33f4a89b9fa6a62f8fe8008bd105515f087ed9f2b67bfe81106c28b12f2",
+    "t+1__b1_arm_rehearsal_v1__k32.json.gz": "17b2930fef580ed5215fa0eed0beec0da23fdfd92ff369afcd8b06b1cb1e2630",
+    "t+1__b1_knee_flex_v1__k00.json.gz": "47444577a636e6cb3af48bea1bd0ddd19faefc93739fe637737b843913a0c527",
+    "t+1__b1_knee_flex_v1__k08.json.gz": "0a430753b10beae8f74cd0688c433dca0fa90861585882201ce4135c8af6d8d4",
+    "t+1__b1_knee_flex_v1__k16.json.gz": "e99893c5cf5c7b24890f10f35d22bd01da3ea32e880e7ecf4533e3b8c285364b",
+    "t+1__b1_knee_flex_v1__k24.json.gz": "90330ec77b1f767a3626470645ad35572ef7cc6a4d3f3f69cc2151a324743806",
+    "t+1__b1_knee_flex_v1__k32.json.gz": "b6cb61a0711a3afa648d4cd09968597a75f3c933a635daf2f4275a1238b28da6",
+    "t-1__b1_arm_rehearsal_v1__k00.json.gz": "b02e3fcdecf0aeaae50107d3c7bad8714f636383dbf0f7d4f8297401318c4087",
+    "t-1__b1_arm_rehearsal_v1__k08.json.gz": "2332ed07687722b474039daf31ad57d331b821dc8eef89a95d050bf0809e42e5",
+    "t-1__b1_arm_rehearsal_v1__k16.json.gz": "323e4b1a6b4b101b8067c4dc625ebe5b84b88b887c6e47218af08fec488ee166",
+    "t-1__b1_arm_rehearsal_v1__k24.json.gz": "3fc9138b1adef528e075f3f69f395a33ba07c788ebcb42593fa64f427b30f936",
+    "t-1__b1_arm_rehearsal_v1__k32.json.gz": "b32b7683d2a188c539231b8d8d989e000d4a68423cba28e22510e9db0cafbdfa",
+    "t-1__b1_knee_flex_v1__k00.json.gz": "7ffb544c84020e647729ce2127a2025c9de00fe4b92c820c55a4e7c4610368e9",
+    "t-1__b1_knee_flex_v1__k08.json.gz": "f7a3b25b818f066947adf1037a7b6d2332e11cc6e2f99567d584a8342eaf1615",
+    "t-1__b1_knee_flex_v1__k16.json.gz": "25299aded8a2886e44b096bafbcd06ed6cd26e8f1c000c6ae6026fa46bced1e2",
+    "t-1__b1_knee_flex_v1__k24.json.gz": "2ab3ac7130f2fec1af7473ee128aaef21b769c8f414eb67a11bb78f2de356194",
+    "t-1__b1_knee_flex_v1__k32.json.gz": "1bf4b1bec235b1a3c6ad21148f63a35a5a16e93d0f5a0d4809854525b3a2a048"
+  },
+  "cloth_quality": "HOLD",
+  "comparator_controls_normal": 5,
+  "comparator_controls_optimized": 5,
+  "controls": {
+    "all_original_positive_influences_retained": true,
+    "body_rig_motion_unchanged": true,
+    "finite_arrays": true,
+    "noop_actual_upload_identity": true,
+    "original_independent_lbs_max_component_m": 1.6497086696709573e-07,
+    "original_source_rows_match_captures": true,
+    "outside_boundary_exact_identity": true,
+    "rest_geometry_unchanged": true
+  },
+  "fixed_rule_unchanged_across_metadata_replays": true,
+  "frames": 30,
+  "graphical_not_run_reason": "Candidate failed numerical no-regression gate; root stopped before heavy Web build/viewer this cycle.",
+  "new_neutral_fold_ids_observed": false,
+  "region_source_ids": [
+    22,
+    29,
+    79,
+    104,
+    110,
+    182,
+    191,
+    241,
+    244,
+    246,
+    255,
+    669,
+    677,
+    691,
+    697,
+    719
+  ],
+  "schema_version": 1,
+  "scope": "offline candidate LBS at30 retained actual baseline bone/rest frames; not actual candidate runtime or visual acceptance",
+  "verdict": "REJECT/HOLD: core strain improves but affected exterior boundary regresses; no tuning",
+  "visual": "NOT-RUN"
+}

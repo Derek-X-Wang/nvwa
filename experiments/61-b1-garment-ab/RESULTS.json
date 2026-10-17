@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "scope": "Fixed local garment correction A/B; retained actual BASELINE frames, offline predicted candidate geometry",
+  "base_commit": "c655217c0c9c41069b0f45a0d8c2795e455ca6bf",
+  "source_profile": "nvwa-mpfb-b1-motion-v1",
+  "decision": "REJECT_BOTH_NO_PRODUCTION_CHANGE",
+  "cohort": {
+    "torso": [
+      -1,
+      0,
+      1
+    ],
+    "jaw": [
+      0
+    ],
+    "clips": [
+      "b1_arm_rehearsal_v1",
+      "b1_knee_flex_v1"
+    ],
+    "source_seconds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "actual_baseline_frames_per_method": 30,
+    "altered_candidate_runtime_frames": 0
+  },
+  "region": {
+    "all_affected_faces": 52,
+    "core_incident_faces": 17,
+    "non_core_affected_faces": 35,
+    "mixed_boundary_faces": 34,
+    "crossing_edges": 34
+  },
+  "A": {
+    "candidate_sha256": "a37c255239723c3219d169e73796a37afdae962239721e0b27f2d0d62ef6a10d",
+    "report_sha256": "3c332b8b923c770cc0ddbaecf1f9cea44e2375ddc9ae89c82e68d8b8b2c40496",
+    "core_torso_plus1_arm2_area_ratio": [
+      22.0056357384,
+      19.57176
+    ],
+    "recorded_group": "34mixed affected/exterior faces",
+    "group_torso_plus1_arm2_max_area_ratio": [
+      5.315406,
+      5.54543
+    ],
+    "boundary_regressions": [
+      {
+        "candidate_boundary_max_area_ratio": 3.5473778742018327,
+        "original_boundary_max_area_ratio": 3.401896542508078,
+        "request": {
+          "clip_id": "b1_arm_rehearsal_v1",
+          "jaw_drop": 0.0,
+          "k": 8,
+          "seconds": 1.0,
+          "torso_length": 0.0
+        }
+      },
+      {
+        "candidate_boundary_max_area_ratio": 7.016048361444529,
+        "original_boundary_max_area_ratio": 6.7427448231175635,
+        "request": {
+          "clip_id": "b1_arm_rehearsal_v1",
+          "jaw_drop": 0.0,
+          "k": 16,
+          "seconds": 2.0,
+          "torso_length": 0.0
+        }
+      },
+      {
+        "candidate_boundary_max_area_ratio": 3.5473778742018327,
+        "original_boundary_max_area_ratio": 3.401896542508078,
+        "request": {
+          "clip_id": "b1_arm_rehearsal_v1",
+          "jaw_drop": 0.0,
+          "k": 24,
+          "seconds": 3.0,
+          "torso_length": 0.0
+        }
+      },
+      {
+        "candidate_boundary_max_area_ratio": 2.844129970321593,
+        "original_boundary_max_area_ratio": 2.7243609129872564,
+        "request": {
+          "clip_id": "b1_arm_rehearsal_v1",
+          "jaw_drop": 0.0,
+          "k": 8,
+          "seconds": 1.0,
+          "torso_length": 1.0
+        }
+      },
+      {
+        "candidate_boundary_max_area_ratio": 5.545430214025033,
+        "original_boundary_max_area_ratio": 5.315406116725644,
+        "request": {
+          "clip_id": "b1_arm_rehearsal_v1",
+          "jaw_drop": 0.0,
+          "k": 16,
+          "seconds": 2.0,
+          "torso_length": 1.0
+        }
+      },
+      {
+        "candidate_boundary_max_area_ratio": 2.844129970321593,
+        "original_boundary_max_area_ratio": 2.7243609129872564,
+        "request": {
+          "clip_id": "b1_arm_rehearsal_v1",
+          "jaw_drop": 0.0,
+          "k": 24,
+          "seconds": 3.0,
+          "torso_length": 1.0
+        }
+      }
+    ],
+    "max_displacement_m": 0.0095303,
+    "verdict": "REJECT/HOLD; core improves but boundary regresses"
+  },
+  "B": {
+    "candidate_sha256": "c6bbf79553de93c257d07baf306bf296f635f5b351932ee7ae3bd607864711ff",
+    "report_sha256": "6b7e3f69a1b2f77fccf94569826ae59e363d1938fb0dfdd171ac7d8c1cfa5d92",
+    "core_torso_plus1_arm2_actual_original_vs_predicted_area_m2": [
+      0.0004146623111,
+      0.0004178822973
+    ],
+    "core_torso_plus1_arm2_original_rest_vs_candidate_rest_ratio": [
+      22.0056357384,
+      4.011109
+    ],
+    "core_torso_plus1_arm2_ratio_against_original_rest": 22.176517,
+    "recorded_group": "35non-core affected incident faces",
+    "group_torso_plus1_arm2_max_candidate_rest_area_ratio": [
+      5.315406,
+      5.697412
+    ],
+    "max_displacement_m": 0.008115454510019245,
+    "verdict": "REJECT/HOLD; denominator gain hides worse absolute core area and neighbour regression"
+  },
+  "local_controls": {
+    "A_normal": 5,
+    "A_optimized": 5,
+    "B_normal": 3,
+    "B_optimized": 3,
+    "passed": true,
+    "scope": "Comparator and offline evaluation controls, not executed graphical/runtime mutation witnesses"
+  },
+  "independent_review": {
+    "status": "CLEAR within frozen offline scope; no P1/P2 findings; both rejected",
+    "report_sha256": "b413d6ee1a21a4fd2d1aa9fe513213b7150dfbb3c6a1534a791c3b29a0536c74",
+    "reviewer": "Independent Astra agent; neither candidate implemented by reviewer; not human review",
+    "verification": "Fresh portable replays reproduce both candidate recipes and detailed geometry byte-for-byte; independent key/hash/denominator/exterior/rejection checks; all8controls normal and optimized",
+    "limits": "No candidate runtime, GPU, Web/native graphics or production adoption"
+  },
+  "execution": {
+    "rust_or_web_build": "NOT-RUN; both rejected before implementing planned viewer",
+    "new_candidate_Web_or_native_graphics": "NOT-RUN",
+    "new_candidate_runtime_or_GPU_readback": "NOT-RUN",
+    "new_GitHub_CI": "NOT-RUN; rejected experiment kept outside main, not a PR81-head change",
+    "models_downloads_paid_compute": "NONE"
+  },
+  "limits": [
+    "No physical collision/global inside-outside/self-intersection acceptance",
+    "No formal performance/cold-start/GPU-memory measurement",
+    "No new jaw-grid or actual intermediate-time candidate matrix",
+    "Baseline product PR81 remains separate and awaits native GUI; its hosted CI stays bound to c655217",
+    "Garment and M2 quality HOLD; issue3 blocked and issue4 gaps retained; appearance79 still depends on78 only"
+  ]
+}
