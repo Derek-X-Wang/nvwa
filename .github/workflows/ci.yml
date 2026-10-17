@@ -121,8 +121,10 @@ jobs:
       - name: Run workspace CPU tests
         run: |
           bash experiments/27-ci-baseline/check.sh native
-          cargo fmt --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --all --check
-          cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --all --check
+          # Product packages are formatted in portable. --all here also visits
+          # admitted vendor path dependencies whose exact bytes must be retained.
+          cargo fmt --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
+          cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --locked --offline
       - name: Compile the actual Web target

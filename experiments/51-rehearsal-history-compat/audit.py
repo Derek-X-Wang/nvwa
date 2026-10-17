@@ -10,7 +10,7 @@ import sys
 import tempfile
 
 HERE = Path(__file__).resolve().parent
-MANIFEST_SHA256 = 'b9869ab5b8926ac420f86eaae08159f9417a1b174434b806c3949a7083558b56'
+MANIFEST_SHA256 = 'a94f9ddb9f9940873ef7979fc99d2e870ae3f11674ea9dac9425d91da366c780'
 SOURCE_COMMIT = '50eae1979cac47c7eb53dada69f06b716436bf92'
 SOURCE_TREE = '0bb87d9dc2ff324390de6e184852a87d513017fa'
 E49 = 'experiments/49-runtime-pose-parity/'

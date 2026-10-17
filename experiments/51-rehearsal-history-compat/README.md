@@ -53,22 +53,25 @@ The mapping contains 179 files:
   `sources/<original logical path>.txt` (576,433 bytes total). These are the
   product/root paths required by the recorded source-cohort unions.
 - Two original packaging tools (`scripts/build-web.sh` and `scripts/package-native.py`, 3,368 bytes total) are also archived at their unchanged pinned identities. They are separate from the 28 product/root files above.
-- 149 retained inputs are read from the live checkout and must retain exact
-  original bytes. They include all of experiment49, all of experiment48's
+- The original experiment49 probe Cargo manifest and lock (143,439 bytes) are
+  archived at the same pinned identities. Current isolated probes can follow
+  the real product dependency graph without replacing recorded source context.
+- 147 retained inputs are read from the live checkout and must retain exact
+  original bytes. They include the remaining experiment49 inputs, all of experiment48's
   runtime archive, the source-cohort assets/scripts, export artifacts, and the
   attribution/calibration input closure. Source archives and receipts in
   experiments41–49 remain unchanged.
 
 The temporary stage contains exactly those 179 allowlisted files (36,966,316
 bytes). It does not copy a checkout, Git metadata, build products, models, or a
-source cache. Both historical input trees and the 30-file combined source archive have
+source cache. Both historical input trees and the 32-file combined source archive have
 exact file-set checks. Missing/extra files, changed bytes or identities,
 duplicate JSON keys, path traversal, archive aliasing and symlinks reject the
 run. Temporary stages are removed on success or failure.
 
 ## Verification boundary
 
-The 17 adapter tests include source/archive pin mutations; missing, extra and
+The 19 adapter tests include source/archive pin mutations; missing, extra and
 untrusted paths; symlinks; changed asset, capture, source and receipt bytes; and
 restoration checks. They also alter staged root Cargo source and a captured
 matrix, then prove that the unchanged original historical48 audit and
@@ -76,10 +79,11 @@ experiment49 comparator reject those mutations and pass after restoration.
 Current product source changes intentionally do not become historical input
 claims. The retained `archived_product_source_files: 28` output field counts
 the original product/root cohort; it does not count the two additional archived
-packaging tools. The complete archive contains 30 files. The new tests also
-prove that archive corruption rejects, restoration passes, and current
-packaging changes do not replace historical source bytes.
+packaging tools or the two probe Cargo context files. The complete archive
+contains 32 files. The new tests also prove that archive corruption rejects,
+restoration passes, and current
+packaging and probe Cargo changes do not replace historical source bytes.
 
-`VERIFICATION.json` records the bounded local normal/optimized runs. Hosted CI,
+`VERIFICATION.json` retains the original bounded local normal/optimized record. Hosted CI,
 new native/Web runtime collection and the new rehearsal feature are outside this
 adapter's evidence scope.
