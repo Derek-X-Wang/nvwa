@@ -164,6 +164,11 @@ fn stale_second_envelope_is_atomic_and_correctable_after_inspection() {
 fn legacy_stage_discovery_apply_validation_and_file_recovery_use_actual_binary() {
     let (dir, input) = setup("stage");
     let mut legacy: Value = serde_json::from_slice(&std::fs::read(&input).unwrap()).unwrap();
+    legacy["profile"].as_object_mut().unwrap().remove("backend");
+    legacy["character"]
+        .as_object_mut()
+        .unwrap()
+        .remove("diagnostic_pose");
     legacy["schema_version"] = json!(1);
     legacy.as_object_mut().unwrap().remove("stage");
     std::fs::write(&input, serde_json::to_vec(&legacy).unwrap()).unwrap();
@@ -171,8 +176,14 @@ fn legacy_stage_discovery_apply_validation_and_file_recovery_use_actual_binary()
     let discovered = cli(&["describe-capabilities".as_ref(), &input]);
     assert!(discovered.status.success());
     let caps: Value = serde_json::from_slice(&discovered.stdout).unwrap();
-    assert_eq!(caps["cli_contract"]["work_schema"]["writes"], 2);
-    assert_eq!(caps["cli_contract"]["work_schema"]["reads"], json!([1, 2]));
+    assert_eq!(
+        caps["cli_contract"]["work_schema"]["writes"],
+        nvwa_core::SCHEMA_VERSION
+    );
+    assert_eq!(
+        caps["cli_contract"]["work_schema"]["reads"],
+        json!([1, 2, 3])
+    );
     assert_eq!(
         caps["cli_contract"]["set_stage"]["quality"],
         json!(["low", "balanced", "high"])
@@ -204,11 +215,13 @@ fn legacy_stage_discovery_apply_validation_and_file_recovery_use_actual_binary()
     let inspected = cli(&["inspect".as_ref(), &saved]);
     assert!(inspected.status.success());
     let work: Value = serde_json::from_slice(&inspected.stdout).unwrap();
-    assert_eq!(work["schema_version"], 2);
+    assert_eq!(work["schema_version"], nvwa_core::SCHEMA_VERSION);
     assert_eq!(work["revision"], 24);
     assert_eq!(work["stage"]["quality"], "high");
     assert_eq!(work["stage"]["camera"]["distance"], 2.0);
-    assert_eq!(work["character"], legacy["character"]);
+    let mut expected_character = legacy["character"].clone();
+    expected_character["diagnostic_pose"] = json!(null);
+    assert_eq!(work["character"], expected_character);
     assert_eq!(work["timeline"], legacy["timeline"]);
     assert_eq!(std::fs::read(&input).unwrap(), before);
     let saved_before = std::fs::read(&saved).unwrap();

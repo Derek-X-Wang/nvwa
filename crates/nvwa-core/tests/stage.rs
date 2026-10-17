@@ -18,11 +18,16 @@ fn envelope(stage: StageSettings) -> CommandEnvelope {
 fn exact_legacy_upgrade_and_required_strict_current_stage() {
     let original = document();
     let mut legacy = serde_json::to_value(&original).unwrap();
+    legacy["profile"].as_object_mut().unwrap().remove("backend");
+    legacy["character"]
+        .as_object_mut()
+        .unwrap()
+        .remove("diagnostic_pose");
     legacy["schema_version"] = json!(1);
     legacy["revision"] = json!(37);
     legacy.as_object_mut().unwrap().remove("stage");
     let upgraded = SceneDocument::from_json(&legacy.to_string()).unwrap();
-    assert_eq!(upgraded.schema_version, 2);
+    assert_eq!(upgraded.schema_version, nvwa_core::SCHEMA_VERSION);
     assert_eq!(upgraded.revision, 37);
     assert_eq!(upgraded.stage, StageSettings::white_studio());
     assert_eq!(upgraded.character, original.character);

@@ -20,7 +20,7 @@ The inspector separates editable **Shape** parameters from read-only **Profile**
 
 Open **Stage / 试演舞台** in the toolbar to adjust the key and fill lights, ambient light, background, floor, camera and requested quality. White studio and Black space provide starting points; Full body and Detail change framing. Right-drag the canvas to orbit, and use the wheel to change camera distance. In Studio, one completed stage gesture creates one Undo step; Escape cancels the current gesture. Player camera changes are temporary; reopen the Work to restore its saved view.
 
-Stage settings travel with the Work through native, Web and CLI. New saves use schema 2. Existing schema 1 Works open with the default white stage and keep their character, timeline and revision; saving them writes schema 2, which earlier Nvwa versions cannot read. Keep a copy when exchanging with older builds. Room import and physics are later stages.
+Stage settings travel with the Work through native, Web and CLI. New saves use schema 3, with an explicit character backend and diagnostic-pose field. Exact schema 1/2 Works open as the original GLB character and keep their timeline and revision; schema 1 receives the default white stage. Saving writes schema 3, which earlier Nvwa versions cannot read. Keep a copy when exchanging with older builds. Room import and physics are later stages.
 
 ```sh
 python3 scripts/install-web-tools.py
@@ -39,6 +39,14 @@ open dist/Nvwa.app
 The local macOS bundle includes its fixture assets and demonstration work. It is unsigned; distribution signing/notarization and other operating systems need separate validation.
 
 ## Compose and play a work
+
+**New B1…** opens the admitted MakeHuman body and sportsuit through the full-influence CPU bridge. It exposes `torso_length`, `jaw_drop` and five fixed diagnostic poses. Its Work uses the same Undo/Redo, Save/Open and rehearsal stage as the original character. B1 has no continuous clips or click-to-wave interaction. Appearance quality, general character imports and continuous B1 motion remain separate gates. Assets are verified before a B1 Open replaces the current Work; rejected candidates leave the current Work and its history available. See [integration evidence](docs/evidence/b1-work/).
+
+The [B1 diagnostic Work](examples/b1-diagnostic.nvwa.json) was created and saved by the actual CLI. It contains torso length 0.35, jaw drop −0.5 and the combined static pose. Open it through Studio's file controls, or from the repository root:
+
+```sh
+cargo run -p nvwa-studio --locked -- --work "$PWD/examples/b1-diagnostic.nvwa.json"
+```
 
 In Studio, **Create 9s sequence** creates idle → wave → turn. The sequence rows change action, duration and order; each completed edit uses the same undoable command contract. The global transport can pause and seek across the whole work. Finite works stop and hold their final pose; Play/Replay restarts a completed work. The M0 single looping clip retains its previous behavior.
 

@@ -1,0 +1,86 @@
+[
+  {
+    "boundary": "Canonical zero recovery",
+    "files": [
+      "works/native-baseline.nvwa.json",
+      "works/native-recovered-zero.nvwa.json"
+    ],
+    "sha256": "91e51a4d1c8e80a01a986399ab2eeb54fc303dcf21aaa652931cff007d9538da",
+    "byte_equal": true,
+    "revision": 0,
+    "character": {
+      "id": "character-1",
+      "profile_id": "nvwa-mpfb-b1-v1",
+      "parameters": {
+        "jaw_drop": 0.0,
+        "torso_length": 0.0
+      },
+      "scale": 1.0,
+      "diagnostic_pose": "neutral"
+    }
+  },
+  {
+    "boundary": "Revision8 input/source rejection preservation",
+    "files": [
+      "works/native-edited-before-errors.nvwa.json",
+      "works/native-after-invalid-work.nvwa.json",
+      "works/native-after-missing.nvwa.json",
+      "works/native-after-corrupt.nvwa.json"
+    ],
+    "sha256": "3319a9b324a6400cd8e6c0f31bb2483d92db13300fed500553f6de399ec1db52",
+    "byte_equal": true,
+    "revision": 8,
+    "character": {
+      "id": "character-1",
+      "profile_id": "nvwa-mpfb-b1-v1",
+      "parameters": {
+        "jaw_drop": -0.53,
+        "torso_length": 0.47
+      },
+      "scale": 1.0,
+      "diagnostic_pose": "combined"
+    }
+  },
+  {
+    "boundary": "Revision10 native GUI to Web",
+    "files": [
+      "works/native-after-history.nvwa.json",
+      "works/native-reopened-resaved.nvwa.json",
+      "works/b1-native-edited.nvwa.json",
+      "works/web-resaved-native.nvwa.json"
+    ],
+    "sha256": "95f49d206de7d4ece66f8fbcc0c366cd8eb8768bfb0217f70ebd9007fa482bc2",
+    "byte_equal": true,
+    "revision": 10,
+    "character": {
+      "id": "character-1",
+      "profile_id": "nvwa-mpfb-b1-v1",
+      "parameters": {
+        "jaw_drop": -0.53,
+        "torso_length": 0.47
+      },
+      "scale": 1.0,
+      "diagnostic_pose": "combined"
+    }
+  },
+  {
+    "boundary": "Revision12 Web to native GUI",
+    "files": [
+      "works/web-final-for-native.nvwa.json",
+      "works/native-returned-from-web.nvwa.json"
+    ],
+    "sha256": "9a805e9bad7891886bc39a332bda15293ce2d0edc42f1944694da17aabf85613",
+    "byte_equal": true,
+    "revision": 12,
+    "character": {
+      "id": "character-1",
+      "profile_id": "nvwa-mpfb-b1-v1",
+      "parameters": {
+        "jaw_drop": 0.5,
+        "torso_length": 0.47
+      },
+      "scale": 1.0,
+      "diagnostic_pose": "elbow"
+    }
+  }
+]

@@ -30,6 +30,12 @@ jobs:
         run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
       - name: Check portable source and real CLI paths
         run: bash experiments/27-ci-baseline/check.sh portable
+      - name: Verify admitted production character inputs and source
+        run: |
+          python3 -B scripts/verify-b1-inputs.py
+          python3 -B -O scripts/verify-b1-inputs.py
+          python3 -B scripts/test-b1-inputs.py
+          python3 -B -O scripts/test-b1-inputs.py
       - name: Check bounded diagnostic controls
         run: bash experiments/27-ci-baseline/check.sh diagnostics
       - name: Check authenticated B1 source bundle and rejection controls
@@ -115,8 +121,10 @@ jobs:
       - name: Run workspace CPU tests
         run: |
           bash experiments/27-ci-baseline/check.sh native
-          cargo fmt --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --all --check
-          cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --all --check
+          # Product packages are formatted in portable. --all here also visits
+          # admitted vendor path dependencies whose exact bytes must be retained.
+          cargo fmt --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
+          cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --locked --offline
       - name: Compile the actual Web target
@@ -124,6 +132,22 @@ jobs:
           bash experiments/27-ci-baseline/check.sh wasm
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+  b1-source-regression:
+    name: macOS B1 source regression and viewer checks
+    # Keep the independent cold B1 build inside its own finite budget.
+    needs: portable
+    runs-on: macos-14
+    timeout-minutes: 60
+    env:
+      CARGO_BUILD_JOBS: '1'
+      # This target directory belongs to this job's fresh runner only.
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
       - name: Prepare pinned B1 inputs without asset or tool downloads
         run: |
           mkdir -p .work

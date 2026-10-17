@@ -1,0 +1,53 @@
+[
+  {
+    "boundary": "Web → CLI → Web",
+    "files": [
+      "works/grounded-web-edited.nvwa.json",
+      "works/grounded-web-cli-resaved.nvwa.json",
+      "works/grounded-web-reopened.nvwa.json"
+    ],
+    "sha256": "129cbdd8b644b2c30912b43c36b80abd1f06b828a685ffdbae009bfa04d433e4",
+    "revision": 9,
+    "byte_equal": true
+  },
+  {
+    "boundary": "Missing source preserves committed Work",
+    "files": [
+      "works/grounded-cache-baseline.nvwa.json",
+      "works/grounded-after-missing.nvwa.json"
+    ],
+    "sha256": "b1b4b0c370e10f89f46d87219ec54a575e0277dc16fbaa8f555bd93796d71c75",
+    "revision": 10,
+    "byte_equal": true
+  },
+  {
+    "boundary": "Corrupt source preserves post-history Work",
+    "files": [
+      "works/grounded-after-history.nvwa.json",
+      "works/grounded-after-corrupt.nvwa.json"
+    ],
+    "sha256": "bc40dccfda6ac6f74b3832b8848a3134b0e518833c3ab801ec0ca1ff02271dff",
+    "revision": 12,
+    "byte_equal": true
+  },
+  {
+    "boundary": "Recovery equals canonical CLI zero Work",
+    "files": [
+      "works/grounded-recovered-zero.nvwa.json",
+      "works/cli-created.nvwa.json"
+    ],
+    "sha256": "91e51a4d1c8e80a01a986399ab2eeb54fc303dcf21aaa652931cff007d9538da",
+    "revision": 0,
+    "byte_equal": true
+  },
+  {
+    "boundary": "GLB retained after rejected B1",
+    "files": [
+      "works/grounded-current-glb-before.nvwa.json",
+      "works/grounded-current-glb-after.nvwa.json"
+    ],
+    "sha256": "bca06eca06aaf8eeea04cc128fee1637be5c689dbf3ebc46b1b5e551c372bba8",
+    "revision": 0,
+    "byte_equal": true
+  }
+]

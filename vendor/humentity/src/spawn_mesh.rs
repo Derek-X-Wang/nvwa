@@ -1,0 +1,682 @@
+use std::sync::{Arc, RwLock};
+
+use crate::{
+    assets::{StitchedPart, StitchedParts, build_final_mesh_mhclo, build_final_meshes_mhclo},
+    basemesh::BaseMesh,
+    gpu::{GpuSkeletonLod, make_gpu_mesh},
+    loaders::{CharacterShapeAsset, MhcloAsset, ObjVertsAsset, TargetAsset},
+    morphs::MakeHumanMorphs,
+    rigs::{RigBundleRes, RigData, RigSpec},
+    template::CharacterTemplate,
+};
+use ahash::{AHashMap, AHashSet};
+use bevy::{prelude::*, tasks::AsyncComputeTaskPool};
+use crossbeam_channel::{Receiver, Sender};
+
+/// Component that references a [`CharacterShapeAsset`].  Place it on the root entity of a character.
+#[derive(Component, Clone, Debug)]
+#[require(Visibility)]
+pub struct CharacterShape(pub Handle<CharacterShapeAsset>);
+
+/// Which skeleton a cached mesh was built for.
+///
+/// CPU meshes are skinned on the CPU (`SkinnedMesh`) and need one build per
+/// skeleton LOD index. GPU crowd meshes are all posed from the single
+/// skeleton selected by [`GpuSkeletonLod`](crate::gpu::GpuSkeletonLod), so
+/// they share one key. The same low-detail proxy (e.g. `proxy741`) therefore
+/// appears twice in the cache when both paths need it: once as
+/// `Cpu(cpu_lod)` and once as `Gpu`.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub enum MeshBuildLod {
+    /// CPU-skinned mesh built for the given skeleton LOD index.
+    Cpu(usize),
+    /// GPU-ready mesh (converted via `make_gpu_mesh`) built for the
+    /// [`GpuSkeletonLod`](crate::gpu::GpuSkeletonLod) skeleton.
+    Gpu,
+}
+
+/// Marks an entity as representing a character mesh piece.
+/// Place as children of a [`CharacterShape`] entity.
+#[derive(Component, Clone, Debug, Eq, PartialEq, Hash)]
+pub struct CharacterPart {
+    pub mesh: Handle<MhcloAsset>,
+    pub skeleton_lod: usize,
+}
+
+/// Marks an entity as a GPU-pipeline mesh piece: the same proxy mesh as a
+/// [`CharacterPart`], but always built on skeleton LOD 0 and rendered without
+/// `SkinnedMesh` (static bind pose until the GPU pose pipeline drives it).
+/// Place as children of a [`CharacterShape`] entity (e.g. under `GPUMeshes`).
+/// Carries no skeleton LOD: the GPU bake poses a single skeleton.
+#[derive(Component, Clone, Debug, Eq, PartialEq, Hash)]
+pub struct GpuCharacterPart {
+    pub mesh: Handle<MhcloAsset>,
+}
+
+/// The state of a mesh load process for character parts
+#[derive(PartialEq, Eq, Debug, Default, Clone)]
+pub enum AssetLoadState {
+    #[default]
+    None,
+    LoadedObj,
+    BuildSubmitted,
+    Finished,
+}
+
+#[derive(Resource, Deref, DerefMut, Default)]
+pub struct CachedMhcloMeshHandles(
+    AHashMap<(Handle<MhcloAsset>, Handle<CharacterTemplate>, MeshBuildLod), Handle<Mesh>>,
+);
+
+pub(crate) struct RawMeshCache {
+    pub(crate) mesh: Handle<Mesh>,
+    pub(crate) verts: Handle<ObjVertsAsset>,
+}
+
+#[derive(Resource, Deref, DerefMut, Default)]
+pub(crate) struct CachedMhcloRawMeshHandles(AHashMap<Handle<MhcloAsset>, RawMeshCache>);
+
+/// A resource for communicating with background threads for mesh loading
+#[derive(Resource, Deref, Default)]
+pub struct MhcloMeshBuilder(AHashMap<LoadAssetMeshJob, (LoadingMediator, AssetLoadState)>);
+
+/// The type of a mesh load job, single CharacterMesh or multiple parts in a StitchedMesh
+#[derive(Eq, PartialEq, Hash, Clone, Debug)]
+pub enum LoadAssetMeshJob {
+    Single {
+        part: Handle<MhcloAsset>,
+        template_handle: Handle<CharacterTemplate>,
+        skeleton_lod: MeshBuildLod,
+    },
+    Stitched {
+        parts: StitchedParts,
+        template_handle: Handle<CharacterTemplate>,
+    },
+}
+
+impl MhcloMeshBuilder {
+    /// Trigger a rebuild of a mesh or group of stitched meshes
+    pub fn trigger(&mut self, key: LoadAssetMeshJob) {
+        self.0
+            .insert(key, (LoadingMediator::default(), AssetLoadState::None));
+    }
+
+    /// Removes the key when finished
+    fn finish(&mut self, key: &LoadAssetMeshJob) {
+        self.0.remove(key);
+    }
+}
+
+/// Request a GPU-ready crowd mesh, converting on demand.
+///
+/// Returns the cached handle when the `Gpu` build already landed. When the
+/// matching `Cpu` build for the GPU skeleton index exists, converts it once
+/// via [`make_gpu_mesh`] and caches it under the `Gpu` key. Otherwise
+/// triggers a background `Gpu` build and returns `None` until it lands.
+pub fn request_gpu_mesh(
+    builder: &mut MhcloMeshBuilder,
+    cached: &mut CachedMhcloMeshHandles,
+    meshes: &mut Assets<Mesh>,
+    part: &Handle<MhcloAsset>,
+    template: &Handle<CharacterTemplate>,
+    gpu_skeleton: &GpuSkeletonLod,
+) -> Option<Handle<Mesh>> {
+    let gpu_key = (part.clone(), template.clone(), MeshBuildLod::Gpu);
+    if let Some(handle) = cached.get(&gpu_key) {
+        return Some(handle.clone());
+    }
+    let cpu_key = (
+        part.clone(),
+        template.clone(),
+        MeshBuildLod::Cpu(gpu_skeleton.0),
+    );
+    if let Some(source_handle) = cached.get(&cpu_key).cloned()
+        && let Some(source) = meshes.get(&source_handle)
+        && let Some(mesh) = make_gpu_mesh(source)
+    {
+        let handle = meshes.add(mesh);
+        cached.insert(gpu_key, handle.clone());
+        return Some(handle);
+    }
+    let job = LoadAssetMeshJob::Single {
+        part: part.clone(),
+        template_handle: template.clone(),
+        skeleton_lod: MeshBuildLod::Gpu,
+    };
+    if !builder.contains_key(&job) {
+        builder.trigger(job);
+    }
+    None
+}
+
+/// A wrapper around crossbeam channels for communicating with the background threads
+#[derive(Clone)]
+pub struct LoadingMediator {
+    pub(crate) mesh_building_msg_sender: Sender<MeshConstructedMsg>,
+    pub(crate) mesh_building_msg_receiver: Receiver<MeshConstructedMsg>,
+}
+
+impl Default for LoadingMediator {
+    fn default() -> Self {
+        let (mesh_building_msg_sender, mesh_building_msg_receiver) = crossbeam_channel::unbounded();
+        Self {
+            mesh_building_msg_receiver,
+            mesh_building_msg_sender,
+        }
+    }
+}
+
+/// A message sent from the bg thread when the mesh or meshes are ready
+pub(crate) struct MeshConstructedMsg {
+    pub(crate) final_meshes: Vec<Mesh>,
+    pub(crate) morph_names: Vec<Vec<String>>,
+    pub(crate) templates: Vec<CharacterTemplate>,
+}
+
+/// This system runs in phases, so it gets triggered multiple times to load a mesh
+/// State is tracked by [`AssetLoadState`]
+pub(crate) fn mesh_build(
+    templates: Res<Assets<CharacterTemplate>>,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mesh_verts: Res<Assets<ObjVertsAsset>>,
+    mhclo_assets: Res<Assets<MhcloAsset>>,
+    mut morphs: ResMut<MakeHumanMorphs>,
+    basemesh: Res<BaseMesh>,
+    rig_data: Res<RigData>,
+    rig_bundle: Res<RigBundleRes>,
+    asset_server: Res<AssetServer>,
+    gpu_skeleton: Option<Res<GpuSkeletonLod>>,
+    mut cached_meshes: ResMut<CachedMhcloMeshHandles>,
+    mut cached_raw_meshes: ResMut<CachedMhcloRawMeshHandles>,
+    mut mediators: ResMut<MhcloMeshBuilder>,
+) {
+    for (key, (mediator, load_state)) in mediators.0.iter_mut() {
+        match key {
+            LoadAssetMeshJob::Single {
+                part,
+                template_handle,
+                skeleton_lod: lod,
+            } => {
+                let Some(template) = templates.get(template_handle) else {
+                    continue;
+                };
+
+                // GPU builds run on the same single bone list the pose shader
+                // bakes, selected by `GpuSkeletonLod`. When no GPU plugin is
+                // present the request is a plain full-skeleton build.
+                let build_index = match lod {
+                    MeshBuildLod::Cpu(index) => *index,
+                    MeshBuildLod::Gpu => gpu_skeleton.as_deref().map(|lod| lod.0).unwrap_or(0),
+                };
+                build_single_mesh_process(
+                    mediator,
+                    load_state,
+                    part,
+                    template_handle,
+                    template,
+                    &mut meshes,
+                    &mesh_verts,
+                    &mhclo_assets,
+                    &mut morphs,
+                    &basemesh.vertices,
+                    &rig_data,
+                    &rig_bundle,
+                    &asset_server,
+                    &mut cached_raw_meshes,
+                    build_index,
+                );
+
+                for msg in mediator.mesh_building_msg_receiver.try_iter() {
+                    let mesh = handle_single_mesh_complete(msg);
+                    let mesh = match lod {
+                        // A GPU entry in the shared cache must be the converted
+                        // mesh (GPU joint attributes, no CPU skin buffer), not
+                        // the skinned source: a reader can trust the variant.
+                        MeshBuildLod::Gpu => {
+                            let Some(mesh) = make_gpu_mesh(&mesh) else {
+                                continue;
+                            };
+                            mesh
+                        }
+                        MeshBuildLod::Cpu(_) => mesh,
+                    };
+                    let mesh_handle = meshes.add(mesh);
+                    cached_meshes.insert(
+                        (part.clone(), template_handle.clone(), *lod),
+                        mesh_handle.clone(),
+                    );
+                    *load_state = AssetLoadState::Finished;
+                }
+            }
+            LoadAssetMeshJob::Stitched {
+                parts,
+                template_handle,
+            } => {
+                let Some(template) = templates.get(template_handle) else {
+                    continue;
+                };
+
+                build_stitched_meshes_process(
+                    mediator,
+                    load_state,
+                    parts,
+                    template_handle,
+                    template,
+                    &templates,
+                    &mut meshes,
+                    &mesh_verts,
+                    &mhclo_assets,
+                    &mut morphs,
+                    &basemesh.vertices,
+                    &rig_data,
+                    &rig_bundle,
+                    &asset_server,
+                    &mut cached_raw_meshes,
+                );
+
+                for msg in mediator.mesh_building_msg_receiver.try_iter() {
+                    let new_meshes = handle_stitched_mesh_complete(msg);
+
+                    for (i_mesh, mesh) in new_meshes.into_iter().enumerate() {
+                        let handle = parts[i_mesh].part.clone();
+                        let lod = parts[i_mesh].lod;
+                        // Key by the part's effective template (override wins):
+                        // two parents sharing one part with different overrides
+                        // build different meshes and must not share a cache entry.
+                        let effective_template = parts[i_mesh]
+                            .template_override
+                            .as_ref()
+                            .map_or(template_handle, |override_template| &override_template.0)
+                            .clone();
+                        let mesh_handle = meshes.add(mesh);
+                        cached_meshes.insert(
+                            (handle, effective_template, MeshBuildLod::Cpu(lod)),
+                            mesh_handle.clone(),
+                        );
+                    }
+                    *load_state = AssetLoadState::Finished;
+                }
+            }
+        }
+    }
+}
+
+/// Handles the message for a completed single mesh and builds the final mesh
+pub(crate) fn handle_single_mesh_complete(msg: MeshConstructedMsg) -> Mesh {
+    let MeshConstructedMsg {
+        final_meshes,
+        morph_names,
+        templates,
+    } = msg;
+    let mut mesh = final_meshes.into_iter().next().unwrap();
+
+    if !templates[0].shapes.is_empty() {
+        let morph_names = morph_names.into_iter().next().unwrap();
+        mesh = mesh.with_morph_target_names(morph_names);
+    }
+    mesh
+}
+
+/// Build a single mesh directly from loaded assets, bypassing the async job system.
+/// All dependencies must already be loaded in their respective asset stores.
+pub fn build_single_mesh_direct(
+    mhclo: &MhcloAsset,
+    input_mesh: &Mesh,
+    mesh_verts: &ObjVertsAsset,
+    template: &CharacterTemplate,
+    mh_morphs: Arc<RwLock<AHashMap<&'static str, TargetAsset>>>,
+    basemesh: Arc<Vec<Vec3>>,
+    rig_spec: &RigSpec,
+    lod_bone_names: &[&'static str],
+    lod_weights: &AHashMap<&'static str, AHashMap<u16, f32>>,
+) -> Mesh {
+    let (mesh, morph_names) = build_final_mesh_mhclo(
+        mhclo,
+        input_mesh,
+        mesh_verts,
+        template,
+        mh_morphs,
+        basemesh,
+        rig_spec,
+        lod_bone_names,
+        lod_weights,
+    );
+    let msg = MeshConstructedMsg {
+        final_meshes: vec![mesh],
+        morph_names: vec![morph_names],
+        templates: vec![template.clone()],
+    };
+    handle_single_mesh_complete(msg)
+}
+
+/// Handles the message for a completed stitched mesh and builds the final meshes
+pub(crate) fn handle_stitched_mesh_complete(msg: MeshConstructedMsg) -> Vec<Mesh> {
+    let MeshConstructedMsg {
+        final_meshes,
+        morph_names,
+        templates,
+    } = msg;
+    let mut meshes = vec![];
+
+    for (i_mesh, (mesh, names)) in final_meshes.into_iter().zip(morph_names).enumerate() {
+        let template = &templates[i_mesh];
+        let mesh = if template.shapes.is_empty() {
+            mesh
+        } else {
+            mesh.with_morph_target_names(names)
+        };
+        meshes.push(mesh);
+    }
+    meshes
+}
+
+/// Handles the actual steps involved in constructing a single mesh
+pub(crate) fn build_single_mesh_process(
+    mediator: &LoadingMediator,
+    load_state: &mut AssetLoadState,
+    part: &Handle<MhcloAsset>,
+    _template_handle: &Handle<CharacterTemplate>,
+    template: &CharacterTemplate,
+    meshes: &mut Assets<Mesh>,
+    mesh_verts: &Assets<ObjVertsAsset>,
+    mhclo_assets: &Assets<MhcloAsset>,
+    morphs: &mut MakeHumanMorphs,
+    basemesh: &Arc<Vec<Vec3>>,
+    rig_data: &RigData,
+    rig_bundle: &RigBundleRes,
+    asset_server: &AssetServer,
+    cached_raw_meshes: &mut CachedMhcloRawMeshHandles,
+    lod: usize,
+) {
+    let pool = AsyncComputeTaskPool::get();
+
+    let Some(mhclo) = mhclo_assets.get(part) else {
+        return;
+    };
+
+    // Start loading mhclo if not already
+    if *load_state == AssetLoadState::None {
+        *load_state = AssetLoadState::LoadedObj;
+        if !cached_raw_meshes.contains_key(part) {
+            let mesh = asset_server.load::<Mesh>(mhclo.obj_file.clone());
+            let verts = asset_server.load::<ObjVertsAsset>(mhclo.obj_file.clone());
+            cached_raw_meshes.insert(part.clone(), RawMeshCache { mesh, verts });
+            return;
+        }
+    }
+
+    if *load_state == AssetLoadState::LoadedObj
+        && let Some(cache) = cached_raw_meshes.get(part)
+        && let Some(input_mesh) = meshes.get(&cache.mesh)
+        && let Some(mesh_verts) = mesh_verts.get(&cache.verts)
+    {
+        let input_mesh = input_mesh.clone();
+        let mesh_verts = mesh_verts.clone();
+        // Bulletproof ordering: every async dependency must be proven loaded
+        // BEFORE advancing state or consuming cached inputs. Advancing first
+        // strands the job in BuildSubmitted forever (no mesh, no retry).
+        if !morphs.is_ready(asset_server) {
+            return;
+        }
+        if !morphs.has_targets_for_shapes(&template.shapes) {
+            return;
+        }
+        if basemesh.is_empty() {
+            return;
+        }
+        let Some(rig_entry) = rig_data.0.as_ref() else {
+            return;
+        };
+        let rig_spec = rig_entry.clone();
+
+        *load_state = AssetLoadState::BuildSubmitted;
+        // Inputs already cloned above. Keep the shared raw entry: duplicate
+        // jobs (same proxy, different skeleton LOD) share one raw entry, so
+        // removing here strands the other job in `LoadedObj` with no entry
+        // and no retry. Handles are cheap; the entry is reused by later jobs.
+
+        let template = template.clone();
+        let mh_morphs = morphs.targets.clone();
+
+        let (lod_bone_names, lod_weights) = rig_bundle
+            .bundle
+            .as_ref()
+            .map(|bundle| {
+                let Some(variant) = bundle.lod_data.get(lod) else {
+                    panic!("mesh build asks for skeleton LOD {lod} but the rig build only produced {} levels: upload the full SkeletonLodConfig before the build (mesh weights are baked from it)", bundle.lod_data.len());
+                };
+                (variant.bone_names.clone(), variant.merged_weights.clone())
+            })
+            .unwrap_or_else(|| {
+                (
+                    rig_spec.reference_rig.bone_names.clone(),
+                    rig_spec.weights.weights.clone(),
+                )
+            });
+
+        let sender = mediator.mesh_building_msg_sender.clone();
+        let mhclo = mhclo.clone();
+        let basemesh = basemesh.clone();
+
+        pool.spawn(async move {
+            let (mesh, morph_names) = build_final_mesh_mhclo(
+                &mhclo,
+                &input_mesh,
+                &mesh_verts,
+                &template,
+                mh_morphs,
+                basemesh,
+                &rig_spec,
+                &lod_bone_names,
+                &lod_weights,
+            );
+            sender.send(MeshConstructedMsg {
+                final_meshes: vec![mesh],
+                morph_names: vec![morph_names],
+                templates: vec![template],
+            })
+        })
+        .detach()
+    }
+}
+
+/// Handles the actual steps involved in constructing a stitched mesh
+fn build_stitched_meshes_process(
+    mediator: &LoadingMediator,
+    load_state: &mut AssetLoadState,
+    parts: &StitchedParts,
+    template_handle: &Handle<CharacterTemplate>,
+    parent_template: &CharacterTemplate,
+    templates: &Assets<CharacterTemplate>,
+    meshes: &mut Assets<Mesh>,
+    mesh_verts: &Assets<ObjVertsAsset>,
+    mhclo_assets: &Assets<MhcloAsset>,
+    morphs: &mut MakeHumanMorphs,
+    basemesh: &Arc<Vec<Vec3>>,
+    rig_data: &RigData,
+    rig_bundle: &RigBundleRes,
+    asset_server: &AssetServer,
+    cached_raw_meshes: &mut CachedMhcloRawMeshHandles,
+) {
+    let pool = AsyncComputeTaskPool::get();
+
+    // Resolve all mhclo assets; bail if any part's asset isn't loaded yet
+    let mhclos_ready: Vec<_> = parts.iter().map(|p| mhclo_assets.get(&p.part)).collect();
+
+    if mhclos_ready.iter().any(|o| o.is_none()) {
+        return;
+    }
+
+    // Phase 1: ensure raw OBJ meshes are loading (same pattern as single-mesh path)
+    if *load_state == AssetLoadState::None {
+        *load_state = AssetLoadState::LoadedObj;
+        for StitchedPart { part, .. } in parts.iter() {
+            if !cached_raw_meshes.contains_key(part) {
+                let mhclo = mhclo_assets.get(part).expect("mhclo already checked");
+                let mesh = asset_server.load::<Mesh>(mhclo.obj_file.clone());
+                let verts = asset_server.load::<ObjVertsAsset>(mhclo.obj_file.clone());
+                cached_raw_meshes.insert(part.clone(), RawMeshCache { mesh, verts });
+            }
+        }
+        return;
+    }
+
+    // Phase 2: when all raw meshes are in Assets<Mesh>, spawn the build task
+    if *load_state == AssetLoadState::LoadedObj {
+        let raw_handles: Vec<_> = parts
+            .iter()
+            .map(|p| cached_raw_meshes.get(&p.part))
+            .collect();
+
+        let all_ready = raw_handles.iter().all(|h| h.is_some());
+        if !all_ready {
+            return;
+        }
+
+        let loaded_meshes: Vec<_> = raw_handles
+            .iter()
+            .filter_map(|h| h.and_then(|cache| meshes.get(&cache.mesh)))
+            .collect();
+
+        let loaded_mesh_count = loaded_meshes.len();
+
+        if loaded_mesh_count != parts.len() {
+            return;
+        }
+
+        if !morphs.is_ready(asset_server) {
+            return;
+        }
+
+        let templates_for_build: Vec<_> = parts
+            .iter()
+            .map(|p| {
+                let h = p
+                    .template_override
+                    .as_ref()
+                    .map_or(template_handle, |ov| &ov.0);
+                templates.get(h).unwrap_or(parent_template)
+            })
+            .cloned()
+            .collect();
+        if !morphs.has_targets_for_shapes(&parent_template.shapes)
+            || templates_for_build
+                .iter()
+                .any(|t| !morphs.has_targets_for_shapes(&t.shapes))
+        {
+            return;
+        }
+
+        // Bulletproof ordering: every async dependency must be proven loaded
+        // BEFORE advancing state or consuming cached inputs. Advancing first
+        // strands the job in BuildSubmitted forever (no mesh, no retry).
+        if basemesh.is_empty() {
+            return;
+        }
+        let Some(rig_entry) = rig_data.0.as_ref() else {
+            return;
+        };
+        let rig_spec = rig_entry.clone();
+        // All per-part vertex snapshots must be loaded; a short vec would
+        // misalign meshes/verts/mhclos in the background build.
+        let mesh_verts: Vec<ObjVertsAsset> = raw_handles
+            .iter()
+            .filter_map(|h| h.and_then(|cache| mesh_verts.get(&cache.verts).cloned()))
+            .collect();
+        if mesh_verts.len() != parts.len() {
+            return;
+        }
+
+        *load_state = AssetLoadState::BuildSubmitted;
+
+        let mut input_meshes: Vec<Mesh> = loaded_meshes.into_iter().cloned().collect();
+        let mhclos: Vec<_> = parts
+            .iter()
+            .map(|p| mhclo_assets.get(&p.part).unwrap().clone())
+            .collect();
+
+        let mh_morphs = morphs.targets.clone();
+        let basemesh = basemesh.clone();
+
+        let lod = parts.first().map(|p| p.lod).unwrap_or(0);
+        let (lod_bone_names, lod_weights) = rig_bundle
+            .bundle
+            .as_ref()
+            .map(|bundle| {
+                let Some(variant) = bundle.lod_data.get(lod) else {
+                    panic!("stitched mesh build asks for skeleton LOD {lod} but the rig build only produced {} levels: upload the full SkeletonLodConfig before the build (mesh weights are baked from it)", bundle.lod_data.len());
+                };
+                (variant.bone_names.clone(), variant.merged_weights.clone())
+            })
+            .unwrap_or_else(|| {
+                (
+                    rig_spec.reference_rig.bone_names.clone(),
+                    rig_spec.weights.weights.clone(),
+                )
+            });
+        // Inputs already cloned above. Raw entries are owned by
+        // `mediators_clean_up`, which drops them once no live job needs them.
+
+        let sender = mediator.mesh_building_msg_sender.clone();
+        pool.spawn(async move {
+            let (final_meshes, morph_names) = build_final_meshes_mhclo(
+                &mhclos,
+                &mut input_meshes,
+                &mesh_verts,
+                &templates_for_build,
+                mh_morphs,
+                basemesh,
+                &rig_spec,
+                &lod_bone_names,
+                &lod_weights,
+            );
+            sender.send(MeshConstructedMsg {
+                final_meshes,
+                morph_names,
+                templates: templates_for_build,
+            })
+        })
+        .detach();
+    }
+}
+
+/// Monitors for finished jobs and removes their mediators. Also drops raw OBJ
+/// entries no live job needs anymore: a raw entry is only input to the
+/// `LoadedObj` -> `BuildSubmitted` step, so once no unfinished job references
+/// its proxy it is dead weight (the built meshes live in `Assets<Mesh>` under
+/// `CachedMhcloMeshHandles`). Finished jobs are removed first so a job that
+/// just completed does not pin its own raw entry for another frame.
+pub(crate) fn mediators_clean_up(
+    mut mediators: ResMut<MhcloMeshBuilder>,
+    mut cached_raw_meshes: ResMut<CachedMhcloRawMeshHandles>,
+) {
+    let mut remove = vec![];
+    for (key, (_, state)) in mediators.iter() {
+        if *state == AssetLoadState::Finished {
+            remove.push(key.clone());
+        }
+    }
+    for key in remove {
+        mediators.finish(&key);
+    }
+    if cached_raw_meshes.is_empty() {
+        return;
+    }
+    let mut live: AHashSet<Handle<MhcloAsset>> = AHashSet::default();
+    for (key, (_, state)) in mediators.iter() {
+        if *state == AssetLoadState::Finished {
+            continue;
+        }
+        match key {
+            LoadAssetMeshJob::Single { part, .. } => {
+                live.insert(part.clone());
+            }
+            LoadAssetMeshJob::Stitched { parts, .. } => {
+                for part in parts.iter().map(|part| &part.part) {
+                    live.insert(part.clone());
+                }
+            }
+        }
+    }
+    cached_raw_meshes.retain(|part, _| live.contains(part));
+}

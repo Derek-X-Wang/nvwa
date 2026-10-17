@@ -1,5 +1,8 @@
 #![forbid(unsafe_code)]
-use nvwa_core::{CharacterProfile, Command, CommandEnvelope, CoreError, Editor, SceneDocument};
+use nvwa_core::{
+    B1_DIAGNOSTIC_POSES, B1_MAX_ASSET_BYTES, B1_MAX_MANIFEST_BYTES, B1_MAX_TOTAL_ASSET_BYTES,
+    B1AssetManifest, CharacterProfile, Command, CommandEnvelope, CoreError, Editor, SceneDocument,
+};
 use std::path::{Path, PathBuf};
 
 fn respond(response: impl std::fmt::Display) -> Result<(), CoreError> {
@@ -49,6 +52,109 @@ fn read(path: &Path) -> Result<String, CoreError> {
     String::from_utf8(bytes).map_err(|e| CoreError::new("invalid_utf8", e.to_string()))
 }
 
+// Read bounded authenticated bytes from a regular asset beneath the selected
+// root. Refuse symlink components rather than following them outside the root.
+fn read_asset(root: &Path, relative: &Path, limit: usize) -> Result<Vec<u8>, CoreError> {
+    use std::io::Read;
+    let root = root
+        .canonicalize()
+        .map_err(|e| CoreError::new("asset_missing", format!("{}: {e}", root.display())))?;
+    let mut path = root.clone();
+    for component in relative.components() {
+        let std::path::Component::Normal(component) = component else {
+            return Err(CoreError::new(
+                "unsafe_asset_path",
+                "Asset path must be relative without traversal",
+            ));
+        };
+        path.push(component);
+        let metadata = std::fs::symlink_metadata(&path)
+            .map_err(|e| CoreError::new("asset_missing", format!("{}: {e}", path.display())))?;
+        if metadata.file_type().is_symlink() {
+            return Err(CoreError::new(
+                "unsafe_asset_path",
+                format!("Asset path contains a symlink: {}", path.display()),
+            ));
+        }
+    }
+    let canonical = path
+        .canonicalize()
+        .map_err(|e| CoreError::new("asset_missing", format!("{}: {e}", path.display())))?;
+    if !canonical.starts_with(&root) {
+        return Err(CoreError::new(
+            "unsafe_asset_path",
+            "Asset path escapes the selected asset root",
+        ));
+    }
+    let mut options = std::fs::OpenOptions::new();
+    options.read(true);
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::OpenOptionsExt;
+        options.custom_flags(libc::O_NONBLOCK | libc::O_NOFOLLOW);
+    }
+    let file = options
+        .open(&canonical)
+        .map_err(|e| CoreError::new("asset_missing", format!("{}: {e}", canonical.display())))?;
+    let metadata = file
+        .metadata()
+        .map_err(|e| CoreError::new("file_metadata", e.to_string()))?;
+    if !metadata.is_file() {
+        return Err(CoreError::new(
+            "unsupported_file",
+            "Only regular asset files are supported",
+        ));
+    }
+    if metadata.len() > limit as u64 {
+        return Err(CoreError::new(
+            "invalid_asset",
+            format!("Asset exceeds {limit} byte limit"),
+        ));
+    }
+    let mut bytes = Vec::new();
+    file.take(limit as u64 + 1)
+        .read_to_end(&mut bytes)
+        .map_err(|e| CoreError::new("file_read", e.to_string()))?;
+    if bytes.len() > limit {
+        return Err(CoreError::new(
+            "invalid_asset",
+            format!("Asset exceeds {limit} byte limit"),
+        ));
+    }
+    Ok(bytes)
+}
+
+fn validate_assets(document: &SceneDocument, root: &Path) -> Result<(), CoreError> {
+    if document.profile.backend.is_b1() {
+        let manifest_path = Path::new(&document.profile.asset_path);
+        let bytes = read_asset(root, manifest_path, B1_MAX_MANIFEST_BYTES)?;
+        document.profile.validate_asset_bytes(&bytes)?;
+        let manifest = B1AssetManifest::from_bytes(&bytes)?;
+        let parent = manifest_path
+            .parent()
+            .ok_or_else(|| CoreError::new("unsafe_asset_path", "B1 manifest has no parent"))?;
+        let mut total = 0usize;
+        for entry in &manifest.files {
+            let bytes = read_asset(root, &parent.join(&entry.path), B1_MAX_ASSET_BYTES)?;
+            total = total
+                .checked_add(bytes.len())
+                .ok_or_else(|| CoreError::new("invalid_asset", "B1 asset total overflow"))?;
+            if total > B1_MAX_TOTAL_ASSET_BYTES {
+                return Err(CoreError::new("invalid_asset", "B1 assets exceed 8 MiB"));
+            }
+            manifest.validate_file_bytes(&entry.path, &bytes)?;
+        }
+    } else {
+        let bytes = read_asset(
+            root,
+            Path::new(&document.profile.asset_path),
+            64 * 1024 * 1024,
+        )?;
+        document.profile.validate_asset_bytes(&bytes)?;
+    }
+    Ok(())
+}
+
 fn save(document: &SceneDocument, path: &Path) -> Result<(), CoreError> {
     use std::io::Write;
     let json = document.to_json()?;
@@ -86,7 +192,7 @@ fn save(document: &SceneDocument, path: &Path) -> Result<(), CoreError> {
 fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError> {
     // Examples use the production command serializer and this work's actual IDs.
     // Each is a standalone example at the loaded revision, not a ready-made batch.
-    let commands = [
+    let mut commands = vec![
         Command::SetParameters {
             character_id: document.character.id.clone(),
             values: document.character.parameters.clone(),
@@ -104,6 +210,20 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         Command::Undo,
         Command::Redo,
     ];
+    if document.profile.backend.is_b1() {
+        commands.retain(|command| !matches!(command, Command::SetTimeline { .. }));
+        commands.insert(
+            2,
+            Command::SetDiagnosticPose {
+                character_id: document.character.id.clone(),
+                pose_id: document
+                    .character
+                    .diagnostic_pose
+                    .clone()
+                    .unwrap_or_else(|| "neutral".into()),
+            },
+        );
+    }
     let examples: Vec<_> = commands
         .into_iter()
         .enumerate()
@@ -121,15 +241,17 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
     Ok(serde_json::json!({
         "schema_version": 1,
         "transport": "offline_files",
-        "work_schema": {"writes": nvwa_core::SCHEMA_VERSION, "reads": [1, nvwa_core::SCHEMA_VERSION], "legacy_upgrade": "schema1_to_schema2_default_white_studio_without_revision_change"},
+        "work_schema": {"writes": nvwa_core::SCHEMA_VERSION, "reads": [1, 2, nvwa_core::SCHEMA_VERSION], "legacy_upgrade": "schema1_and_schema2_to_schema3_glb_backend_null_diagnostic_pose_preserve_revision_and_content_schema1_default_white_studio"},
         "entrypoints": {
             "new": ["profile.json", "output.json"],
+            "new-b1": ["asset_root", "output.json"],
             "inspect": ["input.json"],
             "describe-capabilities": ["input.json"],
             "validate": ["input.json", "optional_asset_root"],
             "apply": ["input.json", "command_or_array.json", "output.json"],
             "save": ["input.json", "output.json"]
         },
+        "creation": {"new":"glb_profile_metadata_only", "new-b1":"exact_b1_manifest_and_thirteen_assets_verified_before_save"},
         "input": {
             "max_json_bytes": nvwa_core::MAX_JSON_BYTES,
             "unknown_fields": "rejected",
@@ -145,7 +267,11 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         "examples_are": "independent_shapes_at_loaded_revision_not_a_batch",
         "set_parameters": "updates_only_named_parameters_within_profile_min_max_inclusive",
         "set_scale": "finite_greater_than_zero",
+        "character_backend": document.profile.backend,
+        "diagnostic_poses": if document.profile.backend.is_b1() { serde_json::json!({"ids":B1_DIAGNOSTIC_POSES,"current":document.character.diagnostic_pose,"meaning":"authored_static_diagnostic_pose_not_animation","command":"set_diagnostic_pose","renderer":"fixed_positive_final_aggregate_cpu_no_four_cap","morph_index":"inert_legacy_metadata_unused_on_b1","targets":{"torso_length":["torso-scale-vert-decr","torso-scale-vert-incr"],"jaw_drop":["chin-jaw-drop-decr","chin-jaw-drop-incr"]},"continuous_parameter_edits":true,"numeric_acceptance":"eight_reference_recipes_times_five_poses_only","timeline_supported":false}) } else { serde_json::json!({"ids":[],"current":null,"timeline_supported":true}) },
         "set_timeline": {
+            "animation_supported": document.profile.backend.is_glb(),
+            "b1": "only_empty_timeline_allowed_diagnostic_pose_is_separate",
             "effect": "replaces_entire_timeline",
             "clip_id": "must_reference_profile_clips_id",
             "id": "nonblank_unique_timeline_entry_id",
@@ -192,6 +318,8 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "response_transport_failure": "stdout_write_may_follow_successful_save_inspect_output_before_retry",
             "output": "array_of_revision_summary_duplicate_results_in_input_order",
             "session": "fresh_editor_per_invocation",
+            "asset_checked": false,
+            "asset_validation": "apply_and_save_edit_work_metadata_only_use_validate_with_explicit_asset_root_for_b1",
             "history": "undo_redo_and_successful_retry_ids_only_within_same_apply_invocation",
             "persistent_idempotency": false
         },
@@ -213,9 +341,13 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "nothing_to_undo": "history_does_not_cross_apply_invocations",
             "nothing_to_redo": "redo_requires_undo_in_same_invocation",
             "stdout_write": "output_may_already_be_saved_inspect_actual_output_before_retrying_mutation",
+            "unsupported_pose": "read_diagnostic_poses_ids",
+            "unsupported_character_operation": "read_backend_specific_operation_support",
+            "asset_hash_mismatch": "restore_exact_shipped_asset_bytes_then_validate_with_asset_root",
+            "asset_root_required": "b1_validate_requires_validate_work_json_asset_root",
             "other_errors": "read_code_and_message_input_command_validation_and_persistence_failures_before_save_do_not_commit_output"
         },
-        "asset_validation": "validate_with_asset_root_checks_profile_asset_hash_and_structure",
+        "asset_validation": "b1_validate_requires_explicit_asset_root_and_authenticates_exact_manifest_and_all_thirteen_bounded_files_glb_asset_root_optional",
         "studio_control": false
     }))
 }
@@ -228,11 +360,27 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             .ok_or_else(|| CoreError::new("usage", "Missing argument; run nvwa-cli help"))
     };
     match command {
+        "new-b1" => {
+            let document = SceneDocument::from_profile(CharacterProfile::b1())?;
+            validate_assets(&document, &arg(1)?)?;
+            save(&document, &arg(2)?)?;
+            respond(
+                serde_json::json!({"revision":document.revision,"saved":args[2],"asset_checked":true}),
+            )?;
+        }
         "new" => {
             let profile = CharacterProfile::from_json(&read(&arg(1)?)?)?;
+            if profile.backend.is_b1() {
+                return Err(CoreError::new(
+                    "unsupported_character_operation",
+                    "Use new-b1 <asset-root> <work.json> to authenticate all B1 assets before creation",
+                ));
+            }
             let document = SceneDocument::from_profile(profile)?;
             save(&document, &arg(2)?)?;
-            respond(serde_json::json!({"revision":document.revision,"saved":args[2]}))?;
+            respond(
+                serde_json::json!({"revision":document.revision,"saved":args[2],"asset_checked":false}),
+            )?;
         }
         "inspect" | "describe-capabilities" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
@@ -280,12 +428,12 @@ fn run(args: &[String]) -> Result<(), CoreError> {
         "validate" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
             if let Some(root) = args.get(2) {
-                // The core validated that this asset reference is a safe relative path.
-                let asset = Path::new(root).join(&document.profile.asset_path);
-                let bytes = std::fs::read(&asset).map_err(|e| {
-                    CoreError::new("asset_missing", format!("{}: {e}", asset.display()))
-                })?;
-                document.profile.validate_asset_bytes(&bytes)?;
+                validate_assets(&document, Path::new(root))?;
+            } else if document.profile.backend.is_b1() {
+                return Err(CoreError::new(
+                    "asset_root_required",
+                    "B1 validation requires validate <work.json> <asset-root> to authenticate all thirteen files",
+                ));
             }
             respond(
                 serde_json::json!({"valid":true,"revision":document.revision,"asset_checked":args.len()>2}),
@@ -313,10 +461,12 @@ fn run(args: &[String]) -> Result<(), CoreError> {
         "save" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
             save(&document, &arg(2)?)?;
-            respond(serde_json::json!({"revision":document.revision,"saved":args[2]}))?;
+            respond(
+                serde_json::json!({"revision":document.revision,"saved":args[2],"asset_checked":false}),
+            )?;
         }
         "help" | "--help" | "-h" => respond(
-            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, undo, redo.\nThis edits files; it does not control a running Studio.",
+            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
         )?,
         _ => {
             return Err(CoreError::new(

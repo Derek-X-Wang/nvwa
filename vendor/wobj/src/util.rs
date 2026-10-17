@@ -1,0 +1,63 @@
+use std::path::PathBuf;
+
+use winnow::ascii::{line_ending, multispace1, till_line_ending};
+use winnow::combinator::{alt, opt, preceded, repeat};
+use winnow::error::{StrContext, StrContextValue};
+use winnow::token::take_till;
+use winnow::{BStr, Parser, Result};
+
+/// Go to next line
+pub fn to_next_line(input: &mut &BStr) -> Result<()> {
+    (till_line_ending, opt(line_ending))
+        .void()
+        .parse_next(input)
+}
+
+pub fn word<'a>(input: &mut &'a BStr) -> Result<&'a [u8]> {
+    take_till(1.., (' ', '\t', '\r', '\n')).parse_next(input)
+}
+
+pub fn label(text: &'static str) -> StrContext {
+    StrContext::Label(text)
+}
+
+pub fn expected(text: &'static str) -> StrContext {
+    StrContext::Expected(StrContextValue::StringLiteral(text))
+}
+
+pub fn description(text: &'static str) -> StrContext {
+    StrContext::Expected(StrContextValue::Description(text))
+}
+
+/// Parses a non-empty UTF-8 string
+pub fn parse_string(input: &mut &BStr) -> Result<String> {
+    till_line_ending
+        .verify(|s: &[_]| !s.is_empty())
+        .try_map(|s: &[_]| String::from_utf8(s.to_vec()))
+        .context(description("UTF-8 string"))
+        .parse_next(input)
+}
+
+/// Parses a non-empty filesystem path
+pub fn parse_path(input: &mut &BStr) -> Result<PathBuf> {
+    use std::path::{MAIN_SEPARATOR, MAIN_SEPARATOR_STR};
+    const OTHER_SEPARATOR: char = match MAIN_SEPARATOR {
+        '/' => '\\',
+        _ => '/',
+    };
+
+    parse_string
+        .map(|s| s.replace("\\\\", "\\"))
+        .map(|s| s.replace(OTHER_SEPARATOR, MAIN_SEPARATOR_STR))
+        .map(PathBuf::from)
+        .context(description("filesystem path"))
+        .parse_next(input)
+}
+
+fn comment(input: &mut &BStr) -> Result<()> {
+    preceded('#', to_next_line).void().parse_next(input)
+}
+
+pub fn ignoreable(input: &mut &BStr) -> Result<()> {
+    repeat(0.., alt((comment, multispace1.void()))).parse_next(input)
+}

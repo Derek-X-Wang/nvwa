@@ -17,7 +17,7 @@ The supported character's available appearance parameters and authored actions, 
 _Avoid_: arbitrary model compatibility
 
 **Character recipe**:
-The chosen appearance values for a character in a work.
+The chosen appearance values and, where supported, diagnostic pose for a character in a work.
 _Avoid_: mesh, model file
 
 **Morph**:
@@ -35,3 +35,11 @@ _Avoid_: renamed preset
 **Preview**:
 The temporary appearance shown during a parameter drag before the edit is committed.
 _Avoid_: saved edit
+
+**Character backend**:
+The versioned character system that interprets a profile and recipe.
+_Avoid_: interchangeable model loader
+
+**Diagnostic pose**:
+A fixed skeletal pose used to inspect how a character changes shape.
+_Avoid_: continuous animation, generated action

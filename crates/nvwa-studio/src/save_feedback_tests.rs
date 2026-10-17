@@ -19,8 +19,10 @@ impl Harness {
                 .as_nanos()
         ));
         std::fs::create_dir_all(&directory).unwrap();
-        let profile =
-            serde_json::from_str(include_str!("../../../assets/character.profile.json")).unwrap();
+        let profile = nvwa_core::CharacterProfile::from_json(include_str!(
+            "../../../assets/character.profile.json"
+        ))
+        .unwrap();
         let mut editor = EditorState::default();
         editor
             .replace(SceneDocument::from_profile(profile).unwrap())

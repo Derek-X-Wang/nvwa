@@ -27,3 +27,8 @@ web-sys = { version = "=0.3.106", features = ["Window", "Document", "HtmlElement
 opt-level = 1
 [profile.dev.package."*"]
 opt-level = 1
+
+# Isolated probe workspaces do not inherit the product workspace patches.
+[patch.crates-io]
+bevy_obj = { path = "../../../vendor/bevy_obj" }
+wobj = { path = "../../../vendor/wobj" }

@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "upstream_repository": "https://github.com/emberlightstudios/Humentity",
+  "upstream_commit": "286d33124648501535655a0de811cef55152b9fd",
+  "upstream_inventory_sha256": "3c0d8c4d2aac9c398d3b7eb75272ced08f6babafd6bd4577f895e50f10b661ab",
+  "approved_original_archive_manifest_sha256": "925688915e0ff918ba9c373c3aba39a5dbc1d4b93cabb65a3b51398fdfab3bcb",
+  "upstream_original_files": [
+    {
+      "path": "Cargo.toml",
+      "bytes": 1901,
+      "sha256": "4df29f89867d849641ec7754383d714d04d8864cf3ae620f40948a90c1a2d5d0",
+      "git_blob_sha1": "78f863ed914818ae08c2c1c3f9781c43014f91ba"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1741,
+      "sha256": "a6bf173350167d8cb25909e781579e004361a2595485004751792c0b90df0052",
+      "git_blob_sha1": "007489153930ad55c7105d95671df83c953d7d7b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 21884,
+      "sha256": "08f7a7c89e4b3c2c6b69190ba39255296e1c29b5c0982ab6a1f22819e1a19b04",
+      "git_blob_sha1": "102e74fc8407913568ade5a9cd7def081ab1990e"
+    },
+    {
+      "path": "src/animation.rs",
+      "bytes": 20847,
+      "sha256": "ac87e6e0a00f0425ea16506995c9bd20d1e3165b7acd369d901b931110d4988f",
+      "git_blob_sha1": "f91b029f3104aed8725ef5b1be8e5a1b688e6084"
+    },
+    {
+      "path": "src/assets.rs",
+      "bytes": 10655,
+      "sha256": "fa56cef044582191efe643ac905750c1a4b64d05e88be825ef48f8c02d4f5ace",
+      "git_blob_sha1": "03bfc2e69d6c2700ed464d7e10565d697c1e651c"
+    },
+    {
+      "path": "src/basemesh.rs",
+      "bytes": 2406,
+      "sha256": "7551b0def9a402ec34bc1a3d76840c729fe7893a30598b4dad46a3b39a4a5baf",
+      "git_blob_sha1": "93b80cf81e543e46c9afdc49c4f1c28ce25adfa2"
+    },
+    {
+      "path": "src/bone_debug.rs",
+      "bytes": 985,
+      "sha256": "8cbe74a18f9762281c9d46d8282382ed7150a7ae6a4b59d04922079981a19b70",
+      "git_blob_sha1": "07420a1577cd31a4a0648fcfb61690119f2719e8"
+    },
+    {
+      "path": "src/gpu/bake.rs",
+      "bytes": 29459,
+      "sha256": "c577c818d4c3f254bcfa7aa9f712e88ca7196199341d81f68affd4cfe6c045fe",
+      "git_blob_sha1": "62d5404499a21a77dba92e52a4bdcfc8c8c6adba"
+    },
+    {
+      "path": "src/gpu/bank.rs",
+      "bytes": 12157,
+      "sha256": "b4989ab5210a17d2c19962b3e6c3adc9044b1676715adb3b7ec564e4fa27c6ad",
+      "git_blob_sha1": "02e7cd5b81aff0f37b1a13345aac445c7c13147b"
+    },
+    {
+      "path": "src/gpu/config.rs",
+      "bytes": 9116,
+      "sha256": "3394b12c94f039c32d229070dee940f4d8b77c2d451e6bb8d5b7e5a7d3f93bfd",
+      "git_blob_sha1": "5617e2a2be8a6e8653b4a0a37a5b6096a865a008"
+    },
+    {
+      "path": "src/gpu/crowd_forward.wgsl",
+      "bytes": 1556,
+      "sha256": "5a10f78904a6871500075d83b3a535b1dd016453e4a81d45c16881c696f65935",
+      "git_blob_sha1": "f7c2902d2958a0a4dcafeae2949fe7e9ac7f01c2"
+    },
+    {
+      "path": "src/gpu/crowd_prepass.wgsl",
+      "bytes": 2691,
+      "sha256": "6cb7bccd4dd61be4395b854b1cdadea8c587ded9f0af5112e3c4a82a67baa7ea",
+      "git_blob_sha1": "7f6647245c5fa79fe7f69ba9776dfdc5ad10f38f"
+    },
+    {
+      "path": "src/gpu/crowd_skin.wgsl",
+      "bytes": 5007,
+      "sha256": "5e0b1d201e6387672a876a3f128d56c688ebe8fc04f672bc51c4df56bb8b9a36",
+      "git_blob_sha1": "38c7f7a95ce8ecc7cfa5f639f4214d9960c0d7e4"
+    },
+    {
+      "path": "src/gpu/material.rs",
+      "bytes": 6216,
+      "sha256": "5cbea81337efd4ea027a79b46b93380aae253ed8b6a80f218538c8f3beb66463",
+      "git_blob_sha1": "a2d56db762d844f63c31809025fd8f05d2c22a69"
+    },
+    {
+      "path": "src/gpu/mod.rs",
+      "bytes": 5689,
+      "sha256": "281ffdfec940ffda91b1a2bdf127bf9affbe531089259c7716601b3fdf84beda",
+      "git_blob_sha1": "89fabcda0f56c074df95d919edee93ac5e893425"
+    },
+    {
+      "path": "src/gpu/pipeline.rs",
+      "bytes": 9345,
+      "sha256": "df5ae5bbfd559788449003d24735acb332aa177a529b77936d210153689790de",
+      "git_blob_sha1": "ec3aa0868f9b1fa7dbdbf9992afa57da988fa1b4"
+    },
+    {
+      "path": "src/gpu/pose.wgsl",
+      "bytes": 12433,
+      "sha256": "bba5e8bd804e762c453dd54802792bee654c0ee3bf72b7fd38574b76f7635dbf",
+      "git_blob_sha1": "a1d06604c822850b8a9e2d8b5c1f2128ef21593f"
+    },
+    {
+      "path": "src/gpu/readback.rs",
+      "bytes": 3709,
+      "sha256": "cc4431b9d40357fed8d35dc9c98cd8ed110eca853e05d09624c7a89a675429a0",
+      "git_blob_sha1": "7bbf66599e2c5efc31c2bc6f424001a981d3b0c8"
+    },
+    {
+      "path": "src/gpu/shapes.rs",
+      "bytes": 7265,
+      "sha256": "8a478d4232a424069c139684cc3265cce602e18732fd55a9793a9e7e74d9961a",
+      "git_blob_sha1": "162a634456f8465c4e1b79671038ce7e718e6528"
+    },
+    {
+      "path": "src/gpu/state.rs",
+      "bytes": 10907,
+      "sha256": "307cb100fdf4e23298cdc1f036be8e223c217f03ee0adf0041d186f77aab70ca",
+      "git_blob_sha1": "7f0564de971eb4b290af5e81785f1b122adf6abc"
+    },
+    {
+      "path": "src/helpers.rs",
+      "bytes": 1202,
+      "sha256": "c9256b45e826f3130d480a72a103218ae86a295f95aba9550a1fdcd71df98f72",
+      "git_blob_sha1": "634b886038a1a7caaadf62fd858f69578ba7ae2c"
+    },
+    {
+      "path": "src/lib.rs",
+      "bytes": 18040,
+      "sha256": "5b25d9f7f1f85612930c0cac3bc3f9f45f52889c18ceefe17bddced12eeec692",
+      "git_blob_sha1": "0d8911d50ba99ab8f7c3cb0454cdb284a2392bf6"
+    },
+    {
+      "path": "src/loaders/composite_target_manifest.rs",
+      "bytes": 4812,
+      "sha256": "01054f8cc9b585de59209b8b9fa6ff41740061d31cf53927b9b3b4fceb01b36e",
+      "git_blob_sha1": "832f03df9a33cd2c029ab096264059ddfd7e4dcb"
+    },
+    {
+      "path": "src/loaders/macro_json.rs",
+      "bytes": 3417,
+      "sha256": "2a2b64eb9864959550c7df8630375dabfab04885c1565eb3bd6e224b2b3afa36",
+      "git_blob_sha1": "484c4e207afede4411c05329994b1901250aca16"
+    },
+    {
+      "path": "src/loaders/mhclo.rs",
+      "bytes": 13787,
+      "sha256": "eae76f2964502ceea4e212b2f5cb229d1d2886446687e43a424d71e6e86aa8fc",
+      "git_blob_sha1": "015879ea666370f52d67fe16f5ea5c235bf74c9b"
+    },
+    {
+      "path": "src/loaders/mod.rs",
+      "bytes": 1262,
+      "sha256": "a176d0ce9d9ac325bce25863754e48d47557e0f1fd57517e373ab08bd31c348e",
+      "git_blob_sha1": "39e8f0c1f33b7031a20f14f911e8234f84afdc08"
+    },
+    {
+      "path": "src/loaders/obj_verts.rs",
+      "bytes": 3474,
+      "sha256": "29da84c284d2d2ee88f9334476a842c3c178f2586236d1bbdc8d70d9b715f920",
+      "git_blob_sha1": "d382c3a6742e07780ae1350c89531b3d32827916"
+    },
+    {
+      "path": "src/loaders/reference_rig.rs",
+      "bytes": 10809,
+      "sha256": "f43b82499f563cb3190ec9e4645c0657a15f773520a57358505aeeeccfb530d6",
+      "git_blob_sha1": "2f9ed2c9576f20a724791403f71615da12f6f989"
+    },
+    {
+      "path": "src/loaders/rig_config.rs",
+      "bytes": 2557,
+      "sha256": "75078eda9575023f8bbd1025ba1ef3a6dea0328b3b031c4be68af796faea27ba",
+      "git_blob_sha1": "2b6d7cb92efff64105bf7c25072b4324ae7f2323"
+    },
+    {
+      "path": "src/loaders/rig_weights.rs",
+      "bytes": 2060,
+      "sha256": "93629108898991b58181c23b6c0e33e989f7a4e682fd451f6750dc74a9d0bf57",
+      "git_blob_sha1": "7e7312b95b2da31546d103fc1d1de4858e9e77a1"
+    },
+    {
+      "path": "src/loaders/rotation_only_animation.rs",
+      "bytes": 29688,
+      "sha256": "45046fb03d7c5c25872ca6c91246c262b8695195284c29d1ba1ff2d06efc0c75",
+      "git_blob_sha1": "819aa6baf7f23797064301d45e53a7aa9bd504c2"
+    },
+    {
+      "path": "src/loaders/shape_config.rs",
+      "bytes": 2825,
+      "sha256": "f4a5ec2f4bc86fd4905ca9a7fc54b8238b26e786c85e136a65d9a1adc77d6683",
+      "git_blob_sha1": "add7dbaba92442696c135dc350434cb5d73a8624"
+    },
+    {
+      "path": "src/loaders/target.rs",
+      "bytes": 3433,
+      "sha256": "92d25bb92ac004a10261815e39a77c3d03f9782034c2dbbcbf9f802620cc7dba",
+      "git_blob_sha1": "f9217ad53217d9a15dd1891bc4d67b61d623baf1"
+    },
+    {
+      "path": "src/loaders/template_asset.rs",
+      "bytes": 1323,
+      "sha256": "a9e1d3c8e50cddf27446652096411a5de8be6ae8bf3727e6a852bb4676ec0d18",
+      "git_blob_sha1": "913b69a3c5e6ffd9feabcfc7d2650b9dc8a76eee"
+    },
+    {
+      "path": "src/mesh_ops.rs",
+      "bytes": 11161,
+      "sha256": "84f0b9d993689cf0acfa971cdb510cc8979694775ec596938f0e0ca25bf0c317",
+      "git_blob_sha1": "97b58b413c7c4f5827b77a5f57c323076e7bbfd6"
+    },
+    {
+      "path": "src/morphs.rs",
+      "bytes": 22526,
+      "sha256": "c6e7653ee062f1dc457b0a1d87eef69055ec8903dce67f7f9e41da2242cd0971",
+      "git_blob_sha1": "a66059e2b16b803a02eae7134b7043c127b14b1a"
+    },
+    {
+      "path": "src/physics/avian.rs",
+      "bytes": 44221,
+      "sha256": "f8afe85d2ff51dfb9347ffa00fbc6d329c6282f187308d2303b11606a881fa70",
+      "git_blob_sha1": "118cccdcdfaa8e9dea8f0af49c81385a722d2047"
+    },
+    {
+      "path": "src/physics/boxddd.rs",
+      "bytes": 44807,
+      "sha256": "a21b99b4b023f74ceda10a3ecef07b231e0b1ad50a460e5c7477d80c4980ff60",
+      "git_blob_sha1": "4d0d485c28cd1ca24856a7daa85973c1481f691b"
+    },
+    {
+      "path": "src/physics/jolt.rs",
+      "bytes": 41880,
+      "sha256": "7dee5e70dd973475de4b3d35c3af08d2091dc934dd1d9fb1133134c1315253f1",
+      "git_blob_sha1": "5a68ddf9aec69abba699f8e942053b696d6b7762"
+    },
+    {
+      "path": "src/physics/mod.rs",
+      "bytes": 6353,
+      "sha256": "75b75992d54d949c9b9befe3b053391532ab913b5d6b7e008d8e2d2c643b9fac",
+      "git_blob_sha1": "b80b01cf118c077201dd14c3c9a3a6c603f42ea1"
+    },
+    {
+      "path": "src/rigs.rs",
+      "bytes": 27383,
+      "sha256": "1a8f772bd5ce36e08954382b5d219ad87d92eb92554f5b8fef788f76f1451d82",
+      "git_blob_sha1": "70c50ea0cd67ad847aaee6789356fca1f5994c2b"
+    },
+    {
+      "path": "src/skeleton_lod.rs",
+      "bytes": 21423,
+      "sha256": "14d5382bed16f3d0adbf4ff5d5ea28e306d3c82e75d08c51369b0815e8a9070d",
+      "git_blob_sha1": "99c2ea47540d84cbc932486c54bffa806b899acb"
+    },
+    {
+      "path": "src/spawn_mesh.rs",
+      "bytes": 24807,
+      "sha256": "263d6532ec8d81228f7eae0d8f131fc9acceee1d58563dbfc9fda1b9c461d545",
+      "git_blob_sha1": "d4899108c6467242435676439d8ef435ba68132d"
+    },
+    {
+      "path": "src/spawn_skeleton.rs",
+      "bytes": 32396,
+      "sha256": "b0a07c932dadd184a4b676f830dab152894adff2b159a3f7718a7b7125162777",
+      "git_blob_sha1": "e4afb17b98a5e1c1aa0f6b49be832d5d95b4b135"
+    },
+    {
+      "path": "src/template.rs",
+      "bytes": 10294,
+      "sha256": "4afbff7d3c09a57bf466be98189f280b2b1b918db56707e7071ebb5837b6331c",
+      "git_blob_sha1": "53e8c8b73b6be5439ae258466ed13ef8dd570e51"
+    }
+  ],
+  "frozen_source_code_tree_sha256": "1c75796828d3af9311ac9bf6f8e8777a77d66838e598544aff7377b908c8a6e8",
+  "source_code_files": {
+    "src/animation.rs": "ac87e6e0a00f0425ea16506995c9bd20d1e3165b7acd369d901b931110d4988f",
+    "src/assets.rs": "fa56cef044582191efe643ac905750c1a4b64d05e88be825ef48f8c02d4f5ace",
+    "src/basemesh.rs": "7551b0def9a402ec34bc1a3d76840c729fe7893a30598b4dad46a3b39a4a5baf",
+    "src/bone_debug.rs": "8cbe74a18f9762281c9d46d8282382ed7150a7ae6a4b59d04922079981a19b70",
+    "src/gpu/bake.rs": "c577c818d4c3f254bcfa7aa9f712e88ca7196199341d81f68affd4cfe6c045fe",
+    "src/gpu/bank.rs": "b4989ab5210a17d2c19962b3e6c3adc9044b1676715adb3b7ec564e4fa27c6ad",
+    "src/gpu/config.rs": "3394b12c94f039c32d229070dee940f4d8b77c2d451e6bb8d5b7e5a7d3f93bfd",
+    "src/gpu/crowd_forward.wgsl": "5a10f78904a6871500075d83b3a535b1dd016453e4a81d45c16881c696f65935",
+    "src/gpu/crowd_prepass.wgsl": "6cb7bccd4dd61be4395b854b1cdadea8c587ded9f0af5112e3c4a82a67baa7ea",
+    "src/gpu/crowd_skin.wgsl": "5e0b1d201e6387672a876a3f128d56c688ebe8fc04f672bc51c4df56bb8b9a36",
+    "src/gpu/material.rs": "5cbea81337efd4ea027a79b46b93380aae253ed8b6a80f218538c8f3beb66463",
+    "src/gpu/mod.rs": "281ffdfec940ffda91b1a2bdf127bf9affbe531089259c7716601b3fdf84beda",
+    "src/gpu/pipeline.rs": "df5ae5bbfd559788449003d24735acb332aa177a529b77936d210153689790de",
+    "src/gpu/pose.wgsl": "bba5e8bd804e762c453dd54802792bee654c0ee3bf72b7fd38574b76f7635dbf",
+    "src/gpu/readback.rs": "cc4431b9d40357fed8d35dc9c98cd8ed110eca853e05d09624c7a89a675429a0",
+    "src/gpu/shapes.rs": "8a478d4232a424069c139684cc3265cce602e18732fd55a9793a9e7e74d9961a",
+    "src/gpu/state.rs": "307cb100fdf4e23298cdc1f036be8e223c217f03ee0adf0041d186f77aab70ca",
+    "src/helpers.rs": "c9256b45e826f3130d480a72a103218ae86a295f95aba9550a1fdcd71df98f72",
+    "src/lib.rs": "5534d85d6f98b7b79a6fbae42281f9ea07887bdc3239fc067580413e6c5733d7",
+    "src/loaders/composite_target_manifest.rs": "01054f8cc9b585de59209b8b9fa6ff41740061d31cf53927b9b3b4fceb01b36e",
+    "src/loaders/macro_json.rs": "2a2b64eb9864959550c7df8630375dabfab04885c1565eb3bd6e224b2b3afa36",
+    "src/loaders/mhclo.rs": "eae76f2964502ceea4e212b2f5cb229d1d2886446687e43a424d71e6e86aa8fc",
+    "src/loaders/mod.rs": "a176d0ce9d9ac325bce25863754e48d47557e0f1fd57517e373ab08bd31c348e",
+    "src/loaders/obj_verts.rs": "29da84c284d2d2ee88f9334476a842c3c178f2586236d1bbdc8d70d9b715f920",
+    "src/loaders/reference_rig.rs": "f43b82499f563cb3190ec9e4645c0657a15f773520a57358505aeeeccfb530d6",
+    "src/loaders/rig_config.rs": "75078eda9575023f8bbd1025ba1ef3a6dea0328b3b031c4be68af796faea27ba",
+    "src/loaders/rig_weights.rs": "93629108898991b58181c23b6c0e33e989f7a4e682fd451f6750dc74a9d0bf57",
+    "src/loaders/rotation_only_animation.rs": "45046fb03d7c5c25872ca6c91246c262b8695195284c29d1ba1ff2d06efc0c75",
+    "src/loaders/shape_config.rs": "f4a5ec2f4bc86fd4905ca9a7fc54b8238b26e786c85e136a65d9a1adc77d6683",
+    "src/loaders/target.rs": "7aed4c8fe21e15cba592c1a2f2acaedcac02b51ea3f5cdd3a503d36df019339f",
+    "src/loaders/template_asset.rs": "a9e1d3c8e50cddf27446652096411a5de8be6ae8bf3727e6a852bb4676ec0d18",
+    "src/mesh_ops.rs": "c6cd8e188c6c9768344926616f7c42b566da9ea35232584f06e72fc2146e9c95",
+    "src/morphs.rs": "1bf279cd0cbaddef818c20816e2260ed622a7429f8d072193af9dc10e979c356",
+    "src/physics/avian.rs": "f8afe85d2ff51dfb9347ffa00fbc6d329c6282f187308d2303b11606a881fa70",
+    "src/physics/boxddd.rs": "a21b99b4b023f74ceda10a3ecef07b231e0b1ad50a460e5c7477d80c4980ff60",
+    "src/physics/jolt.rs": "7dee5e70dd973475de4b3d35c3af08d2091dc934dd1d9fb1133134c1315253f1",
+    "src/physics/mod.rs": "75b75992d54d949c9b9befe3b053391532ab913b5d6b7e008d8e2d2c643b9fac",
+    "src/rigs.rs": "4ae57b2d08ed0d41e7497d533464351136aadf97e0f21e9a9e22f560294ac2cc",
+    "src/skeleton_lod.rs": "14d5382bed16f3d0adbf4ff5d5ea28e306d3c82e75d08c51369b0815e8a9070d",
+    "src/spawn_mesh.rs": "263d6532ec8d81228f7eae0d8f131fc9acceee1d58563dbfc9fda1b9c461d545",
+    "src/spawn_skeleton.rs": "b0a07c932dadd184a4b676f830dab152894adff2b159a3f7718a7b7125162777",
+    "src/template.rs": "4afbff7d3c09a57bf466be98189f280b2b1b918db56707e7071ebb5837b6331c"
+  },
+  "admitted_patches": {
+    "packaging.patch": "b72c4573a319f3f6d93530eab8fa8508f9157aa0dc16bfd08185d80a59ce9200",
+    "B1-threshold.patch": "9a7cc3f9b0ea52d2dc3dcccbe58c37228ec6a462cea2fedfd4b6381dd242756c",
+    "01-explicit-target-paths.patch": "d3421693a716c2ca1073de219d013a2a4727a272534acade27580629b4e4b778",
+    "02-zero-padding.patch": "697ab610b9f63a1a0522d4282a2beda1fd5ea3b9816b76db688c7c5d6e5fe1a5",
+    "03-read-only-rig-data.patch": "f3fe7cdb5bbdf5c739669251b8a8742d957e6390de39fcdd507a13ab946abc94",
+    "04-proxy-map-export.patch": "5bdc1a9b0ba37149c84fce4ccca57332f85ce0c79c419c290b0204ed92daeb27"
+  },
+  "production_manifest_changes": [
+    "Removed nested workspace and absolute dependency patches; root owns the workspace and portable vendor patches",
+    "Added the upstream declared MIT OR Apache-2.0 package license and repository metadata"
+  ],
+  "algorithm_changes_after_frozen_source": false,
+  "license": "MIT OR Apache-2.0",
+  "source_code_files_role": "Frozen admitted pre-production-adaptation baseline; retained unchanged",
+  "production_source_code_files": {
+    "src/animation.rs": "ac87e6e0a00f0425ea16506995c9bd20d1e3165b7acd369d901b931110d4988f",
+    "src/assets.rs": "fa56cef044582191efe643ac905750c1a4b64d05e88be825ef48f8c02d4f5ace",
+    "src/basemesh.rs": "7551b0def9a402ec34bc1a3d76840c729fe7893a30598b4dad46a3b39a4a5baf",
+    "src/bone_debug.rs": "8cbe74a18f9762281c9d46d8282382ed7150a7ae6a4b59d04922079981a19b70",
+    "src/gpu/bake.rs": "c577c818d4c3f254bcfa7aa9f712e88ca7196199341d81f68affd4cfe6c045fe",
+    "src/gpu/bank.rs": "b4989ab5210a17d2c19962b3e6c3adc9044b1676715adb3b7ec564e4fa27c6ad",
+    "src/gpu/config.rs": "3394b12c94f039c32d229070dee940f4d8b77c2d451e6bb8d5b7e5a7d3f93bfd",
+    "src/gpu/crowd_forward.wgsl": "5a10f78904a6871500075d83b3a535b1dd016453e4a81d45c16881c696f65935",
+    "src/gpu/crowd_prepass.wgsl": "6cb7bccd4dd61be4395b854b1cdadea8c587ded9f0af5112e3c4a82a67baa7ea",
+    "src/gpu/crowd_skin.wgsl": "5e0b1d201e6387672a876a3f128d56c688ebe8fc04f672bc51c4df56bb8b9a36",
+    "src/gpu/material.rs": "5cbea81337efd4ea027a79b46b93380aae253ed8b6a80f218538c8f3beb66463",
+    "src/gpu/mod.rs": "281ffdfec940ffda91b1a2bdf127bf9affbe531089259c7716601b3fdf84beda",
+    "src/gpu/pipeline.rs": "df5ae5bbfd559788449003d24735acb332aa177a529b77936d210153689790de",
+    "src/gpu/pose.wgsl": "bba5e8bd804e762c453dd54802792bee654c0ee3bf72b7fd38574b76f7635dbf",
+    "src/gpu/readback.rs": "cc4431b9d40357fed8d35dc9c98cd8ed110eca853e05d09624c7a89a675429a0",
+    "src/gpu/shapes.rs": "8a478d4232a424069c139684cc3265cce602e18732fd55a9793a9e7e74d9961a",
+    "src/gpu/state.rs": "307cb100fdf4e23298cdc1f036be8e223c217f03ee0adf0041d186f77aab70ca",
+    "src/helpers.rs": "c9256b45e826f3130d480a72a103218ae86a295f95aba9550a1fdcd71df98f72",
+    "src/lib.rs": "47c4ba72f227cfcb547cbcb02a7c9dcc74f212194ef64f915e3dfc708b36a2a5",
+    "src/loaders/composite_target_manifest.rs": "01054f8cc9b585de59209b8b9fa6ff41740061d31cf53927b9b3b4fceb01b36e",
+    "src/loaders/macro_json.rs": "2a2b64eb9864959550c7df8630375dabfab04885c1565eb3bd6e224b2b3afa36",
+    "src/loaders/mhclo.rs": "eae76f2964502ceea4e212b2f5cb229d1d2886446687e43a424d71e6e86aa8fc",
+    "src/loaders/mod.rs": "a176d0ce9d9ac325bce25863754e48d47557e0f1fd57517e373ab08bd31c348e",
+    "src/loaders/obj_verts.rs": "29da84c284d2d2ee88f9334476a842c3c178f2586236d1bbdc8d70d9b715f920",
+    "src/loaders/reference_rig.rs": "f43b82499f563cb3190ec9e4645c0657a15f773520a57358505aeeeccfb530d6",
+    "src/loaders/rig_config.rs": "75078eda9575023f8bbd1025ba1ef3a6dea0328b3b031c4be68af796faea27ba",
+    "src/loaders/rig_weights.rs": "93629108898991b58181c23b6c0e33e989f7a4e682fd451f6750dc74a9d0bf57",
+    "src/loaders/rotation_only_animation.rs": "45046fb03d7c5c25872ca6c91246c262b8695195284c29d1ba1ff2d06efc0c75",
+    "src/loaders/shape_config.rs": "f4a5ec2f4bc86fd4905ca9a7fc54b8238b26e786c85e136a65d9a1adc77d6683",
+    "src/loaders/target.rs": "7aed4c8fe21e15cba592c1a2f2acaedcac02b51ea3f5cdd3a503d36df019339f",
+    "src/loaders/template_asset.rs": "a9e1d3c8e50cddf27446652096411a5de8be6ae8bf3727e6a852bb4676ec0d18",
+    "src/mesh_ops.rs": "c6cd8e188c6c9768344926616f7c42b566da9ea35232584f06e72fc2146e9c95",
+    "src/morphs.rs": "1bf279cd0cbaddef818c20816e2260ed622a7429f8d072193af9dc10e979c356",
+    "src/physics/avian.rs": "f8afe85d2ff51dfb9347ffa00fbc6d329c6282f187308d2303b11606a881fa70",
+    "src/physics/boxddd.rs": "a21b99b4b023f74ceda10a3ecef07b231e0b1ad50a460e5c7477d80c4980ff60",
+    "src/physics/jolt.rs": "7dee5e70dd973475de4b3d35c3af08d2091dc934dd1d9fb1133134c1315253f1",
+    "src/physics/mod.rs": "75b75992d54d949c9b9befe3b053391532ab913b5d6b7e008d8e2d2c643b9fac",
+    "src/rigs.rs": "4ae57b2d08ed0d41e7497d533464351136aadf97e0f21e9a9e22f560294ac2cc",
+    "src/skeleton_lod.rs": "14d5382bed16f3d0adbf4ff5d5ea28e306d3c82e75d08c51369b0815e8a9070d",
+    "src/spawn_mesh.rs": "263d6532ec8d81228f7eae0d8f131fc9acceee1d58563dbfc9fda1b9c461d545",
+    "src/spawn_skeleton.rs": "b0a07c932dadd184a4b676f830dab152894adff2b159a3f7718a7b7125162777",
+    "src/template.rs": "4afbff7d3c09a57bf466be98189f280b2b1b918db56707e7071ebb5837b6331c"
+  },
+  "production_source_code_tree_sha256": "1638145da5417a7257aa686a7c6d8f96c747c3840c4a2894153155195872038c",
+  "production_adaptations": [
+    {
+      "patch": "production-lazy-resource-scheduling.patch",
+      "sha256": "5e9ff7181f83d87213c37f2b185e2a4b5cbd17bfe6ce37f07a76703137de6dc2",
+      "scope": "Registration-only resource-existence guards for readiness check and reset observer before lazy B1 source setup",
+      "baseline_source_code_tree_sha256": "1c75796828d3af9311ac9bf6f8e8777a77d66838e598544aff7377b908c8a6e8",
+      "baseline_files": {
+        "src/lib.rs": "5534d85d6f98b7b79a6fbae42281f9ea07887bdc3239fc067580413e6c5733d7"
+      },
+      "production_files": {
+        "src/lib.rs": "47c4ba72f227cfcb547cbcb02a7c9dcc74f212194ef64f915e3dfc708b36a2a5"
+      },
+      "geometry_rig_influence_changes": false,
+      "runtime_verification": "NOT-RUN by source worker; root/runtime owner runs real production seam tests"
+    }
+  ]
+}

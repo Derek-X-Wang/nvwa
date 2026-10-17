@@ -4,6 +4,7 @@ use std::collections::BTreeMap;
 
 fn profile() -> CharacterProfile {
     CharacterProfile {
+        backend: CharacterBackend::Glb { schema_version: 1 },
         id: "humanoid-v1".into(),
         asset_path: "fixtures/humanoid.glb".into(),
         asset_sha256: "0".repeat(64),
