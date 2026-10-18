@@ -1,0 +1,101 @@
+{
+  "evidence": "comparator-only controls + native metadata check; NOT executed compiled production-source mutations",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "experiments/60-b1-continuous-motion/test_controls.py"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "...............\n----------------------------------------------------------------------\nRan 15 tests in 0.003s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-O",
+        "experiments/60-b1-continuous-motion/test_controls.py"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "...............\n----------------------------------------------------------------------\nRan 15 tests in 0.002s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "experiments/60-b1-continuous-motion/test_serve.py"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.017s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-O",
+        "experiments/60-b1-continuous-motion/test_serve.py"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.016s\n\nOK\n"
+    }
+  ],
+  "native_metadata": {
+    "command": "CARGO_TARGET_DIR=$PWD/target cargo check --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --all-targets --locked --offline -j1",
+    "exit": 0,
+    "reported_duration": "2m33s",
+    "scope": "metadata only; no executable linking/run/GPU"
+  },
+  "lock_extra_packages": [
+    [
+      "b1-continuous-probe",
+      "0.0.0",
+      "path"
+    ]
+  ],
+  "runtime": "NOT-RUN",
+  "desktop": "NOT-RUN",
+  "web": "NOT-RUN",
+  "production_source_mutations": "NOT-RUN",
+  "sources": {
+    "Cargo.lock": "6c4e6b3759e209974727b83a9bd0b682d0a48fcb4b44613aeb31860767bc3dee",
+    "Cargo.toml": "359cb5a04fa96469fd0bae5fc1d388a03acc9c1a878d173adf03586c0e85aa8a",
+    "README.md": "10c15d284162fa3e4e1851f674a7122e39e0f1b13e5c9c43111a7b225c86075d",
+    "check_selected.py": "dec64c9476a9ba9f2df374437d8a017497767d737e27665dd48638f9c9cbe62c",
+    "checker.py": "9df1b095a81050effae88a99286426bcd5991513f26d84ff26f7662c9cf41a62",
+    "geometry.py": "26b676e5880bf5a0a228574676215db6b2aa31b5b5d3004458af33fea9d4f5aa",
+    "index.html": "f4896bc7f207741d694e40caee1a7a87bbce6cc4293ba6770018e1b304ab6351",
+    "run_matrix.py": "fcc7c2838c3603194a0d40a61947d0e2f2dc541f262c20c5f17a765dd9584d57",
+    "selected_commands.py": "3010de8c72aa8dc237e84825492cb13cc2aebd56f32d3b3471c0445de93664a4",
+    "serve.py": "bc3e53e48ede089f53b6febe602d7adfb8c72f4f7d64e624a23ffe2ff872ee95",
+    "src/bin/matrix.rs": "c8778eac5d610ef7ea165952c06a7ab8f32a9391fd285ce861b97a5c1fe60776",
+    "src/bin/studio.rs": "2219d15d22bd5df0a27851b7743c857c465d42e85e1cedf57708d4ab7e291110",
+    "src/lib.rs": "9bc341c091df61ad8a35fe2282496f68b8094197642a26fbcba3ee376cca5165",
+    "test_controls.py": "ce8d3160eb4b74a7a0d7ed1e9d9417222c96b9ffbe73fc4dd19ea5a85c693bd1",
+    "test_serve.py": "5c0d0e2f94d9e3cd91dd554726f5aa3c99fac48f3b9e4c77e4fa5abaac9423d4"
+  },
+  "checker_coverage_fix": {
+    "review_finding": "P2 matrix k could be relabelled independently of requested/actual time",
+    "required_binding": "non-bool integer k in0..32; request.seconds exactly k/8; finite position_seconds/source_seconds match request and probe-entry",
+    "control_kind": "comparator-only; relabelled neutral inputs routed through actual Checker.check entry point; no Rust source mutation",
+    "controls": 15,
+    "old_checker_receipts": "provisional; actual CPU binary must be rerun with fixed checker",
+    "previous_worker_receipt_sha256": "4c971b8a75ee83e97ae2e48e0407b3010b398b6cb23bfe1d38fa835d06dba37e",
+    "rust_cargo_lock_changed": false,
+    "native_metadata_note": "earlier retained native metadata pass; no compiler rerun for this Python-only correction"
+  },
+  "browser_adapter": {
+    "scope": "test-only DOM bootstrap + stdlib loopback storage; no product UI/Rust/math changes",
+    "handler_controls": 9,
+    "math_coverage_controls": 15,
+    "server_started": false,
+    "browser_or_gpu_used": false,
+    "live_dom_fetch": "NOT-RUN",
+    "initial_control_failure": "Both normal/-O initially failed one fixture assertion because macOS /var fixture path was unresolved while handler intentionally resolves /private/var. Fixture expectation corrected to Path.resolve; guards unchanged.",
+    "previous_worker_receipt_sha256": "94198f2c204efcbdeaad0946d482b984ded7ca31e560380c0f2c8c2d5f72da10"
+  }
+}

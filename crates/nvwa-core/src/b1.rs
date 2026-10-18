@@ -1,9 +1,12 @@
 //! Bounded B1 identity and byte validation. No filesystem or renderer dependency.
-use crate::{CharacterProfile, CoreError, ParameterSpec, Result, parse_json};
+use crate::{CharacterProfile, ClipSpec, CoreError, ParameterSpec, Result, parse_json};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
 pub const B1_PROFILE_ID: &str = "nvwa-mpfb-b1-v1";
+pub const B1_MOTION_PROFILE_ID: &str = "nvwa-mpfb-b1-motion-v1";
+pub const B1_MOTION_CLIPS: [&str; 2] = ["b1_arm_rehearsal_v1", "b1_knee_flex_v1"];
+pub const B1_MOTION_DURATION_SECONDS: f32 = 4.0;
 pub const B1_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v1";
 pub const B1_ASSET_PATH: &str = "characters/mpfb-b1-v1/manifest.json";
 pub const B1_ASSET_MANIFEST_SHA256: &str =
@@ -75,6 +78,18 @@ impl CharacterBackend {
     pub fn is_b1(&self) -> bool {
         matches!(self, Self::B1Cpu { .. })
     }
+    pub fn is_b1_motion(&self) -> bool {
+        matches!(
+            self,
+            Self::B1Cpu {
+                schema_version: 2,
+                ..
+            }
+        )
+    }
+    pub fn supports_timeline(&self) -> bool {
+        self.is_glb() || self.is_b1_motion()
+    }
     pub fn is_glb(&self) -> bool {
         matches!(self, Self::Glb { .. })
     }
@@ -82,7 +97,7 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 {
+        if version != 1 && !(version == 2 && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported; expected 1"),
@@ -127,11 +142,43 @@ impl CharacterProfile {
             clips: Vec::new(),
         }
     }
+    /// Authored continuous rehearsal on the same admitted body and sportsuit.
+    pub fn b1_motion() -> Self {
+        let mut profile = Self::b1();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 2,
+            asset_id: B1_ASSET_ID.into(),
+        };
+        profile.id = B1_MOTION_PROFILE_ID.into();
+        profile.clips = B1_MOTION_CLIPS
+            .into_iter()
+            .enumerate()
+            .map(|(animation_index, id)| ClipSpec {
+                id: id.into(),
+                animation_index,
+                duration_seconds: B1_MOTION_DURATION_SECONDS,
+            })
+            .collect();
+        profile
+    }
     pub(crate) fn validate_b1(&self) -> Result<()> {
-        if self != &Self::b1() {
+        if (self.id == B1_PROFILE_ID && self.backend.is_b1_motion())
+            || (self.id == B1_MOTION_PROFILE_ID && !self.backend.is_b1_motion())
+        {
+            return Err(CoreError::new(
+                "unsupported_character_version",
+                "B1 backend version does not match its canonical profile identity",
+            ));
+        }
+        let canonical = if self.backend.is_b1_motion() {
+            Self::b1_motion()
+        } else {
+            Self::b1()
+        };
+        if self != &canonical {
             return Err(CoreError::new(
                 "unsupported_character_asset",
-                "B1 requires the exact shipped profile ID, asset path/hash, license, two parameter specs and empty clips",
+                "B1 requires its exact versioned shipped profile, asset identity, parameters and clip catalogue",
             ));
         }
         Ok(())

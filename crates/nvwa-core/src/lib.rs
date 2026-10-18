@@ -547,7 +547,7 @@ impl SceneDocument {
             .iter()
             .map(|p| (p.id.clone(), p.default))
             .collect();
-        let timeline = profile
+        let mut timeline = profile
             .clips
             .iter()
             .find(|c| c.id == "idle")
@@ -562,6 +562,17 @@ impl SceneDocument {
                 }]
             })
             .unwrap_or_default();
+        if profile.backend.is_b1_motion() {
+            let clip = &profile.clips[0];
+            timeline = vec![TimelineClip {
+                id: "timeline-1".into(),
+                clip_id: clip.id.clone(),
+                start_seconds: 0.0,
+                duration_seconds: clip.duration_seconds,
+                speed: 1.0,
+                looping: true,
+            }];
+        }
         let document = Self {
             schema_version: SCHEMA_VERSION,
             revision: 0,
@@ -619,7 +630,7 @@ impl SceneDocument {
                 ));
             }
         }
-        if self.profile.backend.is_b1() && !self.timeline.is_empty() {
+        if !self.profile.backend.supports_timeline() && !self.timeline.is_empty() {
             return Err(CoreError::new(
                 "unsupported_character_operation",
                 "B1 diagnostic characters do not support animation timelines",
@@ -1039,6 +1050,9 @@ fn apply_edit(document: &mut SceneDocument, command: &Command) -> Result<()> {
             }
             validate_b1_pose(pose_id)?;
             document.character.diagnostic_pose = Some(pose_id.clone());
+            if document.profile.backend.is_b1_motion() {
+                document.timeline.clear();
+            }
         }
         Command::SetTimeline { clips } => document.timeline = clips.clone(),
         Command::SetStage { stage } => {
@@ -1138,3 +1152,6 @@ impl<'de> Deserialize<'de> for UniqueJson {
         deserializer.deserialize_any(Visitor)
     }
 }
+
+#[cfg(test)]
+mod b1_motion_tests;

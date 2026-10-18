@@ -775,8 +775,10 @@ fn draw_editor_ui(
                     state.selected = true;
                 }
                 ui.small(&doc.profile.id);
-                ui.small(if doc.profile.backend.is_b1() {
-                    "B1 positive aggregate CPU · diagnostic poses"
+                ui.small(if doc.profile.backend.is_b1_motion() {
+                    "B1 positive aggregate CPU · authored rehearsal"
+                } else if doc.profile.backend.is_b1() {
+                    "B1 positive aggregate CPU · static diagnostics"
                 } else {
                     "Skinned humanoid"
                 });
@@ -866,7 +868,7 @@ fn draw_editor_ui(
                             });
                         }
                     }
-                    ui.small("No continuous motion, cloth or appearance acceptance.");
+                    ui.small("Selecting a diagnostic stops the timeline. Cloth and appearance remain unaccepted.");
                 }
                 ui.separator();
             }
@@ -886,32 +888,43 @@ fn draw_editor_ui(
             ui.heading(
                 if document
                     .as_ref()
+                    .is_some_and(|doc| doc.profile.backend.is_b1_motion())
+                {
+                    "B1 authored rehearsal"
+                } else if document
+                    .as_ref()
                     .is_some_and(|doc| doc.profile.backend.is_b1())
                 {
-                    "B1 diagnostic pose"
+                    "B1 static diagnostic pose"
                 } else {
                     "Animation"
                 },
             );
             ui.add_enabled_ui(
-                status.ready
-                    && document
-                        .as_ref()
-                        .is_some_and(|doc| !doc.timeline.is_empty()),
+                transport_enabled(
+                    document.as_ref(),
+                    status,
+                    &next_playback,
+                    interaction.busy(),
+                ),
                 |ui| {
                     draw_transport_buttons(ui, &mut next_playback);
                 },
             );
-            if let Some(doc) = document.as_ref().filter(|doc| doc.profile.backend.is_glb()) {
+            if let Some(doc) = document
+                .as_ref()
+                .filter(|doc| doc.profile.backend.supports_timeline())
+            {
                 let has_sequence_actions = ["idle", "wave", "turn"]
                     .iter()
                     .all(|id| doc.profile.clips.iter().any(|clip| clip.id == *id));
-                if ui
-                    .add_enabled(
-                        has_sequence_actions,
-                        egui::Button::new("Create 9s sequence"),
-                    )
-                    .clicked()
+                if doc.profile.backend.is_glb()
+                    && ui
+                        .add_enabled(
+                            has_sequence_actions,
+                            egui::Button::new("Create 9s sequence"),
+                        )
+                        .clicked()
                 {
                     command = Some(Command::SetTimeline {
                         clips: nine_second_sequence(),
@@ -924,7 +937,13 @@ fn draw_editor_ui(
                             if ui
                                 .selectable_label(
                                     doc.is_single_loop() && doc.timeline[0].clip_id == clip.id,
-                                    &clip.id,
+                                    if clip.id == "b1_arm_rehearsal_v1" {
+                                        "Arm rehearsal · authored"
+                                    } else if clip.id == "b1_knee_flex_v1" {
+                                        "Knee flex · authored"
+                                    } else {
+                                        &clip.id
+                                    },
                                 )
                                 .clicked()
                             {
@@ -954,7 +973,10 @@ fn draw_editor_ui(
                 ));
             }
         });
-        if let Some(doc) = document.as_ref().filter(|doc| doc.profile.backend.is_glb()) {
+        if let Some(doc) = document
+            .as_ref()
+            .filter(|doc| doc.profile.backend.supports_timeline())
+        {
             let mut ordered = doc.timeline.clone();
             ordered.sort_by(|a, b| a.start_seconds.total_cmp(&b.start_seconds));
             if !doc.is_single_loop() {
@@ -1025,9 +1047,14 @@ fn draw_editor_ui(
             "Wave interaction · sequence cursor held"
         } else if document
             .as_ref()
+            .is_some_and(|doc| doc.profile.backend.is_b1_motion())
+        {
+            "B1 authored rehearsal/diagnostic · not AI-generated · shape edits preserve phase"
+        } else if document
+            .as_ref()
             .is_some_and(|doc| doc.profile.backend.is_b1())
         {
-            "Static diagnostic pose · shape and pose edits use shared Work commands"
+            "B1 static diagnostic pose · shape and pose edits use shared Work commands"
         } else {
             "Original fixture: Click chest/head to wave"
         });
@@ -1081,8 +1108,12 @@ fn draw_editor_ui(
     guard.pointer = editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
     guard.keyboard = ctx.egui_wants_keyboard_input();
     if !guard.keyboard
-        && !interaction.busy()
-        && !next_playback.clip_id.is_empty()
+        && transport_enabled(
+            document.as_ref(),
+            status,
+            &next_playback,
+            interaction.busy(),
+        )
         && ctx.input(|i| i.key_pressed(egui::Key::Space))
     {
         next_playback.playing = !next_playback.playing;
@@ -1108,7 +1139,7 @@ fn draw_editor_ui(
     state.save_notice = save_notice;
     *playback = next_playback;
     if new_b1 {
-        let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1())
+        let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_motion())
             .map_err(|e| e.to_string())
             .and_then(|doc| editor.request_open(doc));
         if let Err(error) = result {
@@ -1203,7 +1234,7 @@ fn draw_player(
                     ui.label("Verifying B1 candidate · current Work remains active");
                 }
                 ui.add_enabled_ui(
-                    status.ready && !interaction.busy() && !next.clip_id.is_empty(),
+                    transport_enabled(editor.document(), status, &next, interaction.busy()),
                     |ui| {
                         draw_transport_buttons(ui, &mut next);
                         if let Some(doc) = editor.document() {
@@ -1220,6 +1251,11 @@ fn draw_player(
             ));
             ui.small(
                 if editor
+                    .document()
+                    .is_some_and(|doc| doc.profile.backend.is_b1_motion())
+                {
+                    "B1 authored rehearsal/diagnostic · not AI-generated"
+                } else if editor
                     .document()
                     .is_some_and(|doc| doc.profile.backend.is_b1())
                 {
@@ -1260,9 +1296,7 @@ fn draw_player(
     guard.pointer = editor_owns_pointer(ctx, viewport.available_rect_before_wrap());
     guard.keyboard = ctx.egui_wants_keyboard_input();
     if !guard.keyboard
-        && status.ready
-        && !interaction.busy()
-        && !next.clip_id.is_empty()
+        && transport_enabled(editor.document(), status, &next, interaction.busy())
         && ctx.input(|input| input.key_pressed(egui::Key::Space))
     {
         next.playing = !next.playing;
@@ -1296,6 +1330,23 @@ fn draw_work_path(ui: &mut egui::Ui, path: &mut String, width: f32) {
     web_input::work_text_edit(ui, path, width);
     #[cfg(not(target_arch = "wasm32"))]
     ui.add(egui::TextEdit::singleline(path).desired_width(width));
+}
+
+/// Shared Studio/Player capability gate; old static Works never expose Play,
+/// even if a stale transport intent exists before the next runtime update.
+fn transport_enabled(
+    doc: Option<&SceneDocument>,
+    status: &RuntimeStatus,
+    playback: &Playback,
+    busy: bool,
+) -> bool {
+    !busy
+        && !playback.clip_id.is_empty()
+        && doc.is_some_and(|doc| {
+            doc.profile.backend.supports_timeline()
+                && !doc.timeline.is_empty()
+                && (status.ready || doc.profile.backend.is_b1_motion())
+        })
 }
 
 fn draw_transport_buttons(ui: &mut egui::Ui, playback: &mut Playback) {
@@ -2020,3 +2071,39 @@ mod tests {
 
 #[cfg(all(test, not(target_arch = "wasm32")))]
 mod save_feedback_tests;
+
+#[cfg(test)]
+mod b1_player_transport_tests {
+    use super::*;
+    #[test]
+    fn studio_and_player_gate_static_work_even_with_stale_transport_identity() {
+        let status = RuntimeStatus {
+            ready: true,
+            ..default()
+        };
+        let stale = Playback {
+            clip_id: "idle".into(),
+            playing: true,
+            active_timeline_id: "timeline-1".into(),
+            ..default()
+        };
+        let static_work = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1()).unwrap();
+        assert!(!transport_enabled(
+            Some(&static_work),
+            &status,
+            &stale,
+            false
+        ));
+        let motion = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_motion()).unwrap();
+        let playback = Playback {
+            clip_id: nvwa_core::B1_MOTION_CLIPS[0].into(),
+            ..default()
+        };
+        assert!(transport_enabled(Some(&motion), &status, &playback, false));
+        assert!(
+            transport_enabled(Some(&motion), &RuntimeStatus::default(), &playback, false),
+            "Pause remains available while a motion shape fit is pending"
+        );
+        assert!(!transport_enabled(Some(&motion), &status, &playback, true));
+    }
+}

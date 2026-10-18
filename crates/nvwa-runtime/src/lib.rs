@@ -1,7 +1,7 @@
 //! Shared native/Web renderer. The editor document is the source of truth.
 mod b1;
 mod stage;
-pub use b1::register_b1_asset_source;
+pub use b1::{b1_frame_snapshot, register_b1_asset_source};
 pub use stage::StageViewOverride;
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -939,7 +939,7 @@ fn control_single_loop_before_advance(
     }
     let Some(document) = editor
         .document()
-        .filter(|document| document.is_single_loop())
+        .filter(|document| document.profile.backend.is_glb() && document.is_single_loop())
     else {
         return;
     };
@@ -981,7 +981,7 @@ fn control_playback(
         asset.applied_clip.clear();
         restored = true;
     }
-    let Some(document) = editor.document() else {
+    let Some(document) = editor.document().filter(|d| d.profile.backend.is_glb()) else {
         return;
     };
     let changed = prepare_timeline(
