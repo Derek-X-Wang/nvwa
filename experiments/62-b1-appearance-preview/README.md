@@ -7,8 +7,11 @@ An isolated technical preparation for issue79 while issue78's native acceptance 
 - Authenticated and selectively prepared the already approved CC0 archive. Exactly10 source payloads (6,769,409 bytes), plus selected metadata, full CC0 and a manifest. See [ASSETS.md](ASSETS.md).
 - Full RGB/RGBA PNG scanline decoding and alpha statistics. Skin is opaque RGB2048²; eyes and short04 hair retain their real alpha. Eyes/hair are preparation only, not rendered/fitted in this slice.
 - Eleven asset controls and nine loopback capture controls pass normally and with Python `-O` (20 unique tests,40 executions).
-- Independent fresh Astra/high R1 source review of Sol-authored preview: no remaining P1/P2 findings after fixing rejected-command stale success and transport freshness. Review has not yet certified runtime behavior or pixels.
-- The first offline Web build failed with E0616(private field access) and E0596(missing mutable mesh binding); no Web export or native build was produced. The isolated preview was corrected and independently re-reviewed; a fresh bounded build is running. Native GUI will remain NOT-RUN while the user is away. No performance or appearance-quality result is claimed.
+- Actual Web build/export and IAB rendering pass. Four plain/skin toggles preserve full production snapshots; 18 declared skin/pose samples pass independent f64 FK/full LBS/foot checks. Live playback, seek, identical Work reopening, persistent rejected commands, actual missing-asset failure and recovery were exercised.
+- Independent fresh Astra/high source and retained-evidence review: no remaining P1/P2 findings. The reviewer checked all206 source identities,41 Web artifact hashes,27 capture receipt identities,18 numerical outputs and nine actual screenshots. See [SOURCE-REVIEW.md](SOURCE-REVIEW.md).
+- The first offline Web build failed with E0616(private field access) and E0596(missing mutable mesh binding); its failure is preserved. The corrected R2 Web build passes. At the 2026-10-18 00:00 UTC checkpoint, the separate native build is still running. Native GUI remains NOT-RUN while the user is away. No performance or production appearance admission is claimed.
+
+See [RESULTS.md](RESULTS.md) for the bounded conclusion, actual screenshots, retained record identities and remaining gates.
 
 ## Rendering contract
 
@@ -56,4 +59,4 @@ python3 -B experiments/62-b1-appearance-preview/build/check_captures.py \
   --captures "$NVWA_EXCLUSIVE_CAPTURES" --asset-root assets --out "$NVWA_EXCLUSIVE_CHECK_OUT"
 ```
 
-PARTIAL — Prepared assets,40 Python test executions and independent source review. Compilation, actual Web/native binding/rendering, live failure/recovery, appearance judgment and production admission remain unverified.
+PARTIAL — Actual Web skin/UV binding,18 numerical cases, failure/recovery,40 Python test executions and independent review pass. Native compilation is in progress at the recorded checkpoint; native GUI, close-up appearance quality, eyes/hair fitting, saved appearance identity, performance and production admission remain unverified.
