@@ -185,3 +185,51 @@ for exact bytes, retained actual68 production goldens and raw frame retention.
 R1's13 green Python tests were insufficient for the eight retained malformed
 records; the historical freeze and failure reproducer remain preserved. This
 is a Python/tests/docs repair. Rust and all fixed Works remain unchanged.
+
+## Typed transition rework — pending independent review/build
+
+The observer now uses `src/transition.rs` for its production-called typed
+readiness policy. `AppearanceStatus.pending` waits, including its retained
+reason text, under the original request's45-second deadline. Every wait clears
+held stability; two fresh consecutive current observations are still required.
+Open/runtime/runtime-appearance/stage/playback errors and nonpending appearance
+errors remain terminal. No error string is matched or swallowed.
+
+On readiness, the observer obtains the strict current `b1_frame_snapshot` first,
+checks its versioned Work/parameters/revision and appearance generation/body/
+transport binding, and then calls `appearance_snapshot`. Parameters compare to
+the typed f32 Work values directly, never to reparsed pretty-JSON decimals.
+Appearance must share that base body's identity, mesh and sample serial. Errors
+after claimed readiness remain terminal; there is no catch-all retry or timeout
+extension. Typed pending also invalidates prior ready identity evidence.
+
+Seven standalone std-only Rust policy controls pass; existing22 Python controls
+pass normally and with `-O`. Six additional observer transaction/identity tests
+are authored for the normal Cargo suite. **Full observer Cargo compilation and
+those six tests are NOT-RUN in this rework pass.** Root schedules independent
+review and new native/Wasm builds before actual requests. The failed original
+D command and separate D2 recovery observation remain unchanged historical
+records; they do not become successful patched-source requests. No69-case plan,
+collector, expected Work, production crate, numeric/quality limit or dependency
+is changed. The separate collector f32-normalization finding is outside this
+patch.
+
+Fast policy-only reproduction (fresh private output):
+
+```sh
+mkdir -p .work/transition71-policy
+rustc --edition=2024 --test experiments/71-b1-character-parameters/src/transition.rs \
+  -o .work/transition71-policy/policy-tests
+.work/transition71-policy/policy-tests --nocapture
+```
+
+Deferred full observer controls:
+
+```sh
+cargo test --manifest-path experiments/71-b1-character-parameters/Cargo.toml \
+  --lib --locked --offline
+```
+
+`TRANSITION-SOURCE.json` identifies this rework's source hashes and preparation
+limits. Earlier `FROZEN-SOURCE*.json` and existing runtime captures retain their
+original identities; their compiled artifacts do not execute this Rust change.

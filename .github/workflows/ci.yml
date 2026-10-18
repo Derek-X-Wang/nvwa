@@ -53,7 +53,7 @@ jobs:
       - name: Check eye, hair, and character parameter controls
         timeout-minutes: 3
         run: |
-          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters; do
+          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls; do
             python3 -B -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
             python3 -B -O -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
           done

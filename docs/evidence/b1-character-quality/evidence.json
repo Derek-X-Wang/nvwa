@@ -1,42 +1,922 @@
 {
   "admission85": {
-    "closure_status": "Not admitted; candidate build/CLI/Web screenshots do not satisfy the remaining gates",
-    "html_only_mitigation": {
-      "browser_retry": "NOT-RUN",
-      "changed_files": [
-        "index.html",
-        "test_html.py",
-        "PREPARATION.json",
-        "FROZEN-SOURCE.json"
-      ],
-      "export_file_count": 172,
-      "fresh_compile": false,
-      "html_sha256": "6ce3fd993111f823baad5af2b855ff506e2ab1bb140a227a6f17744d953b9523",
-      "independent_review": "pending at evidence preparation",
-      "old_r3_wasm_exactly_reused": true,
-      "original_r3_controls71_tests_per_mode": 19,
-      "root_cause": "UNKNOWN",
-      "rust_inline_js_works_changed": false,
-      "scope": "Post-R3 HTML-only mitigation and private export; no successful browser effect or cohort acceptance",
-      "source_author_reported_optimized_tests": 22,
-      "source_author_reported_tests_per_mode": 22,
-      "source_author_reported_wrap_mutation_controls": 6,
-      "source_freeze_sha256": "f74ac1eb0da083b13ebe64042a2bc5dabcd20b102d2db926c9701e837ce327ba",
-      "status": "AUTHORED_NOT_BROWSER_VERIFIED"
-    },
-    "live_recipes_per_endpoint": "NOT-RUN: three planned",
-    "native_accepted": 0,
-    "native_runtime": "NOT-RUN",
-    "native_web_native_exchange": "NOT-RUN",
-    "planned_held_cases_per_endpoint": 69,
     "status": "NOT_ADMITTED",
-    "web_accepted": 0,
-    "web_attempts": {
-      "control_transport": "CDP frame-tree timeout; no accepted frame",
-      "first_host_error_before_ui_requests": true,
-      "second_completed_cases": 0,
-      "second_open_requests_issued": 1,
-      "second_status": "failed; Open delivery uncertain before visible form mutation; no blind retry"
+    "closure_status": "Product581 R4 build/CI, native69+Web69 held CPU gates, ordinary89/exchange, fresh68/70 and72 CPU PASS; distinct R5 native18 andWeb18 actual sequences independently audited PASS; final assembled-source/public-evidence review, exact final-head CI and merged-main validation pending",
+    "current_round_ref": "/round89_r4_r5",
+    "required_held_cases_per_endpoint": 69,
+    "final_current_held_accepted": {
+      "native": 69,
+      "web": 69
+    },
+    "pending_gates_ref": "/round89_r4_r5/finalization_placeholders",
+    "historical_r3_snapshot": {
+      "closure_status": "Not admitted; candidate build/CLI/Web screenshots do not satisfy the remaining gates",
+      "html_only_mitigation": {
+        "browser_retry": "NOT-RUN",
+        "changed_files": [
+          "index.html",
+          "test_html.py",
+          "PREPARATION.json",
+          "FROZEN-SOURCE.json"
+        ],
+        "export_file_count": 172,
+        "fresh_compile": false,
+        "html_sha256": "6ce3fd993111f823baad5af2b855ff506e2ab1bb140a227a6f17744d953b9523",
+        "independent_review": "pending at evidence preparation",
+        "old_r3_wasm_exactly_reused": true,
+        "original_r3_controls71_tests_per_mode": 19,
+        "root_cause": "UNKNOWN",
+        "rust_inline_js_works_changed": false,
+        "scope": "Post-R3 HTML-only mitigation and private export; no successful browser effect or cohort acceptance",
+        "source_author_reported_optimized_tests": 22,
+        "source_author_reported_tests_per_mode": 22,
+        "source_author_reported_wrap_mutation_controls": 6,
+        "source_freeze_sha256": "f74ac1eb0da083b13ebe64042a2bc5dabcd20b102d2db926c9701e837ce327ba",
+        "status": "AUTHORED_NOT_BROWSER_VERIFIED"
+      },
+      "live_recipes_per_endpoint": "NOT-RUN: three planned",
+      "native_accepted": 0,
+      "native_runtime": "NOT-RUN",
+      "native_web_native_exchange": "NOT-RUN",
+      "planned_held_cases_per_endpoint": 69,
+      "status": "NOT_ADMITTED",
+      "web_accepted": 0,
+      "web_attempts": {
+        "control_transport": "CDP frame-tree timeout; no accepted frame",
+        "first_host_error_before_ui_requests": true,
+        "second_completed_cases": 0,
+        "second_open_requests_issued": 1,
+        "second_status": "failed; Open delivery uncertain before visible form mutation; no blind retry"
+      }
+    },
+    "held_cohorts": {
+      "native": {
+        "status": "COMPLETE69_CPU_GATES_PASS",
+        "required_cases": 69,
+        "final_accepted_cases": 69,
+        "requests": 138,
+        "complete_numeric_verification": "PASS69",
+        "foot_verification": "PASS69_NEW_REVIEWED_FOOT_REGION_IDENTITY_CHECKER",
+        "accessory_verification": "PASS69",
+        "receipts": {
+          "cohort_state": {
+            "bytes": 18649,
+            "sha256": "ed95767771a1ffd20ed1a483f59f7f51cdf04756573397e1e89bfc33a6ef9f64"
+          },
+          "independent_numeric": {
+            "bytes": 118720,
+            "sha256": "d5fe3010fda5ad91c0473891d339975e398e90068e5ededaeb5737654e062f9c"
+          },
+          "corrected_foot": {
+            "bytes": 370552,
+            "sha256": "b8ee8c200b36d30cd89ee909b78c9df13c7097fcb4aafec5c12927882df6f036"
+          },
+          "accessory": {
+            "bytes": 472723,
+            "sha256": "d616347fca99afd0020be32162cd4f4f8506bcad0162ac602f4b55b33802cc10"
+          }
+        },
+        "foot_checker_sha256": "277201181b3cb43e851b2a51d32c5a762bc0fc41a47205dd461fbca760f14cf0",
+        "foot_repair_independent_review": "PASS_BOUNDED_TOOLING_R2; not itself a69 result",
+        "original_failed_foot": {
+          "passing_cases": 62,
+          "required_cases": 69,
+          "status": "FAIL_PRESERVED",
+          "sha256": "1157ae794fb896d97d36eb4606da3f848109c0918f1900c03a1718edec03b9e4",
+          "original_checker_sha256": "7659e85e06e3d8cf441e85bb40a29c4cdc7cc2600a4fd5f65ed8241e61a6ea8c"
+        },
+        "original_failed_pipeline_receipt": {
+          "bytes": 48879,
+          "sha256": "01c3c37149c4898f8e4eb42d183a5b4e5f66c3c71e747b18d86cd45b238aa7df"
+        },
+        "same_original_captures_rerun_with_fresh_result": true,
+        "numeric_limits_unchanged": true,
+        "foot_identity": "exact53bone rest/IBM/canonical/gauge + authenticated complete foot-region rest including duplicate rows + body/garment sourceIDs/indices + garmentrest; each case original raw-source/LBS1e-6 mandatory first",
+        "recorded_nonfoot_rest_bit_variants": {
+          "cases": 7,
+          "max_abs_component_delta_m": 7.450580596923828e-09
+        },
+        "scope": "held CPU source/identity/full arrays/FK/transfer/foot/accessory only; ordinary playback actions/GPU/quality/performance separate",
+        "observer_binary_sha256": "5421e5bc38fb90831244f103842bacab3554dd59743d0a51e538a46a1d73cf9a",
+        "source_binding": "original R4 observer; not relabelled R5"
+      },
+      "web": {
+        "status": "COMPLETE69_CPU_GATES_PASS_R2_AUDIT",
+        "required_cases": 69,
+        "accepted_cases_at_draft": 69,
+        "final_accepted_cases": 69,
+        "complete_numeric_verification": "PASS69_RECORDED_COORDINATOR",
+        "foot_verification": "PASS69_REVIEWED_FOOT_REGION_CHECKER",
+        "accessory_verification": "PASS69_RECORDED_COORDINATOR",
+        "final_receipt_sha256": "412aa4c5bfadd76ee9888fd80df9d4daaeeeb1a7486dc9f955cb0427d8c8c3c9",
+        "independent_review": {
+          "status": "PASS_BOUNDED_ACTUAL_WEB69",
+          "review_sha256": "df2f978a63108e5531fce493a88dc320961434044964b299549571b89b83889e",
+          "machine_audit_sha256": "70d75bea14a4b59fafc85979c81b207f4dba896c41225a9aa8875436d9efcf6e"
+        },
+        "progress_source": "actual final state complete69/138 plus passed numeric coordinator receipt; not continuous runtime",
+        "observer_source_binding": {
+          "product": "581f6c8329c984bf55a913ca999830430334e5a1",
+          "observer": "original R4 experiment71 Web export; not R5 observer",
+          "wasm_sha256": "370142d969645e04d274d3da364af1ea2307fb1d86a9e326e0aece5e9aadd78f",
+          "source_artifact_audit_sha256": "3bf6c89943cc6ba3e25c58270d0cca3a990dac68a2e6cc1a8d6bd5dbb70a3322"
+        },
+        "requests": 138,
+        "receipts": {
+          "state": {
+            "bytes": 18717,
+            "sha256": "3d6f4c1b8db820db62210f0e45db5a60785e3ec8d36149355f4daa05f2d7a355"
+          },
+          "coordinator": {
+            "bytes": 63670,
+            "sha256": "412aa4c5bfadd76ee9888fd80df9d4daaeeeb1a7486dc9f955cb0427d8c8c3c9"
+          },
+          "independent_numeric": {
+            "bytes": 118527,
+            "sha256": "d6fca2770d1d546542cbd2d8d3d88a11b03ecf3724e78d428916af923d5ec57c"
+          },
+          "foot": {
+            "bytes": 369844,
+            "sha256": "44f6afe09339c79c4dbed4bd6f5e9512a4e9af2895c33a64f8087e5be9e08f61"
+          },
+          "accessory": {
+            "bytes": 472515,
+            "sha256": "a9cd05761a84c4de21ef3fcb3a755b953553d4d0a7c750cfde51402df53260f1"
+          },
+          "session_boundary": {
+            "bytes": 329,
+            "sha256": "9ab611b3e927439f41cbef3a781cbb9fbfae24a37bbcd130877942cc1596bb83"
+          },
+          "independent_machine_audit": {
+            "bytes": 61521,
+            "sha256": "70d75bea14a4b59fafc85979c81b207f4dba896c41225a9aa8875436d9efcf6e"
+          }
+        },
+        "recorded_checks": [
+          {
+            "name": "independent",
+            "exit_code": 0,
+            "seconds": 61.82058295805473,
+            "script_sha256": "db0eae795db295401297d16e33cd76b138d9ec53467e9d6ad264b78d8f5ec08e",
+            "log_sha256": "9e05595b40c57993ace01a36cc367d1bd08ea592948abef64e115f4992d0d103"
+          },
+          {
+            "name": "foot",
+            "exit_code": 0,
+            "seconds": 91.381618250045,
+            "script_sha256": "277201181b3cb43e851b2a51d32c5a762bc0fc41a47205dd461fbca760f14cf0",
+            "log_sha256": "b512f2a9b7cc521982850a0b17c9cfb13cdd0b13f6d1e575106545afee7b73ca"
+          },
+          {
+            "name": "accessory",
+            "exit_code": 0,
+            "seconds": 71.02635237504728,
+            "script_sha256": "4278024e6387cc77fcceb912f58caee9a68836176ae32b4be41dc76953620d6f",
+            "log_sha256": "479ac060e8df28dacaad26ba0a94a6c5ba7a3a8f032fcec8d72378f2e3ae081e"
+          }
+        ],
+        "browser_launch_boundary": {
+          "launches": 2,
+          "boundary_next_start": 43,
+          "issued_requests_at_boundary": 86,
+          "reason": "explicit acknowledged pause for sole-GPU native acceptance; same source/export/helper on resumed Web session",
+          "same_build": true,
+          "uninterrupted_runtime_claim": false,
+          "cross_launch_generation_continuity_claim": false
+        },
+        "raw_capture_inventory": [
+          {
+            "index": 0,
+            "case_id": "zero-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-000-h",
+            "envelope": "captures/zero-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "d59982699fa62d098d71eec157a15ff310c94937d3ae73f80079dd8f81695107"
+          },
+          {
+            "index": 1,
+            "case_id": "zero-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-001-h",
+            "envelope": "captures/zero-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "16f22121c02e127ea24660984516711e27dac9207d1acfadac9d071cd563f335"
+          },
+          {
+            "index": 2,
+            "case_id": "zero-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-002-h",
+            "envelope": "captures/zero-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "8fe1c0db0a9e399deac1a7637c21c9cf6f5f4591514a017c9096034295c3d8ce"
+          },
+          {
+            "index": 3,
+            "case_id": "torso_length-minus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-003-h",
+            "envelope": "captures/torso_length-minus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "3218439544517e0c8afa705a3cf60d71912b6dc92b90304582066d7f92392601"
+          },
+          {
+            "index": 4,
+            "case_id": "torso_length-minus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-004-h",
+            "envelope": "captures/torso_length-minus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "fb61b36b01e631c74a801109c41ca910399d3523b9c9f5333b1da06bb944aa10"
+          },
+          {
+            "index": 5,
+            "case_id": "torso_length-minus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-005-h",
+            "envelope": "captures/torso_length-minus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "ca81e0ad1b44acdb84871e100092b1c464933687d83cde1c5de0915235fd0e67"
+          },
+          {
+            "index": 6,
+            "case_id": "torso_length-plus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-006-h",
+            "envelope": "captures/torso_length-plus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "e0feaad4ca9edc401bf6020c2bf45ea5c55f653cf91b11c0fa1cc428c98809a2"
+          },
+          {
+            "index": 7,
+            "case_id": "torso_length-plus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-007-h",
+            "envelope": "captures/torso_length-plus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "511f6f75ad551a0136505d80e636be426910967817b6bd3b9c47f781c34f156a"
+          },
+          {
+            "index": 8,
+            "case_id": "torso_length-plus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-008-h",
+            "envelope": "captures/torso_length-plus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "3bcfc68bed8c4dcea20d299489473232e0cee8cde8a00ebdb0bd6cfd609d80f7"
+          },
+          {
+            "index": 9,
+            "case_id": "jaw_drop-minus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-009-h",
+            "envelope": "captures/jaw_drop-minus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "e133e947dc951b88a72c0a2cf69f7b4d8f281f72032b0b43c76c76b3b1726df0"
+          },
+          {
+            "index": 10,
+            "case_id": "jaw_drop-minus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-010-h",
+            "envelope": "captures/jaw_drop-minus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "847d06c7a021dc3458ac5fc918352a0e448145c381821939e98ac7fb69c4d417"
+          },
+          {
+            "index": 11,
+            "case_id": "jaw_drop-minus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-011-h",
+            "envelope": "captures/jaw_drop-minus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "c870d7938dcfde5e04a85d288d3f78b8a60645cec44beeb04c51cba46abd6187"
+          },
+          {
+            "index": 12,
+            "case_id": "jaw_drop-plus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-012-h",
+            "envelope": "captures/jaw_drop-plus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "3fa289082de0020ffc9c2562905b66dece6d1d7e873cfb2835b77d828c823947"
+          },
+          {
+            "index": 13,
+            "case_id": "jaw_drop-plus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-013-h",
+            "envelope": "captures/jaw_drop-plus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "4d8cdf8fc905e3e1a6bcd7ad6069d0e9f1fadfc56e68eafdb7099718663d8006"
+          },
+          {
+            "index": 14,
+            "case_id": "jaw_drop-plus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-014-h",
+            "envelope": "captures/jaw_drop-plus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "d042c1b61336de6a54cfffcea9edfb84b8846b8065cf499f5907a3fdf7c55cc4"
+          },
+          {
+            "index": 15,
+            "case_id": "head_width-minus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-015-h",
+            "envelope": "captures/head_width-minus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "f886a4d6329b261f49d79baa67aa423ac2b10c27c0db127ad417a24f97f21e2e"
+          },
+          {
+            "index": 16,
+            "case_id": "head_width-minus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-016-h",
+            "envelope": "captures/head_width-minus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "b00092d008ef6b2c3bd400769174ee080c598737fb826b6d7fca10de7a7671a7"
+          },
+          {
+            "index": 17,
+            "case_id": "head_width-minus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-017-h",
+            "envelope": "captures/head_width-minus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "59bfe18a81b16a9cb7620e496ee4e90eb35b7caa351cc0dd46039483d16b84ff"
+          },
+          {
+            "index": 18,
+            "case_id": "head_width-plus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-018-h",
+            "envelope": "captures/head_width-plus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "0983ca4bc80b93c100c8f5274b37be11dee52d2e061468cd8df7ea0e3022fb47"
+          },
+          {
+            "index": 19,
+            "case_id": "head_width-plus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-019-h",
+            "envelope": "captures/head_width-plus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "2bcff1f85392bbd2bde19096fc169d9979764f4e795c78db3be03a8e911db666"
+          },
+          {
+            "index": 20,
+            "case_id": "head_width-plus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-020-h",
+            "envelope": "captures/head_width-plus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "7b02195fb44bcd9e683e02b0d3dd9faca296993dc46ccd68af82dc1425e6d3b0"
+          },
+          {
+            "index": 21,
+            "case_id": "nose_width-minus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-021-h",
+            "envelope": "captures/nose_width-minus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "15450a14c297e9d09df0750aab1bb3d64cd88a905d42aa2dfaf54c8382765f7d"
+          },
+          {
+            "index": 22,
+            "case_id": "nose_width-minus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-022-h",
+            "envelope": "captures/nose_width-minus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "c8ca71674cc5b67723e3c1d79d01e87a7506f996f1ab6c7e81a5555209cd0aa1"
+          },
+          {
+            "index": 23,
+            "case_id": "nose_width-minus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-023-h",
+            "envelope": "captures/nose_width-minus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "74499c9f7542ce944e239785d8434779585ed740d5053d06e1d9bc2a7fb8428d"
+          },
+          {
+            "index": 24,
+            "case_id": "nose_width-plus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-024-h",
+            "envelope": "captures/nose_width-plus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "f53d191202cf4ac5269f7e15b47d55372d7756c436f1115803c80dc5d7e56ce1"
+          },
+          {
+            "index": 25,
+            "case_id": "nose_width-plus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-025-h",
+            "envelope": "captures/nose_width-plus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "57e5299c28a221b525d00978c5efef59666ae85088970c71002baea0b0a5317d"
+          },
+          {
+            "index": 26,
+            "case_id": "nose_width-plus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-026-h",
+            "envelope": "captures/nose_width-plus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "7e771021039a7d4465cdcd201e0280ef60621ce1d111cc3ed38324b9eeac0047"
+          },
+          {
+            "index": 27,
+            "case_id": "mouth_width-minus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-027-h",
+            "envelope": "captures/mouth_width-minus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "a16129786d98a7b71f968e69982490c5f4bf5dd404c4ac99631c0fffc7b4c173"
+          },
+          {
+            "index": 28,
+            "case_id": "mouth_width-minus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-028-h",
+            "envelope": "captures/mouth_width-minus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "ed19256a55bbd5e1c329f4d5e3fdb39552ea03472180b04038e8b927d1166971"
+          },
+          {
+            "index": 29,
+            "case_id": "mouth_width-minus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-029-h",
+            "envelope": "captures/mouth_width-minus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "8c58a93df224eb4a37e8be7c42603ec32da3227997e304992e875c52fc86ec40"
+          },
+          {
+            "index": 30,
+            "case_id": "mouth_width-plus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-030-h",
+            "envelope": "captures/mouth_width-plus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "1eda8a98d9d54b821e260d032efd078582d939c7ca537ac82fdd47dc079e5f9b"
+          },
+          {
+            "index": 31,
+            "case_id": "mouth_width-plus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-031-h",
+            "envelope": "captures/mouth_width-plus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "034642588f57248ef06cc1560fa05433c4be10bba0146c349b189a697d67e2c0"
+          },
+          {
+            "index": 32,
+            "case_id": "mouth_width-plus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-032-h",
+            "envelope": "captures/mouth_width-plus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "0c164c420b8ced187a578cc05164b072307144577d298f6069173ea3d4f2610b"
+          },
+          {
+            "index": 33,
+            "case_id": "chin_width-minus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-033-h",
+            "envelope": "captures/chin_width-minus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "07df8f129e03cca1a9eec402fe93c67e8dd403c08ab9c060592f3454ecf938fc"
+          },
+          {
+            "index": 34,
+            "case_id": "chin_width-minus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-034-h",
+            "envelope": "captures/chin_width-minus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "2b0b8bd706bc0797066fd3b7a214c3c453a09a25027da02c1831d706d2a4b088"
+          },
+          {
+            "index": 35,
+            "case_id": "chin_width-minus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-035-h",
+            "envelope": "captures/chin_width-minus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "7c6d71737172ea063b66e9cc7dd5e457cf45fc07865699242042bdc2db4b5ac3"
+          },
+          {
+            "index": 36,
+            "case_id": "chin_width-plus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-036-h",
+            "envelope": "captures/chin_width-plus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "7dedffd7e44ee3689d040863aa322a97f8d30ba4e88b92dee6dc410b8af7b7aa"
+          },
+          {
+            "index": 37,
+            "case_id": "chin_width-plus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-037-h",
+            "envelope": "captures/chin_width-plus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "962ac4249a75967bc4d139d9438a3fcedec4a492a8606abd2c29c2eae103fe7c"
+          },
+          {
+            "index": 38,
+            "case_id": "chin_width-plus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-038-h",
+            "envelope": "captures/chin_width-plus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "a265462be9513851d1abb051560fe1eccfe99784cb40e6b8f9dbf29104b3d44a"
+          },
+          {
+            "index": 39,
+            "case_id": "neck_width-minus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-039-h",
+            "envelope": "captures/neck_width-minus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "e21d8b19f1a4428cc2451989250966e81b605c237de2569f5f2bdc4ce483d3f5"
+          },
+          {
+            "index": 40,
+            "case_id": "neck_width-minus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-040-h",
+            "envelope": "captures/neck_width-minus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "ff1c1cd5d39c8a84b2826046bb5eee842c8f4300d7f19160f073b578dcd0a31f"
+          },
+          {
+            "index": 41,
+            "case_id": "neck_width-minus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-041-h",
+            "envelope": "captures/neck_width-minus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "60346f005060d24cfdbfb747617eda45720b0353d4286ef4c61461319adabfd2"
+          },
+          {
+            "index": 42,
+            "case_id": "neck_width-plus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-042-h",
+            "envelope": "captures/neck_width-plus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "d0bc85a9ec6b19b431512275735ae6a4607e3edd614cb9ca5eeda64a60b71b91"
+          },
+          {
+            "index": 43,
+            "case_id": "neck_width-plus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-043-h",
+            "envelope": "captures/neck_width-plus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "babeb8f8a832771ca0018736656d33f58440ce4beb0c7ea37b719dd18209371e"
+          },
+          {
+            "index": 44,
+            "case_id": "neck_width-plus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-044-h",
+            "envelope": "captures/neck_width-plus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "9da7645086a4eebfa6750e03b3d39bd6c698de48784ebad84c215a7ef4fdf4ef"
+          },
+          {
+            "index": 45,
+            "case_id": "hip_width-minus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-045-h",
+            "envelope": "captures/hip_width-minus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "1dc02f90eaae80763b09516d68aa7f9b429ab156c8cf028b9993ad989fda4cd4"
+          },
+          {
+            "index": 46,
+            "case_id": "hip_width-minus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-046-h",
+            "envelope": "captures/hip_width-minus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "e7e89d3cd5adcb31917cb03d3e003a807379c1585c6e7ffb282917b2c37a6f0b"
+          },
+          {
+            "index": 47,
+            "case_id": "hip_width-minus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-047-h",
+            "envelope": "captures/hip_width-minus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "027cf0d794bc282ca96f4ead8e13076dc3f39aed0532d3de9bb09edf59783b2a"
+          },
+          {
+            "index": 48,
+            "case_id": "hip_width-plus-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-048-h",
+            "envelope": "captures/hip_width-plus-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "a9f1c493fd7a3db4b28ee9b58c5a4263b2b426ce181a7e2ff74410e864a80491"
+          },
+          {
+            "index": 49,
+            "case_id": "hip_width-plus-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-049-h",
+            "envelope": "captures/hip_width-plus-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "a45f10768c70f7d2475b94460610817f75f74275c376979f8d05027761015747"
+          },
+          {
+            "index": 50,
+            "case_id": "hip_width-plus-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-050-h",
+            "envelope": "captures/hip_width-plus-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "7b9162d7f8ca6b23b6bb2f66bed3db59b52bf87efb57222279fbc1e305255fb0"
+          },
+          {
+            "index": 51,
+            "case_id": "face-wide-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-051-h",
+            "envelope": "captures/face-wide-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "920dbe1389cc32353707b04dcf9a59d1434774745ee3172f736bae57f066c176"
+          },
+          {
+            "index": 52,
+            "case_id": "face-wide-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-052-h",
+            "envelope": "captures/face-wide-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "9c9f93ad40d831b76eddb33b10e8dc627eef7079f7ec8f67f6348c00ab1ca107"
+          },
+          {
+            "index": 53,
+            "case_id": "face-wide-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-053-h",
+            "envelope": "captures/face-wide-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "33c7f320a88622bfd5c64618b648ab1a7b541abdc8f1bb64e7829d45ad9a1cb7"
+          },
+          {
+            "index": 54,
+            "case_id": "face-narrow-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-054-h",
+            "envelope": "captures/face-narrow-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "e4b2212a6e9a447174ec114790ed374ad61d2a479d47f807bc54844b823e8a8d"
+          },
+          {
+            "index": 55,
+            "case_id": "face-narrow-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-055-h",
+            "envelope": "captures/face-narrow-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "3b8e888e612877441399c7419a31b0b722374ee41537edb1b3e0b59d9a97f61e"
+          },
+          {
+            "index": 56,
+            "case_id": "face-narrow-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-056-h",
+            "envelope": "captures/face-narrow-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "e7c1f58d613b6b9b170a14f5919d759f0c29141d307ee18213d8b4d755ded624"
+          },
+          {
+            "index": 57,
+            "case_id": "upper-body-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-057-h",
+            "envelope": "captures/upper-body-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "73e6e7500d78e9bd8cb4eec33dd7cf3b3e6202e6b1b787c4d360c54436c8dc89"
+          },
+          {
+            "index": 58,
+            "case_id": "upper-body-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-058-h",
+            "envelope": "captures/upper-body-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "e9f412b72c3f0d98005bd8696ed7d299c83aba2f7c79ee6ed684a0c1ac528e52"
+          },
+          {
+            "index": 59,
+            "case_id": "upper-body-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-059-h",
+            "envelope": "captures/upper-body-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "e1f4d9686f42bec0baf9ac88c621a3c946f6984e41fcc1456c40dd95418f0c60"
+          },
+          {
+            "index": 60,
+            "case_id": "lower-body-b1_arm_rehearsal_v1-0",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-060-h",
+            "envelope": "captures/lower-body-b1_arm_rehearsal_v1-0.json",
+            "envelope_sha256": "2dc616164a3cdfddd11bed1bd1d4804c5fbadb805da3b991457e5e3ac7510a7f"
+          },
+          {
+            "index": 61,
+            "case_id": "lower-body-b1_arm_rehearsal_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-061-h",
+            "envelope": "captures/lower-body-b1_arm_rehearsal_v1-2.json",
+            "envelope_sha256": "df5c898092bdc85454ea0033f72744eedae76de44889a49d802eb2785f725263"
+          },
+          {
+            "index": 62,
+            "case_id": "lower-body-b1_knee_flex_v1-2",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-062-h",
+            "envelope": "captures/lower-body-b1_knee_flex_v1-2.json",
+            "envelope_sha256": "16ed7fdd41974b52c19fabc48880f439fff7f6fec66908342b26976cd32a1fc9"
+          },
+          {
+            "index": 63,
+            "case_id": "zero-b1_arm_rehearsal_v1-4",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-063-h",
+            "envelope": "captures/zero-b1_arm_rehearsal_v1-4.json",
+            "envelope_sha256": "88161fd89a1af484a3473140b2fe05b248861201fb83f818c2590827f23b1c01"
+          },
+          {
+            "index": 64,
+            "case_id": "zero-b1_knee_flex_v1-4",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-064-h",
+            "envelope": "captures/zero-b1_knee_flex_v1-4.json",
+            "envelope_sha256": "79f0f0e4820511e522b149d5ba2bce5610d4f54d315ef07b9c7e914249a5a060"
+          },
+          {
+            "index": 65,
+            "case_id": "face-wide-b1_arm_rehearsal_v1-4",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-065-h",
+            "envelope": "captures/face-wide-b1_arm_rehearsal_v1-4.json",
+            "envelope_sha256": "f8bfc2c7292068d5895329d08428d8905d5c79392b09307001138bf7fdbad378"
+          },
+          {
+            "index": 66,
+            "case_id": "face-wide-b1_knee_flex_v1-4",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-066-h",
+            "envelope": "captures/face-wide-b1_knee_flex_v1-4.json",
+            "envelope_sha256": "6f8958948fcdbc58b7ab182daf455ccc584768cf2055abb3655c0cb881da433f"
+          },
+          {
+            "index": 67,
+            "case_id": "lower-body-b1_arm_rehearsal_v1-4",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-067-h",
+            "envelope": "captures/lower-body-b1_arm_rehearsal_v1-4.json",
+            "envelope_sha256": "759f011daaef45a47036f974b7cdf55aede89aeda07682c51ba04d00d83e1d8a"
+          },
+          {
+            "index": 68,
+            "case_id": "lower-body-b1_knee_flex_v1-4",
+            "request_id": "w71-94f44739adb941508ce3d1ddf3331724-068-h",
+            "envelope": "captures/lower-body-b1_knee_flex_v1-4.json",
+            "envelope_sha256": "e40e507489dac9ea09f3cdec1a1fd46645e7dc968f87ed8dc1f271ac1ed71f71"
+          }
+        ]
+      }
+    },
+    "three_live_recipes_per_endpoint": {
+      "native": {
+        "zero": {
+          "status": "PASS_BOUNDED_ACTUAL_NATIVE_R5_SEQUENCE",
+          "steps": 6,
+          "step_names": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "request_ids": [
+            "r89-825719bc3d264104b18cf041b84eea8f",
+            "r89-42b352d9167041bc9f4319efaf826fd0",
+            "r89-4c55454e9d854dcd84e30c4740dad8fd",
+            "r89-e86d5f1f349640b792f87561d07edc1c",
+            "r89-93f1e08b16de45d78022422ac4bf52f0",
+            "r89-12e9daf6d93943ce85ff62b58d06ccf0"
+          ],
+          "result_sha256_by_step": {
+            "A": "7942d4653755355e2cafdd7c7c6e23b57d55c929107a641334746ecf6d601a8e",
+            "B": "45a6d808542121c2966c01d74b597e7b879c9ca34768eebe56ddc8a014070c49",
+            "C": "406927ababc3bea3d759b1c9cb27c2c9403486083fd2e40a9be842c1acb6e508",
+            "D": "556cbd156a4456423b98f2720d02a1d50cd3789a10129ad31c57383286e83ae3",
+            "E": "c9901288818a15e3d18db285f9e012a0ab72e1410646c96a0b76f7b249f30562",
+            "F": "706c67ee08b7677a38d890f67551d93ebe4ab5d7564190ef0bcbe3206847bdb1"
+          },
+          "natural_pause_seconds": 2.3002872467041016,
+          "resume_pause_seconds": 2.7536513805389404,
+          "neck_width_edit": {
+            "before": 0,
+            "after": 0.2
+          },
+          "scope": "ordinary Play/Pause and Resume/Pause actions plus stable held-current readbacks; no continuous live arrays or independent arbitrary-time deformation/LBS/GPU proof",
+          "final_receipt_sha256": "8bb95d12b987f63f093a524f98c59f14055d8baf360afa81a079a3c1529c6965"
+        },
+        "face-wide": {
+          "status": "PASS_BOUNDED_ACTUAL_NATIVE_R5_SEQUENCE",
+          "steps": 6,
+          "step_names": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "request_ids": [
+            "r89-a66fd77d9dc14c1b8d06b36921e12589",
+            "r89-ee1bf0b1a909457898dbf640abdb1a0a",
+            "r89-13589c5497c34ae8989f84fe35e3d047",
+            "r89-7d7f800e3bda49e7a67751ecf0574aaa",
+            "r89-0ffb341bf65649179706bf7df9f042ec",
+            "r89-b6bee1fec3fc4ff3a52e987d998c9cce"
+          ],
+          "result_sha256_by_step": {
+            "A": "049db12d87bd897f4008d049c335a12a2a5ecc41d13812e75cf1459b89e51fae",
+            "B": "2c788b4dbbf0963f3450088325bb03543d9b0a1811065a7c7e08ed058be51481",
+            "C": "cc2bd2f5711823a6aecf7b2d318b287b94ba152d3d1331c0d5021378b99780ce",
+            "D": "cb964e15165b15958e430e7d00dde476b9e2b68411b0a54a3a0290c96c734b0a",
+            "E": "0ddba82c74df392d5d8126095bd85865a0054c11aeee315952938ff373a1a505",
+            "F": "9b38f7b86ecb16905e325d70e2bebf2bf0428c9ed66bc76e60b77e8ccfc9401c"
+          },
+          "natural_pause_seconds": 2.2919557094573975,
+          "resume_pause_seconds": 2.716383218765259,
+          "neck_width_edit": {
+            "before": 0,
+            "after": 0.2
+          },
+          "scope": "ordinary Play/Pause and Resume/Pause actions plus stable held-current readbacks; no continuous live arrays or independent arbitrary-time deformation/LBS/GPU proof",
+          "final_receipt_sha256": "8bb95d12b987f63f093a524f98c59f14055d8baf360afa81a079a3c1529c6965"
+        },
+        "lower-body": {
+          "status": "PASS_BOUNDED_ACTUAL_NATIVE_R5_SEQUENCE",
+          "steps": 6,
+          "step_names": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "request_ids": [
+            "r89-3ea17f98f3d74f7b8e49e60e7a6d3285",
+            "r89-6f74b85ffaa84ca1a6d9f70f202832ba",
+            "r89-0da1dda2200d456fb7bb8ba572fc9a0e",
+            "r89-de05e7b98e284795bafeac7708ebda6c",
+            "r89-a32b5cc72d56493fb1ff56f9e36df36a",
+            "r89-43e0d47b1c8d4c09b8fa51cb2bcee328"
+          ],
+          "result_sha256_by_step": {
+            "A": "c023baaa97d4456c43e0955a1d438a964d11db2e1fa75318299e2bf5421f899e",
+            "B": "5215a6d7e52b13946581955099142002c4f637be2c753a2a79436e4bd240b8ce",
+            "C": "186adb97f6099da80d5745ed005023fdcd7922718a19ad53973af9870d229819",
+            "D": "54d80d6cb0cfe117649948208a50dfea8fa8af5dfeb8ee4fd6598677e3b2d70f",
+            "E": "6f00e51161d3fa085e378bebcf6b279ae79bb09e624a7d105ee96a107955a322",
+            "F": "ead173773e6fdff22ab8a8630a9fd17b680d807ed128da25228c96491e9d9368"
+          },
+          "natural_pause_seconds": 2.292246103286743,
+          "resume_pause_seconds": 2.766439914703369,
+          "neck_width_edit": {
+            "before": 1,
+            "after": 0.8
+          },
+          "scope": "ordinary Play/Pause and Resume/Pause actions plus stable held-current readbacks; no continuous live arrays or independent arbitrary-time deformation/LBS/GPU proof",
+          "final_receipt_sha256": "8bb95d12b987f63f093a524f98c59f14055d8baf360afa81a079a3c1529c6965"
+        }
+      },
+      "web": {
+        "zero": {
+          "status": "PASS6_ACTUAL_AND_INDEPENDENT_R2_AUDIT",
+          "steps": 6,
+          "result_sha256_by_step": {
+            "A": "11bd2e1c9e69c9222d30084fef5d5b281c54f900709e9455bf80660c015c05b2",
+            "B": "b5d720228f7d73be4be3d907cb2a57ce2d39166ab8a9123d20cc86e25b82c159",
+            "C": "89dd0f592b546f68bdcd109a9309ea9705760c34cd01193c3b8b217e9d00060c",
+            "D": "2e59e820b92b49165d7130d40aef54ad06c026ae866f71b8b52a3bc9ebf0ef07",
+            "E": "c96f7924a23e7e651616a05b3a6faffbf5c491afd0112c4be6fcf0bb5f2f59cd",
+            "F": "10f4a78a4222e305c1fb7efe0f29ce42a77849f5f2ddfdb2f75519cd747e169e"
+          },
+          "request_ids": [
+            "r89-556187a9b21543f5b5169d8763c6972d",
+            "r89-8e7f3149fa0f48e5b3ef2e3d53310af5",
+            "r89-b73948da809b493798a731290d2b671b",
+            "r89-66ec15cc3d0b4ba3884079d4270b607f",
+            "r89-63a7fab2744043b78fe827fc05d1cf7f",
+            "r89-e5e5902622764090a9e944c633ee855e"
+          ],
+          "natural_pause_seconds": 0.2752000093460083,
+          "resume_pause_seconds": 0.9538000822067261,
+          "neck_width_edit": {
+            "before": 0,
+            "after": 0.2
+          },
+          "final_receipt_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+          "scope": "ordinary root-observed actions/screens + current stable held CPU readbacks; not continuous live arrays, independent arbitrary-time LBS, GPU/quality/performance"
+        },
+        "face-wide": {
+          "status": "PASS6_ACTUAL_AND_INDEPENDENT_R2_AUDIT",
+          "steps": 6,
+          "result_sha256_by_step": {
+            "A": "e4d59569d5edfaee0ba411190c8f50c8348b24b68da25f74cab7a5a06b325524",
+            "B": "8df2367918d58bfbdb051f37e673edfeda67793c7d550c29ed4adb81198e6df9",
+            "C": "cef4df8d7e484f9fc0c5cfe1257bbde8ecab133ee07356a2587a39e39639af37",
+            "D": "445e44343d1695d7b2ed7bc2f5020351c83b22e714ac83fbb7010eb7d3cfcfc2",
+            "E": "6bf1bf11a371b333418662063a8827d06630c6e659e05ebbac100eba92de2a46",
+            "F": "9e5894c1d998dcb0b259a75ee38afd9c708db2210df84fe8a0b99ee412cea849"
+          },
+          "request_ids": [
+            "r89-14785381d76d4b5793ef101834588d9a",
+            "r89-08ae3a89d73b4877b35b2b52b86ece2f",
+            "r89-df1f07a5c4f04188ba3167a290e8c7d4",
+            "r89-3f8fa164e9054a10a73fe117ecbfc230",
+            "r89-1ec9bc9fa0514c9e891fe49a8b82dc97",
+            "r89-c90d155e620d45478a02b7888689997f"
+          ],
+          "natural_pause_seconds": 0.2859000265598297,
+          "resume_pause_seconds": 0.8185999989509583,
+          "neck_width_edit": {
+            "before": 0,
+            "after": 0.2
+          },
+          "final_receipt_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+          "scope": "ordinary root-observed actions/screens + current stable held CPU readbacks; not continuous live arrays, independent arbitrary-time LBS, GPU/quality/performance"
+        },
+        "lower-body": {
+          "status": "PASS6_ACTUAL_AND_INDEPENDENT_R2_AUDIT",
+          "steps": 6,
+          "result_sha256_by_step": {
+            "A": "cc714cd18f24a2eadedae1cf7263506ea477795c02b105a7603df0c3e38d6638",
+            "B": "d6925a03f4e5ffba0317ae06dc62d8a5b1b77a8ee9320a870777e97548f08dff",
+            "C": "3026dd460baacc970326fa092689e0fff34cb4cb7fe61fd41d3502f32e3afe43",
+            "D": "609edb0da1eb13f9ffd111f4cc1226a24c84f789cf29840d709e8367fb38124e",
+            "E": "f1e63685997f0db5ffcc62f759c252a127b1adff22fec7e5cc29ba8b5d18e3f3",
+            "F": "6e91af99ae35d3a88f0557b5c25a15256b1e08a6b8354ce8f00d05a91d251fd7"
+          },
+          "request_ids": [
+            "r89-851fe0765d1b4582b08d3f3be49d3620",
+            "r89-4702e113d8e24eb1b9d0764f457c12b7",
+            "r89-7012e0c371344d1e9848e9497a45f087",
+            "r89-4d186a139a254e9bbdf6160a3a9f8a7f",
+            "r89-f8c68fb0a6694763bbb9a18b7c7091ca",
+            "r89-8c3e37b15f254a7bba421ec8f8da6a5e"
+          ],
+          "natural_pause_seconds": 0.2198999971151352,
+          "resume_pause_seconds": 1.1512000560760498,
+          "neck_width_edit": {
+            "before": 1,
+            "after": 0.8
+          },
+          "final_receipt_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+          "scope": "ordinary root-observed actions/screens + current stable held CPU readbacks; not continuous live arrays, independent arbitrary-time LBS, GPU/quality/performance"
+        }
+      }
+    },
+    "additional_diagnostic72": {
+      "status": "PASS_BOUNDED_ACTUAL_CPU_CONTROLS",
+      "baseline_commit": "581f6c8329c984bf55a913ca999830430334e5a1",
+      "receipt_sha256": "24429e6c3bf9ed25cf72d824ed5cab58424b48bac2fc503412ffa189d1bf054c",
+      "derived_manifest_sha256": "7a3a9ad1cf2bd670c59ba8845223dfc50dbe11eb7c5e9d863b69b956d351978a",
+      "proposed_public_manifest": "experiments/72-b1-admission-controls/evidence-manifest.json",
+      "original_preparation_control_hashes": {
+        "run.py": "07e9d5ccafc693dbbd7cca484d9c8aa148eaaed2853122d3d0d7250f441dfd1b",
+        "test_controls.py": "a6427e1b70d5bd3df70fdfd50e52db83ba8789a14db566b2b92c11ec406308b0",
+        "compatibility.rs": "06c015c47b30fbe10019756ad556031a1d1e48a31ffaafe496c2919cd75d4ef8",
+        "cases.json": "a54b067966e85896c362a0389e61031b5804333449ed01932bf98570ef6354a8",
+        "pins.json": "02637d4de1f782658c6363e88c92e22ed6384db2f20ea468d73a28b74f257208",
+        "README.md": "6581ecfcd7634cef1aee6b42e96c553a9519385e2d8c770a3090f4dfedc8fd21",
+        "REVIEW.md": "dd456b0c97d29717ecee97bad427030d84ef1d02384f4ab757ecfcfcad41c67f"
+      },
+      "zero_comparisons": 2,
+      "full_original_recipe_pose_cases": 40,
+      "actual_cargo_invocations": 14,
+      "green_invocations": 9,
+      "semantic_red_invocations": 5,
+      "all_five_each_restored_green": true,
+      "all8030_original_source_hashes_restored": true,
+      "measurement_count": 83,
+      "measurement_hashes_in_derived_manifest": true,
+      "workspace_test_total_not_incremented": true,
+      "scope": "headless production CPU zero-extension compatibility + five head_width mapping semantic controls; not full Blender/reference rerun/new8 fitted-rig derivation/71 app/GPU/quality admission",
+      "published_results_sha256": "9fd13a1e63670a75e338552919275c95c0fb66abab3385545c27b021af9737bc",
+      "publication_status": "existing reviewed public72 docs; preserve original prep hashes and actual receipt separately"
+    },
+    "web_r5_live_audit": {
+      "actual_status": "ALL18_STRICT_COLLECTOR_STEPS_PASS",
+      "summary_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+      "independent_R2_review": "PASS_BOUNDED_ACTUAL_WEB18",
+      "review_sha256": "e99192886cd0962f972d4528088e0082555c61f717d8490574d454ab4a304815",
+      "observer_binary_source": "R5 closure18f1c60d...; actual R5 Wasm c525f70b...; separate from R4 Web69",
+      "Wasm_sha256": "c525f70b9d90a68e6671d4bd5ab3809905bc6dd1961cfa015cfd69baa7d7bbc1",
+      "machine_audit_sha256": "6db7010034a7054efd3a845c34260ca9e4e6d1b7b7cfa85e5d0e312415373044",
+      "short_gui_click_intervals_ms": [
+        294,
+        406,
+        278,
+        324,
+        213,
+        649
+      ],
+      "long_continuous_playback_claim": false,
+      "separate_ordinary8s_exchange_not_combined": true,
+      "source_provenance": "root actual recorded launch invocation + explicitly retrospective launch record + HTTP fetch observations +173 exported artifact rehashes; no independent historical process or response-body recapture"
     }
   },
   "cleanup": {
@@ -44,7 +924,8 @@
     "local_server": "stopped; reported by coordinator",
     "provenance": "Coordinator observation, not independently replayed here",
     "scope": "Cleanup limitation, not accepted cohort evidence",
-    "task_owned_tab2": "remained unclosed because control timed out"
+    "task_owned_tab2": "remained unclosed because control timed out",
+    "historical_round": "Original fields above describe historical R3 cleanup; current owner confirmation is separate and pending at this record."
   },
   "cli": {
     "appearance": "v2, all three roles selected",
@@ -349,7 +1230,7 @@
       "sha256": "4bbf42bb9223f74cb2592d23f3cf177327189c548500d99e4194217fb2846e80"
     }
   ],
-  "inventory_note": "Exact JPEG and RESULTS hashes listed here; this JSON does not contain its own hash. Private source hashes identify originals without reproducing private path-bearing contents.",
+  "inventory_note": "Original inventories retain historical source identities. Current R4/R5 exact copied JPEG/Work inventories and raw omitted-capture/output hashes are in round89_r4_r5; public_text_files identifies the current report. Self-hash of evidence.json is intentionally omitted.",
   "local_build": {
     "checks": [
       {
@@ -816,9 +1697,9 @@
   ],
   "public_text_files": [
     {
-      "bytes": 17607,
       "path": "RESULTS.md",
-      "sha256": "b5fc083f2abca69a0b3ff61e517f35b70be9c4ab2817d334fd59e7e21e23ad60"
+      "bytes": 33787,
+      "sha256": "c80c107fc5c03a2fd2d377dea5c08bd53894d85c084aab8cc39df2195ae7d53d"
     }
   ],
   "quality": {
@@ -993,7 +1874,7 @@
     "status": "HOLD"
   },
   "schema": "nvwa-b1-character-quality-candidate-evidence-v1",
-  "scope": "Derived compact public summary from private retained records, selected exact JPEG copies and recorded coordinator observations; not a raw full receipt or new execution",
+  "scope": "Derived compact public summary: current product581 R4 andobserver R5 evidence plus explicitly historical R3/quality cohorts; no raw full receipt, new execution or merge claim",
   "source_documents": [
     {
       "bytes": 13389,
@@ -1021,8 +1902,1775 @@
       "sha256": "a548dfd0bcec2caaa9d45f8b62277e8aeff53639665b882f3d7632f81da8668f"
     }
   ],
-  "status": "PARTIAL_NOT_ADMITTED",
+  "status": "PARTIAL_FINAL_REVIEW_AND_INTEGRATION_PENDING_NOT_ADMITTED",
   "unverified": [
+    "final assembled-source/public-evidence review and exact final PR-head CI",
+    "merge and exact merged-main validation",
+    "GPU fragment/depth/ownership and continuous-frame observation",
+    "formal first-present/cold/GPU-memory/performance",
+    "#3 blocked;#4 gaps;#79/#80/M2 quality HOLD;#86/#87/#90 follow-ups;#84 strict whole-workspace lint remains"
+  ],
+  "round89_r4_r5": {
+    "record_status": "DERIVED_PUBLIC_COMPACT_SUMMARY; ACTUAL_RUNTIME_RESULTS_RECORDED; FINAL_REVIEW_CI_MAIN_PENDING",
+    "summary": "Product581 R4 build/CI, native69+Web69 held CPU gates, ordinary89/exchange, fresh68/70 and72 CPU PASS; distinct R5 native18 andWeb18 actual sequences independently audited PASS; final assembled-source/public-evidence review, exact final-head CI and merged-main validation pending",
+    "source_git_head": "581f6c8329c984bf55a913ca999830430334e5a1",
+    "source_closure": {
+      "files": 2748,
+      "sha256": "e912fba4a74ebeb5a677bc1d2a97cc976e9d1719990d85c241bea4c8c75008ab"
+    },
+    "build": {
+      "status": "PASS_LOCAL",
+      "workspace_tests_passed": 210,
+      "workspace_failed": 0,
+      "workspace_ignored": 0,
+      "core_cli_tests_overlap_workspace_total": true,
+      "strict_core_cli_clippy": "PASS",
+      "strict_workspace_clippy": "NO_PASS_CLAIM; historical#84 failure retained",
+      "native_and_web_product_builds": "PASS",
+      "probe68_native_tests": 14,
+      "probe71_native_tests": 10,
+      "probe68_71_native_Wasm_exports": "PASS",
+      "combined_test_total": null
+    },
+    "artifact_inventory": [
+      {
+        "artifact": "product-native/nvwa-cli",
+        "bytes": 1735584,
+        "sha256": "af1ecf1cef37207857f8e1987655415a91ba5882284dae1fa7113998a4ee2b3b"
+      },
+      {
+        "artifact": "product-native/nvwa-studio",
+        "bytes": 153804752,
+        "sha256": "c204a10b870634f03b00b20d2e89099ab798fd404d7340c5ae3acba643a6c4fc"
+      },
+      {
+        "artifact": "product-web/nvwa_studio_bg.wasm",
+        "bytes": 143013152,
+        "sha256": "96d858804f59c46a44d6b23bf9557d7d14522efb046ce17dcffb7fd72c8f03e0"
+      },
+      {
+        "artifact": "product-web/nvwa_studio.js",
+        "bytes": 127351,
+        "sha256": "32e7cc7a36eb4b96d3793b42bee29d52a68201add13757f235a024b89b28444a"
+      },
+      {
+        "artifact": "product-web/index.html",
+        "bytes": 2665,
+        "sha256": "a03b7e9e7ae602967f3cd311c82ae56fc75ac00badbeadaa47a75cf3e96df382"
+      },
+      {
+        "artifact": "experiment68/native/studio68",
+        "bytes": 154415696,
+        "sha256": "9ab24efd1f24efde536fe8cdb368bf0800eacb5d7383b1bc66b13651f7c36ef7"
+      },
+      {
+        "artifact": "experiment71/native/studio71",
+        "bytes": 154324896,
+        "sha256": "5421e5bc38fb90831244f103842bacab3554dd59743d0a51e538a46a1d73cf9a"
+      },
+      {
+        "artifact": "experiment71/web/pkg/b1_character_parameters_bg.wasm",
+        "bytes": 143474813,
+        "sha256": "370142d969645e04d274d3da364af1ea2307fb1d86a9e326e0aece5e9aadd78f"
+      },
+      {
+        "artifact": "experiment71/web/index.html",
+        "bytes": 3176,
+        "sha256": "6ce3fd993111f823baad5af2b855ff506e2ab1bb140a227a6f17744d953b9523"
+      },
+      {
+        "artifact": "experiment68/web/pkg/b1_eye_render_diagnosis_bg.wasm",
+        "bytes": 143534783,
+        "sha256": "eb2a5190c1cbada63ae36f7a06fbabd72dd7f084a625e19431ab0a07aafe8291"
+      },
+      {
+        "artifact": "experiment68/web/index.html",
+        "bytes": 3964,
+        "sha256": "6c77a44b5c6e09998708b907249dd92e5c0fd74f255dcf49d0d5fd0e9c08564c"
+      }
+    ],
+    "ci": {
+      "status": "ALL_FOUR_EXACT_HEAD_CHECKS_PASS",
+      "head": "581f6c8329c984bf55a913ca999830430334e5a1",
+      "root_live_verification_utc": "2026-10-18T19:39Z",
+      "last_bounded_job_completed_utc": "2026-10-18T19:39:03Z",
+      "source": "root live CI inspection reported to this drafting worker; worker did not query network",
+      "bounded_run": {
+        "id": 39155741956,
+        "url": "https://github.com/Derek-X-Wang/nvwa/actions/runs/39155741956",
+        "successful_jobs": 3
+      },
+      "cli_run": {
+        "id": 39155741971,
+        "url": "https://github.com/Derek-X-Wang/nvwa/actions/runs/39155741971",
+        "successful_jobs": 1
+      },
+      "merged": false,
+      "merged_main_validation": "NOT-RUN for this candidate"
+    },
+    "ordinary_native89": {
+      "status": "ROOT_ACTUAL_GUI_PLUS_FILESYSTEM_CHECKS",
+      "first_save_screens": "02..14 (native pixels withheld)",
+      "eight_controls_screens": "19..23 (native pixels withheld)",
+      "filesystem_cases": [
+        {
+          "case": "accepted-new-first-save-modal-before-cancel",
+          "checks": {
+            "old_A_sha256": "16fb04306e5bcfef0e917dae9ae562ff921ad8e13e30e20c6b26e4e7f19f64ff",
+            "old_A_bytes_unchanged": true,
+            "new_B_absent": true
+          }
+        },
+        {
+          "case": "cancel-keeps-original-byte-identical",
+          "checks": {
+            "old_A_sha256": "16fb04306e5bcfef0e917dae9ae562ff921ad8e13e30e20c6b26e4e7f19f64ff",
+            "old_A_bytes_unchanged": true,
+            "new_B_absent": true
+          }
+        },
+        {
+          "case": "confirmed-new-destination-preserves-old-A",
+          "checks": {
+            "old_A_sha256": "16fb04306e5bcfef0e917dae9ae562ff921ad8e13e30e20c6b26e4e7f19f64ff",
+            "old_A_bytes_unchanged": true,
+            "new_B_sha256": "6be12f7979f66e08b12b939dc63afcb87820bf90b2609e8c01c563eab99b3d14",
+            "new_B_bytes": 3303,
+            "new_B_semantically_matches_actual_cli_constructor": true,
+            "params": {
+              "chin_width": 0.0,
+              "head_width": 0.0,
+              "hip_width": 0.0,
+              "jaw_drop": 0.0,
+              "mouth_width": 0.0,
+              "neck_width": 0.0,
+              "nose_width": 0.0,
+              "torso_length": 0.0
+            },
+            "revision": 0
+          }
+        },
+        {
+          "case": "same-content-new-rearms-confirmation-before-overwrite",
+          "checks": {
+            "old_A_sha256": "16fb04306e5bcfef0e917dae9ae562ff921ad8e13e30e20c6b26e4e7f19f64ff",
+            "old_A_bytes_unchanged": true
+          }
+        },
+        {
+          "case": "explicit-confirmation-alone-replaces-disposable-A",
+          "checks": {
+            "A_sha256_after": "6be12f7979f66e08b12b939dc63afcb87820bf90b2609e8c01c563eab99b3d14",
+            "B_sha256": "6be12f7979f66e08b12b939dc63afcb87820bf90b2609e8c01c563eab99b3d14",
+            "original_backup_unchanged": true,
+            "A_equals_new_B": true
+          }
+        },
+        {
+          "case": "actual-directory-rename-failure-retains-files-and-cleans-temp",
+          "checks": {
+            "A_B_unchanged_sha256": "6be12f7979f66e08b12b939dc63afcb87820bf90b2609e8c01c563eab99b3d14",
+            "destination_remains_empty_directory": true,
+            "temporary_files_remaining": 0
+          }
+        },
+        {
+          "case": "failed-save-guard-reconfirmed-and-recovered",
+          "checks": {
+            "recovered_sha256": "6be12f7979f66e08b12b939dc63afcb87820bf90b2609e8c01c563eab99b3d14",
+            "equals_expected_new_constructor": true,
+            "old_backup_unchanged": true
+          }
+        }
+      ],
+      "screens_are_not_action_proof_on_their_own": true,
+      "failed_save_attempts": [
+        {
+          "screen": 24,
+          "accepted_save": false
+        },
+        {
+          "screen": 38,
+          "accepted_save": false
+        }
+      ],
+      "successful_native_saves": [
+        25,
+        39
+      ],
+      "publication_status": "Native path-containing pixels withheld; scoped actions/filesystem checks and actual saved Works separately authenticated"
+    },
+    "exchange": {
+      "status": "ORDINARY_GUI_ACTIONS_PLUS_BYTE_AND_SEMANTIC_AUDIT",
+      "files": {
+        "native-A": {
+          "bytes": 3709,
+          "sha256": "7e33b3c19ecdfedc82dff1a24c7cc1991d54753e3988b912063f1c20ec555ffb",
+          "revision": 17,
+          "parameters": {
+            "chin_width": -0.05,
+            "head_width": 0.45,
+            "hip_width": 0.3,
+            "jaw_drop": 0.3,
+            "mouth_width": 0.3,
+            "neck_width": 0.2,
+            "nose_width": -0.1,
+            "torso_length": 0.35
+          }
+        },
+        "web-B": {
+          "bytes": 3708,
+          "sha256": "b22515b22174043977734f0236c1500ddd2a48504e7fe0e76a674b399dae4037",
+          "revision": 18,
+          "parameters": {
+            "chin_width": -0.05,
+            "head_width": 0.9,
+            "hip_width": 0.3,
+            "jaw_drop": 0.3,
+            "mouth_width": 0.3,
+            "neck_width": 0.2,
+            "nose_width": -0.1,
+            "torso_length": 0.35
+          }
+        },
+        "native-C": {
+          "bytes": 3708,
+          "sha256": "b22515b22174043977734f0236c1500ddd2a48504e7fe0e76a674b399dae4037",
+          "revision": 18,
+          "parameters": {
+            "chin_width": -0.05,
+            "head_width": 0.9,
+            "hip_width": 0.3,
+            "jaw_drop": 0.3,
+            "mouth_width": 0.3,
+            "neck_width": 0.2,
+            "nose_width": -0.1,
+            "torso_length": 0.35
+          }
+        },
+        "download": {
+          "bytes": 3708,
+          "sha256": "b22515b22174043977734f0236c1500ddd2a48504e7fe0e76a674b399dae4037",
+          "revision": 18,
+          "parameters": {
+            "chin_width": -0.05,
+            "head_width": 0.9,
+            "hip_width": 0.3,
+            "jaw_drop": 0.3,
+            "mouth_width": 0.3,
+            "neck_width": 0.2,
+            "nose_width": -0.1,
+            "torso_length": 0.35
+          }
+        }
+      },
+      "web_edit": {
+        "parameter": "head_width",
+        "before": 0.45,
+        "after": 0.9,
+        "revision_before": 17,
+        "revision_after": 18,
+        "other_fields_unchanged": true
+      },
+      "B_equals_C_exact_bytes": true,
+      "all_appearance_roles": true,
+      "backend_version": 3,
+      "appearance_version": 2,
+      "work_schema_version": 4,
+      "timeline": "two finite4-second clips;8seconds total",
+      "semantic_changes": {
+        "input_to_A": [
+          "/character/parameters/chin_width",
+          "/character/parameters/head_width",
+          "/character/parameters/hip_width",
+          "/character/parameters/jaw_drop",
+          "/character/parameters/mouth_width",
+          "/character/parameters/neck_width",
+          "/character/parameters/nose_width",
+          "/character/parameters/torso_length",
+          "/revision"
+        ],
+        "A_to_B": [
+          "/character/parameters/head_width",
+          "/revision"
+        ],
+        "B_to_C": []
+      },
+      "CLI_validation": {
+        "binary_sha256": "af1ecf1cef37207857f8e1987655415a91ba5882284dae1fa7113998a4ee2b3b",
+        "complete_R4_source_assets": "PASS_ALL_THREE",
+        "native_package_assets": "FAIL_ALL_THREE_asset_missing_appearances",
+        "Web_export_assets": "FAIL_ALL_THREE_asset_missing_appearances",
+        "scope": "CLI disk-root validation, not an observed renderer failure",
+        "inherited_policy": true,
+        "native_packaging_script_equal_pre89_R3": true,
+        "followup": "#90 standalone CLI asset-root distribution/documentation; actual missing-appearance errors retained"
+      },
+      "web_invalid_open": {
+        "root_observed_error_and_retained_actor_screen": 35,
+        "root_observed_valid_recovery_screen": 36
+      },
+      "all_actions_attributed_to_root": true
+    },
+    "withheld_native_images": {
+      "reason": "private absolute paths in native toolbar/toasts; no crop/redaction/reencoding proposed",
+      "hashes_in_private_originals": true,
+      "pixels_public": false
+    },
+    "static_transport_control": {
+      "status": "PASS_CHUNKS_MATCH_STATIC_SOURCE",
+      "scope": "static retained native R3 JSON transport only; not current Web runtime/GPU or product performance",
+      "fixture_bytes": 15206047,
+      "fixture_sha256": "699e12c1b009a2b29e381a89b10c228683be27332b57e8d854c5f4c7bb363ceb",
+      "chunks": 117,
+      "elapsed_ms_one_control": 7396,
+      "whole_return_chars": 200011,
+      "whole_matches_source": false,
+      "reassembled_matches_source": true
+    },
+    "admission85_pending": {
+      "status": "NOT_ADMITTED",
+      "required_held_per_endpoint": 69,
+      "held_cohorts": {
+        "native": {
+          "status": "COMPLETE69_CPU_GATES_PASS",
+          "required_cases": 69,
+          "final_accepted_cases": 69,
+          "requests": 138,
+          "complete_numeric_verification": "PASS69",
+          "foot_verification": "PASS69_NEW_REVIEWED_FOOT_REGION_IDENTITY_CHECKER",
+          "accessory_verification": "PASS69",
+          "receipts": {
+            "cohort_state": {
+              "bytes": 18649,
+              "sha256": "ed95767771a1ffd20ed1a483f59f7f51cdf04756573397e1e89bfc33a6ef9f64"
+            },
+            "independent_numeric": {
+              "bytes": 118720,
+              "sha256": "d5fe3010fda5ad91c0473891d339975e398e90068e5ededaeb5737654e062f9c"
+            },
+            "corrected_foot": {
+              "bytes": 370552,
+              "sha256": "b8ee8c200b36d30cd89ee909b78c9df13c7097fcb4aafec5c12927882df6f036"
+            },
+            "accessory": {
+              "bytes": 472723,
+              "sha256": "d616347fca99afd0020be32162cd4f4f8506bcad0162ac602f4b55b33802cc10"
+            }
+          },
+          "foot_checker_sha256": "277201181b3cb43e851b2a51d32c5a762bc0fc41a47205dd461fbca760f14cf0",
+          "foot_repair_independent_review": "PASS_BOUNDED_TOOLING_R2; not itself a69 result",
+          "original_failed_foot": {
+            "passing_cases": 62,
+            "required_cases": 69,
+            "status": "FAIL_PRESERVED",
+            "sha256": "1157ae794fb896d97d36eb4606da3f848109c0918f1900c03a1718edec03b9e4",
+            "original_checker_sha256": "7659e85e06e3d8cf441e85bb40a29c4cdc7cc2600a4fd5f65ed8241e61a6ea8c"
+          },
+          "original_failed_pipeline_receipt": {
+            "bytes": 48879,
+            "sha256": "01c3c37149c4898f8e4eb42d183a5b4e5f66c3c71e747b18d86cd45b238aa7df"
+          },
+          "same_original_captures_rerun_with_fresh_result": true,
+          "numeric_limits_unchanged": true,
+          "foot_identity": "exact53bone rest/IBM/canonical/gauge + authenticated complete foot-region rest including duplicate rows + body/garment sourceIDs/indices + garmentrest; each case original raw-source/LBS1e-6 mandatory first",
+          "recorded_nonfoot_rest_bit_variants": {
+            "cases": 7,
+            "max_abs_component_delta_m": 7.450580596923828e-09
+          },
+          "scope": "held CPU source/identity/full arrays/FK/transfer/foot/accessory only; ordinary playback actions/GPU/quality/performance separate",
+          "observer_binary_sha256": "5421e5bc38fb90831244f103842bacab3554dd59743d0a51e538a46a1d73cf9a",
+          "source_binding": "original R4 observer; not relabelled R5"
+        },
+        "web": {
+          "status": "COMPLETE69_CPU_GATES_PASS_R2_AUDIT",
+          "required_cases": 69,
+          "accepted_cases_at_draft": 69,
+          "final_accepted_cases": 69,
+          "complete_numeric_verification": "PASS69_RECORDED_COORDINATOR",
+          "foot_verification": "PASS69_REVIEWED_FOOT_REGION_CHECKER",
+          "accessory_verification": "PASS69_RECORDED_COORDINATOR",
+          "final_receipt_sha256": "412aa4c5bfadd76ee9888fd80df9d4daaeeeb1a7486dc9f955cb0427d8c8c3c9",
+          "independent_review": {
+            "status": "PASS_BOUNDED_ACTUAL_WEB69",
+            "review_sha256": "df2f978a63108e5531fce493a88dc320961434044964b299549571b89b83889e",
+            "machine_audit_sha256": "70d75bea14a4b59fafc85979c81b207f4dba896c41225a9aa8875436d9efcf6e"
+          },
+          "progress_source": "actual final state complete69/138 plus passed numeric coordinator receipt; not continuous runtime",
+          "observer_source_binding": {
+            "product": "581f6c8329c984bf55a913ca999830430334e5a1",
+            "observer": "original R4 experiment71 Web export; not R5 observer",
+            "wasm_sha256": "370142d969645e04d274d3da364af1ea2307fb1d86a9e326e0aece5e9aadd78f",
+            "source_artifact_audit_sha256": "3bf6c89943cc6ba3e25c58270d0cca3a990dac68a2e6cc1a8d6bd5dbb70a3322"
+          },
+          "requests": 138,
+          "receipts": {
+            "state": {
+              "bytes": 18717,
+              "sha256": "3d6f4c1b8db820db62210f0e45db5a60785e3ec8d36149355f4daa05f2d7a355"
+            },
+            "coordinator": {
+              "bytes": 63670,
+              "sha256": "412aa4c5bfadd76ee9888fd80df9d4daaeeeb1a7486dc9f955cb0427d8c8c3c9"
+            },
+            "independent_numeric": {
+              "bytes": 118527,
+              "sha256": "d6fca2770d1d546542cbd2d8d3d88a11b03ecf3724e78d428916af923d5ec57c"
+            },
+            "foot": {
+              "bytes": 369844,
+              "sha256": "44f6afe09339c79c4dbed4bd6f5e9512a4e9af2895c33a64f8087e5be9e08f61"
+            },
+            "accessory": {
+              "bytes": 472515,
+              "sha256": "a9cd05761a84c4de21ef3fcb3a755b953553d4d0a7c750cfde51402df53260f1"
+            },
+            "session_boundary": {
+              "bytes": 329,
+              "sha256": "9ab611b3e927439f41cbef3a781cbb9fbfae24a37bbcd130877942cc1596bb83"
+            },
+            "independent_machine_audit": {
+              "bytes": 61521,
+              "sha256": "70d75bea14a4b59fafc85979c81b207f4dba896c41225a9aa8875436d9efcf6e"
+            }
+          },
+          "recorded_checks": [
+            {
+              "name": "independent",
+              "exit_code": 0,
+              "seconds": 61.82058295805473,
+              "script_sha256": "db0eae795db295401297d16e33cd76b138d9ec53467e9d6ad264b78d8f5ec08e",
+              "log_sha256": "9e05595b40c57993ace01a36cc367d1bd08ea592948abef64e115f4992d0d103"
+            },
+            {
+              "name": "foot",
+              "exit_code": 0,
+              "seconds": 91.381618250045,
+              "script_sha256": "277201181b3cb43e851b2a51d32c5a762bc0fc41a47205dd461fbca760f14cf0",
+              "log_sha256": "b512f2a9b7cc521982850a0b17c9cfb13cdd0b13f6d1e575106545afee7b73ca"
+            },
+            {
+              "name": "accessory",
+              "exit_code": 0,
+              "seconds": 71.02635237504728,
+              "script_sha256": "4278024e6387cc77fcceb912f58caee9a68836176ae32b4be41dc76953620d6f",
+              "log_sha256": "479ac060e8df28dacaad26ba0a94a6c5ba7a3a8f032fcec8d72378f2e3ae081e"
+            }
+          ],
+          "browser_launch_boundary": {
+            "launches": 2,
+            "boundary_next_start": 43,
+            "issued_requests_at_boundary": 86,
+            "reason": "explicit acknowledged pause for sole-GPU native acceptance; same source/export/helper on resumed Web session",
+            "same_build": true,
+            "uninterrupted_runtime_claim": false,
+            "cross_launch_generation_continuity_claim": false
+          },
+          "raw_capture_inventory": [
+            {
+              "index": 0,
+              "case_id": "zero-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-000-h",
+              "envelope": "captures/zero-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "d59982699fa62d098d71eec157a15ff310c94937d3ae73f80079dd8f81695107"
+            },
+            {
+              "index": 1,
+              "case_id": "zero-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-001-h",
+              "envelope": "captures/zero-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "16f22121c02e127ea24660984516711e27dac9207d1acfadac9d071cd563f335"
+            },
+            {
+              "index": 2,
+              "case_id": "zero-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-002-h",
+              "envelope": "captures/zero-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "8fe1c0db0a9e399deac1a7637c21c9cf6f5f4591514a017c9096034295c3d8ce"
+            },
+            {
+              "index": 3,
+              "case_id": "torso_length-minus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-003-h",
+              "envelope": "captures/torso_length-minus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "3218439544517e0c8afa705a3cf60d71912b6dc92b90304582066d7f92392601"
+            },
+            {
+              "index": 4,
+              "case_id": "torso_length-minus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-004-h",
+              "envelope": "captures/torso_length-minus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "fb61b36b01e631c74a801109c41ca910399d3523b9c9f5333b1da06bb944aa10"
+            },
+            {
+              "index": 5,
+              "case_id": "torso_length-minus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-005-h",
+              "envelope": "captures/torso_length-minus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "ca81e0ad1b44acdb84871e100092b1c464933687d83cde1c5de0915235fd0e67"
+            },
+            {
+              "index": 6,
+              "case_id": "torso_length-plus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-006-h",
+              "envelope": "captures/torso_length-plus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "e0feaad4ca9edc401bf6020c2bf45ea5c55f653cf91b11c0fa1cc428c98809a2"
+            },
+            {
+              "index": 7,
+              "case_id": "torso_length-plus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-007-h",
+              "envelope": "captures/torso_length-plus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "511f6f75ad551a0136505d80e636be426910967817b6bd3b9c47f781c34f156a"
+            },
+            {
+              "index": 8,
+              "case_id": "torso_length-plus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-008-h",
+              "envelope": "captures/torso_length-plus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "3bcfc68bed8c4dcea20d299489473232e0cee8cde8a00ebdb0bd6cfd609d80f7"
+            },
+            {
+              "index": 9,
+              "case_id": "jaw_drop-minus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-009-h",
+              "envelope": "captures/jaw_drop-minus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "e133e947dc951b88a72c0a2cf69f7b4d8f281f72032b0b43c76c76b3b1726df0"
+            },
+            {
+              "index": 10,
+              "case_id": "jaw_drop-minus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-010-h",
+              "envelope": "captures/jaw_drop-minus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "847d06c7a021dc3458ac5fc918352a0e448145c381821939e98ac7fb69c4d417"
+            },
+            {
+              "index": 11,
+              "case_id": "jaw_drop-minus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-011-h",
+              "envelope": "captures/jaw_drop-minus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "c870d7938dcfde5e04a85d288d3f78b8a60645cec44beeb04c51cba46abd6187"
+            },
+            {
+              "index": 12,
+              "case_id": "jaw_drop-plus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-012-h",
+              "envelope": "captures/jaw_drop-plus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "3fa289082de0020ffc9c2562905b66dece6d1d7e873cfb2835b77d828c823947"
+            },
+            {
+              "index": 13,
+              "case_id": "jaw_drop-plus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-013-h",
+              "envelope": "captures/jaw_drop-plus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "4d8cdf8fc905e3e1a6bcd7ad6069d0e9f1fadfc56e68eafdb7099718663d8006"
+            },
+            {
+              "index": 14,
+              "case_id": "jaw_drop-plus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-014-h",
+              "envelope": "captures/jaw_drop-plus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "d042c1b61336de6a54cfffcea9edfb84b8846b8065cf499f5907a3fdf7c55cc4"
+            },
+            {
+              "index": 15,
+              "case_id": "head_width-minus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-015-h",
+              "envelope": "captures/head_width-minus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "f886a4d6329b261f49d79baa67aa423ac2b10c27c0db127ad417a24f97f21e2e"
+            },
+            {
+              "index": 16,
+              "case_id": "head_width-minus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-016-h",
+              "envelope": "captures/head_width-minus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "b00092d008ef6b2c3bd400769174ee080c598737fb826b6d7fca10de7a7671a7"
+            },
+            {
+              "index": 17,
+              "case_id": "head_width-minus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-017-h",
+              "envelope": "captures/head_width-minus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "59bfe18a81b16a9cb7620e496ee4e90eb35b7caa351cc0dd46039483d16b84ff"
+            },
+            {
+              "index": 18,
+              "case_id": "head_width-plus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-018-h",
+              "envelope": "captures/head_width-plus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "0983ca4bc80b93c100c8f5274b37be11dee52d2e061468cd8df7ea0e3022fb47"
+            },
+            {
+              "index": 19,
+              "case_id": "head_width-plus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-019-h",
+              "envelope": "captures/head_width-plus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "2bcff1f85392bbd2bde19096fc169d9979764f4e795c78db3be03a8e911db666"
+            },
+            {
+              "index": 20,
+              "case_id": "head_width-plus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-020-h",
+              "envelope": "captures/head_width-plus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "7b02195fb44bcd9e683e02b0d3dd9faca296993dc46ccd68af82dc1425e6d3b0"
+            },
+            {
+              "index": 21,
+              "case_id": "nose_width-minus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-021-h",
+              "envelope": "captures/nose_width-minus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "15450a14c297e9d09df0750aab1bb3d64cd88a905d42aa2dfaf54c8382765f7d"
+            },
+            {
+              "index": 22,
+              "case_id": "nose_width-minus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-022-h",
+              "envelope": "captures/nose_width-minus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "c8ca71674cc5b67723e3c1d79d01e87a7506f996f1ab6c7e81a5555209cd0aa1"
+            },
+            {
+              "index": 23,
+              "case_id": "nose_width-minus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-023-h",
+              "envelope": "captures/nose_width-minus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "74499c9f7542ce944e239785d8434779585ed740d5053d06e1d9bc2a7fb8428d"
+            },
+            {
+              "index": 24,
+              "case_id": "nose_width-plus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-024-h",
+              "envelope": "captures/nose_width-plus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "f53d191202cf4ac5269f7e15b47d55372d7756c436f1115803c80dc5d7e56ce1"
+            },
+            {
+              "index": 25,
+              "case_id": "nose_width-plus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-025-h",
+              "envelope": "captures/nose_width-plus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "57e5299c28a221b525d00978c5efef59666ae85088970c71002baea0b0a5317d"
+            },
+            {
+              "index": 26,
+              "case_id": "nose_width-plus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-026-h",
+              "envelope": "captures/nose_width-plus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "7e771021039a7d4465cdcd201e0280ef60621ce1d111cc3ed38324b9eeac0047"
+            },
+            {
+              "index": 27,
+              "case_id": "mouth_width-minus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-027-h",
+              "envelope": "captures/mouth_width-minus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "a16129786d98a7b71f968e69982490c5f4bf5dd404c4ac99631c0fffc7b4c173"
+            },
+            {
+              "index": 28,
+              "case_id": "mouth_width-minus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-028-h",
+              "envelope": "captures/mouth_width-minus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "ed19256a55bbd5e1c329f4d5e3fdb39552ea03472180b04038e8b927d1166971"
+            },
+            {
+              "index": 29,
+              "case_id": "mouth_width-minus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-029-h",
+              "envelope": "captures/mouth_width-minus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "8c58a93df224eb4a37e8be7c42603ec32da3227997e304992e875c52fc86ec40"
+            },
+            {
+              "index": 30,
+              "case_id": "mouth_width-plus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-030-h",
+              "envelope": "captures/mouth_width-plus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "1eda8a98d9d54b821e260d032efd078582d939c7ca537ac82fdd47dc079e5f9b"
+            },
+            {
+              "index": 31,
+              "case_id": "mouth_width-plus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-031-h",
+              "envelope": "captures/mouth_width-plus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "034642588f57248ef06cc1560fa05433c4be10bba0146c349b189a697d67e2c0"
+            },
+            {
+              "index": 32,
+              "case_id": "mouth_width-plus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-032-h",
+              "envelope": "captures/mouth_width-plus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "0c164c420b8ced187a578cc05164b072307144577d298f6069173ea3d4f2610b"
+            },
+            {
+              "index": 33,
+              "case_id": "chin_width-minus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-033-h",
+              "envelope": "captures/chin_width-minus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "07df8f129e03cca1a9eec402fe93c67e8dd403c08ab9c060592f3454ecf938fc"
+            },
+            {
+              "index": 34,
+              "case_id": "chin_width-minus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-034-h",
+              "envelope": "captures/chin_width-minus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "2b0b8bd706bc0797066fd3b7a214c3c453a09a25027da02c1831d706d2a4b088"
+            },
+            {
+              "index": 35,
+              "case_id": "chin_width-minus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-035-h",
+              "envelope": "captures/chin_width-minus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "7c6d71737172ea063b66e9cc7dd5e457cf45fc07865699242042bdc2db4b5ac3"
+            },
+            {
+              "index": 36,
+              "case_id": "chin_width-plus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-036-h",
+              "envelope": "captures/chin_width-plus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "7dedffd7e44ee3689d040863aa322a97f8d30ba4e88b92dee6dc410b8af7b7aa"
+            },
+            {
+              "index": 37,
+              "case_id": "chin_width-plus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-037-h",
+              "envelope": "captures/chin_width-plus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "962ac4249a75967bc4d139d9438a3fcedec4a492a8606abd2c29c2eae103fe7c"
+            },
+            {
+              "index": 38,
+              "case_id": "chin_width-plus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-038-h",
+              "envelope": "captures/chin_width-plus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "a265462be9513851d1abb051560fe1eccfe99784cb40e6b8f9dbf29104b3d44a"
+            },
+            {
+              "index": 39,
+              "case_id": "neck_width-minus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-039-h",
+              "envelope": "captures/neck_width-minus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "e21d8b19f1a4428cc2451989250966e81b605c237de2569f5f2bdc4ce483d3f5"
+            },
+            {
+              "index": 40,
+              "case_id": "neck_width-minus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-040-h",
+              "envelope": "captures/neck_width-minus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "ff1c1cd5d39c8a84b2826046bb5eee842c8f4300d7f19160f073b578dcd0a31f"
+            },
+            {
+              "index": 41,
+              "case_id": "neck_width-minus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-041-h",
+              "envelope": "captures/neck_width-minus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "60346f005060d24cfdbfb747617eda45720b0353d4286ef4c61461319adabfd2"
+            },
+            {
+              "index": 42,
+              "case_id": "neck_width-plus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-042-h",
+              "envelope": "captures/neck_width-plus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "d0bc85a9ec6b19b431512275735ae6a4607e3edd614cb9ca5eeda64a60b71b91"
+            },
+            {
+              "index": 43,
+              "case_id": "neck_width-plus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-043-h",
+              "envelope": "captures/neck_width-plus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "babeb8f8a832771ca0018736656d33f58440ce4beb0c7ea37b719dd18209371e"
+            },
+            {
+              "index": 44,
+              "case_id": "neck_width-plus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-044-h",
+              "envelope": "captures/neck_width-plus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "9da7645086a4eebfa6750e03b3d39bd6c698de48784ebad84c215a7ef4fdf4ef"
+            },
+            {
+              "index": 45,
+              "case_id": "hip_width-minus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-045-h",
+              "envelope": "captures/hip_width-minus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "1dc02f90eaae80763b09516d68aa7f9b429ab156c8cf028b9993ad989fda4cd4"
+            },
+            {
+              "index": 46,
+              "case_id": "hip_width-minus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-046-h",
+              "envelope": "captures/hip_width-minus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "e7e89d3cd5adcb31917cb03d3e003a807379c1585c6e7ffb282917b2c37a6f0b"
+            },
+            {
+              "index": 47,
+              "case_id": "hip_width-minus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-047-h",
+              "envelope": "captures/hip_width-minus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "027cf0d794bc282ca96f4ead8e13076dc3f39aed0532d3de9bb09edf59783b2a"
+            },
+            {
+              "index": 48,
+              "case_id": "hip_width-plus-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-048-h",
+              "envelope": "captures/hip_width-plus-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "a9f1c493fd7a3db4b28ee9b58c5a4263b2b426ce181a7e2ff74410e864a80491"
+            },
+            {
+              "index": 49,
+              "case_id": "hip_width-plus-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-049-h",
+              "envelope": "captures/hip_width-plus-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "a45f10768c70f7d2475b94460610817f75f74275c376979f8d05027761015747"
+            },
+            {
+              "index": 50,
+              "case_id": "hip_width-plus-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-050-h",
+              "envelope": "captures/hip_width-plus-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "7b9162d7f8ca6b23b6bb2f66bed3db59b52bf87efb57222279fbc1e305255fb0"
+            },
+            {
+              "index": 51,
+              "case_id": "face-wide-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-051-h",
+              "envelope": "captures/face-wide-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "920dbe1389cc32353707b04dcf9a59d1434774745ee3172f736bae57f066c176"
+            },
+            {
+              "index": 52,
+              "case_id": "face-wide-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-052-h",
+              "envelope": "captures/face-wide-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "9c9f93ad40d831b76eddb33b10e8dc627eef7079f7ec8f67f6348c00ab1ca107"
+            },
+            {
+              "index": 53,
+              "case_id": "face-wide-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-053-h",
+              "envelope": "captures/face-wide-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "33c7f320a88622bfd5c64618b648ab1a7b541abdc8f1bb64e7829d45ad9a1cb7"
+            },
+            {
+              "index": 54,
+              "case_id": "face-narrow-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-054-h",
+              "envelope": "captures/face-narrow-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "e4b2212a6e9a447174ec114790ed374ad61d2a479d47f807bc54844b823e8a8d"
+            },
+            {
+              "index": 55,
+              "case_id": "face-narrow-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-055-h",
+              "envelope": "captures/face-narrow-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "3b8e888e612877441399c7419a31b0b722374ee41537edb1b3e0b59d9a97f61e"
+            },
+            {
+              "index": 56,
+              "case_id": "face-narrow-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-056-h",
+              "envelope": "captures/face-narrow-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "e7c1f58d613b6b9b170a14f5919d759f0c29141d307ee18213d8b4d755ded624"
+            },
+            {
+              "index": 57,
+              "case_id": "upper-body-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-057-h",
+              "envelope": "captures/upper-body-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "73e6e7500d78e9bd8cb4eec33dd7cf3b3e6202e6b1b787c4d360c54436c8dc89"
+            },
+            {
+              "index": 58,
+              "case_id": "upper-body-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-058-h",
+              "envelope": "captures/upper-body-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "e9f412b72c3f0d98005bd8696ed7d299c83aba2f7c79ee6ed684a0c1ac528e52"
+            },
+            {
+              "index": 59,
+              "case_id": "upper-body-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-059-h",
+              "envelope": "captures/upper-body-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "e1f4d9686f42bec0baf9ac88c621a3c946f6984e41fcc1456c40dd95418f0c60"
+            },
+            {
+              "index": 60,
+              "case_id": "lower-body-b1_arm_rehearsal_v1-0",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-060-h",
+              "envelope": "captures/lower-body-b1_arm_rehearsal_v1-0.json",
+              "envelope_sha256": "2dc616164a3cdfddd11bed1bd1d4804c5fbadb805da3b991457e5e3ac7510a7f"
+            },
+            {
+              "index": 61,
+              "case_id": "lower-body-b1_arm_rehearsal_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-061-h",
+              "envelope": "captures/lower-body-b1_arm_rehearsal_v1-2.json",
+              "envelope_sha256": "df5c898092bdc85454ea0033f72744eedae76de44889a49d802eb2785f725263"
+            },
+            {
+              "index": 62,
+              "case_id": "lower-body-b1_knee_flex_v1-2",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-062-h",
+              "envelope": "captures/lower-body-b1_knee_flex_v1-2.json",
+              "envelope_sha256": "16ed7fdd41974b52c19fabc48880f439fff7f6fec66908342b26976cd32a1fc9"
+            },
+            {
+              "index": 63,
+              "case_id": "zero-b1_arm_rehearsal_v1-4",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-063-h",
+              "envelope": "captures/zero-b1_arm_rehearsal_v1-4.json",
+              "envelope_sha256": "88161fd89a1af484a3473140b2fe05b248861201fb83f818c2590827f23b1c01"
+            },
+            {
+              "index": 64,
+              "case_id": "zero-b1_knee_flex_v1-4",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-064-h",
+              "envelope": "captures/zero-b1_knee_flex_v1-4.json",
+              "envelope_sha256": "79f0f0e4820511e522b149d5ba2bce5610d4f54d315ef07b9c7e914249a5a060"
+            },
+            {
+              "index": 65,
+              "case_id": "face-wide-b1_arm_rehearsal_v1-4",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-065-h",
+              "envelope": "captures/face-wide-b1_arm_rehearsal_v1-4.json",
+              "envelope_sha256": "f8bfc2c7292068d5895329d08428d8905d5c79392b09307001138bf7fdbad378"
+            },
+            {
+              "index": 66,
+              "case_id": "face-wide-b1_knee_flex_v1-4",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-066-h",
+              "envelope": "captures/face-wide-b1_knee_flex_v1-4.json",
+              "envelope_sha256": "6f8958948fcdbc58b7ab182daf455ccc584768cf2055abb3655c0cb881da433f"
+            },
+            {
+              "index": 67,
+              "case_id": "lower-body-b1_arm_rehearsal_v1-4",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-067-h",
+              "envelope": "captures/lower-body-b1_arm_rehearsal_v1-4.json",
+              "envelope_sha256": "759f011daaef45a47036f974b7cdf55aede89aeda07682c51ba04d00d83e1d8a"
+            },
+            {
+              "index": 68,
+              "case_id": "lower-body-b1_knee_flex_v1-4",
+              "request_id": "w71-94f44739adb941508ce3d1ddf3331724-068-h",
+              "envelope": "captures/lower-body-b1_knee_flex_v1-4.json",
+              "envelope_sha256": "e40e507489dac9ea09f3cdec1a1fd46645e7dc968f87ed8dc1f271ac1ed71f71"
+            }
+          ]
+        }
+      },
+      "three_live_recipes_per_endpoint": {
+        "native": {
+          "zero": {
+            "status": "PASS_BOUNDED_ACTUAL_NATIVE_R5_SEQUENCE",
+            "steps": 6,
+            "step_names": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "request_ids": [
+              "r89-825719bc3d264104b18cf041b84eea8f",
+              "r89-42b352d9167041bc9f4319efaf826fd0",
+              "r89-4c55454e9d854dcd84e30c4740dad8fd",
+              "r89-e86d5f1f349640b792f87561d07edc1c",
+              "r89-93f1e08b16de45d78022422ac4bf52f0",
+              "r89-12e9daf6d93943ce85ff62b58d06ccf0"
+            ],
+            "result_sha256_by_step": {
+              "A": "7942d4653755355e2cafdd7c7c6e23b57d55c929107a641334746ecf6d601a8e",
+              "B": "45a6d808542121c2966c01d74b597e7b879c9ca34768eebe56ddc8a014070c49",
+              "C": "406927ababc3bea3d759b1c9cb27c2c9403486083fd2e40a9be842c1acb6e508",
+              "D": "556cbd156a4456423b98f2720d02a1d50cd3789a10129ad31c57383286e83ae3",
+              "E": "c9901288818a15e3d18db285f9e012a0ab72e1410646c96a0b76f7b249f30562",
+              "F": "706c67ee08b7677a38d890f67551d93ebe4ab5d7564190ef0bcbe3206847bdb1"
+            },
+            "natural_pause_seconds": 2.3002872467041016,
+            "resume_pause_seconds": 2.7536513805389404,
+            "neck_width_edit": {
+              "before": 0,
+              "after": 0.2
+            },
+            "scope": "ordinary Play/Pause and Resume/Pause actions plus stable held-current readbacks; no continuous live arrays or independent arbitrary-time deformation/LBS/GPU proof",
+            "final_receipt_sha256": "8bb95d12b987f63f093a524f98c59f14055d8baf360afa81a079a3c1529c6965"
+          },
+          "face-wide": {
+            "status": "PASS_BOUNDED_ACTUAL_NATIVE_R5_SEQUENCE",
+            "steps": 6,
+            "step_names": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "request_ids": [
+              "r89-a66fd77d9dc14c1b8d06b36921e12589",
+              "r89-ee1bf0b1a909457898dbf640abdb1a0a",
+              "r89-13589c5497c34ae8989f84fe35e3d047",
+              "r89-7d7f800e3bda49e7a67751ecf0574aaa",
+              "r89-0ffb341bf65649179706bf7df9f042ec",
+              "r89-b6bee1fec3fc4ff3a52e987d998c9cce"
+            ],
+            "result_sha256_by_step": {
+              "A": "049db12d87bd897f4008d049c335a12a2a5ecc41d13812e75cf1459b89e51fae",
+              "B": "2c788b4dbbf0963f3450088325bb03543d9b0a1811065a7c7e08ed058be51481",
+              "C": "cc2bd2f5711823a6aecf7b2d318b287b94ba152d3d1331c0d5021378b99780ce",
+              "D": "cb964e15165b15958e430e7d00dde476b9e2b68411b0a54a3a0290c96c734b0a",
+              "E": "0ddba82c74df392d5d8126095bd85865a0054c11aeee315952938ff373a1a505",
+              "F": "9b38f7b86ecb16905e325d70e2bebf2bf0428c9ed66bc76e60b77e8ccfc9401c"
+            },
+            "natural_pause_seconds": 2.2919557094573975,
+            "resume_pause_seconds": 2.716383218765259,
+            "neck_width_edit": {
+              "before": 0,
+              "after": 0.2
+            },
+            "scope": "ordinary Play/Pause and Resume/Pause actions plus stable held-current readbacks; no continuous live arrays or independent arbitrary-time deformation/LBS/GPU proof",
+            "final_receipt_sha256": "8bb95d12b987f63f093a524f98c59f14055d8baf360afa81a079a3c1529c6965"
+          },
+          "lower-body": {
+            "status": "PASS_BOUNDED_ACTUAL_NATIVE_R5_SEQUENCE",
+            "steps": 6,
+            "step_names": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ],
+            "request_ids": [
+              "r89-3ea17f98f3d74f7b8e49e60e7a6d3285",
+              "r89-6f74b85ffaa84ca1a6d9f70f202832ba",
+              "r89-0da1dda2200d456fb7bb8ba572fc9a0e",
+              "r89-de05e7b98e284795bafeac7708ebda6c",
+              "r89-a32b5cc72d56493fb1ff56f9e36df36a",
+              "r89-43e0d47b1c8d4c09b8fa51cb2bcee328"
+            ],
+            "result_sha256_by_step": {
+              "A": "c023baaa97d4456c43e0955a1d438a964d11db2e1fa75318299e2bf5421f899e",
+              "B": "5215a6d7e52b13946581955099142002c4f637be2c753a2a79436e4bd240b8ce",
+              "C": "186adb97f6099da80d5745ed005023fdcd7922718a19ad53973af9870d229819",
+              "D": "54d80d6cb0cfe117649948208a50dfea8fa8af5dfeb8ee4fd6598677e3b2d70f",
+              "E": "6f00e51161d3fa085e378bebcf6b279ae79bb09e624a7d105ee96a107955a322",
+              "F": "ead173773e6fdff22ab8a8630a9fd17b680d807ed128da25228c96491e9d9368"
+            },
+            "natural_pause_seconds": 2.292246103286743,
+            "resume_pause_seconds": 2.766439914703369,
+            "neck_width_edit": {
+              "before": 1,
+              "after": 0.8
+            },
+            "scope": "ordinary Play/Pause and Resume/Pause actions plus stable held-current readbacks; no continuous live arrays or independent arbitrary-time deformation/LBS/GPU proof",
+            "final_receipt_sha256": "8bb95d12b987f63f093a524f98c59f14055d8baf360afa81a079a3c1529c6965"
+          }
+        },
+        "web": {
+          "zero": {
+            "status": "PASS6_ACTUAL_AND_INDEPENDENT_R2_AUDIT",
+            "steps": 6,
+            "result_sha256_by_step": {
+              "A": "11bd2e1c9e69c9222d30084fef5d5b281c54f900709e9455bf80660c015c05b2",
+              "B": "b5d720228f7d73be4be3d907cb2a57ce2d39166ab8a9123d20cc86e25b82c159",
+              "C": "89dd0f592b546f68bdcd109a9309ea9705760c34cd01193c3b8b217e9d00060c",
+              "D": "2e59e820b92b49165d7130d40aef54ad06c026ae866f71b8b52a3bc9ebf0ef07",
+              "E": "c96f7924a23e7e651616a05b3a6faffbf5c491afd0112c4be6fcf0bb5f2f59cd",
+              "F": "10f4a78a4222e305c1fb7efe0f29ce42a77849f5f2ddfdb2f75519cd747e169e"
+            },
+            "request_ids": [
+              "r89-556187a9b21543f5b5169d8763c6972d",
+              "r89-8e7f3149fa0f48e5b3ef2e3d53310af5",
+              "r89-b73948da809b493798a731290d2b671b",
+              "r89-66ec15cc3d0b4ba3884079d4270b607f",
+              "r89-63a7fab2744043b78fe827fc05d1cf7f",
+              "r89-e5e5902622764090a9e944c633ee855e"
+            ],
+            "natural_pause_seconds": 0.2752000093460083,
+            "resume_pause_seconds": 0.9538000822067261,
+            "neck_width_edit": {
+              "before": 0,
+              "after": 0.2
+            },
+            "final_receipt_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+            "scope": "ordinary root-observed actions/screens + current stable held CPU readbacks; not continuous live arrays, independent arbitrary-time LBS, GPU/quality/performance"
+          },
+          "face-wide": {
+            "status": "PASS6_ACTUAL_AND_INDEPENDENT_R2_AUDIT",
+            "steps": 6,
+            "result_sha256_by_step": {
+              "A": "e4d59569d5edfaee0ba411190c8f50c8348b24b68da25f74cab7a5a06b325524",
+              "B": "8df2367918d58bfbdb051f37e673edfeda67793c7d550c29ed4adb81198e6df9",
+              "C": "cef4df8d7e484f9fc0c5cfe1257bbde8ecab133ee07356a2587a39e39639af37",
+              "D": "445e44343d1695d7b2ed7bc2f5020351c83b22e714ac83fbb7010eb7d3cfcfc2",
+              "E": "6bf1bf11a371b333418662063a8827d06630c6e659e05ebbac100eba92de2a46",
+              "F": "9e5894c1d998dcb0b259a75ee38afd9c708db2210df84fe8a0b99ee412cea849"
+            },
+            "request_ids": [
+              "r89-14785381d76d4b5793ef101834588d9a",
+              "r89-08ae3a89d73b4877b35b2b52b86ece2f",
+              "r89-df1f07a5c4f04188ba3167a290e8c7d4",
+              "r89-3f8fa164e9054a10a73fe117ecbfc230",
+              "r89-1ec9bc9fa0514c9e891fe49a8b82dc97",
+              "r89-c90d155e620d45478a02b7888689997f"
+            ],
+            "natural_pause_seconds": 0.2859000265598297,
+            "resume_pause_seconds": 0.8185999989509583,
+            "neck_width_edit": {
+              "before": 0,
+              "after": 0.2
+            },
+            "final_receipt_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+            "scope": "ordinary root-observed actions/screens + current stable held CPU readbacks; not continuous live arrays, independent arbitrary-time LBS, GPU/quality/performance"
+          },
+          "lower-body": {
+            "status": "PASS6_ACTUAL_AND_INDEPENDENT_R2_AUDIT",
+            "steps": 6,
+            "result_sha256_by_step": {
+              "A": "cc714cd18f24a2eadedae1cf7263506ea477795c02b105a7603df0c3e38d6638",
+              "B": "d6925a03f4e5ffba0317ae06dc62d8a5b1b77a8ee9320a870777e97548f08dff",
+              "C": "3026dd460baacc970326fa092689e0fff34cb4cb7fe61fd41d3502f32e3afe43",
+              "D": "609edb0da1eb13f9ffd111f4cc1226a24c84f789cf29840d709e8367fb38124e",
+              "E": "f1e63685997f0db5ffcc62f759c252a127b1adff22fec7e5cc29ba8b5d18e3f3",
+              "F": "6e91af99ae35d3a88f0557b5c25a15256b1e08a6b8354ce8f00d05a91d251fd7"
+            },
+            "request_ids": [
+              "r89-851fe0765d1b4582b08d3f3be49d3620",
+              "r89-4702e113d8e24eb1b9d0764f457c12b7",
+              "r89-7012e0c371344d1e9848e9497a45f087",
+              "r89-4d186a139a254e9bbdf6160a3a9f8a7f",
+              "r89-f8c68fb0a6694763bbb9a18b7c7091ca",
+              "r89-8c3e37b15f254a7bba421ec8f8da6a5e"
+            ],
+            "natural_pause_seconds": 0.2198999971151352,
+            "resume_pause_seconds": 1.1512000560760498,
+            "neck_width_edit": {
+              "before": 1,
+              "after": 0.8
+            },
+            "final_receipt_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+            "scope": "ordinary root-observed actions/screens + current stable held CPU readbacks; not continuous live arrays, independent arbitrary-time LBS, GPU/quality/performance"
+          }
+        }
+      },
+      "ordinary_native_Web_native_exchange": "RECORDED with CLI distribution-root limitation",
+      "independent_full_rig_derivation": "existing calibration limit, not a new admission gate",
+      "additional_diagnostic72": {
+        "status": "PASS_BOUNDED_ACTUAL_CPU_CONTROLS",
+        "baseline_commit": "581f6c8329c984bf55a913ca999830430334e5a1",
+        "receipt_sha256": "24429e6c3bf9ed25cf72d824ed5cab58424b48bac2fc503412ffa189d1bf054c",
+        "derived_manifest_sha256": "7a3a9ad1cf2bd670c59ba8845223dfc50dbe11eb7c5e9d863b69b956d351978a",
+        "proposed_public_manifest": "experiments/72-b1-admission-controls/evidence-manifest.json",
+        "original_preparation_control_hashes": {
+          "run.py": "07e9d5ccafc693dbbd7cca484d9c8aa148eaaed2853122d3d0d7250f441dfd1b",
+          "test_controls.py": "a6427e1b70d5bd3df70fdfd50e52db83ba8789a14db566b2b92c11ec406308b0",
+          "compatibility.rs": "06c015c47b30fbe10019756ad556031a1d1e48a31ffaafe496c2919cd75d4ef8",
+          "cases.json": "a54b067966e85896c362a0389e61031b5804333449ed01932bf98570ef6354a8",
+          "pins.json": "02637d4de1f782658c6363e88c92e22ed6384db2f20ea468d73a28b74f257208",
+          "README.md": "6581ecfcd7634cef1aee6b42e96c553a9519385e2d8c770a3090f4dfedc8fd21",
+          "REVIEW.md": "dd456b0c97d29717ecee97bad427030d84ef1d02384f4ab757ecfcfcad41c67f"
+        },
+        "zero_comparisons": 2,
+        "full_original_recipe_pose_cases": 40,
+        "actual_cargo_invocations": 14,
+        "green_invocations": 9,
+        "semantic_red_invocations": 5,
+        "all_five_each_restored_green": true,
+        "all8030_original_source_hashes_restored": true,
+        "measurement_count": 83,
+        "measurement_hashes_in_derived_manifest": true,
+        "workspace_test_total_not_incremented": true,
+        "scope": "headless production CPU zero-extension compatibility + five head_width mapping semantic controls; not full Blender/reference rerun/new8 fitted-rig derivation/71 app/GPU/quality admission",
+        "published_results_sha256": "9fd13a1e63670a75e338552919275c95c0fb66abab3385545c27b021af9737bc",
+        "publication_status": "existing reviewed public72 docs; preserve original prep hashes and actual receipt separately"
+      },
+      "native_r5_live_audit": {
+        "status": "PASS",
+        "summary_sha256": "8bb95d12b987f63f093a524f98c59f14055d8baf360afa81a079a3c1529c6965",
+        "independent_review_sha256": "3c512c18c049ccc05a32b53a98d58ff06706bcdb1df6771f03594d04053b158d",
+        "independent_machine_audit_sha256": "cb3888c8f4b6b494975c8dbdd24c7e5d1f18457d6790acfb5e159aaf49cfb924",
+        "collector_sha256": "4fa75262fe026471e037d05fb7056dcd3c161d12f820e1660a54312f4caabf0e",
+        "binding_checker_sha256": "79adaf5189f5943390c86f8e6c6cec477ccf0a71b7d7136d967fa0495792c780",
+        "verifier_sha256": "db0eae795db295401297d16e33cd76b138d9ec53467e9d6ad264b78d8f5ec08e",
+        "native_binary_sha256": "342b7581af3970d699f659680da6942379b96319439276b59a9936ee79c3646d",
+        "ordinary_pixels": "private only; not copied into this proposed public-safe manifest"
+      },
+      "web_r5_live_audit": {
+        "actual_status": "ALL18_STRICT_COLLECTOR_STEPS_PASS",
+        "summary_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+        "independent_R2_review": "PASS_BOUNDED_ACTUAL_WEB18",
+        "review_sha256": "e99192886cd0962f972d4528088e0082555c61f717d8490574d454ab4a304815",
+        "observer_binary_source": "R5 closure18f1c60d...; actual R5 Wasm c525f70b...; separate from R4 Web69",
+        "Wasm_sha256": "c525f70b9d90a68e6671d4bd5ab3809905bc6dd1961cfa015cfd69baa7d7bbc1",
+        "machine_audit_sha256": "6db7010034a7054efd3a845c34260ca9e4e6d1b7b7cfa85e5d0e312415373044",
+        "short_gui_click_intervals_ms": [
+          294,
+          406,
+          278,
+          324,
+          213,
+          649
+        ],
+        "long_continuous_playback_claim": false,
+        "separate_ordinary8s_exchange_not_combined": true,
+        "source_provenance": "root actual recorded launch invocation + explicitly retrospective launch record + HTTP fetch observations +173 exported artifact rehashes; no independent historical process or response-body recapture"
+      }
+    },
+    "requested_quality_supplements": {
+      "fresh68_long_shoulder_0_2": {
+        "status": "ACTUAL_NATIVE_WEB_WITNESSES_AND70_NUMERIC_PARITY_PASS; QUALITY_HOLD",
+        "native": {
+          "status": "source0/source2 acknowledged current fresh records",
+          "records": [
+            {
+              "bytes": 13926322,
+              "sha256": "75f09abab9784385bead392f06632dab371c624f6ea2e7fa397dd7bbbf5e30a5"
+            },
+            {
+              "bytes": 13926669,
+              "sha256": "3aecaa94bbdd117d74963f9412db49a54f7dc2f9267aaee33d5cc43af6cdfbf4"
+            }
+          ]
+        },
+        "web": {
+          "status": "source0/source2 actual downloaded records",
+          "records": [
+            {
+              "bytes": 13845769,
+              "sha256": "9a9a0a762bb023efbbc7b095fc50f40a0a569fec0e83becced92877db66bf55c"
+            },
+            {
+              "bytes": 13846380,
+              "sha256": "8a266e35aa6bff08a1561c1175c5bda1b8d1efc8615c01f10854e3a8d7eb250b"
+            }
+          ]
+        },
+        "receipt": {
+          "bytes": 5862,
+          "sha256": "71ce26298bda5a1ea5999a3e0bfb277d0f1dcb5ef609615d839b0ea9ed68dbd2"
+        },
+        "commands_exit": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "comparisons": [
+          {
+            "seconds": 0,
+            "bytes": 3735,
+            "sha256": "70fa49bce23f834e7c68beb1856dbd364bfa42a5fdd53e15ef0b1622386990ee",
+            "native_envelope_sha256": "75f09abab9784385bead392f06632dab371c624f6ea2e7fa397dd7bbbf5e30a5",
+            "web_envelope_sha256": "9a9a0a762bb023efbbc7b095fc50f40a0a569fec0e83becced92877db66bf55c",
+            "local_position_max_m": 1.7881393432617188e-07,
+            "stage_position_max_m": 1.7881393432617188e-07,
+            "rest_max_m": 0.0,
+            "skin_matrix_max": 2.384185791015625e-07,
+            "source_triangle": [
+              246,
+              244,
+              182
+            ],
+            "posed_over_fitted_rest_area": 1.0000140755661076
+          },
+          {
+            "seconds": 2,
+            "bytes": 3731,
+            "sha256": "a3fbaeba6f44e4da2cbaf534bf2b3a65485e7a274dc89bc7e790721b654228b4",
+            "native_envelope_sha256": "3aecaa94bbdd117d74963f9412db49a54f7dc2f9267aaee33d5cc43af6cdfbf4",
+            "web_envelope_sha256": "8a266e35aa6bff08a1561c1175c5bda1b8d1efc8615c01f10854e3a8d7eb250b",
+            "local_position_max_m": 1.7881393432617188e-07,
+            "stage_position_max_m": 1.7881393432617188e-07,
+            "rest_max_m": 0.0,
+            "skin_matrix_max": 2.384185791015625e-07,
+            "source_triangle": [
+              246,
+              244,
+              182
+            ],
+            "posed_over_fitted_rest_area": 22.005635738420796
+          }
+        ],
+        "profile_scope": "legacy backend2 torso_length1 jaw_drop0, arms timeline b1_arm_rehearsal_v1; not new8 parameter matrix",
+        "quality": "HOLD; source triangle246/244/182 remains22.0056357x fitted-rest area atsource2; parity is no fix, GPU owner or collision proof",
+        "native_first_source2_attempt": "failed early current check retained; later matching resolution + distinct fresh request success, no replay/relabel"
+      },
+      "scope": "requested quality-round supplement; no new undisclosed#85 gate"
+    },
+    "failed_attempts_retained": {
+      "native_R4_first_cohort": {
+        "failure": "startup null report before readiness; later matching current acknowledgement retained separately",
+        "accepted_cases": 0,
+        "original_artifacts_preserved": true
+      },
+      "prior_R3_Web_attempts": "retained historical failures; no replay/resume or acceptance transfer",
+      "native_save24_and38": "retained failed attempts; corrected saves25/39 separate",
+      "native_foot_original": "original62/69 checker and failed pipeline receipt preserved; reviewed repair/new69 result has different checker identity, not original receipt rewritten",
+      "R4_Web_first_two_cohorts": {
+        "accepted_cases_each": 0,
+        "reason": "DOM chunk length/offset/end changed or truncated during firstOpen; original failures preserved; later actual matching ready separately observed",
+        "new_cohort": "historical first-case checkpoint: fresh publication-reader helper/version had first case current and remaining68/numeric gates pending then; final grouped Web69 and all three numeric gates later passed separately"
+      },
+      "native_live_D": "matching shared-command appearance publication error remains failure; later fresh recovery capture separate"
+    },
+    "unchanged_limits": [
+      "#3 BLOCKED",
+      "#4 measurement gaps",
+      "#79 eye/hair appearance quality HOLD",
+      "#80 garment quality HOLD",
+      "M2 generated-motion quality HOLD",
+      "#84 strict workspace lint failure retained",
+      "#86 visual interruption/staleReady remains open",
+      "GPU pixel/depth/owner readback NOT-RUN",
+      "formal performance NOT-RUN",
+      "Native R5 playback sequences PASS does not relabel R4 native69 observer identity",
+      "Web69 used two browser launches with explicit boundary43, same build but not uninterrupted runtime",
+      "No issue85/89 closure or merge is claimed before final integration and merge",
+      "Web213\u2013649ms Play/Resume\u2013Pause checks are short advancement, not continuous/long playback or performance"
+    ],
+    "private_source_hash_inventory": [
+      {
+        "id": "r4_build_receipt",
+        "original_bytes": 16294,
+        "original_sha256": "86fc83518e4e1031fedddcc61501d49a0ecdeb5060348ba1f4702c96586a92d8",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "r4_source_closure",
+        "original_bytes": 480311,
+        "original_sha256": "e912fba4a74ebeb5a677bc1d2a97cc976e9d1719990d85c241bea4c8c75008ab",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "r4_export_manifest",
+        "original_bytes": 588271,
+        "original_sha256": "219d87154fedf52b8f8e9c8d49e9e88e2a5e6a90c906cff44710012b345cc51c",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "r4_independent_artifact_audit",
+        "original_bytes": 14698,
+        "original_sha256": "0da1ab2cc5a4a7398d63ac8726880098651ea81d372a3682fc5cd15f1d9cec99",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "r4_exchange_audit",
+        "original_bytes": 41453,
+        "original_sha256": "6c85403bb9b8f80fe7cd3e99695eb54d31d2083de5862207ee140e069baa3979",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "r4_filesystem_checks",
+        "original_bytes": 2383,
+        "original_sha256": "112a144e6b90d72af6635f3b2e7dd2e4c2759482d7edf41e8b25612dff19e027",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "r4_download_receipt",
+        "original_bytes": 1109,
+        "original_sha256": "3606fff3b960176161cb2bc1088ee5770d5d0beb7fef0cc9583571f8d665939b",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "issue89_static_review",
+        "original_bytes": 2221,
+        "original_sha256": "9b205c4cf2cbf577374fdd953580e152f29c8a7f2db2bacacc6cb4739ea6073d",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "static_r3_transport_result",
+        "original_bytes": 11975,
+        "original_sha256": "d0368e4cfdd1ae5c901fe05b48d3006262975e62bca54e6848b03802ecf22dee",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "r4_prepared_source_artifact_audit",
+        "original_bytes": 100134,
+        "original_sha256": "3bf6c89943cc6ba3e25c58270d0cca3a990dac68a2e6cc1a8d6bd5dbb70a3322",
+        "original_published": false,
+        "scope": "compact fields derived; raw private receipt not copied"
+      },
+      {
+        "id": "native69_cohort_state",
+        "original_bytes": 18649,
+        "original_sha256": "ed95767771a1ffd20ed1a483f59f7f51cdf04756573397e1e89bfc33a6ef9f64",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "native69_independent_numeric",
+        "original_bytes": 118720,
+        "original_sha256": "d5fe3010fda5ad91c0473891d339975e398e90068e5ededaeb5737654e062f9c",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "native69_original_failed_pipeline",
+        "original_bytes": 48879,
+        "original_sha256": "01c3c37149c4898f8e4eb42d183a5b4e5f66c3c71e747b18d86cd45b238aa7df",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "native69_original_failed_foot",
+        "original_bytes": 262640,
+        "original_sha256": "1157ae794fb896d97d36eb4606da3f848109c0918f1900c03a1718edec03b9e4",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "native69_corrected_foot",
+        "original_bytes": 370552,
+        "original_sha256": "b8ee8c200b36d30cd89ee909b78c9df13c7097fcb4aafec5c12927882df6f036",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "native69_accessory",
+        "original_bytes": 472723,
+        "original_sha256": "d616347fca99afd0020be32162cd4f4f8506bcad0162ac602f4b55b33802cc10",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "foot_checker_repair_review",
+        "original_bytes": 5621,
+        "original_sha256": "243aa8147befa2d271e9aeb6be87e924aa13c961a770036728a9f88ebb86b126",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "fresh68_70_receipt",
+        "original_bytes": 5862,
+        "original_sha256": "71ce26298bda5a1ea5999a3e0bfb277d0f1dcb5ef609615d839b0ea9ed68dbd2",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "fresh68_70_compare0",
+        "original_bytes": 3735,
+        "original_sha256": "70fa49bce23f834e7c68beb1856dbd364bfa42a5fdd53e15ef0b1622386990ee",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "fresh68_70_compare2",
+        "original_bytes": 3731,
+        "original_sha256": "a3fbaeba6f44e4da2cbaf534bf2b3a65485e7a274dc89bc7e790721b654228b4",
+        "original_published": false,
+        "scope": "compact fields derived read-only; private paths/large raw arrays withheld"
+      },
+      {
+        "id": "r5_build_export",
+        "original_bytes": 68865,
+        "original_sha256": "bbda79afa8f31fb596740cdf478bfb0561c8182ce8f92c781efc803e7a76817b"
+      },
+      {
+        "id": "r5_native_live_summary",
+        "original_bytes": 14995,
+        "original_sha256": "8bb95d12b987f63f093a524f98c59f14055d8baf360afa81a079a3c1529c6965"
+      },
+      {
+        "id": "r5_native_live_review",
+        "original_bytes": 5746,
+        "original_sha256": "3c512c18c049ccc05a32b53a98d58ff06706bcdb1df6771f03594d04053b158d"
+      },
+      {
+        "id": "r5_native_live_independent_audit",
+        "original_bytes": 40948,
+        "original_sha256": "cb3888c8f4b6b494975c8dbdd24c7e5d1f18457d6790acfb5e159aaf49cfb924"
+      },
+      {
+        "id": "r5_build_independent_audit",
+        "original_bytes": 16403,
+        "original_sha256": "ffd642e12c726a5a626e047f48eb2e2f31a8a66fe2dfe94cfea17ac3eba7a326"
+      },
+      {
+        "id": "web69_coordinator",
+        "original_bytes": 63670,
+        "original_sha256": "412aa4c5bfadd76ee9888fd80df9d4daaeeeb1a7486dc9f955cb0427d8c8c3c9"
+      },
+      {
+        "id": "web69_final_state",
+        "original_bytes": 18717,
+        "original_sha256": "3d6f4c1b8db820db62210f0e45db5a60785e3ec8d36149355f4daa05f2d7a355"
+      },
+      {
+        "id": "web69_independent",
+        "original_bytes": 118527,
+        "original_sha256": "d6fca2770d1d546542cbd2d8d3d88a11b03ecf3724e78d428916af923d5ec57c"
+      },
+      {
+        "id": "web69_foot",
+        "original_bytes": 369844,
+        "original_sha256": "44f6afe09339c79c4dbed4bd6f5e9512a4e9af2895c33a64f8087e5be9e08f61"
+      },
+      {
+        "id": "web69_accessory",
+        "original_bytes": 472515,
+        "original_sha256": "a9cd05761a84c4de21ef3fcb3a755b953553d4d0a7c750cfde51402df53260f1"
+      },
+      {
+        "id": "web69_launch_boundary",
+        "original_bytes": 329,
+        "original_sha256": "9ab611b3e927439f41cbef3a781cbb9fbfae24a37bbcd130877942cc1596bb83"
+      },
+      {
+        "id": "web69_machine_audit",
+        "original_bytes": 61521,
+        "original_sha256": "70d75bea14a4b59fafc85979c81b207f4dba896c41225a9aa8875436d9efcf6e"
+      },
+      {
+        "id": "r2_web69_review",
+        "original_bytes": 5831,
+        "original_sha256": "df2f978a63108e5531fce493a88dc320961434044964b299549571b89b83889e"
+      },
+      {
+        "id": "r5_Web18_summary",
+        "original_bytes": 15134,
+        "original_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb"
+      },
+      {
+        "id": "r2_web18_review",
+        "original_bytes": 5719,
+        "original_sha256": "e99192886cd0962f972d4528088e0082555c61f717d8490574d454ab4a304815"
+      },
+      {
+        "id": "r2_web18_machine_audit",
+        "original_bytes": 45154,
+        "original_sha256": "6db7010034a7054efd3a845c34260ca9e4e6d1b7b7cfa85e5d0e312415373044"
+      }
+    ],
+    "diagnostic71_followup": {
+      "status": "R5_NATIVE23_AND_NATIVE_WASM_EXPORT_PASS; NATIVE18_AND_WEB18_ACTUAL_R2_PASS",
+      "product_baseline": "581f6c8329c984bf55a913ca999830430334e5a1",
+      "diagnostic_scope": "new71 observer lifecycle code; separate source closure from original R4; production runtime unchanged",
+      "source_closure_sha256": "18f1c60d046a6784725b31fc64332a9dfde8086050d97b13669f94c42d13974d",
+      "production_runtime_sha256": "e798765fbe44f2ecbc7e0f4b96c71a89ebfe23492b39d696a78a0e9bedf8d687",
+      "diagnostic_lib_sha256": "7e223aa9185fa0afc22bf6fc83483e562f46050d64d2dfc93cc3aeb2203ee899",
+      "diagnostic_transition_sha256": "0470eb7ba095ad58ee1f3081b7900aff8ebedbc68e407626d199d799742e1e51",
+      "native_unit_tests": {
+        "passed": 23,
+        "failed": 0,
+        "log_sha256": "969eef54c94f4afd2633e41b76a2e5b33bc815099d64895ef0e870185435ca41"
+      },
+      "native_binary": {
+        "bytes": 154355104,
+        "sha256": "342b7581af3970d699f659680da6942379b96319439276b59a9936ee79c3646d"
+      },
+      "Web_export": {
+        "status": "COMPILED_EXPORTED_PASS",
+        "bytes": 143470835,
+        "wasm_sha256": "c525f70b9d90a68e6671d4bd5ab3809905bc6dd1961cfa015cfd69baa7d7bbc1",
+        "js_sha256": "715fded6fe57a9c2e80cbe6ac028c1886f2a63759fc8aee3e56261b63b9f3b37",
+        "html_sha256": "6ce3fd993111f823baad5af2b855ff506e2ab1bb140a227a6f17744d953b9523"
+      },
+      "actual_native_app": "LAUNCHED;18 actual A-F records across3 frozen recipes independently audited PASS",
+      "actual_native_readback": "18 stable held-current records; six ordinary natural Play/Pause and Resume/Pause action sequences; no per-frame live-array claim",
+      "remaining_live_gates": "NONE within bounded native/Web18 protocol; final integration/source review and exact-head/main checks separate",
+      "scope_not_added_to_workspace210": true,
+      "export_receipt_sha256": "bbda79afa8f31fb596740cdf478bfb0561c8182ce8f92c781efc803e7a76817b",
+      "independent_build_audit_sha256": "ffd642e12c726a5a626e047f48eb2e2f31a8a66fe2dfe94cfea17ac3eba7a326",
+      "selected_sources": 350,
+      "rehashed_export_files": 173,
+      "production581_ci_is_not_r5_observer_ci": true
+    },
+    "proposed_ci72": {
+      "status": "STAGED_NOT_CI_RUN",
+      "patch_sha256": "f278340fb0f55037d58c89f2119193fbd04aa8932e40de3ef943711939eef9c6",
+      "scope": "one additional experiment name in existing Python normal/-O portable loop; no new runner/full mutant job/download/time-budget change"
+    },
+    "round_label": "R4_PRODUCT_PLUS_R5_OBSERVER_CHECKPOINT",
+    "finalization_placeholders": {
+      "web69_final_collection_count": 69,
+      "web69_numeric_result_sha256": "d6fca2770d1d546542cbd2d8d3d88a11b03ecf3724e78d428916af923d5ec57c",
+      "web69_foot_result_sha256": "44f6afe09339c79c4dbed4bd6f5e9512a4e9af2895c33a64f8087e5be9e08f61",
+      "web69_accessory_result_sha256": "a9cd05761a84c4de21ef3fcb3a755b953553d4d0a7c750cfde51402df53260f1",
+      "web69_source_artifact_binding_and_independent_review": {
+        "status": "PASS_R2",
+        "review_sha256": "df2f978a63108e5531fce493a88dc320961434044964b299549571b89b83889e",
+        "machine_audit_sha256": "70d75bea14a4b59fafc85979c81b207f4dba896c41225a9aa8875436d9efcf6e"
+      },
+      "web_r5_live18_summary_and_review": {
+        "summary_sha256": "6290b4dad870cf78c2fb64ca09296bc5c93faf4285187a2c1774eb03d60ff5cb",
+        "actual_status": "ALL18_STRICT_COLLECTOR_STEPS_PASS",
+        "independent_R2_review": "PASS",
+        "review_sha256": "e99192886cd0962f972d4528088e0082555c61f717d8490574d454ab4a304815",
+        "machine_audit_sha256": "6db7010034a7054efd3a845c34260ca9e4e6d1b7b7cfa85e5d0e312415373044"
+      },
+      "final_source_review_and_exact_head_ci": null,
+      "merge_commit_and_post_merge_main_ci": null,
+      "final_resource_cleanup_confirmation": {
+        "status": "OWNER_REPORTED_CLOSED",
+        "native": "R5 owned native app closed per retained closure",
+        "web": "root reports owned tab and server closed after18steps",
+        "independent_process_interrogation": false
+      }
+    },
+    "public_images": [
+      {
+        "original_basename": "31-web-head-drag-committed.png",
+        "actual_media_type": "image/jpeg",
+        "bytes": 78343,
+        "sha256": "6c927b820122bb4d1c4f3f89a16be1521c4152abe1d35f7e8cbfaf17214b79df",
+        "label": "Committed eight-parameter Work, head width0.90, revision18",
+        "privacy_review": "Viewed original existing pixels; no home/temp path or secret visible",
+        "copy_status": "EXACT_BYTES_COPIED",
+        "transform": "NONE; no cropping, redaction, synthesis or reencoding",
+        "format_verification": "JPEG/JFIF magic independently rechecked; original .png basename retained; proposed .jpg exact-byte copy",
+        "public_path": "screens/ordinary-r4/31-web-head-drag-committed.jpg"
+      },
+      {
+        "original_basename": "32-web-work-downloaded.png",
+        "actual_media_type": "image/jpeg",
+        "bytes": 81282,
+        "sha256": "5b2e0b726509bb238f17b2b7dc741b9f8a4376229467190bc76950da635f2ba2",
+        "label": "Web Download started; durable file independently audited",
+        "privacy_review": "Viewed original existing pixels; no home/temp path or secret visible",
+        "copy_status": "EXACT_BYTES_COPIED",
+        "transform": "NONE; no cropping, redaction, synthesis or reencoding",
+        "format_verification": "JPEG/JFIF magic independently rechecked; original .png basename retained; proposed .jpg exact-byte copy",
+        "public_path": "screens/ordinary-r4/32-web-work-downloaded.jpg"
+      },
+      {
+        "original_basename": "33-web-knee-drag-seek.png",
+        "actual_media_type": "image/jpeg",
+        "bytes": 81103,
+        "sha256": "c835c127fbc423f74bcda379091b2ee88ae74f61def9582625c5e7a0417b047d",
+        "label": "Knee seek, global7.00 seconds",
+        "privacy_review": "Viewed original existing pixels; no home/temp path or secret visible",
+        "copy_status": "EXACT_BYTES_COPIED",
+        "transform": "NONE; no cropping, redaction, synthesis or reencoding",
+        "format_verification": "JPEG/JFIF magic independently rechecked; original .png basename retained; proposed .jpg exact-byte copy",
+        "public_path": "screens/ordinary-r4/33-web-knee-drag-seek.jpg"
+      },
+      {
+        "original_basename": "34-web-arms-drag-seek.png",
+        "actual_media_type": "image/jpeg",
+        "bytes": 78601,
+        "sha256": "fe886a162cccab91b690b3d2631941a8995168d9279287d4b146878f764e51d9",
+        "label": "Arm seek, global2.50 seconds",
+        "privacy_review": "Viewed original existing pixels; no home/temp path or secret visible",
+        "copy_status": "EXACT_BYTES_COPIED",
+        "transform": "NONE; no cropping, redaction, synthesis or reencoding",
+        "format_verification": "JPEG/JFIF magic independently rechecked; original .png basename retained; proposed .jpg exact-byte copy",
+        "public_path": "screens/ordinary-r4/34-web-arms-drag-seek.jpg"
+      },
+      {
+        "original_basename": "35-web-invalid-open-retained.png",
+        "actual_media_type": "image/jpeg",
+        "bytes": 80641,
+        "sha256": "948feaee76e3e18b4e0ca3b83a13a9cb0ea49ef1f4977e5bfb62eb57b7072146",
+        "label": "Malformed Open error with displayed character retained",
+        "privacy_review": "Viewed original existing pixels; no home/temp path or secret visible",
+        "copy_status": "EXACT_BYTES_COPIED",
+        "transform": "NONE; no cropping, redaction, synthesis or reencoding",
+        "format_verification": "JPEG/JFIF magic independently rechecked; original .png basename retained; proposed .jpg exact-byte copy",
+        "public_path": "screens/ordinary-r4/35-web-invalid-open-retained.jpg"
+      },
+      {
+        "original_basename": "36-web-valid-recovery.png",
+        "actual_media_type": "image/jpeg",
+        "bytes": 77585,
+        "sha256": "2596f0e470c378cbb9cfbbf4860b011a0e259c3972496ff44b907cb1e3e46106",
+        "label": "Valid Open recovery, source0",
+        "privacy_review": "Viewed original existing pixels; no home/temp path or secret visible",
+        "copy_status": "EXACT_BYTES_COPIED",
+        "transform": "NONE; no cropping, redaction, synthesis or reencoding",
+        "format_verification": "JPEG/JFIF magic independently rechecked; original .png basename retained; proposed .jpg exact-byte copy",
+        "public_path": "screens/ordinary-r4/36-web-valid-recovery.jpg"
+      }
+    ],
+    "public_exchange_samples": [
+      {
+        "id": "native-A",
+        "public_path": "exchange/native-A.nvwa.json",
+        "bytes": 3709,
+        "sha256": "7e33b3c19ecdfedc82dff1a24c7cc1991d54753e3988b912063f1c20ec555ffb",
+        "revision": 17,
+        "copy": "exact original ordinary GUI saved/downloaded bytes",
+        "parameters": {
+          "chin_width": -0.05,
+          "head_width": 0.45,
+          "hip_width": 0.3,
+          "jaw_drop": 0.3,
+          "mouth_width": 0.3,
+          "neck_width": 0.2,
+          "nose_width": -0.1,
+          "torso_length": 0.35
+        }
+      },
+      {
+        "id": "web-B",
+        "public_path": "exchange/web-B.nvwa.json",
+        "bytes": 3708,
+        "sha256": "b22515b22174043977734f0236c1500ddd2a48504e7fe0e76a674b399dae4037",
+        "revision": 18,
+        "copy": "exact original ordinary GUI saved/downloaded bytes",
+        "parameters": {
+          "chin_width": -0.05,
+          "head_width": 0.9,
+          "hip_width": 0.3,
+          "jaw_drop": 0.3,
+          "mouth_width": 0.3,
+          "neck_width": 0.2,
+          "nose_width": -0.1,
+          "torso_length": 0.35
+        }
+      },
+      {
+        "id": "native-C",
+        "public_path": "exchange/native-C.nvwa.json",
+        "bytes": 3708,
+        "sha256": "b22515b22174043977734f0236c1500ddd2a48504e7fe0e76a674b399dae4037",
+        "revision": 18,
+        "copy": "exact original ordinary GUI saved/downloaded bytes",
+        "parameters": {
+          "chin_width": -0.05,
+          "head_width": 0.9,
+          "hip_width": 0.3,
+          "jaw_drop": 0.3,
+          "mouth_width": 0.3,
+          "neck_width": 0.2,
+          "nose_width": -0.1,
+          "torso_length": 0.35
+        }
+      }
+    ],
+    "current_lightweight_checks": {
+      "source": "root reported actual checks on assembled integration source",
+      "71_python_normal": 22,
+      "71_python_optimized": 22,
+      "72_python_normal": 10,
+      "72_python_optimized": 10,
+      "71_cargo_format": "PASS",
+      "pre_documentation_diff_whitespace": "PASS",
+      "not_added_to_rust_test_totals": true
+    },
+    "current_main_at_preparation": "ab4c16f81deddfc98faa97fcd1a8e7904c5f2f0b",
+    "entrypoint_doc_hashes": [
+      {
+        "path": "README.md",
+        "bytes": 13291,
+        "sha256": "be87593928a7328e80e468828ae21cc0927ca832abbfabe78e88ca81e424acf0"
+      },
+      {
+        "path": "docs/ROADMAP.md",
+        "bytes": 25907,
+        "sha256": "a76ae35e9632608001c6d7fe0f9fa46f5b012e82e60bb141e0302ec24f81d08c"
+      }
+    ]
+  },
+  "historical_r3_unverified": [
     "new native ordinary UI and actual71 native cohort",
     "actual71 complete69-case Web cohort",
     "three live recipes per endpoint",
@@ -1033,5 +3681,21 @@
     "formal first-present/cold/GPU-memory/performance",
     "#3 remains blocked; #4 gaps retained; M2 generated-motion/appearance/clothing quality HOLD",
     "PR and exact merged-main CI not certified by this evidence package"
+  ],
+  "historical_r3_field_scope": [
+    "local_build",
+    "cohorts",
+    "cli",
+    "ordinary_web",
+    "cleanup original fields",
+    "images original inventory",
+    "private_source_hashes original inventory"
+  ],
+  "historical_r3_public_text_files": [
+    {
+      "bytes": 17607,
+      "path": "RESULTS.md",
+      "sha256": "b5fc083f2abca69a0b3ff61e517f35b70be9c4ab2817d334fd59e7e21e23ad60"
+    }
   ]
 }

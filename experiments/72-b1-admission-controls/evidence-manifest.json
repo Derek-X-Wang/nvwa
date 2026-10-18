@@ -1,0 +1,685 @@
+{
+  "schema_version": 1,
+  "status": "PASS_BOUNDED_ACTUAL_CPU_CONTROL_RUN",
+  "record_kind": "public-safe derived compact manifest; original raw receipts/logs/arrays not copied",
+  "baseline_commit": "581f6c8329c984bf55a913ca999830430334e5a1",
+  "production_runtime_sha256": "e798765fbe44f2ecbc7e0f4b96c71a89ebfe23492b39d696a78a0e9bedf8d687",
+  "cfg_test_runtime_sha256": "4f0e7983926814f62a63fe4f8ec7b9ea5a675ca4fd650ecdc2fc3ccac5d9d288",
+  "original_private_receipt": {
+    "sha256": "24429e6c3bf9ed25cf72d824ed5cab58424b48bac2fc503412ffa189d1bf054c",
+    "bytes": 23694,
+    "raw_published": false
+  },
+  "baseline_archive_sha256": "8aa7ba02d8930586bb46f4cad122aa2fe01d7ad8a577172433e1bac2ec8fe8e1",
+  "source_closure": {
+    "original_files": 8030,
+    "initial_sha256": "4e96415708ed7f036537684a4a3ed5ecffc220ba36f268b0e527db2055474b18",
+    "final_sha256": "4e96415708ed7f036537684a4a3ed5ecffc220ba36f268b0e527db2055474b18",
+    "every_original_file_rehashed_and_restored": true,
+    "additional_isolated_control_files_remain_not_included_by_pristine_runtime": true
+  },
+  "original_preparation_control_hashes": {
+    "run.py": "07e9d5ccafc693dbbd7cca484d9c8aa148eaaed2853122d3d0d7250f441dfd1b",
+    "test_controls.py": "a6427e1b70d5bd3df70fdfd50e52db83ba8789a14db566b2b92c11ec406308b0",
+    "compatibility.rs": "06c015c47b30fbe10019756ad556031a1d1e48a31ffaafe496c2919cd75d4ef8",
+    "cases.json": "a54b067966e85896c362a0389e61031b5804333449ed01932bf98570ef6354a8",
+    "pins.json": "02637d4de1f782658c6363e88c92e22ed6384db2f20ea468d73a28b74f257208",
+    "README.md": "6581ecfcd7634cef1aee6b42e96c553a9519385e2d8c770a3090f4dfedc8fd21",
+    "REVIEW.md": "dd456b0c97d29717ecee97bad427030d84ef1d02384f4ab757ecfcfcad41c67f"
+  },
+  "counts": {
+    "cargo_invocations": 14,
+    "green_invocations": 9,
+    "semantic_red_invocations": 5,
+    "zero_comparisons": 2,
+    "original_recipe_pose_cases": 40,
+    "measurement_files": 83,
+    "these_are_not_added_to_workspace210": true
+  },
+  "actual_summary": {
+    "zero_comparisons": 2,
+    "original40_cases": 40,
+    "recipes": 8,
+    "poses": 5,
+    "measurement_files": 83,
+    "body_position_max_m": 0.0,
+    "garment_position_max_m": 0.0,
+    "matrix_max": 0.0,
+    "joint_head_max_m": 0.0,
+    "full_positive_scalar_LBS_max_m": 1.7423694043117166e-07,
+    "render_rows_body_garment": [
+      22077,
+      1986
+    ],
+    "unique_source_domains_body_garment": [
+      19158,
+      1797
+    ],
+    "all_original_parameters_and_actual_pose_ids_verified": true,
+    "distinct_old_bone_hashes_across_inputs": 20
+  },
+  "commands": [
+    {
+      "label": "pristine-endpoint-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "a6a25322c367ee7cd851430c80afdf89571f48cb54f9b954ef020d37c24048c8",
+      "seconds": 1239.2025743750855
+    },
+    {
+      "label": "zero-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields",
+      "log_sha256": "4f1762a004e886ca6f869f5509f1e0ccb1d00e88751d07e3cc0c32525cd19eff",
+      "seconds": 42.30268466693815
+    },
+    {
+      "label": "original40-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility",
+      "log_sha256": "bef851f2d979bdfd3509d01dd0fd4a7839ba025e41304a0a755f5361b065569d",
+      "seconds": 104.44512883294374
+    },
+    {
+      "label": "omit-new-target-red",
+      "exit_code": 101,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "5126bfc3e9327aaace7d065eb9f036bee8c48aed0b76ba0dc9905c02e0cfbd46",
+      "seconds": 38.35522441705689
+    },
+    {
+      "label": "omit-new-target-restored-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "81cc0ad7be54f86a40ac14fb9e1b6047340e0cdf7c979a2519d1b7cc778d2adf",
+      "seconds": 56.80517924996093
+    },
+    {
+      "label": "wrong-target-name-id-red",
+      "exit_code": 101,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "a600bf313a5463feafc35cca63c6d3267561d5dc60a3bb5159725fe4f475cb54",
+      "seconds": 35.101857292000204
+    },
+    {
+      "label": "wrong-target-name-id-restored-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "cb118d34bf776e599aa574ce829eb8a44037915029c09724c3a7443ae19098f2",
+      "seconds": 53.91649645904545
+    },
+    {
+      "label": "wrong-sign-red",
+      "exit_code": 101,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "2c74ad2a9afc82cffb83e4615aa1ca5fe58c84e191d8d4220e0fcbaa02df19f5",
+      "seconds": 33.95145887497347
+    },
+    {
+      "label": "wrong-sign-restored-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "5a8509faf0487afc66bc77737c79ab9e1958d631a2be72d9d804ad1cca688eb3",
+      "seconds": 49.183785291039385
+    },
+    {
+      "label": "second-times-point-one-red",
+      "exit_code": 101,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "c9d27e2d068bbe7d18ce8841202f498173044064877716da3164e40d2f97da34",
+      "seconds": 30.20854658295866
+    },
+    {
+      "label": "second-times-point-one-restored-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "7157049e57507ab0d9540d367954fd1618a6ffd608576ca8883096a9ee738976",
+      "seconds": 47.52211324998643
+    },
+    {
+      "label": "ignore-new-field-red",
+      "exit_code": 101,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "533c0a4707e505a63ce5547ea9619a7d471064e0a81e974cac8da6b24f600d8d",
+      "seconds": 28.034207500051707
+    },
+    {
+      "label": "ignore-new-field-restored-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "8340745c14224c8477d3093b746a0d9c4f510333701b3f6a39a40aad336cfa1d",
+      "seconds": 48.42107095802203
+    },
+    {
+      "label": "pristine-final-endpoint-green",
+      "exit_code": 0,
+      "named_test": "b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry",
+      "log_sha256": "92ae449b7a684644dd70f4c2045fc2260eb2422216d5fa2a9f56cceea2d7e8ef",
+      "seconds": 60.66082216706127
+    }
+  ],
+  "mutations": [
+    {
+      "id": "omit-new-target",
+      "semantic_red_exit": 101,
+      "restored_green_exit": 0,
+      "expected_failure_marker": "head_width -1 must reach actual Mesh POSITION",
+      "expected_failure_marker2": null,
+      "actual_panic_origin": "crates/nvwa-runtime/src/b1.rs:3095:17",
+      "mutant_sha256": "67b25ef583d1df0e8206bd891f5c1ac87238163417445db5c749d21b131a5757",
+      "restored_sha256": "4f0e7983926814f62a63fe4f8ec7b9ea5a675ca4fd650ecdc2fc3ccac5d9d288",
+      "red_log_sha256": "5126bfc3e9327aaace7d065eb9f036bee8c48aed0b76ba0dc9905c02e0cfbd46",
+      "green_log_sha256": "81cc0ad7be54f86a40ac14fb9e1b6047340e0cdf7c979a2519d1b7cc778d2adf"
+    },
+    {
+      "id": "wrong-target-name-id",
+      "semantic_red_exit": 101,
+      "restored_green_exit": 0,
+      "expected_failure_marker": "head_width -1, source ",
+      "expected_failure_marker2": "selected signed target/units must reach fitted body",
+      "actual_panic_origin": "crates/nvwa-runtime/src/b1.rs:3132:25",
+      "mutant_sha256": "87639a850286442e1f7013578d5f0e27a4fa273b914258e84cf5f91c718fdead",
+      "restored_sha256": "4f0e7983926814f62a63fe4f8ec7b9ea5a675ca4fd650ecdc2fc3ccac5d9d288",
+      "red_log_sha256": "a600bf313a5463feafc35cca63c6d3267561d5dc60a3bb5159725fe4f475cb54",
+      "green_log_sha256": "cb118d34bf776e599aa574ce829eb8a44037915029c09724c3a7443ae19098f2"
+    },
+    {
+      "id": "wrong-sign",
+      "semantic_red_exit": 101,
+      "restored_green_exit": 0,
+      "expected_failure_marker": "head_width -1, source ",
+      "expected_failure_marker2": "selected signed target/units must reach fitted body",
+      "actual_panic_origin": "crates/nvwa-runtime/src/b1.rs:3129:25",
+      "mutant_sha256": "975f94aaa9e57a9c49e1485b90bc9b2c1f3afe792141fe3f372e04d14eac696a",
+      "restored_sha256": "4f0e7983926814f62a63fe4f8ec7b9ea5a675ca4fd650ecdc2fc3ccac5d9d288",
+      "red_log_sha256": "2c74ad2a9afc82cffb83e4615aa1ca5fe58c84e191d8d4220e0fcbaa02df19f5",
+      "green_log_sha256": "5a8509faf0487afc66bc77737c79ab9e1958d631a2be72d9d804ad1cca688eb3"
+    },
+    {
+      "id": "second-times-point-one",
+      "semantic_red_exit": 101,
+      "restored_green_exit": 0,
+      "expected_failure_marker": "head_width -1, source ",
+      "expected_failure_marker2": "selected signed target/units must reach fitted body",
+      "actual_panic_origin": "crates/nvwa-runtime/src/b1.rs:3129:25",
+      "mutant_sha256": "186beef94c51fddab8e0de09d4b36a315fb8cdcf9d44948083385f3df881dc38",
+      "restored_sha256": "4f0e7983926814f62a63fe4f8ec7b9ea5a675ca4fd650ecdc2fc3ccac5d9d288",
+      "red_log_sha256": "c9d27e2d068bbe7d18ce8841202f498173044064877716da3164e40d2f97da34",
+      "green_log_sha256": "7157049e57507ab0d9540d367954fd1618a6ffd608576ca8883096a9ee738976"
+    },
+    {
+      "id": "ignore-new-field",
+      "semantic_red_exit": 101,
+      "restored_green_exit": 0,
+      "expected_failure_marker": "head_width -1 must reach actual Mesh POSITION",
+      "expected_failure_marker2": null,
+      "actual_panic_origin": "crates/nvwa-runtime/src/b1.rs:3094:17",
+      "mutant_sha256": "c16a11189b67ac086a02ded66e4699175e183e89ac3976bfb5d91e78f327d891",
+      "restored_sha256": "4f0e7983926814f62a63fe4f8ec7b9ea5a675ca4fd650ecdc2fc3ccac5d9d288",
+      "red_log_sha256": "533c0a4707e505a63ce5547ea9619a7d471064e0a81e974cac8da6b24f600d8d",
+      "green_log_sha256": "8340745c14224c8477d3093b746a0d9c4f510333701b3f6a39a40aad336cfa1d"
+    }
+  ],
+  "bounds": {
+    "body_position_m": 0.001,
+    "garment_position_m": 0.003,
+    "bone_matrix": 0.0001,
+    "joint_head_m": 1e-05,
+    "full_positive_lbs_m": 1e-05
+  },
+  "measurements": {
+    "raw_published": false,
+    "format": "compact original measurements retain hash/coverage/maxima, not complete arrays",
+    "files": [
+      {
+        "name": "body-half__combined-inputs.json",
+        "bytes": 10603,
+        "sha256": "09d97778148f687ea1fcdba2e604f3757fd8cfb141132bb24dd50d1fcf7fc69b"
+      },
+      {
+        "name": "body-half__combined.json",
+        "bytes": 3552,
+        "sha256": "3ed3bb51253c73e30060e589b5ba79f0f0e4ba2f7c1e1e7a03f0bbdac777944a"
+      },
+      {
+        "name": "body-half__elbow-inputs.json",
+        "bytes": 10591,
+        "sha256": "ea5f12b50c44035a56e03290d6221506111de3f0c5a04294ac598eb0630b607a"
+      },
+      {
+        "name": "body-half__elbow.json",
+        "bytes": 3546,
+        "sha256": "66555feaca0bc4dbcc3cdd5c8415e60df4c98050026dbaa9bd13faf9f463c195"
+      },
+      {
+        "name": "body-half__knee-inputs.json",
+        "bytes": 10587,
+        "sha256": "e7d6e373485027ac1cc3a54316647589d5264ea8b124959b3f1416edbac8eff5"
+      },
+      {
+        "name": "body-half__knee.json",
+        "bytes": 3544,
+        "sha256": "c30ec8f9168b9347fbf93a1fe0a4e03eaff1145c599986fa3d511cf6a45a0f4e"
+      },
+      {
+        "name": "body-half__neutral-inputs.json",
+        "bytes": 10599,
+        "sha256": "16ca5c9620991bd37cba1ffe916a225d0bac32806e9419cf91e4247473433bd0"
+      },
+      {
+        "name": "body-half__neutral.json",
+        "bytes": 3550,
+        "sha256": "75f6507add078bc8209a91317ac5e527d995103b2d007eeca1e79b4f6a4c75fd"
+      },
+      {
+        "name": "body-half__shoulder-inputs.json",
+        "bytes": 10603,
+        "sha256": "712843fce0510cd17e22ac8e277c15c9c91ac274e4fd642d4b9939b3bb9f7969"
+      },
+      {
+        "name": "body-half__shoulder.json",
+        "bytes": 3552,
+        "sha256": "4c31e2e0375b7f5d9188958691f6f65a976ac5df63469ac96df02c848dc29f67"
+      },
+      {
+        "name": "body-negative__combined-inputs.json",
+        "bytes": 10612,
+        "sha256": "8b0e079ffd79ea7a4e9ad30d924082e39571fe6d9ddef8542ea153582ae2145c"
+      },
+      {
+        "name": "body-negative__combined.json",
+        "bytes": 3561,
+        "sha256": "c58276d456a55f65de64c94e1533c56ae21450fa483e66177a83981342ff5e4a"
+      },
+      {
+        "name": "body-negative__elbow-inputs.json",
+        "bytes": 10598,
+        "sha256": "056775fec34e64590a6ad991aee224b7e941544989e5c35c5513df51947ff43f"
+      },
+      {
+        "name": "body-negative__elbow.json",
+        "bytes": 3555,
+        "sha256": "6942e02b5853f690ddd6cdd4b628e2dfefebb4a0f6bf769e1a8fcacc59d00490"
+      },
+      {
+        "name": "body-negative__knee-inputs.json",
+        "bytes": 10594,
+        "sha256": "332c9579379fecbf0e238611a27da091295b5b275f155e5e8bed87dfab95a149"
+      },
+      {
+        "name": "body-negative__knee.json",
+        "bytes": 3553,
+        "sha256": "4474bd256be6bbaddb6952cef84d5d520c1492ec5d885dfa4ffb0d4fc9c131fe"
+      },
+      {
+        "name": "body-negative__neutral-inputs.json",
+        "bytes": 10606,
+        "sha256": "34045ffb0daa558942069d723d0165ada54b86ceba5a108b208e4524a5862817"
+      },
+      {
+        "name": "body-negative__neutral.json",
+        "bytes": 3559,
+        "sha256": "50c6c43571185b45e8da94e00ea0fa6af2dfb32276dae76be17fc50c3fcb0a6b"
+      },
+      {
+        "name": "body-negative__shoulder-inputs.json",
+        "bytes": 10610,
+        "sha256": "a42edcc3385f77906b36c0d315ec5942d964073a30404e561d490c51ffe5302d"
+      },
+      {
+        "name": "body-negative__shoulder.json",
+        "bytes": 3561,
+        "sha256": "31a8acbd5b19954fed73c7e43896eae9a317edd6b9b6dbd13bf084831aad6b2f"
+      },
+      {
+        "name": "body-positive__combined-inputs.json",
+        "bytes": 10611,
+        "sha256": "564dbde5df29d2b913b01c662cc548651ceb6b1288783d3e23d45d021c18cc95"
+      },
+      {
+        "name": "body-positive__combined.json",
+        "bytes": 3560,
+        "sha256": "b5cb7a0ac645c70936158ea68d7b4129484da6282d087c5748934342dd462ded"
+      },
+      {
+        "name": "body-positive__elbow-inputs.json",
+        "bytes": 10601,
+        "sha256": "6321f0bb13b42fc9054dde0cc573267bcce1e95a84cbdc4636e1966dd7150984"
+      },
+      {
+        "name": "body-positive__elbow.json",
+        "bytes": 3554,
+        "sha256": "ab226862761266541b53be65d02cd2c7a3e6debfad236fced60cbf2bcc1e71e7"
+      },
+      {
+        "name": "body-positive__knee-inputs.json",
+        "bytes": 10596,
+        "sha256": "05aa6937a8d4ba8263cab2b91d0da20c94b301f3a26ffc9c09fb15f23230856e"
+      },
+      {
+        "name": "body-positive__knee.json",
+        "bytes": 3552,
+        "sha256": "c10c3e6d4eff17e5a56fa3aa431be67b2ac04bfc0ae8f84f27260a49606402ef"
+      },
+      {
+        "name": "body-positive__neutral-inputs.json",
+        "bytes": 10607,
+        "sha256": "ce99c989bbad49150af7250f4928944bb4c04bdfe61f96fa3af5eada2533f196"
+      },
+      {
+        "name": "body-positive__neutral.json",
+        "bytes": 3558,
+        "sha256": "42c632c0d4be6bb333a89491ed320ae4d7cb5a6ef0663339aecb843ac4e1d600"
+      },
+      {
+        "name": "body-positive__shoulder-inputs.json",
+        "bytes": 10611,
+        "sha256": "2dfa49abf13f22baf52a642e74d7761d3a60b5afc920e89dec4972fbb5910145"
+      },
+      {
+        "name": "body-positive__shoulder.json",
+        "bytes": 3560,
+        "sha256": "bf9a3d7438b22ce1bd8cb403d9158530fe31b957dc17676bbfb36eb4cc3a1015"
+      },
+      {
+        "name": "combined__combined-inputs.json",
+        "bytes": 10607,
+        "sha256": "8eb369d2670cf6979d90e0f37c5c2eab50a8a93bcb66709d956b5d2a9f2da95d"
+      },
+      {
+        "name": "combined__combined.json",
+        "bytes": 3550,
+        "sha256": "7f49b379371b65804026f6a0a2fc20b1b1034abd3b79fd501a0d5a9b89654eea"
+      },
+      {
+        "name": "combined__elbow-inputs.json",
+        "bytes": 10595,
+        "sha256": "b7308126f5128cc2c82b11756b689a8427e04a19699ba1c9ba61f02115b9057e"
+      },
+      {
+        "name": "combined__elbow.json",
+        "bytes": 3544,
+        "sha256": "ce849d04dab958f2997d2efad62bfe4b8a77e1d7697fbe43ce9764d769b5c810"
+      },
+      {
+        "name": "combined__knee-inputs.json",
+        "bytes": 10591,
+        "sha256": "aa57f68f19413d57d75770b6483506232a47ff5ed18ab4c94f37d36c438be61e"
+      },
+      {
+        "name": "combined__knee.json",
+        "bytes": 3542,
+        "sha256": "24ae52dee3ea95d2decae6e95c555552f273fb7bb5b201e775ea14a52f15b0c4"
+      },
+      {
+        "name": "combined__neutral-inputs.json",
+        "bytes": 10603,
+        "sha256": "1229199e6a851725223178329b0205271ff44ebec6563e1cd97b0a7111770b5f"
+      },
+      {
+        "name": "combined__neutral.json",
+        "bytes": 3548,
+        "sha256": "124852e891ad3aeb17b605c36126dedb54f8a763feca2f6d0da6776d28554031"
+      },
+      {
+        "name": "combined__shoulder-inputs.json",
+        "bytes": 10607,
+        "sha256": "2706032694fd4a9cb41d861f0f1eec28e7661f0fac3962dcb28f554c8ec8a331"
+      },
+      {
+        "name": "combined__shoulder.json",
+        "bytes": 3550,
+        "sha256": "5988adaeca34991918161e2f562b7b8d4315b64ba69115846c037c3f79c43060"
+      },
+      {
+        "name": "face-half__combined-inputs.json",
+        "bytes": 10609,
+        "sha256": "0cfb98574965f4dd7ce9a78962811593ba636fd8c2424275f5e72b9916de2488"
+      },
+      {
+        "name": "face-half__combined.json",
+        "bytes": 3552,
+        "sha256": "70e54a7e94cd992a08fa531bacaece72086794c0a0e22e6e5a9c4e0ba6c09be5"
+      },
+      {
+        "name": "face-half__elbow-inputs.json",
+        "bytes": 10597,
+        "sha256": "742d7dac17003a3417fa04f9a4ed0f6206a946d02834a2529db3d245541ee225"
+      },
+      {
+        "name": "face-half__elbow.json",
+        "bytes": 3546,
+        "sha256": "a93980309b6e4b578fb69e4ea5592cc2afdea4f43cb37489b12aee411078f7ab"
+      },
+      {
+        "name": "face-half__knee-inputs.json",
+        "bytes": 10593,
+        "sha256": "16a5685794c9e8731f7c3f5faf27ab7ee4015cdd3a12536d0a103e7365edae07"
+      },
+      {
+        "name": "face-half__knee.json",
+        "bytes": 3544,
+        "sha256": "294ad93a32dc70ee04e91c00e60b86c357a0c1143e398e427502d8f500ab74e3"
+      },
+      {
+        "name": "face-half__neutral-inputs.json",
+        "bytes": 10605,
+        "sha256": "8f353c0e23862913a29991b3a6692a319be93b9d338518be621b5f5364e16b43"
+      },
+      {
+        "name": "face-half__neutral.json",
+        "bytes": 3550,
+        "sha256": "ba48f7c6853c2feefba3f716da6f8cd6716ca55ee40b59f3e273d9cdba41e69c"
+      },
+      {
+        "name": "face-half__shoulder-inputs.json",
+        "bytes": 10608,
+        "sha256": "ddc4801cf3021c18867f582effa43bf077c35d765ca6c2120774e3f60f87115f"
+      },
+      {
+        "name": "face-half__shoulder.json",
+        "bytes": 3550,
+        "sha256": "a6258eb9cdf13de5ec85636c9b25ab44219975c1cbb85ec69ffa46e0564b73e8"
+      },
+      {
+        "name": "face-negative__combined-inputs.json",
+        "bytes": 10618,
+        "sha256": "a7047fdd0ff7c4690b51d0e839dca55598f731d10e384e03d851d572140fdb96"
+      },
+      {
+        "name": "face-negative__combined.json",
+        "bytes": 3561,
+        "sha256": "df810ea9c20b3fea0b791a464a0e3ad39b96a06af1e729d6416e1f3907accfc8"
+      },
+      {
+        "name": "face-negative__elbow-inputs.json",
+        "bytes": 10606,
+        "sha256": "8ecd7932439493415e3a095dcbf06f15028356b74c4ae31ab8cc1b10f8cb5605"
+      },
+      {
+        "name": "face-negative__elbow.json",
+        "bytes": 3555,
+        "sha256": "b0e4fdf5459f0c02157061bcd9e841cd00a5d237b7d41ad2c748729c3d1dfbd4"
+      },
+      {
+        "name": "face-negative__knee-inputs.json",
+        "bytes": 10603,
+        "sha256": "9287819970d880cc3b0375aad31ccb1ea635414bd1ac8977e070701790469f2d"
+      },
+      {
+        "name": "face-negative__knee.json",
+        "bytes": 3553,
+        "sha256": "faf24a3741009912eb822e215d739c075d7762616aa4267ff93bf962b60c3e72"
+      },
+      {
+        "name": "face-negative__neutral-inputs.json",
+        "bytes": 10612,
+        "sha256": "8762f4500ae67e88b799fe5c59e25399d362f157103b00e34ba6ff94338441ac"
+      },
+      {
+        "name": "face-negative__neutral.json",
+        "bytes": 3559,
+        "sha256": "b4b620eb186c8b9088373fa0bd929870dca66865569b23b19fad6c8561f1b813"
+      },
+      {
+        "name": "face-negative__shoulder-inputs.json",
+        "bytes": 10619,
+        "sha256": "1a37ddaa716eedfd696723f5bcc61a7be7e3cc21876f8488566f61c226fc2050"
+      },
+      {
+        "name": "face-negative__shoulder.json",
+        "bytes": 3559,
+        "sha256": "461d4ee51932b0ec4d806bc7c0d1d18df5db1a58d03e6e9546413e1dc9afe353"
+      },
+      {
+        "name": "face-positive__combined-inputs.json",
+        "bytes": 10617,
+        "sha256": "8cda8f7fd31f1b96fe599bbe57b5f19e766419910c741cfb1372bb6dc2d579ff"
+      },
+      {
+        "name": "face-positive__combined.json",
+        "bytes": 3560,
+        "sha256": "6ac1e7652032c30087a99e77a5777c38c11c433ccf328fd4c2369d48444e504a"
+      },
+      {
+        "name": "face-positive__elbow-inputs.json",
+        "bytes": 10605,
+        "sha256": "80de8057d8e395739602fe05233e536543233b2ee22989d48ea59130c288d271"
+      },
+      {
+        "name": "face-positive__elbow.json",
+        "bytes": 3554,
+        "sha256": "b8cbd18a0eefa9583d224fb474dcec4ad116d0d49e83d6aa348841cb74b91e8e"
+      },
+      {
+        "name": "face-positive__knee-inputs.json",
+        "bytes": 10601,
+        "sha256": "8fd62278738f40f2c8009d1d755801dc2578af467f02738ecea37511abe22e22"
+      },
+      {
+        "name": "face-positive__knee.json",
+        "bytes": 3552,
+        "sha256": "c1a584a7132093901156ba67b604b2434e9980971718c49b5f886f750ad2589b"
+      },
+      {
+        "name": "face-positive__neutral-inputs.json",
+        "bytes": 10613,
+        "sha256": "4e08ecaad503bbd1a3639164bede6eff3d39bd902c8a180bf71f28acef7e00fb"
+      },
+      {
+        "name": "face-positive__neutral.json",
+        "bytes": 3558,
+        "sha256": "7c770fddd1508215dc1353cd40f3061f8cc8571b73c36a5b4866dceb71b22b7c"
+      },
+      {
+        "name": "face-positive__shoulder-inputs.json",
+        "bytes": 10617,
+        "sha256": "0e46e39eb9f2e6e4eb98280b315b32172b22c31fdb77c21569d7ff108cc8d083"
+      },
+      {
+        "name": "face-positive__shoulder.json",
+        "bytes": 3558,
+        "sha256": "4f213c914ec2824f8d2b07d34695f8b1927c3cb605e691f5d85bd68c78ae32aa"
+      },
+      {
+        "name": "neutral__combined-inputs.json",
+        "bytes": 10595,
+        "sha256": "33c3fda1f923bb981e69c643b89a8077054937cef627c7891de19294b6ab1abb"
+      },
+      {
+        "name": "neutral__combined.json",
+        "bytes": 3548,
+        "sha256": "d029392961fe9ef0b1f8788fa266d6f842161c1539e5240e49147102ea69056b"
+      },
+      {
+        "name": "neutral__elbow-inputs.json",
+        "bytes": 10581,
+        "sha256": "eead9bd6fe6a02fdc6ad10a6a11b35ea6acf492df4570061edbf4ce2c67ce18e"
+      },
+      {
+        "name": "neutral__elbow.json",
+        "bytes": 3542,
+        "sha256": "fd7a9bd0e6344f7cd2c0583983b708974be010ee8f02b152bf0598274cb87f5c"
+      },
+      {
+        "name": "neutral__knee-inputs.json",
+        "bytes": 10578,
+        "sha256": "e654b9b897d1e771edeb6a8e958a5b709072a6cdf093384b36cde647512fe9c8"
+      },
+      {
+        "name": "neutral__knee.json",
+        "bytes": 3540,
+        "sha256": "a5f48038039732621e9ffde2330e8d98176fa3f0175e2f535662642731c36453"
+      },
+      {
+        "name": "neutral__neutral-inputs.json",
+        "bytes": 10589,
+        "sha256": "6cdc0a50c2148d512869d3c3ec73fdd8d3c2c692d66d0a996bbccd288121b41c"
+      },
+      {
+        "name": "neutral__neutral.json",
+        "bytes": 3546,
+        "sha256": "68223f98ffd0552230d84bc4a212d9ed0832856218853638660c7078845efaa1"
+      },
+      {
+        "name": "neutral__shoulder-inputs.json",
+        "bytes": 10593,
+        "sha256": "28ae88d084beff14727c7ebd1cbbdda3dff990f0470e07823222d3ee7d517bb4"
+      },
+      {
+        "name": "neutral__shoulder.json",
+        "bytes": 3546,
+        "sha256": "cf0f7351325747e5b0bceddedea03ee42dbdd23155f1ee2ecacd5520eee028a5"
+      },
+      {
+        "name": "zero-skin-inputs.json",
+        "bytes": 10414,
+        "sha256": "df00e2f7d2f7688c0b70a9b7b6535157e3f614ea74e2f7517a28b655327aeb25"
+      },
+      {
+        "name": "zero-untextured-inputs.json",
+        "bytes": 10412,
+        "sha256": "9e6d7355c5fed52ae4231600d3607fea86bfa65d17f76d65f26a85637fdf6af0"
+      },
+      {
+        "name": "zero.json",
+        "bytes": 7617,
+        "sha256": "057788387f38123419f5da97b125cf4650e390b4f96ca9412b4a1824902a5fd7"
+      }
+    ]
+  },
+  "original_export_manifest_sha256": "54d6115ba1ac110466c54da1a5cc08ec363641216cedc8c662054ab467d3a852",
+  "independent_review": {
+    "verdict": "PASS_BOUNDED_ACTUAL_CPU_EVIDENCE_AUDIT",
+    "note_sha256": "c571c071f79652720cbbe9f73e1f38bafa328d6f8621eff85e498c840027dd96",
+    "machine_audit_sha256": "63b717c6d17194e1197f06f5b2bc3d4602bffcd337352a909fed7286fc0456ff",
+    "raw_private_records_not_copied": true
+  },
+  "failure_history": {
+    "earlier_static_seam_row_count_blocker": "repaired and independently reviewed before this run; old review remains historical",
+    "native71_original_foot62_69": "original failed checker/receipt remain separate; not this72 run",
+    "native71_shared_edit_D": "original failed acknowledgement not repaired by72 CPU proof",
+    "prior_Web71_failed_cohorts": "retained; no acceptance transferred",
+    "no_failed_attempt_relabeled_pass": true
+  },
+  "unverified": [
+    "headless actual production CPU test path, not native71/Web71 app/GUI data",
+    "old/new six-zero-extension full40 compatibility; not a fresh full Blender/reference oracle rerun",
+    "five faults exercise head_width signed mapping at one production seam, not exhaustive every parameter/fault combination",
+    "compact per-case hashes/maxima do not reconstruct all raw mesh arrays",
+    "no independent new-eight fitted-rig derivation, live71 completion, GPU readback, performance or visual-quality clearance",
+    "per-mutation compiled test binaries are not separately archived; source hashes and actual named-test logs bind the run",
+    "parent owns wefty run/control-plane identity; reviewer did not query it"
+  ],
+  "unchanged_status": [
+    "#85 NOT_ADMITTED pending full Web69/live endpoint gates",
+    "#79 eye/hair HOLD",
+    "#80 garment HOLD",
+    "M2 quality HOLD",
+    "#3 BLOCKED",
+    "#4 gaps",
+    "#84 historical strict-workspace lint failure",
+    "#86 transient/staleReady follow-up",
+    "#90 CLI distribution follow-up"
+  ]
+}

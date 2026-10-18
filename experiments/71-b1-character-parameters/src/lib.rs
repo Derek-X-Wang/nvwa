@@ -1,6 +1,7 @@
 //! Acceptance bridge around unchanged production Studio. No rendering, meshes,
 //! materials, images, launch options, or selection state are implemented here.
 mod observation;
+mod transition;
 use bevy::prelude::*;
 use nvwa_core::{Command, SceneDocument, appearance_sha256};
 use nvwa_runtime::{
@@ -9,6 +10,7 @@ use nvwa_runtime::{
 use serde::Deserialize;
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, VecDeque};
+use transition::stable_observation;
 const MAX_REQUEST: usize = 16 * 1024 * 1024;
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -179,7 +181,7 @@ fn identity(world: &World) -> Value {
     let runtime = world.resource::<RuntimeStatus>();
     let document_hash =
         |doc: &SceneDocument| doc.to_json().ok().map(|s| appearance_sha256(s.as_bytes()));
-    json!({"work_sha256":current_work(world).ok().map(|s|appearance_sha256(s.as_bytes())),"generation":appearance.generation,"revision":appearance.revision,"body_entity":appearance.body_entity,"appearance_ready":appearance.ready,"appearance_error":appearance.error,"preview_sha256":editor.preview.as_ref().and_then(document_hash),"pending_open_sha256":editor.pending_open.as_ref().and_then(document_hash),"open_error":editor.open_error,"runtime_ready":runtime.ready,"runtime_error":runtime.error,"runtime_appearance_error":runtime.appearance_error,"stage_error":runtime.stage_error,"clip_id":playback.clip_id,"timeline_id":playback.active_timeline_id,"seconds":playback.position_seconds,"playing":playback.playing,"completed":playback.completed,"seek_request":playback.seek_request,"playback_error":playback.error,"camera":observation::camera(world),"environment":observation::environment(world)})
+    json!({"work_sha256":current_work(world).ok().map(|s|appearance_sha256(s.as_bytes())),"generation":appearance.generation,"revision":appearance.revision,"body_entity":appearance.body_entity,"appearance_ready":appearance.ready,"appearance_pending":appearance.pending,"appearance_error":appearance.error,"preview_sha256":editor.preview.as_ref().and_then(document_hash),"pending_open_sha256":editor.pending_open.as_ref().and_then(document_hash),"open_error":editor.open_error,"runtime_ready":runtime.ready,"runtime_error":runtime.error,"runtime_appearance_error":runtime.appearance_error,"stage_error":runtime.stage_error,"clip_id":playback.clip_id,"timeline_id":playback.active_timeline_id,"seconds":playback.position_seconds,"playing":playback.playing,"completed":playback.completed,"seek_request":playback.seek_request,"playback_error":playback.error,"camera":observation::camera(world),"environment":observation::environment(world)})
 }
 fn invalidate_stale(world: &World, bridge: &mut Bridge) {
     if bridge.report["phase"] == "ready" && identity(world) != bridge.captured_identity {
@@ -317,53 +319,155 @@ fn hash_json(v: &Value) -> String {
 fn base_capture(world: &World) -> Result<Value, String> {
     b1_frame_snapshot(world)
 }
+// Called only after typed readiness and the strict producer snapshot succeed.
+// Compare typed f32 parameters directly; pretty Work JSON has shorter decimals.
+fn validate_current_base(
+    world: &World,
+    base: &Value,
+    appearance: &nvwa_runtime::AppearanceStatus,
+) -> Result<(), String> {
+    let doc = world
+        .resource::<EditorState>()
+        .document()
+        .ok_or("current Work absent")?;
+    let version = doc
+        .profile
+        .backend
+        .b1_asset_version()
+        .ok_or("current Work has no B1 base identity")?;
+    for (key, expected) in [
+        ("backend", json!(doc.profile.backend)),
+        ("profile_id", json!(doc.profile.id)),
+        ("asset_id", json!(version.asset_id())),
+        ("revision", json!(doc.revision)),
+        ("parameters", json!(doc.character.parameters)),
+        ("diagnostic_pose", json!(doc.character.diagnostic_pose)),
+        (
+            "mode",
+            json!(if doc.timeline.is_empty() {
+                "diagnostic"
+            } else {
+                "motion"
+            }),
+        ),
+    ] {
+        if base.get(key) != Some(&expected) {
+            return Err(format!(
+                "published B1 base {key} differs from current typed Work"
+            ));
+        }
+    }
+    if appearance.generation.is_none()
+        || base["generation"].as_u64() != appearance.generation
+        || appearance.revision != Some(doc.revision)
+        || appearance.requested != doc.character.appearance
+        || appearance.applied.as_ref() != Some(&doc.character.appearance)
+    {
+        return Err(
+            "published B1 base differs from current appearance Work/generation binding".into(),
+        );
+    }
+    if appearance
+        .character_entity
+        .as_deref()
+        .is_none_or(str::is_empty)
+        || base["character_entity"].as_str() != appearance.character_entity.as_deref()
+        || appearance.body_entity.as_deref().is_none_or(str::is_empty)
+        || base_body(base)?["display_entity"].as_str() != appearance.body_entity.as_deref()
+    {
+        return Err(
+            "published B1 base differs from current appearance character/body binding".into(),
+        );
+    }
+    let playback = world.resource::<Playback>();
+    for (key, expected) in [
+        ("clip_id", json!(playback.clip_id)),
+        ("timeline_id", json!(playback.active_timeline_id)),
+        ("position_seconds", json!(playback.position_seconds)),
+        ("playing", json!(playback.playing)),
+        ("completed", json!(playback.completed)),
+    ] {
+        if base["sample"].get(key) != Some(&expected) {
+            return Err(format!(
+                "published B1 base sample {key} differs from current transport"
+            ));
+        }
+    }
+    if !base["sample"]["serial"].as_u64().is_some_and(|s| s > 0)
+        || !base["sample"]["source_seconds"]
+            .as_f64()
+            .is_some_and(f64::is_finite)
+    {
+        return Err("published B1 base has no valid current source sample".into());
+    }
+    Ok(())
+}
+fn base_body(base: &Value) -> Result<&Value, String> {
+    let parts = base["parts"]
+        .as_array()
+        .ok_or("published B1 base parts absent")?;
+    let mut bodies = parts.iter().filter(|part| part["name"] == "body");
+    let body = bodies.next().ok_or("published B1 body absent")?;
+    if bodies.next().is_some() {
+        return Err("published B1 body is ambiguous".into());
+    }
+    Ok(body)
+}
+fn validate_appearance_binding(base: &Value, appearance: &Value) -> Result<(), String> {
+    let body = base_body(base)?;
+    for (key, expected) in [
+        ("base_asset_id", &base["asset_id"]),
+        ("generation", &base["generation"]),
+        ("revision", &base["revision"]),
+        ("character_entity", &base["character_entity"]),
+        ("body_entity", &body["display_entity"]),
+        ("body_mesh", &body["mesh_handle"]),
+        ("serial", &base["sample"]["serial"]),
+    ] {
+        if appearance.get(key) != Some(expected) {
+            return Err(format!(
+                "appearance snapshot {key} differs from current published B1 base"
+            ));
+        }
+    }
+    Ok(())
+}
 fn settle(world: &mut World, bridge: &mut Bridge) {
     let Some(mut pending) = bridge.pending.take() else {
         return;
     };
     let now = world.resource::<Time<Real>>().elapsed_secs_f64();
-    if now - pending.started > 45. {
-        fail(
-            bridge,
-            json!(pending.id),
-            "request did not reach current stable production identity within45seconds".into(),
-        );
-        return;
-    }
     let editor = world.resource::<EditorState>();
     let runtime = world.resource::<RuntimeStatus>();
     let appearance = appearance_status(world);
-    let error = editor
-        .open_error
-        .clone()
-        .or_else(|| runtime.error.clone())
-        .or_else(|| runtime.appearance_error.clone())
-        .or_else(|| runtime.stage_error.clone())
-        .or_else(|| appearance.error.clone())
-        .or_else(|| world.resource::<Playback>().error.clone());
-    if let Some(error) = error {
-        fail(bridge, json!(pending.id), error);
-        return;
-    }
-    if editor.preview.is_some() {
-        fail(bridge,json!(pending.id),"cannot certify saved Work while an editor preview is active; commit or cancel the preview".into());
-        return;
-    }
-    if editor.pending_open.is_some()
-        || !runtime.ready
-        || !appearance.ready
-        || world.resource::<Playback>().seek_request.is_some()
-    {
-        if now - pending.started > 45. {
-            fail(
-                bridge,
-                json!(pending.id),
-                "request did not reach current ready production frame within45seconds".into(),
-            );
-        } else {
-            bridge.pending = Some(pending);
+    let playback = world.resource::<Playback>();
+    match transition::check(transition::State {
+        elapsed: now - pending.started,
+        errors: [
+            editor.open_error.as_deref(),
+            runtime.error.as_deref(),
+            runtime.appearance_error.as_deref(),
+            runtime.stage_error.as_deref(),
+        ],
+        appearance_error: appearance.error.as_deref(),
+        playback_error: playback.error.as_deref(),
+        preview: editor.preview.is_some(),
+        pending_open: editor.pending_open.is_some(),
+        runtime_ready: runtime.ready,
+        appearance_ready: appearance.ready,
+        appearance_pending: appearance.pending,
+        seek_pending: playback.seek_request.is_some(),
+    }) {
+        Err(error) => {
+            fail(bridge, json!(pending.id), error);
+            return;
         }
-        return;
+        Ok(transition::Readiness::Waiting) => {
+            transition::reset_stability(&mut pending.stable_identity, &mut pending.stable_frames);
+            bridge.pending = Some(pending);
+            return;
+        }
+        Ok(transition::Readiness::Ready) => {}
     }
     if pending.expects_new_b1_generation
         && (appearance.generation.is_none()
@@ -421,8 +525,12 @@ fn settle(world: &mut World, bridge: &mut Bridge) {
     } else {
         "held-stable-two-frames"
     };
-    let capture = appearance_snapshot(world).and_then(|appearance| {
-        let base = base_capture(world)?;
+    // Strict publication and typed Work/status identity precede the appearance
+    // snapshot, whose failure path invalidates/disposes appearance state.
+    let capture = base_capture(world).and_then(|base| {
+        validate_current_base(world, &base, &appearance)?;
+        let appearance = appearance_snapshot(world)?;
+        validate_appearance_binding(&base, &appearance)?;
         let observed = observation::bindings(world, &base, &appearance)?;
         Ok((appearance, base, observed))
     });
@@ -526,15 +634,6 @@ fn controller(world: &mut World) {
     publish_web_state(&bridge, frame_changed);
     bridge.frame_export_key = frame_key;
     world.insert_resource(bridge);
-}
-fn stable_observation(previous: &mut Option<Value>, count: &mut u8, current: &Value) -> bool {
-    if previous.as_ref() == Some(current) {
-        *count = count.saturating_add(1).min(2);
-    } else {
-        *previous = Some(current.clone());
-        *count = 1;
-    }
-    *count >= 2
 }
 fn current_frame_export_key(bridge: &Bridge) -> String {
     bridge
@@ -687,6 +786,240 @@ mod transaction_tests {
         appearance.revision = Some(revision);
         appearance.applied = Some(nvwa_core::CharacterAppearance::None);
         appearance.body_entity = Some("fixture-body".into());
+        appearance.character_entity = Some("fixture-character".into());
+    }
+    // These are actual observer-policy/identity unit controls with resource or
+    // metadata fixtures, not fabricated successful production mesh captures.
+    #[test]
+    fn pending_appearance_reason_waits_resets_held_state_and_reaches_base_before_appearance() {
+        let mut world = world();
+        mark_ready(&mut world);
+        let mut bridge = Bridge::default();
+        dispatch(
+            &mut world,
+            &mut bridge,
+            r#"{"request_id":"typed-pending","action":"capture"}"#.into(),
+        );
+        let original_started = bridge.pending.as_ref().unwrap().started;
+        bridge.pending.as_mut().unwrap().stable_identity = Some(identity(&world));
+        bridge.pending.as_mut().unwrap().stable_frames = 1;
+        {
+            let mut status = world.resource_mut::<nvwa_runtime::AppearanceStatus>();
+            status.pending = true;
+            status.error = Some("opaque transition reason".into());
+        }
+        settle(&mut world, &mut bridge);
+        assert_eq!(bridge.report["phase"], "pending");
+        assert_eq!(bridge.report["acknowledged"], false);
+        assert!(bridge.report["request_succeeded"].is_null());
+        assert!(bridge.frame.is_none());
+        assert!(bridge.pending.as_ref().unwrap().stable_identity.is_none());
+        assert_eq!(bridge.pending.as_ref().unwrap().stable_frames, 0);
+        world
+            .resource_mut::<Time<Real>>()
+            .advance_by(std::time::Duration::from_secs(15));
+        settle(&mut world, &mut bridge);
+        assert_eq!(bridge.pending.as_ref().unwrap().started, original_started);
+        {
+            let mut status = world.resource_mut::<nvwa_runtime::AppearanceStatus>();
+            status.pending = false;
+            status.error = None;
+        }
+        settle(&mut world, &mut bridge);
+        assert_eq!(bridge.report["phase"], "pending");
+        assert_eq!(bridge.pending.as_ref().unwrap().stable_frames, 1);
+        settle(&mut world, &mut bridge);
+        assert_eq!(bridge.report["phase"], "error");
+        assert_eq!(bridge.report["error"], "B1 runtime absent");
+        assert_eq!(bridge.report["request_succeeded"], false);
+        let status = world.resource::<nvwa_runtime::AppearanceStatus>();
+        assert!(
+            status.ready,
+            "base failure must precede appearance snapshot invalidation"
+        );
+        assert!(status.error.is_none());
+        assert_eq!(status.applied, Some(nvwa_core::CharacterAppearance::None));
+    }
+    #[test]
+    fn all_actual_error_channels_stay_terminal_while_appearance_transition_waits() {
+        for channel in 0..6 {
+            let mut world = world();
+            mark_ready(&mut world);
+            let mut bridge = Bridge::default();
+            dispatch(
+                &mut world,
+                &mut bridge,
+                r#"{"request_id":"typed-error","action":"capture"}"#.into(),
+            );
+            {
+                let mut status = world.resource_mut::<nvwa_runtime::AppearanceStatus>();
+                status.pending = true;
+                status.error = Some("opaque transition reason".into());
+            }
+            let error = format!("actual failure channel {channel}");
+            match channel {
+                0 => world.resource_mut::<EditorState>().open_error = Some(error.clone()),
+                1 => world.resource_mut::<RuntimeStatus>().error = Some(error.clone()),
+                2 => world.resource_mut::<RuntimeStatus>().appearance_error = Some(error.clone()),
+                3 => world.resource_mut::<RuntimeStatus>().stage_error = Some(error.clone()),
+                4 => world.resource_mut::<Playback>().error = Some(error.clone()),
+                _ => {
+                    let mut status = world.resource_mut::<nvwa_runtime::AppearanceStatus>();
+                    status.pending = false;
+                    status.error = Some(error.clone());
+                }
+            }
+            settle(&mut world, &mut bridge);
+            assert_eq!(bridge.report["error"], error);
+            assert_eq!(bridge.report["phase"], "error");
+            assert_eq!(bridge.report["acknowledged"], true);
+            assert_eq!(bridge.report["request_succeeded"], false);
+            assert!(bridge.pending.is_none());
+            assert!(bridge.frame.is_none());
+        }
+    }
+    #[test]
+    fn typed_pending_times_out_on_original_request_deadline() {
+        let mut world = world();
+        mark_ready(&mut world);
+        let mut bridge = Bridge::default();
+        dispatch(
+            &mut world,
+            &mut bridge,
+            r#"{"request_id":"typed-timeout","action":"capture"}"#.into(),
+        );
+        world
+            .resource_mut::<nvwa_runtime::AppearanceStatus>()
+            .pending = true;
+        world.resource_mut::<nvwa_runtime::AppearanceStatus>().error =
+            Some("pending reason".into());
+        world
+            .resource_mut::<Time<Real>>()
+            .advance_by(std::time::Duration::from_secs(46));
+        settle(&mut world, &mut bridge);
+        assert_eq!(bridge.report["phase"], "error");
+        assert_eq!(bridge.report["request_succeeded"], false);
+        assert_eq!(
+            bridge.report["error"],
+            "request did not reach current stable production identity within45seconds"
+        );
+        assert!(bridge.pending.is_none());
+        assert!(bridge.frame.is_none());
+    }
+    #[test]
+    fn changed_saved_work_cannot_reuse_a_pending_request_or_call_appearance_snapshot() {
+        let mut world = world();
+        mark_ready(&mut world);
+        let mut bridge = Bridge::default();
+        dispatch(
+            &mut world,
+            &mut bridge,
+            r#"{"request_id":"typed-stale-work","action":"capture"}"#.into(),
+        );
+        let doc = world.resource::<EditorState>().document().unwrap().clone();
+        let mut values = doc.character.parameters;
+        values.insert("torso_length".into(), 0.5);
+        world
+            .resource_mut::<EditorState>()
+            .apply(Command::SetParameters {
+                character_id: doc.character.id,
+                values,
+            })
+            .unwrap();
+        settle(&mut world, &mut bridge);
+        assert_eq!(bridge.report["phase"], "error");
+        assert_eq!(
+            bridge.report["error"],
+            "current Work differs from requested Work before acknowledgement"
+        );
+        assert!(world.resource::<nvwa_runtime::AppearanceStatus>().ready);
+        assert!(bridge.frame.is_none());
+    }
+    fn metadata_fixture(world: &World) -> Value {
+        let doc = world.resource::<EditorState>().document().unwrap();
+        let status = appearance_status(world);
+        let playback = world.resource::<Playback>();
+        json!({"backend":doc.profile.backend,"profile_id":doc.profile.id,"asset_id":doc.profile.backend.b1_asset_version().unwrap().asset_id(),"revision":doc.revision,"parameters":doc.character.parameters,"generation":status.generation,"character_entity":status.character_entity,"diagnostic_pose":doc.character.diagnostic_pose,"mode":"motion","parts":[{"name":"body","display_entity":status.body_entity,"mesh_handle":"fixture-mesh"}],"sample":{"clip_id":playback.clip_id,"timeline_id":playback.active_timeline_id,"position_seconds":playback.position_seconds,"source_seconds":0.0,"playing":playback.playing,"completed":playback.completed,"serial":1}})
+    }
+    #[test]
+    fn base_identity_guard_rejects_stale_fields_and_uses_exact_typed_f32() {
+        let mut world = world();
+        let mut doc =
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character()).unwrap();
+        doc.character.parameters.insert("neck_width".into(), 0.2);
+        world.resource_mut::<EditorState>().replace(doc).unwrap();
+        mark_ready(&mut world);
+        let base = metadata_fixture(&world);
+        let appearance = appearance_status(&world);
+        assert!(validate_current_base(&world, &base, &appearance).is_ok());
+        for key in [
+            "backend",
+            "profile_id",
+            "asset_id",
+            "revision",
+            "parameters",
+            "generation",
+            "character_entity",
+            "diagnostic_pose",
+            "mode",
+        ] {
+            let mut stale = base.clone();
+            stale[key] = Value::Null;
+            assert!(
+                validate_current_base(&world, &stale, &appearance).is_err(),
+                "{key}"
+            );
+        }
+        for key in [
+            "clip_id",
+            "timeline_id",
+            "position_seconds",
+            "playing",
+            "completed",
+            "serial",
+            "source_seconds",
+        ] {
+            let mut stale = base.clone();
+            stale["sample"][key] = Value::Null;
+            assert!(
+                validate_current_base(&world, &stale, &appearance).is_err(),
+                "{key}"
+            );
+        }
+        let mut stale = base.clone();
+        stale["parts"][0]["display_entity"] = json!("old-body");
+        assert!(validate_current_base(&world, &stale, &appearance).is_err());
+        let mut stale = base.clone();
+        stale["parameters"] = serde_json::from_str::<Value>(&current_work(&world).unwrap())
+            .unwrap()["character"]["parameters"]
+            .clone();
+        assert_ne!(
+            stale["parameters"], base["parameters"],
+            "pretty JSON decimal differs from exact promoted f32"
+        );
+        assert!(validate_current_base(&world, &stale, &appearance).is_err());
+        assert!(validate_current_base(&world, &base, &appearance).is_ok());
+    }
+    #[test]
+    fn appearance_capture_must_share_base_body_generation_and_sample_serial() {
+        let mut world = world();
+        mark_ready(&mut world);
+        let base = metadata_fixture(&world);
+        let appearance = json!({"base_asset_id":base["asset_id"],"generation":base["generation"],"revision":base["revision"],"character_entity":base["character_entity"],"body_entity":base["parts"][0]["display_entity"],"body_mesh":base["parts"][0]["mesh_handle"],"serial":base["sample"]["serial"]});
+        assert!(validate_appearance_binding(&base, &appearance).is_ok());
+        for key in [
+            "base_asset_id",
+            "generation",
+            "revision",
+            "character_entity",
+            "body_entity",
+            "body_mesh",
+            "serial",
+        ] {
+            let mut stale = appearance.clone();
+            stale[key] = Value::Null;
+            assert!(validate_appearance_binding(&base, &stale).is_err(), "{key}");
+        }
     }
     #[test]
     fn preview_stales_prior_proof_and_blocks_saved_work_capture() {
