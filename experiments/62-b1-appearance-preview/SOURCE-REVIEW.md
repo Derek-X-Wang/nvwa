@@ -30,3 +30,11 @@ One nonblocking evidence wording correction was requested and applied before pub
 VERIFIED — Independent frozen source and retained actual Web evidence review; material findings fixed and reviewed; no remaining P1/P2 findings in the isolated Web scope.
 
 NOT-RUN — Reviewer-executed build/checker, native visible launch and broader appearance-quality/admission decision. Root execution evidence is recorded separately in RESULTS.md.
+
+## Later native visual subset
+
+The same independent Astra/high reviewer inspected all six actual native images and rehashed206 source identities, the exact compiled/copied native binary, image receipts and unchanged disk Work. No newP1/P2 was found for the explicitly limited native visual archive. See [native-independent-review.md](evidence/native-independent-review.md). No native report/frame export, exact native UV/material/geometry diagnosis, failure recovery, dedicated experiment panel, persistence, performance or production admission is credited.
+
+Before publication, root applied the nonblocking wording cleanup: visible not-saved labels explicitly refer to Web, and issue78/PR81 blocked/draft wording is marked as historical starting context. Compiled inputs were unchanged.
+
+PARTIAL — Actual native visual subset independently reviewed; full native appearance functionality and production admission remain open.

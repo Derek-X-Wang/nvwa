@@ -1,6 +1,6 @@
 # B1 temporary skin preview — experiment62
 
-An isolated technical preparation for issue79 while issue78's native acceptance is unavailable. This does not admit appearance to the product, remove issue79's dependency, or authorize merging PR81 before its remaining native gate. It wraps the normal `nvwa_studio::build_app()` and the same real B1 character. Production code, root dependencies, profile/Work formats and character assets are unchanged.
+An isolated technical preparation for issue79, started while issue78's native acceptance was unavailable. Later issue78/PR81 state is governed by GitHub, not by this historical experiment checkpoint. This does not admit appearance to the product, remove issue79's dependency, or authorize merging PR81 before its remaining native gate. It wraps the normal `nvwa_studio::build_app()` and the same real B1 character. Production code, root dependencies, profile/Work formats and character assets are unchanged.
 
 ## Current evidence
 
@@ -9,7 +9,7 @@ An isolated technical preparation for issue79 while issue78's native acceptance 
 - Eleven asset controls and nine loopback capture controls pass normally and with Python `-O` (20 unique tests,40 executions).
 - Actual Web build/export and IAB rendering pass. Four plain/skin toggles preserve full production snapshots; 18 declared skin/pose samples pass independent f64 FK/full LBS/foot checks. Live playback, seek, identical Work reopening, persistent rejected commands, actual missing-asset failure and recovery were exercised.
 - Independent fresh Astra/high source and retained-evidence review: no remaining P1/P2 findings. The reviewer checked all206 source identities,41 Web artifact hashes,27 capture receipt identities,18 numerical outputs and nine actual screenshots. See [SOURCE-REVIEW.md](SOURCE-REVIEW.md).
-- The first offline Web build failed with E0616(private field access) and E0596(missing mutable mesh binding); its failure is preserved. The corrected R2 Web build passes (15m48s), and the separate native build also passes (17m36s). The completed R2 task took about 33m44s; these are build timings, not product performance. All 206 native receipt source hashes and the exported binary hash were independently checked. See [native-build-receipt.json](evidence/native-build-receipt.json). Native GUI remains NOT-RUN: root is prioritizing issue 78 and has not launched appearance62. No production appearance admission is claimed.
+- The first offline Web build failed with E0616(private field access) and E0596(missing mutable mesh binding); its failure is preserved. The corrected R2 Web build passes (15m48s), and the separate native build also passes (17m36s). The completed R2 task took about 33m44s; these are build timings, not product performance. All 206 native receipt source hashes and the exported binary hash were independently checked. See [native-build-receipt.json](evidence/native-build-receipt.json). Native actual visual smoke now covers plain/skin, ordinary playback/pause, knee seek, torso refit and plain/skin restoration; this is a limited screenshot layer, without native diagnostic export. See [NATIVE-VISUAL.md](NATIVE-VISUAL.md). No production appearance admission is claimed.
 
 See [RESULTS.md](RESULTS.md) for the bounded conclusion, actual screenshots, retained record identities and remaining gates.
 
@@ -19,7 +19,7 @@ Use the fitted source body's actual duplicate-order `Mesh::ATTRIBUTE_UV_0`, matc
 
 The overlay changes only UV/material/image bindings: fixed approved sRGB diffuse plus white tint, with other material properties preserved. Fresh successful production `b1_frame_snapshot` values before and after binding must be equal. That proves unchanged uploaded CPU geometry/bones/sample; it does not prove GPU pixels. Plain restores and reads back the original UV/material binding. Refit/reopen invalidate old bindings and proof. Rejected commands and changed transport invalidate the exported capture instead of returning an earlier green result.
 
-The visible experiment label states **Experimental appearance · not saved**. Saving a Work does not persist this temporary skin choice. No appearance backend/profile version is introduced. Existing garment quality remains HOLD.
+The Web preview's visible experiment label states **Experimental appearance · not saved**. The isolated native visual smoke has no equivalent dedicated panel and is not a delivered user entry. Saving a Work does not persist this temporary skin choice. No appearance backend/profile version is introduced. Existing garment quality remains HOLD.
 
 ## Reproduce without new downloads
 
@@ -59,4 +59,4 @@ python3 -B experiments/62-b1-appearance-preview/build/check_captures.py \
   --captures "$NVWA_EXCLUSIVE_CAPTURES" --asset-root assets --out "$NVWA_EXCLUSIVE_CHECK_OUT"
 ```
 
-PARTIAL — Actual Web skin/UV binding,18 numerical cases, failure/recovery,40 Python test executions and independent review pass. Native compilation passes; native GUI, close-up appearance quality, eyes/hair fitting, saved appearance identity, performance and production admission remain unverified.
+PARTIAL — Actual Web skin/UV binding,18 numerical cases, failure/recovery,40 Python test executions and independent review pass. Native compilation and bounded actual visual smoke pass; native full diagnostic/failure/UI gates, close-up appearance quality, eyes/hair fitting, saved appearance identity, performance and production admission remain unverified.
