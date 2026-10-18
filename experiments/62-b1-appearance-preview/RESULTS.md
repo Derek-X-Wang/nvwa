@@ -19,12 +19,16 @@
 | 修复后的 Web 编译 | PASS，离线构建15分48秒；独立复审编译修复；41 个导出文件及206 个源码身份有哈希记录 |
 | Web 实际启动 | PASS，IAB 实际加载普通 Studio 和真实 B1；所有操作由可见控件/正常 Open 发起 |
 | Web 功能 | PASS，纹理/原始材质切换、18 个动作采样、播放/暂停、重复打开、拒绝无效命令、真实缺失资产错误及恢复 |
-| 原生编译 | 2026-10-18 00:00 UTC 检查点仍在运行，尚无原生成功 receipt |
-| 原生实际启动/GUI | NOT-RUN，用户离家，未尝试越过锁屏或把编译算作验收 |
+| 原生编译 | PASS，独立离线编译17分36秒；206个源文件身份与导出二进制哈希全部复核一致，见 `evidence/native-build-receipt.json` |
+| 原生实际启动/GUI | NOT-RUN，root 本轮优先 #78；尚未启动 appearance62，编译通过不算 GUI 验收 |
 | 性能/内存/GPU 正式测量 | NOT-RUN；此次是调试构建，编译期间的交互不作为性能证据 |
 | 主线/Hosted CI | 本实验没有 PR 或 hosted CI 结果；未修改 main。#81 的既有 CI 不转借为本实验 CI |
 
 构建任务：首轮 `run_a6c0f2e8a6e009ea643aa6d873ee2fda`；修复后的 R2 `run_b4cb03d18788bfa64167dcbc129f0639`。每轮独立 disposable target；离线、单 Cargo job。重任务由 wefty 执行。
+
+R2 的实际 ledger 终态为 `succeeded`，起止时间为2026-10-17 23:30:53.393139 UTC至2026-10-18 00:04:37.393017 UTC，总任务约33分44秒。Web 编译日志单独报告15分48秒，原生编译日志单独报告17分36秒；两段编译时间与总任务时长分开记录，均不是产品运行性能。
+
+原生 receipt 的206项源文件哈希与本地当前源文件逐项一致，也与 R2 Web receipt 的源身份完全相同。原生 `studio` 为140,831,152字节，SHA256：`74106adbcb1ca7fd6b61f361c967e73c04c5aa3fee17e826d3efda57519fc5c8`；receipt SHA256：`c670bc3bfdfe98b4c7de8e6ed9d0bc646c1bb351514ff80acdb0c65f819cf48e`。这是原生编译及导出身份的证据，未执行该程序，也不补足外观质量、保存或主线准入门槛。
 
 ## 实际技术证据
 
