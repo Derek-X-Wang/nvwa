@@ -1,0 +1,395 @@
+{
+  "scope": "current r4 ordinary native GUI and normal Web file exchange; no additive probe/performance/physical-input claim",
+  "binary_sha256": "3c142ca7b95245151d0804761d437517b938461912b08e63f81211fc97c48ecb",
+  "web_wasm_sha256": "b0e22cf9ae5959304f072dfc8f197f53b421b8cfcdbaee4cf5b91c6614501c9d",
+  "input_work_sha256": "92ab229ada8b521d912dab5ae85dbb439538eb262ca3a8d10dbdef93809cba77",
+  "gui_saved_work_sha256": "5ea189bd5fa884aeddbfbd4ceac9172f462729229a18ab0913a8cfb68dcca14b",
+  "saved_revision": 10,
+  "saved_parameters": {
+    "torso_length": 0.0,
+    "jaw_drop": 1.0
+  },
+  "timeline_entries": 2,
+  "observations": [
+    {
+      "event": "actual_open",
+      "revision": 7,
+      "torso": 0.75,
+      "jaw": 1.0,
+      "position": 0,
+      "image": "01-current-open.jpg"
+    },
+    {
+      "event": "actual_play",
+      "playing_button": "Pause",
+      "position_observed": 4.459,
+      "clip": "b1_knee_flex_v1",
+      "image": "02-play-attempt.jpg"
+    },
+    {
+      "event": "seek_slider",
+      "position_observed": 7.0,
+      "playing_button": "Play",
+      "image": "05-slider-seek.jpg"
+    },
+    {
+      "event": "paused_shape_change",
+      "torso": 0.0,
+      "revision": 8,
+      "position": 7.0,
+      "image": "06-shape-at-seven.jpg"
+    },
+    {
+      "event": "undo",
+      "torso": 0.75,
+      "revision": 9,
+      "position": 7.0,
+      "image": "07-undo.jpg"
+    },
+    {
+      "event": "redo",
+      "torso": 0.0,
+      "revision": 10,
+      "position": 7.0,
+      "image": "08-redo.jpg"
+    },
+    {
+      "event": "normal_save",
+      "notice": "已保存 / Saved, lower-right, exact owned file destination",
+      "file_bytes_verified": true,
+      "image": "09-saved.jpg"
+    },
+    {
+      "event": "restart_pause",
+      "position": 2.158,
+      "clip": "b1_arm_rehearsal_v1",
+      "playing_button": "Play",
+      "image": "10-paused-arm.jpg"
+    },
+    {
+      "event": "invalid_open",
+      "error": "invalid_json: EOF while parsing a value at line 1 column 18",
+      "retained_revision": 10,
+      "retained_position": 2.158,
+      "image": "11-invalid-open-retains.jpg"
+    },
+    {
+      "event": "valid_open_recovery",
+      "revision": 10,
+      "position": 0.0,
+      "playing_button": "Play",
+      "error_cleared": true,
+      "image": "12-valid-open-recovery.jpg"
+    },
+    {
+      "event": "normal_web_picker_open_current_native_save",
+      "revision": 10,
+      "torso": 0.0,
+      "jaw": 1.0,
+      "position": 0.0,
+      "image": "13-web-open-native-save.jpg"
+    },
+    {
+      "event": "web_restart",
+      "position": 0.2016,
+      "playing_button": "Pause",
+      "image": "14-web-restart-native-save.jpg"
+    },
+    {
+      "event": "web_completed",
+      "position": 8.0,
+      "playing_button": "Replay",
+      "clip": "b1_knee_flex_v1",
+      "image": "15-web-completed-native-save.jpg"
+    }
+  ],
+  "failed_attempts": [
+    {
+      "scope": "tool input",
+      "description": "Batched double-click/key numeric seek, separated key retry and titlebar-focus/paste attempt did not confirm value6; stopped keyboard retries and used visible slider successfully to7.0. No product keyboard pass/failure inferred.",
+      "images": [
+        "03-seek-six.jpg",
+        "04-seek-six-confirmed.jpg"
+      ]
+    }
+  ],
+  "file_exchange_scope": "Existing current Web rev7 -> actual current native Open/edit/Save rev10 -> actual normal Web picker Open rev10 -> native normal valid Open of same saved rev10. No new Web Save/download is claimed in this round.",
+  "cli": {
+    "binary_sha256": "ce5ee95477caf319e2fa07dbf3488aad5631165969e64c6eb32cf81fdbc52cee",
+    "commands": [
+      {
+        "command": "validate",
+        "exit_code": 0,
+        "result": {
+          "asset_checked": true,
+          "revision": 10,
+          "valid": true
+        }
+      },
+      {
+        "command": "inspect",
+        "exit_code": 0,
+        "result": {
+          "schema_version": 3,
+          "revision": 10,
+          "profile": {
+            "backend": {
+              "type": "b1_cpu",
+              "schema_version": 2,
+              "asset_id": "mpfb-hm08-game-engine-female-sportsuit01-v1"
+            },
+            "id": "nvwa-mpfb-b1-motion-v1",
+            "asset_path": "characters/mpfb-b1-v1/manifest.json",
+            "asset_sha256": "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18",
+            "license": "CC0-1.0",
+            "parameters": [
+              {
+                "id": "torso_length",
+                "morph_index": 0,
+                "min": -1.0,
+                "max": 1.0,
+                "default": 0.0
+              },
+              {
+                "id": "jaw_drop",
+                "morph_index": 1,
+                "min": -1.0,
+                "max": 1.0,
+                "default": 0.0
+              }
+            ],
+            "clips": [
+              {
+                "id": "b1_arm_rehearsal_v1",
+                "animation_index": 0,
+                "duration_seconds": 4.0
+              },
+              {
+                "id": "b1_knee_flex_v1",
+                "animation_index": 1,
+                "duration_seconds": 4.0
+              }
+            ]
+          },
+          "character": {
+            "id": "character-1",
+            "profile_id": "nvwa-mpfb-b1-motion-v1",
+            "parameters": {
+              "jaw_drop": 1.0,
+              "torso_length": 0.0
+            },
+            "scale": 1.0,
+            "diagnostic_pose": "neutral"
+          },
+          "timeline": [
+            {
+              "id": "arms",
+              "clip_id": "b1_arm_rehearsal_v1",
+              "start_seconds": 0.0,
+              "duration_seconds": 4.0,
+              "speed": 1.0,
+              "looping": false
+            },
+            {
+              "id": "knee",
+              "clip_id": "b1_knee_flex_v1",
+              "start_seconds": 4.0,
+              "duration_seconds": 4.0,
+              "speed": 1.0,
+              "looping": false
+            }
+          ],
+          "stage": {
+            "key_light": {
+              "illuminance_lux": 10000.0,
+              "color_srgb": [
+                1.0,
+                0.94,
+                0.86
+              ],
+              "azimuth_degrees": -35.0,
+              "elevation_degrees": 42.0
+            },
+            "fill_light": {
+              "illuminance_lux": 3000.0,
+              "color_srgb": [
+                0.8,
+                0.89,
+                1.0
+              ],
+              "azimuth_degrees": 55.0,
+              "elevation_degrees": 28.0
+            },
+            "ambient": {
+              "brightness": 180.0,
+              "color_srgb": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "background_color_srgb": [
+              0.88,
+              0.9,
+              0.93
+            ],
+            "floor": {
+              "visible": true,
+              "color_srgb": [
+                0.72,
+                0.75,
+                0.8
+              ],
+              "shadows": true
+            },
+            "camera": {
+              "azimuth_degrees": 16.0,
+              "elevation_degrees": 8.0,
+              "distance": 3.8,
+              "target_height": 0.95,
+              "fov_degrees": 36.0
+            },
+            "quality": "balanced"
+          }
+        }
+      }
+    ]
+  },
+  "performance": "NOT-RUN",
+  "physical_drag_ime_dpi": "NOT-RUN this round",
+  "quality": "cloth and M2 HOLD unchanged",
+  "screenshots": {
+    "01-current-open.jpg": {
+      "bytes": 333432,
+      "sha256": "eeb19d0a32160293a89204384a8e0b53445d770d9772d250dbb5247beea68eda"
+    },
+    "02-play-attempt.jpg": {
+      "bytes": 333557,
+      "sha256": "30dd968ed9bbeeaf42366aacc0332da2f156676e1313f3226a1438f3c60c46c5"
+    },
+    "03-seek-six.jpg": {
+      "bytes": 339454,
+      "sha256": "7b9cf022b415c062b30f4f429d766d1f7ce8677704b3da9dfcef7bd78d62a922"
+    },
+    "04-seek-six-confirmed.jpg": {
+      "bytes": 339481,
+      "sha256": "5281a0113ca2a09fdbfa0aedcd7deaaff7dafada0fbb03f9bb1e14ef10720f17"
+    },
+    "05-slider-seek.jpg": {
+      "bytes": 332926,
+      "sha256": "e4aadfa4ea54fbd40664cc2ad48a5671660d9a3bf388daaa5cce0c6923313956"
+    },
+    "06-shape-at-seven.jpg": {
+      "bytes": 332092,
+      "sha256": "ff8ad818c53c34c58c3cd54369518ab2441eeb0368c1fb0219c2f8eb9c2251c2"
+    },
+    "07-undo.jpg": {
+      "bytes": 330944,
+      "sha256": "31ac7df49deb75401979ebc401150d0d8f0d745910e895d7a931e7dc975e3497"
+    },
+    "08-redo.jpg": {
+      "bytes": 330486,
+      "sha256": "8a22f6176b284757279e8867228535c03fbbb0752524863f36a5aa520a363fb8"
+    },
+    "09-saved.jpg": {
+      "bytes": 358686,
+      "sha256": "4bb4ee784637379d3153e486903880e2f978092096d322ac58f7e0ba9bbab3f6"
+    },
+    "10-paused-arm.jpg": {
+      "bytes": 337145,
+      "sha256": "ae91f802ca05f152c2fd01fa9da795a2fa4d3ec98e3231e51644bb463d48c192"
+    },
+    "11-invalid-open-retains.jpg": {
+      "bytes": 343873,
+      "sha256": "8462002b4e980c2eeaf4051ce117f466069e6a1c0568f324aadded40a7d48c7b"
+    },
+    "12-valid-open-recovery.jpg": {
+      "bytes": 333221,
+      "sha256": "caabb00e9d65eea7a7780a3cfca59c1e4116b455bd7413e722bbe0d765a0deb7"
+    },
+    "13-web-open-native-save.jpg": {
+      "bytes": 64945,
+      "sha256": "24f1ce2daeeac8b66ded8201bd04ede619c64b964af1b4a6597c25007290328f"
+    },
+    "14-web-restart-native-save.jpg": {
+      "bytes": 65737,
+      "sha256": "72e653597e583d642d09f20361f1ab41de8508179ced60f6b6c82a404fecfc0c"
+    },
+    "15-web-completed-native-save.jpg": {
+      "bytes": 65679,
+      "sha256": "93e451f8dd75c759c0ccc2b57aa7b0a24c606b86120b8940acdc40c36c8c84c0"
+    },
+    "16-probe-ready.jpg": {
+      "bytes": 332936,
+      "sha256": "a33129133ef711e1cb313075870519869bc96ee788292dbf9e54a20cead727cb"
+    },
+    "17-neutral-arm-peak.jpg": {
+      "bytes": 321451,
+      "sha256": "63309b13a0f2cf75d2a95e21b9a06d9f4890449f53d88ed935e9038205dc35c8"
+    },
+    "18-neutral-knee-peak.jpg": {
+      "bytes": 318989,
+      "sha256": "f7201bff9b8ffd9a88c27bae1e649a13498b3406dc2a02a182beef80c6a17d19"
+    },
+    "19-short-arm-peak.jpg": {
+      "bytes": 321032,
+      "sha256": "023e4a7a9128d14ec0c3111d4441c74705a93cb6164a4ea207b875a582bbf286"
+    },
+    "20-short-knee-peak.jpg": {
+      "bytes": 318520,
+      "sha256": "aba19955ce35d0b9a88745850802f378ab939582d64f9a5928a76cac8631efb6"
+    },
+    "21-long-arm-peak.jpg": {
+      "bytes": 322279,
+      "sha256": "b1863f10ce1de42439add3f0e4cdad4d0b39bf7d41e566abdc07576ef5deeb77"
+    },
+    "22-long-knee-peak.jpg": {
+      "bytes": 319598,
+      "sha256": "3d7ccb86a6e77fd4acf273a039e132bcedde3f98d985806bfb4e5521ea838748"
+    },
+    "23-native-player-open.jpg": {
+      "bytes": 239080,
+      "sha256": "51891150ab319a6ff11ae987da8c53d561e762a762b02f71e01f19c3fac47e54"
+    },
+    "24-native-player-paused-arm.jpg": {
+      "bytes": 241284,
+      "sha256": "8ed46ff198dc716c32174a817880f98acadaa8e5e23e04deb884194095c74fd6"
+    },
+    "25-native-player-seek.jpg": {
+      "bytes": 237881,
+      "sha256": "cef78b20e7747dc370d51cd5359116aadfcf36a7973cefa60c02d86331a448cc"
+    },
+    "26-native-player-complete.jpg": {
+      "bytes": 241569,
+      "sha256": "a9ea50ac16bd3a516abbd5133a822f1669f75a15ef8470156e765467901bb53f"
+    }
+  },
+  "player": {
+    "scope": "current normal native binary --player with exact GUI-saved rev10; no additive controller",
+    "editing_panels_hidden": true,
+    "observations": [
+      {
+        "event": "opened",
+        "position": 0.0,
+        "image": "23-native-player-open.jpg"
+      },
+      {
+        "event": "restart_pause",
+        "position": 2.258,
+        "image": "24-native-player-paused-arm.jpg"
+      },
+      {
+        "event": "seek_slider",
+        "position": 6.2,
+        "active_clip": "b1_knee_flex_v1",
+        "image": "25-native-player-seek.jpg"
+      },
+      {
+        "event": "resume_complete",
+        "position": 8.0,
+        "button": "Replay",
+        "image": "26-native-player-complete.jpg"
+      }
+    ]
+  }
+}

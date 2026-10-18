@@ -18,11 +18,11 @@
 | 原生与Web构建 | VERIFIED | 产品应用/实际Wasm、Studio加性探针双端均构建；[193源与125产物哈希](build-closure.json)与当前文件一致 |
 | 实际Studio数值读回 | VERIFIED | 桌面14/14、Web14/14分别通过独立FK/LBS/脚部及表面描述检查，之后14组双端数值对照通过；[结果](platform-summary.json) |
 | 当前Web普通界面 | VERIFIED | 实际播放/暂停、7秒定位、jaw编辑/Undo/Redo且时刻保留、真实保存下载、坏文件保留人物、有效文件重开恢复 |
-| 当前原生画面/普通界面 | PARTIAL | 实际打开当前Web保存文件并读回rev7/torso0.75/jaw1/53骨骼/两网格；14帧通过。CUA被锁屏阻断；应用自截图也为黑图，不能据退出0算画面通过 |
-| CLI与文件交换 | VERIFIED bounded | 当前CLI与此前21项实际命令通过的二进制字节相同，复用证据，未宣称重跑21项。r2普通GUI完整往返与当前Web保存文件相同；当前原生普通GUI保存尚未补验 |
+| 当前原生画面/普通界面 | VERIFIED bounded | 解锁后用当前r4实际运行Studio及Player；三torso×两动作峰值可见，普通编辑/Undo/Redo、Save、坏文件保留、有效重开及播放完成均实测；[新补验](native-resume-20261017/README.md) |
+| CLI与文件交换 | VERIFIED bounded | 当前Web rev7→当前原生普通GUI编辑/Save rev10→正常Web picker Open，并由当前原生重开同一新Save文件。新增文件实际validate/inspect成功；此前21命令仅复用字节相同的证据，无本轮Web新下载声明 |
 | 真实生产故障控制 | VERIFIED | 去掉手臂动作、漏传衣物网格、关闭脚部反向旋转均触发精确运行时断言；恢复原字节后同测试通过；[三组红/恢复绿](mutations.json) |
 | 比较器/捕获/输入拒绝控制 | VERIFIED | 16/9/20项各自正常及Python `-O`通过；比较器控制与实际生产故障分开计数 |
-| 独立审查与PR/main CI | PARTIAL | 修正源码及精确拒绝锚点/外观提案复核CLEAR，CPU证据审计与最终证据独立复核通过；原生画面与精确CI待完成 |
+| 独立审查与PR/main CI | PARTIAL | 既有修正源码/数值证据审查CLEAR；c655217精确PR的四项CI已成功。新增原生补验[独立复核CLEAR](native-resume-20261017/independent-review.md)，原生P1解除；本次证据提交后的最终head及合并后main CI另行确认 |
 
 CPU矩阵安装完整生产`NvwaRuntimePlugin`及真实加载器、拟合、骨骼传播和网格上传，但没有窗口/渲染器/GPU。两端Studio探针调用正常`nvwa_studio::build_app()`，只添加命令/采样控制器；读到实际CPU上传缓冲，不是GPU顶点回读。普通界面另行操作。数字、画面、保存和性能互不替代。
 
@@ -46,7 +46,7 @@ Web固定镜头包含[短躯干手臂](web-short-arm.jpg)、[中立躯干手臂]
 
 肩腰穿插、服装折叠及极端法线质量继续HOLD，由[#80](https://github.com/Derek-X-Wang/nvwa/issues/80)单独跟踪。面积/边长比、最近三角形局部有符号投影及相邻面翻折只是描述；开放表面符号不证明全局内外或真实穿透深度。通用相交/自相交分类、布料物理、IK、任意体型/骨架/衣物、动作审美及M2真实生成质量均未准入。#3保持阻塞，#4保留首次物理呈现、完全冷启动与GPU/内存缺口。
 
-本轮原生[自截图](native-locked.png)为黑图，[退出0/Ready/回调记录](native-capture-rejected.json)明确拒绝视觉通过。回调时间/主循环频率不作为性能结果。需要解锁后补原生实际画面和普通界面；旧r2成功画面不填当前缺口。
+此前原生[自截图](native-locked.png)为黑图，[退出0/Ready/回调记录](native-capture-rejected.json)继续保留为被拒绝的失败尝试。解锁后用当前同字节r4完成[新的实际原生补验](native-resume-20261017/README.md)，不借用旧r2画面。新增14帧完整骨骼/网格与既有独立检查的现行r4帧精确对应；没有声称重跑完整数值检查器。回调时间/主循环频率不作为性能结果。
 
 原生探针首个命令早于Work加载被拒绝；加入就绪读回、新请求ID后继续。一次大JSON捕获超过私有脚本60秒等待，文件随后完成；保留该超时，将诊断捕获等待上限设180秒后取得14帧。产品超时、正确性阈值和CI界限未改，不据此归因产品性能。Web标签/正则选择器适配失败也保留，改用已观察到的控件ID和精确回执后采样；计算器/结果未改。
 
@@ -64,4 +64,4 @@ cp docs/evidence/b1-motion/web-edited.nvwa.json "$nvwa_demo_dir/demo.nvwa.json"
 target/debug/nvwa-studio --work "$nvwa_demo_dir/demo.nvwa.json"
 ```
 
-**PARTIAL — 当前完整数值、构建、三项真实故障、双端14帧与Web功能通过；原生画面/普通GUI及最终PR/main验收待完成。衣物/M2质量HOLD保留。**
+**PARTIAL — 完整数值、构建、三项真实故障、双端14帧、当前原生画面/普通GUI/Player及文件交换通过；新增证据独立复核通过，最终PR/main CI待完成。衣物/M2质量HOLD保留。**
