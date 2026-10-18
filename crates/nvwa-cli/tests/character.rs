@@ -168,3 +168,31 @@ fn every_extension_target_is_authenticated_before_creation_and_legacy_needs_none
     );
     std::fs::remove_dir_all(dir).unwrap();
 }
+
+#[test]
+fn validation_discovery_and_missing_root_wording_cover_both_selected_base_versions() {
+    let dir = directory("validation-wording");
+    let contract = "b1_validate_requires_explicit_asset_root_and_authenticates_exact_selected_base_and_appearance_manifests_and_all_their_bounded_payloads_glb_asset_root_optional";
+    let message = "B1 validation requires validate <work.json> <asset-root> to authenticate all payloads of the selected base and appearance";
+    for (verb, version, count) in [
+        ("new-b1-motion", B1AssetVersion::V1, 13),
+        ("new-character", B1AssetVersion::V2, 25),
+    ] {
+        let input = dir.join(format!("{verb}.json"));
+        success(cli(&[verb.as_ref(), &root(), &input]));
+        let caps = success(cli(&["describe-capabilities".as_ref(), &input]));
+        assert_eq!(caps["cli_contract"]["asset_validation"], contract);
+        assert_eq!(caps["backend"]["asset_id"], version.asset_id());
+        let descriptor =
+            B1AssetManifest::from_bytes_for(version, version.manifest_bytes()).unwrap();
+        assert_eq!(descriptor.files.len(), count);
+        let failed = cli(&["validate".as_ref(), &input]);
+        assert_eq!(failed.status.code(), Some(1));
+        assert!(failed.stdout.is_empty());
+        let error: Value = serde_json::from_slice(&failed.stderr).unwrap();
+        assert_eq!(error["code"], "asset_root_required");
+        assert_eq!(error["message"], message);
+        success(cli(&["validate".as_ref(), &input, &root()]));
+    }
+    std::fs::remove_dir_all(dir).unwrap();
+}

@@ -141,6 +141,7 @@ fn new_character_entry_stages_eight_parameters_and_all_bilingual_controls_are_re
                     egui::Event::MouseWheel {
                         unit: egui::MouseWheelUnit::Point,
                         delta: egui::vec2(0.0, -100.0),
+                        phase: egui::TouchPhase::Move,
                         modifiers: egui::Modifiers::default(),
                     },
                 ]

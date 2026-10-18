@@ -546,8 +546,20 @@ mod tests {
         assert_eq!(after_slider.timeline, before.timeline);
         // The egui slider accepts secondary drags as value edits. Its light
         // edit is valid; it must never also become a viewport camera gesture.
+        // Locate the real Work TextEdit from its current production paint. The
+        // toolbar can move or wrap when its creation button or labels change.
+        let output = h.frame(vec![]);
+        let work_position = label(&output, &h.ui.file_path).center();
+        output.drop_without_applying_deltas();
+        h.click(work_position);
+        assert!(
+            h.ctx
+                .memory(|memory| memory.focused())
+                .and_then(|id| h.ctx.read_response(id))
+                .is_some_and(|response| response.rect.contains(work_position)),
+            "the painted Work text input must receive actual widget focus"
+        );
         // Real Work text edit owns keyboard input, including IME preedit.
-        h.click(egui::pos2(500.0, 15.0));
         h.frame(vec![egui::Event::Ime(egui::ImeEvent::Preedit {
             text: "测试".into(),
             active_range_chars: Some(0..2),

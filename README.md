@@ -79,6 +79,20 @@ The exchanged [revision 6 work](docs/evidence/m1/web-sequence.nvwa.json) contain
 
 The CLI is the third supported entrypoint. It uses the same typed core commands as Studio and edits portable Work files offline. Open its saved output in native Studio or Web Studio to render and continue editing. The CLI does not control an already-open window. See [CLI support](docs/CLI-SUPPORT.md) for scope and platform evidence, and the [CLI authoring guide](docs/agents/cli-authoring.md) for command and error contracts.
 
+The eight-parameter character candidate adds head, nose, mouth, chin, neck and hip widths to torso length and jaw opening. Its complete desktop/Web admission is still pending; see the [current evidence and limitations](docs/evidence/b1-character-quality/RESULTS.md). To create a separate candidate Work without changing an existing file:
+
+```sh
+cargo build --locked -p nvwa-cli
+mkdir -p .work
+CHARACTER_OUT="$(mktemp -d .work/nvwa-character.XXXXXX)"
+target/debug/nvwa-cli new-character assets "$CHARACTER_OUT/character.nvwa.json"
+target/debug/nvwa-cli describe-capabilities "$CHARACTER_OUT/character.nvwa.json"
+target/debug/nvwa-cli validate "$CHARACTER_OUT/character.nvwa.json" assets
+cargo run -p nvwa-studio --locked -- --work "$CHARACTER_OUT/character.nvwa.json"
+```
+
+Studio's **New character…** creates the same profile. Fresh characters start with Skin, Eyes and Hair off; the checked-in `examples/b1-character.nvwa.json` selects all three. `new-b1`, `new-b1-motion` and existing Works retain their original profiles. Use `describe-capabilities` for the selected Work before sending commands; old Works do not gain the new parameters automatically.
+
 This quickstart builds the CLI, creates a fresh ignored `.work` directory, and writes every Work and command file there. It leaves the checked-in examples and existing Works untouched. The command values below come from the current bundled profile's `describe-capabilities` response; read that response before adapting the commands to another profile.
 
 ```sh

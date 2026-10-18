@@ -1,0 +1,72 @@
+{
+  "compared_files": 10,
+  "ordinary_optimized_evidence_bytes_exact": true,
+  "python_version": "3.14.7",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/67-b1-eye-surface-diagnosis",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "output": "................\n----------------------------------------------------------------------\nRan 16 tests in 0.066s\n\nOK\n",
+      "wall_seconds": 0.19383362506050617
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "experiments/67-b1-eye-surface-diagnosis/probe.py",
+        "--capture-root",
+        "CAPTURE_REPOSITORY",
+        "--output",
+        "experiments/67-b1-eye-surface-diagnosis/evidence"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_sha256": "a7053a79f7e6591be84a36197b9614b27e049927ccdafb8814cff81d60341794",
+      "wall_seconds": 5.9794457500102
+    },
+    {
+      "command": [
+        "python3",
+        "-O",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/67-b1-eye-surface-diagnosis",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0,
+      "output": "................\n----------------------------------------------------------------------\nRan 16 tests in 0.060s\n\nOK\n",
+      "wall_seconds": 0.17970108392182738
+    },
+    {
+      "command": [
+        "python3",
+        "-O",
+        "-B",
+        "experiments/67-b1-eye-surface-diagnosis/probe.py",
+        "--capture-root",
+        "CAPTURE_REPOSITORY",
+        "--output",
+        "experiments/67-b1-eye-surface-diagnosis/evidence-optimized"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout_sha256": "a7053a79f7e6591be84a36197b9614b27e049927ccdafb8814cff81d60341794",
+      "wall_seconds": 5.935299874981865
+    }
+  ],
+  "scope": "actual local stdlib execution; no app/GPU/build; timings are tool run durations, not renderer performance"
+}

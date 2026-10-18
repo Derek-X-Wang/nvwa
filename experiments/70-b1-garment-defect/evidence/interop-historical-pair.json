@@ -1,0 +1,112 @@
+{
+  "expected": {
+    "torso_length": 1.0,
+    "jaw_drop": 0.0,
+    "clip_id": "b1_arm_rehearsal_v1",
+    "seconds": 2.0,
+    "timeline_id": "probe-entry"
+  },
+  "right_expected": {
+    "torso_length": 1.0,
+    "jaw_drop": 0.0,
+    "clip_id": "b1_arm_rehearsal_v1",
+    "seconds": 2.0,
+    "timeline_id": "probe-entry"
+  },
+  "left_input_binding": {
+    "kind": "studio",
+    "capture_id": null,
+    "capture_endpoint": null,
+    "acknowledgement": "experiment60 request/sample binding; not a live acknowledgement"
+  },
+  "right_input_binding": {
+    "kind": "studio",
+    "capture_id": null,
+    "capture_endpoint": null,
+    "acknowledgement": "experiment60 request/sample binding; not a live acknowledgement"
+  },
+  "left_identity": {
+    "generation": 1,
+    "revision": 15,
+    "character_entity": "385v0",
+    "garment_entity": "479v0",
+    "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 10, generation: 1}",
+    "sample": {
+      "clip_id": "b1_arm_rehearsal_v1",
+      "completed": false,
+      "playing": false,
+      "position_seconds": 2.0,
+      "serial": 1,
+      "source_seconds": 2.0,
+      "timeline_id": "probe-entry"
+    }
+  },
+  "right_identity": {
+    "generation": 1,
+    "revision": 8,
+    "character_entity": "299v1",
+    "garment_entity": "386v0",
+    "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 7, generation: 1}",
+    "sample": {
+      "clip_id": "b1_arm_rehearsal_v1",
+      "completed": false,
+      "playing": false,
+      "position_seconds": 2,
+      "serial": 1,
+      "source_seconds": 2,
+      "timeline_id": "probe-entry"
+    }
+  },
+  "garment_source_vertices": 1797,
+  "maximum_local_position_difference_m": 1.7881393432617188e-07,
+  "maximum_stage_position_difference_m": 1.7881393432617188e-07,
+  "maximum_rest_difference_m": 0.0,
+  "maximum_skin_matrix_difference": 2.384185791015625e-07,
+  "left_geometry": {
+    "source_triangle": [
+      246,
+      244,
+      182
+    ],
+    "display_triangle": 200,
+    "raw_obj_area_m2": 0.00018793456046510614,
+    "fitted_rest_area_m2": 1.884345974021258e-05,
+    "actual_posed_area_m2": 0.0004146623110947154,
+    "posed_over_fitted_rest_area": 22.005635738420796,
+    "fitted_rest_over_raw_obj_area": 0.1002660697084039,
+    "actual_edge_lengths_m": [
+      0.01965951802222095,
+      0.04367767187743674,
+      0.05233981807260501
+    ]
+  },
+  "right_geometry": {
+    "source_triangle": [
+      246,
+      244,
+      182
+    ],
+    "display_triangle": 200,
+    "raw_obj_area_m2": 0.00018793456046510614,
+    "fitted_rest_area_m2": 1.884345974021258e-05,
+    "actual_posed_area_m2": 0.0004146623110947154,
+    "posed_over_fitted_rest_area": 22.005635738420796,
+    "fitted_rest_over_raw_obj_area": 0.1002660697084039,
+    "actual_edge_lengths_m": [
+      0.01965951802222095,
+      0.04367767187743674,
+      0.05233981807260501
+    ]
+  },
+  "parity_verified": true,
+  "scope": "actual CPU records only; not GPU, pixels, collision or garment quality acceptance",
+  "left_input_sha256": "e9c65e1705e45b34c1aa3d6ecf1e23dedfb05b96e8850af8ce2f13b4a46f9746",
+  "right_input_sha256": "880715f1fed715cf1d10c900c4c9116b5cbabca7fdf03ee277d1a640cca14d7e",
+  "source_manifest_sha256": "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18",
+  "unchanged_fk_support_sha256": {
+    "experiments/60-b1-continuous-motion/checker.py": "cbdd941ee671dba23d3fa7b7e9b183664222597c7b69df6241897846048da22b",
+    "experiments/60-b1-continuous-motion/geometry.py": "26b676e5880bf5a0a228574676215db6b2aa31b5b5d3004458af33fea9d4f5aa"
+  },
+  "analyzer_sha256": "84c36d5a68c94c61503661d5096967608d47a15225f1c043084a957d6ee5b2d3",
+  "comparator_sha256": "46074fbfb751cc54e9b23eb8c0e4336bb045af5365874fc77412b6fc7d500d1d"
+}

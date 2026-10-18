@@ -1,0 +1,26 @@
+{
+  "scope": "cargo metadata --no-deps --format-version1 --locked --offline only; no compile",
+  "package": "b1-eye-render-diagnosis",
+  "targets": [
+    {
+      "name": "b1_eye_render_diagnosis",
+      "kind": [
+        "cdylib",
+        "rlib"
+      ],
+      "crate_types": [
+        "cdylib",
+        "rlib"
+      ]
+    },
+    {
+      "name": "studio68",
+      "kind": [
+        "bin"
+      ],
+      "crate_types": [
+        "bin"
+      ]
+    }
+  ]
+}

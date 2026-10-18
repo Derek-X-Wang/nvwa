@@ -1,0 +1,1037 @@
+{
+  "admission85": {
+    "closure_status": "Not admitted; candidate build/CLI/Web screenshots do not satisfy the remaining gates",
+    "html_only_mitigation": {
+      "browser_retry": "NOT-RUN",
+      "changed_files": [
+        "index.html",
+        "test_html.py",
+        "PREPARATION.json",
+        "FROZEN-SOURCE.json"
+      ],
+      "export_file_count": 172,
+      "fresh_compile": false,
+      "html_sha256": "6ce3fd993111f823baad5af2b855ff506e2ab1bb140a227a6f17744d953b9523",
+      "independent_review": "pending at evidence preparation",
+      "old_r3_wasm_exactly_reused": true,
+      "original_r3_controls71_tests_per_mode": 19,
+      "root_cause": "UNKNOWN",
+      "rust_inline_js_works_changed": false,
+      "scope": "Post-R3 HTML-only mitigation and private export; no successful browser effect or cohort acceptance",
+      "source_author_reported_optimized_tests": 22,
+      "source_author_reported_tests_per_mode": 22,
+      "source_author_reported_wrap_mutation_controls": 6,
+      "source_freeze_sha256": "f74ac1eb0da083b13ebe64042a2bc5dabcd20b102d2db926c9701e837ce327ba",
+      "status": "AUTHORED_NOT_BROWSER_VERIFIED"
+    },
+    "live_recipes_per_endpoint": "NOT-RUN: three planned",
+    "native_accepted": 0,
+    "native_runtime": "NOT-RUN",
+    "native_web_native_exchange": "NOT-RUN",
+    "planned_held_cases_per_endpoint": 69,
+    "status": "NOT_ADMITTED",
+    "web_accepted": 0,
+    "web_attempts": {
+      "control_transport": "CDP frame-tree timeout; no accepted frame",
+      "first_host_error_before_ui_requests": true,
+      "second_completed_cases": 0,
+      "second_open_requests_issued": 1,
+      "second_status": "failed; Open delivery uncertain before visible form mutation; no blind retry"
+    }
+  },
+  "cleanup": {
+    "browser_control_attempts": "all attempted control operations timed out after cohort failure",
+    "local_server": "stopped; reported by coordinator",
+    "provenance": "Coordinator observation, not independently replayed here",
+    "scope": "Cleanup limitation, not accepted cohort evidence",
+    "task_owned_tab2": "remained unclosed because control timed out"
+  },
+  "cli": {
+    "appearance": "v2, all three roles selected",
+    "binary_sha256": "af1ecf1cef37207857f8e1987655415a91ba5882284dae1fa7113998a4ee2b3b",
+    "commands": [
+      {
+        "command": {
+          "character_id": "character-1",
+          "type": "set_parameters",
+          "values": {
+            "chin_width": -0.15,
+            "head_width": 0.35,
+            "hip_width": 0.2,
+            "jaw_drop": 0.2,
+            "mouth_width": 0.2,
+            "neck_width": 0.1,
+            "nose_width": -0.2,
+            "torso_length": 0.25
+          }
+        },
+        "command_id": "cli85-0",
+        "expected_revision": 0
+      },
+      {
+        "command": {
+          "appearance": {
+            "asset_set_id": "mpfb-b1-cc0-appearance-v2",
+            "asset_set_sha256": "f2fe77d8d78c4f38cc5570403754a7f3532fd66de28af786bc5e8dcb4f4106f7",
+            "eyes": true,
+            "hair": true,
+            "schema_version": 2,
+            "skin": true,
+            "type": "b1_cc0"
+          },
+          "character_id": "character-1",
+          "type": "set_appearance"
+        },
+        "command_id": "cli85-1",
+        "expected_revision": 1
+      },
+      {
+        "command": {
+          "clips": [
+            {
+              "clip_id": "b1_arm_rehearsal_v1",
+              "duration_seconds": 4.0,
+              "id": "arms",
+              "looping": false,
+              "speed": 1.0,
+              "start_seconds": 0.0
+            },
+            {
+              "clip_id": "b1_knee_flex_v1",
+              "duration_seconds": 4.0,
+              "id": "knee",
+              "looping": false,
+              "speed": 1.0,
+              "start_seconds": 4.0
+            }
+          ],
+          "type": "set_timeline"
+        },
+        "command_id": "cli85-2",
+        "expected_revision": 2
+      },
+      {
+        "command": {
+          "type": "undo"
+        },
+        "command_id": "cli85-3",
+        "expected_revision": 3
+      },
+      {
+        "command": {
+          "type": "redo"
+        },
+        "command_id": "cli85-4",
+        "expected_revision": 4
+      }
+    ],
+    "edited_saved_byte_identical": true,
+    "final_revision": 5,
+    "initial_revision": 0,
+    "limits": "Intermediate Undo state not exported; no GUI/readiness/render/exchange proof",
+    "missing_asset_root_error": "asset_root_required",
+    "parameters": {
+      "chin_width": -0.15,
+      "head_width": 0.35,
+      "hip_width": 0.2,
+      "jaw_drop": 0.2,
+      "mouth_width": 0.2,
+      "neck_width": 0.1,
+      "nose_width": -0.2,
+      "torso_length": 0.25
+    },
+    "passed": true,
+    "saved_bytes": 3708,
+    "saved_work_sha256": "16fb04306e5bcfef0e917dae9ae562ff921ad8e13e30e20c6b26e4e7f19f64ff",
+    "steps": [
+      {
+        "exit_code": 0,
+        "name": "create",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "60ce82cffd0fea10cc4474afea6706fb11a56b06e8546bc902695bdba49b6417"
+      },
+      {
+        "exit_code": 0,
+        "name": "capabilities",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e705e973bcc3d6b423b712a042c3272bb3e039ec5d6de9964143f53e36c5bc1e"
+      },
+      {
+        "exit_code": 0,
+        "name": "apply",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "fb515392d0dc28406308d0a2f66f21f2b8d3bc9ea63686349abd80c606bdb8a8"
+      },
+      {
+        "exit_code": 0,
+        "name": "validate",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "f701a482d047b5f73e8e32a82be56cce1b6071cd6ec9f0ce28053116a745cfee"
+      },
+      {
+        "exit_code": 1,
+        "name": "missing-root",
+        "stderr_sha256": "425aa82dfada3600a955f102fa503232ecf58054fa374a4e9ce76750b85fdb78",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exit_code": 0,
+        "name": "save",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "a30172399281a2c91a9fe093ed3bcec9d2a4d17595e0f249aca052ec6add1807"
+      },
+      {
+        "exit_code": 0,
+        "name": "inspect-saved",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "6ab87ffe7993dff0908b283af881e0497dadb1f15b20dac221518d0ac7f77d2b"
+      }
+    ],
+    "timeline": "two finite four-second clips, eight seconds total",
+    "validate_selected_payloads": 38
+  },
+  "cohorts": {
+    "baseline_commit": "ab4c16f81deddfc98faa97fcd1a8e7904c5f2f0b",
+    "historical_eye68_r2_freeze": "e6a77816b11788c449039883ef0f12efc6d2ed59b31692d5d16094027363fe67",
+    "old_eye68_r2_artifacts": [
+      {
+        "artifact": "native/studio68",
+        "bytes": 154360976,
+        "sha256": "285ffbe1129d35b794c61b1b41689c187b6d81f595436a8633b7806876784fa7"
+      },
+      {
+        "artifact": "web/pkg/b1_eye_render_diagnosis_bg.wasm",
+        "bytes": 143467070,
+        "sha256": "dbe177186044e6297a9486826512ff813b2f30e4a67706edac24d9fef872e602"
+      }
+    ],
+    "parameter_source_commit": "05d3f773bba4e2adadbde8b0616979d6a6f6fe7d",
+    "r3_archived_source_files": 2734,
+    "r3_artifacts": [
+      {
+        "artifact": "product-native/nvwa-cli",
+        "binary_not_copied": true,
+        "bytes": 1735584,
+        "sha256": "af1ecf1cef37207857f8e1987655415a91ba5882284dae1fa7113998a4ee2b3b"
+      },
+      {
+        "artifact": "product-native/nvwa-studio",
+        "binary_not_copied": true,
+        "bytes": 153781072,
+        "sha256": "26eb1d1ee3437b38c943601fc6752512ae88d81c6bb4607e5fb97067e4f58b1e"
+      },
+      {
+        "artifact": "product-web/nvwa_studio_bg.wasm",
+        "binary_not_copied": true,
+        "bytes": 142991830,
+        "sha256": "2e3875c6f99fcb89a1227e5a9df87502e38a13a99f41685e7d1d61eee71e86d0"
+      },
+      {
+        "artifact": "product-web/nvwa_studio.js",
+        "binary_not_copied": true,
+        "bytes": 127351,
+        "sha256": "fc247060c05cd5f79e56cd8015fff6e8f766e6f12838ec62d422a540d2d942c7"
+      },
+      {
+        "artifact": "product-web/index.html",
+        "binary_not_copied": true,
+        "bytes": 2665,
+        "sha256": "a03b7e9e7ae602967f3cd311c82ae56fc75ac00badbeadaa47a75cf3e96df382"
+      },
+      {
+        "artifact": "experiment68/native/studio68",
+        "binary_not_copied": true,
+        "bytes": 154402368,
+        "sha256": "f0522f83d0f5945a3e1a03ce21e8dbed0c91a996d84000e89044cbf365cfa34f"
+      },
+      {
+        "artifact": "experiment68/web/pkg/b1_eye_render_diagnosis_bg.wasm",
+        "binary_not_copied": true,
+        "bytes": 143530681,
+        "sha256": "9138e40dc855887b736e2b34b08c745b2a9e9eb5665bd95dfca768b657c7b643"
+      },
+      {
+        "artifact": "experiment71/native/studio71",
+        "binary_not_copied": true,
+        "bytes": 154311216,
+        "sha256": "96c4ec21643b27b2f5297fb5bd1ca56fbad6d82c051273d61e99e6b182c0cb2f"
+      },
+      {
+        "artifact": "experiment71/web/pkg/b1_character_parameters_bg.wasm",
+        "binary_not_copied": true,
+        "bytes": 143435000,
+        "sha256": "8437bfdeaec59f6493fb30a898f7846d0aec1ded67505a4f96900c322ab74f47"
+      }
+    ],
+    "r3_coordinator_sha256": "db2f769bbae046b00ba8f669edd0b9e4910f852dfb10f59473a0e1c07c761f73",
+    "r3_source_closure_sha256": "c9761188003aefa0462949a4fe5519a9f4e6c4b5f7efe2e2b6274796a998d3c0",
+    "source_binding_limit": "R3 artifacts bind the archived source. Later documentation and the separately recorded71 HTML-only export do not constitute a fresh Rust/Wasm compile."
+  },
+  "images": [
+    {
+      "bytes": 40740,
+      "cohort": "eye68-r2-web",
+      "copy": "exact original bytes; no crop/redaction/reencoding",
+      "label": "Combined textured diagnostic control",
+      "mime_type": "image/jpeg",
+      "original_basename": "combined-textured.jpg",
+      "path": "screens/eye68-r2-web/combined-textured.jpg",
+      "sha256": "f2bbf504f1399c8c63cb52ee5f0e7887428184632cead2683bf255139dbcdb48"
+    },
+    {
+      "bytes": 22032,
+      "cohort": "eye68-r2-web",
+      "copy": "exact original bytes; no crop/redaction/reencoding",
+      "label": "Eyes only, unlit with original texture/alpha",
+      "mime_type": "image/jpeg",
+      "original_basename": "eye_only-unlit_textured.jpg",
+      "path": "screens/eye68-r2-web/eye-only-unlit-textured.jpg",
+      "sha256": "26b5529e784cc836375d6a0e12e14a3b4afa55653becfcb00348285e3c022a5c"
+    },
+    {
+      "bytes": 37300,
+      "cohort": "eye68-r2-web",
+      "copy": "exact original bytes; no crop/redaction/reencoding",
+      "label": "Body only, cyan role tint; not object-ID readback",
+      "mime_type": "image/jpeg",
+      "original_basename": "body_only-role_tint.jpg",
+      "path": "screens/eye68-r2-web/body-only-role-tint.jpg",
+      "sha256": "72c2d10601abc629ba7f316747d3a40e358102a13480f339ec7dd55afe8c046f"
+    },
+    {
+      "bytes": 78859,
+      "cohort": "ordinary-web85-r3",
+      "copy": "exact original bytes; no crop/redaction/reencoding",
+      "label": "Eight-parameter profile at rounded torso 0.20, other values zero; second sparse settling observation",
+      "mime_type": "image/jpeg",
+      "original_basename": "23-new-settle-unchanged.jpg",
+      "path": "screens/ordinary-web85/23-new-settle-unchanged.jpg",
+      "sha256": "db81d009468173cb1fdd95e8da062f75d859db33601ef79a17c2c1a6d5204a92"
+    },
+    {
+      "bytes": 80850,
+      "cohort": "ordinary-web85-r3",
+      "copy": "exact original bytes; no crop/redaction/reencoding",
+      "label": "Ordinary Web Save initiated after edit/Undo/Redo; no durable filesystem guarantee from toast alone",
+      "mime_type": "image/jpeg",
+      "original_basename": "05-saved.jpg",
+      "path": "screens/ordinary-web85/05-saved.jpg",
+      "sha256": "8f9564e5c47236d47be7db23fcd74826f3d987b49c746e0cf253717705fbd24c"
+    },
+    {
+      "bytes": 79939,
+      "cohort": "ordinary-web85-r3",
+      "copy": "exact original bytes; no crop/redaction/reencoding",
+      "label": "Malformed Open rejected; existing displayed Work retained",
+      "mime_type": "image/jpeg",
+      "original_basename": "08-invalid-open.jpg",
+      "path": "screens/ordinary-web85/08-invalid-open.jpg",
+      "sha256": "aa1cd6f66101a7319ff60ed06afaf363a2006338165563d0e4fc33b23dfeff2e"
+    },
+    {
+      "bytes": 81552,
+      "cohort": "ordinary-web85-r3",
+      "copy": "exact original bytes; no crop/redaction/reencoding",
+      "label": "Backend 999 rejected; misleading expected 1 text tracked separately",
+      "mime_type": "image/jpeg",
+      "original_basename": "09-unknown-backend.jpg",
+      "path": "screens/ordinary-web85/09-unknown-backend.jpg",
+      "sha256": "57f59c84d03b93eba7ce507dfd633cee68a119d644dd21c056beb47e7979ac9f"
+    },
+    {
+      "bytes": 70950,
+      "cohort": "ordinary-web85-r3",
+      "copy": "exact original bytes; no crop/redaction/reencoding",
+      "label": "Legacy two-parameter Work opened in the same R3 Web build",
+      "mime_type": "image/jpeg",
+      "original_basename": "14-legacy-two-parameters.jpg",
+      "path": "screens/ordinary-web85/14-legacy-two-parameters.jpg",
+      "sha256": "4bbf42bb9223f74cb2592d23f3cf177327189c548500d99e4194217fb2846e80"
+    }
+  ],
+  "inventory_note": "Exact JPEG and RESULTS hashes listed here; this JSON does not contain its own hash. Private source hashes identify originals without reproducing private path-bearing contents.",
+  "local_build": {
+    "checks": [
+      {
+        "exit_code": 0,
+        "label": "prepare71",
+        "log_sha256": "e8167ee69e1574da402498af6d4af4bc6140be6dbc731440e34b5a80a5041dc0"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls67-normal",
+        "log_sha256": "4402a5e03ba9caf794fb6b62818d787c61d89df9ab29ffb529ad3c456c00a2e7"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls67-optimized",
+        "log_sha256": "d1c2105d8316bc21a6a37088020a59d0c6dc2cfbbc93f42df18a3a8cde09cc4c"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls69-normal",
+        "log_sha256": "5344cfb9114457579711bfca08abf0a3a3333e1ef365cc1996294ad01ed9e1bb"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls69-optimized",
+        "log_sha256": "a621c1cd03ab6aff8ef99db15c12ade6caf4dfc410c2282d8ca3418472b6a87e"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls68-normal",
+        "log_sha256": "192373d955e87e0b319d260cada8a2e8ee4b032fae2a786cc3b2dff2cc2980c5"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls68-optimized",
+        "log_sha256": "57bff42ae3af3feacf005301bce57875fa89276f7ba6aa88a371d63b232aeedb"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls71-normal",
+        "log_sha256": "43e831ffc3dad26bf5774c845514aaaf12eaf37da67ca43111d45f669ddb05cf"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls71-optimized",
+        "log_sha256": "7c84d84dc310cee555bea934346ff4ebe0c5be83bd4915b6bd67552a5f237a76"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls70-normal",
+        "log_sha256": "b556a739bd82f0aab7f998759febfb5b6d6de94b5826f5cf4a3c259d7a234e74"
+      },
+      {
+        "exit_code": 0,
+        "label": "controls70-optimized",
+        "log_sha256": "7ce68df29a41105c1261c9811ca63f0614d0d67643eb1da6eadb371be4ac6e92"
+      },
+      {
+        "exit_code": 0,
+        "label": "production-inputs",
+        "log_sha256": "2fa9dbe64ce888a02a0c787904d51a860a9f136a5f57acd855b4a1f6996096cf"
+      },
+      {
+        "exit_code": 0,
+        "label": "product-format",
+        "log_sha256": "1f2fb2c58f8f9def19ac231af3e89b394845e98570eb0c45981c82e12ec2c190"
+      },
+      {
+        "exit_code": 0,
+        "label": "core-cli-clippy",
+        "log_sha256": "2287bae1dd6b42e2da5b3ecca1b23dbdcf193488ecb1423ea0d4614a347fb436"
+      },
+      {
+        "exit_code": 0,
+        "label": "workspace-tests",
+        "log_sha256": "070b63fede28f83f9dc0bc6a90d54c7dbe6d8a5f93f4c432bb5542453bdbfc2f"
+      },
+      {
+        "exit_code": 0,
+        "label": "product-native-build",
+        "log_sha256": "0eb1f7776d1f6816def16857cbb538d1060f5746386968ffe6b99561c34960f0"
+      },
+      {
+        "exit_code": 0,
+        "label": "cli-help",
+        "log_sha256": "15859d7bacbf93e4e796cf235e32ed00c496ec31988d266e20eee833ba351fff"
+      },
+      {
+        "exit_code": 0,
+        "label": "product-native-package",
+        "log_sha256": "1ee67c650a429c9d6ff1b8ff3efc0898a17bf9863756ad43614663608806a325"
+      },
+      {
+        "exit_code": 0,
+        "label": "product-web-export",
+        "log_sha256": "13200726741c8bc88692dfe11df5cfe7b795c569cbd0ba1a85a0459fa471dc91"
+      },
+      {
+        "exit_code": 0,
+        "label": "experiment68-build",
+        "log_sha256": "6a12401608550bbd9b2ad4b6f3d105415f1fb2a05cdbfceaffe07edcf731fc7b"
+      },
+      {
+        "exit_code": 0,
+        "label": "experiment71-build",
+        "log_sha256": "e5c40f33074eb04130e428c029e2a4289d06a310ddfc212f4075adf76166f707"
+      }
+    ],
+    "core_cli_strict_clippy": "PASS; workspace-wide strict Clippy not asserted",
+    "scope": "Local build/test/export only; not CI or runtime admission",
+    "status": "passed",
+    "workspace_failure_count": 0,
+    "workspace_tests_passed": 204
+  },
+  "ordinary_web": {
+    "downloaded_work_checks": [
+      {
+        "bytes": 3708,
+        "download_basename": "web-edited.nvwa.json",
+        "kind": "web-save",
+        "recorded_checks": {
+          "changes": [
+            "/character/parameters/head_width",
+            "/revision"
+          ],
+          "head_width": 0.75,
+          "passed": true,
+          "revision": 8
+        },
+        "sha256": "3f58569f34f4ae8e08c6319b6336ae645e4b24f6cb6821358b587af8baeb91c6"
+      },
+      {
+        "bytes": 3303,
+        "download_basename": "gui-created.nvwa.json",
+        "kind": "web-new-constructor",
+        "recorded_checks": {
+          "passed": true,
+          "same_as_cli_constructor": true
+        },
+        "sha256": "6be12f7979f66e08b12b939dc63afcb87820bf90b2609e8c01c563eab99b3d14"
+      },
+      {
+        "bytes": 2743,
+        "download_basename": "legacy-roundtrip.nvwa.json",
+        "kind": "web-legacy-save",
+        "recorded_checks": {
+          "appearance_version": 1,
+          "backend_version": 2,
+          "only_semantic_change": "revision2->4 from one drag and one Undo",
+          "parameter_count": 2,
+          "passed": true
+        },
+        "sha256": "dd10e51721d68a98ec06c76f3ce990e90c4763da90f6cd3848bda09033483bec"
+      }
+    ],
+    "followups": [
+      86,
+      87
+    ],
+    "native_gui": "NOT-RUN; platform access blocked before launch",
+    "screenshots": "Selected exact copies; actions attributed to recorded operator observations, not inferred from still images alone",
+    "settling": {
+      "first_legacy": {
+        "blank_observed_seconds": 6.01,
+        "counts_as_ten_second_pass": false,
+        "drag_return_timestamp_recorded": false,
+        "origin": "before_drag",
+        "recovered_observed_seconds": 11.739
+      },
+      "legacy_repeat": {
+        "observed_present_seconds_after_return": [
+          2.155127499997616,
+          7.738317833006382
+        ],
+        "transition": "0.42 to0.20"
+      },
+      "limits": "Sparse screenshot/UI-only observations; no exact post-edit Work hash or atomic CPU/GPU correlation. Redo-to-save pair has intervening Save; no timed no-action Undo/Redo admission.",
+      "new_repeat": {
+        "observed_present_seconds_after_return": [
+          0.18955387499928475,
+          5.80881791600585
+        ],
+        "transition": "zero recipe torso0 to0.20"
+      },
+      "rule": "Two prospective torso trials checked against10s after drag API return; no worst-case guarantee"
+    }
+  },
+  "privacy": {
+    "native_screenshots_withheld": [
+      {
+        "bytes": 84899,
+        "original_basename": "n68-combined-textured.jpg",
+        "reason": "Visible private absolute path in toolbar; original retained privately, no altered substitute published",
+        "sha256": "dec907ee0ca2d75798e4e40c3ba120ed866fd502ed12859e0633b3e66a93b193"
+      },
+      {
+        "bytes": 59367,
+        "original_basename": "n68-eye_only-unlit_textured.jpg",
+        "reason": "Visible private absolute path in toolbar; original retained privately, no altered substitute published",
+        "sha256": "380f5f5384930d4c1357ac346fee99f749182705aca6822ec112d22490bd4aa8"
+      },
+      {
+        "bytes": 79809,
+        "original_basename": "n68-body_only-role_tint.jpg",
+        "reason": "Visible private absolute path in toolbar; original retained privately, no altered substitute published",
+        "sha256": "6aaa753aa19fe8332fd24ec3356b29bd0696872ddea348899d806e3e1dc1ed64"
+      }
+    ],
+    "raw_receipts_full_frames_binaries_not_copied": true
+  },
+  "private_source_hashes": [
+    {
+      "bytes": 16295,
+      "id": "r3-build-receipt",
+      "original_basename": "receipt.json",
+      "raw_private_not_copied": true,
+      "sha256": "1e12186980587cf6660143e2e3832a69d938a2875a3ed3388cd585b64ef224e1"
+    },
+    {
+      "bytes": 477815,
+      "id": "r3-source-closure",
+      "original_basename": "source-closure.json",
+      "raw_private_not_copied": true,
+      "sha256": "c9761188003aefa0462949a4fe5519a9f4e6c4b5f7efe2e2b6274796a998d3c0"
+    },
+    {
+      "bytes": 585677,
+      "id": "r3-export-manifest",
+      "original_basename": "export-manifest.json",
+      "raw_private_not_copied": true,
+      "sha256": "55034dd2ca3ff986080c3180eb067b41cec35eb827eb6355f357eaac8ff686a2"
+    },
+    {
+      "bytes": 380,
+      "id": "r3-final-checks",
+      "original_basename": "final-checks.json",
+      "raw_private_not_copied": true,
+      "sha256": "f958ececb3a4fbb5a967d8bb47ed0686a65dc0990734d070486c9b7d28378249"
+    },
+    {
+      "bytes": 4038,
+      "id": "cli-flow-receipt",
+      "original_basename": "receipt.json",
+      "raw_private_not_copied": true,
+      "sha256": "f760e3dd657f231d68aa64e3be5675d9798739294b527e5e8ebfec8be09c8eee"
+    },
+    {
+      "bytes": 1637,
+      "id": "cli-command-envelope-file",
+      "original_basename": "commands.json",
+      "raw_private_not_copied": true,
+      "sha256": "f8e969a6e52a45adfe775eeef5489ce5da56501c59b57aaf15daf8d333717930"
+    },
+    {
+      "bytes": 2891,
+      "id": "cli-independent-review",
+      "original_basename": "cli85-review.md",
+      "raw_private_not_copied": true,
+      "sha256": "96c394f47487e44279d972a8f74c00c6740520d61735e86a32a67f8c56a64360"
+    },
+    {
+      "bytes": 3303,
+      "id": "cli-created-work",
+      "original_basename": "created.nvwa.json",
+      "raw_private_not_copied": true,
+      "sha256": "6be12f7979f66e08b12b939dc63afcb87820bf90b2609e8c01c563eab99b3d14"
+    },
+    {
+      "bytes": 3708,
+      "id": "cli-edited-work",
+      "original_basename": "edited.nvwa.json",
+      "raw_private_not_copied": true,
+      "sha256": "16fb04306e5bcfef0e917dae9ae562ff921ad8e13e30e20c6b26e4e7f19f64ff"
+    },
+    {
+      "bytes": 3708,
+      "id": "cli-saved-work",
+      "original_basename": "saved.nvwa.json",
+      "raw_private_not_copied": true,
+      "sha256": "16fb04306e5bcfef0e917dae9ae562ff921ad8e13e30e20c6b26e4e7f19f64ff"
+    },
+    {
+      "bytes": 4545,
+      "id": "cli-flow-script",
+      "original_basename": "cli85_flow.py",
+      "raw_private_not_copied": true,
+      "sha256": "1f4bd2af2cb8bd8e59e1ca441b3260aefdcaf51c272cd0fe5d568d4503d51c10"
+    },
+    {
+      "bytes": 404,
+      "id": "web-save-verification",
+      "original_basename": "save-verification.json",
+      "raw_private_not_copied": true,
+      "sha256": "935afae3b43e1b2629808e41275c2a2a9f2f34c63a6c04677a5cab3879e1cedb"
+    },
+    {
+      "bytes": 3708,
+      "id": "web-save-download",
+      "original_basename": "web-edited.nvwa.json",
+      "raw_private_not_copied": true,
+      "sha256": "3f58569f34f4ae8e08c6319b6336ae645e4b24f6cb6821358b587af8baeb91c6"
+    },
+    {
+      "bytes": 136,
+      "id": "web-new-constructor-verification",
+      "original_basename": "new-character-verification.json",
+      "raw_private_not_copied": true,
+      "sha256": "78959372b518b7fef6f472712d27a4ae9c4a9c44380c266c9f2c49f9be53e0f8"
+    },
+    {
+      "bytes": 3303,
+      "id": "web-new-constructor-download",
+      "original_basename": "gui-created.nvwa.json",
+      "raw_private_not_copied": true,
+      "sha256": "6be12f7979f66e08b12b939dc63afcb87820bf90b2609e8c01c563eab99b3d14"
+    },
+    {
+      "bytes": 245,
+      "id": "web-legacy-save-verification",
+      "original_basename": "legacy-verification.json",
+      "raw_private_not_copied": true,
+      "sha256": "7378d4540d3288c9a983027e1437a11fdb3f3b53a182fc52ea8a69901bb6dc74"
+    },
+    {
+      "bytes": 2743,
+      "id": "web-legacy-save-download",
+      "original_basename": "legacy-roundtrip.nvwa.json",
+      "raw_private_not_copied": true,
+      "sha256": "dd10e51721d68a98ec06c76f3ce990e90c4763da90f6cd3848bda09033483bec"
+    },
+    {
+      "bytes": 15082,
+      "id": "ordinary-web-site-preparation",
+      "original_basename": "site-preparation.json",
+      "raw_private_not_copied": true,
+      "sha256": "3a795c878ac5d9003c2b1cc625abf645900b14282018867b922a5353ae6caff0"
+    },
+    {
+      "bytes": 6441,
+      "id": "ordinary-web-settling-review",
+      "original_basename": "web85-admission-review.md",
+      "raw_private_not_copied": true,
+      "sha256": "95055dfd618d3cad916f31feb40fe2fb7befcb89011c7021a39462f0294e46be"
+    },
+    {
+      "bytes": 1727,
+      "id": "ordinary-web-settling-observations",
+      "original_basename": "settle-observations.json",
+      "raw_private_not_copied": true,
+      "sha256": "583137a0a0b090f578d0f664d765f7a0353e99d82f664cf8cfe1b5ecbd3ca63c"
+    },
+    {
+      "bytes": 1119,
+      "id": "eye68-r2-native-matrix",
+      "original_basename": "eye-validation.json",
+      "raw_private_not_copied": true,
+      "sha256": "75e044b85425def0cd8dcfeabf435810bd54960de8b0ccb854a00d1a6f67ca4b"
+    },
+    {
+      "bytes": 967,
+      "id": "eye68-r2-web-matrix",
+      "original_basename": "eye-validation.json",
+      "raw_private_not_copied": true,
+      "sha256": "a730e020d5ef9e126bc48da6fc39971dce95e6446e74edbc79f2d2c84bf34716"
+    },
+    {
+      "bytes": 34718,
+      "id": "eye68-r2-independent-review-data",
+      "original_basename": "eye68-actual-review.json",
+      "raw_private_not_copied": true,
+      "sha256": "1822502f334eacb74f00a9bb2924c835afb5e5133ea9cba2e1ded1de776d98aa"
+    },
+    {
+      "bytes": 3943,
+      "id": "eye68-r2-independent-review",
+      "original_basename": "eye68-actual-review.md",
+      "raw_private_not_copied": true,
+      "sha256": "8604deff3fc67d34ff0f875a75a764ced234a9025223a7ea4f73a84910a658c7"
+    },
+    {
+      "bytes": 1741,
+      "id": "eye68-r4-verifier-review",
+      "original_basename": "68-r4-review.md",
+      "raw_private_not_copied": true,
+      "sha256": "3c4f444aef362c1817f9663ab6f3b8a53d72e5332927601d66b91f61cf73c666"
+    },
+    {
+      "bytes": 31611,
+      "id": "eye68-r2-build-export",
+      "original_basename": "export-receipt.json",
+      "raw_private_not_copied": true,
+      "sha256": "caf58b8fb58f10ace43c4273ecb630c3cdc8bce10d2602ebe1fbceac534743ae"
+    },
+    {
+      "bytes": 657,
+      "id": "web71-host-error-before-request",
+      "original_basename": "cohort-r1-host-error.json",
+      "raw_private_not_copied": true,
+      "sha256": "0e5f2b5ce2de4753e734c8ffa1d74d785a259f28f53c2c22aac0c7c31848c932"
+    },
+    {
+      "bytes": 858,
+      "id": "web71-uncertain-attempt-state",
+      "original_basename": "state.json",
+      "raw_private_not_copied": true,
+      "sha256": "aa83ed0bccd93efc3d8a407771e71153bde66eed3ce66810a3996fc926b93aeb"
+    },
+    {
+      "bytes": 555,
+      "id": "web71-uncertain-open-failure",
+      "original_basename": "000-open.json",
+      "raw_private_not_copied": true,
+      "sha256": "db4bf3dad1bdcc65564bf34ae4cf0f22d6a9be95467d9e239e9c67b3881857d3"
+    },
+    {
+      "bytes": 32204,
+      "id": "web71-site-preparation",
+      "original_basename": "site-preparation.json",
+      "raw_private_not_copied": true,
+      "sha256": "29d44a518245c99c69973e89ad0ea3022da059efbe4c6e5e0bc206d0af7c68f0"
+    },
+    {
+      "bytes": 328,
+      "id": "native85-launch-blocker",
+      "original_basename": "launch-blocker.json",
+      "raw_private_not_copied": true,
+      "sha256": "d1540d0a5aa1b05375d8e924eaf88e97635212dcc5c29c0e6c1cf273e3fee7ae"
+    },
+    {
+      "bytes": 5694,
+      "id": "hair69-independent-review",
+      "original_basename": "hair69-review.md",
+      "raw_private_not_copied": true,
+      "sha256": "f5cb965b380daa2d1e3e666a16238040adc39557c88dbe4ceb1d65d2c524ad53"
+    },
+    {
+      "bytes": 6637,
+      "id": "garment70-independent-review",
+      "original_basename": "garment70-review.md",
+      "raw_private_not_copied": true,
+      "sha256": "b535b5fd21c0db5b5eb9933d0cc3d2daa5aa6c4502ab66f54b4392d16d01fb7d"
+    },
+    {
+      "bytes": 5001,
+      "id": "eye67-independent-review",
+      "original_basename": "eye67-review.md",
+      "raw_private_not_copied": true,
+      "sha256": "190a6ae31c021ac58d45ed2d42ddef0445e686dd9b48d82fe3749fcb91bf9796"
+    },
+    {
+      "bytes": 3476,
+      "id": "public-source-docs-review",
+      "original_basename": "public-source-docs-review.md",
+      "raw_private_not_copied": true,
+      "sha256": "62bb7c993cd08aa1fd5e8107229096fccec352eb7aacdc33027df548826c6632"
+    },
+    {
+      "bytes": 33188,
+      "id": "web71-html-only-export",
+      "original_basename": "html-only-export.json",
+      "raw_private_not_copied": true,
+      "sha256": "f0e83ad0c59bcd392e86854798331c5af8baead0117ef66a84d6a79771fe3ba3"
+    }
+  ],
+  "public_text_files": [
+    {
+      "bytes": 17607,
+      "path": "RESULTS.md",
+      "sha256": "b5fc083f2abca69a0b3ff61e517f35b70be9c4ab2817d334fd59e7e21e23ad60"
+    }
+  ],
+  "quality": {
+    "eye67": {
+      "body_first_source_triangles": 13,
+      "cpu_rays": 96,
+      "historical_captures": 8,
+      "scope": "Sparse CPU candidates only; no anatomy/GPU ownership or root cause",
+      "source_quads": 12
+    },
+    "eye68": {
+      "actual_controls_per_endpoint": 9,
+      "corrected_r4_scope": "Reviewed raw-row validation correction; actual original eye inputs accepted unchanged, not fresh shoulder acceptance",
+      "original_r2_full_base_verifier_pass": false,
+      "raw_capture_hash_inventory": [
+        {
+          "bytes": 13931955,
+          "endpoint": "native",
+          "original_basename": "n68-body_only-role_tint.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "d27fa0e531aa408ff3fb4eb07be0987c45af68ae9bf9bdbc45f6604dedf648fa"
+        },
+        {
+          "bytes": 13932041,
+          "endpoint": "native",
+          "original_basename": "n68-body_only-textured.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "64b8f19511228c9aabb8921681b4637c229b877c57bbc8a57300ab070d7907f6"
+        },
+        {
+          "bytes": 13932055,
+          "endpoint": "native",
+          "original_basename": "n68-body_only-unlit_textured.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "4a7306fa1d47a26c56a525b9cef2b3533a5c1ec24befa0098d780636eadad10c"
+        },
+        {
+          "bytes": 13931965,
+          "endpoint": "native",
+          "original_basename": "n68-combined-role_tint.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "f8306c49767b8f2657415656b08fd57377d554664ccfe9cf00bcf63d5ce7e4da"
+        },
+        {
+          "bytes": 13932982,
+          "endpoint": "native",
+          "original_basename": "n68-combined-textured.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "9cde54133d6b24eca8dfa155105c5c9ae7c9d2085e769d5978c22e8cfc184ef6"
+        },
+        {
+          "bytes": 13932065,
+          "endpoint": "native",
+          "original_basename": "n68-combined-unlit_textured.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "d7ea98940fe8961211673a44460ba72ccf609c7aafee9e7af06ef8bd258549ef"
+        },
+        {
+          "bytes": 13931951,
+          "endpoint": "native",
+          "original_basename": "n68-eye_only-role_tint.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "b1c7ddc308cabb70d603e8c348b942000061129db404ccb1a037524b2512514b"
+        },
+        {
+          "bytes": 13932037,
+          "endpoint": "native",
+          "original_basename": "n68-eye_only-textured.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "36e1df3940256d8b50d8587ef77e76342d5e7b081fbae37a1461ea944df79105"
+        },
+        {
+          "bytes": 13932051,
+          "endpoint": "native",
+          "original_basename": "n68-eye_only-unlit_textured.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "bd2ca4fb343eae8bbe8229ead68dd97b68d3c0b1f7b1aa4e793242e2e4bedd83"
+        },
+        {
+          "bytes": 13851448,
+          "endpoint": "web",
+          "original_basename": "web68-10.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "dd08d086c2e3fa74bef4abadb6ffa3224f973d4f72ae537018fc638dc35c6d32"
+        },
+        {
+          "bytes": 13851548,
+          "endpoint": "web",
+          "original_basename": "web68-2.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "7dbad005d40fa1b5ef0b6121ee90274584baaa7c7d6f27dc3942ae93ee0be60a"
+        },
+        {
+          "bytes": 13851550,
+          "endpoint": "web",
+          "original_basename": "web68-3.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "51353c6796671699c789ce43c8b536bf9ea86275e0c26f4e62d73292fd3a8a80"
+        },
+        {
+          "bytes": 13851460,
+          "endpoint": "web",
+          "original_basename": "web68-4.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "a2e1963b1c7fb9c5b0516f798f10b13c9bddbf5749b245479be62551df7e7f17"
+        },
+        {
+          "bytes": 13851536,
+          "endpoint": "web",
+          "original_basename": "web68-5.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "69dd41148aee79af54ebc4fbd81259d4083531cc75904bc39a384db34ce932c1"
+        },
+        {
+          "bytes": 13851538,
+          "endpoint": "web",
+          "original_basename": "web68-6.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "d99f97310861060beb270b8c34c9c79386e433fd6f0a97ed2e385c183ab70a00"
+        },
+        {
+          "bytes": 13851448,
+          "endpoint": "web",
+          "original_basename": "web68-7.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "05e3ebb32c4e9e668f8673ba78efa1af22a447961370a11f8339736770e146c9"
+        },
+        {
+          "bytes": 13851534,
+          "endpoint": "web",
+          "original_basename": "web68-8.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "69f2ea3716f3b02e177e682b7bf491cfb4ae5e086d1c521d8fc97ad47f26ed12"
+        },
+        {
+          "bytes": 13851536,
+          "endpoint": "web",
+          "original_basename": "web68-9.json",
+          "raw_full_frame_not_copied": true,
+          "sha256": "9dbb356b6a9b62d184eb2955dd01cc4cede80593312c3f1910df4e4288696285"
+        }
+      ],
+      "recorded_matrices_complete": {
+        "native": true,
+        "web": true
+      },
+      "scope": "Actual capture-time bound CPU arrays and separate historical rendered controls; faceted source limitation, no unique eyelid/culling/depth cause",
+      "total_actual_controls": 18
+    },
+    "garment70": {
+      "arm2_area_over_rest": 22.0056357384,
+      "historical_cpu_frames": 30,
+      "maximum_source_to_upload_component_error_m": 1.8289538616933498e-07,
+      "scope": "Historical independent source-fit/full-positive LBS replay; source-only MPFB semantics audit is not an MPFB/Blender runtime comparison or unique visible cause",
+      "source_ids": [
+        246,
+        244,
+        182
+      ],
+      "status": "HOLD_NO_CORRECTION",
+      "triangle": 200
+    },
+    "hair69": {
+      "bound_percentage_points": 0.1,
+      "candidate_render": "NOT-RUN",
+      "coverage_error": 0.001132965087890625,
+      "error_percentage_points": 0.1132965087890625,
+      "frozen_engineering_bound": 0.001,
+      "scope": "One finite global alpha policy, not artistic acceptance/universal mip failure/source-only cause",
+      "status": "CPU_REJECTED"
+    },
+    "status": "HOLD"
+  },
+  "schema": "nvwa-b1-character-quality-candidate-evidence-v1",
+  "scope": "Derived compact public summary from private retained records, selected exact JPEG copies and recorded coordinator observations; not a raw full receipt or new execution",
+  "source_documents": [
+    {
+      "bytes": 13389,
+      "path": "docs/research/b1-source-replacement-plan.md",
+      "sha256": "d5e25965a88cbf91f35ecd11eb5216559b15891f6425cb9e617562404fedd104"
+    },
+    {
+      "bytes": 11699,
+      "path": "docs/research/b1-mpfb-garment-semantics.md",
+      "sha256": "3aed805e72037b59cbd8d191109cbd43d2b6b58c0380c2facaabc9e122a4bb5f"
+    },
+    {
+      "bytes": 10147,
+      "path": "experiments/67-b1-eye-surface-diagnosis/RESULTS.md",
+      "sha256": "a836cf8219aa46ede0ccb6e2eb507de593d109c3fe840c97696568672b425147"
+    },
+    {
+      "bytes": 38106,
+      "path": "experiments/69-b1-hairline/alpha-reference.json",
+      "sha256": "7040bc36ee2ae9a49774f50ffd6eeddc1aab4804b988b1b0084dd8107714e59e"
+    },
+    {
+      "bytes": 221501,
+      "path": "experiments/70-b1-garment-defect/evidence/final-retained30/report.json",
+      "sha256": "a548dfd0bcec2caaa9d45f8b62277e8aeff53639665b882f3d7632f81da8668f"
+    }
+  ],
+  "status": "PARTIAL_NOT_ADMITTED",
+  "unverified": [
+    "new native ordinary UI and actual71 native cohort",
+    "actual71 complete69-case Web cohort",
+    "three live recipes per endpoint",
+    "exact native-Web-native exchange",
+    "fresh accepted68 long-torso arm0/source2 native-Web pair",
+    "FK/calibration uses observed fitted rest; independent complete bone derivation is not claimed and is not an added admission gate",
+    "GPU fragment/depth/ownership readback",
+    "formal first-present/cold/GPU-memory/performance",
+    "#3 remains blocked; #4 gaps retained; M2 generated-motion/appearance/clothing quality HOLD",
+    "PR and exact merged-main CI not certified by this evidence package"
+  ]
+}

@@ -1,0 +1,1126 @@
+{
+  "scope": "Predeclared future parameter validation; no new production implementation or runtime executed",
+  "recipe_count": 21,
+  "held_cases_per_endpoint": 69,
+  "parameter_order": [
+    "torso_length",
+    "jaw_drop",
+    "head_width",
+    "nose_width",
+    "mouth_width",
+    "chin_width",
+    "neck_width",
+    "hip_width"
+  ],
+  "recipes": [
+    {
+      "id": "zero",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "torso_length-minus",
+      "parameters": {
+        "torso_length": -1,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "torso_length-plus",
+      "parameters": {
+        "torso_length": 1,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "jaw_drop-minus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": -1,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "jaw_drop-plus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 1,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "head_width-minus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": -1,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "head_width-plus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 1,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "nose_width-minus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": -1,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "nose_width-plus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 1,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "mouth_width-minus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": -1,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "mouth_width-plus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 1,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "chin_width-minus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": -1,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "chin_width-plus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 1,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "neck_width-minus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": -1,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "neck_width-plus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 1,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "hip_width-minus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": -1
+      }
+    },
+    {
+      "id": "hip_width-plus",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 0,
+        "hip_width": 1
+      }
+    },
+    {
+      "id": "face-wide",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 1,
+        "head_width": 1,
+        "nose_width": 1,
+        "mouth_width": 1,
+        "chin_width": 1,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "face-narrow",
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": -1,
+        "head_width": -1,
+        "nose_width": -1,
+        "mouth_width": -1,
+        "chin_width": -1,
+        "neck_width": 0,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "upper-body",
+      "parameters": {
+        "torso_length": 1,
+        "jaw_drop": 0,
+        "head_width": 1,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": -1,
+        "hip_width": 0
+      }
+    },
+    {
+      "id": "lower-body",
+      "parameters": {
+        "torso_length": -1,
+        "jaw_drop": 0,
+        "head_width": 0,
+        "nose_width": 0,
+        "mouth_width": 0,
+        "chin_width": 0,
+        "neck_width": 1,
+        "hip_width": 1
+      }
+    }
+  ],
+  "held_cases": [
+    {
+      "id": "zero-b1_arm_rehearsal_v1-0",
+      "recipe_id": "zero",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "zero-b1_arm_rehearsal_v1-2",
+      "recipe_id": "zero",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "zero-b1_knee_flex_v1-2",
+      "recipe_id": "zero",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "torso_length-minus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "torso_length-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "torso_length-minus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "torso_length-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "torso_length-minus-b1_knee_flex_v1-2",
+      "recipe_id": "torso_length-minus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "torso_length-plus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "torso_length-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "torso_length-plus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "torso_length-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "torso_length-plus-b1_knee_flex_v1-2",
+      "recipe_id": "torso_length-plus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "jaw_drop-minus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "jaw_drop-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "jaw_drop-minus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "jaw_drop-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "jaw_drop-minus-b1_knee_flex_v1-2",
+      "recipe_id": "jaw_drop-minus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "jaw_drop-plus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "jaw_drop-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "jaw_drop-plus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "jaw_drop-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "jaw_drop-plus-b1_knee_flex_v1-2",
+      "recipe_id": "jaw_drop-plus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "head_width-minus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "head_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "head_width-minus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "head_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "head_width-minus-b1_knee_flex_v1-2",
+      "recipe_id": "head_width-minus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "head_width-plus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "head_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "head_width-plus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "head_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "head_width-plus-b1_knee_flex_v1-2",
+      "recipe_id": "head_width-plus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "nose_width-minus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "nose_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "nose_width-minus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "nose_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "nose_width-minus-b1_knee_flex_v1-2",
+      "recipe_id": "nose_width-minus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "nose_width-plus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "nose_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "nose_width-plus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "nose_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "nose_width-plus-b1_knee_flex_v1-2",
+      "recipe_id": "nose_width-plus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "mouth_width-minus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "mouth_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "mouth_width-minus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "mouth_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "mouth_width-minus-b1_knee_flex_v1-2",
+      "recipe_id": "mouth_width-minus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "mouth_width-plus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "mouth_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "mouth_width-plus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "mouth_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "mouth_width-plus-b1_knee_flex_v1-2",
+      "recipe_id": "mouth_width-plus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "chin_width-minus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "chin_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "chin_width-minus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "chin_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "chin_width-minus-b1_knee_flex_v1-2",
+      "recipe_id": "chin_width-minus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "chin_width-plus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "chin_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "chin_width-plus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "chin_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "chin_width-plus-b1_knee_flex_v1-2",
+      "recipe_id": "chin_width-plus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "neck_width-minus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "neck_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "neck_width-minus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "neck_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "neck_width-minus-b1_knee_flex_v1-2",
+      "recipe_id": "neck_width-minus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "neck_width-plus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "neck_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "neck_width-plus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "neck_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "neck_width-plus-b1_knee_flex_v1-2",
+      "recipe_id": "neck_width-plus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "hip_width-minus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "hip_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "hip_width-minus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "hip_width-minus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "hip_width-minus-b1_knee_flex_v1-2",
+      "recipe_id": "hip_width-minus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "hip_width-plus-b1_arm_rehearsal_v1-0",
+      "recipe_id": "hip_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "hip_width-plus-b1_arm_rehearsal_v1-2",
+      "recipe_id": "hip_width-plus",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "hip_width-plus-b1_knee_flex_v1-2",
+      "recipe_id": "hip_width-plus",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "face-wide-b1_arm_rehearsal_v1-0",
+      "recipe_id": "face-wide",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "face-wide-b1_arm_rehearsal_v1-2",
+      "recipe_id": "face-wide",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "face-wide-b1_knee_flex_v1-2",
+      "recipe_id": "face-wide",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "face-narrow-b1_arm_rehearsal_v1-0",
+      "recipe_id": "face-narrow",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "face-narrow-b1_arm_rehearsal_v1-2",
+      "recipe_id": "face-narrow",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "face-narrow-b1_knee_flex_v1-2",
+      "recipe_id": "face-narrow",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "upper-body-b1_arm_rehearsal_v1-0",
+      "recipe_id": "upper-body",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "upper-body-b1_arm_rehearsal_v1-2",
+      "recipe_id": "upper-body",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "upper-body-b1_knee_flex_v1-2",
+      "recipe_id": "upper-body",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "lower-body-b1_arm_rehearsal_v1-0",
+      "recipe_id": "lower-body",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "lower-body-b1_arm_rehearsal_v1-2",
+      "recipe_id": "lower-body",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "lower-body-b1_knee_flex_v1-2",
+      "recipe_id": "lower-body",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "zero-b1_arm_rehearsal_v1-4",
+      "recipe_id": "zero",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "zero-b1_knee_flex_v1-4",
+      "recipe_id": "zero",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "face-wide-b1_arm_rehearsal_v1-4",
+      "recipe_id": "face-wide",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "face-wide-b1_knee_flex_v1-4",
+      "recipe_id": "face-wide",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "lower-body-b1_arm_rehearsal_v1-4",
+      "recipe_id": "lower-body",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    },
+    {
+      "id": "lower-body-b1_knee_flex_v1-4",
+      "recipe_id": "lower-body",
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "playing": false,
+      "appearance": {
+        "skin": true,
+        "eyes": true,
+        "hair": true
+      }
+    }
+  ],
+  "live_recipes": [
+    "zero",
+    "face-wide",
+    "lower-body"
+  ],
+  "preserve_existing_quality_holds": true
+}

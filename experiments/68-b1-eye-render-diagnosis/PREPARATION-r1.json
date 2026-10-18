@@ -1,0 +1,42 @@
+{
+  "scope": "worker lightweight checks only; no Cargo compilation, Rust unit execution, app/server/browser/GPU launch or source-quality claim",
+  "base_head": "ab4c16f81deddfc98faa97fcd1a8e7904c5f2f0b",
+  "checks": [
+    {
+      "check": "python-tests",
+      "exit_code": 0,
+      "seconds": 0.195,
+      "stdout": "",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.131s\n\nOK\n"
+    },
+    {
+      "check": "python-optimized-tests",
+      "exit_code": 0,
+      "seconds": 0.143,
+      "stdout": "",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.076s\n\nOK\n"
+    },
+    {
+      "check": "rustfmt",
+      "exit_code": 0,
+      "seconds": 0.178,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "check": "html-module-syntax",
+      "exit_code": 0,
+      "seconds": 0.192,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "not_run": [
+    "native/Wasm compilation",
+    "Rust unit execution",
+    "actual native/Web launch and captures",
+    "GPU readback",
+    "cause/fit/anatomical classification",
+    "performance"
+  ]
+}

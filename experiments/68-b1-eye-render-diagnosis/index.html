@@ -1,0 +1,19 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nvwa · actual production eye diagnostic68</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden}canvas{display:block}details{position:fixed;right:10px;top:10px;z-index:100;width:360px;max-height:90vh;overflow:auto;background:#17202bf2;color:white;padding:10px;font:12px system-ui;border:1px solid #9aa}button,textarea{font:inherit;margin:4px;padding:5px}textarea{box-sizing:border-box;width:96%}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:180px;overflow:auto}#matrix{display:grid;grid-template-columns:1fr 1fr 1fr}p{line-height:1.4}</style>
+<canvas id="nvwa"></canvas><details id="controls" open><summary>68 · eye surface diagnostic · not saved</summary>
+<p>Actual production appearance controller stays enabled. Combined + textured preserves its original materials and visibility. Body-only and eye-only hide the other character roles, including hair and clothes. Floor, lights and background stay. Unlit/tint retain texture alpha, Mask, culling and other material fields. Collapse this panel for screenshots. No GPU ID/depth readback.</p>
+<button id="hold" disabled>Hold arm source2</button><button id="capture" disabled>Capture current</button><div id="matrix"></div><p>Separate shoulder Work only:</p><button id="witness0" disabled>Witness source0</button><button id="witness2" disabled>Witness source2</button>
+<form id="form"><textarea id="command" rows="4">{"request_id":"custom-001","action":"diagnostic","mode":"combined","palette":"textured"}</textarea><button id="run" disabled>Send exact request</button></form>
+<pre id="report">Loading…</pre><button id="export" disabled>Download correlated CPU record</button></details>
+<script type="module">
+const $=id=>document.getElementById(id);let api=null,serial=0,last='';
+function send(value){try{api.b1_68_command(JSON.stringify(value));$('export').disabled=true}catch(e){$('report').textContent=String(e)}}
+function request(value){send({request_id:'web68-'+(++serial),...value})}
+for(const mode of ['combined','body_only','eye_only'])for(const palette of ['textured','unlit_textured','role_tint']){const button=document.createElement('button');button.disabled=true;button.textContent=mode+' / '+palette;button.onclick=()=>request({action:'diagnostic',mode,palette});$('matrix').append(button)}
+$('witness0').onclick=()=>request({action:'witness',seek_seconds:0});$('witness2').onclick=()=>request({action:'witness',seek_seconds:2});
+$('hold').onclick=()=>request({action:'playback',seek_seconds:2,playing:false});$('capture').onclick=()=>request({action:'capture'});
+$('form').onsubmit=e=>{e.preventDefault();try{send(JSON.parse($('command').value))}catch(e){$('report').textContent=String(e)}};
+$('export').onclick=()=>{try{const report=JSON.parse(api.b1_68_report()),frame=JSON.parse(api.b1_68_frame());if(report.phase!=='ready'||!report.current||!report.request_succeeded||report.request_id!==frame.request_id)throw Error('No current correlated capture');const a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify({report,frame})],{type:'application/json'}));a.href=url;a.download=report.request_id+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}catch(e){$('report').textContent=String(e)}};
+try{api=await import('./pkg/b1_eye_render_diagnosis.js');await api.default();window.b1_68=api;document.documentElement.dataset.diagnosticBridge='ready';for(const b of document.querySelectorAll('button'))b.disabled=false;$('export').disabled=true;setInterval(()=>{const raw=api.b1_68_report();if(raw!==last){last=raw;$('report').textContent=raw||'Wait for Work startup, then hold source2.'}try{const r=JSON.parse(raw);$('export').disabled=!(r.phase==='ready'&&r.current&&r.diagnostic)}catch{$('export').disabled=true}},150)}catch(e){$('report').textContent='Start failed: '+String(e)}
+</script></html>

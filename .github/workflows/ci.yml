@@ -50,6 +50,13 @@ jobs:
           python3 -B -O -m unittest discover -s experiments/65-b1-appearance-quality -p 'test_*.py' -v
           python3 -B -m unittest discover -s experiments/65-b1-appearance-quality/preview/build -p 'test_*.py' -v
           python3 -B -O -m unittest discover -s experiments/65-b1-appearance-quality/preview/build -p 'test_*.py' -v
+      - name: Check eye, hair, and character parameter controls
+        timeout-minutes: 3
+        run: |
+          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters; do
+            python3 -B -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
+            python3 -B -O -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
+          done
       - name: Check authenticated B1 source bundle and rejection controls
         timeout-minutes: 3
         run: |
@@ -145,6 +152,10 @@ jobs:
           cargo fmt --manifest-path experiments/66-b1-appearance-work/Cargo.toml --package b1-appearance-work --check
           cargo test --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --lib --locked --offline
           cargo test --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --locked --offline
+          cargo fmt --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --package b1-eye-render-diagnosis --check
+          cargo fmt --manifest-path experiments/71-b1-character-parameters/Cargo.toml --package b1-character-parameters --check
+          cargo test --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --locked --offline
+          cargo test --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --locked --offline
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
@@ -156,6 +167,10 @@ jobs:
           cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
           cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline
           python3 -B experiments/60-b1-continuous-motion/run_matrix.py --binary "$CARGO_TARGET_DIR/debug/matrix" --asset-root "$GITHUB_WORKSPACE/assets" --out "$RUNNER_TEMP/nvwa-b1-motion-matrix"
+          # Use this job's actual retained source2 frame. The garment controls
+          # require real source/upload data, not an invented portable fixture.
+          python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
+          python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
       - name: Compile the actual Web target
         run: |
           bash experiments/27-ci-baseline/check.sh wasm
@@ -164,6 +179,8 @@ jobs:
           cargo check --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
   b1-source-regression:
     name: macOS B1 source regression and viewer checks
     # Keep the independent cold B1 build inside its own finite budget.

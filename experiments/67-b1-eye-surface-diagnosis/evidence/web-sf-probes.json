@@ -1,0 +1,2927 @@
+{
+  "body_display_transform": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0.8167600035667419,
+    0,
+    1
+  ],
+  "camera": {
+    "active": true,
+    "entity": "288v0",
+    "global_transform": [
+      0.9902680516242981,
+      0,
+      -0.13917309045791626,
+      0,
+      -0.007283765356987715,
+      0.9986295104026794,
+      -0.051826685667037964,
+      0,
+      0.138982355594635,
+      0.052336014807224274,
+      0.9889109134674072,
+      0,
+      0.13203324377536774,
+      1.549719214439392,
+      0.939465343952179,
+      1
+    ],
+    "msaa": "Sample4",
+    "msaa_samples": 4,
+    "projection": "Perspective(PerspectiveProjection { fov: 0.5235988, aspect_ratio: 1.7777778, near: 0.05, far: 250.0, near_clip_plane: Vec4(0.0, 0.0, -1.0, -0.1) })",
+    "scope": "actual observation camera; temporary override, not saved",
+    "viewport_size_pixels": [
+      1280,
+      720
+    ]
+  },
+  "capture": "web/sf",
+  "coordinate_validation": {
+    "body_triangles": 22892,
+    "body_world_positions_semantic_sha256": "92eb635d096a36717c925e5df54406ffe453c9c64fdcc4a90fdcde0ef0db5fbc",
+    "captured_eye_stage_bounds_max_component_error_m": 5.960464477539063e-08,
+    "eye_triangles": 172,
+    "eye_world_positions_semantic_sha256": "21217caecc125f1bff9ce949849c4b605d2c9b57f73b2be57e34a59ba601152a",
+    "posed_helper_max_component_error_m": 5.960464477539063e-08,
+    "recomputed_eye_stage_bounds_m": {
+      "max": [
+        0.04459000006318092,
+        1.5158899426460266,
+        0.13920027017593384
+      ],
+      "min": [
+        -0.04459000006318092,
+        1.4882599711418152,
+        0.1188102662563324
+      ]
+    },
+    "rest_helper_max_component_error_m": 0.0,
+    "source_body_triangles_exact_ordered_subsequence": true,
+    "source_eye_triangle_sequence_exact": true
+  },
+  "eye_display_transform": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0.8167600035667419,
+    0,
+    1
+  ],
+  "eye_material": {
+    "actual_msaa_samples": 4,
+    "alpha": "Mask(0.5)",
+    "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+    "cull_mode": "Some(Back)",
+    "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+    "double_sided": false,
+    "format": "Rgba8UnormSrgb",
+    "handle": "AssetId<bevy_pbr::pbr_material::StandardMaterial>{ index: 3, generation: 0}",
+    "image_handle": "AssetId<bevy_image::image::Image>{ index: 4, generation: 0}",
+    "image_height": 1024,
+    "image_width": 1024,
+    "metallic": 0,
+    "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes",
+    "quality": "frozen64",
+    "roughness": 0.699999988079071,
+    "texture": "eyes/materials/brown_eye.png",
+    "unlit": false
+  },
+  "model_to_world_record_not_applied_again": [
+    -1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    -1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "probes": [
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8097647258630173,
+        0.8151263669288263,
+        0.8306340847039053,
+        0.9825425883179564
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8206749113738181,
+        0.8249802218503542
+      ],
+      "camera_view_target_m": [
+        0.0020938256206768932,
+        -0.012640975453218004,
+        -0.8205749000362336
+      ],
+      "helper_ids": [
+        14655,
+        14664,
+        14665
+      ],
+      "kind": "triangle_centroid",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": -0.010910185510800807,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8097647258630173,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3231709447023285,
+                  0.5779050046357255,
+                  0.09892405066194605
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8097647258630173,
+                "render_triangle_ordinal": 11448,
+                "source_face_ordinal": 6671,
+                "source_obj_line": 47182,
+                "source_vertex_ids": [
+                  11745,
+                  11507,
+                  6832
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02164068343141208,
+                  1.4948886901065874,
+                  0.13913665680289067
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8206749113738181,
+            "ties": [
+              {
+                "barycentric": [
+                  0.33333333333336884,
+                  0.33333333333304277,
+                  0.33333333333358833
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14655,
+                  14664,
+                  14665
+                ],
+                "ray_distance_m": 0.8206749113738181,
+                "render_triangle_ordinal": 0,
+                "source_face_ordinal": 0,
+                "source_obj_line": 209,
+                "source_vertex_ids": [
+                  8,
+                  2,
+                  1
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02015333374341323,
+                  1.4941499431927998,
+                  0.12835360566774967
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": -0.010910185510800807,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8097647258630173,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3231709447023285,
+                  0.5779050046357255,
+                  0.09892405066194605
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8097647258630173,
+                "render_triangle_ordinal": 11448,
+                "source_face_ordinal": 6671,
+                "source_obj_line": 47182,
+                "source_vertex_ids": [
+                  11745,
+                  11507,
+                  6832
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02164068343141208,
+                  1.4948886901065874,
+                  0.13913665680289067
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8206749113738181,
+            "ties": [
+              {
+                "barycentric": [
+                  0.33333333333336884,
+                  0.33333333333304277,
+                  0.33333333333358833
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14655,
+                  14664,
+                  14665
+                ],
+                "ray_distance_m": 0.8206749113738181,
+                "render_triangle_ordinal": 0,
+                "source_face_ordinal": 0,
+                "source_obj_line": 209,
+                "source_vertex_ids": [
+                  8,
+                  2,
+                  1
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02015333374341323,
+                  1.4941499431927998,
+                  0.12835360566774967
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_left/triangle-0",
+      "selected_target_is_nearest_eye": true,
+      "side": "source_left",
+      "source_triangle_ordinal": 0,
+      "source_vertex_ids": [
+        8,
+        2,
+        1
+      ],
+      "target_ray_distance_m": 0.8206749113738178,
+      "world_ray_unit_direction": [
+        -0.13632670925039783,
+        -0.06771167301016767,
+        -0.9883471847904063
+      ],
+      "world_target_m": [
+        0.020153333743413288,
+        1.4941499431927998,
+        0.12835360566775003
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8089944516120043,
+        0.8143456429330507,
+        0.83147113559262,
+        0.9767927630291663
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8166826716290725,
+        0.8269854466093081
+      ],
+      "camera_view_target_m": [
+        0.01556754080002188,
+        -0.01751951719025056,
+        -0.8266533024056602
+      ],
+      "helper_ids": [
+        14657,
+        14648,
+        14647
+      ],
+      "kind": "triangle_centroid",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": -0.007688220017068148,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8089944516120043,
+            "ties": [
+              {
+                "barycentric": [
+                  0.18396541052349666,
+                  0.5796286101014713,
+                  0.23640597937503208
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8089944516120043,
+                "render_triangle_ordinal": 19639,
+                "source_face_ordinal": 11567,
+                "source_obj_line": 52078,
+                "source_vertex_ids": [
+                  6918,
+                  6861,
+                  6862
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.03484794285910235,
+                  1.4902817801020978,
+                  0.13853199377613445
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8166826716290725,
+            "ties": [
+              {
+                "barycentric": [
+                  0.13610474586557486,
+                  0.18672214430841447,
+                  0.6771731098260106
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14645,
+                  14655,
+                  14646
+                ],
+                "ray_distance_m": 0.8166826716290725,
+                "render_triangle_ordinal": 37,
+                "source_face_ordinal": 18,
+                "source_obj_line": 227,
+                "source_vertex_ids": [
+                  15,
+                  8,
+                  14
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.03392434940999972,
+                  1.4897169207615615,
+                  0.13092038185111943
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": -0.007688220017068148,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8089944516120043,
+            "ties": [
+              {
+                "barycentric": [
+                  0.18396541052349666,
+                  0.5796286101014713,
+                  0.23640597937503208
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8089944516120043,
+                "render_triangle_ordinal": 19639,
+                "source_face_ordinal": 11567,
+                "source_obj_line": 52078,
+                "source_vertex_ids": [
+                  6918,
+                  6861,
+                  6862
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.03484794285910235,
+                  1.4902817801020978,
+                  0.13853199377613445
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8166826716290725,
+            "ties": [
+              {
+                "barycentric": [
+                  0.13610474586557486,
+                  0.18672214430841447,
+                  0.6771731098260106
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14645,
+                  14655,
+                  14646
+                ],
+                "ray_distance_m": 0.8166826716290725,
+                "render_triangle_ordinal": 37,
+                "source_face_ordinal": 18,
+                "source_obj_line": 227,
+                "source_vertex_ids": [
+                  15,
+                  8,
+                  14
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.03392434940999972,
+                  1.4897169207615615,
+                  0.13092038185111943
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_left/triangle-28",
+      "selected_target_is_nearest_eye": false,
+      "side": "source_left",
+      "source_triangle_ordinal": 28,
+      "source_vertex_ids": [
+        6,
+        12,
+        13
+      ],
+      "target_ray_distance_m": 0.8269854466093081,
+      "world_ray_unit_direction": [
+        -0.12013098572260132,
+        -0.0734707564666965,
+        -0.9900356530012075
+      ],
+      "world_target_m": [
+        0.03268666689594587,
+        1.4889599680900574,
+        0.1207202672958374
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8381275604196746,
+        0.9832969516942387
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8078422582599175
+      ],
+      "camera_view_target_m": [
+        0.01414745610583961,
+        -0.0033781901124236907,
+        -0.8077113254117981
+      ],
+      "helper_ids": [
+        14616,
+        14625,
+        14626
+      ],
+      "kind": "triangle_centroid",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": 0.03028530215975711,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8381275604196746,
+            "ties": [
+              {
+                "barycentric": [
+                  0.24254643774167084,
+                  0.5346752519674313,
+                  0.2227783102908979
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8381275604196746,
+                "render_triangle_ordinal": 19661,
+                "source_face_ordinal": 11578,
+                "source_obj_line": 52089,
+                "source_vertex_ids": [
+                  11916,
+                  8020,
+                  11915
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.030127697099813194,
+                  1.5023620352500382,
+                  0.10890507240590575
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8078422582599175,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3333333333333375,
+                  0.33333333333332615,
+                  0.33333333333333637
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14616,
+                  14625,
+                  14626
+                ],
+                "ray_distance_m": 0.8078422582599175,
+                "render_triangle_ordinal": 56,
+                "source_face_ordinal": 28,
+                "source_obj_line": 237,
+                "source_vertex_ids": [
+                  35,
+                  29,
+                  28
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.03381000086665155,
+                  1.5040732622146606,
+                  0.13891693452994036
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": 0.03028530215975711,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8381275604196746,
+            "ties": [
+              {
+                "barycentric": [
+                  0.24254643774167084,
+                  0.5346752519674313,
+                  0.2227783102908979
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8381275604196746,
+                "render_triangle_ordinal": 19661,
+                "source_face_ordinal": 11578,
+                "source_obj_line": 52089,
+                "source_vertex_ids": [
+                  11916,
+                  8020,
+                  11915
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.030127697099813194,
+                  1.5023620352500382,
+                  0.10890507240590575
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8078422582599175,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3333333333333375,
+                  0.33333333333332615,
+                  0.33333333333333637
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14616,
+                  14625,
+                  14626
+                ],
+                "ray_distance_m": 0.8078422582599175,
+                "render_triangle_ordinal": 56,
+                "source_face_ordinal": 28,
+                "source_obj_line": 237,
+                "source_vertex_ids": [
+                  35,
+                  29,
+                  28
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.03381000086665155,
+                  1.5040732622146606,
+                  0.13891693452994036
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_left/triangle-56",
+      "selected_target_is_nearest_eye": true,
+      "side": "source_left",
+      "source_triangle_ordinal": 56,
+      "source_vertex_ids": [
+        35,
+        29,
+        28
+      ],
+      "target_ray_distance_m": 0.8078422582599176,
+      "world_ray_unit_direction": [
+        -0.12158715628504985,
+        -0.05650354603020182,
+        -0.9909711967118559
+      ],
+      "world_target_m": [
+        0.033810000866651535,
+        1.5040732622146606,
+        0.13891693452994028
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8384339013184005,
+        0.9827132547548222
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8081035789558244
+      ],
+      "camera_view_target_m": [
+        0.011470609144096946,
+        -0.007008482992440116,
+        -0.8079917909851371
+      ],
+      "helper_ids": [
+        14661,
+        14643,
+        14634
+      ],
+      "kind": "triangle_centroid",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": 0.030330322362576045,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8384339013184005,
+            "ties": [
+              {
+                "barycentric": [
+                  0.9587071262222048,
+                  0.009366448847152615,
+                  0.031926424930642565
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8384339013184005,
+                "render_triangle_ordinal": 13398,
+                "source_face_ordinal": 7646,
+                "source_obj_line": 48157,
+                "source_vertex_ids": [
+                  8013,
+                  8021,
+                  8028
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02736012002354357,
+                  1.4985834306490837,
+                  0.10916414820440745
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8081035789558244,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3333333333333329,
+                  0.33333333333333515,
+                  0.3333333333333319
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14661,
+                  14643,
+                  14634
+                ],
+                "ray_distance_m": 0.8081035789558244,
+                "render_triangle_ordinal": 85,
+                "source_face_ordinal": 42,
+                "source_obj_line": 251,
+                "source_vertex_ids": [
+                  5,
+                  17,
+                  23
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.031146667276819542,
+                  1.5004332661628723,
+                  0.13920027017593384
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": 0.030330322362576045,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8384339013184005,
+            "ties": [
+              {
+                "barycentric": [
+                  0.9587071262222048,
+                  0.009366448847152615,
+                  0.031926424930642565
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8384339013184005,
+                "render_triangle_ordinal": 13398,
+                "source_face_ordinal": 7646,
+                "source_obj_line": 48157,
+                "source_vertex_ids": [
+                  8013,
+                  8021,
+                  8028
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02736012002354357,
+                  1.4985834306490837,
+                  0.10916414820440745
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8081035789558244,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3333333333333329,
+                  0.33333333333333515,
+                  0.3333333333333319
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14661,
+                  14643,
+                  14634
+                ],
+                "ray_distance_m": 0.8081035789558244,
+                "render_triangle_ordinal": 85,
+                "source_face_ordinal": 42,
+                "source_obj_line": 251,
+                "source_vertex_ids": [
+                  5,
+                  17,
+                  23
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.031146667276819542,
+                  1.5004332661628723,
+                  0.13920027017593384
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_left/triangle-85",
+      "selected_target_is_nearest_eye": true,
+      "side": "source_left",
+      "source_triangle_ordinal": 85,
+      "source_vertex_ids": [
+        5,
+        17,
+        23
+      ],
+      "target_ray_distance_m": 0.8081035789558244,
+      "world_ray_unit_direction": [
+        -0.12484362045383694,
+        -0.06098964236763271,
+        -0.9903001231726907
+      ],
+      "world_target_m": [
+        0.031146667276819546,
+        1.5004332661628723,
+        0.13920027017593384
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8376396531720045,
+        0.9843579992077334
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8083287947309142,
+        0.8083287947309142,
+        0.8083287947309143,
+        0.8083287947309143,
+        0.8083287947309143,
+        0.8083287947309143
+      ],
+      "camera_view_target_m": [
+        0.00843378601753136,
+        -0.004233268738892436,
+        -0.8082737313491517
+      ],
+      "helper_ids": [
+        14598
+      ],
+      "kind": "source_vertex",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": 0.02931085844109027,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8376396531720045,
+            "ties": [
+              {
+                "barycentric": [
+                  0.6684551517011721,
+                  0.06588046083400997,
+                  0.26566438746481796
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8376396531720045,
+                "render_triangle_ordinal": 13419,
+                "source_face_ordinal": 7656,
+                "source_obj_line": 48167,
+                "source_vertex_ids": [
+                  8020,
+                  11740,
+                  8029
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.0243105448492269,
+                  1.5015027199195539,
+                  0.11018181079937217
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8083287947309142,
+            "ties": [
+              {
+                "barycentric": [
+                  0.9999999999999997,
+                  1.226958103262186e-15,
+                  -9.202185774466395e-16
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14598,
+                  14608,
+                  14599
+                ],
+                "ray_distance_m": 0.8083287947309142,
+                "render_triangle_ordinal": 79,
+                "source_face_ordinal": 39,
+                "source_obj_line": 248,
+                "source_vertex_ids": [
+                  47,
+                  40,
+                  46
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593395
+                ]
+              },
+              {
+                "barycentric": [
+                  -4.440892098500626e-15,
+                  1.0000000000000044,
+                  0.0
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14607,
+                  14598,
+                  14625
+                ],
+                "ray_distance_m": 0.8083287947309142,
+                "render_triangle_ordinal": 80,
+                "source_face_ordinal": 40,
+                "source_obj_line": 249,
+                "source_vertex_ids": [
+                  41,
+                  47,
+                  29
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593395
+                ]
+              },
+              {
+                "barycentric": [
+                  -7.324951618737293e-16,
+                  0.9999999999999958,
+                  4.951342655449324e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14661,
+                  14598,
+                  14599
+                ],
+                "ray_distance_m": 0.8083287947309143,
+                "render_triangle_ordinal": 76,
+                "source_face_ordinal": 38,
+                "source_obj_line": 247,
+                "source_vertex_ids": [
+                  5,
+                  47,
+                  46
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.028079999610781656,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  1.000000000000021,
+                  -2.1064089579529435e-14,
+                  0.0
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14598,
+                  14607,
+                  14608
+                ],
+                "ray_distance_m": 0.8083287947309143,
+                "render_triangle_ordinal": 78,
+                "source_face_ordinal": 39,
+                "source_obj_line": 248,
+                "source_vertex_ids": [
+                  47,
+                  41,
+                  40
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.028079999610781656,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  0.9999999999999978,
+                  4.5555722949374666e-15,
+                  -2.2777861474687333e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14598,
+                  14661,
+                  14634
+                ],
+                "ray_distance_m": 0.8083287947309143,
+                "render_triangle_ordinal": 82,
+                "source_face_ordinal": 41,
+                "source_obj_line": 250,
+                "source_vertex_ids": [
+                  47,
+                  5,
+                  23
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.028079999610781656,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  0.9999999999999978,
+                  4.5555722949374666e-15,
+                  -2.2777861474687333e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14598,
+                  14634,
+                  14625
+                ],
+                "ray_distance_m": 0.8083287947309143,
+                "render_triangle_ordinal": 83,
+                "source_face_ordinal": 41,
+                "source_obj_line": 250,
+                "source_vertex_ids": [
+                  47,
+                  23,
+                  29
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.028079999610781656,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": 0.02931085844109027,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8376396531720045,
+            "ties": [
+              {
+                "barycentric": [
+                  0.6684551517011721,
+                  0.06588046083400997,
+                  0.26566438746481796
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8376396531720045,
+                "render_triangle_ordinal": 13419,
+                "source_face_ordinal": 7656,
+                "source_obj_line": 48167,
+                "source_vertex_ids": [
+                  8020,
+                  11740,
+                  8029
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.0243105448492269,
+                  1.5015027199195539,
+                  0.11018181079937217
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8083287947309142,
+            "ties": [
+              {
+                "barycentric": [
+                  0.9999999999999997,
+                  1.226958103262186e-15,
+                  -9.202185774466395e-16
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14598,
+                  14608,
+                  14599
+                ],
+                "ray_distance_m": 0.8083287947309142,
+                "render_triangle_ordinal": 79,
+                "source_face_ordinal": 39,
+                "source_obj_line": 248,
+                "source_vertex_ids": [
+                  47,
+                  40,
+                  46
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593395
+                ]
+              },
+              {
+                "barycentric": [
+                  -4.440892098500626e-15,
+                  1.0000000000000044,
+                  0.0
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14607,
+                  14598,
+                  14625
+                ],
+                "ray_distance_m": 0.8083287947309142,
+                "render_triangle_ordinal": 80,
+                "source_face_ordinal": 40,
+                "source_obj_line": 249,
+                "source_vertex_ids": [
+                  41,
+                  47,
+                  29
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593395
+                ]
+              },
+              {
+                "barycentric": [
+                  -7.324951618737293e-16,
+                  0.9999999999999958,
+                  4.951342655449324e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14661,
+                  14598,
+                  14599
+                ],
+                "ray_distance_m": 0.8083287947309143,
+                "render_triangle_ordinal": 76,
+                "source_face_ordinal": 38,
+                "source_obj_line": 247,
+                "source_vertex_ids": [
+                  5,
+                  47,
+                  46
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.028079999610781656,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  1.000000000000021,
+                  -2.1064089579529435e-14,
+                  0.0
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14598,
+                  14607,
+                  14608
+                ],
+                "ray_distance_m": 0.8083287947309143,
+                "render_triangle_ordinal": 78,
+                "source_face_ordinal": 39,
+                "source_obj_line": 248,
+                "source_vertex_ids": [
+                  47,
+                  41,
+                  40
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.028079999610781656,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  0.9999999999999978,
+                  4.5555722949374666e-15,
+                  -2.2777861474687333e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14598,
+                  14661,
+                  14634
+                ],
+                "ray_distance_m": 0.8083287947309143,
+                "render_triangle_ordinal": 82,
+                "source_face_ordinal": 41,
+                "source_obj_line": 250,
+                "source_vertex_ids": [
+                  47,
+                  5,
+                  23
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.028079999610781656,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  0.9999999999999978,
+                  4.5555722949374666e-15,
+                  -2.2777861474687333e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14598,
+                  14634,
+                  14625
+                ],
+                "ray_distance_m": 0.8083287947309143,
+                "render_triangle_ordinal": 83,
+                "source_face_ordinal": 41,
+                "source_obj_line": 250,
+                "source_vertex_ids": [
+                  47,
+                  23,
+                  29
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.028079999610781656,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_left/helper-min",
+      "selected_target_is_nearest_eye": true,
+      "side": "source_left",
+      "source_vertex_ids": [
+        47
+      ],
+      "target_ray_distance_m": 0.8083287947309143,
+      "world_ray_unit_direction": [
+        -0.12860267361772162,
+        -0.057562335232399994,
+        -0.990024206724748
+      ],
+      "world_target_m": [
+        0.02807999961078167,
+        1.5031899213790894,
+        0.13920027017593384
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8102949242514066,
+        0.814691582853677,
+        0.8318447278900974,
+        0.9840587445543003
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8152881623158285,
+        0.8302274180218098,
+        0.83022741802181,
+        0.8302274180218103
+      ],
+      "camera_view_target_m": [
+        0.0012995264554281965,
+        -0.009494393156151837,
+        -0.8301721321226714
+      ],
+      "helper_ids": [
+        14666
+      ],
+      "kind": "source_vertex",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": -0.004993238064421868,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8102949242514066,
+            "ties": [
+              {
+                "barycentric": [
+                  0.4335355045455397,
+                  0.539782466397368,
+                  0.026682029057092254
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8102949242514066,
+                "render_triangle_ordinal": 19055,
+                "source_face_ordinal": 11275,
+                "source_obj_line": 51786,
+                "source_vertex_ids": [
+                  11482,
+                  11694,
+                  11743
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.020747523909781768,
+                  1.4980606835711465,
+                  0.13851294273839554
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8152881623158285,
+            "ties": [
+              {
+                "barycentric": [
+                  0.012898635411399684,
+                  0.3160821230109715,
+                  0.6710192415776288
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14600,
+                  14664,
+                  14663
+                ],
+                "ray_distance_m": 0.8152881623158285,
+                "render_triangle_ordinal": 49,
+                "source_face_ordinal": 24,
+                "source_obj_line": 233,
+                "source_vertex_ids": [
+                  45,
+                  2,
+                  3
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02006175373422156,
+                  1.4977423509061336,
+                  0.13357727561543342
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": -0.004993238064421868,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8102949242514066,
+            "ties": [
+              {
+                "barycentric": [
+                  0.4335355045455397,
+                  0.539782466397368,
+                  0.026682029057092254
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8102949242514066,
+                "render_triangle_ordinal": 19055,
+                "source_face_ordinal": 11275,
+                "source_obj_line": 51786,
+                "source_vertex_ids": [
+                  11482,
+                  11694,
+                  11743
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.020747523909781768,
+                  1.4980606835711465,
+                  0.13851294273839554
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8152881623158285,
+            "ties": [
+              {
+                "barycentric": [
+                  0.012898635411399684,
+                  0.3160821230109715,
+                  0.6710192415776288
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14600,
+                  14664,
+                  14663
+                ],
+                "ray_distance_m": 0.8152881623158285,
+                "render_triangle_ordinal": 49,
+                "source_face_ordinal": 24,
+                "source_obj_line": 233,
+                "source_vertex_ids": [
+                  45,
+                  2,
+                  3
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  0.02006175373422156,
+                  1.4977423509061336,
+                  0.13357727561543342
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_left/helper-max",
+      "selected_target_is_nearest_eye": false,
+      "side": "source_left",
+      "source_vertex_ids": [
+        0
+      ],
+      "target_ray_distance_m": 0.8302274180218099,
+      "world_ray_unit_direction": [
+        -0.13733977164968375,
+        -0.06375275140217676,
+        -0.9884702189807566
+      ],
+      "world_target_m": [
+        0.01800999976694584,
+        1.4967899322509766,
+        0.1188102662563324
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8157525958044586,
+        0.8242639471534697,
+        0.840956458065962,
+        0.9656308470971817
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.829633342851475,
+        0.8367750139092307
+      ],
+      "camera_view_target_m": [
+        -0.039879053010903054,
+        -0.015070906031072822,
+        -0.8285372943450047
+      ],
+      "helper_ids": [
+        14727,
+        14728,
+        14737
+      ],
+      "kind": "triangle_centroid",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": -0.013880747047016473,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8157525958044586,
+            "ties": [
+              {
+                "barycentric": [
+                  0.35095881599087897,
+                  0.5057433981020941,
+                  0.14329778590702688
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8157525958044586,
+                "render_triangle_ordinal": 181,
+                "source_face_ordinal": 90,
+                "source_obj_line": 40601,
+                "source_vertex_ids": [
+                  5084,
+                  80,
+                  142
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.019914476331225534,
+                  1.492283934566361,
+                  0.1400496970312376
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.829633342851475,
+            "ties": [
+              {
+                "barycentric": [
+                  0.33333333333330395,
+                  0.3333333333333705,
+                  0.3333333333333255
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14727,
+                  14728,
+                  14737
+                ],
+                "ray_distance_m": 0.829633342851475,
+                "render_triangle_ordinal": 86,
+                "source_face_ordinal": 43,
+                "source_obj_line": 252,
+                "source_vertex_ids": [
+                  56,
+                  55,
+                  49
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02250000027318802,
+                  1.4913066228230794,
+                  0.12644693752129843
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": -0.013880747047016473,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8157525958044586,
+            "ties": [
+              {
+                "barycentric": [
+                  0.35095881599087897,
+                  0.5057433981020941,
+                  0.14329778590702688
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8157525958044586,
+                "render_triangle_ordinal": 181,
+                "source_face_ordinal": 90,
+                "source_obj_line": 40601,
+                "source_vertex_ids": [
+                  5084,
+                  80,
+                  142
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.019914476331225534,
+                  1.492283934566361,
+                  0.1400496970312376
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.829633342851475,
+            "ties": [
+              {
+                "barycentric": [
+                  0.33333333333330395,
+                  0.3333333333333705,
+                  0.3333333333333255
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14727,
+                  14728,
+                  14737
+                ],
+                "ray_distance_m": 0.829633342851475,
+                "render_triangle_ordinal": 86,
+                "source_face_ordinal": 43,
+                "source_obj_line": 252,
+                "source_vertex_ids": [
+                  56,
+                  55,
+                  49
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02250000027318802,
+                  1.4913066228230794,
+                  0.12644693752129843
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_right/triangle-0",
+      "selected_target_is_nearest_eye": true,
+      "side": "source_right",
+      "source_triangle_ordinal": 86,
+      "source_vertex_ids": [
+        56,
+        55,
+        49
+      ],
+      "target_ray_distance_m": 0.8296333428514747,
+      "world_ray_unit_direction": [
+        -0.18626691583708568,
+        -0.07040771940957304,
+        -0.9799731573426298
+      ],
+      "world_target_m": [
+        -0.022500000273187954,
+        1.4913066228230794,
+        0.12644693752129874
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8164558606483121,
+        0.8245451248563715,
+        0.8408021862896546,
+        0.9571504838189704
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8282154403587326,
+        0.8347993055358828
+      ],
+      "camera_view_target_m": [
+        -0.045797821118738084,
+        -0.01751861670960536,
+        -0.8333580108546974
+      ],
+      "helper_ids": [
+        14729,
+        14728,
+        14719
+      ],
+      "kind": "triangle_centroid",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": -0.01175957971042052,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8164558606483121,
+            "ties": [
+              {
+                "barycentric": [
+                  0.10407235382842217,
+                  0.3950370991338556,
+                  0.5008905470377222
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8164558606483121,
+                "render_triangle_ordinal": 179,
+                "source_face_ordinal": 89,
+                "source_obj_line": 40600,
+                "source_vertex_ids": [
+                  142,
+                  79,
+                  141
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02547457966712327,
+                  1.4899527523148517,
+                  0.14057897659665763
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8282154403587326,
+            "ties": [
+              {
+                "barycentric": [
+                  0.22160369795407941,
+                  0.20766066837152874,
+                  0.5707356336743918
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14718,
+                  14728,
+                  14727
+                ],
+                "ray_distance_m": 0.8282154403587326,
+                "render_triangle_ordinal": 117,
+                "source_face_ordinal": 58,
+                "source_obj_line": 267,
+                "source_vertex_ids": [
+                  62,
+                  55,
+                  56
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.027743196862566072,
+                  1.4890919238129834,
+                  0.12907245386923705
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": -0.01175957971042052,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8164558606483121,
+            "ties": [
+              {
+                "barycentric": [
+                  0.10407235382842217,
+                  0.3950370991338556,
+                  0.5008905470377222
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8164558606483121,
+                "render_triangle_ordinal": 179,
+                "source_face_ordinal": 89,
+                "source_obj_line": 40600,
+                "source_vertex_ids": [
+                  142,
+                  79,
+                  141
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02547457966712327,
+                  1.4899527523148517,
+                  0.14057897659665763
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8282154403587326,
+            "ties": [
+              {
+                "barycentric": [
+                  0.22160369795407941,
+                  0.20766066837152874,
+                  0.5707356336743918
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14718,
+                  14728,
+                  14727
+                ],
+                "ray_distance_m": 0.8282154403587326,
+                "render_triangle_ordinal": 117,
+                "source_face_ordinal": 58,
+                "source_obj_line": 267,
+                "source_vertex_ids": [
+                  62,
+                  55,
+                  56
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.027743196862566072,
+                  1.4890919238129834,
+                  0.12907245386923705
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_right/triangle-28",
+      "selected_target_is_nearest_eye": false,
+      "side": "source_right",
+      "source_triangle_ordinal": 114,
+      "source_vertex_ids": [
+        54,
+        55,
+        61
+      ],
+      "target_ray_distance_m": 0.8347993055358828,
+      "world_ray_unit_direction": [
+        -0.19291652008893767,
+        -0.07320231871087621,
+        -0.9784807799911687
+      ],
+      "world_target_m": [
+        -0.0290133332212766,
+        1.4886099696159363,
+        0.12263026833534241
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8470852439352299,
+        0.9537743050166743
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8189864477375275
+      ],
+      "camera_view_target_m": [
+        -0.052609996026954736,
+        -0.001484096236596014,
+        -0.8172935960020363
+      ],
+      "helper_ids": [
+        14688,
+        14689,
+        14698
+      ],
+      "kind": "triangle_centroid",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": 0.02809879619770239,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8470852439352299,
+            "ties": [
+              {
+                "barycentric": [
+                  0.15282112205025136,
+                  0.6404206020458563,
+                  0.20675827590389237
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8470852439352299,
+                "render_triangle_ordinal": 2066,
+                "source_face_ordinal": 1033,
+                "source_obj_line": 41544,
+                "source_vertex_ids": [
+                  5311,
+                  1354,
+                  1353
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.039327570033204584,
+                  1.5039448746645976,
+                  0.1111576765955058
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8189864477375275,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3333333333333543,
+                  0.3333333333333049,
+                  0.33333333333334086
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14688,
+                  14689,
+                  14698
+                ],
+                "ray_distance_m": 0.8189864477375275,
+                "render_triangle_ordinal": 142,
+                "source_face_ordinal": 71,
+                "source_obj_line": 280,
+                "source_vertex_ids": [
+                  83,
+                  82,
+                  76
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.03364333386222523,
+                  1.5054632623990376,
+                  0.13863359888394666
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": 0.02809879619770239,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8470852439352299,
+            "ties": [
+              {
+                "barycentric": [
+                  0.15282112205025136,
+                  0.6404206020458563,
+                  0.20675827590389237
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8470852439352299,
+                "render_triangle_ordinal": 2066,
+                "source_face_ordinal": 1033,
+                "source_obj_line": 41544,
+                "source_vertex_ids": [
+                  5311,
+                  1354,
+                  1353
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.039327570033204584,
+                  1.5039448746645976,
+                  0.1111576765955058
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8189864477375275,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3333333333333543,
+                  0.3333333333333049,
+                  0.33333333333334086
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14688,
+                  14689,
+                  14698
+                ],
+                "ray_distance_m": 0.8189864477375275,
+                "render_triangle_ordinal": 142,
+                "source_face_ordinal": 71,
+                "source_obj_line": 280,
+                "source_vertex_ids": [
+                  83,
+                  82,
+                  76
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.03364333386222523,
+                  1.5054632623990376,
+                  0.13863359888394666
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_right/triangle-56",
+      "selected_target_is_nearest_eye": true,
+      "side": "source_right",
+      "source_triangle_ordinal": 142,
+      "source_vertex_ids": [
+        83,
+        82,
+        76
+      ],
+      "target_ray_distance_m": 0.8189864477375274,
+      "world_ray_unit_direction": [
+        -0.20229465102295532,
+        -0.05403746565356823,
+        -0.9778327190645851
+      ],
+      "world_target_m": [
+        -0.03364333386222521,
+        1.5054632623990376,
+        0.13863359888394675
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8480096996348944,
+        0.9556096456516938
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8179977408538761
+      ],
+      "camera_view_target_m": [
+        -0.0489588511988571,
+        -0.00708994821579308,
+        -0.8165005218612615
+      ],
+      "helper_ids": [
+        14733,
+        14715,
+        14724
+      ],
+      "kind": "triangle_centroid",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": 0.030011958781018255,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8480096996348944,
+            "ties": [
+              {
+                "barycentric": [
+                  0.6116713912898609,
+                  0.07391830974551264,
+                  0.31441029896462647
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8480096996348944,
+                "render_triangle_ordinal": 2028,
+                "source_face_ordinal": 1014,
+                "source_obj_line": 41525,
+                "source_vertex_ids": [
+                  5308,
+                  1351,
+                  1350
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.0358170664974127,
+                  1.4980789977190625,
+                  0.10983891474848462
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8179977408538761,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3333333333333321,
+                  0.3333333333333359,
+                  0.333333333333332
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14733,
+                  14715,
+                  14724
+                ],
+                "ray_distance_m": 0.8179977408538761,
+                "render_triangle_ordinal": 171,
+                "source_face_ordinal": 85,
+                "source_obj_line": 294,
+                "source_vertex_ids": [
+                  53,
+                  65,
+                  59
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.029876666764418275,
+                  1.499906599521637,
+                  0.13920027017593384
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": 0.030011958781018255,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8480096996348944,
+            "ties": [
+              {
+                "barycentric": [
+                  0.6116713912898609,
+                  0.07391830974551264,
+                  0.31441029896462647
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8480096996348944,
+                "render_triangle_ordinal": 2028,
+                "source_face_ordinal": 1014,
+                "source_obj_line": 41525,
+                "source_vertex_ids": [
+                  5308,
+                  1351,
+                  1350
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.0358170664974127,
+                  1.4980789977190625,
+                  0.10983891474848462
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8179977408538761,
+            "ties": [
+              {
+                "barycentric": [
+                  0.3333333333333321,
+                  0.3333333333333359,
+                  0.333333333333332
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14733,
+                  14715,
+                  14724
+                ],
+                "ray_distance_m": 0.8179977408538761,
+                "render_triangle_ordinal": 171,
+                "source_face_ordinal": 85,
+                "source_obj_line": 294,
+                "source_vertex_ids": [
+                  53,
+                  65,
+                  59
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.029876666764418275,
+                  1.499906599521637,
+                  0.13920027017593384
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_right/triangle-85",
+      "selected_target_is_nearest_eye": true,
+      "side": "source_right",
+      "source_triangle_ordinal": 171,
+      "source_vertex_ids": [
+        53,
+        65,
+        59
+      ],
+      "target_ray_distance_m": 0.8179977408538761,
+      "world_ray_unit_direction": [
+        -0.19793442261927832,
+        -0.060895785440382356,
+        -0.9783218630174693
+      ],
+      "world_target_m": [
+        -0.029876666764418285,
+        1.499906599521637,
+        0.13920027017593384
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8485091384247131,
+        0.9600713593459986
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8174505576035915,
+        0.8174505576035915,
+        0.8174505576035916,
+        0.8174505576035916,
+        0.8174505576035916,
+        0.8174505576035918
+      ],
+      "camera_view_target_m": [
+        -0.04717966905066631,
+        -0.0038242124797349328,
+        -0.8160789808186474
+      ],
+      "helper_ids": [
+        14670
+      ],
+      "kind": "source_vertex",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": 0.031058580821121562,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8485091384247131,
+            "ties": [
+              {
+                "barycentric": [
+                  0.04387394805867295,
+                  0.32724798549388573,
+                  0.6288780664474414
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8485091384247131,
+                "render_triangle_ordinal": 8167,
+                "source_face_ordinal": 4854,
+                "source_obj_line": 45365,
+                "source_vertex_ids": [
+                  1329,
+                  5310,
+                  1319
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.034163413542040055,
+                  1.5014220666805747,
+                  0.10879464228687274
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8174505576035915,
+            "ties": [
+              {
+                "barycentric": [
+                  1.0000000000000036,
+                  1.1517451614289508e-15,
+                  -4.606980645715803e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14670,
+                  14697,
+                  14706
+                ],
+                "ray_distance_m": 0.8174505576035915,
+                "render_triangle_ordinal": 168,
+                "source_face_ordinal": 84,
+                "source_obj_line": 293,
+                "source_vertex_ids": [
+                  95,
+                  77,
+                  71
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.028079999610781642,
+                  1.5031899213790894,
+                  0.13920027017593395
+                ]
+              },
+              {
+                "barycentric": [
+                  1.000000000000001,
+                  0.0,
+                  -1.1517451614289508e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14670,
+                  14706,
+                  14733
+                ],
+                "ray_distance_m": 0.8174505576035915,
+                "render_triangle_ordinal": 169,
+                "source_face_ordinal": 84,
+                "source_obj_line": 293,
+                "source_vertex_ids": [
+                  95,
+                  71,
+                  53
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.028079999610781642,
+                  1.5031899213790894,
+                  0.13920027017593395
+                ]
+              },
+              {
+                "barycentric": [
+                  1.7763568394002505e-15,
+                  0.0,
+                  0.9999999999999982
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14733,
+                  14671,
+                  14670
+                ],
+                "ray_distance_m": 0.8174505576035916,
+                "render_triangle_ordinal": 163,
+                "source_face_ordinal": 81,
+                "source_obj_line": 290,
+                "source_vertex_ids": [
+                  53,
+                  94,
+                  95
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  1.0000000000000175,
+                  -2.258481205127955e-15,
+                  -1.5244748134613696e-14
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14670,
+                  14680,
+                  14679
+                ],
+                "ray_distance_m": 0.8174505576035916,
+                "render_triangle_ordinal": 165,
+                "source_face_ordinal": 82,
+                "source_obj_line": 291,
+                "source_vertex_ids": [
+                  95,
+                  88,
+                  89
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  -6.8833827526759706e-15,
+                  8.127780618028773e-15,
+                  0.9999999999999988
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14679,
+                  14697,
+                  14670
+                ],
+                "ray_distance_m": 0.8174505576035916,
+                "render_triangle_ordinal": 167,
+                "source_face_ordinal": 83,
+                "source_obj_line": 292,
+                "source_vertex_ids": [
+                  89,
+                  77,
+                  95
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  0.9999999999999986,
+                  1.4388709027363016e-15,
+                  0.0
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14670,
+                  14671,
+                  14680
+                ],
+                "ray_distance_m": 0.8174505576035918,
+                "render_triangle_ordinal": 164,
+                "source_face_ordinal": 82,
+                "source_obj_line": 291,
+                "source_vertex_ids": [
+                  95,
+                  94,
+                  88
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.028079999610781697,
+                  1.5031899213790894,
+                  0.13920027017593373
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": 0.031058580821121562,
+          "classification": "eye_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8485091384247131,
+            "ties": [
+              {
+                "barycentric": [
+                  0.04387394805867295,
+                  0.32724798549388573,
+                  0.6288780664474414
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8485091384247131,
+                "render_triangle_ordinal": 8167,
+                "source_face_ordinal": 4854,
+                "source_obj_line": 45365,
+                "source_vertex_ids": [
+                  1329,
+                  5310,
+                  1319
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.034163413542040055,
+                  1.5014220666805747,
+                  0.10879464228687274
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8174505576035915,
+            "ties": [
+              {
+                "barycentric": [
+                  1.0000000000000036,
+                  1.1517451614289508e-15,
+                  -4.606980645715803e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14670,
+                  14697,
+                  14706
+                ],
+                "ray_distance_m": 0.8174505576035915,
+                "render_triangle_ordinal": 168,
+                "source_face_ordinal": 84,
+                "source_obj_line": 293,
+                "source_vertex_ids": [
+                  95,
+                  77,
+                  71
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.028079999610781642,
+                  1.5031899213790894,
+                  0.13920027017593395
+                ]
+              },
+              {
+                "barycentric": [
+                  1.000000000000001,
+                  0.0,
+                  -1.1517451614289508e-15
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14670,
+                  14706,
+                  14733
+                ],
+                "ray_distance_m": 0.8174505576035915,
+                "render_triangle_ordinal": 169,
+                "source_face_ordinal": 84,
+                "source_obj_line": 293,
+                "source_vertex_ids": [
+                  95,
+                  71,
+                  53
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.028079999610781642,
+                  1.5031899213790894,
+                  0.13920027017593395
+                ]
+              },
+              {
+                "barycentric": [
+                  1.7763568394002505e-15,
+                  0.0,
+                  0.9999999999999982
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14733,
+                  14671,
+                  14670
+                ],
+                "ray_distance_m": 0.8174505576035916,
+                "render_triangle_ordinal": 163,
+                "source_face_ordinal": 81,
+                "source_obj_line": 290,
+                "source_vertex_ids": [
+                  53,
+                  94,
+                  95
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  1.0000000000000175,
+                  -2.258481205127955e-15,
+                  -1.5244748134613696e-14
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14670,
+                  14680,
+                  14679
+                ],
+                "ray_distance_m": 0.8174505576035916,
+                "render_triangle_ordinal": 165,
+                "source_face_ordinal": 82,
+                "source_obj_line": 291,
+                "source_vertex_ids": [
+                  95,
+                  88,
+                  89
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  -6.8833827526759706e-15,
+                  8.127780618028773e-15,
+                  0.9999999999999988
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14679,
+                  14697,
+                  14670
+                ],
+                "ray_distance_m": 0.8174505576035916,
+                "render_triangle_ordinal": 167,
+                "source_face_ordinal": 83,
+                "source_obj_line": 292,
+                "source_vertex_ids": [
+                  89,
+                  77,
+                  95
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.02807999961078167,
+                  1.5031899213790894,
+                  0.13920027017593384
+                ]
+              },
+              {
+                "barycentric": [
+                  0.9999999999999986,
+                  1.4388709027363016e-15,
+                  0.0
+                ],
+                "boundary": true,
+                "group": null,
+                "helper_ids": [
+                  14670,
+                  14671,
+                  14680
+                ],
+                "ray_distance_m": 0.8174505576035918,
+                "render_triangle_ordinal": 164,
+                "source_face_ordinal": 82,
+                "source_obj_line": 291,
+                "source_vertex_ids": [
+                  95,
+                  94,
+                  88
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.028079999610781697,
+                  1.5031899213790894,
+                  0.13920027017593373
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_right/helper-min",
+      "selected_target_is_nearest_eye": true,
+      "side": "source_right",
+      "source_vertex_ids": [
+        95
+      ],
+      "target_ray_distance_m": 0.8174505576035916,
+      "world_ray_unit_direction": [
+        -0.19586902461175337,
+        -0.0569200089565127,
+        -0.9789767299471581
+      ],
+      "world_target_m": [
+        -0.02807999961078167,
+        1.5031899213790894,
+        0.13920027017593384
+      ]
+    },
+    {
+      "all_positive_body_hit_distances_m": [
+        0.8139102644992678,
+        0.8264656665094704,
+        0.8388029565022834,
+        0.9733974413764863
+      ],
+      "all_positive_eye_hit_distances_m": [
+        0.8300928785738205,
+        0.8359361461222111,
+        0.8359361461222116,
+        0.8359361461222782
+      ],
+      "camera_view_target_m": [
+        -0.03436992962364941,
+        -0.0092320319298623,
+        -0.8351782768190764
+      ],
+      "helper_ids": [
+        14738
+      ],
+      "kind": "source_vertex",
+      "modes": {
+        "normal_toward_camera_only": {
+          "body_minus_eye_m": -0.01618261407455268,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8139102644992678,
+            "ties": [
+              {
+                "barycentric": [
+                  0.10544187563893706,
+                  0.7384344317642593,
+                  0.15612369259680367
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8139102644992678,
+                "render_triangle_ordinal": 139,
+                "source_face_ordinal": 69,
+                "source_obj_line": 40580,
+                "source_vertex_ids": [
+                  106,
+                  99,
+                  107
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.014056546221581007,
+                  1.4981845532507712,
+                  0.14043351066135834
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8300928785738205,
+            "ties": [
+              {
+                "barycentric": [
+                  0.0011272516023899115,
+                  0.9281752483687976,
+                  0.07069750002881248
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14736,
+                  14737,
+                  14674
+                ],
+                "ray_distance_m": 0.8300928785738205,
+                "render_triangle_ordinal": 128,
+                "source_face_ordinal": 64,
+                "source_obj_line": 273,
+                "source_vertex_ids": [
+                  50,
+                  49,
+                  91
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.01696118423251397,
+                  1.4971599126118043,
+                  0.12454671778575477
+                ]
+              }
+            ]
+          }
+        },
+        "two_sided": {
+          "body_minus_eye_m": -0.01618261407455268,
+          "classification": "body_first",
+          "nearest_body": {
+            "ray_distance_m": 0.8139102644992678,
+            "ties": [
+              {
+                "barycentric": [
+                  0.10544187563893706,
+                  0.7384344317642593,
+                  0.15612369259680367
+                ],
+                "boundary": false,
+                "group": "body",
+                "ray_distance_m": 0.8139102644992678,
+                "render_triangle_ordinal": 139,
+                "source_face_ordinal": 69,
+                "source_obj_line": 40580,
+                "source_vertex_ids": [
+                  106,
+                  99,
+                  107
+                ],
+                "triangle_in_quad": 1,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.014056546221581007,
+                  1.4981845532507712,
+                  0.14043351066135834
+                ]
+              }
+            ]
+          },
+          "nearest_eye": {
+            "ray_distance_m": 0.8300928785738205,
+            "ties": [
+              {
+                "barycentric": [
+                  0.0011272516023899115,
+                  0.9281752483687976,
+                  0.07069750002881248
+                ],
+                "boundary": false,
+                "group": null,
+                "helper_ids": [
+                  14736,
+                  14737,
+                  14674
+                ],
+                "ray_distance_m": 0.8300928785738205,
+                "render_triangle_ordinal": 128,
+                "source_face_ordinal": 64,
+                "source_obj_line": 273,
+                "source_vertex_ids": [
+                  50,
+                  49,
+                  91
+                ],
+                "triangle_in_quad": 0,
+                "winding_normal_toward_camera": true,
+                "world_point_m": [
+                  -0.01696118423251397,
+                  1.4971599126118043,
+                  0.12454671778575477
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "probe_id": "source_right/helper-max",
+      "selected_target_is_nearest_eye": false,
+      "side": "source_right",
+      "source_vertex_ids": [
+        48
+      ],
+      "target_ray_distance_m": 0.8359361461222112,
+      "world_ray_unit_direction": [
+        -0.17949127363177536,
+        -0.06331737469894912,
+        -0.9817198137713612
+      ],
+      "world_target_m": [
+        -0.01800999976694584,
+        1.4967899322509766,
+        0.1188102662563324
+      ]
+    }
+  ],
+  "request": {
+    "action": "quality",
+    "quality": "frozen64",
+    "request_id": "w65-sf-reference"
+  },
+  "sample": {
+    "clip_id": "b1_arm_rehearsal_v1",
+    "completed": false,
+    "playing": false,
+    "position_seconds": 2,
+    "serial": 2,
+    "source_seconds": 2,
+    "timeline_id": "probe-entry"
+  },
+  "schema": "b1-eye-cpu-ray-candidates-v1",
+  "scope": "sparse CPU geometry hypotheses; NOT GPU pixel ownership or quality acceptance",
+  "shape": {
+    "jaw_drop": 0.0,
+    "torso_length": -1.0
+  },
+  "source_envelope": {
+    "bytes": 11351430,
+    "sha256": "35a0a550633813468caf757916498937bfad73361fd64cc166f3ce15228926b3"
+  }
+}

@@ -402,7 +402,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "asset_root_required": "b1_validate_requires_validate_work_json_asset_root",
             "other_errors": "read_code_and_message_input_command_validation_and_persistence_failures_before_save_do_not_commit_output"
         },
-        "asset_validation": "b1_validate_requires_explicit_asset_root_and_authenticates_exact_manifest_and_all_thirteen_bounded_files_glb_asset_root_optional",
+        "asset_validation": "b1_validate_requires_explicit_asset_root_and_authenticates_exact_selected_base_and_appearance_manifests_and_all_their_bounded_payloads_glb_asset_root_optional",
         "studio_control": false
     }))
 }
@@ -494,7 +494,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             } else if document.profile.backend.is_b1() {
                 return Err(CoreError::new(
                     "asset_root_required",
-                    "B1 validation requires validate <work.json> <asset-root> to authenticate all thirteen files",
+                    "B1 validation requires validate <work.json> <asset-root> to authenticate all payloads of the selected base and appearance",
                 ));
             }
             respond(
