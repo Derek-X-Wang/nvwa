@@ -1,0 +1,2981 @@
+{
+  "scope": "Actual Web batch-a source-grounded CPU export verification",
+  "records": [
+    {
+      "id": "w64-t0-j0-arm-s0",
+      "capture_bytes": 11348721,
+      "capture_sha256": "a1418d3404f87bbdfe6b4acd8b7fb5778e19d60a08830d1579505ab149199a24",
+      "sender_command_sha256": "8c163071cb1edbfae7028f108d764b19aab0eaa41ff7ba58f7e581059952dc37",
+      "current_compact_report_sha256": "00fbbf315cdfffb313295370e43f00ac388df8a2ca6808061f2912b31e34f676",
+      "UI_Store_text_sha256": "202feca3b72f25994f8d013a5abcfd6df0ce7f3f580d9c49cac056e0ef98b715",
+      "checker_result_sha256": "149c09e1e7ade4a2990ed4cb4e1201e4ed1230ed2f506692a78e083ddb0d41fc",
+      "request": {
+        "request_id": "w64-t0-j0-arm-s0",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0,
+        "torso_length": -1,
+        "jaw_drop": 0
+      },
+      "revision": 9,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 1,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j0-arm-s2",
+      "capture_bytes": 11347739,
+      "capture_sha256": "910f3eeec74eab6cb7b8b0e283d0b51454870c93bf257678b41d4bace032de0d",
+      "sender_command_sha256": "d9f1de013bc82b55d99b22babd2a0c88722f8c86255ebe9d7ba94392f739f862",
+      "current_compact_report_sha256": "d694af0afc32403dca2a0202d2d58a53d7069772f10772b44210eac05181be6c",
+      "UI_Store_text_sha256": "974618aa94838bb44b3c4437110012f6fae48c2fdce2d1c1144b454a6bc74724",
+      "checker_result_sha256": "4c6a2eee1dd837dc9ff2804e9844514b98238d54d65a4aa67ec8f4b0a8d5af7d",
+      "request": {
+        "request_id": "w64-t0-j0-arm-s2",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 2,
+        "torso_length": -1,
+        "jaw_drop": 0
+      },
+      "revision": 9,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "26bd2da67ad2721fbc73e8015ff6b083e6f5733b31afc39d3fc70bee40cb0961"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j0-arm-s4",
+      "capture_bytes": 11348715,
+      "capture_sha256": "78ba94e430a79ca6be7fd84cc585af144589c2f5d7f29030e1ad4789137785e0",
+      "sender_command_sha256": "4e6e70645711ab5bc76374451ff4c2b1b255b0ec9658aa7c1baa60a617526cd4",
+      "current_compact_report_sha256": "5a09230afec66087233004e45dc53283f9929874eb88dc6bbc556c772f5b8099",
+      "UI_Store_text_sha256": "f3fe74fe9e1490fe9c1901b7e8a0d17dc029bccf26f43fbe6d2b437f7075d91a",
+      "checker_result_sha256": "df477c34bacda572b729e9a0286eb6cc0f73313370e83e58137acdebfce3ef3d",
+      "request": {
+        "request_id": "w64-t0-j0-arm-s4",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 4,
+        "torso_length": -1,
+        "jaw_drop": 0
+      },
+      "revision": 9,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 3,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j0-knee-s0",
+      "capture_bytes": 11348697,
+      "capture_sha256": "2733e1cbef3cfba2a9a93d41dc0ffa4bab5c01a4b2468a4007aadb6c6b36bd6e",
+      "sender_command_sha256": "e07c49f083b82e90a5bc69bec190dc43e913c4302486a303d95b9d1f688b25b9",
+      "current_compact_report_sha256": "7cce8230586704a80175aff3fb28a825b1ae577b46577ac0c2479e8b47670bef",
+      "UI_Store_text_sha256": "8702eab19f790d19ae83390af16fb6137948592ce47280abc28105f8d9f290be",
+      "checker_result_sha256": "ae92caaa0e9aa1ff49f10aedf86d5d204b4630528c1a89bddf264513c1ddb933",
+      "request": {
+        "request_id": "w64-t0-j0-knee-s0",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 0,
+        "torso_length": -1,
+        "jaw_drop": 0
+      },
+      "revision": 10,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 4,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j0-knee-s2",
+      "capture_bytes": 11349705,
+      "capture_sha256": "1a1125261ce918261b7644c3f0fbb66ae14c0db5b6eb93df60738289f9cfe513",
+      "sender_command_sha256": "afe605b27440edd023a6a71ab3016e6abaa92d8620e2d633840663f5bd48fe5a",
+      "current_compact_report_sha256": "6cd2e772f12322e8166893e168aa7f5066e91e9ff8d94545466732dcef627bd9",
+      "UI_Store_text_sha256": "92128402dac02ef1bbadc641196e54ffe19a7d508e19d1252977d5e641696d01",
+      "checker_result_sha256": "d7b26e96cb922baf9c4398972db5e30907bc8a095081e42234a8c1599a5b83ca",
+      "request": {
+        "request_id": "w64-t0-j0-knee-s2",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 2,
+        "torso_length": -1,
+        "jaw_drop": 0
+      },
+      "revision": 10,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 5,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j0-knee-s4",
+      "capture_bytes": 11348693,
+      "capture_sha256": "326297b40db3f994d60ba20cef81ce25fc74960e44170fb1bd34de04cfc2a3d9",
+      "sender_command_sha256": "4bf2ef160ae82685ea94ee35aa99ddda363551f18ea560efd25f338e97e4ce53",
+      "current_compact_report_sha256": "1b8b8b9f1e7003c04a7b859b35dafa42c4d84d035dc90bd2c8fd9af5b1fb4b5b",
+      "UI_Store_text_sha256": "88593b04ae65c177d0b03faf00387f492cbb8f819799cde2a78e2aa20fd2b778",
+      "checker_result_sha256": "40e99484b68b8d8ff0be0467d8080185b18505f58ea316468ae6152395ee871e",
+      "request": {
+        "request_id": "w64-t0-j0-knee-s4",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 4,
+        "torso_length": -1,
+        "jaw_drop": 0
+      },
+      "revision": 10,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 6,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j1-arm-s0",
+      "capture_bytes": 11348835,
+      "capture_sha256": "2e063065f5aaf92d5baa7128947abfc68de7cebcd75e2ab4e28d3271c6980358",
+      "sender_command_sha256": "6ce0da2be4db2282ea7980bc2c9b31feb8e65e20a7f9194002f7b79e2539971e",
+      "current_compact_report_sha256": "928d7274f61a4729b06e8a8e5f045dce99c719f61f70bd5c1997e3a4a13f3b48",
+      "UI_Store_text_sha256": "1a316634debea37b76e4232d746848b210117052fd1ca42476f83ea9b469f06c",
+      "checker_result_sha256": "2ba863dbd9eca02ea7ff02b2669fb51acbfeb10a1962eead85513c6a8e9887f9",
+      "request": {
+        "request_id": "w64-t0-j1-arm-s0",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0,
+        "torso_length": -1,
+        "jaw_drop": 0.5
+      },
+      "revision": 12,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 1,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j1-arm-s2",
+      "capture_bytes": 11347855,
+      "capture_sha256": "41693340dc5f08d43de77527488564ce75ad8bc141b9b14b865c28d105eb711d",
+      "sender_command_sha256": "995b90951ae97d01e327d06bc8c4f4dd980f78ec361370f1384a3d97f8ac9fde",
+      "current_compact_report_sha256": "2dc98251a16fed94e118ec2968d8f3f85c5f1813ed2b7dd0632fc52851987187",
+      "UI_Store_text_sha256": "0f3fb7905839587adc9e8a7b71cc92e51aaee86740ac444824be5826f7a0bc79",
+      "checker_result_sha256": "ae4173fe89c7fed8dfc84eae19f352a59a08b8a94ca220c08a3bacb43c177d64",
+      "request": {
+        "request_id": "w64-t0-j1-arm-s2",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 2,
+        "torso_length": -1,
+        "jaw_drop": 0.5
+      },
+      "revision": 12,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "26bd2da67ad2721fbc73e8015ff6b083e6f5733b31afc39d3fc70bee40cb0961"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j1-arm-s4",
+      "capture_bytes": 11348831,
+      "capture_sha256": "b80fce594ed7402f8a3d67c64b7e7b105f0b5862b4939e221e418ab5cbba9636",
+      "sender_command_sha256": "9e74d0eae40cbf5dc365ed7db92c06c92e802e01c7f18968c8c47c00cf8acd47",
+      "current_compact_report_sha256": "41e837384248b35179276ea5015ebc673ba766346aa4cf1eb4a3dad514b6ae32",
+      "UI_Store_text_sha256": "275f9562745b913aa6d1c5f7027584cde05345ffe40f5ae88c28823b53bffbce",
+      "checker_result_sha256": "ebb6cfea8dcc0f52fe8769c6e6b676efd6e4b24747858d3264fd15e158087278",
+      "request": {
+        "request_id": "w64-t0-j1-arm-s4",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 4,
+        "torso_length": -1,
+        "jaw_drop": 0.5
+      },
+      "revision": 12,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 3,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j1-knee-s0",
+      "capture_bytes": 11348814,
+      "capture_sha256": "b715383958517c99cb5eb2f190fb558176df06621091f9445232ecc407600150",
+      "sender_command_sha256": "24c5df35621db7304de4b5107c67b59e13848b3eac0a621d5819ff1ef681d9a2",
+      "current_compact_report_sha256": "85fda083d77a9707a0a0b1aff6d4a1ae98c41e0764baceb0f7900feb99117594",
+      "UI_Store_text_sha256": "3fdf5bec6a00aed37bd9c4c3c509babbbd19facbac5e9bb6ebf875f55edfe1c5",
+      "checker_result_sha256": "209db76cedd9a340dd7a56cd5bd98d67c63a921ccf7c632b8f926332049b918b",
+      "request": {
+        "request_id": "w64-t0-j1-knee-s0",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 0,
+        "torso_length": -1,
+        "jaw_drop": 0.5
+      },
+      "revision": 13,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 4,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j1-knee-s2",
+      "capture_bytes": 11349822,
+      "capture_sha256": "a8857f1a9227b87141a72dcf762da58ab8fc308354c7bb5cece50a335bd5a00b",
+      "sender_command_sha256": "951d0d52d1377e09e6faee044285760798c629ec97ccaedb500ebc444ec58938",
+      "current_compact_report_sha256": "48d894161d36982d7248ef3d07078fd65eee3c612ba7c068dba2bfa5093b6434",
+      "UI_Store_text_sha256": "ec99e125c9055cd1396b77d7a7a89eabf869a1eb6b9ae269299565b201aa09a3",
+      "checker_result_sha256": "5ba3607c3b6954d4073e4c5affc02f396bc66e494ec956958eb0c35da90a1000",
+      "request": {
+        "request_id": "w64-t0-j1-knee-s2",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 2,
+        "torso_length": -1,
+        "jaw_drop": 0.5
+      },
+      "revision": 13,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 5,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j1-knee-s4",
+      "capture_bytes": 11348810,
+      "capture_sha256": "891d4464c22a10953f1c414698e1e69384ec225ff815c453f77558628b762754",
+      "sender_command_sha256": "ae7bfee92735b88e30aa3df2dcca0ae1470c4df87a9a0684559ac419490b64b1",
+      "current_compact_report_sha256": "fea9bb188d8716f65e0c708eed1bc6ca384232a1c9a2a0dbba273a8ae31380bb",
+      "UI_Store_text_sha256": "c0657101b2ab62fbeda37fc16172e5799b75c66a2f46d1efa6938ca17a292b6d",
+      "checker_result_sha256": "2eb9d4983262839d8c264db8c68c2e8ccf4477fa4049ac058767558e2890c27a",
+      "request": {
+        "request_id": "w64-t0-j1-knee-s4",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 4,
+        "torso_length": -1,
+        "jaw_drop": 0.5
+      },
+      "revision": 13,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 6,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j2-arm-s0",
+      "capture_bytes": 11348803,
+      "capture_sha256": "67e547af9526f8c184cd32f994f50685fe2a5d8a5df2f66a8606d601c9536ff8",
+      "sender_command_sha256": "9b9a73ad6ae44a2b49ad0264713e291841f599ea3427efbd94d1ff90894d393d",
+      "current_compact_report_sha256": "8ecaf803e25bbcfef3aa50e174f0378f08d2ccfb642f1f45021b9b7d9d4d91db",
+      "UI_Store_text_sha256": "71f245cc1914110495632e568da503b45d82e7b79d2ce90363e307854ff3c90c",
+      "checker_result_sha256": "63640c17a3dd0eac0e29f21220c120054b370babeec0812868dea1e69a7a236b",
+      "request": {
+        "request_id": "w64-t0-j2-arm-s0",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0,
+        "torso_length": -1,
+        "jaw_drop": 1
+      },
+      "revision": 15,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 1,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j2-arm-s2",
+      "capture_bytes": 11347821,
+      "capture_sha256": "68a89b109de32206ca582b16ee97588550858ce556c1ec0be994b36445e2b82d",
+      "sender_command_sha256": "960aa8cf445675f6ca5559fc0963d47cc4a1ca64dec8603e40e97d6f3eee20e5",
+      "current_compact_report_sha256": "ee4bdcb4128911c755f188cc09f61a81cb98b858d8e4faed3d0ef1d2bc916fde",
+      "UI_Store_text_sha256": "f75cd521f9d6c2d031b6643d06be130e9c5f5f4c6409e0eb132e045111dcd17b",
+      "checker_result_sha256": "176c0b8639d1ca286e3085f97cf9c4893c4fea4bcf495c39e06c6b2198b5eb04",
+      "request": {
+        "request_id": "w64-t0-j2-arm-s2",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 2,
+        "torso_length": -1,
+        "jaw_drop": 1
+      },
+      "revision": 15,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "26bd2da67ad2721fbc73e8015ff6b083e6f5733b31afc39d3fc70bee40cb0961"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j2-arm-s4",
+      "capture_bytes": 11348797,
+      "capture_sha256": "8efcd138be2439147807d7b3bf9a9f6c67fba17988a9f94511d7a69256230f00",
+      "sender_command_sha256": "ee6917aba2618ed50cc7fa3123bdbe9a51ad8f895403da0c1bd41474050b6f2d",
+      "current_compact_report_sha256": "b1ae1bf798bb025f0f5c66301cd8a3cc3121d189985fdbbb8f318a3894896e6d",
+      "UI_Store_text_sha256": "7e07fdba0949fead35ab4c21af0d7be0a804b3ef33190227cb0e3b4aec6c14c9",
+      "checker_result_sha256": "0ef2ab91d669e862f2923aff950a97a5b0381bfd61710c4e821e11d1409001ae",
+      "request": {
+        "request_id": "w64-t0-j2-arm-s4",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 4,
+        "torso_length": -1,
+        "jaw_drop": 1
+      },
+      "revision": 15,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 3,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j2-knee-s0",
+      "capture_bytes": 11348776,
+      "capture_sha256": "39aa681afc71995badc8fbd4efab1513aafd4143437e16af457dea98370f52c2",
+      "sender_command_sha256": "2fcecdfcbedb1284a6adf5d135673ecd07b5f1f918d76c8a7df670b19ff726cd",
+      "current_compact_report_sha256": "7b4ad4dba771b711e07d7e1e866358548a49ad55bc911ccb99091c2bc2526aa7",
+      "UI_Store_text_sha256": "5a6d9e13d776d95f9a8eea08e8a02e2e87527f5fafe0ac161c5089072fd5b949",
+      "checker_result_sha256": "8022438ae7d6731a975218757b820b8bf61a6281c11b572b9a6cb4787f1d0d1c",
+      "request": {
+        "request_id": "w64-t0-j2-knee-s0",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 0,
+        "torso_length": -1,
+        "jaw_drop": 1
+      },
+      "revision": 16,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 4,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j2-knee-s2",
+      "capture_bytes": 11349784,
+      "capture_sha256": "88b04fe90ca0b44e18c6eb55ed78fcfc03fefc4e772a240999dcf4308d448d78",
+      "sender_command_sha256": "88ceb066ee5cf9123c148a51d4dbc75777b47d1f2d1eef38fc46ddfc11b9ccc8",
+      "current_compact_report_sha256": "a7c2363b6c604d24cd61b7a0d014781874ddbf57ba79cf6e8fdf91566a1af8dc",
+      "UI_Store_text_sha256": "667999c6041f730e547f3c1c483e29ec000b0b868c033812e132a70998c61d14",
+      "checker_result_sha256": "365f3dac5a3a0c05b0c67823cef1be6f9ea6f895748eb50e709c7ee63d34a70a",
+      "request": {
+        "request_id": "w64-t0-j2-knee-s2",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 2,
+        "torso_length": -1,
+        "jaw_drop": 1
+      },
+      "revision": 16,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 5,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t0-j2-knee-s4",
+      "capture_bytes": 11348772,
+      "capture_sha256": "320c96e5d52a87a7ad21636496567c362259a0f145e5bff7795d04fb2ee04e92",
+      "sender_command_sha256": "f53dff2b94ad012e132c9b0e68f0b5d7e1f183d17cb722f8308ca96b02db9bd6",
+      "current_compact_report_sha256": "7ba47e7c1b7888bbd3b5085cadb77762378171312b6d8b23bc5bee279006fef2",
+      "UI_Store_text_sha256": "8badc4339da71ce0cba79eab4f238a7100a44f4dade977c334f573a306532600",
+      "checker_result_sha256": "e498fe44868801c4e6888818d70a1b239549e8c3d59c72009f8415cf3bd321f7",
+      "request": {
+        "request_id": "w64-t0-j2-knee-s4",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 4,
+        "torso_length": -1,
+        "jaw_drop": 1
+      },
+      "revision": 16,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 6,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.3036130952492897e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "ccfaf9adeb968a0cf45106908543f0e28a1fd8f729f598482d9e84e94b5c9f66"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 2.220446049250313e-16,
+          "actual_upload_LBS_error_m": 2.9801573209198295e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "6a30d5fedfcb022fbf6637f940843d74b546cc72f0338465f7b72f4ea9ee5601"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j0-arm-s0",
+      "capture_bytes": 11342060,
+      "capture_sha256": "d8fe31f52d0f36de7d80f09502915ec60139651bddcbe3e973ef0a0c9fb27fa1",
+      "sender_command_sha256": "dd7c106973a26887e77b881d35f6720bb8f400102679afc585130bd6c5bbad9d",
+      "current_compact_report_sha256": "bd5cce3bc6a8f2204285344655efdb5b973e3a3903eec402b0110bfba4673606",
+      "UI_Store_text_sha256": "77fedb10d0ed2426a3069cf024cb37309413606c9b4af2614f0ac5bbd2bfbb26",
+      "checker_result_sha256": "c958fb07d45900790fac5682f9bcab1066bfc0623abc904479e94a16dca1d186",
+      "request": {
+        "request_id": "w64-t1-j0-arm-s0",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0,
+        "torso_length": 0,
+        "jaw_drop": 0
+      },
+      "revision": 18,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 1,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "58fb88c0e148dd39e418e1af098e9d8ed9fd03f95ed6ed8fe28bc05f811d349d"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j0-arm-s2",
+      "capture_bytes": 11341216,
+      "capture_sha256": "ad1947056ef8c3278b5623348e710e4e5c091bf6d0b46926dc184f586bf6749d",
+      "sender_command_sha256": "233baece5c50900cdf44eebb1b9c6610ff360986f15dc8eeae8f033895dcc72a",
+      "current_compact_report_sha256": "9798cbf776dbbee29ef0240c78717ce3665daa3ca6532b3e11a94f8bab0b04ef",
+      "UI_Store_text_sha256": "f16dd2767827440930091e15a38bd96d04e0bc2579703b7d8164799c71b501af",
+      "checker_result_sha256": "24035f4a06ce4d41b8de441acea3a022c5e1326e9a3c4f58224eb604e8f8a3c8",
+      "request": {
+        "request_id": "w64-t1-j0-arm-s2",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 2,
+        "torso_length": 0,
+        "jaw_drop": 0
+      },
+      "revision": 18,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "a84c2d92b7179bd22ee7b8b5114fa007b8ae2f89f5fc846a425e9d7f0d19f9ae"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j0-arm-s4",
+      "capture_bytes": 11342058,
+      "capture_sha256": "b0b08678702318a2ef176e34b3f7fdfdad9becb1088a838090d8e84bac918a99",
+      "sender_command_sha256": "3fe96cb7ad19e118a99ef91027aee0b036f8dfb5b899e886001f1abf7c7cc7d7",
+      "current_compact_report_sha256": "bdfb049accd8d14e27b61b2ea441111dd00c70a015868efde2d466b534bc4193",
+      "UI_Store_text_sha256": "03edb750b87cee695596fec1bf04009178faa4253967c42721629816dd8db2cf",
+      "checker_result_sha256": "2108e9d262e6ca80a983dd9aef410caf13883dc30a7242421f60555d286ddd39",
+      "request": {
+        "request_id": "w64-t1-j0-arm-s4",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 4,
+        "torso_length": 0,
+        "jaw_drop": 0
+      },
+      "revision": 18,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 3,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "58fb88c0e148dd39e418e1af098e9d8ed9fd03f95ed6ed8fe28bc05f811d349d"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j0-knee-s0",
+      "capture_bytes": 11342033,
+      "capture_sha256": "36e327250cc9feffcf806202eb2cdcc1594b601adaade8df9b03d800b1b58e5d",
+      "sender_command_sha256": "3476e1e0e01f233746e8b18bdd1b47b4bfe9ef1869895d60a918aead0c795372",
+      "current_compact_report_sha256": "3d44032e2b9b142b485a36ecf54a76e07e3a0952906a7eedf576b04a7a5b0a83",
+      "UI_Store_text_sha256": "edb7f37406dc24994066aa8583ab4b8dc3033eb2b0c604b05857184343e32aaa",
+      "checker_result_sha256": "dc764ee900f02b11ac4b08cb510befcd7c631731bcd47760e7315743e06b6470",
+      "request": {
+        "request_id": "w64-t1-j0-knee-s0",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 0,
+        "torso_length": 0,
+        "jaw_drop": 0
+      },
+      "revision": 19,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 4,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "58fb88c0e148dd39e418e1af098e9d8ed9fd03f95ed6ed8fe28bc05f811d349d"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j0-knee-s2",
+      "capture_bytes": 11343041,
+      "capture_sha256": "d8c6b0c88a05de6f8c24485040ea979e76c4baef1dfb3d3f31b03b0d337aad70",
+      "sender_command_sha256": "94290c77affc01ff5ca49730cd5130ed044bad2fbc02ff916569053d1f752722",
+      "current_compact_report_sha256": "ec3dbc43bbab42b9299527e03163ab6186b3b1eb01b06724e2a597bab1833809",
+      "UI_Store_text_sha256": "0fa1f2b3da2f348826a28d319162ccb88e26bc6dc890d41c050e8363ca3ddd15",
+      "checker_result_sha256": "d97ea60d5f58ae87389f7fa92348438175d8869cea01646f2e61559c62f8d38b",
+      "request": {
+        "request_id": "w64-t1-j0-knee-s2",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 2,
+        "torso_length": 0,
+        "jaw_drop": 0
+      },
+      "revision": 19,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 5,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "58fb88c0e148dd39e418e1af098e9d8ed9fd03f95ed6ed8fe28bc05f811d349d"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j0-knee-s4",
+      "capture_bytes": 11342029,
+      "capture_sha256": "200022da24b4c8075768bd34788a74520946e274f5acd976b08f73255e95ae3b",
+      "sender_command_sha256": "6449bf53b12d1a41de13e91dc2b429a175b393894509faf1b36005f8c0467db8",
+      "current_compact_report_sha256": "e361e5264322b4233813b45b355f500b402b2109aca05742bcdd42eeede755da",
+      "UI_Store_text_sha256": "29a9d8b7c1e41a3e687335360d3e233a8db3b70c76096a5472320f30de92338c",
+      "checker_result_sha256": "120ae29e05adc33f4a3754da6ef4ac4653186592d811280f4e92cc00aca0d36f",
+      "request": {
+        "request_id": "w64-t1-j0-knee-s4",
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 4,
+        "torso_length": 0,
+        "jaw_drop": 0
+      },
+      "revision": 19,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_knee_flex_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 6,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "58fb88c0e148dd39e418e1af098e9d8ed9fd03f95ed6ed8fe28bc05f811d349d"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j1-arm-s0",
+      "capture_bytes": 11342170,
+      "capture_sha256": "41fa379d8c4da55bf7677e95365d5ff848aaaecd02f58bb69e97da4e0c446bfd",
+      "sender_command_sha256": "5db5a932c2272f2a4fce83e2d1ee392307b8881f56bb80c983c640c38276a1e9",
+      "current_compact_report_sha256": "98ca9ca855437a940c41235b51badbc1add39592beea2b7c85569fb2e6935c7e",
+      "UI_Store_text_sha256": "90188d24df82c0b60da7f337137e1509a34020191d6bfbe0eda9edca8c96d0c5",
+      "checker_result_sha256": "361c533d33b79c45a79cdb47df85f2d5970a1a40cbee1a445ad3a01c791c9391",
+      "request": {
+        "request_id": "w64-t1-j1-arm-s0",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0,
+        "torso_length": 0,
+        "jaw_drop": 0.5
+      },
+      "revision": 21,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 0,
+        "serial": 1,
+        "source_seconds": 0,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "58fb88c0e148dd39e418e1af098e9d8ed9fd03f95ed6ed8fe28bc05f811d349d"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j1-arm-s2",
+      "capture_bytes": 11341324,
+      "capture_sha256": "2ee58ce961944fe6a0fba9bb906e9154450ab2e6391771095dd92da5405d0b55",
+      "sender_command_sha256": "0a23887c5e93fb73949c03cbecf3b4e04341eb55864e8cdf22d755551eab8105",
+      "current_compact_report_sha256": "19d53b7ff5937791d1350123672f83fd27baa0ba8b1bcf79e90318e6ba6670a8",
+      "UI_Store_text_sha256": "44119b7dcf0c15b0ee5aa4f044a5bb2d5f37c5cb08858f38566d55c33e52819a",
+      "checker_result_sha256": "2da36597e40e16b58f8950c8cdab67b172dc5fbb6f3417340432253c85215398",
+      "request": {
+        "request_id": "w64-t1-j1-arm-s2",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 2,
+        "torso_length": 0,
+        "jaw_drop": 0.5
+      },
+      "revision": 21,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "a84c2d92b7179bd22ee7b8b5114fa007b8ae2f89f5fc846a425e9d7f0d19f9ae"
+        }
+      }
+    },
+    {
+      "id": "w64-t1-j1-arm-s4",
+      "capture_bytes": 11342166,
+      "capture_sha256": "7031c64d2fe8022ac34d557d631a90b851da7a420e9f0d763c598e19c2a3b735",
+      "sender_command_sha256": "af45ce6a0268bb05545aa012a203ec6da404322e48b8e9b625bbd90bda6984c4",
+      "current_compact_report_sha256": "4576cd8dcb48f6814e6933bb737bf46d3745a93330698ef8476e074baafacbb9",
+      "UI_Store_text_sha256": "3fe9809775cb21580dc35642d2ce4110b66348a2b9a07909006fe9a80d33de5a",
+      "checker_result_sha256": "13b5e326e7012abedcfc54865cda5a04dcac31804971cf5d80b269ed81f70f56",
+      "request": {
+        "request_id": "w64-t1-j1-arm-s4",
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 4,
+        "torso_length": 0,
+        "jaw_drop": 0.5
+      },
+      "revision": 21,
+      "generation": 1,
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": true,
+        "playing": false,
+        "position_seconds": 4,
+        "serial": 3,
+        "source_seconds": 4,
+        "timeline_id": "probe-entry"
+      },
+      "bones": 53,
+      "core_parts": [
+        {
+          "name": "body",
+          "render_vertices": 22077,
+          "source_vertices": 19158,
+          "indices": 68676
+        },
+        {
+          "name": "garment",
+          "render_vertices": 1986,
+          "source_vertices": 1797,
+          "indices": 10308
+        }
+      ],
+      "accessories": {
+        "eyes": {
+          "source_vertices": 96,
+          "render_corners": 96,
+          "rest_error_m": 0.0,
+          "actual_upload_LBS_error_m": 1.560509110820618e-08,
+          "normalized_positive_weight_L1_max": 0.0,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 172,
+          "max_positive_influences": 1,
+          "source_ids_over4": [],
+          "normal_unit_max_error": 3.0602123501921596e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": false,
+            "cull_mode": "Some(Back)",
+            "texture": "eyes/materials/brown_eye.png",
+            "image_width": 1024,
+            "image_height": 1024,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "f4a6f9eadb0343486206ae8981b59078dace51689a316cf843a6ec16ef669e5e",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "8800fe698dab0335a02362ff5f2fa9ca1b6db21fb666fb1687bb7da369dc17f9"
+        },
+        "hair": {
+          "source_vertices": 865,
+          "render_corners": 991,
+          "rest_error_m": 3.3306690738754696e-16,
+          "actual_upload_LBS_error_m": 2.9708241866543972e-08,
+          "normalized_positive_weight_L1_max": 1.945058697438995e-16,
+          "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+          "normal_check": "finite/unit only",
+          "tangents": "NOT-EXPORTED",
+          "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+          "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked",
+          "triangles": 1050,
+          "max_positive_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "normal_unit_max_error": 4.3199539057070524e-08,
+          "material": {
+            "base_color": "LinearRgba(LinearRgba { red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 })",
+            "roughness": 0.699999988079071,
+            "metallic": 0,
+            "alpha": "Mask(0.5)",
+            "double_sided": true,
+            "cull_mode": "None",
+            "texture": "hair/short04/short04_diffuse.png",
+            "image_width": 2048,
+            "image_height": 2048,
+            "format": "Rgba8UnormSrgb",
+            "decoded_rgba_sha256": "c7ba27fdb3c6c3872f9e0c2c1ddc1b7f042d9fe8211ad0034d1dcb0e5d030bdb",
+            "observation": "current entity MeshMaterial3d -> Assets<StandardMaterial> -> actual base_color_texture -> Assets<Image> CPU bytes"
+          },
+          "CPU_upload_sha256": "58fb88c0e148dd39e418e1af098e9d8ed9fd03f95ed6ed8fe28bc05f811d349d"
+        }
+      }
+    }
+  ],
+  "exclusions": [
+    {
+      "id": "w64-accessories-01",
+      "reason": "Original UI Store receipt was not separately saved; root authorized exclusion. No receipt was derived from capture bytes."
+    }
+  ]
+}

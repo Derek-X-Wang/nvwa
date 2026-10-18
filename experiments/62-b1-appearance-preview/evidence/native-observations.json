@@ -1,0 +1,100 @@
+{
+  "scope": "Actual native visual smoke subset only; not native full numerical/export/failure or product appearance admission",
+  "binary_sha256": "74106adbcb1ca7fd6b61f361c967e73c04c5aa3fee17e826d3efda57519fc5c8",
+  "work_unchanged_sha256": "92ab229ada8b521d912dab5ae85dbb439538eb262ca3a8d10dbdef93809cba77",
+  "commands_submitted": [
+    {
+      "request_id": "native62_skin_1",
+      "action": "skin"
+    },
+    {
+      "request_id": "native62_plain_2",
+      "action": "plain"
+    },
+    {
+      "request_id": "native62_skin_3",
+      "action": "skin"
+    }
+  ],
+  "native_command_ack": "NOT-RUN; frozen native binary does not expose report/frame output. File request submission is not treated as successful binding proof; actual visible changes below are screenshot observations.",
+  "actual_observations": [
+    {
+      "image": "01-plain.jpg",
+      "torso": 0.75,
+      "jaw": 1.0,
+      "revision": 7,
+      "seconds": 0.0,
+      "visible": "original brown plain material; real character/clothes"
+    },
+    {
+      "image": "02-skin.jpg",
+      "torso": 0.75,
+      "jaw": 1.0,
+      "revision": 7,
+      "seconds": 0.0,
+      "visible": "skin texture visible on face/body in full-body view"
+    },
+    {
+      "image": "03-skin-paused-arm.jpg",
+      "seconds": 2.24,
+      "visible": "actual Restart/Pause; arm raised; skin visible"
+    },
+    {
+      "image": "04-skin-refit-knee.jpg",
+      "torso": 0.0,
+      "jaw": 1.0,
+      "revision": 8,
+      "seconds": 7.0,
+      "visible": "normal timeline slider seek and torso click refit; knee and skin visible"
+    },
+    {
+      "image": "05-plain-restored.jpg",
+      "torso": 0.0,
+      "revision": 8,
+      "seconds": 7.0,
+      "visible": "original brown material visible again, same displayed pose"
+    },
+    {
+      "image": "06-skin-reapplied.jpg",
+      "torso": 0.0,
+      "revision": 8,
+      "seconds": 7.0,
+      "visible": "skin texture visible again, same displayed pose"
+    }
+  ],
+  "screenshots": {
+    "01-plain.jpg": {
+      "bytes": 332356,
+      "sha256": "9130f4a0cebda4cdcda407234fb3ad3b63d62b911bd3f2ff7fcd4528c43088ff"
+    },
+    "02-skin.jpg": {
+      "bytes": 331241,
+      "sha256": "5aaf23a9879938b5d04d98837a309ce1e4ae0b309af9c44845f15e77082e737b"
+    },
+    "03-skin-paused-arm.jpg": {
+      "bytes": 338891,
+      "sha256": "6543926d60ad3b76c81a7fcb81a1daaed2b8bad93154f5893c1afad005c421c2"
+    },
+    "04-skin-refit-knee.jpg": {
+      "bytes": 331023,
+      "sha256": "f3d3c1d98712c9d80f780556e1fd0339e439855d967cf18afb63ea40295800ea"
+    },
+    "05-plain-restored.jpg": {
+      "bytes": 332100,
+      "sha256": "ec83335a93d429067bc6c80524ed9075313edc412834101a0099a2302e74e47f"
+    },
+    "06-skin-reapplied.jpg": {
+      "bytes": 331009,
+      "sha256": "ef0f7e529ac27371366f9beafda909c092455fc0e1b64db9066fbc70708187c8"
+    }
+  },
+  "limits": [
+    "No full native numerical/material/UV/image diagnostic export was produced",
+    "Native has no dedicated experimental toggle/status/not-saved panel; named isolated app only, not a delivered end-user entry",
+    "No native invalid command or missing-asset recovery testing in this visual subset",
+    "No Save; temporary skin not persisted; working file hash unchanged",
+    "No native/Web same-frame pixel metric, GPU vertex readback, close-up quality or performance claim",
+    "Eyes/hair not rendered; garment and M2 quality HOLD unchanged"
+  ],
+  "cleanup": "Closed exact owned native test window; process exit verified; copied app/build/raw evidence retained for review"
+}

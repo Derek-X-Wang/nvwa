@@ -1,0 +1,69 @@
+[
+  {
+    "event": "live_playback",
+    "observedFrom": "CUA runtime observation and compact live_start report in web-observations.json; full retained live_pause.json record only",
+    "startedAt": 0,
+    "playingSampleObserved": 0.006899999920278788,
+    "advancedProof": {
+      "phase": "stale",
+      "storeEnabled": false
+    },
+    "pausedAt": 3.324298143386841,
+    "pausedRecord": "live_pause.json"
+  },
+  {
+    "event": "invalid_command_persistent_rejection",
+    "first": {
+      "report": {
+        "error": "invalid action",
+        "phase": "error"
+      },
+      "storeEnabled": false
+    },
+    "later": {
+      "report": {
+        "error": "invalid action",
+        "phase": "error"
+      },
+      "storeEnabled": false
+    }
+  },
+  {
+    "event": "identical_work_reopen",
+    "documentSha256": "62cf2d2b3b5ada7af811a496b66cdfb2b6267791865654d6c3a9327e3256ca8e",
+    "firstGeneration": 2,
+    "secondGeneration": 3,
+    "firstBindings": [
+      [
+        "441v1",
+        "AssetId<humentity::loaders::shape_config::CharacterShapeAsset>{ index: 0, generation: 3}"
+      ]
+    ],
+    "secondBindings": [
+      [
+        "360v0",
+        "AssetId<humentity::loaders::shape_config::CharacterShapeAsset>{ index: 1, generation: 3}"
+      ]
+    ]
+  },
+  {
+    "event": "real_missing_manifest_open_failure",
+    "report": {
+      "error": "B1 open failed: B1 candidate rejected · current Work preserved: asset_missing: characters/mpfb-b1-v1/manifest.json: HTTP 404",
+      "phase": "pending",
+      "request": {
+        "action": "report",
+        "request_id": "automatic-rebind"
+      }
+    },
+    "storeEnabled": false,
+    "fixture": "same valid Work; only owned site manifest temporarily renamed; real HTTP404"
+  },
+  {
+    "event": "real_failed_open_recovery",
+    "generation": 4,
+    "documentSha256": "62cf2d2b3b5ada7af811a496b66cdfb2b6267791865654d6c3a9327e3256ca8e",
+    "reportPhase": "captured",
+    "applied": "skin"
+  }
+]

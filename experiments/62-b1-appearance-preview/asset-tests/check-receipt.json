@@ -1,0 +1,40 @@
+{
+  "scope": "experiment62 asset preparation only; no runtime/appearance admission",
+  "commands": [
+    {
+      "command": "python3 -B experiments/62-b1-appearance-preview/tools/pack_assets.py --archive \"$ARCHIVE\" --output experiments/62-b1-appearance-preview/assets",
+      "exit_code": 0,
+      "result": "13 outputs;10 source payloads;6769409 source bytes"
+    },
+    {
+      "command": "python3 -B experiments/62-b1-appearance-preview/tools/pack_assets.py --archive \"$ARCHIVE\" --output experiments/62-b1-appearance-preview/assets --verify",
+      "exit_code": 0,
+      "result": "Exact prepared bytes and file set match; no writes"
+    },
+    {
+      "command": "python3 -B experiments/62-b1-appearance-preview/asset-tests/test_assets.py",
+      "exit_code": 0,
+      "tests": 11
+    },
+    {
+      "command": "python3 -B -O experiments/62-b1-appearance-preview/asset-tests/test_assets.py",
+      "exit_code": 0,
+      "tests": 11
+    }
+  ],
+  "archive_binding": "$ARCHIVE is the caller-supplied existing approved local archive, authenticated by exact280737770 size and pinned SHA in pack_assets.py. No path discovery/download.",
+  "sha256": {
+    "experiments/62-b1-appearance-preview/tools/pack_assets.py": "04c974a48cdbc2334762e9731054ce803695b02042b5f9a8e1aebb35d4656101",
+    "experiments/62-b1-appearance-preview/asset-tests/test_assets.py": "5810e577ebbc8b1bd1299fabf0e98da37053717a904f3f92b121b72f8db6b8c4",
+    "experiments/62-b1-appearance-preview/ASSETS.md": "cb4229c8b4857987c393b0d1bde9158fd54641581fd61b2125c085e29c1fdeab",
+    "experiments/62-b1-appearance-preview/assets/asset-manifest.json": "620099486462ed31f5ca0a7e06b351d8fb8a6a59120f85b604d5ea94c3808a59"
+  },
+  "not_run": [
+    "build",
+    "GPU",
+    "Web/native rendering",
+    "UV/material binding",
+    "eye/hair fitting",
+    "production admission"
+  ]
+}
