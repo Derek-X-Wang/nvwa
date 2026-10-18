@@ -1,6 +1,7 @@
 //! Rust Studio: egui and the renderer share one Bevy event loop on both targets.
 mod appearance_ui;
 mod editor_layout;
+mod first_save;
 mod fonts;
 pub mod platform;
 mod scene_view;
@@ -29,6 +30,7 @@ struct StudioUi {
     file_path: String,
     error: Option<String>,
     save_notice: Option<SaveNotice>,
+    first_save: first_save::FirstSave,
     stage: stage_ui::StageUi,
 }
 impl Default for StudioUi {
@@ -39,6 +41,7 @@ impl Default for StudioUi {
             file_path: "scene.nvwa.json".into(),
             error: None,
             save_notice: None,
+            first_save: default(),
             stage: default(),
         }
     }
@@ -568,8 +571,13 @@ fn accept_file_completion(
     editor: &mut EditorState,
     ui: &mut StudioUi,
 ) {
+    ui.first_save.sync(editor, &ui.file_path);
     match result {
         Ok(FileCompletion::Saved(destination)) => {
+            if !ui.first_save.saved(editor, &ui.file_path, &destination) {
+                ui.save_notice = None;
+                return;
+            }
             ui.error = None;
             ui.save_notice = Some(SaveNotice::new(
                 "已保存 / Saved",
@@ -579,6 +587,7 @@ fn accept_file_completion(
         }
         #[cfg(any(target_arch = "wasm32", test))]
         Ok(FileCompletion::DownloadStarted(file_name)) => {
+            ui.first_save.finish_other_io();
             ui.error = None;
             ui.save_notice = Some(SaveNotice::new(
                 "下载已开始 / Download started",
@@ -587,6 +596,8 @@ fn accept_file_completion(
             ));
         }
         Ok(FileCompletion::Opened(json)) => {
+            ui.first_save.finish_other_io();
+            ui.first_save.dismiss();
             ui.save_notice = None;
             match SceneDocument::from_json(&json)
                 .map_err(|e| e.to_string())
@@ -597,6 +608,8 @@ fn accept_file_completion(
             }
         }
         Err(error) => {
+            ui.first_save.finish_other_io();
+            ui.first_save.dismiss();
             ui.save_notice = None;
             ui.error = Some(error);
         }
@@ -681,6 +694,7 @@ fn draw_editor_ui(
         io,
         guard,
     } = session;
+    state.first_save.sync(editor, &state.file_path);
     let mut viewport_ui = egui::Ui::new(
         ctx.clone(),
         "nvwa_viewport".into(),
@@ -733,6 +747,7 @@ fn draw_editor_ui(
             let previous_path = state.file_path.clone();
             draw_work_path(ui, &mut state.file_path, 220.0);
             if previous_path != state.file_path {
+                state.first_save.dismiss();
                 save_notice = None;
             }
             if ui
@@ -1117,9 +1132,13 @@ fn draw_editor_ui(
             &mut stage_intent,
         );
     }
+    let confirmation_intent = state.first_save.draw(ctx);
+    let first_save_modal = !matches!(confirmation_intent, first_save::ConfirmationIntent::None)
+        || state.first_save.confirmation_open();
     // Do not paint a central egui panel: the scene remains visible through it.
-    guard.pointer = editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
-    guard.keyboard = ctx.egui_wants_keyboard_input();
+    guard.pointer =
+        first_save_modal || editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
+    guard.keyboard = first_save_modal || ctx.egui_wants_keyboard_input();
     if !guard.keyboard
         && transport_enabled(
             document.as_ref(),
@@ -1154,21 +1173,7 @@ fn draw_editor_ui(
     if new_b1 {
         let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character())
             .map_err(|e| e.to_string())
-            .and_then(|doc| editor.request_open(doc));
-        if let Err(error) = result {
-            state.error = Some(error);
-        }
-    }
-    if let Some(save) = file_action {
-        let result = if save {
-            editor
-                .document()
-                .ok_or("No document is open".to_owned())
-                .and_then(|d| d.to_json().map_err(|e| e.to_string()))
-                .and_then(|json| io.request_save(json, &state.file_path))
-        } else {
-            io.request_open(&state.file_path)
-        };
+            .and_then(|doc| state.first_save.request_new(editor, &state.file_path, doc));
         if let Err(error) = result {
             state.error = Some(error);
         }
@@ -1194,6 +1199,27 @@ fn draw_editor_ui(
             Err(error) => state.error = Some(error),
         }
     }
+    if let Some(save) = file_action {
+        let result = if save {
+            state.first_save.request_save(editor, &state.file_path, io)
+        } else {
+            state.first_save.dismiss();
+            io.request_open(&state.file_path)
+        };
+        if let Err(error) = result {
+            state.error = Some(error);
+        }
+    }
+    match confirmation_intent {
+        first_save::ConfirmationIntent::Cancel => state.first_save.dismiss(),
+        first_save::ConfirmationIntent::Save => {
+            if let Err(error) = state.first_save.confirm(editor, &state.file_path, io) {
+                state.error = Some(error);
+            }
+        }
+        first_save::ConfirmationIntent::None => {}
+    }
+    state.first_save.sync(editor, &state.file_path);
     Ok(())
 }
 
@@ -1357,7 +1383,11 @@ fn draw_work_path(ui: &mut egui::Ui, path: &mut String, width: f32) {
     #[cfg(target_arch = "wasm32")]
     web_input::work_text_edit(ui, path, width);
     #[cfg(not(target_arch = "wasm32"))]
-    ui.add(egui::TextEdit::singleline(path).desired_width(width));
+    ui.add(
+        egui::TextEdit::singleline(path)
+            .id(egui::Id::new("work_path"))
+            .desired_width(width),
+    );
 }
 
 /// Shared Studio/Player capability gate; old static Works never expose Play,
