@@ -1,0 +1,52 @@
+{
+  "scope": "Publication candidate v3: reviewed r4 compiled renderer/schema + r5 Python capture sink source identity; version metadata only",
+  "stdlib_only": true,
+  "original_private_artifacts_unchanged": true,
+  "supersedes_candidate_manifest_sha256": "19b0adf8efcdccbb6b05424e79f501a04c74f88356eb486ca6604814f7527a4f",
+  "old_r4_source_canonical_sha256": "e36e167caf490369e0d9584101ecf92825b61a7ab5853a18f8500a23c174b52d",
+  "current_r4_Rust_r5_sink_source_canonical_sha256": "549ba3161723a92db3065fa79edd2d869dc06ea4c809558a8a2c6ef1f71303d4",
+  "source_delta": [
+    "build/serve.py",
+    "build/test_serve.py"
+  ],
+  "compiled_inputs_unchanged": true,
+  "checker_all_function_ASTs_unchanged": true,
+  "numerical_reference_and_test_source_bytes_unchanged": true,
+  "controls": {
+    "previous_artificial_rejections": 44,
+    "whole_suite_replayed": false,
+    "version_targeted_gate_and_relocated_CLI": "PASS; ARTIFICIAL only"
+  },
+  "actual_runtime_this_worker": "NOT-RUN",
+  "files": {
+    "check_capture.py": {
+      "sha256": "d75a9faf032e926a75ac5b5a8d867cb53a7924f834361874b18c375238b661c2",
+      "bytes": 15853
+    },
+    "TEST-RESULTS.json": {
+      "sha256": "642c17a6ff49a3bed7ef4ed1a9976ade55d222153a6e904d7f9e602ddbbea208",
+      "bytes": 11574
+    },
+    "source_reference.py": {
+      "sha256": "46d0e909b8f08822941e24e20d7fffdd47105b7ef86e0046da9f2a4fe225c572",
+      "bytes": 4757
+    },
+    "equivalence.json": {
+      "sha256": "f367c4dd4eb2edc3fffd23d23aa9b471a36416c89766978c7e4570ccaede32e9",
+      "bytes": 4544
+    },
+    "test_candidate.py": {
+      "sha256": "80f8ff4da3d7c6dec1edd2093fc36174218ecc02f5be471d98d33d3131532ade",
+      "bytes": 17240
+    },
+    "README.md": {
+      "sha256": "c86c9a206c1cf9eef6c998dd0c646cb9d369ce5182867de150034d6b60d45c43",
+      "bytes": 7998
+    },
+    "source-freeze-r5.json": {
+      "sha256": "ba0b0f262859abb90aa7cf0a80432f968371125f83e81e1cf83c21cdffd6d7a9",
+      "bytes": 1596
+    }
+  },
+  "publication_note": "Root integration updated README prose only to point to separately completed actual evidence; verifier/schema/numeric/test code and historical test results unchanged."
+}

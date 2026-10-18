@@ -1,0 +1,78 @@
+{
+  "scope": "Ten original numerical/helper function ASTs remain unchanged. Initial six checker functions were identical at extraction; protocol/check_record now intentionally hardened to require frozen observation fields/identity handles/hash syntax.",
+  "original_reference_sha256": "f28b41eb0584440bf23786685829d00e8f5422e7e494ee329678cdbf2316a3d0",
+  "original_adapter_r4_sha256": "92ab6e7e0624dc866362b6400cde78e8251ddefc52b8e772d7965c24be4ebc1f",
+  "source_reference_sha256": "46d0e909b8f08822941e24e20d7fffdd47105b7ef86e0046da9f2a4fe225c572",
+  "reference_function_AST_sha256": {
+    "need": "0dba420f7eb4c8bb5b13834baec119e9b71cbf5d78ad11c473c6b4ac739e36ce",
+    "sha": "df26336b075718742fa9991789235a4cbc88653609a6003fb373a7dfd4076b0b",
+    "dump": "ef1de1caf84fa6c07385477f7b03de7bc80b919e364a31f1b7b4065dfbb362ab",
+    "finite": "2ee499f46830da33afdb1b4294efad98c2f4a160239226b164bcf0a9a421ce59",
+    "err": "5a8ebbff6061c14ece8525c41009be9f8286b868a51296a63fecd275f5830388",
+    "point": "39b9743da220214f6184a08ef3098efab21e28355872a31f8ec24be87e448d80",
+    "mapping": "1581abfe3b5eba026864bafc3168a7719205d524f0182486197709b665997bc1",
+    "obj": "2221028088867b3f38bf9c31001e02132d64652f1116086522ccbf47a70f19f5",
+    "cage_of": "3c5d35538ad5e4f1a47e1687d69eae47bc51c8aac3dc86b57286320e106df54d",
+    "compute": "a24e462cff8c826583c49c04c3e1022e00312ae946d02f707f88ac30e264a013"
+  },
+  "checker_function_AST_sha256": {
+    "require_fields": "b13a4d163fe3d0d6d7a5b7752fe80adbac63ed487c9cd0991ee856798d7a984b",
+    "require_observations": "e8b7e4ca9d6a6df89cdf5fa688acd4e75c1d1b689bac731c6e8dc492d6768bf8",
+    "load": "8ca795ccc31813f24bbde00ce8539c1d0629a0fdd4dc2246fdef5d7a71c49744",
+    "array": "cf240a1bce418905804c2cd3a76c0732163b45fa864a6aba9418e6b79e0d7b3d",
+    "same_weights": "a5c12a8fe2928761ab8c13a90efe7cd9f4e1f06e1d5deaec1b9c531e65263df8",
+    "protocol": "e78a2de0bf79a71ac1b84f3e6a6978999451224c05f1dcfaec2afa429813728a",
+    "point_bounds": "d08ed7cd5a6b4c6217bede948d3adddedca8113930fcc08ec811579fbb3a709a",
+    "check_record": "1a5d73181c69271b4f5c46d459f9b43eb23a934378ca60cc09e62b82921c297d"
+  },
+  "guards": {
+    "arithmetic_m": 1e-05,
+    "UV_component": 1e-06,
+    "positive_joint_sets": "exact; all final positive influences"
+  },
+  "runtime": "NOT-RUN",
+  "initial_checker_function_AST_sha256": {
+    "load": "8ca795ccc31813f24bbde00ce8539c1d0629a0fdd4dc2246fdef5d7a71c49744",
+    "array": "cf240a1bce418905804c2cd3a76c0732163b45fa864a6aba9418e6b79e0d7b3d",
+    "same_weights": "a5c12a8fe2928761ab8c13a90efe7cd9f4e1f06e1d5deaec1b9c531e65263df8",
+    "protocol": "2aaf5ede3780050aae0b820743b2d69506bc16b7038f4fb5f4b1b8afa5288893",
+    "point_bounds": "d08ed7cd5a6b4c6217bede948d3adddedca8113930fcc08ec811579fbb3a709a",
+    "check_record": "43c0d18698d3b9259bc7e2e266ef3bf3d77b25167d50a7431ad3fe1f7a770bd5"
+  },
+  "strict_parser_hardening": {
+    "review": "P2 missing compact/full/material observation fields could bypass their comparisons",
+    "changed_functions": [
+      "protocol",
+      "check_record"
+    ],
+    "added_functions": [
+      "require_fields",
+      "require_observations"
+    ],
+    "unchanged_original_checker_functions": [
+      "load",
+      "array",
+      "same_weights",
+      "point_bounds"
+    ],
+    "numerical_functions_and_tolerances": "unchanged",
+    "upload_digest_scope": "64 lowercase hexadecimal syntax plus full/compact exact match; NOT Rust digest recomputation"
+  },
+  "source_version_update": {
+    "old_r4_canonical_sha256": "e36e167caf490369e0d9584101ecf92825b61a7ab5853a18f8500a23c174b52d",
+    "current_r4_Rust_r5_sink_canonical_sha256": "549ba3161723a92db3065fa79edd2d869dc06ea4c809558a8a2c6ef1f71303d4",
+    "current_map_raw_sha256": "ba0b0f262859abb90aa7cf0a80432f968371125f83e81e1cf83c21cdffd6d7a9",
+    "only_changed_files": {
+      "experiments/64-b1-accessory-preview/build/serve.py": {
+        "r4": "ac3d7bef567b3617c1b7225b3f58372e1714e82d60f2469887411eec6816fc7a",
+        "r5": "cc044dc371360026b68bd110e20b4a630733d662903b7718d56e4d4d026801b3"
+      },
+      "experiments/64-b1-accessory-preview/build/test_serve.py": {
+        "r4": "40d8142fcedb9f1ce8c81830de60e61c85d882105d79fe98e9595a1284f8a82b",
+        "r5": "6b89454f25350b1bfb44f88706aeac94f235471ce34c1a3ad0914c7291a113a1"
+      }
+    },
+    "compiled_input_scope": "All compiled Rust/HTML/lock/reference/assets unchanged; r4-built Wasm/native artifacts retain their compiled-input identity; only Python capture-sink files changed",
+    "parser_numerical_guard_changes": "NONE"
+  }
+}

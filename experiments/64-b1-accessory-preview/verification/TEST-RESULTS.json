@@ -1,0 +1,273 @@
+{
+  "scope": "ARTIFICIAL standalone synthetic cage/frame; source-grounded fake attachments only; actual runtime NOT-RUN",
+  "source_freeze": {
+    "authenticated_source_payloads": 12,
+    "source_weights_sha256": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473",
+    "canonical_sha256": "e36e167caf490369e0d9584101ecf92825b61a7ab5853a18f8500a23c174b52d",
+    "file_sha256": "099e50f48496c7e9b139c1579c9e91ad4b7e648b809af94811f8f4c04576a51f",
+    "files": 13,
+    "reference_sha256": "46d0e909b8f08822941e24e20d7fffdd47105b7ef86e0046da9f2a4fe225c572"
+  },
+  "valid_fixture": {
+    "result": "PASS_WITH_LIMITS",
+    "input_provenance": "Caller-supplied capture/command/receipt; collector provenance must be verified externally",
+    "binding_scope": "sent command + separately read compact report + frame protocol consistency; same capture producer, NOT independent world freshness oracle",
+    "sample_scope": "published full snapshot; live serial=null/stream_frame is rejected",
+    "geometry_hash_limit": "equality of producer hashes; no cross-language JSON hash recomputation claimed",
+    "accessories": {
+      "eyes": {
+        "source_vertices": 96,
+        "render_corners": 96,
+        "rest_error_m": 0.0,
+        "actual_upload_LBS_error_m": 0.0,
+        "normalized_positive_weight_L1_max": 0.0,
+        "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+        "normal_check": "finite/unit only",
+        "tangents": "NOT-EXPORTED",
+        "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+        "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked"
+      },
+      "hair": {
+        "source_vertices": 865,
+        "render_corners": 991,
+        "rest_error_m": 0.0,
+        "actual_upload_LBS_error_m": 0.0,
+        "normalized_positive_weight_L1_max": 0.0,
+        "source_UV_index_identity": "exact source_uv_pairs+actual uv values+actual ordered indices",
+        "normal_check": "finite/unit only",
+        "tangents": "NOT-EXPORTED",
+        "material_observation": "current entity-bound material/cull/double_sided/current-image CPU digest exported and source-checked; not GPU readback",
+        "bounds_observation": "actual uploaded model and once-placed stage bounds cross-checked"
+      }
+    },
+    "not_run": [
+      "GPU readback",
+      "independent current-world producer",
+      "tangent parity",
+      "visual quality"
+    ]
+  },
+  "negative_controls": [
+    {
+      "mutation": "wrong separately read request receipt",
+      "rejected": "sent command/report/frame/receipt mismatch"
+    },
+    {
+      "mutation": "stale/null published sample serial",
+      "rejected": "published snapshot serial missing/null"
+    },
+    {
+      "mutation": "live stream sample masquerades as published snapshot",
+      "rejected": "live sample cannot be published snapshot"
+    },
+    {
+      "mutation": "old accessory generation",
+      "rejected": "stale accessory generation"
+    },
+    {
+      "mutation": "old accessory revision",
+      "rejected": "stale accessory revision"
+    },
+    {
+      "mutation": "old accessory character entity",
+      "rejected": "stale accessory entity/mesh/cache identity"
+    },
+    {
+      "mutation": "old body mesh handle",
+      "rejected": "stale accessory entity/mesh/cache identity"
+    },
+    {
+      "mutation": "different accessory bone frame",
+      "rejected": "runtime actual_skin_matrices differs from same capture bone frames"
+    },
+    {
+      "mutation": "absent actual upload positions (no offline substitution)",
+      "rejected": "full accessory frozen field set differs: missing=positions extra="
+    },
+    {
+      "mutation": "actual upload position corrupted",
+      "rejected": "hair actual rest/LBS exceeds existing arithmetic guard"
+    },
+    {
+      "mutation": "source UV-index identity forged",
+      "rejected": "hair exact OBJ source/UV-index corner identity mismatch"
+    },
+    {
+      "mutation": "actual UV double V-flip",
+      "rejected": "hair actual UV values differ from source once-V-flip"
+    },
+    {
+      "mutation": "actual triangle winding changed",
+      "rejected": "hair actual triangle fan/winding/corner indices differ"
+    },
+    {
+      "mutation": "actual five-influence source82 truncated",
+      "rejected": "hair missing/duplicate/extra positive final joints"
+    },
+    {
+      "mutation": "actual normals zero",
+      "rejected": "hair actual normals zero/nonunit"
+    },
+    {
+      "mutation": "wrong cached declared decoded texture SHA",
+      "rejected": "hair compact actual field mismatch material"
+    },
+    {
+      "mutation": "current hair material cull Back (all protocol copies agree)",
+      "rejected": "hair actual bound cull policy mismatch"
+    },
+    {
+      "mutation": "current hair material double_sided false (all protocol copies agree)",
+      "rejected": "hair actual bound double-sided policy mismatch"
+    },
+    {
+      "mutation": "current bound image changed SHA (all protocol copies agree)",
+      "rejected": "hair actual bound image RGBA sha differs from pinned source"
+    },
+    {
+      "mutation": "cached r2 white literal replacing actual Debug field",
+      "rejected": "hair exported simple material mismatch"
+    },
+    {
+      "mutation": "current material observer route absent",
+      "rejected": "hair actual material/image observation route missing"
+    },
+    {
+      "mutation": "mode desired/applied mismatch (both reports agree)",
+      "rejected": "current accessories mode not captured"
+    },
+    {
+      "mutation": "actual source model bounds corrupted",
+      "rejected": "hair posed_model_bounds_m disagrees with actual arrays/placement"
+    },
+    {
+      "mutation": "actual placed stage bounds corrupted",
+      "rejected": "hair posed_stage_bounds_m disagrees with actual arrays/placement"
+    },
+    {
+      "mutation": "tangents invented as observed",
+      "rejected": "hair tangent observation scope changed"
+    },
+    {
+      "mutation": "name-only compact records in both reports",
+      "rejected": "eyes compact accessory frozen field set differs: missing=actual_cpu_upload_sha256,axis_scales,display_transform,entity,material,mesh_handle,model_to_world_record_only,not_saved,observation,posed_model_bounds_m,posed_stage_bounds_m,source_vertices,tangents extra="
+    },
+    {
+      "mutation": "coherent missing full/compact actual_cpu_upload_sha256",
+      "rejected": "full accessory frozen field set differs: missing=actual_cpu_upload_sha256 extra="
+    },
+    {
+      "mutation": "coherent missing full/compact entity",
+      "rejected": "full accessory frozen field set differs: missing=entity extra="
+    },
+    {
+      "mutation": "coherent missing full/compact mesh_handle",
+      "rejected": "full accessory frozen field set differs: missing=mesh_handle extra="
+    },
+    {
+      "mutation": "coherent missing full/compact axis_scales",
+      "rejected": "full accessory frozen field set differs: missing=axis_scales extra="
+    },
+    {
+      "mutation": "coherent missing full/compact model_to_world_record_only",
+      "rejected": "full accessory frozen field set differs: missing=model_to_world_record_only extra="
+    },
+    {
+      "mutation": "coherent missing nested material handle",
+      "rejected": "full accessory material frozen field set differs: missing=handle extra="
+    },
+    {
+      "mutation": "coherent missing nested material image_handle",
+      "rejected": "full accessory material frozen field set differs: missing=image_handle extra="
+    },
+    {
+      "mutation": "coherent malformed upload hash 'not-a-sha'",
+      "rejected": "full accessory malformed actual CPU upload sha256"
+    },
+    {
+      "mutation": "coherent malformed upload hash 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'",
+      "rejected": "full accessory malformed actual CPU upload sha256"
+    },
+    {
+      "mutation": "coherent malformed upload hash 'fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'",
+      "rejected": "full accessory malformed actual CPU upload sha256"
+    },
+    {
+      "mutation": "coherent malformed upload hash None",
+      "rejected": "full accessory malformed actual CPU upload sha256"
+    },
+    {
+      "mutation": "coherent malformed upload hash 123",
+      "rejected": "full accessory malformed actual CPU upload sha256"
+    },
+    {
+      "mutation": "coherent empty identity entity",
+      "rejected": "full accessory missing/invalid entity"
+    },
+    {
+      "mutation": "coherent empty identity mesh_handle",
+      "rejected": "full accessory missing/invalid mesh_handle"
+    },
+    {
+      "mutation": "coherent empty material identity handle",
+      "rejected": "full accessory missing/invalid material handle"
+    },
+    {
+      "mutation": "coherent empty material identity image_handle",
+      "rejected": "full accessory missing/invalid material image_handle"
+    },
+    {
+      "mutation": "valid lowerhex compact hash differs from full",
+      "rejected": "hair compact actual field mismatch actual_cpu_upload_sha256"
+    },
+    {
+      "mutation": "unknown compact r4 field in both reports",
+      "rejected": "hair compact accessory frozen field set differs: missing= extra=unexpected_observer"
+    }
+  ],
+  "coherent_bundle_limitation": {
+    "whole_bundle_generation_changed_and_protocol_still_passes": "PASS_WITH_LIMITS",
+    "meaning": "same-producer consistent bundle cannot establish independently current world freshness; no independent binding fabricated"
+  },
+  "public_CLI_coherent_rejections": [
+    {
+      "case": "name-only",
+      "nonzero_exit": true,
+      "success_output_absent": true,
+      "expected_error": "frozen field set differs"
+    },
+    {
+      "case": "bad-upload-hash",
+      "nonzero_exit": true,
+      "success_output_absent": true,
+      "expected_error": "malformed actual CPU upload sha256"
+    }
+  ],
+  "AST_equivalence": "10 numerical helpers unchanged; initial strict6 unchanged at extraction, then protocol/check_record intentionally hardened plus2field validators; current parser baselines recorded",
+  "relocated_repo_gate": "PASS; only frozen public files/assets/weights, no retained captures",
+  "missing_frozen_file_rejected": true,
+  "source_hash_drift_rejected": "r4 source changed experiments/64-b1-accessory-preview/src/bin/studio.rs",
+  "artificial_full_CLI": "PASS_WITH_LIMITS; pipeline only",
+  "runtime": "NOT-RUN",
+  "version_update_targeted_tests": {
+    "scope": "Version-only r4 Rust/r5 sink update, ARTIFICIAL relocation CLI only",
+    "gate": {
+      "authenticated_source_payloads": 12,
+      "source_weights_sha256": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473",
+      "canonical_sha256": "549ba3161723a92db3065fa79edd2d869dc06ea4c809558a8a2c6ef1f71303d4",
+      "file_sha256": "ba0b0f262859abb90aa7cf0a80432f968371125f83e81e1cf83c21cdffd6d7a9",
+      "files": 13,
+      "reference_sha256": "46d0e909b8f08822941e24e20d7fffdd47105b7ef86e0046da9f2a4fe225c572"
+    },
+    "all_checker_function_ASTs_unchanged_from_reviewed_v2": true,
+    "numerical_reference_and_test_source_bytes_unchanged": true,
+    "only_original_source_changes": [
+      "build/serve.py",
+      "build/test_serve.py"
+    ],
+    "relocated_repo_CLI": "PASS_WITH_LIMITS; ARTIFICIAL",
+    "whole_44_suite_replayed": false,
+    "prior_44_controls": "unchanged checker/test logic, previous results retained",
+    "runtime_this_worker": "NOT-RUN"
+  }
+}
