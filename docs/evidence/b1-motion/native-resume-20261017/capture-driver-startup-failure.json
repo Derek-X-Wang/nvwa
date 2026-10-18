@@ -1,0 +1,6 @@
+{
+  "scope": "private root capture driver, not product",
+  "error": "AttributeError: startup probe-status JSON was null, not a dict",
+  "command_may_have_landed": true,
+  "correction": "require dict before status access; reconcile exact existing request0 record before proceeding; no retry of landed request"
+}
