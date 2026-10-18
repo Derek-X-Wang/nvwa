@@ -91,13 +91,15 @@ these bounded snapshots.
 
 [BUILD-SOURCES.json](BUILD-SOURCES.json), [BUILD-EXPORTS.json](BUILD-EXPORTS.json)
 and [CPU-CHECKS.json](CPU-CHECKS.json) separate the frozen r4 GUI cohort from the
-later CLI correction. The recorded comparison finds346 of348 r4 inputs still
-matching; only `crates/nvwa-cli/src/main.rs` and its real-process
-`tests/appearance.rs` changed later to correct command discovery/help. Those
-files are outside GUI dependencies. The separately rebuilt CLI has its own
-23-source receipt and binary identity. The r4 GUI artifacts do not claim to
-contain that later CLI-only delta, and whole-tree artifact equivalence is not
-claimed.
+later CLI correction. The final recorded comparison finds344 of348 r4 inputs still
+matching. Two source/test files, `crates/nvwa-cli/src/main.rs` and its real-process
+`tests/appearance.rs`, changed later to correct command discovery/help; they
+are outside GUI dependencies and were separately rebuilt. The other two
+differences are the experimental65/66 READMEs, updated only to point to the
+completed results. The separately rebuilt CLI has its own23-source receipt
+and binary identity. The original r4 fingerprint table remains unchanged.
+The r4 GUI artifacts do not claim to contain the later CLI-only delta, and
+whole-tree artifact equivalence is not claimed.
 
 The joint driver retained its failed extra strict workspace Clippy gate and
 exited1 despite exporting useful QA artifacts. This is not an all-green joint
