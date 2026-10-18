@@ -56,7 +56,7 @@ python3 -B experiments/62-b1-appearance-preview/build/check_captures.py \
   --out "$NVWA_EXCLUSIVE_CHECK_OUT"
 ```
 
-本轮未修改用户常用页面、未点击 Save 或下载到 Downloads。测试临时页及专用9277服务已关闭。原始27个完整 JSON、构建日志与导出保留在此 worktree 的 `.work/appearance62/`；原始记录约270MB，不进入 Git。Git 中保留全部27个记录的字节/哈希、18项检查结果、compact reports、事件、Web构建receipt、九张截图。不是声称只凭哈希就能复现原始帧。
+本轮未修改用户常用页面、未点击 Save 或下载到 Downloads。测试临时页及专用9277服务已关闭。原始27个完整 JSON、构建日志与导出保留在此 worktree 的 `.work/appearance62/`；原始记录289,990,153字节（约290MB），不进入 Git。Git 中保留全部27个记录的字节/哈希、18项检查结果、compact reports、事件、Web构建receipt、九张截图。不是声称只凭哈希就能复现原始帧。
 
 独立审查见 [SOURCE-REVIEW.md](SOURCE-REVIEW.md)。建议接下来先补原生实际画面验收；通过 #78 后再决定 #79 正式外观准入，并逐项做眼睛/头发适配，保留原始材质对照。
 
