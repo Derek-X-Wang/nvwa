@@ -461,3 +461,411 @@ fn save_feedback_browser_completion_is_download_only_and_errors_replace_it() {
     no_notice(&failed);
     text(&failed, "File selection cancelled");
 }
+
+const FIRST_SAVE_TITLE: &str = "新人物首次保存 / First save for new character";
+const CONFIRM_FIRST_SAVE: &str = "确认保存并替换 / Save here and replace";
+
+impl Harness {
+    fn current_json(&self) -> String {
+        self.app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .to_json()
+            .unwrap()
+    }
+
+    fn stage_new(&mut self) {
+        let before = self.current_json();
+        let history = format!("{:?}", self.app.world().resource::<EditorState>().editor);
+        let initial = self.frame(vec![]);
+        self.click(&initial, "新建人物… / New character…")
+            .drop_without_applying_deltas();
+        initial.drop_without_applying_deltas();
+        assert_eq!(self.current_json(), before);
+        assert_eq!(
+            format!("{:?}", self.app.world().resource::<EditorState>().editor),
+            history
+        );
+        assert!(
+            self.app
+                .world()
+                .resource::<EditorState>()
+                .pending_open
+                .is_some()
+        );
+    }
+
+    fn accept_new(&mut self) -> egui::FullOutput {
+        self.stage_new();
+        {
+            let mut editor = self.app.world_mut().resource_mut::<EditorState>();
+            let candidate = editor.pending_open.clone().unwrap();
+            // This CPU UI harness has no renderer/asset loader. Simulate only its
+            // successful publication seam; actual asset acceptance remains separate.
+            editor.replace(candidate).unwrap();
+        }
+        self.frame(vec![])
+    }
+
+    fn first_save_modal(&mut self) -> egui::FullOutput {
+        let current = self.frame(vec![]);
+        self.click(&current, "Save").drop_without_applying_deltas();
+        current.drop_without_applying_deltas();
+        assert!(!self.app.world().resource::<PlatformIo>().busy());
+        let modal = self.frame(vec![]);
+        text(&modal, FIRST_SAVE_TITLE);
+        assert!(self.app.world().resource::<UiInputGuard>().pointer);
+        assert!(self.app.world().resource::<UiInputGuard>().keyboard);
+        modal
+    }
+
+    fn edit_work_path(&mut self, destination: &str) {
+        self.frame(vec![]).drop_without_applying_deltas();
+        let id = egui::Id::new("work_path");
+        let rect = self
+            .ctx
+            .read_response(id)
+            .expect("production Work field")
+            .rect;
+        let position = rect.center();
+        self.frame(vec![
+            egui::Event::PointerMoved(position),
+            pointer(position, true),
+        ])
+        .drop_without_applying_deltas();
+        self.frame(vec![pointer(position, false)])
+            .drop_without_applying_deltas();
+        assert_eq!(self.ctx.memory(|memory| memory.focused()), Some(id));
+        let mut modifiers = egui::Modifiers::COMMAND;
+        modifiers.mac_cmd = true;
+        self.frame(vec![
+            egui::Event::Key {
+                key: egui::Key::A,
+                physical_key: None,
+                pressed: true,
+                repeat: false,
+                modifiers,
+            },
+            egui::Event::Text(destination.into()),
+        ])
+        .drop_without_applying_deltas();
+        assert_eq!(self.ui().file_path, destination);
+    }
+}
+
+#[test]
+fn new_first_save_actual_cancel_and_new_destination_preserve_previous_file() {
+    for size in [egui::vec2(1280.0, 720.0), egui::vec2(1024.0, 768.0)] {
+        let mut h = Harness::new(size);
+        let original_path = h.ui().file_path.clone();
+        let original = h.current_json();
+        std::fs::write(&original_path, &original).unwrap();
+        h.accept_new().drop_without_applying_deltas();
+        let created = h.current_json();
+        assert_ne!(created, original);
+        let modal = h.first_save_modal();
+        let viewport = egui::Rect::from_min_size(egui::Pos2::ZERO, size);
+        assert!(viewport.contains_rect(text(&modal, FIRST_SAVE_TITLE)));
+        assert!(viewport.contains_rect(text(&modal, CONFIRM_FIRST_SAVE)));
+        assert!(
+            painted_text(&modal)
+                .iter()
+                .any(|(label, _)| label == &original_path)
+        );
+        assert_eq!(std::fs::read(&original_path).unwrap(), original.as_bytes());
+        h.click(&modal, "取消 / Cancel")
+            .drop_without_applying_deltas();
+        modal.drop_without_applying_deltas();
+        assert!(!h.ui().first_save.confirmation_open());
+        assert!(!h.app.world().resource::<PlatformIo>().busy());
+        assert_eq!(h.current_json(), created);
+        assert_eq!(std::fs::read(&original_path).unwrap(), original.as_bytes());
+        let destination = h.directory.join("new-character.json").display().to_string();
+        h.edit_work_path(&destination);
+        let modal = h.first_save_modal();
+        h.click(&modal, CONFIRM_FIRST_SAVE)
+            .drop_without_applying_deltas();
+        modal.drop_without_applying_deltas();
+        assert!(h.app.world().resource::<PlatformIo>().busy());
+        h.frame(vec![]).drop_without_applying_deltas();
+        assert_eq!(std::fs::read_to_string(&destination).unwrap(), created);
+        assert_eq!(std::fs::read(&original_path).unwrap(), original.as_bytes());
+        assert!(h.ui().save_notice.is_some());
+        // Exact successful completion restores ordinary deliberate Save.
+        let current = h.frame(vec![]);
+        h.click(&current, "Save").drop_without_applying_deltas();
+        current.drop_without_applying_deltas();
+        assert!(h.app.world().resource::<PlatformIo>().busy());
+        assert!(!h.ui().first_save.confirmation_open());
+        h.frame(vec![]).drop_without_applying_deltas();
+    }
+}
+
+#[test]
+fn new_first_save_actual_explicit_overwrite_then_repeated_save() {
+    let mut h = Harness::new(egui::vec2(1024.0, 768.0));
+    let path = h.ui().file_path.clone();
+    let original = h.current_json();
+    std::fs::write(&path, &original).unwrap();
+    h.accept_new().drop_without_applying_deltas();
+    let created = h.current_json();
+    let modal = h.first_save_modal();
+    assert_eq!(std::fs::read_to_string(&path).unwrap(), original);
+    h.click(&modal, CONFIRM_FIRST_SAVE)
+        .drop_without_applying_deltas();
+    modal.drop_without_applying_deltas();
+    assert_eq!(std::fs::read_to_string(&path).unwrap(), created);
+    h.frame(vec![]).drop_without_applying_deltas();
+    {
+        let mut editor = h.app.world_mut().resource_mut::<EditorState>();
+        let doc = editor.document().unwrap();
+        let command = Command::SetAppearance {
+            character_id: doc.character.id.clone(),
+            appearance: nvwa_core::CharacterAppearance::b1_cc0_for(
+                &doc.profile.backend,
+                true,
+                false,
+                false,
+            )
+            .unwrap(),
+        };
+        editor.apply(command).unwrap();
+    }
+    let edited = h.current_json();
+    let current = h.frame(vec![]);
+    h.click(&current, "Save").drop_without_applying_deltas();
+    current.drop_without_applying_deltas();
+    assert!(!h.ui().first_save.confirmation_open());
+    assert_eq!(std::fs::read_to_string(&path).unwrap(), edited);
+    h.frame(vec![]).drop_without_applying_deltas();
+}
+
+#[test]
+fn new_first_save_pending_cancel_rejection_and_failure_retain_context() {
+    let mut h = Harness::new(egui::vec2(1280.0, 720.0));
+    let original_path = h.ui().file_path.clone();
+    let original = h.current_json();
+    std::fs::write(&original_path, &original).unwrap();
+    for rejected in [false, true] {
+        h.stage_new();
+        let history = format!("{:?}", h.app.world().resource::<EditorState>().editor);
+        // Pending New still saves the existing committed Work, without new consent.
+        let current = h.frame(vec![]);
+        h.click(&current, "Save").drop_without_applying_deltas();
+        current.drop_without_applying_deltas();
+        assert!(h.app.world().resource::<PlatformIo>().busy());
+        h.frame(vec![]).drop_without_applying_deltas();
+        {
+            let mut editor = h.app.world_mut().resource_mut::<EditorState>();
+            editor.cancel_pending_open();
+            if rejected {
+                editor.open_error = Some("candidate asset verification failed".into());
+            }
+        }
+        h.frame(vec![]).drop_without_applying_deltas();
+        assert_eq!(h.current_json(), original);
+        assert_eq!(
+            format!("{:?}", h.app.world().resource::<EditorState>().editor),
+            history
+        );
+        assert_eq!(h.ui().file_path, original_path);
+        assert_eq!(std::fs::read_to_string(&original_path).unwrap(), original);
+        assert!(!h.ui().first_save.confirmation_open());
+    }
+    h.accept_new().drop_without_applying_deltas();
+    // An actual native rename onto a directory fails; consent is not remembered.
+    h.app.world_mut().resource_mut::<StudioUi>().file_path = h.directory.display().to_string();
+    let modal = h.first_save_modal();
+    h.click(&modal, CONFIRM_FIRST_SAVE)
+        .drop_without_applying_deltas();
+    modal.drop_without_applying_deltas();
+    assert!(
+        h.ui()
+            .error
+            .as_ref()
+            .is_some_and(|error| error.contains("Save"))
+    );
+    assert!(!h.app.world().resource::<PlatformIo>().busy());
+    assert!(h.ui().save_notice.is_none());
+    h.app.world_mut().resource_mut::<StudioUi>().file_path = original_path.clone();
+    h.first_save_modal().drop_without_applying_deltas();
+    assert_eq!(std::fs::read_to_string(original_path).unwrap(), original);
+}
+
+#[test]
+fn new_first_save_stale_confirmation_cannot_write_after_any_context_change() {
+    for change in [
+        "edit",
+        "preview",
+        "open-request",
+        "replace-identical",
+        "new",
+        "path",
+    ] {
+        let mut h = Harness::new(egui::vec2(1280.0, 720.0));
+        let original_path = h.ui().file_path.clone();
+        let original = h.current_json();
+        std::fs::write(&original_path, &original).unwrap();
+        h.accept_new().drop_without_applying_deltas();
+        h.first_save_modal().drop_without_applying_deltas();
+        let mut editor = h.app.world_mut().remove_resource::<EditorState>().unwrap();
+        let mut ui = h.app.world_mut().remove_resource::<StudioUi>().unwrap();
+        match change {
+            "edit" => editor
+                .apply(Command::SetTimeline { clips: Vec::new() })
+                .unwrap(),
+            "preview" => editor
+                .preview_parameters(editor.document().unwrap().character.parameters.clone())
+                .unwrap(),
+            "open-request" => {
+                editor
+                    .request_open(editor.document().unwrap().clone())
+                    .unwrap();
+                editor.cancel_pending_open(); // Same bytes and published generation, new request identity.
+            }
+            "replace-identical" => editor.replace(editor.document().unwrap().clone()).unwrap(),
+            "new" => ui
+                .first_save
+                .request_new(
+                    &mut editor,
+                    &ui.file_path,
+                    SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character())
+                        .unwrap(),
+                )
+                .unwrap(),
+            "path" => ui.file_path = h.directory.join("other.json").display().to_string(),
+            _ => unreachable!(),
+        }
+        let mut io = PlatformIo::default();
+        assert!(
+            ui.first_save
+                .confirm(&editor, &ui.file_path, &mut io)
+                .is_err(),
+            "{change}"
+        );
+        assert!(!io.busy(), "{change}");
+        assert_eq!(
+            std::fs::read_to_string(&original_path).unwrap(),
+            original,
+            "{change}"
+        );
+        assert!(!h.directory.join("other.json").exists());
+        h.app.world_mut().insert_resource(editor);
+        h.app.world_mut().insert_resource(ui);
+    }
+}
+
+#[test]
+fn new_first_save_stale_or_wrong_completion_cannot_authorize_later_work() {
+    for change in [
+        "edited-before-completion",
+        "new-before-completion",
+        "wrong-destination",
+        "path-before-completion",
+        "download-only",
+    ] {
+        let mut h = Harness::new(egui::vec2(1280.0, 720.0));
+        let original_path = h.ui().file_path.clone();
+        let original = h.current_json();
+        std::fs::write(&original_path, &original).unwrap();
+        h.accept_new().drop_without_applying_deltas();
+        let modal = h.first_save_modal();
+        h.click(&modal, CONFIRM_FIRST_SAVE)
+            .drop_without_applying_deltas();
+        modal.drop_without_applying_deltas();
+        let mut editor = h.app.world_mut().remove_resource::<EditorState>().unwrap();
+        let mut ui = h.app.world_mut().remove_resource::<StudioUi>().unwrap();
+        let completion = h
+            .app
+            .world_mut()
+            .resource_mut::<PlatformIo>()
+            .poll()
+            .unwrap();
+        let completion = match change {
+            "edited-before-completion" => {
+                editor
+                    .apply(Command::SetTimeline { clips: Vec::new() })
+                    .unwrap();
+                completion
+            }
+            "new-before-completion" => {
+                ui.first_save
+                    .request_new(
+                        &mut editor,
+                        &ui.file_path,
+                        SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character())
+                            .unwrap(),
+                    )
+                    .unwrap();
+                let candidate = editor.pending_open.clone().unwrap();
+                editor.replace(candidate).unwrap();
+                completion
+            }
+            "wrong-destination" => Ok(FileCompletion::Saved(
+                h.directory.join("wrong.json").display().to_string(),
+            )),
+            "path-before-completion" => {
+                ui.file_path = h.directory.join("later.json").display().to_string();
+                completion
+            }
+            "download-only" => Ok(FileCompletion::DownloadStarted("scene.json".into())),
+            _ => unreachable!(),
+        };
+        accept_file_completion(completion, &mut editor, &mut ui);
+        let mut io = PlatformIo::default();
+        ui.first_save
+            .request_save(&editor, &ui.file_path, &mut io)
+            .unwrap();
+        assert!(ui.first_save.confirmation_open(), "{change}");
+        assert!(!io.busy(), "{change}");
+        assert!(!h.directory.join("later.json").exists());
+        assert!(!h.directory.join("wrong.json").exists());
+        h.app.world_mut().insert_resource(editor);
+        h.app.world_mut().insert_resource(ui);
+    }
+}
+
+#[test]
+fn new_first_save_failed_or_cancelled_open_invalidates_consent_but_retains_guard() {
+    for outcome in ["cancelled", "invalid-json", "identical-open-cancelled"] {
+        let mut h = Harness::new(egui::vec2(1280.0, 720.0));
+        let original_path = h.ui().file_path.clone();
+        let original = h.current_json().into_bytes();
+        std::fs::write(&original_path, &original).unwrap();
+        h.accept_new().drop_without_applying_deltas();
+        h.first_save_modal().drop_without_applying_deltas();
+        let mut editor = h.app.world_mut().remove_resource::<EditorState>().unwrap();
+        let mut ui = h.app.world_mut().remove_resource::<StudioUi>().unwrap();
+        let before = editor.document().unwrap().clone();
+        let completion = match outcome {
+            "cancelled" => Err("File selection cancelled".into()),
+            "invalid-json" => Ok(FileCompletion::Opened("{".into())),
+            "identical-open-cancelled" => Ok(FileCompletion::Opened(before.to_json().unwrap())),
+            _ => unreachable!(),
+        };
+        accept_file_completion(completion, &mut editor, &mut ui);
+        editor.cancel_pending_open();
+        let mut io = PlatformIo::default();
+        assert!(
+            ui.first_save
+                .confirm(&editor, &ui.file_path, &mut io)
+                .is_err(),
+            "{outcome}"
+        );
+        assert_eq!(editor.document(), Some(&before), "{outcome}");
+        assert_eq!(
+            std::fs::read(&original_path).unwrap(),
+            original,
+            "{outcome}"
+        );
+        ui.first_save
+            .request_save(&editor, &ui.file_path, &mut io)
+            .unwrap();
+        assert!(ui.first_save.confirmation_open(), "{outcome}");
+        assert!(!io.busy(), "{outcome}");
+        h.app.world_mut().insert_resource(editor);
+        h.app.world_mut().insert_resource(ui);
+    }
+}

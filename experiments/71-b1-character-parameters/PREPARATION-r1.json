@@ -1,0 +1,59 @@
+{
+  "scope": "worker source/preparation only; no Rust compile/test execution or native/Web runtime/GPU proof",
+  "linked_head": "05d3f773bba4e2adadbde8b0616979d6a6f6fe7d",
+  "cases_sha256": "7abedf9e9c46245d7c9cf0aaeab77e716fb37dd538aa76cccdae935e6fda9185",
+  "base_manifest_sha256": "15834b6bea9bc7daff2d7189e15a66e044130c3b6b4cc75f4b3e508a4e97f3f4",
+  "appearance_manifest_sha256": "f2fe77d8d78c4f38cc5570403754a7f3532fd66de28af786bc5e8dcb4f4106f7",
+  "held_cases": 69,
+  "checks": [
+    {
+      "check": "python312-tests",
+      "exit_code": 0,
+      "seconds": 2.102,
+      "stdout": "",
+      "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 1.981s\n\nOK\n"
+    },
+    {
+      "check": "python312-optimized-tests",
+      "exit_code": 0,
+      "seconds": 2.44,
+      "stdout": "",
+      "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 2.177s\n\nOK\n"
+    },
+    {
+      "check": "rustfmt",
+      "exit_code": 0,
+      "seconds": 0.078,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "check": "html-module-syntax",
+      "exit_code": 0,
+      "seconds": 0.162,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "retained_preparation_failures": [
+    {
+      "check": "initial rustfmt during source construction",
+      "result": "exit1: observation module file had not yet been written",
+      "resolution": "completed read-only observation module; final formatting passes"
+    },
+    {
+      "check": "new full-schema/source4 verifier negative regression",
+      "result": "failed NameError: identity after correlation helper extraction",
+      "resolution": "bind current frame identity in validate; full-schema positive and negative regressions now pass"
+    }
+  ],
+  "not_run": [
+    "Cargo compilation/native Rust unit execution",
+    "actual native/Web69held cohort",
+    "ordinary UI/eight controls/Undo/Redo/Reset/Save/Open and cross-end file exchange",
+    "live zero/face-wide/lower-body",
+    "GUI screenshots/GPU visibility/texel/depth",
+    "quality/performance/physics/AI generation"
+  ],
+  "held_stability_gate": "two consecutive equal actual identity/camera frames after readiness, reset on change,45second unconditional app deadline; live-transient explicitly separate"
+}

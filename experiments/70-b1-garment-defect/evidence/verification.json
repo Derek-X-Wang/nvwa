@@ -1,0 +1,43 @@
+{
+  "scope": "Worker-observed local stdlib executions; no compile, app, GPU or new runtime capture",
+  "base_head": "ab4c16f81deddfc98faa97fcd1a8e7904c5f2f0b",
+  "controls": {
+    "normal": {
+      "tests": 13,
+      "exit_code": 0,
+      "observed_seconds": 1.523
+    },
+    "python_optimized": {
+      "tests": 13,
+      "exit_code": 0,
+      "observed_seconds": 1.521
+    }
+  },
+  "retained30": {
+    "exit_code": 0,
+    "frames": 30,
+    "reconstruction_verified": true
+  },
+  "historical_native_web": {
+    "exit_code": 0,
+    "same_case": "torso+1/jaw0/arm2",
+    "all_garment_points": 1797
+  },
+  "diagnostic_exit_codes": {
+    "witness_arm2": 3,
+    "control_arm0": 0,
+    "control_knee2": 0
+  },
+  "syntax_ast": "PASS",
+  "planned_requests": {
+    "count": 54,
+    "web_batches": [
+      27,
+      27
+    ],
+    "executed_current_runtime": 0
+  },
+  "heavy_compilation_tokens_consumed": 0,
+  "candidate_fix": null,
+  "quality": "HOLD"
+}

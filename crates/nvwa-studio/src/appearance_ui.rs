@@ -14,8 +14,12 @@ pub(super) fn draw(ui: &mut egui::Ui, document: &SceneDocument) -> Option<Comman
     let eyes_changed = ui.checkbox(&mut eyes, "眼睛 / Eyes").changed();
     let hair_changed = ui.checkbox(&mut hair, "头发 / Hair").changed();
     ui.small("随作品保存 / Included in Work");
-    (skin_changed || eyes_changed || hair_changed).then(|| Command::SetAppearance {
+    if !(skin_changed || eyes_changed || hair_changed) {
+        return None;
+    }
+    Some(Command::SetAppearance {
         character_id: document.character.id.clone(),
-        appearance: CharacterAppearance::b1_cc0(skin, eyes, hair),
+        appearance: CharacterAppearance::b1_cc0_for(&document.profile.backend, skin, eyes, hair)
+            .ok()?,
     })
 }

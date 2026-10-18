@@ -13,7 +13,7 @@ use bevy::{
     prelude::*,
     render::render_resource::{Face, TextureFormat},
 };
-use nvwa_core::{CharacterAppearance, appearance_sha256};
+use nvwa_core::{B1AppearanceSet, CharacterAppearance, appearance_sha256};
 use serde_json::{Value, json};
 
 #[derive(Resource, Clone, Debug, Default)]
@@ -31,6 +31,7 @@ pub struct AppearanceStatus {
 }
 #[derive(Clone, PartialEq)]
 struct Key {
+    set: B1AppearanceSet,
     generation: u64,
     character: Entity,
     body: Entity,
@@ -40,6 +41,7 @@ struct Key {
 impl Key {
     fn new(frame: &AppearanceFrame, flags: (bool, bool, bool)) -> Self {
         Self {
+            set: B1AppearanceSet::for_base(frame.base),
             generation: frame.generation,
             character: frame.character,
             body: frame.body,
@@ -76,7 +78,7 @@ struct Live {
 }
 #[derive(Resource, Default)]
 pub(super) struct AppearanceRuntime {
-    authenticated: bool,
+    authenticated: Option<B1AppearanceSet>,
     key: Option<Key>,
     skin: Option<SkinBinding>,
     live: Vec<Live>,
@@ -209,7 +211,7 @@ fn prepare(
                 .map(|b| b.name.clone())
                 .collect::<Vec<_>>(),
         )?;
-        for p in geometry::prepare()?
+        for p in geometry::prepare(B1AppearanceSet::for_base(frame.base))?
             .into_iter()
             .filter(|p| if p.hair { flags.2 } else { flags.1 })
         {
@@ -230,7 +232,13 @@ pub(super) fn preflight(
     appearance: &CharacterAppearance,
 ) -> Result<(), String> {
     if let Some(flags) = appearance.b1_flags() {
-        assets::authenticate()?;
+        let set = appearance
+            .b1_set()
+            .ok_or("appearance: invalid selected set")?;
+        if set.base() != frame.base {
+            return Err("appearance: candidate base/set identity mismatch".into());
+        }
+        assets::authenticate(set)?;
         let _ = prepare(frame, fit, flags)?;
     }
     Ok(())
@@ -241,9 +249,10 @@ fn build(
     frame: &AppearanceFrame,
     flags: (bool, bool, bool),
 ) -> Result<(), String> {
-    if !state.authenticated {
-        assets::authenticate()?;
-        state.authenticated = true;
+    let set = B1AppearanceSet::for_base(frame.base);
+    if state.authenticated != Some(set) {
+        assets::authenticate(set)?;
+        state.authenticated = Some(set);
     }
     let fit = appearance_fit(world, frame)?;
     let baseline = world
@@ -723,7 +732,7 @@ pub fn appearance_snapshot(world: &mut World) -> Result<Value, String> {
             _ => return Err("appearance actual body positions missing".into()),
         };
         Ok(
-            json!({"requested":status.requested,"applied":status.applied,"ready":true,"generation":frame.generation,"revision":frame.revision,"serial":frame.serial,"character_entity":format!("{:?}",frame.character),"body_entity":format!("{:?}",frame.body),"body_mesh":format!("{:?}",frame.mesh.id()),"body_material":format!("{:?}",actual_material.0.id()),"body_vertices":positions.len(),"body_positions_sha256":hash(json!(positions))?,"skin":skin,"accessories":accessories,"observation":"current entity handles -> CPU Assets<Mesh/StandardMaterial/Image>; NOT GPU readback","error":null}),
+            json!({"requested":status.requested,"applied":status.applied,"ready":true,"base_asset_id":frame.base.asset_id(),"generation":frame.generation,"revision":frame.revision,"serial":frame.serial,"character_entity":format!("{:?}",frame.character),"body_entity":format!("{:?}",frame.body),"body_mesh":format!("{:?}",frame.mesh.id()),"body_material":format!("{:?}",actual_material.0.id()),"body_vertices":positions.len(),"body_positions_sha256":hash(json!(positions))?,"skin":skin,"accessories":accessories,"observation":"current entity handles -> CPU Assets<Mesh/StandardMaterial/Image>; NOT GPU readback","error":null}),
         )
     })();
     if let Err(error) = &result {
@@ -775,7 +784,14 @@ mod tests {
         world.init_resource::<Assets<Mesh>>();
         world.init_resource::<Assets<StandardMaterial>>();
         world.init_resource::<Assets<Image>>();
-        let image = assets::decode(geometry::prepare().unwrap().remove(0).png, 1024).unwrap();
+        let image = assets::decode(
+            geometry::prepare(B1AppearanceSet::V1)
+                .unwrap()
+                .remove(0)
+                .png,
+            1024,
+        )
+        .unwrap();
         let texture = texture(&mut world, image, 1024).unwrap();
         let material = world
             .resource_mut::<Assets<StandardMaterial>>()
@@ -823,6 +839,7 @@ mod tests {
             .id();
         let character = world.spawn_empty().id();
         let frame = AppearanceFrame {
+            base: nvwa_core::B1AssetVersion::V1,
             generation: 1,
             revision: 2,
             serial: 4,

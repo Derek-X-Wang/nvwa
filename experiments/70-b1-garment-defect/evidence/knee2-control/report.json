@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "source_manifest_sha256": "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18",
+  "source_file_sha256": {
+    "manifest.json": "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18",
+    "base.obj": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2",
+    "body.mhclo": "152e68fcc03cdbd08566b42d53dcb253546d7a71e3dabd62a95f8c72763aa5aa",
+    "composite.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "empty.macro": "e0ca0537a591ee9d362fb69c381d793f0e4a64f6ce62d21c0d607edfdd8bf37c",
+    "garment/female_sportsuit01.mhclo": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7",
+    "garment/female_sportsuit01.obj": "f9f91788c1dd2918fceedd4dd4ada520f56fb8dfd68cbbeb9a4f6bfbd8e101a9",
+    "rig.game_engine.json": "b324ddb4b707721c19630bfadb87c3e3b38eed3b6e4590bb3cead43ea918f799",
+    "targets/chin-jaw-drop-decr.target": "6bf2cab4e65e5dd7456405ad3d0b68f4ec80b6130ff78349a02f650f33f7f443",
+    "targets/chin-jaw-drop-incr.target": "789b8d79f920786244d8e7de1d87ce4fff7e2650d7bf171a35ad22b9011d5238",
+    "targets/torso-scale-vert-decr.target": "a7deb8343fb3ecfef46c6118662b1a40f0cfc33d79ff959c641dd796a17bed9f",
+    "targets/torso-scale-vert-incr.target": "caa5e04cebd43ba40c9a98717fc7f177b14b43c1f01c37e15fef7a4cb4e6660c",
+    "vertex_groups.json": "8cb1417bc55ae5ec8aa99f90734e81ed5fbb556511ff6a2c00e0534b70911444",
+    "weights.game_engine.json": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473"
+  },
+  "analyzer_sha256": "d3a3a7d3cb2183a462db918f74be264fe94e08059f88ec50368076b3598a286f",
+  "unchanged_fk_support_sha256": {
+    "experiments/60-b1-continuous-motion/checker.py": "cbdd941ee671dba23d3fa7b7e9b183664222597c7b69df6241897846048da22b",
+    "experiments/60-b1-continuous-motion/geometry.py": "26b676e5880bf5a0a228574676215db6b2aa31b5b5d3004458af33fea9d4f5aa"
+  },
+  "frames": [
+    {
+      "expected": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0,
+        "clip_id": "b1_knee_flex_v1",
+        "seconds": 2.0
+      },
+      "identity": {
+        "generation": 1,
+        "revision": 24,
+        "character_entity": "340v0",
+        "garment_entity": "285v2",
+        "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 6, generation: 4}",
+        "sample": {
+          "clip_id": "b1_knee_flex_v1",
+          "completed": false,
+          "playing": false,
+          "position_seconds": 2.0,
+          "serial": 50,
+          "source_seconds": 2.0,
+          "timeline_id": "probe-entry"
+        }
+      },
+      "geometry": {
+        "source_triangle": [
+          246,
+          244,
+          182
+        ],
+        "display_triangle": 200,
+        "raw_obj_area_m2": 0.00018793456046510614,
+        "fitted_rest_area_m2": 1.884345974021258e-05,
+        "actual_posed_area_m2": 1.8843724972575847e-05,
+        "posed_over_fitted_rest_area": 1.0000140755661076,
+        "fitted_rest_over_raw_obj_area": 0.1002660697084039,
+        "actual_edge_lengths_m": [
+          0.020857277914305583,
+          0.02038411186489208,
+          0.04120078751126635
+        ]
+      },
+      "reconstruction": {
+        "all_source_vertices": 1797,
+        "authored_fk_max_component_error": 7.293033377209213e-07,
+        "authored_joint_head_max_component_error_m": 3.960591470342223e-07,
+        "rest_inverse_bind_identity_error": 1.0800307315150803e-07,
+        "rest_max_component_error_m": 1.095930359795716e-07,
+        "normalized_weight_max_component_error": 3.632476242021454e-08,
+        "actual_weight_lbs_max_component_error_m": 1.2860308373774387e-07,
+        "source_fit_weight_lbs_max_component_error_m": 1.4534784920083865e-07,
+        "maximum_positive_bones_per_vertex": 6,
+        "signed_mapping_rows": 30
+      },
+      "region": {
+        "source_ids": [
+          22,
+          29,
+          79,
+          104,
+          110,
+          182,
+          191,
+          241,
+          244,
+          246,
+          255,
+          669,
+          677,
+          691,
+          697,
+          719
+        ],
+        "incident_triangles": 52,
+        "metrics": {
+          "all_incident": {
+            "triangles": 52,
+            "max_area_over_same_frame_rest": 1.0000140755661076,
+            "max_triangle": [
+              246,
+              244,
+              182
+            ]
+          },
+          "mixed_boundary": {
+            "triangles": 34,
+            "max_area_over_same_frame_rest": 1.0000028912947854,
+            "max_triangle": [
+              29,
+              592,
+              110
+            ]
+          },
+          "non_core": {
+            "triangles": 35,
+            "max_area_over_same_frame_rest": 1.0000028912947854,
+            "max_triangle": [
+              29,
+              592,
+              110
+            ]
+          }
+        }
+      },
+      "scale_ratios": [
+        1.05865523538876,
+        1.0566942729001814,
+        1.0411678472620896
+      ],
+      "core_trace": [
+        {
+          "source_id": 246,
+          "mapping": {
+            "helpers": [
+              17235,
+              17238,
+              16990
+            ],
+            "coefficients": [
+              0.40531,
+              0.38123,
+              0.21346
+            ],
+            "offset_m": [
+              0.000673,
+              -0.001139,
+              -0.002492
+            ]
+          },
+          "normalized_weights": {
+            "spine_03": 0.16727830563703686,
+            "clavicle_l": 0.11287213851193814,
+            "upperarm_l": 0.7198495558510251
+          },
+          "raw_obj_m": [
+            0.17763,
+            0.40888,
+            -0.03584
+          ],
+          "fitted_rest_m": [
+            0.17206358909606934,
+            0.5732240080833435,
+            -0.03863012418150902
+          ],
+          "actual_upload_m": [
+            0.17206357419490814,
+            0.5732237696647644,
+            -0.038629885762929916
+          ],
+          "replayed_upload_m": [
+            0.17206358526736318,
+            0.5732238157469798,
+            -0.038629883244856576
+          ],
+          "actual_stage_m": [
+            0.17206357419490814,
+            1.3899837732315063,
+            -0.038629885762929916
+          ]
+        },
+        {
+          "source_id": 244,
+          "mapping": {
+            "helpers": [
+              17238,
+              17235,
+              16971
+            ],
+            "coefficients": [
+              0.22499775002249978,
+              0.5488945110548895,
+              0.22610773892261077
+            ],
+            "offset_m": [
+              -0.003135,
+              -0.008129,
+              -0.005816
+            ]
+          },
+          "normalized_weights": {
+            "spine_03": 0.11354994508587794,
+            "clavicle_l": 0.08805071376368377,
+            "upperarm_l": 0.7983993411504382
+          },
+          "raw_obj_m": [
+            0.17344,
+            0.3893,
+            -0.02816
+          ],
+          "fitted_rest_m": [
+            0.1674603670835495,
+            0.5532670617103577,
+            -0.034685928374528885
+          ],
+          "actual_upload_m": [
+            0.1674603521823883,
+            0.5532668232917786,
+            -0.03468568995594978
+          ],
+          "replayed_upload_m": [
+            0.16746036066724784,
+            0.5532668664788296,
+            -0.03468569142017365
+          ],
+          "actual_stage_m": [
+            0.1674603521823883,
+            1.3700268268585205,
+            -0.03468568995594978
+          ]
+        },
+        {
+          "source_id": 182,
+          "mapping": {
+            "helpers": [
+              17224,
+              17223,
+              16954
+            ],
+            "coefficients": [
+              0.23534,
+              0.59183,
+              0.17283
+            ],
+            "offset_m": [
+              0.014105,
+              -0.003642,
+              -0.004865
+            ]
+          },
+          "normalized_weights": {
+            "spine_01": 0.00011838967746542639,
+            "spine_02": 0.012005258393662298,
+            "spine_03": 0.721345397616449,
+            "clavicle_l": 0.020980432408048706,
+            "upperarm_l": 0.24555052190437454
+          },
+          "raw_obj_m": [
+            0.15673,
+            0.39153,
+            -0.03298
+          ],
+          "fitted_rest_m": [
+            0.16160550713539124,
+            0.5343639254570007,
+            -0.02979627437889576
+          ],
+          "actual_upload_m": [
+            0.16160550713539124,
+            0.5343638062477112,
+            -0.02979603223502636
+          ],
+          "replayed_upload_m": [
+            0.1616055045219639,
+            0.534363783411205,
+            -0.02979603140106451
+          ],
+          "actual_stage_m": [
+            0.16160550713539124,
+            1.3511238098144531,
+            -0.02979603223502636
+          ]
+        }
+      ],
+      "scope": "same-frame CPU source/upload reconstruction; not GPU, collision, penetration depth, visual approval or a candidate fix",
+      "input_sha256": "e99893c5cf5c7b24890f10f35d22bd01da3ea32e880e7ecf4533e3b8c285364b",
+      "input_name": "t+1__b1_knee_flex_v1__k16.json.gz"
+    }
+  ],
+  "failures": [],
+  "expected_frames": 1,
+  "reconstruction_verified": true,
+  "diagnostic_stretch_over10": [],
+  "diagnostic_threshold_scope": "fixed historical symptom selector; not appearance acceptance",
+  "candidate": "NONE; source-limited diagnosis, no correction applied",
+  "garment_quality": "HOLD",
+  "scope": "bounded same-frame CPU evidence only; old captures do not prove current-head runtime or pixels"
+}

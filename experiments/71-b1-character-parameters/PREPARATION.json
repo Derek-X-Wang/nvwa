@@ -1,0 +1,97 @@
+{
+  "scope": "HTML-only no-wrap diagnostic mitigation and static DOM tests; Rust/JavaScript/Works/protocol unchanged; prior R3 Wasm may be reused with distinct HTML identity; no new browser proof",
+  "linked_head": "05d3f773bba4e2adadbde8b0616979d6a6f6fe7d",
+  "cases_sha256": "7abedf9e9c46245d7c9cf0aaeab77e716fb37dd538aa76cccdae935e6fda9185",
+  "base_manifest_sha256": "15834b6bea9bc7daff2d7189e15a66e044130c3b6b4cc75f4b3e508a4e97f3f4",
+  "appearance_manifest_sha256": "f2fe77d8d78c4f38cc5570403754a7f3532fd66de28af786bc5e8dcb4f4106f7",
+  "held_cases": 69,
+  "retained_preparation_failures": [
+    {
+      "check": "initial rustfmt during source construction",
+      "result": "exit1: observation module file had not yet been written",
+      "resolution": "completed read-only observation module; final formatting passes"
+    },
+    {
+      "check": "new full-schema/source4 verifier negative regression",
+      "result": "failed NameError: identity after correlation helper extraction",
+      "resolution": "bind current frame identity in validate; full-schema positive and negative regressions now pass"
+    }
+  ],
+  "held_stability_gate": "two consecutive equal actual identity/camera frames after readiness, reset on change,45second unconditional app deadline; live-transient explicitly separate",
+  "prior_freeze_sha256": "078c9fe9faa33d3eb05aeb921f367ec5ab7591b22b33a0858889168ac3016c39",
+  "prior_tests_status": "original13 green Python tests insufficient: retained eight mutation acceptances are failures",
+  "unchanged_r1_protected_files": 80,
+  "actual_hash_golden": {
+    "capture_basename": "n68-combined-textured.json",
+    "capture_sha256": "9cde54133d6b24eca8dfa155105c5c9ae7c9d2085e769d5978c22e8cfc184ef6",
+    "arrays": 8,
+    "result": "all eight actual production appearance digests match actual arrays using promoted-f32 encoding",
+    "scope": "existing68R2 CPU observation only, not new71 runtime evidence",
+    "fixture_arrays_and_expected_hashes_exact_source_copy": true,
+    "fixture_sha256": "905ce1af510cc3c5669daf6cdb9241331415cf385b74ccf3ac30d5833a8367e7"
+  },
+  "mutation_red_controls": "all8 formerly accepted malformed records now rejected; reasons retained in VERIFIER-R2-NEGATIVE-REPRO.json",
+  "prior_scope": "R2 Python/tests/docs correction only; Rust/fixed Works unchanged; no new Rust execution or native/Web71 runtime proof",
+  "prior_preparation_sha256": "714df6ad9caea14c888b8de7cb1689a0cf7ea3b9092427099e575805eaeae88e",
+  "prior_checks": [
+    {
+      "check": "python312-tests",
+      "exit_code": 0,
+      "seconds": 9.544,
+      "stdout": "",
+      "stderr": "...................\n----------------------------------------------------------------------\nRan 19 tests in 9.450s\n\nOK\n"
+    },
+    {
+      "check": "python312-optimized-tests",
+      "exit_code": 0,
+      "seconds": 9.675,
+      "stdout": "",
+      "stderr": "...................\n----------------------------------------------------------------------\nRan 19 tests in 9.445s\n\nOK\n"
+    }
+  ],
+  "checks": [
+    {
+      "check": "python312-tests",
+      "exit_code": 0,
+      "tests": 22,
+      "test_seconds": 9.521,
+      "merged_log_sha256": "d71f15aa41b5076511a448134a1deecb1da785b6e4dedc83663bffc733b829c9",
+      "merged_log": "......................\n----------------------------------------------------------------------\nRan 22 tests in 9.521s\n\nOK\n"
+    },
+    {
+      "check": "python312-optimized-tests",
+      "exit_code": 0,
+      "tests": 22,
+      "test_seconds": 9.655,
+      "merged_log_sha256": "d04cbc5e7b07ff9d1f438c961681b74e7395884d6d448e3a61fa57a6a65d352f",
+      "merged_log": "......................\n----------------------------------------------------------------------\nRan 22 tests in 9.655s\n\nOK\n"
+    }
+  ],
+  "prior_not_run": [
+    "Cargo compilation/native Rust unit execution",
+    "actual native/Web69held cohort",
+    "ordinary UI/eight controls/Undo/Redo/Reset/Save/Open and cross-end file exchange",
+    "live zero/face-wide/lower-body",
+    "GUI screenshots/GPU visibility/texel/depth",
+    "quality/performance/physics/AI generation"
+  ],
+  "not_run": [
+    "Actual browser responsiveness after HTML change",
+    "Root-cause timing/profile or proof Open was dispatched in failed cohort",
+    "New Rust compilation (Rust bytes unchanged; reuse R3 artifact only with explicit source/artifact receipt)",
+    "Actual Web69held cohort and UI/rendered/GPU/quality/performance acceptance"
+  ],
+  "html_diagnostic": {
+    "before_sha256": "0fe6648cd6d46a9b4f5447f0aebca0f0588db36c3c549ba2d2a4dbeb069b9ecd",
+    "after_sha256": "6ce3fd993111f823baad5af2b855ff506e2ab1bb140a227a6f17744d953b9523",
+    "root_cause": "UNKNOWN",
+    "static_red_control": "original HTML failed readonly-wrap and CSS checks; not a browser timeout reproduction",
+    "unchanged_inline_script": true,
+    "unchanged_rust": true,
+    "visible_readonly_exports": [
+      "acceptance-report",
+      "acceptance-frame",
+      "acceptance-work"
+    ]
+  }
+}

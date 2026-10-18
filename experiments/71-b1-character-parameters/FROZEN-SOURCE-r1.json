@@ -1,0 +1,425 @@
+{
+  "scope": "linked05d3f77 acceptance71 source freeze including held stability guard; no runtime evidence",
+  "files": {
+    "CONTRACT.md": {
+      "sha256": "02aacbd1a765ca2b1437395d6e8ad871071cd84d47ac18e0dd18dc5b15ffd743",
+      "bytes": 3313
+    },
+    "Cargo.lock": {
+      "sha256": "89b32846bb1bcf1898c3bf0efed1487cc351e6c7b34bad6a21a58b73940063da",
+      "bytes": 145878
+    },
+    "Cargo.toml": {
+      "sha256": "04469ebfa17cc3cfef49b6f534bb2096414988e6abaa6fb0220fd3c86fa3da3b",
+      "bytes": 1180
+    },
+    "PREPARATION.json": {
+      "sha256": "4e7e150d7d1af4a81dcbd654ff62eac32dde872e8a5884363a702b9c8948e882",
+      "bytes": 2336
+    },
+    "README.md": {
+      "sha256": "e8a94b5229ee3c6d863ab4079b3b0707d343b8b3edee9e27d5953a16ac45bdc9",
+      "bytes": 9948
+    },
+    "build.py": {
+      "sha256": "137c250ffc0732e27929be2ae57eb207fb87f2205fd7caf6388481ab5d44f169",
+      "bytes": 3884
+    },
+    "index.html": {
+      "sha256": "0fe6648cd6d46a9b4f5447f0aebca0f0588db36c3c549ba2d2a4dbeb069b9ecd",
+      "bytes": 3055
+    },
+    "inputs/CC0-1.0.txt": {
+      "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c",
+      "bytes": 6962
+    },
+    "inputs/cases.json": {
+      "sha256": "7abedf9e9c46245d7c9cf0aaeab77e716fb37dd538aa76cccdae935e6fda9185",
+      "bytes": 25809
+    },
+    "inputs/oracle-sources.json": {
+      "sha256": "8072ba48bcee0cf43465b7ae2617dbf2568e0a94a293746176d2038ef32aa945",
+      "bytes": 5923
+    },
+    "inputs/raw/base.obj": {
+      "sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+      "bytes": 1749303
+    },
+    "inputs/raw/chin-jaw-drop-decr.target": {
+      "sha256": "6bf2cab4e65e5dd7456405ad3d0b68f4ec80b6130ff78349a02f650f33f7f443",
+      "bytes": 1072
+    },
+    "inputs/raw/chin-jaw-drop-incr.target": {
+      "sha256": "789b8d79f920786244d8e7de1d87ce4fff7e2650d7bf171a35ad22b9011d5238",
+      "bytes": 857
+    },
+    "inputs/raw/chin-width-decr.target": {
+      "sha256": "b99f878229b6cc8a52bca1ec3b1d746faeca9049acd6ae59170ae2d0a776911c",
+      "bytes": 2649
+    },
+    "inputs/raw/chin-width-incr.target": {
+      "sha256": "39449581db893fa4a2561b0d05ff11344deccf5d0cb85411fdf702b4c4738dc8",
+      "bytes": 3833
+    },
+    "inputs/raw/head-scale-horiz-decr.target": {
+      "sha256": "6e4390a2dffe69e6c09ad6a6e1b0c905439ef128ff2401301daf1c1b39c958ac",
+      "bytes": 81086
+    },
+    "inputs/raw/head-scale-horiz-incr.target": {
+      "sha256": "12ad083682f5319882923d775074677569c3612706c0d785a4b287821abfe400",
+      "bytes": 82552
+    },
+    "inputs/raw/hip-scale-horiz-decr.target": {
+      "sha256": "356c5dfc694c738c9780105c9c2c554e0906f903720a6f092601fd6f586ba559",
+      "bytes": 32310
+    },
+    "inputs/raw/hip-scale-horiz-incr.target": {
+      "sha256": "2fcaf2239862bec5d285ac4620ba1b1f7713dbb105f495c8f16836a7b2a4f474",
+      "bytes": 32310
+    },
+    "inputs/raw/mouth-scale-horiz-decr.target": {
+      "sha256": "2eecf3b71ce834fdf8c00817c4de28913d0abcbde9bb1a05df860946d31581a1",
+      "bytes": 12040
+    },
+    "inputs/raw/mouth-scale-horiz-incr.target": {
+      "sha256": "1561577f3f2b061fd42290ac3adc469a2c796090ca9668a9e131e65ed047ec43",
+      "bytes": 15053
+    },
+    "inputs/raw/neck-scale-horiz-decr.target": {
+      "sha256": "da92e9cadad16b0652177935d6febd5a53d3263fcfe7421de01075ddc52bdc81",
+      "bytes": 7849
+    },
+    "inputs/raw/neck-scale-horiz-incr.target": {
+      "sha256": "42e5ae83aa3897fcd0ad045d8628dd0044b63817a13797129fe712cd4a710360",
+      "bytes": 10107
+    },
+    "inputs/raw/nose-scale-horiz-decr.target": {
+      "sha256": "41480edfeec76d2595edec3e714fc077e93d265e12c7b5c94eb7aa42288f71df",
+      "bytes": 4470
+    },
+    "inputs/raw/nose-scale-horiz-incr.target": {
+      "sha256": "a2130755fb06b021ac4ab1269715835588f76276201bc15369ffa2f13889573b",
+      "bytes": 6964
+    },
+    "inputs/raw/torso-scale-vert-decr.target": {
+      "sha256": "a7deb8343fb3ecfef46c6118662b1a40f0cfc33d79ff959c641dd796a17bed9f",
+      "bytes": 201357
+    },
+    "inputs/raw/torso-scale-vert-incr.target": {
+      "sha256": "caa5e04cebd43ba40c9a98717fc7f177b14b43c1f01c37e15fef7a4cb4e6660c",
+      "bytes": 195076
+    },
+    "oracle.py": {
+      "sha256": "291225c08cff60845e3327f25905777850e7ec741936c4e46b962b4faae40f5f",
+      "bytes": 6195
+    },
+    "prepare_works.py": {
+      "sha256": "5e9f776c6d5f83230bfbaa90332dc0c45b4ca24bfccecf8b14a5e255fb9ee2fc",
+      "bytes": 3333
+    },
+    "src/bin/studio71.rs": {
+      "sha256": "e2ddf97361c045bbd1a6765be780ea13ec4ac33b4b884a60b9138ea78d78d9aa",
+      "bytes": 164
+    },
+    "src/lib.rs": {
+      "sha256": "374b10e42029c5854bdbb0998cf7ce394a3bfd06e062b42040f3351dec69525a",
+      "bytes": 34299
+    },
+    "src/observation.rs": {
+      "sha256": "805e1ac0749ad7655fc54094357c15ff81a6af94e2844a51c49114d6759de11a",
+      "bytes": 8090
+    },
+    "test_full_schema.py": {
+      "sha256": "8002202125f917fb939e90880fe5c4a3727514f9b34eda6de5eafb2a04c8ac2b",
+      "bytes": 6097
+    },
+    "test_oracle.py": {
+      "sha256": "418f998ef1ca9fd88abad94b4da80473e440324420374cf6d710f9026a4d9704",
+      "bytes": 10782
+    },
+    "verify.py": {
+      "sha256": "7f9fbda997b0ba4fd98acf4fe7d3c5d93d5bb97c3f486bb466a99fed87749da0",
+      "bytes": 10595
+    },
+    "works/chin_width-minus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "8e141140f0ea5dbefe10239369ba3c32b91d80db5606d0ef297cd24a2a0fb345",
+      "bytes": 3529
+    },
+    "works/chin_width-minus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "8e141140f0ea5dbefe10239369ba3c32b91d80db5606d0ef297cd24a2a0fb345",
+      "bytes": 3529
+    },
+    "works/chin_width-minus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "f9dd6d340c62c9ce4973f6b1138ddaddd8d0e59cd85f40e360ad333440c54b7a",
+      "bytes": 3525
+    },
+    "works/chin_width-plus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "4c31a7369c312b98faabe9f000e4f1082c6fb7b27a34263ddc9d8f94b14fd076",
+      "bytes": 3528
+    },
+    "works/chin_width-plus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "4c31a7369c312b98faabe9f000e4f1082c6fb7b27a34263ddc9d8f94b14fd076",
+      "bytes": 3528
+    },
+    "works/chin_width-plus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "d3613bdb36c296092198f6c61929c690471fcd6b1061a35321c08b5a33331a5f",
+      "bytes": 3524
+    },
+    "works/face-narrow-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "65815830f624d85c5e42c1ac60675a4bfee15814e4ec8f6a20c9b9384f5144b8",
+      "bytes": 3533
+    },
+    "works/face-narrow-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "65815830f624d85c5e42c1ac60675a4bfee15814e4ec8f6a20c9b9384f5144b8",
+      "bytes": 3533
+    },
+    "works/face-narrow-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "c40b4bd3719b033f0ab8a7d8a36de17ee122f9ce79fc4f94fc43f52467b5cf66",
+      "bytes": 3529
+    },
+    "works/face-wide-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "d174e32f0a026423e0215dbd903422a87ebf112893f6d672f0872048933a073e",
+      "bytes": 3528
+    },
+    "works/face-wide-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "d174e32f0a026423e0215dbd903422a87ebf112893f6d672f0872048933a073e",
+      "bytes": 3528
+    },
+    "works/face-wide-b1_arm_rehearsal_v1-4.nvwa.json": {
+      "sha256": "d174e32f0a026423e0215dbd903422a87ebf112893f6d672f0872048933a073e",
+      "bytes": 3528
+    },
+    "works/face-wide-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "096e6787980b91f7441bd6355fba8649593e91e28f226a033f586b65ca6b2259",
+      "bytes": 3524
+    },
+    "works/face-wide-b1_knee_flex_v1-4.nvwa.json": {
+      "sha256": "096e6787980b91f7441bd6355fba8649593e91e28f226a033f586b65ca6b2259",
+      "bytes": 3524
+    },
+    "works/head_width-minus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "92a0f5e2516ba2fc8fe87ce22fd49399724d261243a90227d524c5e0995bba9f",
+      "bytes": 3529
+    },
+    "works/head_width-minus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "92a0f5e2516ba2fc8fe87ce22fd49399724d261243a90227d524c5e0995bba9f",
+      "bytes": 3529
+    },
+    "works/head_width-minus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "8d05fb2b9831e91b61310ae3a114472ddda931be376b66a24909e84c4b3ebc14",
+      "bytes": 3525
+    },
+    "works/head_width-plus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "1cb1dc01c172a99e1b97d9042a47595a899da4b8b72ca76b739610d5e77398b8",
+      "bytes": 3528
+    },
+    "works/head_width-plus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "1cb1dc01c172a99e1b97d9042a47595a899da4b8b72ca76b739610d5e77398b8",
+      "bytes": 3528
+    },
+    "works/head_width-plus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "be1bb5b08843148659a5d27f25e0ad2e3978eda48b12353e965edc52e8c8d5d1",
+      "bytes": 3524
+    },
+    "works/hip_width-minus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "f2464bfd1bd98d13a8a539092ba8e16fa91dcbf6b7fec227b45481fca02f41e1",
+      "bytes": 3529
+    },
+    "works/hip_width-minus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "f2464bfd1bd98d13a8a539092ba8e16fa91dcbf6b7fec227b45481fca02f41e1",
+      "bytes": 3529
+    },
+    "works/hip_width-minus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "de533adeb73e8ae3f5923da673bdbe08ccc7ef6cd4bf1ce6c06bcb08e3f66229",
+      "bytes": 3525
+    },
+    "works/hip_width-plus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "aa8fbfc5f7f7d411b594fd817f4c2e48410134744a789a0c8c5829a8bd8e73c6",
+      "bytes": 3528
+    },
+    "works/hip_width-plus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "aa8fbfc5f7f7d411b594fd817f4c2e48410134744a789a0c8c5829a8bd8e73c6",
+      "bytes": 3528
+    },
+    "works/hip_width-plus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "6060920477c17b03cbf3b2910202df98a880ab05f1a01145175c239e343ee457",
+      "bytes": 3524
+    },
+    "works/jaw_drop-minus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "5dbb1f960217ee2fbecbcc6e3cdb8204e8f0141e90426d449d6ce71f183060ad",
+      "bytes": 3529
+    },
+    "works/jaw_drop-minus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "5dbb1f960217ee2fbecbcc6e3cdb8204e8f0141e90426d449d6ce71f183060ad",
+      "bytes": 3529
+    },
+    "works/jaw_drop-minus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "45c5929aa9eb150e08f5231c2d974cf541155d2c88cac8a4932f9608700520da",
+      "bytes": 3525
+    },
+    "works/jaw_drop-plus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "f950981d5ad252b6a8c09a06a52abe21f0e4a830ff7275e1772d41443cc926f1",
+      "bytes": 3528
+    },
+    "works/jaw_drop-plus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "f950981d5ad252b6a8c09a06a52abe21f0e4a830ff7275e1772d41443cc926f1",
+      "bytes": 3528
+    },
+    "works/jaw_drop-plus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "3900b973a079296119a1ac1af1d96757d8c1fbec01809b4e0f62a185e7dbd310",
+      "bytes": 3524
+    },
+    "works/lower-body-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "e6279acae01d242814841113049e96b461535597f70c2698a55690dcb903d0e2",
+      "bytes": 3529
+    },
+    "works/lower-body-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "e6279acae01d242814841113049e96b461535597f70c2698a55690dcb903d0e2",
+      "bytes": 3529
+    },
+    "works/lower-body-b1_arm_rehearsal_v1-4.nvwa.json": {
+      "sha256": "e6279acae01d242814841113049e96b461535597f70c2698a55690dcb903d0e2",
+      "bytes": 3529
+    },
+    "works/lower-body-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "b22ca24ba126128a572fbff4dca5cf109c50286ef3be3b943e768395f0c11881",
+      "bytes": 3525
+    },
+    "works/lower-body-b1_knee_flex_v1-4.nvwa.json": {
+      "sha256": "b22ca24ba126128a572fbff4dca5cf109c50286ef3be3b943e768395f0c11881",
+      "bytes": 3525
+    },
+    "works/mouth_width-minus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "a74a1d820fde8d1df7941627c4e701d312af259f011c0dafbf4524feff9cba65",
+      "bytes": 3529
+    },
+    "works/mouth_width-minus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "a74a1d820fde8d1df7941627c4e701d312af259f011c0dafbf4524feff9cba65",
+      "bytes": 3529
+    },
+    "works/mouth_width-minus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "9ca8706aee06f6cb0c95f26ffd85495ce6c67fe8720647ab450c89dac5f9113b",
+      "bytes": 3525
+    },
+    "works/mouth_width-plus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "89d6cc5d508917aa33ebf9881d0f2c66f015a437453421821987b0215fd4ab18",
+      "bytes": 3528
+    },
+    "works/mouth_width-plus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "89d6cc5d508917aa33ebf9881d0f2c66f015a437453421821987b0215fd4ab18",
+      "bytes": 3528
+    },
+    "works/mouth_width-plus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "cd6300477ba247e618c13e8c0aa9198a20f9caa84643923e25d88aca6243f906",
+      "bytes": 3524
+    },
+    "works/neck_width-minus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "a58356acf74b730183fa5e569ea3937cae0bb226c47e39365445c271fc81aeb0",
+      "bytes": 3529
+    },
+    "works/neck_width-minus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "a58356acf74b730183fa5e569ea3937cae0bb226c47e39365445c271fc81aeb0",
+      "bytes": 3529
+    },
+    "works/neck_width-minus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "5b1cf7761530e70e0fb42286308c1813ddae23a98c3d103728eda36c10faa43a",
+      "bytes": 3525
+    },
+    "works/neck_width-plus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "db5b9227544278637c3a90df264a6c90dbb06aca9247a27c6c3b4585a55f9481",
+      "bytes": 3528
+    },
+    "works/neck_width-plus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "db5b9227544278637c3a90df264a6c90dbb06aca9247a27c6c3b4585a55f9481",
+      "bytes": 3528
+    },
+    "works/neck_width-plus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "f9bc8c1b67c9a6aa6360b1148f1c280721f87d2f91c967286370ef60e7303f5b",
+      "bytes": 3524
+    },
+    "works/nose_width-minus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "7d54f6db579a0c9453943cddbdea85981ff61da5a30865c6c8a20b174a199cbd",
+      "bytes": 3529
+    },
+    "works/nose_width-minus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "7d54f6db579a0c9453943cddbdea85981ff61da5a30865c6c8a20b174a199cbd",
+      "bytes": 3529
+    },
+    "works/nose_width-minus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "c750dcf924ece2e7212ba00771f6b21bad174896aae94dbd35777fd39ab289b4",
+      "bytes": 3525
+    },
+    "works/nose_width-plus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "ef76809fc81042fe41b7f8a67a58f1726dad70d886450463faf45d288be9a1e0",
+      "bytes": 3528
+    },
+    "works/nose_width-plus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "ef76809fc81042fe41b7f8a67a58f1726dad70d886450463faf45d288be9a1e0",
+      "bytes": 3528
+    },
+    "works/nose_width-plus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "2edaaff60996fbebfed8f350fb13ea2e955dbf1566d62ed64f980a547d6cd5f2",
+      "bytes": 3524
+    },
+    "works/plan.json": {
+      "sha256": "7d628a8353f9ac3821219e6466fb46faf3a4aa5df089fd9fd0b699478e77dbbb",
+      "bytes": 316525
+    },
+    "works/torso_length-minus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "205bc12efbc1460ed2e6d5f5bf4ff8e00b92e3572236d63e7b2dcfc7eab37736",
+      "bytes": 3529
+    },
+    "works/torso_length-minus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "205bc12efbc1460ed2e6d5f5bf4ff8e00b92e3572236d63e7b2dcfc7eab37736",
+      "bytes": 3529
+    },
+    "works/torso_length-minus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "8887d26e5e8be711ce95da919df2108f5f5636a9061e08796e58e4639bb39675",
+      "bytes": 3525
+    },
+    "works/torso_length-plus-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "60af0bd93c61ce548832c1e522b6a02b80ae398a3a41c46cdf547d4b93cb08c9",
+      "bytes": 3528
+    },
+    "works/torso_length-plus-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "60af0bd93c61ce548832c1e522b6a02b80ae398a3a41c46cdf547d4b93cb08c9",
+      "bytes": 3528
+    },
+    "works/torso_length-plus-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "40d978995fe8ba2967c0f6aff498bd1e25889c90cae736ca2b8d4bffa3d5d0fd",
+      "bytes": 3524
+    },
+    "works/upper-body-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "da093a59de2ad9e85fe97867c1569bc89bcf77407faaf8bcb5dc15115bf65bc3",
+      "bytes": 3529
+    },
+    "works/upper-body-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "da093a59de2ad9e85fe97867c1569bc89bcf77407faaf8bcb5dc15115bf65bc3",
+      "bytes": 3529
+    },
+    "works/upper-body-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "61dc68b103548e961bbb6b5607dbfbdf93b4580fafbaaed4d0ac6b61675d8bab",
+      "bytes": 3525
+    },
+    "works/zero-b1_arm_rehearsal_v1-0.nvwa.json": {
+      "sha256": "11ced01abb94e92ba8fe932e340aea9f888fdcde3f7a716168862dd12c1a5b01",
+      "bytes": 3528
+    },
+    "works/zero-b1_arm_rehearsal_v1-2.nvwa.json": {
+      "sha256": "11ced01abb94e92ba8fe932e340aea9f888fdcde3f7a716168862dd12c1a5b01",
+      "bytes": 3528
+    },
+    "works/zero-b1_arm_rehearsal_v1-4.nvwa.json": {
+      "sha256": "11ced01abb94e92ba8fe932e340aea9f888fdcde3f7a716168862dd12c1a5b01",
+      "bytes": 3528
+    },
+    "works/zero-b1_knee_flex_v1-2.nvwa.json": {
+      "sha256": "dccea8c9d8197290ebe329bbc24817ea41ad93c22dcc8d9b9c627387e47c9093",
+      "bytes": 3524
+    },
+    "works/zero-b1_knee_flex_v1-4.nvwa.json": {
+      "sha256": "dccea8c9d8197290ebe329bbc24817ea41ad93c22dcc8d9b9c627387e47c9093",
+      "bytes": 3524
+    }
+  }
+}

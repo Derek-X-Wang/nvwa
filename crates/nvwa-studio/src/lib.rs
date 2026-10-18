@@ -1,6 +1,7 @@
 //! Rust Studio: egui and the renderer share one Bevy event loop on both targets.
 mod appearance_ui;
 mod editor_layout;
+mod first_save;
 mod fonts;
 pub mod platform;
 mod scene_view;
@@ -29,6 +30,7 @@ struct StudioUi {
     file_path: String,
     error: Option<String>,
     save_notice: Option<SaveNotice>,
+    first_save: first_save::FirstSave,
     stage: stage_ui::StageUi,
 }
 impl Default for StudioUi {
@@ -39,6 +41,7 @@ impl Default for StudioUi {
             file_path: "scene.nvwa.json".into(),
             error: None,
             save_notice: None,
+            first_save: default(),
             stage: default(),
         }
     }
@@ -568,8 +571,13 @@ fn accept_file_completion(
     editor: &mut EditorState,
     ui: &mut StudioUi,
 ) {
+    ui.first_save.sync(editor, &ui.file_path);
     match result {
         Ok(FileCompletion::Saved(destination)) => {
+            if !ui.first_save.saved(editor, &ui.file_path, &destination) {
+                ui.save_notice = None;
+                return;
+            }
             ui.error = None;
             ui.save_notice = Some(SaveNotice::new(
                 "已保存 / Saved",
@@ -579,6 +587,7 @@ fn accept_file_completion(
         }
         #[cfg(any(target_arch = "wasm32", test))]
         Ok(FileCompletion::DownloadStarted(file_name)) => {
+            ui.first_save.finish_other_io();
             ui.error = None;
             ui.save_notice = Some(SaveNotice::new(
                 "下载已开始 / Download started",
@@ -587,6 +596,8 @@ fn accept_file_completion(
             ));
         }
         Ok(FileCompletion::Opened(json)) => {
+            ui.first_save.finish_other_io();
+            ui.first_save.dismiss();
             ui.save_notice = None;
             match SceneDocument::from_json(&json)
                 .map_err(|e| e.to_string())
@@ -597,6 +608,8 @@ fn accept_file_completion(
             }
         }
         Err(error) => {
+            ui.first_save.finish_other_io();
+            ui.first_save.dismiss();
             ui.save_notice = None;
             ui.error = Some(error);
         }
@@ -681,6 +694,7 @@ fn draw_editor_ui(
         io,
         guard,
     } = session;
+    state.first_save.sync(editor, &state.file_path);
     let mut viewport_ui = egui::Ui::new(
         ctx.clone(),
         "nvwa_viewport".into(),
@@ -706,7 +720,7 @@ fn draw_editor_ui(
     let mut preview: Option<BTreeMap<String, f32>> = None;
     let mut commit_drag = false;
     egui::Panel::top("document_toolbar").show(&mut viewport_ui, |ui| {
-        ui.horizontal(|ui| {
+        ui.horizontal_wrapped(|ui| {
             ui.heading("Nvwa");
             ui.separator();
             if ui
@@ -724,7 +738,7 @@ fn draw_editor_ui(
             ui.separator();
             ui.toggle_value(&mut stage_ui.open, "舞台 / Stage");
             if ui
-                .add_enabled(!io.busy(), egui::Button::new("New B1…"))
+                .add_enabled(!io.busy(), egui::Button::new("新建人物… / New character…"))
                 .clicked()
             {
                 new_b1 = true;
@@ -733,6 +747,7 @@ fn draw_editor_ui(
             let previous_path = state.file_path.clone();
             draw_work_path(ui, &mut state.file_path, 220.0);
             if previous_path != state.file_path {
+                state.first_save.dismiss();
                 save_notice = None;
             }
             if ui
@@ -814,67 +829,73 @@ fn draw_editor_ui(
             };
             layout.draw_tabs(ui);
             if layout.tab == editor_layout::InspectorTab::Shape {
-                ui.label("Shape parameters");
-                ui.small("Drag to preview. Release to make one edit.");
-                let mut values = doc.character.parameters.clone();
-                for parameter in doc.profile.parameters.iter().take(4) {
-                    let value = values
-                        .entry(parameter.id.clone())
-                        .or_insert(parameter.default);
-                    let response = ui.add(
-                        egui::Slider::new(value, parameter.min..=parameter.max)
-                            .text(parameter.id.replace('_', " ")),
-                    );
-                    if response.changed() {
-                        preview = Some(values.clone());
-                    }
-                    if response.drag_stopped()
-                        || (response.changed()
-                            && !response.is_pointer_button_down_on()
-                            && !response.dragged())
-                    {
-                        commit_drag = true;
-                    }
-                }
-                if editor.preview.is_some() {
-                    ui.label("Preview · document unchanged");
-                }
-                if ui.button("Reset shape").clicked() {
-                    command = Some(Command::SetParameters {
-                        character_id: doc.character.id.clone(),
-                        values: doc
-                            .profile
-                            .parameters
-                            .iter()
-                            .map(|p| (p.id.clone(), p.default))
-                            .collect(),
-                    });
-                }
-                ui.separator();
-                ui.label(format!("Scale {:.2}", doc.character.scale));
-                if let Some(appearance) = appearance_ui::draw(ui, doc) {
-                    command = Some(appearance);
-                }
-                if doc.profile.backend.is_b1() {
-                    ui.separator();
-                    ui.label("Static diagnostic poses");
-                    for pose in nvwa_core::B1_DIAGNOSTIC_POSES.iter() {
-                        if ui
-                            .selectable_label(
-                                doc.character.diagnostic_pose.as_deref() == Some(*pose),
-                                *pose,
-                            )
-                            .clicked()
-                        {
-                            command = Some(Command::SetDiagnosticPose {
+                egui::ScrollArea::vertical()
+                    .id_salt("shape_controls")
+                    .show(ui, |ui| {
+                        ui.label("Shape parameters");
+                        ui.small("Drag to preview. Release to make one edit.");
+                        let mut values = doc.character.parameters.clone();
+                        for parameter in &doc.profile.parameters {
+                            let value = values
+                                .entry(parameter.id.clone())
+                                .or_insert(parameter.default);
+                            let response = if doc.profile.backend.is_b1() {
+                                let label = ui.label(shape_parameter_label(&parameter.id));
+                                ui.add(egui::Slider::new(value, parameter.min..=parameter.max)).labelled_by(label.id)
+                            } else {
+                                ui.add(egui::Slider::new(value, parameter.min..=parameter.max).text(parameter.id.replace('_', " ")))
+                            };
+                            if response.changed() {
+                                preview = Some(values.clone());
+                            }
+                            if response.drag_stopped()
+                                || (response.changed()
+                                    && !response.is_pointer_button_down_on()
+                                    && !response.dragged())
+                            {
+                                commit_drag = true;
+                            }
+                        }
+                        if editor.preview.is_some() {
+                            ui.label("Preview · document unchanged");
+                        }
+                        if ui.button("Reset shape").clicked() {
+                            command = Some(Command::SetParameters {
                                 character_id: doc.character.id.clone(),
-                                pose_id: (*pose).into(),
+                                values: doc
+                                    .profile
+                                    .parameters
+                                    .iter()
+                                    .map(|p| (p.id.clone(), p.default))
+                                    .collect(),
                             });
                         }
-                    }
-                    ui.small("Selecting a diagnostic stops the timeline. Cloth and full visual quality remain unaccepted.");
-                }
-                ui.separator();
+                        ui.separator();
+                        ui.label(format!("Scale {:.2}", doc.character.scale));
+                        if let Some(appearance) = appearance_ui::draw(ui, doc) {
+                            command = Some(appearance);
+                        }
+                        if doc.profile.backend.is_b1() {
+                            ui.separator();
+                            ui.label("Static diagnostic poses");
+                            for pose in nvwa_core::B1_DIAGNOSTIC_POSES.iter() {
+                                if ui
+                                    .selectable_label(
+                                        doc.character.diagnostic_pose.as_deref() == Some(*pose),
+                                        *pose,
+                                    )
+                                    .clicked()
+                                {
+                                    command = Some(Command::SetDiagnosticPose {
+                                        character_id: doc.character.id.clone(),
+                                        pose_id: (*pose).into(),
+                                    });
+                                }
+                            }
+                            ui.small("Selecting a diagnostic stops the timeline. Cloth and full visual quality remain unaccepted.");
+                        }
+                        ui.separator();
+                    });
             }
             if layout.tab == editor_layout::InspectorTab::Profile {
                 ui.small(format!("Profile: {}", doc.profile.id));
@@ -1111,9 +1132,13 @@ fn draw_editor_ui(
             &mut stage_intent,
         );
     }
+    let confirmation_intent = state.first_save.draw(ctx);
+    let first_save_modal = !matches!(confirmation_intent, first_save::ConfirmationIntent::None)
+        || state.first_save.confirmation_open();
     // Do not paint a central egui panel: the scene remains visible through it.
-    guard.pointer = editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
-    guard.keyboard = ctx.egui_wants_keyboard_input();
+    guard.pointer =
+        first_save_modal || editor_owns_pointer(ctx, viewport_ui.available_rect_before_wrap());
+    guard.keyboard = first_save_modal || ctx.egui_wants_keyboard_input();
     if !guard.keyboard
         && transport_enabled(
             document.as_ref(),
@@ -1146,23 +1171,9 @@ fn draw_editor_ui(
     state.save_notice = save_notice;
     *playback = next_playback;
     if new_b1 {
-        let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_motion())
+        let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character())
             .map_err(|e| e.to_string())
-            .and_then(|doc| editor.request_open(doc));
-        if let Err(error) = result {
-            state.error = Some(error);
-        }
-    }
-    if let Some(save) = file_action {
-        let result = if save {
-            editor
-                .document()
-                .ok_or("No document is open".to_owned())
-                .and_then(|d| d.to_json().map_err(|e| e.to_string()))
-                .and_then(|json| io.request_save(json, &state.file_path))
-        } else {
-            io.request_open(&state.file_path)
-        };
+            .and_then(|doc| state.first_save.request_new(editor, &state.file_path, doc));
         if let Err(error) = result {
             state.error = Some(error);
         }
@@ -1188,6 +1199,27 @@ fn draw_editor_ui(
             Err(error) => state.error = Some(error),
         }
     }
+    if let Some(save) = file_action {
+        let result = if save {
+            state.first_save.request_save(editor, &state.file_path, io)
+        } else {
+            state.first_save.dismiss();
+            io.request_open(&state.file_path)
+        };
+        if let Err(error) = result {
+            state.error = Some(error);
+        }
+    }
+    match confirmation_intent {
+        first_save::ConfirmationIntent::Cancel => state.first_save.dismiss(),
+        first_save::ConfirmationIntent::Save => {
+            if let Err(error) = state.first_save.confirm(editor, &state.file_path, io) {
+                state.error = Some(error);
+            }
+        }
+        first_save::ConfirmationIntent::None => {}
+    }
+    state.first_save.sync(editor, &state.file_path);
     Ok(())
 }
 
@@ -1333,11 +1365,29 @@ fn draw_player(
     }
 }
 
+fn shape_parameter_label(id: &str) -> String {
+    match id {
+        "torso_length" => "躯干长度 / Torso length".into(),
+        "jaw_drop" => "下颌开合 / Jaw opening".into(),
+        "head_width" => "头部宽度 / Head width".into(),
+        "nose_width" => "鼻部宽度 / Nose width".into(),
+        "mouth_width" => "嘴部宽度 / Mouth width".into(),
+        "chin_width" => "下巴宽度 / Chin width".into(),
+        "neck_width" => "颈部宽度 / Neck width".into(),
+        "hip_width" => "髋部宽度 / Hip width".into(),
+        _ => id.replace('_', " "),
+    }
+}
+
 fn draw_work_path(ui: &mut egui::Ui, path: &mut String, width: f32) {
     #[cfg(target_arch = "wasm32")]
     web_input::work_text_edit(ui, path, width);
     #[cfg(not(target_arch = "wasm32"))]
-    ui.add(egui::TextEdit::singleline(path).desired_width(width));
+    ui.add(
+        egui::TextEdit::singleline(path)
+            .id(egui::Id::new("work_path"))
+            .desired_width(width),
+    );
 }
 
 /// Shared Studio/Player capability gate; old static Works never expose Play,

@@ -12,9 +12,9 @@ Rust 1.95.0 is pinned in `rust-toolchain.toml`. Use the repository root:
 cargo run -p nvwa-studio --locked
 ```
 
-The toolbar File field names the local JSON file on native. In the packaged app, enter an absolute writable path such as /Users/your-name/Downloads/scene.nvwa.json. Open reads that path; Save writes it atomically. In the browser, Open invokes a local file picker and Save downloads JSON using the basename in that field. No account, model service or network command bridge is needed.
+The toolbar File field names the local JSON file on native. In the packaged app, enter an absolute writable path such as /Users/your-name/Downloads/scene.nvwa.json. Open reads that path; Save writes it atomically. After an accepted New, the first native Save asks you to confirm the destination and any replacement. Cancel or a failed write keeps this protection active; later successful repeated saves use the ordinary flow. In the browser, Open invokes a local file picker and Save downloads JSON using the basename in that field. No account, model service or network command bridge is needed.
 
-Select the character, drag the four sliders, choose a clip, and use Play/Pause or the seek slider. One completed parameter drag commits one undoable command. A saved document includes all parameter values, scale, asset hash, B1 skin/eyes/hair selection, animation settings and rehearsal stage settings. Playback cursor and undo history are session state.
+Select the character, drag the available Shape sliders, choose a clip, and use Play/Pause or the seek slider. One completed parameter drag commits one undoable command. A saved document includes all parameter values, scale, asset hash, B1 skin/eyes/hair selection, animation settings and rehearsal stage settings. Playback cursor and undo history are session state.
 
 The inspector separates editable **Shape** parameters from read-only **Profile** details. Drag the thin separator above Animation to change the timeline height; Escape cancels a current separator drag. **Lock timeline height** prevents resizing and **Reset layout** restores Shape and the initial height while retaining the lock. Layout changes belong to this session and do not change the saved work or Undo/Redo history. The timeline scrolls when its content does not fit.
 
@@ -40,7 +40,7 @@ The local macOS bundle includes its fixture assets and demonstration work. It is
 
 ## Compose and play a work
 
-**New B1…** opens the admitted MakeHuman body and sportsuit through the full-influence CPU bridge. The current motion profile exposes `torso_length`, `jaw_drop`, two Nvwa-authored four-second rehearsal clips and five fixed diagnostic poses. Use the shared timeline transport to play, pause or seek; choosing a diagnostic pose clears the timeline in one undoable edit. Existing static B1 Works keep their static profile. B1 has no click-to-wave interaction. Appearance quality, clothing contact, arbitrary imports and generated actions remain separate gates. Assets are verified before a B1 Open replaces the current Work; rejected candidates leave the current Work and its history available. See [static integration evidence](docs/evidence/b1-work/) and [continuous-motion acceptance](docs/evidence/b1-motion/ACCEPTANCE.md).
+The original B1 motion profile uses the admitted MakeHuman body and sportsuit through the full-influence CPU bridge. That legacy profile exposes `torso_length`, `jaw_drop`, two Nvwa-authored four-second rehearsal clips and five fixed diagnostic poses. Use the shared timeline transport to play, pause or seek; choosing a diagnostic pose clears the timeline in one undoable edit. Existing static B1 Works keep their static profile. B1 has no click-to-wave interaction. Appearance quality, clothing contact, arbitrary imports and generated actions remain separate gates. Assets are verified before a B1 Open replaces the current Work; rejected candidates leave the current Work and its history available. See [static integration evidence](docs/evidence/b1-work/) and [continuous-motion acceptance](docs/evidence/b1-motion/ACCEPTANCE.md).
 
 B1's Shape inspector has independent **皮肤 / Skin**, **眼睛 / Eyes**, and **头发 / Hair** checkboxes. Each edit uses the shared Undo/Redo path and travels with the Work. The approved fixed CC0 bundle is included in native and Web builds; this does not add arbitrary skins/hair imports, gaze, blink or hair physics. Full visual quality remains a separate gate.
 
@@ -78,6 +78,20 @@ The exchanged [revision 6 work](docs/evidence/m1/web-sequence.nvwa.json) contain
 ## Programmatic edits with the native CLI
 
 The CLI is the third supported entrypoint. It uses the same typed core commands as Studio and edits portable Work files offline. Open its saved output in native Studio or Web Studio to render and continue editing. The CLI does not control an already-open window. See [CLI support](docs/CLI-SUPPORT.md) for scope and platform evidence, and the [CLI authoring guide](docs/agents/cli-authoring.md) for command and error contracts.
+
+The eight-parameter character candidate adds head, nose, mouth, chin, neck and hip widths to torso length and jaw opening. It is available in this branch. Actual native/Web editing and file exchange, both69-case held CPU gates and both18-step playback sequences have passed independent runtime review. The retained evidence is a pre-merge checkpoint; [PR #88](https://github.com/Derek-X-Wang/nvwa/pull/88) records final publication and CI status. Appearance/clothing quality remains HOLD. See the [current evidence and limitations](docs/evidence/b1-character-quality/RESULTS.md). To create a separate candidate Work without changing an existing file:
+
+```sh
+cargo build --locked -p nvwa-cli
+mkdir -p .work
+CHARACTER_OUT="$(mktemp -d .work/nvwa-character.XXXXXX)"
+target/debug/nvwa-cli new-character assets "$CHARACTER_OUT/character.nvwa.json"
+target/debug/nvwa-cli describe-capabilities "$CHARACTER_OUT/character.nvwa.json"
+target/debug/nvwa-cli validate "$CHARACTER_OUT/character.nvwa.json" assets
+cargo run -p nvwa-studio --locked -- --work "$CHARACTER_OUT/character.nvwa.json"
+```
+
+Studio's **New character…** creates the same profile. Fresh characters start with Skin, Eyes and Hair off; the checked-in `examples/b1-character.nvwa.json` selects all three. `new-b1`, `new-b1-motion` and existing Works retain their original profiles. Use `describe-capabilities` for the selected Work before sending commands; old Works do not gain the new parameters automatically.
 
 This quickstart builds the CLI, creates a fresh ignored `.work` directory, and writes every Work and command file there. It leaves the checked-in examples and existing Works untouched. The command values below come from the current bundled profile's `describe-capabilities` response; read that response before adapting the commands to another profile.
 

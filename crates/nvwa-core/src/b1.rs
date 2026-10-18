@@ -13,6 +13,101 @@ pub const B1_ASSET_MANIFEST_SHA256: &str =
     "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18";
 pub const B1_ASSET_MANIFEST_BYTES: &[u8] =
     include_bytes!("../../../assets/characters/mpfb-b1-v1/manifest.json");
+pub const B1_CHARACTER_PROFILE_ID: &str = "nvwa-mpfb-b1-motion-v2";
+pub const B1_V2_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v2";
+pub const B1_V2_ASSET_PATH: &str = "characters/mpfb-b1-v2/manifest.json";
+pub const B1_V2_ASSET_MANIFEST_SHA256: &str =
+    "15834b6bea9bc7daff2d7189e15a66e044130c3b6b4cc75f4b3e508a4e97f3f4";
+pub const B1_V2_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v2/manifest.json");
+
+/// Finite shipped base catalogue. This is not a caller-defined asset registry.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum B1AssetVersion {
+    V1,
+    V2,
+}
+impl B1AssetVersion {
+    pub const fn asset_id(self) -> &'static str {
+        match self {
+            Self::V1 => B1_ASSET_ID,
+            Self::V2 => B1_V2_ASSET_ID,
+        }
+    }
+    pub const fn manifest_path(self) -> &'static str {
+        match self {
+            Self::V1 => B1_ASSET_PATH,
+            Self::V2 => B1_V2_ASSET_PATH,
+        }
+    }
+    pub const fn manifest_sha256(self) -> &'static str {
+        match self {
+            Self::V1 => B1_ASSET_MANIFEST_SHA256,
+            Self::V2 => B1_V2_ASSET_MANIFEST_SHA256,
+        }
+    }
+    pub const fn manifest_bytes(self) -> &'static [u8] {
+        match self {
+            Self::V1 => B1_ASSET_MANIFEST_BYTES,
+            Self::V2 => B1_V2_ASSET_MANIFEST_BYTES,
+        }
+    }
+    pub fn parameters(self) -> &'static [B1ParameterTargets] {
+        match self {
+            Self::V1 => &B1_PARAMETER_TARGETS[..2],
+            Self::V2 => &B1_PARAMETER_TARGETS,
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct B1ParameterTargets {
+    pub id: &'static str,
+    pub decrease: &'static str,
+    pub increase: &'static str,
+}
+pub const B1_PARAMETER_TARGETS: [B1ParameterTargets; 8] = [
+    B1ParameterTargets {
+        id: "torso_length",
+        decrease: "torso-scale-vert-decr",
+        increase: "torso-scale-vert-incr",
+    },
+    B1ParameterTargets {
+        id: "jaw_drop",
+        decrease: "chin-jaw-drop-decr",
+        increase: "chin-jaw-drop-incr",
+    },
+    B1ParameterTargets {
+        id: "head_width",
+        decrease: "head-scale-horiz-decr",
+        increase: "head-scale-horiz-incr",
+    },
+    B1ParameterTargets {
+        id: "nose_width",
+        decrease: "nose-scale-horiz-decr",
+        increase: "nose-scale-horiz-incr",
+    },
+    B1ParameterTargets {
+        id: "mouth_width",
+        decrease: "mouth-scale-horiz-decr",
+        increase: "mouth-scale-horiz-incr",
+    },
+    B1ParameterTargets {
+        id: "chin_width",
+        decrease: "chin-width-decr",
+        increase: "chin-width-incr",
+    },
+    B1ParameterTargets {
+        id: "neck_width",
+        decrease: "neck-scale-horiz-decr",
+        increase: "neck-scale-horiz-incr",
+    },
+    B1ParameterTargets {
+        id: "hip_width",
+        decrease: "hip-scale-horiz-decr",
+        increase: "hip-scale-horiz-incr",
+    },
+];
 pub const B1_DIAGNOSTIC_POSES: [&str; 5] = ["neutral", "shoulder", "elbow", "knee", "combined"];
 pub const B1_MAX_MANIFEST_BYTES: usize = 32 * 1024;
 pub const B1_MAX_ASSET_BYTES: usize = 4 * 1024 * 1024;
@@ -82,10 +177,23 @@ impl CharacterBackend {
         matches!(
             self,
             Self::B1Cpu {
-                schema_version: 2,
+                schema_version: 2 | 3,
                 ..
             }
         )
+    }
+    pub fn b1_asset_version(&self) -> Option<B1AssetVersion> {
+        match self {
+            Self::B1Cpu {
+                schema_version: 1 | 2,
+                asset_id,
+            } if asset_id == B1_ASSET_ID => Some(B1AssetVersion::V1),
+            Self::B1Cpu {
+                schema_version: 3,
+                asset_id,
+            } if asset_id == B1_V2_ASSET_ID => Some(B1AssetVersion::V2),
+            _ => None,
+        }
     }
     pub fn supports_timeline(&self) -> bool {
         self.is_glb() || self.is_b1_motion()
@@ -97,14 +205,14 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 && !(version == 2 && self.is_b1()) {
+        if version != 1 && !(matches!(version, 2 | 3) && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported; expected 1"),
             ));
         }
         if let Self::B1Cpu { asset_id, .. } = self
-            && asset_id != B1_ASSET_ID
+            && self.b1_asset_version().is_none()
         {
             return Err(CoreError::new(
                 "unsupported_character_asset",
@@ -161,6 +269,29 @@ impl CharacterProfile {
             .collect();
         profile
     }
+    /// Eight exact source parameters on the second immutable motion asset set.
+    pub fn b1_character() -> Self {
+        let mut profile = Self::b1_motion();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 3,
+            asset_id: B1_V2_ASSET_ID.into(),
+        };
+        profile.id = B1_CHARACTER_PROFILE_ID.into();
+        profile.asset_path = B1_V2_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V2_ASSET_MANIFEST_SHA256.into();
+        profile.parameters = B1_PARAMETER_TARGETS
+            .iter()
+            .enumerate()
+            .map(|(morph_index, targets)| ParameterSpec {
+                id: targets.id.into(),
+                morph_index,
+                min: -1.0,
+                max: 1.0,
+                default: 0.0,
+            })
+            .collect();
+        profile
+    }
     pub(crate) fn validate_b1(&self) -> Result<()> {
         if (self.id == B1_PROFILE_ID && self.backend.is_b1_motion())
             || (self.id == B1_MOTION_PROFILE_ID && !self.backend.is_b1_motion())
@@ -170,7 +301,9 @@ impl CharacterProfile {
                 "B1 backend version does not match its canonical profile identity",
             ));
         }
-        let canonical = if self.backend.is_b1_motion() {
+        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V2) {
+            Self::b1_character()
+        } else if self.backend.is_b1_motion() {
             Self::b1_motion()
         } else {
             Self::b1()
@@ -220,6 +353,10 @@ pub struct B1AssetManifest {
 impl B1AssetManifest {
     /// Authenticate the exact shipped descriptor before interpreting its paths.
     pub fn from_bytes(bytes: &[u8]) -> Result<Self> {
+        Self::from_bytes_for(B1AssetVersion::V1, bytes)
+    }
+
+    pub fn from_bytes_for(version: B1AssetVersion, bytes: &[u8]) -> Result<Self> {
         if bytes.is_empty() {
             return Err(CoreError::new(
                 "asset_missing",
@@ -232,7 +369,7 @@ impl B1AssetManifest {
                 "B1 manifest exceeds 32 KiB",
             ));
         }
-        if format!("{:x}", Sha256::digest(bytes)) != B1_ASSET_MANIFEST_SHA256 {
+        if format!("{:x}", Sha256::digest(bytes)) != version.manifest_sha256() {
             return Err(CoreError::new(
                 "asset_hash_mismatch",
                 "B1 manifest differs from the shipped descriptor",
@@ -252,16 +389,25 @@ impl B1AssetManifest {
     /// Public fields do not grant callers authority to change the authenticated
     /// file set, hashes, paths or bounds used by validate_file_bytes.
     pub fn validate(&self) -> Result<()> {
-        let canonical = Self::decode(B1_ASSET_MANIFEST_BYTES)?;
+        let version = match self.asset_id.as_str() {
+            B1_ASSET_ID => B1AssetVersion::V1,
+            B1_V2_ASSET_ID => B1AssetVersion::V2,
+            _ => return Err(CoreError::new("invalid_asset", "unknown B1 asset identity")),
+        };
+        let canonical = Self::decode(version.manifest_bytes())?;
         if self != &canonical
             || self.format != "nvwa-b1-assets"
             || self.schema_version != 1
-            || self.asset_id != B1_ASSET_ID
-            || self.files.len() != 13
+            || self.asset_id != version.asset_id()
+            || self.files.len()
+                != match version {
+                    B1AssetVersion::V1 => 13,
+                    B1AssetVersion::V2 => 25,
+                }
         {
             return Err(CoreError::new(
                 "invalid_asset",
-                "B1 descriptor must contain the exact shipped thirteen-file set and identities",
+                "B1 descriptor must contain the exact versioned shipped file set and identities",
             ));
         }
         let mut total = 0usize;

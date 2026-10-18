@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "581f6c8329c984bf55a913ca999830430334e5a1",
+  "frozen_reference_manifest": {
+    "path": "experiments/56-b1-pose-reference/reference/frozen/manifest.json",
+    "sha256": "98ffb4b7947101bdd2107055beed866d7f040b33f699fb859c090c4c03242636"
+  },
+  "frozen_poses": {
+    "path": "experiments/56-b1-pose-reference/poses.json",
+    "sha256": "8e51c044841eb1c6cb96d583ca927cceb51ddf7d0729f4526f61777c8b7adab2"
+  },
+  "zero_extension": [
+    "head_width",
+    "nose_width",
+    "mouth_width",
+    "chin_width",
+    "neck_width",
+    "hip_width"
+  ],
+  "bounds": {
+    "body_position_m": 0.001,
+    "garment_position_m": 0.003,
+    "bone_matrix": 0.0001,
+    "joint_head_m": 1e-05,
+    "full_positive_lbs_m": 1e-05
+  },
+  "cases": [
+    {
+      "case_id": "neutral__neutral",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "neutral"
+    },
+    {
+      "case_id": "neutral__shoulder",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "shoulder"
+    },
+    {
+      "case_id": "neutral__elbow",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "elbow"
+    },
+    {
+      "case_id": "neutral__knee",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "knee"
+    },
+    {
+      "case_id": "neutral__combined",
+      "recipe_id": "neutral",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "combined"
+    },
+    {
+      "case_id": "body-negative__neutral",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "neutral"
+    },
+    {
+      "case_id": "body-negative__shoulder",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "shoulder"
+    },
+    {
+      "case_id": "body-negative__elbow",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "elbow"
+    },
+    {
+      "case_id": "body-negative__knee",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "knee"
+    },
+    {
+      "case_id": "body-negative__combined",
+      "recipe_id": "body-negative",
+      "recipe": {
+        "torso_length": -1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "combined"
+    },
+    {
+      "case_id": "body-half__neutral",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "neutral"
+    },
+    {
+      "case_id": "body-half__shoulder",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "shoulder"
+    },
+    {
+      "case_id": "body-half__elbow",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "elbow"
+    },
+    {
+      "case_id": "body-half__knee",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "knee"
+    },
+    {
+      "case_id": "body-half__combined",
+      "recipe_id": "body-half",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "combined"
+    },
+    {
+      "case_id": "body-positive__neutral",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "neutral"
+    },
+    {
+      "case_id": "body-positive__shoulder",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "shoulder"
+    },
+    {
+      "case_id": "body-positive__elbow",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "elbow"
+    },
+    {
+      "case_id": "body-positive__knee",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "knee"
+    },
+    {
+      "case_id": "body-positive__combined",
+      "recipe_id": "body-positive",
+      "recipe": {
+        "torso_length": 1.0,
+        "jaw_drop": 0.0
+      },
+      "pose_id": "combined"
+    },
+    {
+      "case_id": "face-negative__neutral",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "neutral"
+    },
+    {
+      "case_id": "face-negative__shoulder",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "shoulder"
+    },
+    {
+      "case_id": "face-negative__elbow",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "elbow"
+    },
+    {
+      "case_id": "face-negative__knee",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "knee"
+    },
+    {
+      "case_id": "face-negative__combined",
+      "recipe_id": "face-negative",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": -1.0
+      },
+      "pose_id": "combined"
+    },
+    {
+      "case_id": "face-half__neutral",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "neutral"
+    },
+    {
+      "case_id": "face-half__shoulder",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "shoulder"
+    },
+    {
+      "case_id": "face-half__elbow",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "elbow"
+    },
+    {
+      "case_id": "face-half__knee",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "knee"
+    },
+    {
+      "case_id": "face-half__combined",
+      "recipe_id": "face-half",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "combined"
+    },
+    {
+      "case_id": "face-positive__neutral",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "neutral"
+    },
+    {
+      "case_id": "face-positive__shoulder",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "shoulder"
+    },
+    {
+      "case_id": "face-positive__elbow",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "elbow"
+    },
+    {
+      "case_id": "face-positive__knee",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "knee"
+    },
+    {
+      "case_id": "face-positive__combined",
+      "recipe_id": "face-positive",
+      "recipe": {
+        "torso_length": 0.0,
+        "jaw_drop": 1.0
+      },
+      "pose_id": "combined"
+    },
+    {
+      "case_id": "combined__neutral",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "neutral"
+    },
+    {
+      "case_id": "combined__shoulder",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "shoulder"
+    },
+    {
+      "case_id": "combined__elbow",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "elbow"
+    },
+    {
+      "case_id": "combined__knee",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "knee"
+    },
+    {
+      "case_id": "combined__combined",
+      "recipe_id": "combined",
+      "recipe": {
+        "torso_length": 0.5,
+        "jaw_drop": 0.5
+      },
+      "pose_id": "combined"
+    }
+  ]
+}

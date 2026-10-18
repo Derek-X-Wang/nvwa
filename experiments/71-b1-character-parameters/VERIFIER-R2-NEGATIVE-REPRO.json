@@ -1,0 +1,46 @@
+{
+  "scope": "synthetic full-schema verifier mutation controls; not runtime/quality proof",
+  "prior_freeze_sha256": "078c9fe9faa33d3eb05aeb921f367ec5ab7591b22b33a0858889168ac3016c39",
+  "results": [
+    {
+      "mutation": "eye_position",
+      "rejected": true,
+      "reason": "exported array/observed/production hash mismatch eyes positions"
+    },
+    {
+      "mutation": "hair_normal",
+      "rejected": true,
+      "reason": "exported array/observed/production hash mismatch hair normals"
+    },
+    {
+      "mutation": "eye_uv",
+      "rejected": true,
+      "reason": "exported array/observed/production hash mismatch eyes uv_0"
+    },
+    {
+      "mutation": "eye_indices",
+      "rejected": true,
+      "reason": "exported array/observed/production hash mismatch eyes indices"
+    },
+    {
+      "mutation": "identity_work",
+      "rejected": true,
+      "reason": "actual identity/saved Work hash mismatch"
+    },
+    {
+      "mutation": "identity_body",
+      "rejected": true,
+      "reason": "actual identity/base/appearance body mismatch"
+    },
+    {
+      "mutation": "identity_clip",
+      "rejected": true,
+      "reason": "actual identity/base transport mismatch"
+    },
+    {
+      "mutation": "identity_timeline",
+      "rejected": true,
+      "reason": "actual identity/base transport mismatch"
+    }
+  ]
+}

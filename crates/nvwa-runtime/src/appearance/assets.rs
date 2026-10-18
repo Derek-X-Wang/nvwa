@@ -5,7 +5,7 @@ use bevy::{
     prelude::*,
     render::render_resource::TextureFormat,
 };
-use nvwa_core::{B1_APPEARANCE_MANIFEST_BYTES, B1AppearanceManifest};
+use nvwa_core::{B1AppearanceManifest, B1AppearanceSet};
 pub(super) const SKIN_PNG: &[u8] = include_bytes!(
     "../../../../assets/appearances/mpfb-b1-cc0-v1/skins/young_caucasian_female2/young_lightskinned_female_diffuse2.png"
 );
@@ -75,13 +75,17 @@ pub(super) const FIXED: &[(&str, &[u8])] = &[
         ),
     ),
 ];
-pub(super) fn authenticate_file(path: &str, bytes: &[u8]) -> Result<(), String> {
-    B1AppearanceManifest::from_bytes(B1_APPEARANCE_MANIFEST_BYTES)
+pub(super) fn authenticate_file(
+    set: B1AppearanceSet,
+    path: &str,
+    bytes: &[u8],
+) -> Result<(), String> {
+    B1AppearanceManifest::from_bytes_for(set, set.manifest_bytes())
         .and_then(|m| m.validate_file_bytes(path, bytes))
         .map_err(|e| e.to_string())
 }
-pub(super) fn authenticate() -> Result<(), String> {
-    let manifest = B1AppearanceManifest::from_bytes(B1_APPEARANCE_MANIFEST_BYTES)
+pub(super) fn authenticate(set: B1AppearanceSet) -> Result<(), String> {
+    let manifest = B1AppearanceManifest::from_bytes_for(set, set.manifest_bytes())
         .map_err(|e| e.to_string())?;
     for (path, bytes) in FIXED {
         manifest
@@ -117,16 +121,18 @@ mod tests {
     use super::*;
     #[test]
     fn every_fixed_byte_is_authenticated() {
-        authenticate().unwrap();
-        for (path, bytes) in FIXED {
-            let mut bad = bytes.to_vec();
-            bad[0] ^= 1;
-            assert!(authenticate_file(path, &bad).is_err(), "{path}");
-            assert!(
-                authenticate_file(path, &bytes[..bytes.len() - 1]).is_err(),
-                "{path}"
-            );
+        for set in [B1AppearanceSet::V1, B1AppearanceSet::V2] {
+            authenticate(set).unwrap();
+            for (path, bytes) in FIXED {
+                let mut bad = bytes.to_vec();
+                bad[0] ^= 1;
+                assert!(authenticate_file(set, path, &bad).is_err(), "{path}");
+                assert!(
+                    authenticate_file(set, path, &bytes[..bytes.len() - 1]).is_err(),
+                    "{path}"
+                );
+            }
+            assert!(authenticate_file(set, "../arbitrary", b"x").is_err());
         }
-        assert!(authenticate_file("../arbitrary", b"x").is_err());
     }
 }

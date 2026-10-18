@@ -49,7 +49,7 @@ fn versioned_motion_is_same_asset_and_static_identity_is_immutable() {
     };
     assert_eq!(
         bad.validate().unwrap_err().code,
-        "unsupported_character_version"
+        "unsupported_character_asset"
     );
 }
 #[test]

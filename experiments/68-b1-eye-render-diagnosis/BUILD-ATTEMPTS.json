@@ -1,0 +1,23 @@
+{
+  "scope": "root-reported build result; original root-owned run/output remains untouched",
+  "attempts": [
+    {
+      "id": "run_44ab1d5c730ed34378fb5ac95ba13aee",
+      "source_freeze_sha256": "b5de8e71cb31ed6e89d0eaf7f2c6cf508b8d54b13f245f12c32fdd6c7c9d0c3e",
+      "result": "FAILED before Rust compilation",
+      "reason": "node python3 lacks tomllib",
+      "action": "root selects an existing Python3.11+; build.py child source tests use sys.executable; no download/install; fresh r2 output requested"
+    },
+    {
+      "id": "run_d8dd7fe3a28fd8f865eeecfa73d14d87",
+      "source_freeze_sha256": "e6a77816b11788c449039883ef0f12efc6d2ed59b31692d5d16094027363fe67",
+      "scope": "root-reported R2 evidence retained separately on baseab4c",
+      "native_build": "PASS including13Rusttests",
+      "native_eye_cohort": "all9controls+validator PASS per root",
+      "native_shoulder": "FAILED: witness0 rejected because R2 incorrectly used short reference for long Work; no invalid frame accepted",
+      "retained_error_capture": "native68-r2/captures/n68-shoulder-neutral.error.json (root-owned original untouched)",
+      "web": "still compiling at root report; not promoted",
+      "action": "R3 selects a separately authenticated original65 long-front reference with identical numeric/projection/MSAA/viewport gates; no Work/camera changes; no separate rebuild"
+    }
+  ]
+}

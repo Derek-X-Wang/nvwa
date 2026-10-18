@@ -46,6 +46,11 @@ pub struct EditorState {
     document_generation: u64,
 }
 impl EditorState {
+    /// Session identity for file UI decisions: replacement and Open/cancellation.
+    /// An identical-content replacement or request must invalidate stale consent.
+    pub fn file_context_identity(&self) -> (u64, u64) {
+        (self.document_generation, self.open_request_sequence)
+    }
     pub fn document(&self) -> Option<&SceneDocument> {
         self.editor.as_ref().map(Editor::document)
     }

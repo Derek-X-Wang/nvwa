@@ -219,10 +219,10 @@ fn obj(text: &str, count: usize) -> Result<Obj, String> {
         indices,
     })
 }
-fn authenticated(path: &str, bytes: &[u8]) -> Result<(), String> {
-    super::assets::authenticate_file(path, bytes)
+fn authenticated(set: nvwa_core::B1AppearanceSet, path: &str, bytes: &[u8]) -> Result<(), String> {
+    super::assets::authenticate_file(set, path, bytes)
 }
-pub(super) fn prepare() -> Result<Vec<Prepared>, String> {
+pub(super) fn prepare(set: nvwa_core::B1AppearanceSet) -> Result<Vec<Prepared>, String> {
     let mut out = vec![];
     macro_rules! asset {
         ($name:literal,$stem:literal,$texture:literal,$count:literal,$size:literal,$hair:literal) => {{
@@ -240,9 +240,9 @@ pub(super) fn prepare() -> Result<Vec<Prepared>, String> {
                 "../../../../assets/appearances/mpfb-b1-cc0-v1/",
                 $texture
             ));
-            authenticated(concat!($stem, ".mhclo"), map.as_bytes())?;
-            authenticated(concat!($stem, ".obj"), geometry.as_bytes())?;
-            authenticated($texture, png)?;
+            authenticated(set, concat!($stem, ".mhclo"), map.as_bytes())?;
+            authenticated(set, concat!($stem, ".obj"), geometry.as_bytes())?;
+            authenticated(set, $texture, png)?;
             out.push(Prepared {
                 name: $name,
                 mapping: mapping(map, $count)?,
@@ -458,7 +458,7 @@ mod tests {
     use bevy::prelude::{Mat4, Vec3};
     #[test]
     fn fixed_inputs_parse_and_authenticate() {
-        let p = prepare().unwrap();
+        let p = prepare(nvwa_core::B1AppearanceSet::V1).unwrap();
         assert_eq!(p[0].obj.count, 96);
         assert_eq!(p[1].obj.count, 865);
         assert!(

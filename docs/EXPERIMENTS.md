@@ -1,5 +1,17 @@
 # Experiment conclusions
 
+## 2026-10-18：眼睑、发际、一个衣物缺陷与参数候选
+
+| 实验 | 决定 | 实际证据与限制 |
+| --- | --- | --- |
+| [67 眼部表面诊断](../experiments/67-b1-eye-surface-diagnosis/README.md) | 保留稀疏来源对照；不选定唯一病因 | CPU 射线与来源面数检查；不是眼睑解剖或 GPU 深度证据。 |
+| [68 眼部绘制对照](../experiments/68-b1-eye-render-diagnosis/README.md) | 双端九控制；质量 HOLD | 实际桌面/Web 的组合、身体、眼球与三种材质控制；低面数轮廓可见。新的长躯干肩部补验未运行；早期错误相机与权重检查失败保留。 |
+| [69 发际 mip](../experiments/69-b1-hairline/README.md) | 一个候选拒绝 | mip1 覆盖误差约 0.1133 个百分点，超过预先规定的 0.1；未编译、未进行 GPU 或双端视觉试验。 |
+| [70 一个肩部衣物缺陷](../experiments/70-b1-garment-defect/README.md) | 定位局部伸长；无修正候选 | 30 份历史实际帧的来源拟合、完整正权重和蒙皮重放通过；抬臂面积/静止面积约 22.0056。不是碰撞、原工具等价或修复验收。 |
+| [71 八参数准入工具](../experiments/71-b1-character-parameters/README.md) | 构建与拒绝控制通过；新双端完整运行待补 | 21 种体型、每端 69 个暂停样本及三个连续播放体型的门不变。新原生因锁屏未运行，Web 第一条请求尝试控制超时、是否送达未知，未取得接受样本；普通 Web 编辑/保存和 CLI 证据另列。 |
+
+完整分层结果、源码/构建身份、失败尝试与未验证项见[本轮记录](evidence/b1-character-quality/RESULTS.md)。[替换方案](research/b1-source-replacement-plan.md)仅列已保留的本地档案中的素材候选，不表示完成替换。没有新增下载、模型运行、付费 API 或额外机器。
+
 ## 2026-10-16：固定上臂候选与试演舞台兼容性
 
 | 实验 | 当前结论 | 验证边界 |
