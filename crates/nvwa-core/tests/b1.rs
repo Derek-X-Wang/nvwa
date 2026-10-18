@@ -25,7 +25,7 @@ fn pose(id: &str) -> Command {
 #[test]
 fn canonical_b1_defaults_roundtrip_and_reject_modified_profile_identity_or_bindings() {
     let original = document();
-    assert_eq!(original.schema_version, 3);
+    assert_eq!(original.schema_version, 4);
     assert_eq!(original.profile.id, B1_PROFILE_ID);
     assert_eq!(
         original.character.diagnostic_pose.as_deref(),
@@ -84,6 +84,10 @@ fn legacy_schema1_and_schema2_upgrade_only_representation_with_strict_exact_shap
     let current = serde_json::to_value(&original).unwrap();
     for version in [1, 2] {
         let mut legacy = current.clone();
+        legacy["character"]
+            .as_object_mut()
+            .unwrap()
+            .remove("appearance");
         legacy["schema_version"] = json!(version);
         legacy["profile"].as_object_mut().unwrap().remove("backend");
         legacy["character"]

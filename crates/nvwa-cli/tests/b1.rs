@@ -70,7 +70,7 @@ fn no_window_new_discover_apply_validate_save_and_inspect_share_full_work() {
     let created = success(cli(&["new-b1".as_ref(), &root(), &input]));
     assert_eq!(created["asset_checked"], true);
     let inspected = success(cli(&["inspect".as_ref(), &input]));
-    assert_eq!(inspected["schema_version"], 3);
+    assert_eq!(inspected["schema_version"], 4);
     assert_eq!(inspected["character"]["diagnostic_pose"], "neutral");
     assert_eq!(inspected["timeline"], json!([]));
     let caps = success(cli(&["describe-capabilities".as_ref(), &input]));
@@ -114,9 +114,9 @@ fn no_window_new_discover_apply_validate_save_and_inspect_share_full_work() {
     }
     std::fs::write(&request, serde_json::to_vec(&examples).unwrap()).unwrap();
     let results = success(cli(&["apply".as_ref(), &input, &request, &output]));
-    assert_eq!(results.as_array().unwrap().len(), 6);
+    assert_eq!(results.as_array().unwrap().len(), 7);
     let work = success(cli(&["inspect".as_ref(), &output]));
-    assert_eq!(work["revision"], 6);
+    assert_eq!(work["revision"], 7);
     assert_eq!(work["character"]["parameters"]["torso_length"], 0.375);
     assert_eq!(work["character"]["parameters"]["jaw_drop"], -0.25);
     assert_eq!(work["character"]["diagnostic_pose"], "knee");

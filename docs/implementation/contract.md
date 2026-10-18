@@ -7,10 +7,10 @@ Rust fields use snake_case. Core has no Bevy/egui dependency and forbids unsafe.
 - `CharacterProfile { backend: CharacterBackend, id: String, asset_path: String, asset_sha256: String, license: String, parameters: Vec<ParameterSpec>, clips: Vec<ClipSpec> }`.
 - `ParameterSpec { id: String, morph_index: usize, min: f32, max: f32, default: f32 }`.
 - `ClipSpec { id: String, animation_index: usize, duration_seconds: f32 }`.
-- `CharacterRecipe { id: String, profile_id: String, parameters: BTreeMap<String, f32>, scale: f32, diagnostic_pose: Option<String> }`.
+- `CharacterRecipe { id: String, profile_id: String, parameters: BTreeMap<String, f32>, scale: f32, diagnostic_pose: Option<String>, appearance: CharacterAppearance }`.
 - `TimelineClip { id: String, clip_id: String, start_seconds: f32, duration_seconds: f32, speed: f32, looping: bool }`.
 - `CommandEnvelope { command_id: String, expected_revision: u64, command: Command }`.
-- `Command` is Serde internally tagged `type` in snake_case: `SetParameters { character_id, values }`, `SetScale { character_id, scale }`, `SetTimeline { clips }`, `SetStage { stage }`, `SetDiagnosticPose { character_id, pose_id }`, `Undo`, `Redo`.
+- `Command` is Serde internally tagged `type` in snake_case: `SetParameters { character_id, values }`, `SetScale { character_id, scale }`, `SetTimeline { clips }`, `SetStage { stage }`, `SetDiagnosticPose { character_id, pose_id }`, `SetAppearance { character_id, appearance }`, `Undo`, `Redo`.
 - `Editor::new(document) -> Result<Editor, CoreError>`; `document(&self) -> &SceneDocument`; `apply(&mut self, envelope) -> Result<CommandResult, CoreError>`.
 - `CommandResult { revision: u64, summary: String, duplicate: bool }`; `SceneDocument::validate() -> Result<(), CoreError>`; `SceneDocument::from_json(&str) -> Result<Self, CoreError>`; `to_json(&self) -> Result<String, CoreError>`.
 - `SceneDocument::from_profile(profile) -> Result<Self, CoreError>` makes default character `character-1`, scale 1, parameters at defaults, timeline idle if present.
@@ -24,11 +24,11 @@ Rust fields use snake_case. Core has no Bevy/egui dependency and forbids unsafe.
 
 ## Portable rehearsal stage (introduced in schema 2)
 
-New documents and saves use schema 3 and require a complete validated `stage`.
+New documents and saves use schema 4 and require a complete validated `stage`.
 The strict schema 1 wire shape upgrades to `StageSettings::white_studio()` without
 changing character, timeline, profile or revision. Unknown fields, duplicate keys,
-null or missing schema 2/3 stage settings, and unsupported versions are errors.
-Saving the upgraded Work writes schema 3; earlier applications cannot read it.
+null or missing schema 2/3/4 stage settings, and unsupported versions are errors.
+Saving the upgraded Work writes schema 4; earlier applications cannot read it.
 Original schema 1 examples and historical experiment inputs remain unchanged.
 
 `StageSettings` contains key/fill light intensity, sRGB color and direction;
@@ -90,3 +90,7 @@ The B1 profile pins `characters/mpfb-b1-v1/manifest.json` by SHA256. Its exact t
 Runtime B1 opening is pending until asset validation, fitted skeleton, canonical pose, transform propagation and both full-influence CPU display meshes succeed. A rejected or superseded candidate must preserve the committed Work, undo/redo and last good render. Saving while pending saves only the committed Work. A successful commit retires the previous generation. Temporary preview and renderer handles remain outside the Work. Camera and stage edits never become parameter edits or rebuild the character unnecessarily.
 
 B1 readiness records real CPU display publication and actual bones, with no artificial GLB morph/player counters. Two parameter controls and five diagnostic poses are the admitted scope. Numerical evidence covers the retained eight recipes by five poses. Continuous motion, arbitrary assets, appearance quality, GPU4 and performance remain separate gates. See [backend decision](../adr/0007-versioned-character-backends.md) and [integration evidence](../evidence/b1-work/).
+
+## Saved B1 appearance (schema 4)
+
+`CharacterAppearance` is either `none` or the pinned `b1_cc0` asset identity with independent skin/eyes/hair booleans. `SetAppearance` uses the same atomic revision and Undo/Redo route. Old schemas1–3 keep their original strict wire shapes and migrate absent appearance to None; schema4 requires an explicit non-null appearance. Studio, Player and CLI consume the same selection. See [the complete appearance contract](appearance-v1.md) for identity, asset authentication and runtime failure boundaries.

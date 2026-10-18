@@ -1,7 +1,10 @@
 #![forbid(unsafe_code)]
 use nvwa_core::{
-    B1_DIAGNOSTIC_POSES, B1_MAX_ASSET_BYTES, B1_MAX_MANIFEST_BYTES, B1_MAX_TOTAL_ASSET_BYTES,
-    B1AssetManifest, CharacterProfile, Command, CommandEnvelope, CoreError, Editor, SceneDocument,
+    B1_APPEARANCE_ID, B1_APPEARANCE_MANIFEST_PATH, B1_APPEARANCE_MANIFEST_SHA256,
+    B1_APPEARANCE_MAX_ASSET_BYTES, B1_APPEARANCE_MAX_MANIFEST_BYTES,
+    B1_APPEARANCE_MAX_TOTAL_ASSET_BYTES, B1_DIAGNOSTIC_POSES, B1_MAX_ASSET_BYTES,
+    B1_MAX_MANIFEST_BYTES, B1_MAX_TOTAL_ASSET_BYTES, B1AppearanceManifest, B1AssetManifest,
+    CharacterProfile, Command, CommandEnvelope, CoreError, Editor, SceneDocument,
 };
 use std::path::{Path, PathBuf};
 
@@ -152,6 +155,29 @@ fn validate_assets(document: &SceneDocument, root: &Path) -> Result<(), CoreErro
         )?;
         document.profile.validate_asset_bytes(&bytes)?;
     }
+    if document.character.appearance.b1_flags().is_some() {
+        let manifest_path = Path::new(B1_APPEARANCE_MANIFEST_PATH);
+        let bytes = read_asset(root, manifest_path, B1_APPEARANCE_MAX_MANIFEST_BYTES)?;
+        let manifest = B1AppearanceManifest::from_bytes(&bytes)?;
+        let parent = manifest_path.parent().ok_or_else(|| {
+            CoreError::new("unsafe_asset_path", "B1 appearance manifest has no parent")
+        })?;
+        let mut total = 0usize;
+        for path in manifest.files.keys() {
+            let bytes = read_asset(root, &parent.join(path), B1_APPEARANCE_MAX_ASSET_BYTES)?;
+            total = total
+                .checked_add(bytes.len())
+                .ok_or_else(|| CoreError::new("invalid_asset", "B1 appearance size overflow"))?;
+            if total > B1_APPEARANCE_MAX_TOTAL_ASSET_BYTES {
+                return Err(CoreError::new(
+                    "invalid_asset",
+                    "B1 appearance assets exceed 8 MiB",
+                ));
+            }
+            // Authenticate every shipped payload, even when its role is off.
+            manifest.validate_file_bytes(path, &bytes)?;
+        }
+    }
     Ok(())
 }
 
@@ -201,6 +227,10 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             character_id: document.character.id.clone(),
             scale: document.character.scale,
         },
+        Command::SetAppearance {
+            character_id: document.character.id.clone(),
+            appearance: document.character.appearance.clone(),
+        },
         Command::SetTimeline {
             clips: document.timeline.clone(),
         },
@@ -243,7 +273,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
     Ok(serde_json::json!({
         "schema_version": 1,
         "transport": "offline_files",
-        "work_schema": {"writes": nvwa_core::SCHEMA_VERSION, "reads": [1, 2, nvwa_core::SCHEMA_VERSION], "legacy_upgrade": "schema1_and_schema2_to_schema3_glb_backend_null_diagnostic_pose_preserve_revision_and_content_schema1_default_white_studio"},
+        "work_schema": {"writes": nvwa_core::SCHEMA_VERSION, "reads": [1, 2, 3, nvwa_core::SCHEMA_VERSION], "legacy_upgrade": "schema1_and_schema2_glb_backend_null_diagnostic_pose_schema1_default_white_studio_schemas1_2_3_appearance_none_preserve_revision_and_content"},
         "entrypoints": {
             "new": ["profile.json", "output.json"],
             "new-b1": ["asset_root", "output.json"],
@@ -270,6 +300,19 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         "examples_are": "independent_shapes_at_loaded_revision_not_a_batch",
         "set_parameters": "updates_only_named_parameters_within_profile_min_max_inclusive",
         "set_scale": "finite_greater_than_zero",
+        "set_appearance": {
+            "effect": "atomically_replaces_saved_character_appearance",
+            "current": document.character.appearance,
+            "none": {"type":"none"},
+            "b1_cc0_supported": document.profile.backend.is_b1(),
+            "schema_version": 1,
+            "asset_set_id": B1_APPEARANCE_ID,
+            "asset_set_sha256": B1_APPEARANCE_MANIFEST_SHA256,
+            "roles": ["skin", "eyes", "hair"],
+            "selection": "independent_booleans_at_least_one_true_otherwise_use_none",
+            "asset_validation": "validate_with_asset_root_authenticates_all_thirteen_appearance_files",
+            "apply_save": "metadata_only_no_renderer_readiness_claim"
+        },
         "character_backend": document.profile.backend,
         "authored_motion": {"supported":document.profile.backend.is_b1_motion(),"provenance":"Nvwa authored rehearsal; not AI-generated", "clips":document.profile.clips},
         "diagnostic_poses": if document.profile.backend.is_b1() { serde_json::json!({"ids":B1_DIAGNOSTIC_POSES,"current":document.character.diagnostic_pose,"meaning":"authored_static_diagnostic_pose_not_animation","command":"set_diagnostic_pose","renderer":"fixed_positive_final_aggregate_cpu_no_four_cap","morph_index":"inert_legacy_metadata_unused_on_b1","targets":{"torso_length":["torso-scale-vert-decr","torso-scale-vert-incr"],"jaw_drop":["chin-jaw-drop-decr","chin-jaw-drop-incr"]},"continuous_parameter_edits":true,"numeric_acceptance":"eight_reference_recipes_times_five_poses_only","timeline_supported":document.profile.backend.supports_timeline()}) } else { serde_json::json!({"ids":[],"current":null,"timeline_supported":true}) },

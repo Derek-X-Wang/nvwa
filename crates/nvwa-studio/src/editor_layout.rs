@@ -829,3 +829,7 @@ mod tests {
         }
     }
 }
+
+#[cfg(test)]
+#[path = "appearance_ui_tests.rs"]
+mod appearance_tests;

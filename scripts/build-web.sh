@@ -34,6 +34,9 @@ done
 cp assets/fixtures/nvwa-humanoid.glb assets/fixtures/LICENSE.txt assets/fixtures/provenance-manifest.json dist/web/assets/fixtures/
 cp examples/m1-sequence.nvwa.json dist/web/works/
 cp assets/fonts/OFL.txt assets/fonts/NOTICE.md assets/fonts/PROVENANCE.json dist/web/licenses/fonts/
+mkdir -p dist/web/licenses/appearance
+cp assets/appearances/mpfb-b1-cc0-v1/SOURCE.json assets/appearances/mpfb-b1-cc0-v1/manifest.json dist/web/licenses/appearance/
+cp -R assets/appearances/mpfb-b1-cc0-v1/licenses assets/appearances/mpfb-b1-cc0-v1/provenance dist/web/licenses/appearance/
 cp licenses/craft-ui/LICENSE-MIT.txt dist/web/licenses/craft-ui/
 python3 scripts/bundle-sizes.py
 if [[ -n "${NVWA_WEB_EXPORT:-}" ]]; then
