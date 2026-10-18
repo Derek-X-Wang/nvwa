@@ -706,7 +706,7 @@ fn draw_editor_ui(
     let mut preview: Option<BTreeMap<String, f32>> = None;
     let mut commit_drag = false;
     egui::Panel::top("document_toolbar").show(&mut viewport_ui, |ui| {
-        ui.horizontal(|ui| {
+        ui.horizontal_wrapped(|ui| {
             ui.heading("Nvwa");
             ui.separator();
             if ui
@@ -724,7 +724,7 @@ fn draw_editor_ui(
             ui.separator();
             ui.toggle_value(&mut stage_ui.open, "舞台 / Stage");
             if ui
-                .add_enabled(!io.busy(), egui::Button::new("New B1…"))
+                .add_enabled(!io.busy(), egui::Button::new("新建人物… / New character…"))
                 .clicked()
             {
                 new_b1 = true;
@@ -814,67 +814,73 @@ fn draw_editor_ui(
             };
             layout.draw_tabs(ui);
             if layout.tab == editor_layout::InspectorTab::Shape {
-                ui.label("Shape parameters");
-                ui.small("Drag to preview. Release to make one edit.");
-                let mut values = doc.character.parameters.clone();
-                for parameter in doc.profile.parameters.iter().take(4) {
-                    let value = values
-                        .entry(parameter.id.clone())
-                        .or_insert(parameter.default);
-                    let response = ui.add(
-                        egui::Slider::new(value, parameter.min..=parameter.max)
-                            .text(parameter.id.replace('_', " ")),
-                    );
-                    if response.changed() {
-                        preview = Some(values.clone());
-                    }
-                    if response.drag_stopped()
-                        || (response.changed()
-                            && !response.is_pointer_button_down_on()
-                            && !response.dragged())
-                    {
-                        commit_drag = true;
-                    }
-                }
-                if editor.preview.is_some() {
-                    ui.label("Preview · document unchanged");
-                }
-                if ui.button("Reset shape").clicked() {
-                    command = Some(Command::SetParameters {
-                        character_id: doc.character.id.clone(),
-                        values: doc
-                            .profile
-                            .parameters
-                            .iter()
-                            .map(|p| (p.id.clone(), p.default))
-                            .collect(),
-                    });
-                }
-                ui.separator();
-                ui.label(format!("Scale {:.2}", doc.character.scale));
-                if let Some(appearance) = appearance_ui::draw(ui, doc) {
-                    command = Some(appearance);
-                }
-                if doc.profile.backend.is_b1() {
-                    ui.separator();
-                    ui.label("Static diagnostic poses");
-                    for pose in nvwa_core::B1_DIAGNOSTIC_POSES.iter() {
-                        if ui
-                            .selectable_label(
-                                doc.character.diagnostic_pose.as_deref() == Some(*pose),
-                                *pose,
-                            )
-                            .clicked()
-                        {
-                            command = Some(Command::SetDiagnosticPose {
+                egui::ScrollArea::vertical()
+                    .id_salt("shape_controls")
+                    .show(ui, |ui| {
+                        ui.label("Shape parameters");
+                        ui.small("Drag to preview. Release to make one edit.");
+                        let mut values = doc.character.parameters.clone();
+                        for parameter in &doc.profile.parameters {
+                            let value = values
+                                .entry(parameter.id.clone())
+                                .or_insert(parameter.default);
+                            let response = if doc.profile.backend.is_b1() {
+                                let label = ui.label(shape_parameter_label(&parameter.id));
+                                ui.add(egui::Slider::new(value, parameter.min..=parameter.max)).labelled_by(label.id)
+                            } else {
+                                ui.add(egui::Slider::new(value, parameter.min..=parameter.max).text(parameter.id.replace('_', " ")))
+                            };
+                            if response.changed() {
+                                preview = Some(values.clone());
+                            }
+                            if response.drag_stopped()
+                                || (response.changed()
+                                    && !response.is_pointer_button_down_on()
+                                    && !response.dragged())
+                            {
+                                commit_drag = true;
+                            }
+                        }
+                        if editor.preview.is_some() {
+                            ui.label("Preview · document unchanged");
+                        }
+                        if ui.button("Reset shape").clicked() {
+                            command = Some(Command::SetParameters {
                                 character_id: doc.character.id.clone(),
-                                pose_id: (*pose).into(),
+                                values: doc
+                                    .profile
+                                    .parameters
+                                    .iter()
+                                    .map(|p| (p.id.clone(), p.default))
+                                    .collect(),
                             });
                         }
-                    }
-                    ui.small("Selecting a diagnostic stops the timeline. Cloth and full visual quality remain unaccepted.");
-                }
-                ui.separator();
+                        ui.separator();
+                        ui.label(format!("Scale {:.2}", doc.character.scale));
+                        if let Some(appearance) = appearance_ui::draw(ui, doc) {
+                            command = Some(appearance);
+                        }
+                        if doc.profile.backend.is_b1() {
+                            ui.separator();
+                            ui.label("Static diagnostic poses");
+                            for pose in nvwa_core::B1_DIAGNOSTIC_POSES.iter() {
+                                if ui
+                                    .selectable_label(
+                                        doc.character.diagnostic_pose.as_deref() == Some(*pose),
+                                        *pose,
+                                    )
+                                    .clicked()
+                                {
+                                    command = Some(Command::SetDiagnosticPose {
+                                        character_id: doc.character.id.clone(),
+                                        pose_id: (*pose).into(),
+                                    });
+                                }
+                            }
+                            ui.small("Selecting a diagnostic stops the timeline. Cloth and full visual quality remain unaccepted.");
+                        }
+                        ui.separator();
+                    });
             }
             if layout.tab == editor_layout::InspectorTab::Profile {
                 ui.small(format!("Profile: {}", doc.profile.id));
@@ -1146,7 +1152,7 @@ fn draw_editor_ui(
     state.save_notice = save_notice;
     *playback = next_playback;
     if new_b1 {
-        let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_motion())
+        let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character())
             .map_err(|e| e.to_string())
             .and_then(|doc| editor.request_open(doc));
         if let Err(error) = result {
@@ -1330,6 +1336,20 @@ fn draw_player(
             Ok(()) => state.error = None,
             Err(error) => state.error = Some(error),
         }
+    }
+}
+
+fn shape_parameter_label(id: &str) -> String {
+    match id {
+        "torso_length" => "躯干长度 / Torso length".into(),
+        "jaw_drop" => "下颌开合 / Jaw opening".into(),
+        "head_width" => "头部宽度 / Head width".into(),
+        "nose_width" => "鼻部宽度 / Nose width".into(),
+        "mouth_width" => "嘴部宽度 / Mouth width".into(),
+        "chin_width" => "下巴宽度 / Chin width".into(),
+        "neck_width" => "颈部宽度 / Neck width".into(),
+        "hip_width" => "髋部宽度 / Hip width".into(),
+        _ => id.replace('_', " "),
     }
 }
 

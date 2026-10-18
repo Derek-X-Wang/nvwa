@@ -24,7 +24,7 @@ use nvwa_b1_adapter::{
     poses::diagnostic_pose, skin_mesh_frame_full_weights,
 };
 use nvwa_core::{
-    B1_ASSET_PATH, B1_MAX_ASSET_BYTES, B1_MAX_MANIFEST_BYTES, B1AssetManifest, SceneDocument,
+    B1_MAX_ASSET_BYTES, B1_MAX_MANIFEST_BYTES, B1AssetManifest, B1AssetVersion, SceneDocument,
     TimelineClip,
 };
 use std::{
@@ -82,12 +82,18 @@ pub(super) fn install(app: &mut App) {
 
 #[derive(Clone, PartialEq)]
 struct Selection {
+    base: B1AssetVersion,
     parameters: BTreeMap<String, f32>,
     pose: String,
 }
 impl Selection {
     fn from_doc(doc: &SceneDocument) -> Self {
         Self {
+            base: doc
+                .profile
+                .backend
+                .b1_asset_version()
+                .expect("validated B1 profile"),
             parameters: doc.character.parameters.clone(),
             pose: if doc.profile.backend.is_b1_motion() {
                 String::new()
@@ -146,6 +152,7 @@ struct B1Runtime {
     candidate: Option<Candidate>,
     active: Option<Session>,
     initialized: bool,
+    extra_targets: Vec<Handle<TargetAsset>>,
     last_failed: Option<(u64, Selection)>,
     timeline: Vec<TimelineClip>,
     transport_generation: u64,
@@ -194,12 +201,19 @@ async fn read_raw(server: &AssetServer, path: &str, max: usize) -> Result<Vec<u8
         bounded_read(&mut *reader, max).await
     }
 }
-async fn verify_source(server: AssetServer) -> Result<VerifiedBytes, String> {
-    let bytes = read_raw(&server, B1_ASSET_PATH, B1_MAX_MANIFEST_BYTES).await?;
-    let manifest = B1AssetManifest::from_bytes(&bytes).map_err(|e| e.to_string())?;
+async fn verify_source(
+    server: AssetServer,
+    version: B1AssetVersion,
+) -> Result<VerifiedBytes, String> {
+    let bytes = read_raw(&server, version.manifest_path(), B1_MAX_MANIFEST_BYTES).await?;
+    let manifest = B1AssetManifest::from_bytes_for(version, &bytes).map_err(|e| e.to_string())?;
     let mut result = BTreeMap::new();
     for file in &manifest.files {
-        let path = format!("characters/mpfb-b1-v1/{}", file.path);
+        let path = format!(
+            "{}/{}",
+            version.manifest_path().rsplit_once('/').unwrap().0,
+            file.path
+        );
         let bytes = read_raw(&server, &path, file.bytes.min(B1_MAX_ASSET_BYTES)).await?;
         manifest
             .validate_file_bytes(&file.path, &bytes)
@@ -238,6 +252,67 @@ fn initialize(world: &mut World, bytes: VerifiedBytes) -> Result<(), String> {
     );
     world.flush();
     Ok(())
+}
+fn initialize_selected(
+    world: &mut World,
+    runtime: &mut B1Runtime,
+    version: B1AssetVersion,
+    mut bytes: VerifiedBytes,
+) -> Result<(), String> {
+    let mut extra = Vec::new();
+    if version == B1AssetVersion::V2 {
+        for targets in &version.parameters()[2..] {
+            for name in [targets.decrease, targets.increase] {
+                let path = format!("targets/{name}.target");
+                let data = bytes.remove(&path).ok_or_else(|| {
+                    format!("invalid_asset: authenticated target missing: {path}")
+                })?;
+                extra.push((path, data));
+            }
+        }
+    }
+    if !runtime.initialized {
+        initialize(world, bytes)?;
+        runtime.initialized = true;
+    }
+    if version == B1AssetVersion::V2 && runtime.extra_targets.is_empty() {
+        let source = world.resource::<VerifiedSource>().clone();
+        let server = world.resource::<AssetServer>().clone();
+        for (path, data) in extra {
+            source.0.insert_asset(Path::new(&path), data);
+            runtime.extra_targets.push(server.load(asset(&path)));
+        }
+    }
+    Ok(())
+}
+fn extra_targets_ready(
+    world: &World,
+    runtime: &B1Runtime,
+    version: B1AssetVersion,
+) -> Result<bool, String> {
+    if version == B1AssetVersion::V1 {
+        return Ok(true);
+    }
+    if runtime.extra_targets.len() != 12 {
+        return Err("invalid_asset: twelve explicit extension target handles required".into());
+    }
+    let server = world.resource::<AssetServer>();
+    for handle in &runtime.extra_targets {
+        if let Some(bevy::asset::LoadState::Failed(error)) = server.get_load_state(handle.id()) {
+            return Err(format!(
+                "invalid_asset: B1 extension target load failed: {error}"
+            ));
+        }
+    }
+    let morphs = world.resource::<MakeHumanMorphs>();
+    let loaded = morphs
+        .targets
+        .read()
+        .map_err(|_| "morph target lock poisoned")?;
+    Ok(version
+        .parameters()
+        .iter()
+        .all(|t| loaded.contains_key(t.decrease) && loaded.contains_key(t.increase)))
 }
 fn selection_current(world: &World, c: &Candidate) -> bool {
     let editor = world.resource::<EditorState>();
@@ -346,9 +421,13 @@ fn drive(world: &mut World) {
                 .is_none_or(|s| s.selection != selected || s.generation != request))
         && runtime.last_failed.as_ref() != Some(&(request, selected.clone()))
     {
-        let task = (is_open || !runtime.initialized).then(|| {
+        let version = selected.base;
+        let task = (is_open
+            || !runtime.initialized
+            || (version == B1AssetVersion::V2 && runtime.extra_targets.is_empty()))
+        .then(|| {
             let server = world.resource::<AssetServer>().clone();
-            IoTaskPool::get().spawn(verify_source(server))
+            IoTaskPool::get().spawn(verify_source(server, version))
         });
         if !is_open {
             world.resource_mut::<RuntimeStatus>().ready = false;
@@ -382,11 +461,14 @@ fn drive(world: &mut World) {
                 c.task = None;
                 match result {
                     Ok(bytes) => {
-                        if !runtime.initialized {
-                            match initialize(world, bytes) {
-                                Ok(()) => runtime.initialized = true,
-                                Err(e) => error = Some(e),
-                            }
+                        let version = c
+                            .document
+                            .profile
+                            .backend
+                            .b1_asset_version()
+                            .expect("validated B1 profile");
+                        if let Err(e) = initialize_selected(world, &mut runtime, version, bytes) {
+                            error = Some(e);
                         }
                     }
                     Err(e) => error = Some(e),
@@ -398,7 +480,17 @@ fn drive(world: &mut World) {
             && runtime.initialized
             && world.contains_resource::<humentity::HumentityAssetsReady>()
         {
-            let result = advance(world, &mut c);
+            let version = c
+                .document
+                .profile
+                .backend
+                .b1_asset_version()
+                .expect("validated B1 profile");
+            let result = match extra_targets_ready(world, &runtime, version) {
+                Ok(true) => advance(world, &mut c),
+                Ok(false) => Ok(()),
+                Err(error) => Err(error),
+            };
             if let Err(e) = result {
                 error = Some(e);
             }
@@ -482,7 +574,17 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             return Ok(());
         }
         let morphs = world.resource::<MakeHumanMorphs>();
-        for target in TARGETS {
+        let version = c
+            .document
+            .profile
+            .backend
+            .b1_asset_version()
+            .expect("validated B1 profile");
+        for target in version
+            .parameters()
+            .iter()
+            .flat_map(|t| [t.decrease, t.increase])
+        {
             if !morphs
                 .targets
                 .read()
@@ -493,16 +595,22 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             }
         }
         let values = &c.document.character.parameters;
-        let body = values["torso_length"];
-        let jaw = values["jaw_drop"];
         let mut requested = MorphTargets::default();
-        for (name, value) in TARGETS.into_iter().zip([
-            (-body).max(0.0),
-            body.max(0.0),
-            (-jaw).max(0.0),
-            jaw.max(0.0),
-        ]) {
-            requested.insert(humentity::NAME_INTERNER.intern(name).leak(), value);
+        for targets in version.parameters() {
+            let value = values[targets.id];
+            for (name, weight) in [
+                (targets.decrease, (-value).max(0.0)),
+                (targets.increase, value.max(0.0)),
+            ] {
+                // Legacy zero entries retain their original behavior. New zero
+                // parameters never enter the active morph set.
+                if version == B1AssetVersion::V1
+                    || weight > 0.0
+                    || matches!(targets.id, "torso_length" | "jaw_drop")
+                {
+                    requested.insert(humentity::NAME_INTERNER.intern(name).leak(), weight);
+                }
+            }
         }
         let resolved = morphs
             .compute_target_weights(&requested)
@@ -1014,7 +1122,7 @@ mod tests {
     fn fill(dir: &Dir) {
         let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets");
         dir.insert_asset(
-            Path::new(B1_ASSET_PATH),
+            Path::new(nvwa_core::B1_ASSET_PATH),
             nvwa_core::B1_ASSET_MANIFEST_BYTES.to_vec(),
         );
         let manifest = B1AssetManifest::from_bytes(nvwa_core::B1_ASSET_MANIFEST_BYTES).unwrap();
@@ -2882,6 +2990,259 @@ mod tests {
         );
     }
 
+    fn fill_v2(dir: &Dir) {
+        let version = B1AssetVersion::V2;
+        let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets");
+        dir.insert_asset(
+            Path::new(version.manifest_path()),
+            version.manifest_bytes().to_vec(),
+        );
+        let manifest = B1AssetManifest::from_bytes_for(version, version.manifest_bytes()).unwrap();
+        for file in manifest.files {
+            let path = format!("characters/mpfb-b1-v2/{}", file.path);
+            dir.insert_asset(Path::new(&path), std::fs::read(root.join(&path)).unwrap());
+        }
+    }
+    fn open_ready(app: &mut App, doc: SceneDocument) {
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(doc)
+            .unwrap();
+        until(app, |w| {
+            w.resource::<EditorState>().pending_open.is_none()
+                && w.resource::<EditorState>().open_error.is_none()
+                && w.resource::<RuntimeStatus>().ready
+        });
+        app.update();
+    }
+    #[test]
+    fn new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry() {
+        let (mut app, dir, _) = motion_app();
+        fill_v2(&dir);
+        let old_positions = uploaded_positions(&app);
+        let old_bones = b1_frame_snapshot(app.world()).unwrap()["bones"].clone();
+        let doc = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character()).unwrap();
+        open_ready(&mut app, doc.clone());
+        assert_eq!(
+            uploaded_positions(&app),
+            old_positions,
+            "zero extension must preserve exact uploaded floats"
+        );
+        let snapshot = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(
+            snapshot["bones"], old_bones,
+            "zero extension must preserve exact 53 bone frames"
+        );
+        assert_eq!(snapshot["asset_id"], nvwa_core::B1_V2_ASSET_ID);
+        assert_eq!(app.world().resource::<B1Runtime>().extra_targets.len(), 12);
+        let baseline = uploaded_positions(&app);
+        let baseline_fit =
+            appearance_fit(app.world(), &appearance_frame(app.world()).unwrap()).unwrap();
+        let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../../assets/characters/mpfb-b1-v2/targets");
+        // Both signs of all eight real source parameters, through the normal edit/fit/upload path.
+        for (id, decrease, increase) in [
+            (
+                "torso_length",
+                "torso-scale-vert-decr",
+                "torso-scale-vert-incr",
+            ),
+            ("jaw_drop", "chin-jaw-drop-decr", "chin-jaw-drop-incr"),
+            (
+                "head_width",
+                "head-scale-horiz-decr",
+                "head-scale-horiz-incr",
+            ),
+            (
+                "nose_width",
+                "nose-scale-horiz-decr",
+                "nose-scale-horiz-incr",
+            ),
+            (
+                "mouth_width",
+                "mouth-scale-horiz-decr",
+                "mouth-scale-horiz-incr",
+            ),
+            ("chin_width", "chin-width-decr", "chin-width-incr"),
+            (
+                "neck_width",
+                "neck-scale-horiz-decr",
+                "neck-scale-horiz-incr",
+            ),
+            ("hip_width", "hip-scale-horiz-decr", "hip-scale-horiz-incr"),
+        ] {
+            for sign in [-1.0, 1.0] {
+                let mut values = doc.character.parameters.clone();
+                values.insert(id.into(), sign);
+                app.world_mut()
+                    .resource_mut::<EditorState>()
+                    .apply(nvwa_core::Command::SetParameters {
+                        character_id: doc.character.id.clone(),
+                        values,
+                    })
+                    .unwrap();
+                until(&mut app, |w| {
+                    w.resource::<RuntimeStatus>().ready
+                        && w.resource::<B1Runtime>().candidate.is_none()
+                        && w.resource::<B1Runtime>().active.as_ref().is_some_and(|s| {
+                            s.selection
+                                == Selection::from_doc(
+                                    w.resource::<EditorState>().document().unwrap(),
+                                )
+                        })
+                });
+                assert!(
+                    position_delta(&baseline, &uploaded_positions(&app)) > 1e-6,
+                    "{} {sign} must reach actual Mesh POSITION",
+                    id
+                );
+                // Independent original-text sparse delta witness. No production target
+                // catalogue or target loader is used to compute these expectations.
+                let name = if sign < 0.0 { decrease } else { increase };
+                let text = std::fs::read_to_string(root.join(format!("{name}.target"))).unwrap();
+                let mut delta = BTreeMap::<u16, [f32; 3]>::new();
+                for line in text
+                    .lines()
+                    .filter(|line| !line.trim().is_empty() && !line.trim_start().starts_with('#'))
+                {
+                    let cells: Vec<_> = line.split_whitespace().collect();
+                    delta.insert(
+                        cells[0].parse().unwrap(),
+                        [
+                            cells[1].parse::<f32>().unwrap() * 0.1,
+                            cells[2].parse::<f32>().unwrap() * 0.1,
+                            cells[3].parse::<f32>().unwrap() * 0.1,
+                        ],
+                    );
+                }
+                let actual =
+                    appearance_fit(app.world(), &appearance_frame(app.world()).unwrap()).unwrap();
+                assert_eq!(actual.source_ids, baseline_fit.source_ids);
+                for ((source, before), after) in baseline_fit
+                    .source_ids
+                    .iter()
+                    .zip(&baseline_fit.rest)
+                    .zip(&actual.rest)
+                {
+                    let change = delta.get(source).copied().unwrap_or([0.0; 3]);
+                    for axis in 0..3 {
+                        assert!(
+                            (after[axis] - (before[axis] + change[axis])).abs() <= 1e-6,
+                            "{id} {sign}, source {source}, axis {axis}: selected signed target/units must reach fitted body"
+                        );
+                    }
+                }
+                assert_eq!(
+                    b1_frame_snapshot(app.world()).unwrap()["asset_id"],
+                    nvwa_core::B1_V2_ASSET_ID
+                );
+            }
+        }
+        open_ready(&mut app, doc);
+        assert_eq!(uploaded_positions(&app), baseline);
+    }
+    #[test]
+    fn cached_new_base_reauthenticates_open_retains_live_body_on_failure_and_old_base_needs_no_extension()
+     {
+        let (mut app, dir, _) = motion_app();
+        fill_v2(&dir);
+        let mut doc =
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character()).unwrap();
+        doc.character.appearance =
+            nvwa_core::CharacterAppearance::b1_cc0_for(&doc.profile.backend, true, true, true)
+                .unwrap();
+        open_ready(&mut app, doc.clone());
+        let retained = crate::appearance_snapshot(app.world_mut()).unwrap();
+        assert_eq!(retained["base_asset_id"], nvwa_core::B1_V2_ASSET_ID);
+        let before = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        let history = app
+            .world()
+            .resource::<EditorState>()
+            .editor
+            .as_ref()
+            .unwrap()
+            .retention_stats();
+        let corrupt_path = Path::new("characters/mpfb-b1-v2/targets/head-scale-horiz-incr.target");
+        dir.remove_asset(corrupt_path);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(doc.clone())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().open_error.is_some()
+        });
+        assert!(
+            app.world()
+                .resource::<EditorState>()
+                .open_error
+                .as_ref()
+                .unwrap()
+                .contains("asset_missing")
+        );
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&before)
+        );
+        assert_eq!(
+            app.world()
+                .resource::<EditorState>()
+                .editor
+                .as_ref()
+                .unwrap()
+                .retention_stats(),
+            history
+        );
+        let still = crate::appearance_snapshot(app.world_mut()).unwrap();
+        assert_eq!(still["body_entity"], retained["body_entity"]);
+        assert_eq!(still["generation"], retained["generation"]);
+        fill_v2(&dir);
+        open_ready(&mut app, doc.clone());
+        let recovered = crate::appearance_snapshot(app.world_mut()).unwrap();
+        assert_ne!(recovered["generation"], retained["generation"]);
+        assert_ne!(recovered["body_entity"], retained["body_entity"]);
+        // All cached extension files may disappear without becoming an old-base dependency.
+        for targets in &B1AssetVersion::V2.parameters()[2..] {
+            for name in [targets.decrease, targets.increase] {
+                dir.remove_asset(Path::new(&format!(
+                    "characters/mpfb-b1-v2/targets/{name}.target"
+                )));
+            }
+        }
+        open_ready(
+            &mut app,
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_motion()).unwrap(),
+        );
+        let old = crate::appearance_snapshot(app.world_mut()).unwrap();
+        assert_eq!(old["base_asset_id"], nvwa_core::B1_ASSET_ID);
+        assert!(old["accessories"].as_array().unwrap().is_empty());
+        assert_eq!(old["skin"], serde_json::Value::Null);
+        // Cancellation of an unreadable new request must never relabel the retained old session.
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(doc)
+            .unwrap();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetScale {
+                character_id: before.character.id,
+                scale: 1.1,
+            })
+            .unwrap();
+        for _ in 0..4 {
+            app.update();
+        }
+        assert!(app.world().resource::<EditorState>().pending_open.is_none());
+        assert_eq!(
+            b1_frame_snapshot(app.world()).unwrap()["asset_id"],
+            nvwa_core::B1_ASSET_ID
+        );
+    }
+
     #[test]
     fn bounded_reader_stops_at_one_over_limit() {
         let mut reader = bevy::asset::io::VecReader::new(vec![0; 1025]);
@@ -3447,13 +3808,14 @@ pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
         motion::contacts(&sample.clip_id, sample.source)?
     };
     Ok(
-        serde_json::json!({"schema_version":1,"backend":doc.profile.backend,"profile_id":doc.profile.id,"asset_id":nvwa_core::B1_ASSET_ID,"generation":active.generation,"revision":doc.revision,"parameters":doc.character.parameters,"diagnostic_pose":doc.character.diagnostic_pose,"mode":if sample.clip_id.is_empty(){"diagnostic"}else{"motion"},"sample":{"serial":active.serial,"clip_id":sample.clip_id,"timeline_id":sample.timeline_id,"position_seconds":sample.position,"source_seconds":sample.source,"playing":playback.playing,"completed":playback.completed},"character_entity":format!("{:?}",active.character),"bones":bones,"parts":parts,"contacts":{"left":left,"right":right}}),
+        serde_json::json!({"schema_version":1,"backend":doc.profile.backend,"profile_id":doc.profile.id,"asset_id":active.selection.base.asset_id(),"generation":active.generation,"revision":doc.revision,"parameters":doc.character.parameters,"diagnostic_pose":doc.character.diagnostic_pose,"mode":if sample.clip_id.is_empty(){"diagnostic"}else{"motion"},"sample":{"serial":active.serial,"clip_id":sample.clip_id,"timeline_id":sample.timeline_id,"position_seconds":sample.position,"source_seconds":sample.source,"playing":playback.playing,"completed":playback.completed},"character_entity":format!("{:?}",active.character),"bones":bones,"parts":parts,"contacts":{"left":left,"right":right}}),
     )
 }
 
 /// Narrow, current production binding used by saved appearance. Bone frames come
 /// from the actual skeleton; no full body JSON is generated during playback.
 pub(super) struct AppearanceFrame {
+    pub base: B1AssetVersion,
     pub generation: u64,
     pub revision: u64,
     pub serial: u64,
@@ -3516,6 +3878,7 @@ fn appearance_frame_for_session(
         return Err("appearance: body placement is singular/nonfinite".into());
     }
     Ok(AppearanceFrame {
+        base: active.selection.base,
         generation: active.generation,
         revision,
         serial: active.serial,

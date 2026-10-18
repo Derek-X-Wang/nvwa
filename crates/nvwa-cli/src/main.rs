@@ -1,10 +1,10 @@
 #![forbid(unsafe_code)]
 use nvwa_core::{
-    B1_APPEARANCE_ID, B1_APPEARANCE_MANIFEST_PATH, B1_APPEARANCE_MANIFEST_SHA256,
     B1_APPEARANCE_MAX_ASSET_BYTES, B1_APPEARANCE_MAX_MANIFEST_BYTES,
     B1_APPEARANCE_MAX_TOTAL_ASSET_BYTES, B1_DIAGNOSTIC_POSES, B1_MAX_ASSET_BYTES,
-    B1_MAX_MANIFEST_BYTES, B1_MAX_TOTAL_ASSET_BYTES, B1AppearanceManifest, B1AssetManifest,
-    CharacterProfile, Command, CommandEnvelope, CoreError, Editor, SceneDocument,
+    B1_MAX_MANIFEST_BYTES, B1_MAX_TOTAL_ASSET_BYTES, B1AppearanceManifest, B1AppearanceSet,
+    B1AssetManifest, B1AssetVersion, CharacterProfile, Command, CommandEnvelope, CoreError, Editor,
+    SceneDocument,
 };
 use std::path::{Path, PathBuf};
 
@@ -128,11 +128,11 @@ fn read_asset(root: &Path, relative: &Path, limit: usize) -> Result<Vec<u8>, Cor
 }
 
 fn validate_assets(document: &SceneDocument, root: &Path) -> Result<(), CoreError> {
-    if document.profile.backend.is_b1() {
+    if let Some(version) = document.profile.backend.b1_asset_version() {
         let manifest_path = Path::new(&document.profile.asset_path);
         let bytes = read_asset(root, manifest_path, B1_MAX_MANIFEST_BYTES)?;
         document.profile.validate_asset_bytes(&bytes)?;
-        let manifest = B1AssetManifest::from_bytes(&bytes)?;
+        let manifest = B1AssetManifest::from_bytes_for(version, &bytes)?;
         let parent = manifest_path
             .parent()
             .ok_or_else(|| CoreError::new("unsafe_asset_path", "B1 manifest has no parent"))?;
@@ -155,10 +155,10 @@ fn validate_assets(document: &SceneDocument, root: &Path) -> Result<(), CoreErro
         )?;
         document.profile.validate_asset_bytes(&bytes)?;
     }
-    if document.character.appearance.b1_flags().is_some() {
-        let manifest_path = Path::new(B1_APPEARANCE_MANIFEST_PATH);
+    if let Some(set) = document.character.appearance.b1_set() {
+        let manifest_path = Path::new(set.manifest_path());
         let bytes = read_asset(root, manifest_path, B1_APPEARANCE_MAX_MANIFEST_BYTES)?;
-        let manifest = B1AppearanceManifest::from_bytes(&bytes)?;
+        let manifest = B1AppearanceManifest::from_bytes_for(set, &bytes)?;
         let parent = manifest_path.parent().ok_or_else(|| {
             CoreError::new("unsafe_asset_path", "B1 appearance manifest has no parent")
         })?;
@@ -270,6 +270,13 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         serde_json::to_string(&examples).map_err(|e| CoreError::new("serialize", e.to_string()))?;
     let examples: serde_json::Value =
         serde_json::from_str(&examples).map_err(|e| CoreError::new("serialize", e.to_string()))?;
+    let base = document.profile.backend.b1_asset_version();
+    let appearance_set = B1AppearanceSet::for_base(base.unwrap_or(B1AssetVersion::V1));
+    let targets: std::collections::BTreeMap<_, _> = base
+        .into_iter()
+        .flat_map(|v| v.parameters())
+        .map(|t| (t.id, [t.decrease, t.increase]))
+        .collect();
     Ok(serde_json::json!({
         "schema_version": 1,
         "transport": "offline_files",
@@ -278,13 +285,14 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "new": ["profile.json", "output.json"],
             "new-b1": ["asset_root", "output.json"],
             "new-b1-motion": ["asset_root", "output.json"],
+            "new-character": ["asset_root", "output.json"],
             "inspect": ["input.json"],
             "describe-capabilities": ["input.json"],
             "validate": ["input.json", "optional_asset_root"],
             "apply": ["input.json", "command_or_array.json", "output.json"],
             "save": ["input.json", "output.json"]
         },
-        "creation": {"new":"glb_profile_metadata_only", "new-b1":"exact_b1_manifest_and_thirteen_assets_verified_before_save", "new-b1-motion":"same_authenticated_b1_asset_explicit_version2_authored_rehearsal"},
+        "creation": {"new-character":"eight_source_parameters_exact_v2_manifest_and_twenty_five_assets_verified_before_save", "new":"glb_profile_metadata_only", "new-b1":"exact_b1_manifest_and_thirteen_assets_verified_before_save", "new-b1-motion":"same_authenticated_b1_asset_explicit_version2_authored_rehearsal"},
         "input": {
             "max_json_bytes": nvwa_core::MAX_JSON_BYTES,
             "unknown_fields": "rejected",
@@ -305,9 +313,9 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "current": document.character.appearance,
             "none": {"type":"none"},
             "b1_cc0_supported": document.profile.backend.is_b1(),
-            "schema_version": 1,
-            "asset_set_id": B1_APPEARANCE_ID,
-            "asset_set_sha256": B1_APPEARANCE_MANIFEST_SHA256,
+            "schema_version": appearance_set.schema_version(),
+            "asset_set_id": appearance_set.asset_id(),
+            "asset_set_sha256": appearance_set.manifest_sha256(),
             "roles": ["skin", "eyes", "hair"],
             "selection": "independent_booleans_at_least_one_true_otherwise_use_none",
             "asset_validation": "validate_with_asset_root_authenticates_all_thirteen_appearance_files",
@@ -315,10 +323,10 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         },
         "character_backend": document.profile.backend,
         "authored_motion": {"supported":document.profile.backend.is_b1_motion(),"provenance":"Nvwa authored rehearsal; not AI-generated", "clips":document.profile.clips},
-        "diagnostic_poses": if document.profile.backend.is_b1() { serde_json::json!({"ids":B1_DIAGNOSTIC_POSES,"current":document.character.diagnostic_pose,"meaning":"authored_static_diagnostic_pose_not_animation","command":"set_diagnostic_pose","renderer":"fixed_positive_final_aggregate_cpu_no_four_cap","morph_index":"inert_legacy_metadata_unused_on_b1","targets":{"torso_length":["torso-scale-vert-decr","torso-scale-vert-incr"],"jaw_drop":["chin-jaw-drop-decr","chin-jaw-drop-incr"]},"continuous_parameter_edits":true,"numeric_acceptance":"eight_reference_recipes_times_five_poses_only","timeline_supported":document.profile.backend.supports_timeline()}) } else { serde_json::json!({"ids":[],"current":null,"timeline_supported":true}) },
+        "diagnostic_poses": if document.profile.backend.is_b1() { serde_json::json!({"ids":B1_DIAGNOSTIC_POSES,"current":document.character.diagnostic_pose,"meaning":"authored_static_diagnostic_pose_not_animation","command":"set_diagnostic_pose","renderer":"fixed_positive_final_aggregate_cpu_no_four_cap","morph_index":"inert_legacy_metadata_unused_on_b1","targets":targets,"continuous_parameter_edits":true,"numeric_acceptance":if base == Some(B1AssetVersion::V2) { "HOLD_new_eight_parameter_profile_requires_separate_frozen_21_recipe_69_frame_acceptance" } else { "eight_reference_recipes_times_five_poses_only" },"timeline_supported":document.profile.backend.supports_timeline()}) } else { serde_json::json!({"ids":[],"current":null,"timeline_supported":true}) },
         "set_timeline": {
             "animation_supported": document.profile.backend.supports_timeline(),
-            "b1": "v1_empty_only_v2_authored_timeline_exclusive_diagnostic_command_clears_timeline",
+            "b1": "v1_empty_only_v2_v3_authored_timeline_exclusive_diagnostic_command_clears_timeline",
             "effect": "replaces_entire_timeline",
             "clip_id": "must_reference_profile_clips_id",
             "id": "nonblank_unique_timeline_entry_id",
@@ -407,8 +415,10 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             .ok_or_else(|| CoreError::new("usage", "Missing argument; run nvwa-cli help"))
     };
     match command {
-        "new-b1" | "new-b1-motion" => {
-            let profile = if command == "new-b1-motion" {
+        "new-b1" | "new-b1-motion" | "new-character" => {
+            let profile = if command == "new-character" {
+                CharacterProfile::b1_character()
+            } else if command == "new-b1-motion" {
                 CharacterProfile::b1_motion()
             } else {
                 CharacterProfile::b1()
@@ -425,7 +435,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             if profile.backend.is_b1() {
                 return Err(CoreError::new(
                     "unsupported_character_operation",
-                    "Use new-b1 or new-b1-motion <asset-root> <work.json> to authenticate all B1 assets before creation",
+                    "Use new-character, new-b1 or new-b1-motion <asset-root> <work.json> to authenticate all B1 assets before creation",
                 ));
             }
             let document = SceneDocument::from_profile(profile)?;
@@ -518,7 +528,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             )?;
         }
         "help" | "--help" | "-h" => respond(
-            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
+            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
         )?,
         _ => {
             return Err(CoreError::new(

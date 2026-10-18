@@ -1212,3 +1212,6 @@ impl<'de> Deserialize<'de> for UniqueJson {
 
 #[cfg(test)]
 mod b1_motion_tests;
+
+#[cfg(test)]
+mod b1_character_tests;
