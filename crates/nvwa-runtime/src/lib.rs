@@ -1,5 +1,7 @@
 //! Shared native/Web renderer. The editor document is the source of truth.
+mod appearance;
 mod b1;
+pub use appearance::{AppearanceStatus, appearance_snapshot, appearance_status};
 mod stage;
 pub use b1::{b1_frame_snapshot, register_b1_asset_source};
 pub use stage::StageViewOverride;
@@ -140,6 +142,8 @@ pub struct RuntimeStatus {
     pub error: Option<String>,
     /// Presentation conversion errors leave the Work unchanged.
     pub stage_error: Option<String>,
+    /// Saved appearance failures preserve Work and invalidate successful appearance evidence.
+    pub appearance_error: Option<String>,
     pub ready: bool,
     pub meshes: usize,
     pub skins: usize,
@@ -365,6 +369,8 @@ impl AssetLoader for CharacterGlbLoader {
 pub enum RuntimeSystems {
     Transport,
     Mirror,
+    /// Saved appearance controller only; isolated diagnostic apps can explicitly disable this set.
+    Appearance,
 }
 
 pub struct NvwaRuntimePlugin;

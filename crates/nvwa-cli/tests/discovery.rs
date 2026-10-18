@@ -61,6 +61,7 @@ fn discovered_examples_execute_and_keep_existing_profile_contract() {
         [
             "set_parameters",
             "set_scale",
+            "set_appearance",
             "set_timeline",
             "set_stage",
             "undo",
@@ -82,9 +83,9 @@ fn discovered_examples_execute_and_keep_existing_profile_contract() {
     );
     assert!(applied.stderr.is_empty());
     let results: Value = serde_json::from_slice(&applied.stdout).unwrap();
-    assert_eq!(results.as_array().unwrap().len(), 6);
+    assert_eq!(results.as_array().unwrap().len(), 7);
     let loaded: Value = serde_json::from_slice(&std::fs::read(&saved).unwrap()).unwrap();
-    assert_eq!(loaded["revision"], 29);
+    assert_eq!(loaded["revision"], 30);
     assert_eq!(loaded["character"], input_json["character"]);
     assert_eq!(loaded["timeline"], input_json["timeline"]);
     std::fs::remove_dir_all(dir).unwrap();
@@ -169,6 +170,10 @@ fn legacy_stage_discovery_apply_validation_and_file_recovery_use_actual_binary()
         .as_object_mut()
         .unwrap()
         .remove("diagnostic_pose");
+    legacy["character"]
+        .as_object_mut()
+        .unwrap()
+        .remove("appearance");
     legacy["schema_version"] = json!(1);
     legacy.as_object_mut().unwrap().remove("stage");
     std::fs::write(&input, serde_json::to_vec(&legacy).unwrap()).unwrap();
@@ -182,7 +187,7 @@ fn legacy_stage_discovery_apply_validation_and_file_recovery_use_actual_binary()
     );
     assert_eq!(
         caps["cli_contract"]["work_schema"]["reads"],
-        json!([1, 2, 3])
+        json!([1, 2, 3, 4])
     );
     assert_eq!(
         caps["cli_contract"]["set_stage"]["quality"],
@@ -221,6 +226,7 @@ fn legacy_stage_discovery_apply_validation_and_file_recovery_use_actual_binary()
     assert_eq!(work["stage"]["camera"]["distance"], 2.0);
     let mut expected_character = legacy["character"].clone();
     expected_character["diagnostic_pose"] = json!(null);
+    expected_character["appearance"] = json!({"type":"none"});
     assert_eq!(work["character"], expected_character);
     assert_eq!(work["timeline"], legacy["timeline"]);
     assert_eq!(std::fs::read(&input).unwrap(), before);

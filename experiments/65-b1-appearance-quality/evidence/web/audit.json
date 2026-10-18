@@ -1,0 +1,644 @@
+{
+  "schema_version": 1,
+  "scope": "Dual-end65 CPU control isolation audit; no visual quality admission, GPU readback, head-motion or production policy change.",
+  "hash_semantics": "source_envelope_sha256 hashes original bytes. semantic_sha256 hashes Python json.dumps(sort_keys=True,separators=(comma,colon),ensure_ascii=True,allow_nan=False). Producer geometry hashes are retained separately without pretending to reproduce Rust number formatting.",
+  "groups": {
+    "sf": {
+      "camera": {
+        "active": true,
+        "entity": "288v0",
+        "global_transform": [
+          0.9902680516242981,
+          0,
+          -0.13917309045791626,
+          0,
+          -0.007283765356987715,
+          0.9986295104026794,
+          -0.051826685667037964,
+          0,
+          0.138982355594635,
+          0.052336014807224274,
+          0.9889109134674072,
+          0,
+          0.13203324377536774,
+          1.549719214439392,
+          0.939465343952179,
+          1
+        ],
+        "msaa": "Sample4",
+        "msaa_samples": 4,
+        "projection": "Perspective(PerspectiveProjection { fov: 0.5235988, aspect_ratio: 1.7777778, near: 0.05, far: 250.0, near_clip_plane: Vec4(0.0, 0.0, -1.0, -0.1) })",
+        "scope": "actual observation camera; temporary override, not saved",
+        "viewport_size_pixels": [
+          1280,
+          720
+        ]
+      },
+      "parameters": {
+        "torso_length": -1,
+        "jaw_drop": 0
+      },
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "controls": {
+        "reference": {
+          "source_envelope_sha256": "35a0a550633813468caf757916498937bfad73361fd64cc166f3ce15228926b3",
+          "derived_file": "records/w65-sf-reference.json",
+          "derived_bytes": 477150,
+          "derived_sha256": "046d10c8361facb4cb0ee84a6b8dba6ffd839f5766facbe5398dcb738541c54b",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "hair": {
+          "source_envelope_sha256": "a6a15efab58bbf607114823727fbc25a3345e5e4974798ebf3313dcc274f55a1",
+          "derived_file": "records/w65-sf-hair.json",
+          "derived_bytes": 477178,
+          "derived_sha256": "285fd37612cd03b4e301c3854e9dedc042fdc41482d03f777f7a0d9672f6ceaf",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": [
+                "alpha"
+              ]
+            }
+          }
+        },
+        "eye": {
+          "source_envelope_sha256": "01ca781a1ec69b1b33be3ad0a63ee76ecd1f72268fc8891dd1482a0c3acc9507",
+          "derived_file": "records/w65-sf-eye.json",
+          "derived_bytes": 477219,
+          "derived_sha256": "cb5160f7c3bbb97119c883ae95fe09b1c40057f8290da83a46fc739359b5a7d1",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [
+                "rest_normals",
+                "normals"
+              ],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "unlit": {
+          "source_envelope_sha256": "6927a77fb63386c45595bec219e04b6cc385d23a21072373634baec7bfbfdce8",
+          "derived_file": "records/w65-sf-unlit.json",
+          "derived_bytes": 477231,
+          "derived_sha256": "8eb49b66e00f463621766ece1e3257501cbaab1452ce50c28eb6bdad323e66eb",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": [
+                "unlit"
+              ]
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        }
+      }
+    },
+    "lf": {
+      "camera": {
+        "active": true,
+        "entity": "288v0",
+        "global_transform": [
+          0.9902680516242981,
+          0,
+          -0.13917309045791626,
+          0,
+          -0.007283765356987715,
+          0.9986295104026794,
+          -0.051826685667037964,
+          0,
+          0.138982355594635,
+          0.052336014807224274,
+          0.9889109134674072,
+          0,
+          0.13203324377536774,
+          1.6997191905975342,
+          0.939465343952179,
+          1
+        ],
+        "msaa": "Sample4",
+        "msaa_samples": 4,
+        "projection": "Perspective(PerspectiveProjection { fov: 0.5235988, aspect_ratio: 1.7777778, near: 0.05, far: 250.0, near_clip_plane: Vec4(0.0, 0.0, -1.0, -0.1) })",
+        "scope": "actual observation camera; temporary override, not saved",
+        "viewport_size_pixels": [
+          1280,
+          720
+        ]
+      },
+      "parameters": {
+        "torso_length": 1,
+        "jaw_drop": 1
+      },
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "controls": {
+        "reference": {
+          "source_envelope_sha256": "12166598be7e93cc831371e0df949fbd4d6b6b24cb430d180af0fd2669f96c04",
+          "derived_file": "records/w65-lf-reference.json",
+          "derived_bytes": 477294,
+          "derived_sha256": "9d86b856c895c278048adb83d5c86e09f3c54fb50a0bda4a0b5dc9c90202218c",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "hair": {
+          "source_envelope_sha256": "12c7d74c9b50742e32110455404281b3ebc0de852d663f8034328ad4b522b141",
+          "derived_file": "records/w65-lf-hair.json",
+          "derived_bytes": 477322,
+          "derived_sha256": "0a2754a8c31239df35395f12451de6bf5508a992178eb5994fab20ec086268d4",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": [
+                "alpha"
+              ]
+            }
+          }
+        },
+        "eye": {
+          "source_envelope_sha256": "d1641a2160c27cb27acb2c33503440c4769c225040867dcc9e8ac198eaa56a4b",
+          "derived_file": "records/w65-lf-eye.json",
+          "derived_bytes": 477363,
+          "derived_sha256": "56e4139bd9cfee9363de711c965783005f946a6b875b68a56d27051d78c2146f",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [
+                "rest_normals",
+                "normals"
+              ],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "unlit": {
+          "source_envelope_sha256": "80aa1ead977fc34b87423bbd948b6d5f6adb6400991df70738a12b901e9c7518",
+          "derived_file": "records/w65-lf-unlit.json",
+          "derived_bytes": 477375,
+          "derived_sha256": "5b15e963235b72e779e84bad7cff747d7044abf858f520a22783bfc21b318f61",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": [
+                "unlit"
+              ]
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        }
+      }
+    },
+    "sq": {
+      "camera": {
+        "active": true,
+        "entity": "288v0",
+        "global_transform": [
+          0.7071067094802856,
+          -3.725290298461914e-09,
+          -0.7071068286895752,
+          0,
+          -0.037007156759500504,
+          0.9986295104026794,
+          -0.037007156759500504,
+          0,
+          0.7061377763748169,
+          0.05233602598309517,
+          0.7061376571655273,
+          0,
+          0.6708307862281799,
+          1.549719214439392,
+          0.6708307862281799,
+          1
+        ],
+        "msaa": "Sample4",
+        "msaa_samples": 4,
+        "projection": "Perspective(PerspectiveProjection { fov: 0.5235988, aspect_ratio: 1.7777778, near: 0.05, far: 250.0, near_clip_plane: Vec4(0.0, 0.0, -1.0, -0.1) })",
+        "scope": "actual observation camera; temporary override, not saved",
+        "viewport_size_pixels": [
+          1280,
+          720
+        ]
+      },
+      "parameters": {
+        "torso_length": -1,
+        "jaw_drop": 0
+      },
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "controls": {
+        "reference": {
+          "source_envelope_sha256": "50a2ae55af4686e35ab9e80424989a7cf79c8f1a90a58ae2cdef1a04c213c7fb",
+          "derived_file": "records/w65-sq-reference.json",
+          "derived_bytes": 477230,
+          "derived_sha256": "5d70a1468476fdfb44cf7e124f4d09612032a6c4c5e8cb37c645532974f99946",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "hair": {
+          "source_envelope_sha256": "b925ccf0127eca4d40a70847647d3f341cba457be6c6797263bafe904ff8ad71",
+          "derived_file": "records/w65-sq-hair.json",
+          "derived_bytes": 477258,
+          "derived_sha256": "63aaf1f3b3131099f1ddc3e7460a3e096d59e29f96f10f2635a5f2bef5980845",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": [
+                "alpha"
+              ]
+            }
+          }
+        },
+        "eye": {
+          "source_envelope_sha256": "de3b94ac4157517c2506c2e732352decbcf75cc253d43f1f1092f61763afda08",
+          "derived_file": "records/w65-sq-eye.json",
+          "derived_bytes": 477299,
+          "derived_sha256": "db2c130368c3f0a90c1e306241df062cc7c258ac424db24dee593403b3e2d073",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [
+                "rest_normals",
+                "normals"
+              ],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "unlit": {
+          "source_envelope_sha256": "4b722a1afa7a773aa630e5d2e37ea0c64206fd8d6003c40377aa872ca33f2a2d",
+          "derived_file": "records/w65-sq-unlit.json",
+          "derived_bytes": 477311,
+          "derived_sha256": "946bcad1a64954f6c86e26da8663c8aadce32be99edca8f29fd8de5dc9fda107",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": [
+                "unlit"
+              ]
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        }
+      }
+    },
+    "lq": {
+      "camera": {
+        "active": true,
+        "entity": "288v0",
+        "global_transform": [
+          0.7071067094802856,
+          -3.725290298461914e-09,
+          -0.7071068286895752,
+          0,
+          -0.037007156759500504,
+          0.9986295104026794,
+          -0.037007156759500504,
+          0,
+          0.7061377763748169,
+          0.05233602598309517,
+          0.7061376571655273,
+          0,
+          0.6708307862281799,
+          1.6997191905975342,
+          0.6708307862281799,
+          1
+        ],
+        "msaa": "Sample4",
+        "msaa_samples": 4,
+        "projection": "Perspective(PerspectiveProjection { fov: 0.5235988, aspect_ratio: 1.7777778, near: 0.05, far: 250.0, near_clip_plane: Vec4(0.0, 0.0, -1.0, -0.1) })",
+        "scope": "actual observation camera; temporary override, not saved",
+        "viewport_size_pixels": [
+          1280,
+          720
+        ]
+      },
+      "parameters": {
+        "torso_length": 1,
+        "jaw_drop": 1
+      },
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "controls": {
+        "reference": {
+          "source_envelope_sha256": "dc25611ccde014d15374d6d1c56d35b82ea163ae093519f1cde4533a26fabc70",
+          "derived_file": "records/w65-lq-reference.json",
+          "derived_bytes": 477374,
+          "derived_sha256": "166765ab38f41b1e50640d2e998bafe75af7a471547351278c84e5a424bbd0f3",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "hair": {
+          "source_envelope_sha256": "54c956d5ff6506cac4edddb2e019246a20f9adbd2f6f13f540e8c1b6167f83ae",
+          "derived_file": "records/w65-lq-hair.json",
+          "derived_bytes": 477402,
+          "derived_sha256": "5d85ff3dd41f2413f0940fb76d1dbe9527f3b870423b2fb75afdd27a48c85e7e",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": [
+                "alpha"
+              ]
+            }
+          }
+        },
+        "eye": {
+          "source_envelope_sha256": "7584b96b6da969039cf00818dac29111afc087664a47d79617ea65cc2b0cae7c",
+          "derived_file": "records/w65-lq-eye.json",
+          "derived_bytes": 477443,
+          "derived_sha256": "fbaa051037e0cf63d87ffdec969f1955376864e34788bb2b18a837cd26790718",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [
+                "rest_normals",
+                "normals"
+              ],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "unlit": {
+          "source_envelope_sha256": "075cf2fbd6855024df3300116fa5ddc81ddb1ec0356aaf9c839ac607f577a1e9",
+          "derived_file": "records/w65-lq-unlit.json",
+          "derived_bytes": 477455,
+          "derived_sha256": "b739edd88c457217ad43b7deb0c09fa31c0ca79e6fc7ba72e1b94323a5efce8c",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": [
+                "unlit"
+              ]
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        }
+      }
+    },
+    "low": {
+      "camera": {
+        "active": true,
+        "entity": "288v0",
+        "global_transform": [
+          0.9902680516242981,
+          0,
+          -0.13917309045791626,
+          0,
+          -0.007283765356987715,
+          0.9986295104026794,
+          -0.051826685667037964,
+          0,
+          0.138982355594635,
+          0.052336014807224274,
+          0.9889109134674072,
+          0,
+          0.13203324377536774,
+          1.6297192573547363,
+          0.939465343952179,
+          1
+        ],
+        "msaa": "Off",
+        "msaa_samples": 1,
+        "projection": "Perspective(PerspectiveProjection { fov: 0.5235988, aspect_ratio: 1.7777778, near: 0.05, far: 250.0, near_clip_plane: Vec4(0.0, 0.0, -1.0, -0.1) })",
+        "scope": "actual observation camera; temporary override, not saved",
+        "viewport_size_pixels": [
+          1280,
+          720
+        ]
+      },
+      "parameters": {
+        "torso_length": 0,
+        "jaw_drop": 0
+      },
+      "sample": {
+        "clip_id": "b1_arm_rehearsal_v1",
+        "completed": false,
+        "playing": false,
+        "position_seconds": 2,
+        "serial": 2,
+        "source_seconds": 2,
+        "timeline_id": "probe-entry"
+      },
+      "controls": {
+        "reference": {
+          "source_envelope_sha256": "6a8fe9cf87fb99fb82e2779d43ef936613d78bf23c005d717be0f775c40d947d",
+          "derived_file": "records/w65-low-reference.json",
+          "derived_bytes": 474135,
+          "derived_sha256": "e8adf9b83e9c28370f3d2be77bf507b88f61b835edacfbdfc9e15a48e3b9b4f2",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        },
+        "recovered": {
+          "source_envelope_sha256": "65cd65c959a12ce6edca277f724e938991540c1295076462295c12ba154685f6",
+          "derived_file": "records/w65-low-recovered.json",
+          "derived_bytes": 474135,
+          "derived_sha256": "23e416c01e67a0246407a7f46fe3035488c6cf0c221d4c44a8da1a7810918b22",
+          "observed_deltas": {
+            "eyes": {
+              "max_positive_influences": 1,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            },
+            "hair": {
+              "max_positive_influences": 5,
+              "rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+              "changed_array_fields": [],
+              "changed_material_fields": []
+            }
+          }
+        }
+      }
+    }
+  },
+  "unexpected_deltas": [],
+  "sizes": {
+    "original_envelope_bytes": 204286116,
+    "derived_candidate_bytes": 8585174
+  },
+  "status": "PASS_CONTROL_ISOLATION_ONLY",
+  "publication": {
+    "kind": "Derived audit summary, not original runtime envelope",
+    "extractor_sha256": "fb7f6d7a279540275dedb9a8a1ae46c081ae7496ec6071be26ee933f87bbdf5a",
+    "extractor_source": "../inputs/audit_dual.py (exact independently reviewed private-work extraction template; original raw input envelopes are not bundled)",
+    "raw_envelopes": "Private originals omitted for size. Each derived record retains the exact original envelope SHA256/size.",
+    "low": "Only reference and recovered Frozen64 captures are correlated. Intended HairCoverage error observation lacks request identity and remains PARTIAL. Temporary overlay is torn down on the error path; no retained-overlay guarantee.",
+    "omitted_body_limit": "Hashes and source-byte identity preserve traceability; omitted full body arrays cannot be independently recomputed from this public subset alone."
+  }
+}

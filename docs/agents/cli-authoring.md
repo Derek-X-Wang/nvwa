@@ -92,5 +92,22 @@ not AI-generated actions. A nonempty timeline owns the skeleton even when
 paused. `set_diagnostic_pose` atomically clears the timeline; Undo restores it
 and the previous diagnostic pose. Old static B1 Works are not upgraded. Apply/save edit the portable Work only; they do not inspect
 assets or claim that a renderer has opened it. Native/Web rendering is a
-separate check. Schema1/2 GLB Works upgrade to schema3 when saved; old readers
-will reject schema3.
+separate check. Schema1/2 GLB Works and schema3 Works upgrade to schema4 when saved; old readers
+will reject schema4. Schemas1/2/3 require appearance to be absent and migrate it
+to `{"type":"none"}`. Schema4 requires explicit non-null appearance.
+
+## Portable B1 appearance
+
+Use `set_appearance` with the loaded character ID and revision to save the
+selection. `none` has exactly `{"type":"none"}`. B1 accepts `b1_cc0` with
+`schema_version:1`, the fixed asset set ID and SHA-256 returned by discovery,
+and all three required booleans `skin`, `eyes`, `hair`. Select any independent
+combination with at least one true; use `none` for no roles. GLB supports `none`.
+The command uses the existing atomic transaction, retry, Undo and Redo rules.
+Unknown fields, missing/null values, duplicate keys, changed identities and
+unsupported backends reject without saving the batch.
+
+`apply` and `save` edit portable metadata. `validate work.json asset_root`
+authenticates the fixed body asset and, when appearance is selected, its
+descriptor and all thirteen appearance payloads, including unselected roles.
+These commands do not establish rendered appearance readiness.

@@ -1,0 +1,606 @@
+{
+  "schema_version": 1,
+  "status": "PASS_WITH_EXPECTED_REJECTIONS",
+  "scope": "Actual Web experiment66 request-correlated production CPU snapshots and byte-checked exchange files. Not GPU readback, screenshots, rendered acceptance, an independent external geometry oracle, continuous playback/performance evidence, or complete asset-store disposal.",
+  "counts": {
+    "matrix_requests": 67,
+    "supplemental_endpoint_requests": 23,
+    "lifecycle_requests": 12,
+    "normal_ui_observation_captures": 5,
+    "total_copied_request_pairs": 107,
+    "ready_acknowledgements": 104,
+    "expected_rejection_acknowledgements": 3,
+    "held_source_frames": 54,
+    "held_global_time_frames": 45,
+    "supplemental_arm_source4_frames": 9,
+    "raw_pair_files": 214,
+    "exchange_artifact_files": 6
+  },
+  "coverage": {
+    "role_combinations": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "undo_redo": {
+      "ids": [
+        "w79-r4-009",
+        "w79-r4-010",
+        "w79-r4-011"
+      ],
+      "selection_masks": [
+        7,
+        6,
+        7
+      ],
+      "playing": false,
+      "position_seconds": 1.5
+    },
+    "shape_grid": {
+      "torso_length": [
+        -1,
+        0,
+        1
+      ],
+      "jaw_drop": [
+        0,
+        0.5,
+        1
+      ]
+    },
+    "held_source_samples_per_shape": {
+      "b1_arm_rehearsal_v1": [
+        0,
+        2,
+        4
+      ],
+      "b1_knee_flex_v1": [
+        0,
+        2,
+        4
+      ]
+    },
+    "global_time4": "On the eight-second timeline, global4 is knee source0. The arms-only shared SetTimeline supplement supplies arm source4.",
+    "matrix_execution_order": [
+      "matrix",
+      "arm-endpoints",
+      "lifecycle"
+    ],
+    "lifecycle_rejections": {
+      "w79-life-02": "invalid_json",
+      "w79-life-04": "unsupported_appearance_asset",
+      "w79-life-06": "unsupported_character_operation"
+    },
+    "lifecycle_retention": "Fresh captures after each rejected Open exactly match baseline Work, appearance, base CPU frame and captured identity.",
+    "lifecycle_generations": [
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "legacy_migration": "Exact schema3 content retained except schema4 plus explicit None; current skin/accessory bindings absent.",
+    "same_content_open": "Identical migrated Work publishes a fresh generation/body.",
+    "continuous_playback": "NOT-ESTABLISHED by paused samples."
+  },
+  "exported_web_bundle": {
+    "cohort": "r4 b1-appearance-work Web export",
+    "artifacts": {
+      "index.html": "faf70ced0355e78ce2383bbc8a485fe4c0e25645635e10a31d2ebca274eca762",
+      "pkg/b1_appearance_work.js": "c8499e4cfba0ff0ba8e437f5ca0cc0ac43b8cb54eff00c354348ccd359c421d2",
+      "pkg/b1_appearance_work_bg.wasm": "a4340b858e3a98f4a0ab6ad01e45149da86bfc485186d977d191ee08e12259c6"
+    },
+    "provenance": "Export hashes are from the separate r4 artifact receipt. Root reports loading this app; raw CPU reports alone do not prove network payload provenance. Build/lint outcomes remain in parent build evidence."
+  },
+  "ordinary_file_exchange": {
+    "provenance": "Normal native Save, Web file-picker actions, Hair checkbox edit and normal Web Save were observed by root. The copied raw bytes and CPU reports establish resulting data/state, not the GUI action history by themselves.",
+    "native_ui_input": {
+      "file": "exchange/native-ui-saved.nvwa.json",
+      "bytes": 2743,
+      "sha256": "dd10e51721d68a98ec06c76f3ce990e90c4763da90f6cd3848bda09033483bec"
+    },
+    "web_native_open": {
+      "before_id": "w79-pre-open",
+      "after_id": "w79-after-native-open",
+      "generations": [
+        1,
+        2
+      ],
+      "exact_work_hash_match": true
+    },
+    "normal_invalid_picker": {
+      "input": {
+        "file": "exchange/invalid-ui-test.nvwa.json",
+        "bytes": 20,
+        "sha256": "ffe1304157e5994124ca62268bdbf50364aa79fe5e5bcd4b98ff6263d1f675d0"
+      },
+      "before_id": "w79-life-12",
+      "retained_id": "w79-ui-bad-retained",
+      "exact_work_appearance_base_identity_retained": true,
+      "error_banner": "Root-observed; not exported in these CPU reports."
+    },
+    "normal_valid_picker_recovery": {
+      "before_id": "w79-ui-bad-retained",
+      "after_id": "w79-ui-recovered",
+      "generations": [
+        6,
+        7
+      ],
+      "exact_native_input_work_hash_match": true
+    },
+    "web_ui_saved": {
+      "file": "exchange/web-ui-saved.nvwa.json",
+      "bytes": 2744,
+      "sha256": "c81700d5bb404db7f9b9394ebc10f7538e72942cfc68bb6aaeca7de8c48d4ab1"
+    },
+    "browser_download_original": {
+      "file": "exchange/browser-download-original.nvwa.json",
+      "bytes": 2744,
+      "sha256": "c81700d5bb404db7f9b9394ebc10f7538e72942cfc68bb6aaeca7de8c48d4ab1"
+    },
+    "download_byte_copy_exact": true,
+    "current_report_id": "w79-web-saved-current",
+    "input_revision": 4,
+    "output_revision": 5,
+    "only_semantic_changes": [
+      "character.appearance.hair",
+      "revision"
+    ],
+    "output_appearance": {
+      "type": "b1_cc0",
+      "schema_version": 1,
+      "asset_set_id": "mpfb-b1-cc0-appearance-v1",
+      "asset_set_sha256": "c3cf2b1040eed083fb1a328f0494b0c978cec42c71f3b7c826e14992f97cef04",
+      "skin": true,
+      "eyes": true,
+      "hair": false
+    },
+    "reverse_native_open": "NOT-INCLUDED in this Web cohort; root was handling reverse native Open separately at publication."
+  },
+  "publication": {
+    "raw_bytes": "Exact byte copies; no redaction or reformatting.",
+    "privacy": "Every copied UTF-8 JSON/Work value scanned for home/temp paths, emails, private keys and common credential patterns. Original private summary/event files were not copied.",
+    "inventories": "inventory.json lists every copied raw file with bytes/SHA256 and each correlated pair. summary.json normalizes only verified scoped results.",
+    "disposed_resources": "Absent current bindings are observed. Complete CPU asset-store disposal is covered separately by runtime tests, not established by this public bridge snapshot.",
+    "gpu_and_performance": "NOT-ESTABLISHED here; root screenshots/rendered observations/performance evidence remain separate."
+  },
+  "held_source_frame_inventory": [
+    {
+      "request_id": "w79-r4-013",
+      "torso_length": -1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-014",
+      "torso_length": -1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-015",
+      "torso_length": -1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-016",
+      "torso_length": -1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-017",
+      "torso_length": -1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79-r4-019",
+      "torso_length": -1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-020",
+      "torso_length": -1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-021",
+      "torso_length": -1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-022",
+      "torso_length": -1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-023",
+      "torso_length": -1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79-r4-025",
+      "torso_length": -1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-026",
+      "torso_length": -1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-027",
+      "torso_length": -1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-028",
+      "torso_length": -1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-029",
+      "torso_length": -1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79-r4-031",
+      "torso_length": 0.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-032",
+      "torso_length": 0.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-033",
+      "torso_length": 0.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-034",
+      "torso_length": 0.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-035",
+      "torso_length": 0.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79-r4-037",
+      "torso_length": 0.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-038",
+      "torso_length": 0.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-039",
+      "torso_length": 0.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-040",
+      "torso_length": 0.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-041",
+      "torso_length": 0.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79-r4-043",
+      "torso_length": 0.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-044",
+      "torso_length": 0.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-045",
+      "torso_length": 0.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-046",
+      "torso_length": 0.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-047",
+      "torso_length": 0.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79-r4-049",
+      "torso_length": 1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-050",
+      "torso_length": 1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-051",
+      "torso_length": 1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-052",
+      "torso_length": 1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-053",
+      "torso_length": 1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79-r4-055",
+      "torso_length": 1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-056",
+      "torso_length": 1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-057",
+      "torso_length": 1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-058",
+      "torso_length": 1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-059",
+      "torso_length": 1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79-r4-061",
+      "torso_length": 1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 0,
+      "global_seconds": 0
+    },
+    {
+      "request_id": "w79-r4-062",
+      "torso_length": 1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 2,
+      "global_seconds": 2
+    },
+    {
+      "request_id": "w79-r4-063",
+      "torso_length": 1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 0,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79-r4-064",
+      "torso_length": 1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 2,
+      "global_seconds": 6
+    },
+    {
+      "request_id": "w79-r4-065",
+      "torso_length": 1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_knee_flex_v1",
+      "source_seconds": 4,
+      "global_seconds": 8
+    },
+    {
+      "request_id": "w79end-r4-004",
+      "torso_length": -1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79end-r4-006",
+      "torso_length": -1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79end-r4-008",
+      "torso_length": -1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79end-r4-010",
+      "torso_length": 0.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79end-r4-012",
+      "torso_length": 0.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79end-r4-014",
+      "torso_length": 0.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79end-r4-016",
+      "torso_length": 1.0,
+      "jaw_drop": 0.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79end-r4-018",
+      "torso_length": 1.0,
+      "jaw_drop": 0.5,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    },
+    {
+      "request_id": "w79end-r4-020",
+      "torso_length": 1.0,
+      "jaw_drop": 1.0,
+      "clip_id": "b1_arm_rehearsal_v1",
+      "source_seconds": 4,
+      "global_seconds": 4
+    }
+  ]
+}

@@ -33,6 +33,13 @@ for name in ['humentity', 'bevy_obj', 'wobj']:
     if (source / 'licenses').is_dir():
         shutil.copytree(source / 'licenses', destination / 'licenses', dirs_exist_ok=True)
 font_notices = contents / 'Resources/licenses/fonts'
+appearance_source = root / 'assets/appearances/mpfb-b1-cc0-v1'
+appearance_notices = contents / 'Resources/licenses/appearance'
+appearance_notices.mkdir(parents=True, exist_ok=True)
+for name in ['SOURCE.json', 'manifest.json']:
+    shutil.copy2(appearance_source / name, appearance_notices / name)
+for name in ['licenses', 'provenance']:
+    shutil.copytree(appearance_source / name, appearance_notices / name, dirs_exist_ok=True)
 font_notices.mkdir(parents=True, exist_ok=True)
 for name in ['OFL.txt', 'NOTICE.md', 'PROVENANCE.json']:
     shutil.copy2(root / 'assets/fonts' / name, font_notices / name)
@@ -41,7 +48,8 @@ component_notices.mkdir(parents=True, exist_ok=True)
 shutil.copy2(root / 'licenses/craft-ui/LICENSE-MIT.txt', component_notices / 'LICENSE-MIT.txt')
 works = contents / 'Resources/works'
 works.mkdir(parents=True, exist_ok=True)
-shutil.copy2(root / 'examples/m1-sequence.nvwa.json', works / 'm1-sequence.nvwa.json')
+for name in ['m1-sequence.nvwa.json', 'b1-appearance.nvwa.json']:
+    shutil.copy2(root / 'examples' / name, works / name)
 with (contents / 'Info.plist').open('wb') as file:
     plistlib.dump({'CFBundleExecutable': 'Nvwa', 'CFBundleIdentifier': 'dev.nvwa.studio', 'CFBundleName': 'Nvwa', 'CFBundleDisplayName': 'Nvwa', 'CFBundlePackageType': 'APPL', 'CFBundleShortVersionString': '0.1.0', 'NSHighResolutionCapable': True}, file)
 print(contents.parent)

@@ -44,6 +44,12 @@ jobs:
           python3 -B -O experiments/60-b1-continuous-motion/test_serve.py
       - name: Check bounded diagnostic controls
         run: bash experiments/27-ci-baseline/check.sh diagnostics
+      - name: Check bounded appearance diagnostic controls
+        run: |
+          python3 -B -m unittest discover -s experiments/65-b1-appearance-quality -p 'test_*.py' -v
+          python3 -B -O -m unittest discover -s experiments/65-b1-appearance-quality -p 'test_*.py' -v
+          python3 -B -m unittest discover -s experiments/65-b1-appearance-quality/preview/build -p 'test_*.py' -v
+          python3 -B -O -m unittest discover -s experiments/65-b1-appearance-quality/preview/build -p 'test_*.py' -v
       - name: Check authenticated B1 source bundle and rejection controls
         timeout-minutes: 3
         run: |
@@ -133,6 +139,12 @@ jobs:
           cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --locked --offline
+      - name: Check appearance quality and production acceptance bridges
+        run: |
+          cargo fmt --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --package b1-appearance-quality-preview --check
+          cargo fmt --manifest-path experiments/66-b1-appearance-work/Cargo.toml --package b1-appearance-work --check
+          cargo test --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --lib --locked --offline
+          cargo test --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --locked --offline
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
@@ -150,6 +162,8 @@ jobs:
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
   b1-source-regression:
     name: macOS B1 source regression and viewer checks
     # Keep the independent cold B1 build inside its own finite budget.

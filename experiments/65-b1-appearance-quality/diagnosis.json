@@ -1,0 +1,120 @@
+{
+  "scope": "offline source/CPU diagnosis; visual improvement NOT-RUN",
+  "assets_authenticated": 12,
+  "assets": {
+    "eyes": {
+      "source_vertices": 96,
+      "source_faces": 86,
+      "face_sizes": {
+        "4": 86
+      },
+      "material_sha256": "4abad93ce50541c08127721e77bce035640c9f16bed16cd0f5524b1cd5908465",
+      "source_obj_sha256": "783fe1e6331162c876520b4c2bed7a8ca06354ca15497e8ebd68bb1b59f4d3de",
+      "partial_alpha_pixels": 44,
+      "partial_alpha_fraction": 4.1961669921875e-05,
+      "normal_candidate_change_max_degrees": 8.136451442769374,
+      "fan_root_rotation_max_normal_degrees": 16.241353279760304,
+      "polygon_root_rotation_max_normal_degrees": 0.0
+    },
+    "hair": {
+      "source_vertices": 865,
+      "source_faces": 525,
+      "face_sizes": {
+        "4": 525
+      },
+      "material_sha256": "7a3ac74db8478aa0afdb8a596c6fe3997d1a8a09d12211d70e8f1e9f0b7e0e97",
+      "source_obj_sha256": "676964a133ee35ffcea1195382bf75542da7a298931e4001bc7b0d7b707225de",
+      "partial_alpha_pixels": 562370,
+      "partial_alpha_fraction": 0.1340794563293457,
+      "normal_candidate_change_max_degrees": 35.449820724564354,
+      "fan_root_rotation_max_normal_degrees": 36.68852523920729,
+      "polygon_root_rotation_max_normal_degrees": 8.537736462515939e-07
+    }
+  },
+  "captures": [
+    {
+      "capture_sha256": "a1418d3404f87bbdfe6b4acd8b7fb5778e19d60a08830d1579505ab149199a24",
+      "request": {
+        "action": "sample",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "jaw_drop": 0,
+        "request_id": "w64-t0-j0-arm-s0",
+        "seconds": 0,
+        "torso_length": -1
+      },
+      "accessories": {
+        "eyes": {
+          "baseline_rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+          "normal_candidate_change_max_degrees": 8.136445868718033,
+          "source_vertices": 96,
+          "render_corners": 96,
+          "max_influences": 1,
+          "source_ids_over4": [],
+          "source_geometry_unchanged_by_normal_candidate": true,
+          "signed_source_fit_max_component_error_m": 0.0,
+          "signed_full_positive_pose_max_component_error_m": 1.3036130952492897e-08,
+          "source_full_positive_weight_max_L1_error": 0.0,
+          "eye_depth_fit_adjustment_m": 0
+        },
+        "hair": {
+          "baseline_rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+          "normal_candidate_change_max_degrees": 35.53038488282706,
+          "source_vertices": 865,
+          "render_corners": 991,
+          "max_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "source_geometry_unchanged_by_normal_candidate": true,
+          "signed_source_fit_max_component_error_m": 2.220446049250313e-16,
+          "signed_full_positive_pose_max_component_error_m": 2.9801573209198295e-08,
+          "source_full_positive_weight_max_L1_error": 1.945058697438995e-16,
+          "eye_depth_fit_adjustment_m": 0
+        }
+      }
+    },
+    {
+      "capture_sha256": "2ad3c57cbafaa67f42fbba6cf98eff968fbf8a101c84b186bf5ec2c420331144",
+      "request": {
+        "action": "sample",
+        "clip_id": "b1_knee_flex_v1",
+        "jaw_drop": 1,
+        "request_id": "w64-t2-j2-knee-s4",
+        "seconds": 4,
+        "torso_length": 1
+      },
+      "accessories": {
+        "eyes": {
+          "baseline_rest_normal_reconstruction_max_component_error": 2.220446049250313e-16,
+          "normal_candidate_change_max_degrees": 8.136445868718033,
+          "source_vertices": 96,
+          "render_corners": 96,
+          "max_influences": 1,
+          "source_ids_over4": [],
+          "source_geometry_unchanged_by_normal_candidate": true,
+          "signed_source_fit_max_component_error_m": 0.0,
+          "signed_full_positive_pose_max_component_error_m": 2.1732449284606048e-08,
+          "source_full_positive_weight_max_L1_error": 0.0,
+          "eye_depth_fit_adjustment_m": 0
+        },
+        "hair": {
+          "baseline_rest_normal_reconstruction_max_component_error": 3.3306690738754696e-16,
+          "normal_candidate_change_max_degrees": 35.53038488282731,
+          "source_vertices": 865,
+          "render_corners": 991,
+          "max_influences": 5,
+          "source_ids_over4": [
+            82,
+            195
+          ],
+          "source_geometry_unchanged_by_normal_candidate": true,
+          "signed_source_fit_max_component_error_m": 3.3306690738754696e-16,
+          "signed_full_positive_pose_max_component_error_m": 2.9793026823377033e-08,
+          "source_full_positive_weight_max_L1_error": 1.945058697438995e-16,
+          "eye_depth_fit_adjustment_m": 0
+        }
+      }
+    }
+  ]
+}

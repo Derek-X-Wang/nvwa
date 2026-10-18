@@ -14,13 +14,13 @@ cargo run -p nvwa-studio --locked
 
 The toolbar File field names the local JSON file on native. In the packaged app, enter an absolute writable path such as /Users/your-name/Downloads/scene.nvwa.json. Open reads that path; Save writes it atomically. In the browser, Open invokes a local file picker and Save downloads JSON using the basename in that field. No account, model service or network command bridge is needed.
 
-Select the character, drag the four sliders, choose a clip, and use Play/Pause or the seek slider. One completed parameter drag commits one undoable command. A saved document includes all parameter values, scale, asset hash, animation settings and rehearsal stage settings. Playback cursor and undo history are session state.
+Select the character, drag the four sliders, choose a clip, and use Play/Pause or the seek slider. One completed parameter drag commits one undoable command. A saved document includes all parameter values, scale, asset hash, B1 skin/eyes/hair selection, animation settings and rehearsal stage settings. Playback cursor and undo history are session state.
 
 The inspector separates editable **Shape** parameters from read-only **Profile** details. Drag the thin separator above Animation to change the timeline height; Escape cancels a current separator drag. **Lock timeline height** prevents resizing and **Reset layout** restores Shape and the initial height while retaining the lock. Layout changes belong to this session and do not change the saved work or Undo/Redo history. The timeline scrolls when its content does not fit.
 
 Open **Stage / 试演舞台** in the toolbar to adjust the key and fill lights, ambient light, background, floor, camera and requested quality. White studio and Black space provide starting points; Full body and Detail change framing. Right-drag the canvas to orbit, and use the wheel to change camera distance. In Studio, one completed stage gesture creates one Undo step; Escape cancels the current gesture. Player camera changes are temporary; reopen the Work to restore its saved view.
 
-Stage settings travel with the Work through native, Web and CLI. New saves use schema 3, with an explicit character backend and diagnostic-pose field. Exact schema 1/2 Works open as the original GLB character and keep their timeline and revision; schema 1 receives the default white stage. Saving writes schema 3, which earlier Nvwa versions cannot read. Keep a copy when exchanging with older builds. Room import and physics are later stages.
+Stage settings travel with the Work through native, Web and CLI. New saves use schema 4, with an explicit character backend, diagnostic-pose field and appearance selection. Exact schema 1/2 Works open as the original GLB character; schema 3 keeps its declared backend. They keep their timeline and revision and receive no appearance; schema 1 receives the default white stage. Saving writes schema 4, which earlier Nvwa versions cannot read. Keep a copy when exchanging with older builds. Room import and physics are later stages.
 
 ```sh
 python3 scripts/install-web-tools.py
@@ -41,6 +41,16 @@ The local macOS bundle includes its fixture assets and demonstration work. It is
 ## Compose and play a work
 
 **New B1…** opens the admitted MakeHuman body and sportsuit through the full-influence CPU bridge. The current motion profile exposes `torso_length`, `jaw_drop`, two Nvwa-authored four-second rehearsal clips and five fixed diagnostic poses. Use the shared timeline transport to play, pause or seek; choosing a diagnostic pose clears the timeline in one undoable edit. Existing static B1 Works keep their static profile. B1 has no click-to-wave interaction. Appearance quality, clothing contact, arbitrary imports and generated actions remain separate gates. Assets are verified before a B1 Open replaces the current Work; rejected candidates leave the current Work and its history available. See [static integration evidence](docs/evidence/b1-work/) and [continuous-motion acceptance](docs/evidence/b1-motion/ACCEPTANCE.md).
+
+B1's Shape inspector has independent **皮肤 / Skin**, **眼睛 / Eyes**, and **头发 / Hair** checkboxes. Each edit uses the shared Undo/Redo path and travels with the Work. The approved fixed CC0 bundle is included in native and Web builds; this does not add arbitrary skins/hair imports, gaze, blink or hair physics. Full visual quality remains a separate gate.
+
+Open the [appearance demonstration](examples/b1-appearance.nvwa.json) to see all three selections with two continuous four-second authored actions:
+
+```sh
+cargo run -p nvwa-studio --locked -- --work "$PWD/examples/b1-appearance.nvwa.json"
+```
+
+After a Web build, the same example is at `http://127.0.0.1:9201/?work=works/b1-appearance.nvwa.json`. CLI agents can inspect it, discover `set_appearance` with `describe-capabilities`, and use `apply` without a graphical window.
 
 The [B1 diagnostic Work](examples/b1-diagnostic.nvwa.json) was created and saved by the actual CLI. It contains torso length 0.35, jaw drop −0.5 and the combined static pose. Open it through Studio's file controls, or from the repository root:
 

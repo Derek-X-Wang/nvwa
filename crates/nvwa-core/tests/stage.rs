@@ -23,6 +23,10 @@ fn exact_legacy_upgrade_and_required_strict_current_stage() {
         .as_object_mut()
         .unwrap()
         .remove("diagnostic_pose");
+    legacy["character"]
+        .as_object_mut()
+        .unwrap()
+        .remove("appearance");
     legacy["schema_version"] = json!(1);
     legacy["revision"] = json!(37);
     legacy.as_object_mut().unwrap().remove("stage");

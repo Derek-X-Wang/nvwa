@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nvwa Studio · saved appearance acceptance</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#12151c}canvas{width:100%;height:100%;display:block}
+#acceptance-controls{position:fixed;z-index:100;right:12px;top:12px;width:390px;max-height:90vh;overflow:auto;background:#17202bf2;color:#f3f5f8;border:1px solid #8395ac;border-radius:8px;padding:10px;font:13px system-ui}
+summary{cursor:pointer;font-weight:650}label{display:block;margin:8px 0 3px}textarea,input,button{box-sizing:border-box;font:12px ui-monospace,monospace;border:1px solid #8b9cb0;border-radius:4px;padding:6px}textarea,input{width:100%}textarea{resize:vertical}button{cursor:pointer;margin-top:6px}button:disabled{opacity:.55;cursor:wait}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px ui-monospace,monospace;max-height:210px;overflow:auto}.note{color:#d4dfea;font-size:12px}
+</style>
+<canvas id="nvwa"></canvas>
+<details id="acceptance-controls" open>
+<summary>Saved appearance acceptance bridge</summary>
+<p class="note">Normal Studio and production saved appearance. This panel sends shared commands and reads CPU evidence. Collapse it for rendered inspection. Clothes/M2 quality remains HOLD.</p>
+<form id="acceptance-form">
+<label for="acceptance-command">Acceptance command</label>
+<textarea id="acceptance-command" rows="7" spellcheck="false">{"request_id":"initial","action":"capture"}</textarea>
+<button id="acceptance-run" type="submit" disabled>Run</button>
+</form>
+<pre id="acceptance-report" role="status" aria-label="Acceptance report">Loading Studio acceptance bridge…</pre>
+<label for="current-work">Current Work JSON</label>
+<textarea id="current-work" rows="4" readonly spellcheck="false"></textarea>
+<label for="export-name">Export file name</label>
+<input id="export-name" value="nvwa66-work.nvwa.json" pattern="[A-Za-z0-9_-]+\.nvwa\.json">
+<button id="export-work" type="button" disabled>Export Work</button>
+</details>
+<script type="module">
+const $=id=>document.getElementById(id);
+let bridge=null,lastReport='',lastWork='';
+$('acceptance-form').addEventListener('submit',event=>{
+ event.preventDefault();
+ if(!bridge)return;
+ try {bridge.b1_66_command($('acceptance-command').value);$('acceptance-report').textContent=bridge.b1_66_report()}
+ catch(error){$('acceptance-report').textContent=JSON.stringify({phase:'error',current:false,error:String(error)})}
+});
+$('export-work').addEventListener('click',()=>{
+ const name=$('export-name').value;
+ if(!/^[A-Za-z0-9_-]+\.nvwa\.json$/.test(name)||!$('export-name').reportValidity())return;
+ const work=bridge?.b1_66_work();if(!work)return;
+ const url=URL.createObjectURL(new Blob([work],{type:'application/json'}));
+ const link=document.createElement('a');link.href=url;link.download=name;link.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+try {
+ bridge=await import('./pkg/b1_appearance_work.js');await bridge.default();window.b1_66=bridge;
+ document.documentElement.dataset.acceptanceBridge='ready';$('acceptance-run').disabled=false;
+ setInterval(()=>{
+  const report=bridge.b1_66_report();if(report!==lastReport){lastReport=report;$('acceptance-report').textContent=report||'Studio running. Send a request with a fresh request_id.'}
+  const work=bridge.b1_66_work();if(work!==lastWork){lastWork=work;$('current-work').value=work;$('export-work').disabled=!work}
+ },100);
+} catch(error) {
+ $('acceptance-report').textContent=JSON.stringify({phase:'error',current:false,error:'Studio acceptance failed: '+String(error)});
+ document.documentElement.dataset.acceptanceBridge='error';
+}
+</script></html>

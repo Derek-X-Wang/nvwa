@@ -60,6 +60,8 @@ pub(super) fn install(app: &mut App) {
     app.add_plugins(HumentityPlugin)
         .insert_resource(SkeletonLodConfig::new(&[BoneMergeConfig::full()]))
         .init_resource::<B1Runtime>()
+        .init_resource::<super::appearance::AppearanceRuntime>()
+        .init_resource::<super::appearance::AppearanceStatus>()
         .add_systems(
             PostUpdate,
             drive
@@ -69,7 +71,12 @@ pub(super) fn install(app: &mut App) {
         )
         .add_systems(
             PostUpdate,
-            publish.after(bevy::transform::TransformSystems::Propagate),
+            (
+                publish,
+                super::appearance::update.in_set(super::RuntimeSystems::Appearance),
+            )
+                .chain()
+                .after(bevy::transform::TransformSystems::Propagate),
         );
 }
 
@@ -805,6 +812,11 @@ fn upload(world: &mut World, c: &mut Candidate) -> Result<(), String> {
     capture_structure(world, s)?;
     s.phase = 2;
     validate_structure(world, s)?;
+    if c.is_open && c.document.character.appearance.b1_flags().is_some() {
+        let frame = appearance_frame_for_session(world, s, c.document.revision)?;
+        let fit = appearance_fit_for_session(world, s, &frame)?;
+        super::appearance::preflight(&frame, &fit, &c.document.character.appearance)?;
+    }
     Ok(())
 }
 fn publish(world: &mut World) {
@@ -2607,6 +2619,270 @@ mod tests {
     }
 
     #[test]
+    fn saved_appearance_independent_roles_undo_load_shape_live_and_failure_cleanup() {
+        use crate::{appearance_snapshot, appearance_status};
+        use nvwa_core::CharacterAppearance;
+        let (mut app, dir, _) = motion_app();
+        let baseline = appearance_snapshot(app.world_mut()).unwrap();
+        let initial_body = baseline["body_entity"].clone();
+        let original_uv = {
+            let frame = appearance_frame(app.world()).unwrap();
+            app.world()
+                .resource::<Assets<Mesh>>()
+                .get(&frame.mesh)
+                .unwrap()
+                .attribute(Mesh::ATTRIBUTE_UV_0)
+                .cloned()
+        };
+        let apply_appearance = |app: &mut App, skin: bool, eyes: bool, hair: bool| {
+            let character_id = app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .character
+                .id
+                .clone();
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetAppearance {
+                    character_id,
+                    appearance: CharacterAppearance::b1_cc0(skin, eyes, hair),
+                })
+                .unwrap();
+            motion_tick(app, 0.0);
+            appearance_snapshot(app.world_mut()).unwrap()
+        };
+        for mask in 0..8 {
+            let (skin, eyes, hair) = (mask & 1 != 0, mask & 2 != 0, mask & 4 != 0);
+            let snapshot = apply_appearance(&mut app, skin, eyes, hair);
+            assert_eq!(
+                snapshot["body_entity"], initial_body,
+                "appearance must not refit body"
+            );
+            assert_eq!(!snapshot["skin"].is_null(), skin);
+            let roles = snapshot["accessories"].as_array().unwrap();
+            assert_eq!(roles.iter().any(|v| v["name"] == "eyes"), eyes);
+            assert_eq!(roles.iter().any(|v| v["name"] == "hair"), hair);
+        }
+        apply_appearance(&mut app, false, false, false);
+        let frame = appearance_frame(app.world()).unwrap();
+        assert_eq!(
+            app.world()
+                .resource::<Assets<Mesh>>()
+                .get(&frame.mesh)
+                .unwrap()
+                .attribute(Mesh::ATTRIBUTE_UV_0),
+            original_uv.as_ref()
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::Undo)
+            .unwrap();
+        motion_tick(&mut app, 0.0);
+        assert_eq!(
+            appearance_status(app.world()).applied,
+            Some(CharacterAppearance::b1_cc0(true, true, true))
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::Redo)
+            .unwrap();
+        motion_tick(&mut app, 0.0);
+        assert_eq!(
+            appearance_status(app.world()).applied,
+            Some(CharacterAppearance::None)
+        );
+        let full = apply_appearance(&mut app, true, true, true);
+        let authored_before = b1_frame_snapshot(app.world()).unwrap();
+        let head_before = appearance_frame(app.world())
+            .unwrap()
+            .bones
+            .into_iter()
+            .find(|bone| bone.name == "head")
+            .expect("actual head bone");
+        assert_eq!(
+            crate::appearance::test_influence_bone_names(app.world(), "eyes").unwrap(),
+            BTreeSet::from(["head".to_string()]),
+            "the actual transferred eye weights are head-only"
+        );
+        app.world_mut().resource_mut::<Playback>().playing = true;
+        motion_tick(&mut app, 0.3);
+        let playing = appearance_snapshot(app.world_mut()).unwrap();
+        assert_ne!(
+            playing["body_positions_sha256"],
+            full["body_positions_sha256"]
+        );
+        let authored_after = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(authored_after["sample"]["clip_id"], "b1_arm_rehearsal_v1");
+        assert_eq!(authored_after["sample"]["playing"], true);
+        assert!(
+            authored_after["sample"]["position_seconds"]
+                .as_f64()
+                .unwrap()
+                > authored_before["sample"]["position_seconds"]
+                    .as_f64()
+                    .unwrap()
+        );
+        assert_ne!(
+            authored_after["sample"]["serial"],
+            authored_before["sample"]["serial"]
+        );
+        let head_after = appearance_frame(app.world())
+            .unwrap()
+            .bones
+            .into_iter()
+            .find(|bone| bone.name == "head")
+            .expect("actual head bone");
+        assert_eq!(
+            head_after.posed, head_before.posed,
+            "arm rehearsal does not move the actual head pose"
+        );
+        assert_eq!(
+            head_after.skin, head_before.skin,
+            "head skin matrix remains unchanged while the body animates"
+        );
+        let role = |snapshot: &serde_json::Value, name: &str| {
+            snapshot["accessories"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|item| item["name"] == name)
+                .unwrap()
+                .clone()
+        };
+        assert_eq!(
+            role(&playing, "eyes")["positions_sha256"],
+            role(&full, "eyes")["positions_sha256"],
+            "head-only eye vertices must remain stable when their actual driving matrix is unchanged"
+        );
+        assert_eq!(
+            playing["accessories"][0]["mesh_handle"],
+            full["accessories"][0]["mesh_handle"]
+        );
+        // Refit the production shape while the saved selection stays active.
+        let mut values = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .parameters
+            .clone();
+        values.insert("torso_length".into(), 0.6);
+        let character_id = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .id
+            .clone();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetParameters {
+                character_id,
+                values,
+            })
+            .unwrap();
+        motion_tick(&mut app, 0.0);
+        until(&mut app, |w| {
+            w.resource::<RuntimeStatus>().ready && appearance_status(w).ready
+        });
+        let shaped = appearance_snapshot(app.world_mut()).unwrap();
+        assert_ne!(shaped["body_entity"], initial_body);
+        assert_eq!(shaped["applied"], full["applied"]);
+        // Save/load creates a new generation and binds the saved roles to the new body.
+        let saved = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(saved.clone())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().pending_open.is_none()
+                && w.resource::<RuntimeStatus>().ready
+                && appearance_status(w).ready
+        });
+        let reopened = appearance_snapshot(app.world_mut()).unwrap();
+        assert_ne!(reopened["generation"], shaped["generation"]);
+        assert_ne!(reopened["body_entity"], shaped["body_entity"]);
+        assert_eq!(reopened["applied"], shaped["applied"]);
+        // A failed authenticated Open keeps the current Work, body, and its appearance.
+        dir.insert_asset(
+            Path::new("characters/mpfb-b1-v1/base.obj"),
+            b"corrupt candidate".to_vec(),
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(saved)
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().open_error.is_some()
+        });
+        let retained = appearance_snapshot(app.world_mut()).unwrap();
+        assert_eq!(retained["generation"], reopened["generation"]);
+        assert_eq!(retained["body_entity"], reopened["body_entity"]);
+        // Losing the actual body invalidates applied evidence and removes all generated assets.
+        let generated = {
+            let state = app
+                .world()
+                .resource::<crate::appearance::AppearanceRuntime>();
+            // Public observation identifies live attachments; disposal is also covered at its unit seam.
+            let _ = state;
+            retained["accessories"].as_array().unwrap().len()
+        };
+        assert_eq!(generated, 2);
+        let body = appearance_frame(app.world()).unwrap().body;
+        assert!(app.world_mut().despawn(body));
+        motion_tick(&mut app, 0.0);
+        assert!(!appearance_status(app.world()).ready);
+        assert!(appearance_status(app.world()).applied.is_none());
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .appearance_error
+                .is_some()
+        );
+        assert!(appearance_snapshot(app.world_mut()).is_err());
+    }
+
+    #[test]
+    fn isolated_appearance_set_disables_only_controller_not_body_publication() {
+        let (mut app, _, _) = harness(false);
+        app.configure_sets(
+            PostUpdate,
+            super::super::RuntimeSystems::Appearance.run_if(|| false),
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        until(&mut app, |world| {
+            world.resource::<EditorState>().pending_open.is_none()
+                && world.resource::<RuntimeStatus>().ready
+        });
+        let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+        assert_eq!(active.phase, 2);
+        assert_eq!(active.displays.len(), 2);
+        assert_eq!(active.joint_count, 53);
+        assert!(
+            !app.world().resource::<crate::AppearanceStatus>().ready,
+            "only the explicitly disabled appearance controller did not run"
+        );
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .appearance_error
+                .is_none()
+        );
+    }
+
+    #[test]
     fn bounded_reader_stops_at_one_over_limit() {
         let mut reader = bevy::asset::io::VecReader::new(vec![0; 1025]);
         let error = future::block_on(bounded_read(&mut reader, 1024)).unwrap_err();
@@ -3173,4 +3449,196 @@ pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
     Ok(
         serde_json::json!({"schema_version":1,"backend":doc.profile.backend,"profile_id":doc.profile.id,"asset_id":nvwa_core::B1_ASSET_ID,"generation":active.generation,"revision":doc.revision,"parameters":doc.character.parameters,"diagnostic_pose":doc.character.diagnostic_pose,"mode":if sample.clip_id.is_empty(){"diagnostic"}else{"motion"},"sample":{"serial":active.serial,"clip_id":sample.clip_id,"timeline_id":sample.timeline_id,"position_seconds":sample.position,"source_seconds":sample.source,"playing":playback.playing,"completed":playback.completed},"character_entity":format!("{:?}",active.character),"bones":bones,"parts":parts,"contacts":{"left":left,"right":right}}),
     )
+}
+
+/// Narrow, current production binding used by saved appearance. Bone frames come
+/// from the actual skeleton; no full body JSON is generated during playback.
+pub(super) struct AppearanceFrame {
+    pub generation: u64,
+    pub revision: u64,
+    pub serial: u64,
+    pub character: Entity,
+    pub body: Entity,
+    pub mesh: Handle<Mesh>,
+    pub baseline: Handle<StandardMaterial>,
+    pub placement: Mat4,
+    pub bones: Vec<BoneFrame>,
+}
+pub(super) struct AppearanceFit {
+    pub source_ids: Vec<u16>,
+    pub rest: Vec<[f32; 3]>,
+    pub uv: Vec<[f32; 2]>,
+}
+pub(super) fn appearance_identity(world: &World) -> Option<(u64, Entity, Entity)> {
+    let active = world.get_resource::<B1Runtime>()?.active.as_ref()?;
+    Some((
+        active.generation,
+        active.character,
+        *active.displays.first()?,
+    ))
+}
+pub(super) fn appearance_frame(world: &World) -> Result<AppearanceFrame, String> {
+    let runtime = world
+        .get_resource::<B1Runtime>()
+        .ok_or("appearance: B1 runtime absent")?;
+    let active = runtime
+        .active
+        .as_ref()
+        .ok_or("appearance: B1 active body absent")?;
+    validate_structure(world, active)?;
+    let editor = world.resource::<EditorState>();
+    let doc = editor.visible_document().ok_or("appearance: Work absent")?;
+    if !doc.profile.backend.is_b1()
+        || active.generation != editor.document_generation
+        || active.selection != Selection::from_doc(doc)
+        || active.phase != 2
+        || active.frame_error.is_some()
+        || active.pending_sample.is_some()
+    {
+        return Err("appearance: current body is not the requested published shape/frame".into());
+    }
+    appearance_frame_for_session(world, active, doc.revision)
+}
+fn appearance_frame_for_session(
+    world: &World,
+    active: &Session,
+    revision: u64,
+) -> Result<AppearanceFrame, String> {
+    let body = *active
+        .displays
+        .first()
+        .ok_or("appearance: body display absent")?;
+    let placement = world
+        .get::<GlobalTransform>(body)
+        .ok_or("appearance: body placement absent")?
+        .to_matrix();
+    if !placement.is_finite() || placement.determinant().abs() < 1e-10 {
+        return Err("appearance: body placement is singular/nonfinite".into());
+    }
+    Ok(AppearanceFrame {
+        generation: active.generation,
+        revision,
+        serial: active.serial,
+        character: active.character,
+        body,
+        mesh: active.display_meshes[0].clone(),
+        baseline: active.materials[0].clone(),
+        placement,
+        bones: nvwa_b1_adapter::bone_frames(world, active.character)?,
+    })
+}
+pub(super) fn appearance_fit(
+    world: &World,
+    frame: &AppearanceFrame,
+) -> Result<AppearanceFit, String> {
+    let runtime = world
+        .get_resource::<B1Runtime>()
+        .ok_or("appearance: runtime absent")?;
+    let active = runtime
+        .active
+        .as_ref()
+        .ok_or("appearance: active session absent")?;
+    appearance_fit_for_session(world, active, frame)
+}
+fn appearance_fit_for_session(
+    world: &World,
+    active: &Session,
+    frame: &AppearanceFrame,
+) -> Result<AppearanceFit, String> {
+    use bevy::mesh::VertexAttributeValues;
+    if active.character != frame.character
+        || active.displays.first() != Some(&frame.body)
+        || active.display_meshes.first() != Some(&frame.mesh)
+        || active.generation != frame.generation
+    {
+        return Err("appearance: stale fitted body binding".into());
+    }
+    let part = active
+        .parts
+        .first()
+        .ok_or("appearance: source body absent")?;
+    let ids = source_ids(world, part)?;
+    let meshes = world.resource::<Assets<Mesh>>();
+    let raw = meshes
+        .get(&part.source_mesh)
+        .ok_or("appearance: original body source absent")?;
+    let fitted = meshes
+        .get(&part.mesh)
+        .ok_or("appearance: fitted body source absent")?;
+    let get_uv = |mesh: &Mesh| match mesh.attribute(Mesh::ATTRIBUTE_UV_0) {
+        Some(VertexAttributeValues::Float32x2(v)) if v.iter().flatten().all(|x| x.is_finite()) => {
+            Ok(v.clone())
+        }
+        _ => Err("appearance: source finite UV_0 absent".to_string()),
+    };
+    let uv = get_uv(fitted)?;
+    if uv != get_uv(raw)?
+        || uv.len() != ids.len()
+        || fitted.indices().map(|v| v.iter().collect::<Vec<_>>())
+            != raw.indices().map(|v| v.iter().collect::<Vec<_>>())
+    {
+        return Err(
+            "appearance: fitted/raw duplicate-order UV or triangle correspondence mismatch".into(),
+        );
+    }
+    let full = fitted
+        .indices()
+        .ok_or("appearance: source triangles absent")?
+        .iter()
+        .collect::<Vec<_>>();
+    let visible = &active.display_indices[0];
+    if full.len() % 3 != 0 || visible.is_empty() || !visible.len().is_multiple_of(3) {
+        return Err("appearance: invalid source/display triangle arrays".into());
+    }
+    let mut cursor = 0;
+    for tri in full.chunks_exact(3) {
+        if cursor < visible.len() && tri == &visible[cursor..cursor + 3] {
+            cursor += 3;
+        }
+    }
+    if full.len() % 3 != 0
+        || visible.is_empty()
+        || !visible.len().is_multiple_of(3)
+        || cursor != visible.len()
+    {
+        return Err("appearance: displayed triangles are not ordered source triangles".into());
+    }
+    let positions = match fitted.attribute(Mesh::ATTRIBUTE_POSITION) {
+        Some(VertexAttributeValues::Float32x3(v)) => v,
+        _ => return Err("appearance: fitted source positions absent".into()),
+    };
+    let morph = fitted
+        .morph_targets()
+        .ok_or("appearance: fitted morph absent")?;
+    if positions.len() != ids.len() || morph.len() != ids.len() {
+        return Err("appearance: fitted source coverage mismatch".into());
+    }
+    let rest: Vec<_> = positions
+        .iter()
+        .zip(morph)
+        .map(|(p, m)| (Vec3::from_array(*p) + m.position).to_array())
+        .collect();
+    let actual = if let Some(skin) = active.skins.first() {
+        skin.evaluate(&frame.bones)?
+    } else {
+        let mapping = world
+            .resource::<Assets<MhcloAsset>>()
+            .get(&part.mapping)
+            .ok_or("appearance: body mapping absent")?;
+        skin_mesh_frame_full_weights(world, active.character, fitted, mapping, &ids)?
+    };
+    if actual.rest_positions.len() != rest.len()
+        || rest.iter().zip(&actual.rest_positions).any(|(a, b)| {
+            a.iter()
+                .zip(b)
+                .any(|(a, b)| !a.is_finite() || (*a - *b).abs() > 1e-6)
+        })
+    {
+        return Err("appearance: fitted/display full-rest correspondence mismatch".into());
+    }
+    Ok(AppearanceFit {
+        source_ids: ids,
+        rest,
+        uv,
+    })
 }

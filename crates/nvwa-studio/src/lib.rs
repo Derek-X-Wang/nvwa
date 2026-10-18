@@ -1,4 +1,5 @@
 //! Rust Studio: egui and the renderer share one Bevy event loop on both targets.
+mod appearance_ui;
 mod editor_layout;
 mod fonts;
 pub mod platform;
@@ -851,6 +852,9 @@ fn draw_editor_ui(
                 }
                 ui.separator();
                 ui.label(format!("Scale {:.2}", doc.character.scale));
+                if let Some(appearance) = appearance_ui::draw(ui, doc) {
+                    command = Some(appearance);
+                }
                 if doc.profile.backend.is_b1() {
                     ui.separator();
                     ui.label("Static diagnostic poses");
@@ -868,7 +872,7 @@ fn draw_editor_ui(
                             });
                         }
                     }
-                    ui.small("Selecting a diagnostic stops the timeline. Cloth and appearance remain unaccepted.");
+                    ui.small("Selecting a diagnostic stops the timeline. Cloth and full visual quality remain unaccepted.");
                 }
                 ui.separator();
             }
@@ -1059,6 +1063,9 @@ fn draw_editor_ui(
             "Original fixture: Click chest/head to wave"
         });
         if let Some(error) = &status.stage_error {
+            ui.colored_label(egui::Color32::LIGHT_RED, error);
+        }
+        if let Some(error) = &status.appearance_error {
             ui.colored_label(egui::Color32::LIGHT_RED, error);
         }
         if let Some(error) = &status.error {
@@ -1268,6 +1275,7 @@ fn draw_player(
             );
             for error in [
                 status.stage_error.as_ref(),
+                status.appearance_error.as_ref(),
                 status.error.as_ref(),
                 next.error.as_ref(),
                 state.error.as_ref(),
@@ -1476,6 +1484,7 @@ fn smoke_and_capture(
     mut commands: Commands,
     mut smoke: ResMut<SmokeRun>,
     status: Res<RuntimeStatus>,
+    appearance: Res<nvwa_runtime::AppearanceStatus>,
     playback: Res<Playback>,
     mut exit: MessageWriter<AppExit>,
     surface: RenderSurfaceEvidence,
@@ -1491,7 +1500,9 @@ fn smoke_and_capture(
     }
     let warmed = smoke
         .ready_at
-        .is_some_and(|start| now - start > smoke.smoke_seconds);
+        .is_some_and(|start| now - start > smoke.smoke_seconds)
+        && appearance.ready
+        && !appearance.pending;
     if warmed
         && !smoke.requested_capture
         && let Some(path) = smoke.capture.clone()
@@ -1530,6 +1541,7 @@ fn smoke_and_capture(
     let complete = warmed && (smoke.capture.is_none() || capture_complete);
     let failed = status.error.is_some()
         || status.stage_error.is_some()
+        || status.appearance_error.is_some()
         || work.ui.error.is_some()
         || work.editor.open_error.is_some()
         || now > smoke.timeout;
@@ -1548,6 +1560,16 @@ fn smoke_and_capture(
             "mode": work.config.mode.label(),
             "stage": work.editor.visible_document().map(|doc| &doc.stage),
             "stage_error": status.stage_error,
+            "appearance_error": status.appearance_error,
+            "appearance": {
+                "requested": appearance.requested,
+                "applied": appearance.applied,
+                "generation": appearance.generation,
+                "revision": appearance.revision,
+                "ready": appearance.ready,
+                "pending": appearance.pending,
+                "error": appearance.error,
+            },
             "document_revision": work.editor.document().map(|doc| doc.revision),
             "timeline_count": work.editor.document().map(|doc| doc.timeline.len()),
             "playing": playback.playing, "completed": playback.completed,

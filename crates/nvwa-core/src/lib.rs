@@ -1,7 +1,9 @@
 //! Portable, validated scene documents and atomic editor transactions.
 #![forbid(unsafe_code)]
 
+mod appearance;
 mod asset;
+pub use appearance::*;
 mod b1;
 pub use b1::*;
 mod stage;
@@ -12,7 +14,7 @@ mod bounded_history_tests;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
-pub const SCHEMA_VERSION: u32 = 3;
+pub const SCHEMA_VERSION: u32 = 4;
 pub const MAX_JSON_BYTES: usize = 2 * 1024 * 1024;
 
 /// Session retention limits. Bytes measure compact JSON payloads, not heap usage.
@@ -98,7 +100,7 @@ impl<'de> Deserialize<'de> for SceneDocument {
         let wire = Wire::deserialize(deserializer)?;
         let legacy = match wire.schema_version {
             1 | 2 => true,
-            SCHEMA_VERSION => false,
+            3 | SCHEMA_VERSION => false,
             version => {
                 return Err(serde::de::Error::custom(format!(
                     "unsupported_schema_version: schema version {version} is unsupported"
@@ -117,7 +119,7 @@ impl<'de> Deserialize<'de> for SceneDocument {
             .map_err(serde::de::Error::custom)?;
         let character = wire
             .character
-            .into_recipe(legacy)
+            .into_recipe(legacy, wire.schema_version < 4)
             .map_err(serde::de::Error::custom)?;
         Ok(Self {
             schema_version: SCHEMA_VERSION,
@@ -180,6 +182,15 @@ impl<'de> Deserialize<'de> for PoseField {
         Option::<String>::deserialize(deserializer).map(|pose| Self(Some(pose)))
     }
 }
+#[derive(Default)]
+struct AppearanceField(Option<CharacterAppearance>);
+impl<'de> Deserialize<'de> for AppearanceField {
+    fn deserialize<D: serde::Deserializer<'de>>(
+        deserializer: D,
+    ) -> std::result::Result<Self, D::Error> {
+        CharacterAppearance::deserialize(deserializer).map(|appearance| Self(Some(appearance)))
+    }
+}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct RecipeWire {
@@ -189,9 +200,21 @@ struct RecipeWire {
     scale: f32,
     #[serde(default)]
     diagnostic_pose: PoseField,
+    #[serde(default)]
+    appearance: AppearanceField,
 }
 impl RecipeWire {
-    fn into_recipe(self, legacy: bool) -> std::result::Result<CharacterRecipe, String> {
+    fn into_recipe(
+        self,
+        legacy: bool,
+        legacy_appearance: bool,
+    ) -> std::result::Result<CharacterRecipe, String> {
+        let appearance = match (legacy_appearance, self.appearance.0) {
+            (true, None) => CharacterAppearance::None,
+            (true, Some(_)) => return Err("legacy schema does not allow appearance".into()),
+            (false, None) => return Err("missing field `appearance`".into()),
+            (false, Some(appearance)) => appearance,
+        };
         let diagnostic_pose = match (legacy, self.diagnostic_pose.0) {
             (true, None) => None,
             (true, Some(_)) => return Err("legacy schema does not allow diagnostic_pose".into()),
@@ -204,6 +227,7 @@ impl RecipeWire {
             parameters: self.parameters,
             scale: self.scale,
             diagnostic_pose,
+            appearance,
         })
     }
 }
@@ -246,6 +270,7 @@ pub struct CharacterRecipe {
     pub parameters: BTreeMap<String, f32>,
     pub scale: f32,
     pub diagnostic_pose: Option<String>,
+    pub appearance: CharacterAppearance,
 }
 
 impl<'de> Deserialize<'de> for CharacterRecipe {
@@ -253,7 +278,7 @@ impl<'de> Deserialize<'de> for CharacterRecipe {
         deserializer: D,
     ) -> std::result::Result<Self, D::Error> {
         RecipeWire::deserialize(deserializer)?
-            .into_recipe(false)
+            .into_recipe(false, false)
             .map_err(serde::de::Error::custom)
     }
 }
@@ -293,6 +318,10 @@ pub enum Command {
         character_id: String,
         pose_id: String,
     },
+    SetAppearance {
+        character_id: String,
+        appearance: CharacterAppearance,
+    },
     SetTimeline {
         clips: Vec<TimelineClip>,
     },
@@ -325,6 +354,10 @@ impl<'de> Deserialize<'de> for Command {
                 character_id: String,
                 pose_id: String,
             },
+            SetAppearance {
+                character_id: String,
+                appearance: CharacterAppearance,
+            },
             SetTimeline {
                 clips: Vec<TimelineClip>,
             },
@@ -355,6 +388,13 @@ impl<'de> Deserialize<'de> for Command {
             } => Self::SetDiagnosticPose {
                 character_id,
                 pose_id,
+            },
+            StrictCommand::SetAppearance {
+                character_id,
+                appearance,
+            } => Self::SetAppearance {
+                character_id,
+                appearance,
             },
             StrictCommand::SetTimeline { clips } => Self::SetTimeline { clips },
             StrictCommand::SetStage { stage } => Self::SetStage { stage },
@@ -432,6 +472,9 @@ fn parse_json<T: for<'de> Deserialize<'de>>(input: &str) -> Result<T> {
         let code = [
             "unsupported_character_backend",
             "unsupported_schema_version",
+            "unsupported_appearance_version",
+            "unsupported_appearance_asset",
+            "invalid_appearance",
         ]
         .into_iter()
         .find(|code| message.starts_with(&format!("{code}:")))
@@ -582,6 +625,7 @@ impl SceneDocument {
                 parameters,
                 scale: 1.0,
                 diagnostic_pose: profile.backend.is_b1().then(|| "neutral".into()),
+                appearance: CharacterAppearance::None,
             },
             profile,
             timeline,
@@ -603,6 +647,9 @@ impl SceneDocument {
         }
         self.stage.validate()?;
         self.profile.validate()?;
+        self.character
+            .appearance
+            .validate_for(&self.profile.backend)?;
         id(&self.character.id, "character id")?;
         if self.character.profile_id != self.profile.id {
             return Err(CoreError::new(
@@ -770,6 +817,7 @@ impl CommandEnvelope {
                 }
             }
             Command::SetScale { scale, .. } => finite(*scale, "scale")?,
+            Command::SetAppearance { appearance, .. } => appearance.validate()?,
             Command::SetStage { stage } => stage.validate()?,
             Command::SetTimeline { clips } => {
                 for clip in clips {
@@ -1054,6 +1102,14 @@ fn apply_edit(document: &mut SceneDocument, command: &Command) -> Result<()> {
                 document.timeline.clear();
             }
         }
+        Command::SetAppearance {
+            character_id,
+            appearance,
+        } => {
+            check_character(document, character_id)?;
+            appearance.validate_for(&document.profile.backend)?;
+            document.character.appearance = appearance.clone();
+        }
         Command::SetTimeline { clips } => document.timeline = clips.clone(),
         Command::SetStage { stage } => {
             stage.validate()?;
@@ -1084,6 +1140,7 @@ fn command_summary(command: &Command) -> String {
         Command::SetParameters { values, .. } => format!("Set {} parameter(s)", values.len()),
         Command::SetScale { scale, .. } => format!("Set scale to {scale}"),
         Command::SetDiagnosticPose { pose_id, .. } => format!("Set diagnostic pose to {pose_id}"),
+        Command::SetAppearance { .. } => "Set character appearance".into(),
         Command::SetTimeline { clips } => format!("Set {} timeline clip(s)", clips.len()),
         Command::SetStage { .. } => "Set rehearsal stage".into(),
         Command::Undo => "Undo".into(),

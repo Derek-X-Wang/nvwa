@@ -375,7 +375,10 @@ fn save_feedback_long_native_destination_stays_small_and_selectable() {
         let short = h.frame(vec![]);
         text(&short, "已保存 / Saved");
         let mut directory = h.directory.clone();
-        for index in 0..12 {
+        // Overflow the production 120-point scroller even with a short runner
+        // TMPDIR. These 24 short ASCII segments stay below ordinary macOS
+        // PATH_MAX, without depending on the host's longer /var/folders prefix.
+        for index in 0..24 {
             directory = directory.join(format!("long-destination-segment-{index:02}"));
         }
         std::fs::create_dir_all(&directory).unwrap();
