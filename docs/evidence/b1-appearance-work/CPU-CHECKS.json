@@ -1,0 +1,48 @@
+{
+  "scope": "CPU tests, source fingerprints and known lint failure only; no build/export, GUI, GPU or performance claim",
+  "source_cohorts": {
+    "r4_source_file_count": 348,
+    "r4_source_closure_sha256": "cf2334e1eacba446151a1c423200b535471217bb353c635d2e5994148450445b",
+    "current_differences": [
+      "crates/nvwa-cli/src/main.rs",
+      "crates/nvwa-cli/tests/appearance.rs"
+    ],
+    "separately_built_cli_sha256": "a1920c1f3f9f7bfc1084d6019129b682b03eb3ad25a17b193e298d15c41c9157"
+  },
+  "workspace_tests": {
+    "passed": 194,
+    "failed": 0,
+    "log_sha256": "73f5906c297619985f0462514a652a1ca881130ea46950b9e809d54523c0e766"
+  },
+  "portable_final": {
+    "passed": 60,
+    "failed": 0,
+    "strict_core_cli_clippy": "PASS",
+    "log_sha256": "8b21c6033b3e777ed001e48bcde868cdd9681287d020f64188ef4d47b9901791"
+  },
+  "extra_strict_workspace_clippy": {
+    "status": "FAIL",
+    "baseline_warnings": 9,
+    "log_sha256": "055d79860a99a144ce0faa3cd8608776fe30d7fb2fa9877b37c3c986c5dc60b8"
+  },
+  "same_environment_long_path_red_green": {
+    "scope": "Original private receipt independently authenticated; paths normalized here, this is not raw receipt bytes",
+    "tmpdir_characters": 26,
+    "same_tmpdir": true,
+    "original_receipt_sha256": "2c188d11202f34bf0b643b007276bb0c2a9b7ef1260b354c002339a2833bc62c",
+    "runs": [
+      {
+        "tag": "old-r3",
+        "binary_sha256": "3376258d51813a892d68dfd140fd52578070ea25d0ad042e1f832868c7b80ad5",
+        "exit_code": 101,
+        "log_sha256": "2774dec80fea8231b72b9668a272f368ffa72831d6043efb968d430059f4ba07"
+      },
+      {
+        "tag": "fixed-r4",
+        "binary_sha256": "de2069108e5d4900178911fc2a77c0e4d413c79fb498f9765a5df21e2e6550b6",
+        "exit_code": 0,
+        "log_sha256": "6db02da812f1face24424d2dd550714caa485e5a65eaa8c980016bf6fa4524a7"
+      }
+    ]
+  }
+}

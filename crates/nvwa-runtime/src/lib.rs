@@ -369,6 +369,8 @@ impl AssetLoader for CharacterGlbLoader {
 pub enum RuntimeSystems {
     Transport,
     Mirror,
+    /// Saved appearance controller only; isolated diagnostic apps can explicitly disable this set.
+    Appearance,
 }
 
 pub struct NvwaRuntimePlugin;

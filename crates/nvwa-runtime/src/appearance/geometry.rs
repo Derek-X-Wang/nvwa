@@ -4,6 +4,10 @@ use bevy::math::{DMat4, DVec3};
 use nvwa_core::appearance_sha256;
 use serde_json::Value;
 use std::collections::{BTreeMap, BTreeSet};
+type ModelVectors = Vec<[f64; 3]>;
+type RenderVectors = Vec<[f32; 3]>;
+type SourceWeights = Vec<Vec<f64>>;
+type PositiveWeights = Vec<Vec<(usize, f64)>>;
 const CAGE: usize = 19158;
 const WEIGHTS: &str =
     include_str!("../../../../assets/characters/mpfb-b1-v1/weights.game_engine.json");
@@ -267,7 +271,7 @@ pub(super) fn prepare() -> Result<Vec<Prepared>, String> {
     );
     Ok(out)
 }
-pub(super) fn cage(ids: &[u16], rest: &[[f32; 3]]) -> Result<Vec<[f64; 3]>, String> {
+pub(super) fn cage(ids: &[u16], rest: &[[f32; 3]]) -> Result<ModelVectors, String> {
     if ids.len() != rest.len() {
         return Err("cage coverage mismatch".into());
     }
@@ -285,7 +289,7 @@ pub(super) fn cage(ids: &[u16], rest: &[[f32; 3]]) -> Result<Vec<[f64; 3]>, Stri
         .map(|x| x.ok_or("missing full19158 cage position".into()))
         .collect()
 }
-pub(super) fn weights(names: &[String]) -> Result<Vec<Vec<f64>>, String> {
+pub(super) fn weights(names: &[String]) -> Result<SourceWeights, String> {
     if names.len() != 53 || names.iter().collect::<BTreeSet<_>>().len() != 53 {
         return Err("exact53 unique bones required".into());
     }
@@ -319,10 +323,7 @@ pub(super) fn weights(names: &[String]) -> Result<Vec<Vec<f64>>, String> {
     }
     Ok(result)
 }
-pub(super) fn transfer(
-    mapping: &Mapping,
-    source: &[Vec<f64>],
-) -> Result<Vec<Vec<(usize, f64)>>, String> {
+pub(super) fn transfer(mapping: &Mapping, source: &[Vec<f64>]) -> Result<PositiveWeights, String> {
     mapping
         .rows
         .iter()
@@ -354,7 +355,7 @@ pub(super) fn transfer(
 pub(super) fn fit(
     mapping: &Mapping,
     cage: &[[f64; 3]],
-) -> Result<(Vec<[f64; 3]>, [f64; 3]), String> {
+) -> Result<(ModelVectors, [f64; 3]), String> {
     let mut scales = [0.; 3];
     for (a, (lo, hi, reference)) in mapping.scales.iter().enumerate() {
         scales[a] = (cage[*hi][a] - cage[*lo][a]) / reference;
@@ -363,8 +364,8 @@ pub(super) fn fit(
     let mut rest = vec![];
     for row in &mapping.rows {
         let mut p = [0.; 3];
-        for a in 0..3 {
-            p[a] = row
+        for (a, component) in p.iter_mut().enumerate() {
+            *component = row
                 .helpers
                 .iter()
                 .zip(&row.coefficients)
@@ -377,7 +378,7 @@ pub(super) fn fit(
     }
     Ok((rest, scales))
 }
-pub(super) fn source_normals(rest: &[[f64; 3]], obj: &Obj) -> Result<Vec<[f64; 3]>, String> {
+pub(super) fn source_normals(rest: &[[f64; 3]], obj: &Obj) -> Result<ModelVectors, String> {
     let mut n = vec![DVec3::ZERO; rest.len()];
     for t in obj.indices.chunks_exact(3) {
         let a = obj.pairs[t[0] as usize].0;
@@ -404,7 +405,7 @@ pub(super) fn skin(
     normals: &[[f64; 3]],
     weights: &[Vec<(usize, f64)>],
     bones: &[DMat4],
-) -> Result<(Vec<[f32; 3]>, Vec<[f32; 3]>), String> {
+) -> Result<(RenderVectors, RenderVectors), String> {
     if rest.len() != normals.len() || rest.len() != weights.len() || bones.is_empty() {
         return Err("accessory skin row coverage mismatch".into());
     }

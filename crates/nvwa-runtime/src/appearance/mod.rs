@@ -465,34 +465,34 @@ fn stream(
         observe_live(world, live, false)?;
         let (positions, normals) =
             geometry::skin(&live.rest, &live.normals, &live.weights, &matrices)?;
-        let mut meshes = world.resource_mut::<Assets<Mesh>>();
-        let mut mesh = meshes
-            .get_mut(&live.mesh)
-            .ok_or("appearance: accessory CPU mesh disappeared")?;
-        if !matches!(mesh.attribute(Mesh::ATTRIBUTE_UV_0),Some(VertexAttributeValues::Float32x2(v)) if v==&live.obj.uv)
-            || mesh.indices().map(|i| i.iter().collect::<Vec<_>>())
-                != Some(live.obj.indices.iter().map(|i| *i as usize).collect())
         {
-            return Err("appearance: accessory UV/triangle binding changed".into());
+            let mut meshes = world.resource_mut::<Assets<Mesh>>();
+            let mut mesh = meshes
+                .get_mut(&live.mesh)
+                .ok_or("appearance: accessory CPU mesh disappeared")?;
+            if !matches!(mesh.attribute(Mesh::ATTRIBUTE_UV_0),Some(VertexAttributeValues::Float32x2(v)) if v==&live.obj.uv)
+                || mesh.indices().map(|i| i.iter().collect::<Vec<_>>())
+                    != Some(live.obj.indices.iter().map(|i| *i as usize).collect())
+            {
+                return Err("appearance: accessory UV/triangle binding changed".into());
+            }
+            mesh.insert_attribute(
+                Mesh::ATTRIBUTE_POSITION,
+                live.obj
+                    .pairs
+                    .iter()
+                    .map(|(i, _)| positions[*i])
+                    .collect::<Vec<_>>(),
+            );
+            mesh.insert_attribute(
+                Mesh::ATTRIBUTE_NORMAL,
+                live.obj
+                    .pairs
+                    .iter()
+                    .map(|(i, _)| normals[*i])
+                    .collect::<Vec<_>>(),
+            );
         }
-        mesh.insert_attribute(
-            Mesh::ATTRIBUTE_POSITION,
-            live.obj
-                .pairs
-                .iter()
-                .map(|(i, _)| positions[*i])
-                .collect::<Vec<_>>(),
-        );
-        mesh.insert_attribute(
-            Mesh::ATTRIBUTE_NORMAL,
-            live.obj
-                .pairs
-                .iter()
-                .map(|(i, _)| normals[*i])
-                .collect::<Vec<_>>(),
-        );
-        drop(mesh);
-        drop(meshes);
         world
             .get_entity_mut(live.entity)
             .map_err(|_| "appearance: accessory entity disappeared before transform update")?
@@ -743,6 +743,31 @@ pub fn appearance_snapshot(world: &mut World) -> Result<Value, String> {
 }
 
 #[cfg(test)]
+pub(super) fn test_influence_bone_names(
+    world: &World,
+    role: &str,
+) -> Result<std::collections::BTreeSet<String>, String> {
+    let state = world.resource::<AppearanceRuntime>();
+    let frame = appearance_frame(world)?;
+    let live = state
+        .live
+        .iter()
+        .find(|live| live.name == role)
+        .ok_or("test role is not bound")?;
+    live.weights
+        .iter()
+        .flat_map(|row| row.iter().map(|(bone, _)| *bone))
+        .map(|bone| {
+            frame
+                .bones
+                .get(bone)
+                .map(|bone| bone.name.clone())
+                .ok_or("test influence bone is absent".into())
+        })
+        .collect()
+}
+
+#[cfg(test)]
 mod tests {
     use super::*;
     fn fixture() -> (World, AppearanceRuntime, AppearanceFrame) {
@@ -841,6 +866,65 @@ mod tests {
         };
         (world, state, frame)
     }
+    /// Synthetic controller input, not a claim that an authored clip moves the head.
+    /// Read actual entity-bound CPU buffers after the production streaming seam.
+    #[test]
+    fn synthetic_controller_stream_updates_only_when_a_driving_bone_changes() {
+        let (mut world, state, mut frame) = fixture();
+        let live = &state.live[0];
+        let actual_positions = |world: &World| {
+            let handle = &world.get::<Mesh3d>(live.entity).unwrap().0;
+            assert_eq!(handle, &live.mesh);
+            match world
+                .resource::<Assets<Mesh>>()
+                .get(handle)
+                .unwrap()
+                .attribute(Mesh::ATTRIBUTE_POSITION)
+                .unwrap()
+            {
+                VertexAttributeValues::Float32x3(v) => v.clone(),
+                _ => panic!("actual POSITION type changed"),
+            }
+        };
+        stream(&mut world, &state, &frame).unwrap();
+        let neutral = actual_positions(&world);
+        // Negative control: this bone is outside every stored positive row.
+        assert!(live.weights.iter().all(|row| row.as_slice() == [(0, 1.)]));
+        frame.bones[1].skin = Mat4::from_translation(Vec3::new(9., 8., 7.)).to_cols_array();
+        stream(&mut world, &state, &frame).unwrap();
+        assert_eq!(actual_positions(&world), neutral);
+        // Positive control: move the actual driving bone input, retaining all entity/asset handles.
+        let translation = Vec3::new(0.25, -0.5, 0.75);
+        frame.bones[0].skin = Mat4::from_translation(translation).to_cols_array();
+        stream(&mut world, &state, &frame).unwrap();
+        let driven = actual_positions(&world);
+        assert_ne!(driven, neutral);
+        for (before, after) in neutral.iter().zip(&driven) {
+            assert_eq!(
+                Vec3::from_array(*after),
+                Vec3::from_array(*before) + translation
+            );
+        }
+        assert_eq!(
+            world
+                .get::<MeshMaterial3d<StandardMaterial>>(live.entity)
+                .unwrap()
+                .0,
+            live.material
+        );
+        assert_eq!(
+            world
+                .get::<GlobalTransform>(live.entity)
+                .unwrap()
+                .to_matrix(),
+            frame.placement
+        );
+        // Restoring the bone returns the same uploaded vertices, ruling out accumulated offsets.
+        frame.bones[0].skin = Mat4::IDENTITY.to_cols_array();
+        stream(&mut world, &state, &frame).unwrap();
+        assert_eq!(actual_positions(&world), neutral);
+    }
+
     #[test]
     fn actual_bound_material_pixels_and_missing_entity_reject() {
         let (mut world, mut state, frame) = fixture();

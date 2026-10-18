@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "source_cohort": "r4 GUI product and instrumented66 artifacts; CLI-only help edit and its separate rebuilt/tested receipt are outside this GUI cohort.",
+  "provenance": "UI actions, Save/download/Open and playback were observed by root. Stills corroborate visible state; actions are not inferred from the stills. Exact file/report identities and byte hashes are independently inspectable.",
+  "limits": "Byte sizes are file inventory, not transfer, startup or performance measurements. CPU reports are not GPU readback or complete asset-store-disposal evidence. Full visual quality remains unaccepted.",
+  "files": [
+    {
+      "file": "native-ui-saved.nvwa.json",
+      "bytes": 2743,
+      "sha256": "dd10e51721d68a98ec06c76f3ce990e90c4763da90f6cd3848bda09033483bec",
+      "kind": "exact reviewed JSON bytes"
+    },
+    {
+      "file": "web-ui-saved.nvwa.json",
+      "bytes": 2744,
+      "sha256": "c81700d5bb404db7f9b9394ebc10f7538e72942cfc68bb6aaeca7de8c48d4ab1",
+      "kind": "exact reviewed JSON bytes"
+    },
+    {
+      "file": "native-save-receipt.json",
+      "bytes": 516,
+      "sha256": "94a0b5778655757da4be3579054bbdc18c0e8869dddcf440d318ada598fc4e76",
+      "kind": "exact reviewed JSON bytes"
+    },
+    {
+      "file": "web-save-receipt.json",
+      "bytes": 646,
+      "sha256": "7065439df462c7ecdf02f12547992c9c2294e20ca29b2cbbe05f470feeb219dc",
+      "kind": "exact reviewed JSON bytes"
+    },
+    {
+      "file": "ROUNDTRIP.json",
+      "bytes": 855,
+      "sha256": "529b3357f43bb6edb1bebc3f5aad554ff533e6ac0a8412e3087d393f405bfa51",
+      "kind": "exact reviewed JSON bytes"
+    },
+    {
+      "file": "native-return-before-report.json",
+      "bytes": 9589,
+      "sha256": "ec15d27e6b5a1b147a31d764bdd54e04c88b39b5676b2e645a1af03203272925",
+      "kind": "exact reviewed JSON bytes"
+    },
+    {
+      "file": "native-opened-web-report.json",
+      "bytes": 8466,
+      "sha256": "5cbc31052d55f052c49c31ee44562cfa092a54600756c779ab0c0b19177af330",
+      "kind": "exact reviewed JSON bytes"
+    },
+    {
+      "file": "native-invalid-open-retained.json",
+      "bytes": 9610,
+      "sha256": "a457dfe18086aa73207185557ec029051cf275593105e94ee95fe05bd362e332",
+      "kind": "exact reviewed JSON bytes"
+    },
+    {
+      "file": "invalid-ui-test.nvwa.json",
+      "bytes": 20,
+      "sha256": "ffe1304157e5994124ca62268bdbf50364aa79fe5e5bcd4b98ff6263d1f675d0",
+      "kind": "intentionally malformed JSON negative fixture"
+    }
+  ],
+  "verified": {
+    "only_saved_semantic_changes": [
+      "revision",
+      "character.appearance.hair"
+    ],
+    "native_return_generation": [
+      1,
+      2
+    ],
+    "invalid_native_open_retains": "Fresh capture equals exact pre-rejection Work, appearance/base CPU buffers and captured identity. UI parse error is shown in screenshot; the capture is a successful observation of the retained valid state."
+  }
+}

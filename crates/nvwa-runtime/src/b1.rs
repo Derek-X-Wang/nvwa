@@ -71,7 +71,10 @@ pub(super) fn install(app: &mut App) {
         )
         .add_systems(
             PostUpdate,
-            (publish, super::appearance::update)
+            (
+                publish,
+                super::appearance::update.in_set(super::RuntimeSystems::Appearance),
+            )
                 .chain()
                 .after(bevy::transform::TransformSystems::Propagate),
         );
@@ -2691,6 +2694,18 @@ mod tests {
             Some(CharacterAppearance::None)
         );
         let full = apply_appearance(&mut app, true, true, true);
+        let authored_before = b1_frame_snapshot(app.world()).unwrap();
+        let head_before = appearance_frame(app.world())
+            .unwrap()
+            .bones
+            .into_iter()
+            .find(|bone| bone.name == "head")
+            .expect("actual head bone");
+        assert_eq!(
+            crate::appearance::test_influence_bone_names(app.world(), "eyes").unwrap(),
+            BTreeSet::from(["head".to_string()]),
+            "the actual transferred eye weights are head-only"
+        );
         app.world_mut().resource_mut::<Playback>().playing = true;
         motion_tick(&mut app, 0.3);
         let playing = appearance_snapshot(app.world_mut()).unwrap();
@@ -2698,9 +2713,48 @@ mod tests {
             playing["body_positions_sha256"],
             full["body_positions_sha256"]
         );
+        let authored_after = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(authored_after["sample"]["clip_id"], "b1_arm_rehearsal_v1");
+        assert_eq!(authored_after["sample"]["playing"], true);
+        assert!(
+            authored_after["sample"]["position_seconds"]
+                .as_f64()
+                .unwrap()
+                > authored_before["sample"]["position_seconds"]
+                    .as_f64()
+                    .unwrap()
+        );
         assert_ne!(
-            playing["accessories"][0]["positions_sha256"],
-            full["accessories"][0]["positions_sha256"]
+            authored_after["sample"]["serial"],
+            authored_before["sample"]["serial"]
+        );
+        let head_after = appearance_frame(app.world())
+            .unwrap()
+            .bones
+            .into_iter()
+            .find(|bone| bone.name == "head")
+            .expect("actual head bone");
+        assert_eq!(
+            head_after.posed, head_before.posed,
+            "arm rehearsal does not move the actual head pose"
+        );
+        assert_eq!(
+            head_after.skin, head_before.skin,
+            "head skin matrix remains unchanged while the body animates"
+        );
+        let role = |snapshot: &serde_json::Value, name: &str| {
+            snapshot["accessories"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|item| item["name"] == name)
+                .unwrap()
+                .clone()
+        };
+        assert_eq!(
+            role(&playing, "eyes")["positions_sha256"],
+            role(&full, "eyes")["positions_sha256"],
+            "head-only eye vertices must remain stable when their actual driving matrix is unchanged"
         );
         assert_eq!(
             playing["accessories"][0]["mesh_handle"],
@@ -2795,6 +2849,37 @@ mod tests {
                 .is_some()
         );
         assert!(appearance_snapshot(app.world_mut()).is_err());
+    }
+
+    #[test]
+    fn isolated_appearance_set_disables_only_controller_not_body_publication() {
+        let (mut app, _, _) = harness(false);
+        app.configure_sets(
+            PostUpdate,
+            super::super::RuntimeSystems::Appearance.run_if(|| false),
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        until(&mut app, |world| {
+            world.resource::<EditorState>().pending_open.is_none()
+                && world.resource::<RuntimeStatus>().ready
+        });
+        let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+        assert_eq!(active.phase, 2);
+        assert_eq!(active.displays.len(), 2);
+        assert_eq!(active.joint_count, 53);
+        assert!(
+            !app.world().resource::<crate::AppearanceStatus>().ready,
+            "only the explicitly disabled appearance controller did not run"
+        );
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .appearance_error
+                .is_none()
+        );
     }
 
     #[test]
@@ -3502,7 +3587,7 @@ fn appearance_fit_for_session(
         .iter()
         .collect::<Vec<_>>();
     let visible = &active.display_indices[0];
-    if full.len() % 3 != 0 || visible.is_empty() || visible.len() % 3 != 0 {
+    if full.len() % 3 != 0 || visible.is_empty() || !visible.len().is_multiple_of(3) {
         return Err("appearance: invalid source/display triangle arrays".into());
     }
     let mut cursor = 0;
@@ -3513,7 +3598,7 @@ fn appearance_fit_for_session(
     }
     if full.len() % 3 != 0
         || visible.is_empty()
-        || visible.len() % 3 != 0
+        || !visible.len().is_multiple_of(3)
         || cursor != visible.len()
     {
         return Err("appearance: displayed triangles are not ordered source triangles".into());

@@ -46,6 +46,8 @@ fn actual_b1_checkboxes_preserve_other_roles_and_use_shared_undo_redo() {
                 viewport.contains_rect(rect),
                 "control clipped at {size:?}: {label}"
             );
+            // This harness inspects CPU paint only and has no GPU texture sink.
+            output.drop_without_applying_deltas();
             let before = app.editor.document().unwrap().revision;
             app.click(rect.center());
             assert_eq!(

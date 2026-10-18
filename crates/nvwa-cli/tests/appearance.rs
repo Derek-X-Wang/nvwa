@@ -59,6 +59,14 @@ fn write(path: &Path, value: &Value) {
 
 #[test]
 fn real_cli_discovers_applies_all_independent_roles_undo_redo_retry_saves_and_reopens() {
+    let help = cli(&["--help".as_ref()]);
+    assert!(help.status.success());
+    assert!(help.stderr.is_empty());
+    assert!(
+        String::from_utf8(help.stdout)
+            .unwrap()
+            .contains("set_appearance (B1 skin/eyes/hair; none on all backends)")
+    );
     let dir = directory("roundtrip");
     let input = dir.join("input.json");
     let output = dir.join("output.json");

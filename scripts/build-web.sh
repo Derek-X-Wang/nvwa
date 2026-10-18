@@ -32,7 +32,7 @@ for dependency in humentity bevy_obj wobj; do
   fi
 done
 cp assets/fixtures/nvwa-humanoid.glb assets/fixtures/LICENSE.txt assets/fixtures/provenance-manifest.json dist/web/assets/fixtures/
-cp examples/m1-sequence.nvwa.json dist/web/works/
+cp examples/m1-sequence.nvwa.json examples/b1-appearance.nvwa.json dist/web/works/
 cp assets/fonts/OFL.txt assets/fonts/NOTICE.md assets/fonts/PROVENANCE.json dist/web/licenses/fonts/
 mkdir -p dist/web/licenses/appearance
 cp assets/appearances/mpfb-b1-cc0-v1/SOURCE.json assets/appearances/mpfb-b1-cc0-v1/manifest.json dist/web/licenses/appearance/
