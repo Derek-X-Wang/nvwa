@@ -4,6 +4,8 @@ Nvwa is a character creation and animation sandbox with three supported entrypoi
 
 The repository implements M0 editing/exchange plus thin M1: a three-action 5–10 second work, transport, a chest/head click that plays one wave and restores the work, and an editor-free static Player. See the [roadmap](docs/ROADMAP.md), [M1 evidence](docs/M1-VERIFICATION.md), [verification matrix](docs/TEST-MATRIX.md) and [known issues](docs/ISSUES.md). Arbitrary character imports remain outside this prototype.
 
+Daily acceptance prioritizes relevant Web and CLI checks. Desktop-specific changes retain targeted native checks; routine desktop UI regression is collected at larger version milestones. Existing automated and CI gates remain in place. See the [verification policy](docs/agents/verification.md).
+
 ## Run
 
 Rust 1.95.0 is pinned in `rust-toolchain.toml`. Use the repository root:

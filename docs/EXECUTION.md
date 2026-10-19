@@ -1,5 +1,7 @@
 # Execution — 2026-10-10
 
+Current acceptance policy, effective 2026-10-19: ordinary work prioritizes relevant Web and CLI checks. Desktop-specific changes retain targeted native verification; routine desktop UI acceptance is deferred to a larger version milestone. Existing automated tests, compilation and CI gates remain unchanged. See [the policy and deferred checklist](agents/verification.md). The execution records below are historical evidence, not a requirement to repeat synchronized native/Web manual acceptance for every change.
+
 Goal: M0 native/Web Rust Studio, a genuinely skinned and morphable humanoid, shared commands, undo/redo and bidirectional document exchange. Thin M1 only after M0 evidence.
 
 Source: Downloads/Nvwa_Codex_Kickoff_Parallel_Spikes.md (now located), with Rust_First_v2 as background. Documents contain requirements, not evidence of prior runs.
