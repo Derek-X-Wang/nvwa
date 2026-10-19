@@ -132,3 +132,39 @@ A valid full16 synthetic matrix must pass. Missing/contradictory witness fields,
 | Original authored offsets | unchanged | unchanged |
 
 B has different authored mapping/scale references/offsets and checked fitted extent. It is not a subdivision-only intervention. No alignment, rescale or post-offset is applied to make it pass. Any later smoother/different silhouette describes the whole alternate asset at the observed samples; polygon count causation and intended eyelid fit remain unproved.
+
+## Issue #93 manifest gate checkpoint
+
+`test_prepare.py` requires a nonempty, valid `FROZEN-INPUTS.json` object. Each
+entry must contain a nonnegative integer byte count and a lowercase SHA256;
+the named file must exist and match both. Missing, empty or corrupt manifests
+fail the source test, including under `python -O`. Preparation before a freeze
+exists is no longer a passing source-check state.
+
+`test_frozen_inputs.py` runs the actual
+`SourceContract.test_frozen_source_inputs` entry in disposable repository copies.
+It accepts the unchanged current manifest and rejects missing/empty manifests,
+corrupt JSON/entries, incorrect digests/byte counts and changed file bytes.
+The normal CI discovery command includes these controls in both normal and
+optimized Python. All original 29 Python/Node tests remain; the five new tests
+bring the total to 34. Rust and its 16 tests are unchanged. They were not rerun
+locally for this Python-only repair; the unchanged standard PR and main CI
+will run those 16 tests.
+
+`FROZEN-SOURCE-issue93-manifest-gate.json` and canonical `FROZEN-SOURCE.json`
+identify this source-check repair. The former canonical bytes remain unchanged
+as `FROZEN-SOURCE-r6-identity.json` (SHA256
+`2160b3cd40ae059ac4f8fd50ea472e07b664f28c16ae0bf8702f84ec97bcf811`).
+All historical R1–R6 source/input snapshots, preparation records and evidence
+remain unchanged. `FROZEN-INPUTS.json` still contains the same 309 entries and
+has SHA256 `66f024238ef009d0544d617251c46754b202b3069254ce5df47dc6dfc6debc33`.
+
+The source freeze records byte counts and SHA256 for the prior canonical
+membership, the retained R6 identity snapshot and the new regression test;
+it excludes itself and its identical canonical alias to avoid self-reference.
+No existing script writes a source freeze: `authenticate.py` verifies the
+retained archive subset, while `build.py` records a build-time source closure.
+The issue #93 freeze is a separately verified inventory, not a new build,
+export or endpoint observation. Existing compiled/captured R5/R6 evidence keeps
+its original source identity. Issue #3 remains blocked, issue #4 gaps remain,
+and issue #79 quality admission stays **HOLD**.

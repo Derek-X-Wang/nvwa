@@ -52,6 +52,19 @@ class SourceContract(unittest.TestCase):
   self.assertEqual(packages(lock),packages(tomllib.loads((ROOT/'experiments/68-b1-eye-render-diagnosis/Cargo.lock').read_text())))
  def test_frozen_source_inputs(self):
   p=EXP/'FROZEN-INPUTS.json'
-  if not p.exists():self.skipTest('preparation freeze not written yet')
-  for name,item in json.loads(p.read_text()).items():self.assertEqual(digest(ROOT/name),item['sha256']);self.assertEqual((ROOT/name).stat().st_size,item['bytes'])
+  self.assertTrue(p.is_file(),'FROZEN-INPUTS.json is required')
+  try:inputs=json.loads(p.read_text())
+  except (json.JSONDecodeError,UnicodeDecodeError) as error:self.fail(f'FROZEN-INPUTS.json must be valid JSON: {error}')
+  self.assertIsInstance(inputs,dict,'FROZEN-INPUTS.json must be an object')
+  self.assertTrue(inputs,'FROZEN-INPUTS.json must not be empty')
+  for name,item in inputs.items():
+   message=f'FROZEN-INPUTS.json entry {name}'
+   self.assertIsInstance(item,dict,message+' must be an object')
+   self.assertEqual(type(item.get('bytes')),int,message+' needs integer bytes')
+   self.assertGreaterEqual(item['bytes'],0,message+' needs nonnegative bytes')
+   self.assertIsInstance(item.get('sha256'),str,message+' needs SHA256')
+   self.assertRegex(item['sha256'],r'\A[0-9a-f]{64}\Z',message+' needs lowercase SHA256')
+   self.assertTrue((ROOT/name).is_file(),message+' file is required')
+   self.assertEqual(digest(ROOT/name),item['sha256'],message+' SHA256 mismatch')
+   self.assertEqual((ROOT/name).stat().st_size,item['bytes'],message+' byte count mismatch')
 if __name__=='__main__':unittest.main()
