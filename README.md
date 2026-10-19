@@ -143,6 +143,42 @@ JSON
 
 `idle` is an authored action from the bundled profile. This example edits a Work; it does not generate motion. For the full revision, session-history, file-safety and response-delivery rules, follow the [CLI authoring guide](docs/agents/cli-authoring.md).
 
+### Standalone offline CLI distribution
+
+Package a locally built CLI with a complete filesystem asset root:
+
+```sh
+cargo build -p nvwa-cli --release --locked --offline
+python3 -B scripts/package-cli.py
+python3 -B scripts/test-cli-package.py --binary target/release/nvwa-cli
+```
+
+The package builder writes a new `dist/nvwa-cli/` directory and
+`dist/nvwa-cli.tar.gz`; it refuses existing destinations. Use `--binary PATH`
+for another build location, `--profile debug` for the default debug binary,
+or `--output NEW_DIRECTORY` for another package destination. Packaging uses
+Python's standard library and downloads nothing. The extracted package needs
+only the binary's build platform and local files. Use its `assets/` as the
+explicit CLI root from any working directory:
+
+```sh
+NVWA_CLI_HOME="/absolute/path/to/extracted/nvwa-cli"
+"$NVWA_CLI_HOME/bin/nvwa-cli" validate \
+  "$NVWA_CLI_HOME/works/b1-character.nvwa.json" "$NVWA_CLI_HOME/assets"
+```
+
+Both B1 base versions, both Skin/Eyes/Hair payload bundles, the original GLB,
+examples, asset licenses and provenance travel together. Native Studio and
+Web export asset directories are rendering resources and omit filesystem
+appearance payloads; use the standalone package for CLI authentication.
+Missing or corrupted payloads still reject. The check extracts and relocates
+the actual archive, runs its CLI against all supplied Works, creates and edits
+new Works, and exercises missing/corrupt payload failures. See the included
+[standalone usage and distribution contract](docs/CLI-STANDALONE.md).
+This is a local source-built package. First-party licensing and dependency
+notice coverage remain open before public binary release; signing and
+clean-machine installation are separate acceptance gates.
+
 ## Verify and reproduce
 
 ```sh

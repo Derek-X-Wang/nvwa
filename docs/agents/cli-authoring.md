@@ -111,3 +111,10 @@ unsupported backends reject without saving the batch.
 authenticates the fixed body asset and, when appearance is selected, its
 descriptor and all thirteen appearance payloads, including unselected roles.
 These commands do not establish rendered appearance readiness.
+
+For use outside the source checkout, the complete standalone package provides
+an `assets/` root with both admitted B1 base and appearance versions. Set an
+absolute root explicitly; do not substitute Studio's or the Web export's
+rendering asset directory, which omits filesystem appearance payloads.
+See `README.md` in the extracted standalone package for offline usage and
+distribution limits, or `docs/CLI-STANDALONE.md` in the source checkout.
