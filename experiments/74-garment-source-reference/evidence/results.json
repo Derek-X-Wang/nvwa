@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "scope": "New stdlib replay of historical actual captures; authenticated historical actual MPFB static-reference comparison; no new original-tool execution",
+  "base_head": "1c819ea694cda9beefaa6e3542186db9adfb8490",
+  "quality": "HOLD",
+  "candidate": "NONE",
+  "author_recipe": "UNKNOWN",
+  "addon_extraction_files_verified": 2422,
+  "extraction_receipt_sha256": "b98b80d6b0430e4e9c2f66446533482d2c1f0cc76d78e9ace9c042923cd4a150",
+  "source_hashes": {
+    "mpfb-addon/entities/clothes/mhclo.py": "909ea98e31e04dfe8eb7c54849f74aa7365be0676a102c8c30e0e6c64b3eb9d8",
+    "mpfb-addon/services/clothesservice.py": "20b60daeb862e35652035b9e94d1830f1bd2d86706b1e6056f0f2cee43c8d40b",
+    "mpfb-addon/services/objectservice.py": "4a90898fc83d237446355d2c9b8f30b90f056be0d2325b3989b30b341d075211",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01.mhclo": "6df057d3116db93afbbbb6d692f92cce84aa16db699f47dd14e825d07c6fd42f",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01.obj": "fd529bb8dd6a994c1e9a3fb2fd8b236f52c0cc7cebb1f6fd9328953d9df6d6ff"
+  },
+  "historical_actual_replay": [
+    {
+      "case": "arm0",
+      "input_sha256": "1a310480d1a9e3934bce23678c4a74c05d0e110eaf68f2674b172dee1b5009d3",
+      "diagnostic_exit_code": 0,
+      "posed_over_fitted_rest_area": 1.0000140755661076,
+      "reconstruction": {
+        "all_source_vertices": 1797,
+        "authored_fk_max_component_error": 7.293033377209213e-07,
+        "authored_joint_head_max_component_error_m": 3.960591470342223e-07,
+        "rest_inverse_bind_identity_error": 1.0800307315150803e-07,
+        "rest_max_component_error_m": 1.095930359795716e-07,
+        "normalized_weight_max_component_error": 3.632476242021454e-08,
+        "actual_weight_lbs_max_component_error_m": 1.2860308373774387e-07,
+        "source_fit_weight_lbs_max_component_error_m": 1.4534784920083865e-07,
+        "maximum_positive_bones_per_vertex": 6,
+        "signed_mapping_rows": 30
+      }
+    },
+    {
+      "case": "arm2",
+      "input_sha256": "5df0c97e5c51b3e71741e115ca4040d441189dd5853a505c1076d9ed0a53ae5e",
+      "diagnostic_exit_code": 3,
+      "posed_over_fitted_rest_area": 22.005635738420796,
+      "reconstruction": {
+        "all_source_vertices": 1797,
+        "authored_fk_max_component_error": 7.293033377209213e-07,
+        "authored_joint_head_max_component_error_m": 3.9648939678671447e-07,
+        "rest_inverse_bind_identity_error": 1.0800307315150803e-07,
+        "rest_max_component_error_m": 1.095930359795716e-07,
+        "normalized_weight_max_component_error": 3.632476242021454e-08,
+        "actual_weight_lbs_max_component_error_m": 1.4634197509355573e-07,
+        "source_fit_weight_lbs_max_component_error_m": 1.6606523955964292e-07,
+        "maximum_positive_bones_per_vertex": 6,
+        "signed_mapping_rows": 30
+      }
+    },
+    {
+      "case": "knee2",
+      "input_sha256": "e99893c5cf5c7b24890f10f35d22bd01da3ea32e880e7ecf4533e3b8c285364b",
+      "diagnostic_exit_code": 0,
+      "posed_over_fitted_rest_area": 1.0000140755661076,
+      "reconstruction": {
+        "all_source_vertices": 1797,
+        "authored_fk_max_component_error": 7.293033377209213e-07,
+        "authored_joint_head_max_component_error_m": 3.960591470342223e-07,
+        "rest_inverse_bind_identity_error": 1.0800307315150803e-07,
+        "rest_max_component_error_m": 1.095930359795716e-07,
+        "normalized_weight_max_component_error": 3.632476242021454e-08,
+        "actual_weight_lbs_max_component_error_m": 1.2860308373774387e-07,
+        "source_fit_weight_lbs_max_component_error_m": 1.4534784920083865e-07,
+        "maximum_positive_bones_per_vertex": 6,
+        "signed_mapping_rows": 30
+      }
+    }
+  ],
+  "historical_actual_static_reference": {
+    "schema_version": 1,
+    "scope": "Historical actual MPFB static reference versus historical actual Nvwa arm0 fitted rest; no new Blender execution or posed equivalence",
+    "original_reference_sha256": "7ee2f6fd2204a239f77aadd4ed4eb56d071d1ee1ce74ec931eb3cbd210d4a9bf",
+    "public_summary_sha256": "65bf0da652df743614cd6ec04c8eb5d2bc52869876819b4cc5f4ae2393021302",
+    "original_blender_version": "5.2.2 LTS",
+    "original_mpfb_version": [
+      2,
+      0,
+      18
+    ],
+    "body_recipe": {
+      "torso_length": 1.0,
+      "jaw_drop": 0.0
+    },
+    "author_recipe": "UNKNOWN",
+    "source_triangle": [
+      246,
+      244,
+      182
+    ],
+    "helper_cage_max_component_error_m": 3.5762786865234375e-07,
+    "all1797_garment_max_component_error_m": 7.569789886474609e-06,
+    "selected_reference_fitted_rest_area_m2": 1.8834991180905933e-05,
+    "selected_nvwa_fitted_rest_area_m2": 1.884345974021258e-05,
+    "selected_reference_over_nvwa_rest_area": 0.999550583628304,
+    "selected_points": [
+      {
+        "source_id": 246,
+        "original_reference_fitted_rest_m": [
+          0.17206358909606934,
+          0.5732240676879883,
+          -0.0386301651597023
+        ],
+        "historical_nvwa_fitted_rest_m": [
+          0.17206358909606934,
+          0.5732240080833435,
+          -0.03863012418150902
+        ]
+      },
+      {
+        "source_id": 244,
+        "original_reference_fitted_rest_m": [
+          0.1674620807170868,
+          0.5532727241516113,
+          -0.03468625620007515
+        ],
+        "historical_nvwa_fitted_rest_m": [
+          0.1674603670835495,
+          0.5532670617103577,
+          -0.034685928374528885
+        ]
+      },
+      {
+        "source_id": 182,
+        "original_reference_fitted_rest_m": [
+          0.16160550713539124,
+          0.5343639850616455,
+          -0.02979631908237934
+        ],
+        "historical_nvwa_fitted_rest_m": [
+          0.16160550713539124,
+          0.5343639254570007,
+          -0.02979627437889576
+        ]
+      }
+    ],
+    "posed_original_tool_reference": "NOT-RUN",
+    "original_armature_policy_effect": "UNKNOWN",
+    "minimum_justified_fix": "NONE",
+    "quality": "HOLD"
+  },
+  "startup_blocker": {
+    "schema_version": 1,
+    "scope": "Task-owned executable startup probes only; no Blender Python script launched",
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "--version"
+    ],
+    "owned_pids": [
+      70313,
+      70786
+    ],
+    "stdout_bytes_observed": 0,
+    "stderr_bytes_observed": 0,
+    "second_probe_observed_elapsed_seconds_lower_bound": 61,
+    "second_probe_cpu_seconds_at_that_observation": 0.02,
+    "termination": "TERM sent to owned PIDs; subsequent exact-command process search empty",
+    "runtime_version": "NOT-VERIFIED",
+    "bundle_metadata_version": "5.2.2",
+    "bundle_metadata_is_not_executable_version": true,
+    "reference_attempt_spent": false,
+    "original_tool_pose_reference": "NOT-RUN; installed executable startup blocked",
+    "host_repair_attempted": false,
+    "second_probe_collected_exit_code": 143
+  },
+  "controls": {
+    "normal": {
+      "tests": 3,
+      "result": "PASS",
+      "observed_seconds": 0.501
+    },
+    "optimized": {
+      "tests": 3,
+      "result": "PASS",
+      "observed_seconds": 0.494
+    },
+    "scope": "historical comparison provenance only; Blender driver NOT-RUN"
+  },
+  "syntax_ast": {
+    "result": "PASS",
+    "files": 5
+  },
+  "not_run": [
+    "New Blender Python driver",
+    "Original-tool arm2/knee2 armature evaluation",
+    "Fresh native/Web capture",
+    "Original pose policy attribution",
+    "Graphics/GPU/performance",
+    "Any candidate correction or admission"
+  ]
+}

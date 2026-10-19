@@ -1,14 +1,16 @@
 # Nvwa 路线图
 
-## 当前阶段：八参数双端有界运行验收通过（2026-10-18）
+## 当前阶段：八参数与独立 CLI 已交付；人物质量有界排查（2026-10-18）
 
-本节保留 [PR #88](https://github.com/Derek-X-Wang/nvwa/pull/88) 合并前的验收快照；最终发布、议题关闭与精确 PR/main CI 结果以该 PR 的发布记录为准。
+[PR #88](https://github.com/Derek-X-Wang/nvwa/pull/88) 已合并，#85 八参数与 #89 首次原生保存确认已关闭。旧作品保持原后端，不自动升级。双端编辑、动作、失败恢复与完整保存交换已有实际验收；当时的矩阵、短时播放和限制见[人物质量记录](evidence/b1-character-quality/RESULTS.md)，不提升为长时连续或性能认证。
 
-本轮有界结论和实际画面见[人物质量记录](evidence/b1-character-quality/RESULTS.md)。眼睛在桌面/Web 各九组隔离控制中都显示低面数轮廓，但这不能唯一解释眼睑贴合问题。发际的一种 mip 候选超过预先规定的覆盖误差，已拒绝；未改正式材质。衣物只定位一个肩部三角形在抬臂时约 22 倍的面积伸长，来源重放能复现，尚无有依据的修复。眼睑、发际与衣物质量仍 HOLD。[现有素材替换方案](research/b1-source-replacement-plan.md)列出已保留的本地档案中的候选、许可、大小与准入条件；[MPFB 衣物语义核查](research/b1-mpfb-garment-semantics.md)区分 Rust 合同、原工具源码与尚未完成的原工具实际运行。
+[PR #91](https://github.com/Derek-X-Wang/nvwa/pull/91) 已合并到 `1c819ea6`，精确 PR 与合并后 main 的四项 CI 分别通过。#90 独立 CLI 资产包已关闭：包内包含固定身体及外观输入，实际离线 CLI 创作、普通桌面/Web 编辑与逐字节保存交换已有证据。#10 的完整发行条款、签名和干净机器验证仍保留。
 
-[#85 八参数候选](https://github.com/Derek-X-Wang/nvwa/issues/85)复用已批准的 MPFB targets，在躯干和下颌之外增加头、鼻、嘴、下巴、颈和胯宽，当前分支可用，旧作品不自动升级。产品581的210项本地测试、构建及四项精确head CI通过；72实际CPU全零/旧40组和五类真实语义故障与恢复另计，不叠加测试总数。普通双端八参数操作、[#89 首次原生保存确认](https://github.com/Derek-X-Wang/nvwa/issues/89)和桌面→Web→桌面作品交换已有实际证据。原生/Web各69份held及数学/脚底/附件门通过独立复核；Web在43份/86请求确认边界后换浏览器启动继续，相同build不等于连续进程。R5双端各三个播放体型共18步实际结果及独立复核通过；Web播放按钮间隔213–649ms，只证明短时推进，不宣称长时连续播放。最终源码审查、精确最终head CI及合并后main核验仍保留，#85/#89尚未关闭，不能把581 CI当作后续观察器/文档源码的CI。
+本轮按 #79 眼睛 A/B、#80 肩部衣物与 #86 普通 Web 编辑回归并行推进。[眼睛有界决定](evidence/eye-ab-decision-20261018/README.md)是保留正式 A，B 暂不准入：修正请求身份核验后，实际 Web 仍在控制派发前受阻，只取得未配对 A 画面，未取得完整记录或 B。按停止条件结束采集修补，不将工具失败归咎于素材质量；完整眼睑质量仍 HOLD。[现有素材替换方案](research/b1-source-replacement-plan.md)保留来源、许可和准入门。发际 mip 候选已拒绝，不以材质掩盖几何问题。
 
-Web 编辑中的短暂消失与过时 Ready 提示由 [#86](https://github.com/Derek-X-Wang/nvwa/issues/86) 跟踪，未知版本提示由 [#87](https://github.com/Derek-X-Wang/nvwa/issues/87) 跟踪，CLI使用原生/Web发行目录验证时缺少磁盘外观payload由 [#90](https://github.com/Derek-X-Wang/nvwa/issues/90) 跟踪；完整源assets验证成功不能掩盖发行根失败。两次有计时的躯干编辑不等于无闪烁或旧main渲染A/B。新肩部双端source0/2重放和数值一致仍保留22.0056倍面积伸长，并未修复衣物。眼睑、发际、衣物与M2质量HOLD不变；#3阻塞、#4测量缺口和#84严格全workspace lint缺口保留。当前剩余审查/CI由agent完成，无需真人操作。
+肩部[原工具参照实验74](../experiments/74-garment-source-reference/README.md)复核了已有真实 MPFB 静态输出：同一个窄三角形在该明确配方中也存在，面积与 Nvwa 相差约0.045%。这不是新执行的 Blender 姿态参照。抬臂22.0056倍拉伸可重放；原工具启动受阻，姿态与权重策略归因仍 UNKNOWN，无有依据的修复，#80 保持 HOLD。
+
+[#86 普通 Web 回归](evidence/web-edit-regression-20261018/README.md)补到两种后端的单次编辑、释放滑块的一步撤销/重做、损坏文件保护与有效作品恢复；实际下载与输入逐字节一致。八参数首次批量输入未生效，原因未知，按原样保留。原始整个人物消失本轮未复现；无连续呈现或恢复时间保证，#86 保持开放。#3 保持阻塞，#4 保留测量缺口，#84 严格全工作区 lint 与 M2 动作质量 HOLD 不变。
 
 人物基础优先复用成熟 MakeHuman/MPFB 的数据设计，先验证相同小样的两条 Rust 路径，再决定正式后端。[53–55 的同样本对照](../experiments/53-character-comparison/RESULTS.md)已完成身体、关节端点和衣物数值检查：A 是编译数据包，B1 是修正小形变过滤后的实际 Humentity。[#73](https://github.com/Derek-X-Wang/nvwa/issues/73) 的 [56–59 完整姿态与双端实验](../experiments/56-b1-pose-reference/RESULTS.md)已通过 40 组数值门、最终原生/Web 六组完整骨架读回、原型状态往返和失败保护；原四权重 GPU 仍 HOLD。保留全部正的最终聚合影响、不受四权重限制的 CPU 桥接成为下一步接入候选，A 保留数值对照。它与 MPFB 的阈值策略不同，不宣称原库完整 GPU 能力。肩/腰穿插、服装折叠和法线角度/性能仍未验收；上述实验阶段未替换产品角色或根依赖，也未解除既有 M2 HOLD。发布审查、PR/main CI 按具体提交在 PR 中记录。
 

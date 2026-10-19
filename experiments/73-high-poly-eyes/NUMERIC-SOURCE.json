@@ -1,0 +1,12 @@
+{
+  "source": "crates/nvwa-runtime/src/appearance/geometry.rs",
+  "sha256": "f512087f881e1b85c95f4c3e7a0443f769ab9c9b99692c5a4e39bf7031702e3e",
+  "changes": [
+    "remove production prepare/authentication only",
+    "expose parsers to experiment",
+    "adjust include path only",
+    "numeric cage/weights/fit/transfer/source_normals/skin bodies retained exactly",
+    "obj parser validates finite standalone vn rows; original faces require v/vt; fitted normal recomputation and all other numeric bodies unchanged"
+  ],
+  "unit_policy": "MHCLO raw scale references and offsets multiplied by0.1 once inside parser; fitted cage is already metres; no OBJ positions enter fit; display placement applied once by original entity"
+}

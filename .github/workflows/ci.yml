@@ -58,7 +58,10 @@ jobs:
       - name: Check eye, hair, and character parameter controls
         timeout-minutes: 3
         run: |
-          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls; do
+          # The transfer tests run the actual experimental HTML handlers in
+          # Node. A missing interpreter is an error, never a skipped green test.
+          node --version
+          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls 73-high-poly-eyes; do
             python3 -B -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
             python3 -B -O -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
           done
@@ -161,6 +164,8 @@ jobs:
           cargo fmt --manifest-path experiments/71-b1-character-parameters/Cargo.toml --package b1-character-parameters --check
           cargo test --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --locked --offline
           cargo test --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --locked --offline
+          cargo fmt --manifest-path experiments/73-high-poly-eyes/Cargo.toml --package b1-high-poly-eyes --check
+          cargo test --manifest-path experiments/73-high-poly-eyes/Cargo.toml --lib --locked --offline
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
