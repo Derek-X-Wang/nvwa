@@ -6,6 +6,11 @@ and the Nvwa-authored arm2 diagnostic pose. Source triangle200 remains
 `[246,244,182]`. The original garment author's body recipe remains **UNKNOWN**.
 The all-positive final aggregate Rust skinning contract stays unchanged.
 
+Fresh ordinary desktop and Web builds also completed playback, jaw editing,
+Undo/Redo and a full native→Web→native saved-file round trip. The final file was
+byte-identical after native re-save. This separate [runtime regression](RUNTIME-REGRESSION.md)
+uses the old two-parameter profile and does not admit garment quality.
+
 ## Actual reference result
 
 The unchanged experiment74 driver and its existing120s wrapper ran successfully
