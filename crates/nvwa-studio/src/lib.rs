@@ -1618,6 +1618,7 @@ fn smoke_and_capture(
                 "revision": appearance.revision,
                 "ready": appearance.ready,
                 "pending": appearance.pending,
+                "retained": appearance.retained,
                 "error": appearance.error,
             },
             "document_revision": work.editor.document().map(|doc| doc.revision),
