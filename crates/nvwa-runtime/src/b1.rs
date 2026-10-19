@@ -364,6 +364,8 @@ fn fail(world: &mut World, runtime: &mut B1Runtime, error: String) {
                     "B1 candidate rejected · current Work preserved: {error}"
                 ));
                 editor.message = "B1 candidate rejected · current Work preserved".into();
+                world.resource_mut::<RuntimeStatus>().phase =
+                    "B1 candidate rejected · current Work preserved".into();
             }
         } else {
             let mut status = world.resource_mut::<RuntimeStatus>();
@@ -381,7 +383,13 @@ fn drive(world: &mut World) {
         .as_ref()
         .is_some_and(|c| !selection_current(world, c))
     {
-        discard(world, runtime.candidate.take().unwrap());
+        let candidate = runtime.candidate.take().unwrap();
+        let was_open = candidate.is_open;
+        discard(world, candidate);
+        if was_open {
+            world.resource_mut::<RuntimeStatus>().phase =
+                "B1 candidate cancelled · current Work retained".into();
+        }
     }
     let (doc, request, is_open) = {
         let editor = world.resource::<EditorState>();
@@ -429,8 +437,12 @@ fn drive(world: &mut World) {
             let server = world.resource::<AssetServer>().clone();
             IoTaskPool::get().spawn(verify_source(server, version))
         });
-        if !is_open {
-            world.resource_mut::<RuntimeStatus>().ready = false;
+        {
+            let mut status = world.resource_mut::<RuntimeStatus>();
+            if !is_open {
+                status.ready = false;
+            }
+            status.phase = "Preparing B1 candidate · last CPU frame retained".into();
         }
         runtime.candidate = Some(Candidate {
             document: doc,
@@ -528,7 +540,13 @@ fn refresh_active_status(world: &mut World, runtime: &B1Runtime) {
             && Selection::from_doc(doc) == active.selection
             && editor.document_generation == active.generation
     });
+    let pending_open = editor.pending_open.is_some();
     if !current {
+        let mut status = world.resource_mut::<RuntimeStatus>();
+        status.ready = false;
+        if status.error.is_none() {
+            status.phase = "Preparing B1 shape · last CPU frame retained".into();
+        }
         return;
     }
     let meshes = active
@@ -557,10 +575,12 @@ fn refresh_active_status(world: &mut World, runtime: &B1Runtime) {
         // Undo/Escape can return to the already uploaded selection while a newer
         // fit is still pending. That retained frame is current again immediately.
         status.error = None;
-        status.phase = if active.rig.is_some() {
-            "Ready · B1 authored rehearsal · full-positive CPU"
+        status.phase = if pending_open {
+            "Preparing B1 candidate · current Work CPU frame retained"
+        } else if active.rig.is_some() {
+            "CPU body published · B1 authored rehearsal · full-positive CPU"
         } else {
-            "Ready · B1 positive aggregate CPU · static diagnostic pose"
+            "CPU body published · B1 positive aggregate CPU · static diagnostic pose"
         }
         .into();
     }
@@ -1014,9 +1034,9 @@ fn publish(world: &mut World) {
                     status.active_animations = 0;
                     status.paused_animations = 0;
                     status.phase = if session_is_motion_label {
-                        "Ready · B1 authored rehearsal · full-positive CPU"
+                        "CPU body published · B1 authored rehearsal · full-positive CPU"
                     } else {
-                        "Ready · B1 positive aggregate CPU · static diagnostic pose"
+                        "CPU body published · B1 positive aggregate CPU · static diagnostic pose"
                     }
                     .into();
                     if c.is_open {
@@ -3243,6 +3263,683 @@ mod tests {
         );
     }
 
+    fn issue86_full_appearance(app: &mut App) {
+        let doc = app.world().resource::<EditorState>().document().unwrap();
+        let character_id = doc.character.id.clone();
+        let appearance =
+            nvwa_core::CharacterAppearance::b1_cc0_for(&doc.profile.backend, true, true, true)
+                .unwrap();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetAppearance {
+                character_id,
+                appearance,
+            })
+            .unwrap();
+        motion_tick(app, 0.0);
+        assert!(crate::appearance_snapshot(app.world_mut()).is_ok());
+    }
+    fn issue86_torso_preview(app: &mut App, value: f32) {
+        let mut values = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .parameters
+            .clone();
+        values.insert("torso_length".into(), value);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .preview_parameters(values)
+            .unwrap();
+        // Exercise the production scheduled systems at the deterministic boundary
+        // before source fitting can publish a replacement body.
+        drive(app.world_mut());
+        assert!(app.world().resource::<B1Runtime>().candidate.is_some());
+        assert!(
+            appearance_frame(app.world()).is_err(),
+            "requested shape is not published yet"
+        );
+        super::super::appearance::update(app.world_mut());
+    }
+    #[test]
+    fn issue86_pending_shape_does_not_leave_ready_phase() {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        issue86_torso_preview(&mut app, 0.42);
+        let status = app.world().resource::<RuntimeStatus>();
+        assert!(!status.ready);
+        assert!(status.phase.contains("Preparing"));
+        assert!(
+            !status.phase.starts_with("Ready"),
+            "pending requested shape must not display stale Ready: {}",
+            status.phase
+        );
+    }
+    #[test]
+    fn issue86_pending_shape_retains_last_published_appearance_without_current_evidence() {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        let snapshot = crate::appearance_snapshot(app.world_mut()).unwrap();
+        let body = appearance_frame(app.world()).unwrap().body;
+        let material = app
+            .world()
+            .get::<MeshMaterial3d<StandardMaterial>>(body)
+            .unwrap()
+            .0
+            .clone();
+        issue86_torso_preview(&mut app, 0.42);
+        let status = crate::appearance_status(app.world());
+        assert!(status.pending);
+        assert!(status.retained);
+        assert!(!status.ready);
+        assert!(
+            status.applied.is_none(),
+            "retained frame is not evidence for requested shape"
+        );
+        assert_eq!(
+            app.world()
+                .get::<MeshMaterial3d<StandardMaterial>>(body)
+                .unwrap()
+                .0,
+            material,
+            "pending fit must not strip the retained skin to baseline brown"
+        );
+        for role in snapshot["accessories"].as_array().unwrap() {
+            let id = role["entity"].as_str().unwrap();
+            assert!(
+                app.world()
+                    .iter_entities()
+                    .any(|e| format!("{:?}", e.id()) == id),
+                "pending fit must retain {id}"
+            );
+        }
+        assert!(crate::appearance_snapshot(app.world_mut()).is_err());
+        assert_eq!(
+            app.world()
+                .get::<MeshMaterial3d<StandardMaterial>>(body)
+                .unwrap()
+                .0,
+            material,
+            "pending readback refusal must preserve the validated retained display"
+        );
+        assert!(crate::appearance_status(app.world()).retained);
+    }
+
+    fn issue86_assert_roles(
+        app: &mut App,
+        expected: &nvwa_core::CharacterAppearance,
+    ) -> serde_json::Value {
+        let snapshot = crate::appearance_snapshot(app.world_mut()).unwrap();
+        assert_eq!(snapshot["applied"], serde_json::to_value(expected).unwrap());
+        assert!(!snapshot["skin"].is_null());
+        let roles = snapshot["accessories"].as_array().unwrap();
+        assert!(roles.iter().any(|v| v["name"] == "eyes"));
+        assert!(roles.iter().any(|v| v["name"] == "hair"));
+        snapshot
+    }
+    fn issue86_settle(app: &mut App) {
+        app.update();
+        until(app, |w| {
+            w.resource::<RuntimeStatus>().ready && crate::appearance_status(w).ready
+        });
+        let status = crate::appearance_status(app.world());
+        assert!(!status.pending);
+        assert!(status.error.is_none());
+    }
+    #[test]
+    fn issue86_legacy_and_new_edit_undo_redo_reload_cancel_and_latest_wins() {
+        for new_base in [false, true] {
+            let (mut app, dir, _) = motion_app();
+            if new_base {
+                fill_v2(&dir);
+                open_ready(
+                    &mut app,
+                    SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character())
+                        .unwrap(),
+                );
+            }
+            issue86_full_appearance(&mut app);
+            let initial = app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .clone();
+            let appearance = initial.character.appearance.clone();
+            let before = issue86_assert_roles(&mut app, &appearance);
+            issue86_torso_preview(&mut app, 0.42);
+            assert_eq!(
+                app.world().resource::<EditorState>().document(),
+                Some(&initial),
+                "preview cannot mutate Work"
+            );
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .commit_preview()
+                .unwrap();
+            issue86_settle(&mut app);
+            let edited = app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .clone();
+            assert_eq!(edited.character.parameters["torso_length"], 0.42);
+            let after = issue86_assert_roles(&mut app, &appearance);
+            assert_ne!(
+                after["body_positions_sha256"],
+                before["body_positions_sha256"]
+            );
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::Undo)
+                .unwrap();
+            issue86_settle(&mut app);
+            assert_eq!(
+                app.world()
+                    .resource::<EditorState>()
+                    .document()
+                    .unwrap()
+                    .character
+                    .parameters["torso_length"],
+                0.0
+            );
+            assert_eq!(
+                issue86_assert_roles(&mut app, &appearance)["body_positions_sha256"],
+                before["body_positions_sha256"]
+            );
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::Redo)
+                .unwrap();
+            issue86_settle(&mut app);
+            assert_eq!(
+                issue86_assert_roles(&mut app, &appearance)["body_positions_sha256"],
+                after["body_positions_sha256"]
+            );
+            // Reopen the exact saved Work, with version identity and stage intact.
+            let saved = app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .clone();
+            let json = saved.to_json().unwrap();
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .request_open(SceneDocument::from_json(&json).unwrap())
+                .unwrap();
+            app.update();
+            assert!(
+                !app.world()
+                    .resource::<RuntimeStatus>()
+                    .phase
+                    .starts_with("Ready"),
+                "Open candidate must not advertise stale Ready"
+            );
+            until(&mut app, |w| {
+                w.resource::<EditorState>().pending_open.is_none()
+                    && crate::appearance_status(w).ready
+            });
+            assert_eq!(
+                app.world().resource::<EditorState>().document(),
+                Some(&saved)
+            );
+            issue86_assert_roles(&mut app, &appearance);
+            let history = app
+                .world()
+                .resource::<EditorState>()
+                .editor
+                .as_ref()
+                .unwrap()
+                .retention_stats();
+            issue86_torso_preview(&mut app, -0.2);
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .cancel_preview();
+            app.update();
+            assert!(app.world().resource::<B1Runtime>().candidate.is_none());
+            assert_eq!(
+                app.world().resource::<EditorState>().document(),
+                Some(&saved)
+            );
+            assert_eq!(
+                app.world()
+                    .resource::<EditorState>()
+                    .editor
+                    .as_ref()
+                    .unwrap()
+                    .retention_stats(),
+                history
+            );
+            issue86_assert_roles(&mut app, &appearance);
+            issue86_torso_preview(&mut app, -0.4);
+            issue86_torso_preview(&mut app, 0.2);
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .commit_preview()
+                .unwrap();
+            issue86_settle(&mut app);
+            assert_eq!(
+                app.world()
+                    .resource::<EditorState>()
+                    .document()
+                    .unwrap()
+                    .character
+                    .parameters["torso_length"],
+                0.2
+            );
+            let frame = b1_frame_snapshot(app.world()).unwrap();
+            assert_eq!(
+                frame["parameters"]["torso_length"],
+                serde_json::json!(0.2_f32)
+            );
+            issue86_assert_roles(&mut app, &appearance);
+        }
+    }
+    #[test]
+    fn issue86_failed_fit_keeps_error_and_last_appearance_then_cancel_recovers() {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        let before = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        let body = appearance_frame(app.world()).unwrap().body;
+        let material = app
+            .world()
+            .get::<MeshMaterial3d<StandardMaterial>>(body)
+            .unwrap()
+            .0
+            .clone();
+        issue86_torso_preview(&mut app, 0.42);
+        motion_tick(&mut app, 31.0);
+        let status = app.world().resource::<RuntimeStatus>();
+        assert!(!status.ready);
+        assert!(
+            status
+                .error
+                .as_ref()
+                .unwrap()
+                .contains("exceeded 30 seconds")
+        );
+        assert!(!status.phase.starts_with("Ready"));
+        assert_eq!(
+            app.world()
+                .get::<MeshMaterial3d<StandardMaterial>>(body)
+                .unwrap()
+                .0,
+            material
+        );
+        assert!(!crate::appearance_status(app.world()).ready);
+        assert!(crate::appearance_snapshot(app.world_mut()).is_err());
+        assert_eq!(
+            app.world()
+                .get::<MeshMaterial3d<StandardMaterial>>(body)
+                .unwrap()
+                .0,
+            material,
+            "rejected evidence must not strip a valid retained appearance"
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .cancel_preview();
+        motion_tick(&mut app, 0.0);
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&before)
+        );
+        issue86_assert_roles(&mut app, &before.character.appearance);
+        assert!(app.world().resource::<RuntimeStatus>().error.is_none());
+    }
+
+    #[test]
+    fn issue86_pending_retention_still_rejects_tampered_actual_skin() {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        let body = appearance_frame(app.world()).unwrap().body;
+        let material = app
+            .world()
+            .get::<MeshMaterial3d<StandardMaterial>>(body)
+            .unwrap()
+            .0
+            .clone();
+        issue86_torso_preview(&mut app, 0.42);
+        app.world_mut()
+            .resource_mut::<Assets<StandardMaterial>>()
+            .get_mut(&material)
+            .unwrap()
+            .base_color = Color::BLACK;
+        super::super::appearance::update(app.world_mut());
+        let status = crate::appearance_status(app.world());
+        assert!(!status.ready);
+        assert!(
+            !status.pending,
+            "real retained binding error must not hide behind preparation"
+        );
+        assert!(status.applied.is_none());
+        assert!(status.error.as_deref().unwrap().contains("skin material"));
+        assert!(!status.retained);
+        super::super::appearance::update(app.world_mut());
+        let status = crate::appearance_status(app.world());
+        assert!(!status.pending);
+        assert!(
+            status.error.as_deref().unwrap().contains("skin material"),
+            "actual binding error must remain visible while preparation continues"
+        );
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .appearance_error
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn issue86_pending_readback_rejects_actual_retained_pixel_corruption() {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        let body = appearance_frame(app.world()).unwrap().body;
+        let material = app
+            .world()
+            .get::<MeshMaterial3d<StandardMaterial>>(body)
+            .unwrap()
+            .0
+            .clone();
+        let image = app
+            .world()
+            .resource::<Assets<StandardMaterial>>()
+            .get(&material)
+            .unwrap()
+            .base_color_texture
+            .clone()
+            .unwrap();
+        issue86_torso_preview(&mut app, 0.42);
+        app.world_mut()
+            .resource_mut::<Assets<Image>>()
+            .get_mut(&image)
+            .unwrap()
+            .data
+            .as_mut()
+            .unwrap()[0] ^= 1;
+        let error = crate::appearance_snapshot(app.world_mut()).unwrap_err();
+        assert!(error.contains("decoded image pixels changed"), "{error}");
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .phase
+                .contains("appearance binding failed"),
+            "snapshot failure must project its disposed appearance phase immediately"
+        );
+        let status = crate::appearance_status(app.world());
+        assert!(!status.ready && !status.pending && !status.retained && status.applied.is_none());
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .appearance_error
+                .is_some()
+        );
+        super::super::appearance::update(app.world_mut());
+        assert!(
+            crate::appearance_status(app.world())
+                .error
+                .unwrap()
+                .contains("decoded image pixels changed")
+        );
+    }
+
+    #[test]
+    fn issue86_feedback_readback_before_drive_refuses_old_ready_without_stripping_display() {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        let body = appearance_frame(app.world()).unwrap().body;
+        let material = app
+            .world()
+            .get::<MeshMaterial3d<StandardMaterial>>(body)
+            .unwrap()
+            .0
+            .clone();
+        let mut values = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .parameters
+            .clone();
+        values.insert("torso_length".into(), 0.42);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .preview_parameters(values)
+            .unwrap();
+        assert!(crate::appearance_snapshot(app.world_mut()).is_err());
+        assert!(
+            !app.world().resource::<RuntimeStatus>().ready,
+            "refused current evidence must clear the previous CPU readiness even before drive"
+        );
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .phase
+                .contains("Preparing")
+        );
+        assert_eq!(
+            app.world()
+                .get::<MeshMaterial3d<StandardMaterial>>(body)
+                .unwrap()
+                .0,
+            material
+        );
+        let status = crate::appearance_status(app.world());
+        assert!(!status.ready && status.applied.is_none() && status.retained);
+    }
+    #[test]
+    fn issue86_snapshot_after_glb_replacement_refuses_previous_b1_readiness() {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        assert!(app.world().resource::<RuntimeStatus>().ready);
+        let replacement = original();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(replacement.clone())
+            .unwrap();
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&replacement)
+        );
+        // Deliberately no drive/update: the old B1 session still exists while
+        // the public EditorState has already replaced the Work with GLB.
+        assert!(crate::appearance_snapshot(app.world_mut()).is_err());
+        let appearance = crate::appearance_status(app.world());
+        assert!(!appearance.ready && appearance.applied.is_none());
+        assert!(
+            !app.world().resource::<RuntimeStatus>().ready,
+            "a refused snapshot must clear previous B1 readiness for the replacement GLB Work"
+        );
+    }
+
+    #[test]
+    fn issue86_feedback_cancelled_or_rejected_open_does_not_leave_preparing_text() {
+        let (mut app, _, _) = harness(false);
+        // Seed Bevy's clock before advancing the production timeout, as in the
+        // existing >30-second timeout regression. The first update has delta 0.
+        motion_tick(&mut app, 0.0);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        drive(app.world_mut());
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .phase
+                .contains("Preparing")
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .cancel_pending_open();
+        drive(app.world_mut());
+        assert!(
+            !app.world()
+                .resource::<RuntimeStatus>()
+                .phase
+                .contains("Preparing"),
+            "cancelled candidate must not advertise pending preparation"
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        motion_tick(&mut app, 31.0);
+        assert_eq!(app.world().resource::<Time<Real>>().delta_secs(), 31.0);
+        assert!(app.world().resource::<EditorState>().open_error.is_some());
+        assert!(
+            !app.world()
+                .resource::<RuntimeStatus>()
+                .phase
+                .contains("Preparing"),
+            "rejected candidate must not advertise pending preparation"
+        );
+    }
+
+    #[test]
+    fn issue86_advancing_playback_holds_one_whole_cpu_frame_while_shape_is_pending() {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        app.world_mut().resource_mut::<Playback>().playing = true;
+        motion_tick(&mut app, 0.25);
+        let work = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        let before = last_display_frame(app.world()).unwrap();
+        let positions = uploaded_positions(&app);
+        let position = app.world().resource::<Playback>().position_seconds;
+        assert!(position > 0.0);
+        let full = crate::appearance_snapshot(app.world_mut()).unwrap();
+        let mut values = work.character.parameters.clone();
+        values.insert("torso_length".into(), 0.42);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .preview_parameters(values)
+            .unwrap();
+        // Full production scheduling with positive elapsed time: candidate source
+        // work has just started, and publication cannot yet admit its new shape.
+        motion_tick(&mut app, 0.25);
+        assert!(app.world().resource::<B1Runtime>().candidate.is_some());
+        assert_eq!(app.world().resource::<Time>().delta_secs(), 0.25);
+        let retained = last_display_frame(app.world()).unwrap();
+        assert_eq!(retained.body, before.body);
+        assert_eq!(retained.serial, before.serial);
+        assert_eq!(
+            serde_json::to_value(&retained.bones).unwrap(),
+            serde_json::to_value(&before.bones).unwrap()
+        );
+        assert_eq!(
+            uploaded_positions(&app),
+            positions,
+            "both displayed body/garment buffers must hold the same complete frame"
+        );
+        assert_eq!(
+            app.world().resource::<Playback>().position_seconds,
+            position
+        );
+        assert!(
+            app.world().resource::<Playback>().playing,
+            "retain play intent while the shape is pending"
+        );
+        // Refusal also validates actual retained role matrices, buffers, material
+        // and pixels. No current/applied evidence is returned for the new shape.
+        assert!(crate::appearance_snapshot(app.world_mut()).is_err());
+        let status = crate::appearance_status(app.world());
+        assert!(status.pending && status.retained && !status.ready && status.applied.is_none());
+        assert!(status.error.is_none());
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .cancel_preview();
+        motion_tick(&mut app, 0.25);
+        assert!(app.world().resource::<Playback>().position_seconds > position);
+        assert!(position_delta(&positions, &uploaded_positions(&app)) > 1e-5);
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&work)
+        );
+        let resumed = issue86_assert_roles(&mut app, &work.character.appearance);
+        assert_eq!(resumed["body_entity"], full["body_entity"]);
+    }
+
+    #[test]
+    fn issue86_snapshot_rejection_projects_settled_error_and_preserves_specific_candidate_failure()
+    {
+        let (mut app, _, _) = motion_app();
+        issue86_full_appearance(&mut app);
+        let corrupt_skin = |app: &mut App| {
+            let body = last_display_frame(app.world()).unwrap().body;
+            let material = app
+                .world()
+                .get::<MeshMaterial3d<StandardMaterial>>(body)
+                .unwrap()
+                .0
+                .clone();
+            let image = app
+                .world()
+                .resource::<Assets<StandardMaterial>>()
+                .get(&material)
+                .unwrap()
+                .base_color_texture
+                .clone()
+                .unwrap();
+            app.world_mut()
+                .resource_mut::<Assets<Image>>()
+                .get_mut(&image)
+                .unwrap()
+                .data
+                .as_mut()
+                .unwrap()[0] ^= 1;
+        };
+        corrupt_skin(&mut app);
+        let error = crate::appearance_snapshot(app.world_mut()).unwrap_err();
+        assert!(error.contains("decoded image pixels changed"));
+        let status = app.world().resource::<RuntimeStatus>();
+        assert!(!status.ready && status.appearance_error.is_some());
+        assert!(
+            status.phase.contains("appearance binding failed"),
+            "settled snapshot must not advertise bound appearance: {}",
+            status.phase
+        );
+        // Restore through the normal controller, then use a real timeout to
+        // verify that generic appearance feedback cannot hide its specific phase.
+        motion_tick(&mut app, 0.0);
+        issue86_assert_roles(
+            &mut app,
+            &nvwa_core::CharacterAppearance::b1_cc0(true, true, true),
+        );
+        issue86_torso_preview(&mut app, 0.42);
+        motion_tick(&mut app, 31.0);
+        let specific = app.world().resource::<RuntimeStatus>().phase.clone();
+        let runtime_error = app.world().resource::<RuntimeStatus>().error.clone();
+        assert!(
+            runtime_error
+                .as_deref()
+                .unwrap()
+                .contains("exceeded 30 seconds")
+        );
+        corrupt_skin(&mut app);
+        assert!(
+            crate::appearance_snapshot(app.world_mut())
+                .unwrap_err()
+                .contains("decoded image pixels changed")
+        );
+        assert_eq!(app.world().resource::<RuntimeStatus>().phase, specific);
+        assert_eq!(app.world().resource::<RuntimeStatus>().error, runtime_error);
+    }
+
     #[test]
     fn bounded_reader_stops_at_one_over_limit() {
         let mut reader = bevy::asset::io::VecReader::new(vec![0; 1025]);
@@ -3860,6 +4557,21 @@ pub(super) fn appearance_frame(world: &World) -> Result<AppearanceFrame, String>
         return Err("appearance: current body is not the requested published shape/frame".into());
     }
     appearance_frame_for_session(world, active, doc.revision)
+}
+/// Last uploaded CPU display only. This deliberately does not admit the requested
+/// Work/preview as current. Appearance may keep this binding while preparing a
+/// replacement, but must never use it for applied/ready evidence or a new fit.
+pub(super) fn last_display_frame(world: &World) -> Result<AppearanceFrame, String> {
+    let active = world
+        .get_resource::<B1Runtime>()
+        .and_then(|runtime| runtime.active.as_ref())
+        .ok_or("appearance: retained B1 body absent")?;
+    validate_structure(world, active)?;
+    if active.phase != 2 || active.frame_error.is_some() || active.pending_sample.is_some() {
+        return Err("appearance: retained CPU frame is not valid".into());
+    }
+    // No requested revision is attributed to a retained frame.
+    appearance_frame_for_session(world, active, 0)
 }
 fn appearance_frame_for_session(
     world: &World,

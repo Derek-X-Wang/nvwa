@@ -9,6 +9,32 @@ The immutable product baseline is `581f6c8329c984bf55a913ca999830430334e5a1`.
 [cases.json](cases.json) preserves the original eight recipes and five diagnostic
 poses; [pins.json](pins.json) authenticates the frozen inputs and product seams.
 
+## Current checkout compatibility after issue86
+
+The portable Python controls now distinguish the checkout they inspect from the
+immutable source they execute. [input-context-v1.json](input-context-v1.json)
+admits one additional, complete source context: the reviewed issue86 runtime
+retention changes. Only `b1.rs` and `appearance/mod.rs` differ from baseline581;
+both must match their exact SHA-256 together. The other fifteen files in the
+seventeen-file baseline set retain their original hashes. Unknown changes,
+mixed baseline/current pairs, missing files and symlinks reject. The original
+pins file and the new context manifest each have a complete code-pinned hash.
+
+Five source sections retain byte-identical hashes across baseline581 and this
+context: signed target mapping, source IDs, visible-body indices, CPU upload and
+the existing endpoint semantic test. `appearance/geometry.rs`, the B1 adapter,
+core parameter catalogues, frozen original40 inputs and numeric evaluators also
+retain their original whole-file pins. These are source identity witnesses;
+they do not establish current issue86 runtime numeric results.
+
+`--check-inputs` reports the selected checkout context separately from the
+baseline. `--execute` still archives **only baseline581**, verifies that archive
+in historical-only mode, and runs every original zero/original40/five-fault gate
+there. Its receipt records both identities. No current file is overlaid onto
+that archive. Existing execution receipts and historical pins stay unchanged.
+Current issue86 production tests and mutation gates remain separate checks;
+current issue86 original40 execution is **NOT-RUN** by this tooling fix.
+
 ## Cheap preparation controls
 
 From the repository root, without Cargo:
@@ -95,6 +121,6 @@ production semantic red/restore controls. It is neither the historical57 Blender
 full-reference oracle rerun nor sampled40 CI renamed as a full gate. The original
 full-source40 evidence and sampled40 CI retain their original identities. This
 run binds their original recipe/pose coverage and numerical limits to a complete
-current production old/new comparison. It does not supply missing actual71
+baseline581 production old/new comparison. It does not supply missing actual71
 cohorts, renderer/GPU pixel readback, performance, GUI, live playback or quality
 clearance. #79/#80/M2 HOLD and #3/#4 limits remain unchanged.

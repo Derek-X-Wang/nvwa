@@ -4,7 +4,10 @@ mod assets;
 mod geometry;
 use crate::{
     EditorState, RuntimeStatus,
-    b1::{AppearanceFit, AppearanceFrame, appearance_fit, appearance_frame, appearance_identity},
+    b1::{
+        AppearanceFit, AppearanceFrame, appearance_fit, appearance_frame, appearance_identity,
+        last_display_frame,
+    },
 };
 use bevy::{
     asset::RenderAssetUsages,
@@ -27,6 +30,8 @@ pub struct AppearanceStatus {
     pub body_entity: Option<String>,
     pub ready: bool,
     pub pending: bool,
+    /// Last validated CPU display resources only; never current/applied/ready or GPU evidence.
+    pub retained: bool,
     pub error: Option<String>,
 }
 #[derive(Clone, PartialEq)]
@@ -83,6 +88,8 @@ pub(super) struct AppearanceRuntime {
     skin: Option<SkinBinding>,
     live: Vec<Live>,
     failed: Option<(Key, u64, String)>,
+    // A real binding failure stays visible during preparation, including after disposal.
+    retained_error: Option<String>,
 }
 fn hash(value: Value) -> Result<String, String> {
     Ok(appearance_sha256(
@@ -512,6 +519,77 @@ fn stream(
     }
     Ok(())
 }
+/// Validate the old physical binding separately from the strict requested-frame
+/// guard. A retained frame can only stream its existing, already authenticated roles.
+fn retained_frame(
+    world: &World,
+    state: &AppearanceRuntime,
+) -> Result<Option<AppearanceFrame>, String> {
+    if let Some(error) = &state.retained_error {
+        return Err(error.clone());
+    }
+    let Some(key) = &state.key else {
+        // No overlays is not permission to hide a damaged existing CPU body.
+        if appearance_identity(world).is_some() {
+            last_display_frame(world)?;
+        }
+        return Ok(None);
+    };
+    let frame = last_display_frame(world)?;
+    if *key != Key::new(&frame, key.flags) {
+        return Err("appearance: retained generation/body binding changed".into());
+    }
+    Ok(Some(frame))
+}
+/// Explicit readback may reject requested evidence without destroying a valid
+/// retained display. Still check actual pixels and buffers before preserving it.
+fn validate_retained_snapshot(
+    world: &World,
+    state: &AppearanceRuntime,
+    frame: &AppearanceFrame,
+) -> Result<(), String> {
+    if let Some(skin) = &state.skin {
+        observe_skin(world, skin, true)?;
+    } else if world
+        .get::<MeshMaterial3d<StandardMaterial>>(frame.body)
+        .is_none_or(|m| m.0 != frame.baseline)
+    {
+        return Err("appearance: retained baseline material binding changed".into());
+    }
+    let matrices = matrices(frame)?;
+    for live in &state.live {
+        observe_live(world, live, true)?;
+        let meshes = world.resource::<Assets<Mesh>>();
+        let mesh = meshes
+            .get(&live.mesh)
+            .ok_or("appearance: retained accessory mesh absent")?;
+        let (p, n) = geometry::skin(&live.rest, &live.normals, &live.weights, &matrices)?;
+        let positions = live
+            .obj
+            .pairs
+            .iter()
+            .map(|(i, _)| p[*i])
+            .collect::<Vec<_>>();
+        let normals = live
+            .obj
+            .pairs
+            .iter()
+            .map(|(i, _)| n[*i])
+            .collect::<Vec<_>>();
+        if !matches!(mesh.attribute(Mesh::ATTRIBUTE_POSITION),Some(VertexAttributeValues::Float32x3(v)) if v==&positions)
+            || !matches!(mesh.attribute(Mesh::ATTRIBUTE_NORMAL),Some(VertexAttributeValues::Float32x3(v)) if v==&normals)
+            || !matches!(mesh.attribute(Mesh::ATTRIBUTE_UV_0),Some(VertexAttributeValues::Float32x2(v)) if v==&live.obj.uv)
+            || mesh.indices().map(|i| i.iter().collect::<Vec<_>>())
+                != Some(live.obj.indices.iter().map(|i| *i as usize).collect())
+            || world
+                .get::<GlobalTransform>(live.entity)
+                .is_none_or(|t| t.to_matrix() != frame.placement)
+        {
+            return Err("appearance: retained accessory CPU binding changed".into());
+        }
+    }
+    Ok(())
+}
 fn invalidate(
     world: &mut World,
     state: &mut AppearanceRuntime,
@@ -521,10 +599,57 @@ fn invalidate(
     let cleanup = dispose(world, state).err();
     status.ready = false;
     status.applied = None;
+    status.pending = false;
+    status.retained = false;
     status.error = Some(match cleanup {
         Some(cleanup) => format!("{error}; {cleanup}"),
         None => error,
     });
+}
+/// Apply flags, errors and human feedback at the same observation boundary.
+/// A specific body/candidate failure keeps priority over generic appearance text.
+fn project_runtime_status(world: &mut World, status: &AppearanceStatus) {
+    let (is_b1, pending_open) = {
+        let editor = world.resource::<EditorState>();
+        (
+            editor.document().is_some_and(|d| d.profile.backend.is_b1()),
+            editor.pending_open.is_some(),
+        )
+    };
+    let Some(mut runtime_status) = world.get_resource_mut::<RuntimeStatus>() else {
+        return;
+    };
+    runtime_status.appearance_error = if status.pending {
+        None
+    } else {
+        status.error.clone()
+    };
+    if !status.ready && (!status.pending || is_b1) {
+        runtime_status.ready = false;
+    }
+    if !is_b1 || runtime_status.error.is_some() {
+        return;
+    }
+    if !status.ready && !status.pending && status.error.is_some() {
+        runtime_status.phase = if pending_open {
+            "Preparing B1 candidate · current appearance binding failed"
+        } else {
+            "B1 appearance binding failed · presentation unconfirmed"
+        }
+        .into();
+    } else if !pending_open {
+        if status.ready && runtime_status.ready {
+            runtime_status.phase =
+                "CPU body + requested appearance bound · presentation unconfirmed".into();
+        } else if status.pending {
+            runtime_status.phase = if status.retained {
+                "Preparing B1 shape/appearance · last CPU display retained"
+            } else {
+                "Preparing B1 shape/appearance"
+            }
+            .into();
+        }
+    }
 }
 pub(super) fn update(world: &mut World) {
     let mut state = world
@@ -552,10 +677,34 @@ pub(super) fn update(world: &mut World) {
         } else {
             match appearance_frame(world) {
                 Err(error) => {
-                    status.pending = world.resource::<RuntimeStatus>().error.is_none();
-                    invalidate(world, &mut state, &mut status, error);
+                    let retained = retained_frame(world, &state).and_then(|frame| {
+                        if let Some(frame) = frame {
+                            stream(world, &state, &frame)?;
+                            Ok(true)
+                        } else {
+                            Ok(false)
+                        }
+                    });
+                    match retained {
+                        Ok(retained) => {
+                            status.retained = retained;
+                            // Preparation is not a damaged binding. Keep the old
+                            // resources but never attribute them to the request.
+                            status.pending = world.resource::<RuntimeStatus>().error.is_none();
+                            status.error = world
+                                .resource::<RuntimeStatus>()
+                                .error
+                                .clone()
+                                .or_else(|| (!retained).then_some(error));
+                        }
+                        Err(error) => {
+                            state.retained_error = Some(error.clone());
+                            invalidate(world, &mut state, &mut status, error);
+                        }
+                    }
                 }
                 Ok(frame) => {
+                    state.retained_error = None;
                     status.generation = Some(frame.generation);
                     status.revision = Some(frame.revision);
                     status.character_entity = Some(format!("{:?}", frame.character));
@@ -599,16 +748,7 @@ pub(super) fn update(world: &mut World) {
         status.pending = true;
         status.error = Some("appearance: no current Work".into());
     }
-    if let Some(mut runtime_status) = world.get_resource_mut::<RuntimeStatus>() {
-        runtime_status.appearance_error = if status.pending {
-            None
-        } else {
-            status.error.clone()
-        };
-        if !status.ready && !status.pending {
-            runtime_status.ready = false;
-        }
-    }
+    project_runtime_status(world, &status);
     world.insert_resource(state);
     world.insert_resource(status);
 }
@@ -736,17 +876,50 @@ pub fn appearance_snapshot(world: &mut World) -> Result<Value, String> {
         )
     })();
     if let Err(error) = &result {
+        // A refused observation cannot leave readiness from the previous Work,
+        // including before-drive B1 -> GLB replacement. Scheduled GLB pending
+        // handling remains separate from this explicit evidence boundary.
+        if let Some(mut runtime_status) = world.get_resource_mut::<RuntimeStatus>() {
+            runtime_status.ready = false;
+        }
         let mut state = world
             .remove_resource::<AppearanceRuntime>()
             .unwrap_or_default();
         let mut status = appearance_status(world);
-        invalidate(world, &mut state, &mut status, error.clone());
-        if let Some(mut runtime_status) = world.get_resource_mut::<RuntimeStatus>() {
-            runtime_status.appearance_error = Some(error.clone());
-            runtime_status.ready = false;
+        let retained = (status.retained || appearance_frame(world).is_err()).then(|| {
+            retained_frame(world, &state).and_then(|frame| {
+                if let Some(frame) = frame {
+                    validate_retained_snapshot(world, &state, &frame)?;
+                    Ok(true)
+                } else {
+                    Ok(false)
+                }
+            })
+        });
+        if matches!(retained, Some(Ok(true))) {
+            status.ready = false;
+            status.applied = None;
+            status.retained = true;
+            status.pending = world.resource::<RuntimeStatus>().error.is_none();
+            status.error = world.resource::<RuntimeStatus>().error.clone();
+            let refusal = status.error.clone().unwrap_or_else(|| error.clone());
+            project_runtime_status(world, &status);
+            world.insert_resource(state);
+            world.insert_resource(status);
+            return Err(refusal);
         }
+        let failure = match retained {
+            Some(Err(error)) => {
+                state.retained_error = Some(error.clone());
+                error
+            }
+            _ => error.clone(),
+        };
+        invalidate(world, &mut state, &mut status, failure.clone());
+        project_runtime_status(world, &status);
         world.insert_resource(state);
         world.insert_resource(status);
+        return Err(failure);
     }
     result
 }

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "context": "issue86-runtime-retention-v1",
+  "baseline_commit": "581f6c8329c984bf55a913ca999830430334e5a1",
+  "scope": "exact current source identity and unchanged source slices only; current Rust execution NOT-RUN; execute always archives baseline581",
+  "overrides": {
+    "crates/nvwa-runtime/src/b1.rs": "fa89445f25c8337024c5c64abb31d9298a7c970d6f380cfec2de323e219f73ed",
+    "crates/nvwa-runtime/src/appearance/mod.rs": "cd8abbac04b6fa0b176a9cc870557a0cfe9263e89bc9d3b7879da206d4a46727"
+  },
+  "unchanged_runtime_sections": [
+    {
+      "id": "signed_target_mapping",
+      "start": "        let values = &c.document.character.parameters;",
+      "end": "        let resolved = morphs",
+      "sha256": "f81a1794af956699277be21fa3d41f8c642fad5e79ae87bf3f0a5f6a52fec192"
+    },
+    {
+      "id": "source_ids",
+      "start": "fn source_ids(",
+      "end": "fn visible_body_indices(",
+      "sha256": "7798e9e806a29d723b3ced4ee4b9ba919a48054ce3118193b3819e34e41caffb"
+    },
+    {
+      "id": "visible_body_indices",
+      "start": "fn visible_body_indices(",
+      "end": "fn upload(",
+      "sha256": "46be2a5cb2a62177d4f62bae1ef13fadc78537aae6b3a3a4a474c8f4b6135bbd"
+    },
+    {
+      "id": "cpu_upload",
+      "start": "fn upload(",
+      "end": "fn publish(",
+      "sha256": "487ceed9b91e45ba52c5c3614765a4234529e24abceb0e9683179333745f1f71"
+    },
+    {
+      "id": "endpoint_semantic_test",
+      "start": "    fn new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry()",
+      "end": "\n    #[test]",
+      "sha256": "96c2228d3942d0e06019808a1395602f43b7afc5ab68104e52c3c4b17e14fade"
+    }
+  ]
+}

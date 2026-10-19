@@ -3,8 +3,10 @@ import argparse
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 
 HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('admission72_runner', HERE / 'run.py')
@@ -21,6 +23,120 @@ def log(test=runner.ENDPOINT, failed=False, marker=''):
 
 
 class ToolingControls(unittest.TestCase):
+    def input_copy(self, directory):
+        root = Path(directory) / 'source'
+        pins = json.loads((HERE / 'pins.json').read_text())
+        for relative in pins['files']:
+            destination = root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, destination)
+        return root, pins
+
+    def test_exact_current_context_is_explicit_and_execution_stays_historical(self):
+        pins = runner.check_inputs(ROOT)
+        context = pins['checked_input_context']
+        self.assertEqual(context['id'], 'issue86-runtime-retention-v1')
+        self.assertEqual(context['current_rust_execution'], 'NOT-RUN')
+        self.assertEqual(context['execution_source'], 'immutable baseline581 archive only')
+        self.assertEqual(pins['files'][runner.RUNTIME], runner.RUNTIME_SHA)
+        self.assertNotEqual(context['files'][runner.RUNTIME], runner.RUNTIME_SHA)
+        with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+            runner.check_source_context(ROOT, pins, historical_only=True)
+
+    def test_every_pinned_input_mutation_rejects_and_restores(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa72-input-control-') as directory:
+            root, pins = self.input_copy(directory)
+            for relative in pins['files']:
+                with self.subTest(relative=relative):
+                    path = root / relative
+                    original = path.read_bytes()
+                    try:
+                        path.write_bytes(original + b'\nchanged\n')
+                        with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                            runner.check_inputs(root)
+                    finally:
+                        path.write_bytes(original)
+                    runner.check_inputs(root)
+
+    def test_missing_and_symlink_source_rejects(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa72-input-control-') as directory:
+            root, _ = self.input_copy(directory)
+            path = root / runner.RUNTIME
+            original = path.read_bytes()
+            path.unlink()
+            with self.assertRaisesRegex(ValueError, 'source input missing'):
+                runner.check_inputs(root)
+            target = Path(directory) / 'runtime-original'
+            target.write_bytes(original)
+            path.symlink_to(target)
+            with self.assertRaisesRegex(ValueError, 'source input symlink'):
+                runner.check_inputs(root)
+
+    def test_bridge_and_original_pins_cannot_be_rewritten(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa72-material-control-') as directory:
+            material = Path(directory)
+            for name in runner.PACKAGE:
+                shutil.copyfile(HERE / name, material / name)
+            for name, error in [('pins.json', 'immutable baseline pins identity mismatch'),
+                                ('input-context-v1.json', 'input context manifest identity mismatch')]:
+                path = material / name
+                original = path.read_bytes()
+                try:
+                    path.write_bytes(original + b' ')
+                    with patch.object(runner, 'HERE', material):
+                        with self.assertRaisesRegex(ValueError, error):
+                            runner.check_inputs(ROOT)
+                finally:
+                    path.write_bytes(original)
+                with patch.object(runner, 'HERE', material):
+                    runner.check_inputs(ROOT)
+
+    def test_original_coverage_bounds_and_zero_fields_cannot_be_rewritten(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa72-case-control-') as directory:
+            material = Path(directory)
+            for name in runner.PACKAGE:
+                shutil.copyfile(HERE / name, material / name)
+            path = material / 'cases.json'
+            original = path.read_bytes()
+            for change, error in [('bounds', 'original numeric bounds changed'),
+                                  ('zero', 'zero extension fields changed'),
+                                  ('case', 'original40 case/recipe/pose drift')]:
+                plan = json.loads(original)
+                if change == 'bounds':
+                    plan['bounds']['body_position_m'] *= 10
+                elif change == 'zero':
+                    plan['zero_extension'].pop()
+                else:
+                    plan['cases'].pop()
+                try:
+                    path.write_text(json.dumps(plan))
+                    with patch.object(runner, 'HERE', material):
+                        with self.assertRaisesRegex(ValueError, error):
+                            runner.check_inputs(ROOT)
+                finally:
+                    path.write_bytes(original)
+                with patch.object(runner, 'HERE', material):
+                    runner.check_inputs(ROOT)
+
+    def test_five_exact_mapping_faults_reject_context_and_numeric_witness(self):
+        bridge = json.loads((HERE / 'input-context-v1.json').read_text())
+        with tempfile.TemporaryDirectory(prefix='nvwa72-mapping-control-') as directory:
+            root, _ = self.input_copy(directory)
+            path = root / runner.RUNTIME
+            original = path.read_text()
+            for fault in runner.FAULTS:
+                with self.subTest(fault=fault['id']):
+                    changed = runner.mutate(original, fault)
+                    try:
+                        path.write_text(changed)
+                        with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                            runner.check_inputs(root)
+                        with self.assertRaisesRegex(ValueError, 'unchanged numeric section mismatch: signed_target_mapping'):
+                            runner.check_unchanged_sections(changed, bridge)
+                    finally:
+                        path.write_text(original)
+                    runner.check_inputs(root)
+
     def test_original_40_coverage_and_immutable_source(self):
         pins = runner.check_inputs(ROOT)
         self.assertEqual(pins['files'][runner.RUNTIME], runner.RUNTIME_SHA)

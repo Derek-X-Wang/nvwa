@@ -11,6 +11,7 @@ The CLI supports these local operations:
 | `new` | Create a GLB Work from a character profile. |
 | `new-b1` | Authenticate the admitted B1 assets, then create the static version1 Work. |
 | `new-b1-motion` | Authenticate the same B1 assets, then create the continuous rehearsal version2 Work. |
+| `new-character` | Authenticate the version2 base's 25 payloads, then create the eight-parameter character Work. |
 | `describe-capabilities` | Read the profile, current revision, supported parameters and authored clips, the saved stage, plus the CLI command contract. |
 | `inspect` | Read a Work as JSON. |
 | `apply` | Apply `set_parameters`, `set_scale`, `set_timeline`, `set_stage`, `set_diagnostic_pose` (B1), `set_appearance`, `undo` or `redo` commands and save the result to an output file. |
@@ -38,6 +39,18 @@ cargo build --locked -p nvwa-cli
 ```
 
 Cargo needs the locked Rust crates available locally. A first build may fetch crates that are not cached. After the build, supported CLI operations read and write local files. They do not require an open Studio window, a browser, a GPU or local motion weights. Asset validation reads the supplied asset directory. The repository does not provide a public CLI installer or signed binary; users build from source.
+
+For use outside the checkout, `scripts/package-cli.py` creates a local source-built
+directory and archive containing the binary and a complete `assets/` root.
+Both B1 base and appearance versions and the original GLB are included, with
+the existing asset licenses and provenance. The packager authenticates the
+supplied Works with that binary before publishing; `scripts/test-cli-package.py`
+checks the actual extracted archive, relocation, creation/editing, and asset
+rejection paths. Use the standalone `assets/` root explicitly. Native Studio
+and Web rendering directories omit filesystem appearance payloads. See the
+[standalone contract](CLI-STANDALONE.md) and [packaging commands](../README.md#standalone-offline-cli-distribution).
+Public binary release, first-party licensing and complete dependency notices
+remain separate gates.
 
 ## File handoff and limits
 
