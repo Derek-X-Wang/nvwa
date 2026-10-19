@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "base_head": "69176c5dafe2b801c44f80fbb2aec0139cbb7500",
+  "reference_driver": "experiments/74-garment-source-reference/blender_reference.py",
+  "reference_wrapper": "experiments/74-garment-source-reference/run_reference.py",
+  "driver_unchanged": true,
+  "old_artifacts_unchanged": true,
+  "source_hashes": {
+    "mpfb-addon/entities/clothes/mhclo.py": "909ea98e31e04dfe8eb7c54849f74aa7365be0676a102c8c30e0e6c64b3eb9d8",
+    "mpfb-addon/services/clothesservice.py": "20b60daeb862e35652035b9e94d1830f1bd2d86706b1e6056f0f2cee43c8d40b",
+    "mpfb-addon/services/objectservice.py": "4a90898fc83d237446355d2c9b8f30b90f056be0d2325b3989b30b341d075211",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01.mhclo": "6df057d3116db93afbbbb6d692f92cce84aa16db699f47dd14e825d07c6fd42f",
+    "system-assets/clothes/female_sportsuit01/female_sportsuit01.obj": "fd529bb8dd6a994c1e9a3fb2fd8b236f52c0cc7cebb1f6fd9328953d9df6d6ff"
+  },
+  "approved_extraction_file_count": 2422,
+  "approved_extraction_receipt_sha256": "b98b80d6b0430e4e9c2f66446533482d2c1f0cc76d78e9ace9c042923cd4a150",
+  "source_freeze_before_run_sha256": "6309f4b1811fd4819c1ff6b428e725e3038aa9f0ce741204d580c59c0f50d131",
+  "version_probe": {
+    "exit_code": 0,
+    "elapsed_seconds": 0.6701706659514457,
+    "stdout_sha256": "424020b5e01dd0282bded4d9bf07495ea88d0598a2929c576c5afdce63d82d70",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "syntax_ast": {
+    "result": "PASS",
+    "files": 7
+  },
+  "resources": {
+    "task_created_processes": [
+      {
+        "pid": 98909,
+        "role": "Blender original-tool reference",
+        "owned": true,
+        "execution_exit_code": 0,
+        "fresh_ps_exit_code": 1,
+        "fresh_ps_stdout": "",
+        "remaining": false
+      }
+    ],
+    "runtime_version": "Blender5.2.2LTS d13f752e3b9c",
+    "declared_threads": 1,
+    "actual_runtime_seconds": 3.0746150829363614,
+    "resource_limits": "One Blender process;120s wrapper timeout; offline/background/no-render",
+    "memory": "NOT-MEASURED",
+    "gpu": "NOT-RUN",
+    "approved_extraction_files_reverified_after_run": 2422,
+    "task_paths_retained": [
+      "experiments/75-garment-posed-reference",
+      ".work/garment80-next"
+    ],
+    "retention_owner": "root integration owner",
+    "no_host_settings_or_downloads": true,
+    "retained_scratch_file_bytes_observed": 300474384,
+    "retained_scratch_scope": "Includes preserved original arrays/logs and every synthetic negative-control copy/log; observation before adding this byte-count field"
+  },
+  "scope": "Worker local evidence; independent R2 and integration are root-owned and pending"
+}

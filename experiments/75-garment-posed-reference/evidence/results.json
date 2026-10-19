@@ -1,0 +1,482 @@
+{
+  "schema_version": 1,
+  "scope": "Actual new offline Blender/MPFB modifier outputs versus authenticated historical Nvwa CPU captures",
+  "blender_version": "5.2.2 LTS",
+  "mpfb_version": [
+    2,
+    0,
+    18
+  ],
+  "original_execution_seconds": 3.0746150829363614,
+  "driver_sha256": "16b65d928bfa8c5988d144ecdf462a8322c40ab7becdd4c7811e560452b53087",
+  "prepared_input_sha256": "95678a63e88288a10ad0e9a71e5aadf889f7d3033cdddb35c0f425fb9c303099",
+  "original_run_freeze_sha256": "b614724baa4a7824694bafa9bab7629ea2db032cfa123b2a2d1d6c565b4fc9e7",
+  "source_triangle": [
+    246,
+    244,
+    182
+  ],
+  "body_recipe": {
+    "torso_length": 1.0,
+    "jaw_drop": 0.0
+  },
+  "original_author_recipe": "UNKNOWN",
+  "cases": [
+    {
+      "case": "arm0",
+      "historical_capture_sha256": "1a310480d1a9e3934bce23678c4a74c05d0e110eaf68f2674b172dee1b5009d3",
+      "ratios": {
+        "rust": 1.0000140755661076,
+        "original_modifier": 0.9999913305809692,
+        "original_driver_float": 0.9999909724496928
+      },
+      "geometry": {
+        "rust_rest": {
+          "area_m2": 1.884345974021258e-05,
+          "edge_lengths_m": [
+            0.020857277914305583,
+            0.02038422579894895,
+            0.04120090293133851
+          ],
+          "height_to_longest_edge_m": 0.0009147110087181968
+        },
+        "rust_posed": {
+          "area_m2": 1.8843724972575847e-05,
+          "edge_lengths_m": [
+            0.020857277914305583,
+            0.02038411186489208,
+            0.04120078751126635
+          ],
+          "height_to_longest_edge_m": 0.0009147264463050873
+        },
+        "original_rest": {
+          "area_m2": 1.883515447075255e-05,
+          "edge_lengths_m": [
+            0.020851484507108945,
+            0.020389987751608576,
+            0.04120090751245965
+          ],
+          "height_to_longest_edge_m": 0.0009143077474716581
+        },
+        "original_modifier_posed": {
+          "area_m2": 1.8834991180905933e-05,
+          "edge_lengths_m": [
+            0.020851484507108945,
+            0.020389981684769482,
+            0.04120090213260242
+          ],
+          "height_to_longest_edge_m": 0.0009142999403404683
+        }
+      },
+      "all1797_rest_max_component_difference_m": 7.510185241699219e-06,
+      "all1797_posed_max_component_difference_m": 7.748603820800781e-06,
+      "canonical_rest_matrix_max_component_error": 3.874301910400391e-06,
+      "authored_skin_matrix_max_component_error": 5.960464477539062e-07,
+      "actual_original_modifier_lbs_max_component_error_m": 8.940696721859709e-08,
+      "selected": [
+        {
+          "source_id": 246,
+          "rust_normalized_weights": {
+            "spine_03": 0.16727830563703686,
+            "clavicle_l": 0.11287213851193814,
+            "upperarm_l": 0.7198495558510251
+          },
+          "original_raw_weights": {
+            "spine_03": 0.16727830469608307,
+            "clavicle_l": 0.11287213861942291,
+            "upperarm_l": 0.7198495864868164
+          },
+          "original_normalized_weights": {
+            "spine_03": 0.16727829971080124,
+            "clavicle_l": 0.11287213525557115,
+            "upperarm_l": 0.7198495650336276
+          },
+          "rust_displacement_m": [
+            -1.4901161193847656e-08,
+            -2.384185791015625e-07,
+            2.384185791015625e-07
+          ],
+          "original_displacement_m": [
+            -4.470348358154297e-08,
+            -5.960464477539063e-08,
+            3.725290298461914e-09
+          ]
+        },
+        {
+          "source_id": 244,
+          "rust_normalized_weights": {
+            "spine_03": 0.11354994508587794,
+            "clavicle_l": 0.08805071376368377,
+            "upperarm_l": 0.7983993411504382
+          },
+          "original_raw_weights": {
+            "spine_03": 0.11354994773864746,
+            "clavicle_l": 0.0880507156252861,
+            "upperarm_l": 0.7983993291854858
+          },
+          "original_normalized_weights": {
+            "spine_03": 0.1135499485846605,
+            "clavicle_l": 0.08805071628131506,
+            "upperarm_l": 0.7983993351340244
+          },
+          "rust_displacement_m": [
+            -1.4901161193847656e-08,
+            -2.384185791015625e-07,
+            2.384185791015625e-07
+          ],
+          "original_displacement_m": [
+            -4.470348358154297e-08,
+            -5.960464477539063e-08,
+            3.725290298461914e-09
+          ]
+        },
+        {
+          "source_id": 182,
+          "rust_normalized_weights": {
+            "spine_01": 0.00011838967746542639,
+            "spine_02": 0.012005258393662298,
+            "spine_03": 0.721345397616449,
+            "clavicle_l": 0.020980432408048706,
+            "upperarm_l": 0.24555052190437454
+          },
+          "original_raw_weights": {
+            "spine_02": 0.012005258351564407,
+            "spine_03": 0.7213454246520996,
+            "clavicle_l": 0.020980432629585266,
+            "upperarm_l": 0.24555052816867828
+          },
+          "original_normalized_weights": {
+            "spine_02": 0.012006679416491618,
+            "spine_03": 0.721430810459998,
+            "clavicle_l": 0.020982916087757885,
+            "upperarm_l": 0.24557959403575252
+          },
+          "rust_displacement_m": [
+            0.0,
+            -1.1920928955078125e-07,
+            2.421438694000244e-07
+          ],
+          "original_displacement_m": [
+            -2.9802322387695312e-08,
+            -5.960464477539063e-08,
+            -3.725290298461914e-09
+          ]
+        }
+      ],
+      "analytical_same_historical_skin_swaps": {
+        "rust_rest_rust_weights": 1.0000096436245052,
+        "rust_rest_mpfb_weights": 1.0000096411537263,
+        "mpfb_rest_rust_weights": 1.0000096390115194,
+        "mpfb_rest_mpfb_weights": 1.000009636541326
+      },
+      "analytical_swaps_scope": "Counterfactual arithmetic on actual frozen rest/weights; not Blender execution or a product candidate"
+    },
+    {
+      "case": "arm2",
+      "historical_capture_sha256": "5df0c97e5c51b3e71741e115ca4040d441189dd5853a505c1076d9ed0a53ae5e",
+      "ratios": {
+        "rust": 22.005635738420796,
+        "original_modifier": 22.009337055893727,
+        "original_driver_float": 22.00933278965508
+      },
+      "geometry": {
+        "rust_rest": {
+          "area_m2": 1.884345974021258e-05,
+          "edge_lengths_m": [
+            0.020857277914305583,
+            0.02038422579894895,
+            0.04120090293133851
+          ],
+          "height_to_longest_edge_m": 0.0009147110087181968
+        },
+        "rust_posed": {
+          "area_m2": 0.0004146623110947154,
+          "edge_lengths_m": [
+            0.01965951802222095,
+            0.04367767187743674,
+            0.05233981807260501
+          ],
+          "height_to_longest_edge_m": 0.015845003913445097
+        },
+        "original_rest": {
+          "area_m2": 1.883515447075255e-05,
+          "edge_lengths_m": [
+            0.020851484507108945,
+            0.020389987751608576,
+            0.04120090751245965
+          ],
+          "height_to_longest_edge_m": 0.0009143077474716581
+        },
+        "original_modifier_posed": {
+          "area_m2": 0.0004145492632466165,
+          "edge_lengths_m": [
+            0.01965420510903908,
+            0.04367843984997674,
+            0.052338566901358456
+          ],
+          "height_to_longest_edge_m": 0.015841062825732694
+        }
+      },
+      "all1797_rest_max_component_difference_m": 7.510185241699219e-06,
+      "all1797_posed_max_component_difference_m": 0.00014081597328186035,
+      "canonical_rest_matrix_max_component_error": 3.874301910400391e-06,
+      "authored_skin_matrix_max_component_error": 8.341030805908423e-07,
+      "actual_original_modifier_lbs_max_component_error_m": 1.276530510185836e-07,
+      "selected": [
+        {
+          "source_id": 246,
+          "rust_normalized_weights": {
+            "spine_03": 0.16727830563703686,
+            "clavicle_l": 0.11287213851193814,
+            "upperarm_l": 0.7198495558510251
+          },
+          "original_raw_weights": {
+            "spine_03": 0.16727830469608307,
+            "clavicle_l": 0.11287213861942291,
+            "upperarm_l": 0.7198495864868164
+          },
+          "original_normalized_weights": {
+            "spine_03": 0.16727829971080124,
+            "clavicle_l": 0.11287213525557115,
+            "upperarm_l": 0.7198495650336276
+          },
+          "rust_displacement_m": [
+            0.02449728548526764,
+            0.014880955219268799,
+            -0.0023448728024959564
+          ],
+          "original_displacement_m": [
+            0.02449728548526764,
+            0.014881134033203125,
+            -0.0023451149463653564
+          ]
+        },
+        {
+          "source_id": 244,
+          "rust_normalized_weights": {
+            "spine_03": 0.11354994508587794,
+            "clavicle_l": 0.08805071376368377,
+            "upperarm_l": 0.7983993411504382
+          },
+          "original_raw_weights": {
+            "spine_03": 0.11354994773864746,
+            "clavicle_l": 0.0880507156252861,
+            "upperarm_l": 0.7983993291854858
+          },
+          "original_normalized_weights": {
+            "spine_03": 0.1135499485846605,
+            "clavicle_l": 0.08805071628131506,
+            "upperarm_l": 0.7983993351340244
+          },
+          "rust_displacement_m": [
+            0.03962297737598419,
+            0.018462777137756348,
+            -0.003526899963617325
+          ],
+          "original_displacement_m": [
+            0.03961941599845886,
+            0.018462538719177246,
+            -0.0035268887877464294
+          ]
+        },
+        {
+          "source_id": 182,
+          "rust_normalized_weights": {
+            "spine_01": 0.00011838967746542639,
+            "spine_02": 0.012005258393662298,
+            "spine_03": 0.721345397616449,
+            "clavicle_l": 0.020980432408048706,
+            "upperarm_l": 0.24555052190437454
+          },
+          "original_raw_weights": {
+            "spine_02": 0.012005258351564407,
+            "spine_03": 0.7213454246520996,
+            "clavicle_l": 0.020980432629585266,
+            "upperarm_l": 0.24555052816867828
+          },
+          "original_normalized_weights": {
+            "spine_02": 0.012006679416491618,
+            "spine_03": 0.721430810459998,
+            "clavicle_l": 0.020982916087757885,
+            "upperarm_l": 0.24557959403575252
+          },
+          "rust_displacement_m": [
+            0.01593579351902008,
+            0.005980134010314941,
+            -0.0013497639447450638
+          ],
+          "original_displacement_m": [
+            0.015937671065330505,
+            0.0059809088706970215,
+            -0.0013501718640327454
+          ]
+        }
+      ],
+      "analytical_same_historical_skin_swaps": {
+        "rust_rest_rust_weights": 22.00570741423478,
+        "rust_rest_mpfb_weights": 22.004673278134373,
+        "mpfb_rest_rust_weights": 22.01033823976388,
+        "mpfb_rest_mpfb_weights": 22.00930394397776
+      },
+      "analytical_swaps_scope": "Counterfactual arithmetic on actual frozen rest/weights; not Blender execution or a product candidate"
+    },
+    {
+      "case": "knee2",
+      "historical_capture_sha256": "e99893c5cf5c7b24890f10f35d22bd01da3ea32e880e7ecf4533e3b8c285364b",
+      "ratios": {
+        "rust": 1.0000140755661076,
+        "original_modifier": 0.9999913305809692,
+        "original_driver_float": 0.9999909724496928
+      },
+      "geometry": {
+        "rust_rest": {
+          "area_m2": 1.884345974021258e-05,
+          "edge_lengths_m": [
+            0.020857277914305583,
+            0.02038422579894895,
+            0.04120090293133851
+          ],
+          "height_to_longest_edge_m": 0.0009147110087181968
+        },
+        "rust_posed": {
+          "area_m2": 1.8843724972575847e-05,
+          "edge_lengths_m": [
+            0.020857277914305583,
+            0.02038411186489208,
+            0.04120078751126635
+          ],
+          "height_to_longest_edge_m": 0.0009147264463050873
+        },
+        "original_rest": {
+          "area_m2": 1.883515447075255e-05,
+          "edge_lengths_m": [
+            0.020851484507108945,
+            0.020389987751608576,
+            0.04120090751245965
+          ],
+          "height_to_longest_edge_m": 0.0009143077474716581
+        },
+        "original_modifier_posed": {
+          "area_m2": 1.8834991180905933e-05,
+          "edge_lengths_m": [
+            0.020851484507108945,
+            0.020389981684769482,
+            0.04120090213260242
+          ],
+          "height_to_longest_edge_m": 0.0009142999403404683
+        }
+      },
+      "all1797_rest_max_component_difference_m": 7.510185241699219e-06,
+      "all1797_posed_max_component_difference_m": 0.0002747178077697754,
+      "canonical_rest_matrix_max_component_error": 3.874301910400391e-06,
+      "authored_skin_matrix_max_component_error": 1.2731044839765782e-06,
+      "actual_original_modifier_lbs_max_component_error_m": 1.0894465243826978e-07,
+      "selected": [
+        {
+          "source_id": 246,
+          "rust_normalized_weights": {
+            "spine_03": 0.16727830563703686,
+            "clavicle_l": 0.11287213851193814,
+            "upperarm_l": 0.7198495558510251
+          },
+          "original_raw_weights": {
+            "spine_03": 0.16727830469608307,
+            "clavicle_l": 0.11287213861942291,
+            "upperarm_l": 0.7198495864868164
+          },
+          "original_normalized_weights": {
+            "spine_03": 0.16727829971080124,
+            "clavicle_l": 0.11287213525557115,
+            "upperarm_l": 0.7198495650336276
+          },
+          "rust_displacement_m": [
+            -1.4901161193847656e-08,
+            -2.384185791015625e-07,
+            2.384185791015625e-07
+          ],
+          "original_displacement_m": [
+            -4.470348358154297e-08,
+            -5.960464477539063e-08,
+            3.725290298461914e-09
+          ]
+        },
+        {
+          "source_id": 244,
+          "rust_normalized_weights": {
+            "spine_03": 0.11354994508587794,
+            "clavicle_l": 0.08805071376368377,
+            "upperarm_l": 0.7983993411504382
+          },
+          "original_raw_weights": {
+            "spine_03": 0.11354994773864746,
+            "clavicle_l": 0.0880507156252861,
+            "upperarm_l": 0.7983993291854858
+          },
+          "original_normalized_weights": {
+            "spine_03": 0.1135499485846605,
+            "clavicle_l": 0.08805071628131506,
+            "upperarm_l": 0.7983993351340244
+          },
+          "rust_displacement_m": [
+            -1.4901161193847656e-08,
+            -2.384185791015625e-07,
+            2.384185791015625e-07
+          ],
+          "original_displacement_m": [
+            -4.470348358154297e-08,
+            -5.960464477539063e-08,
+            3.725290298461914e-09
+          ]
+        },
+        {
+          "source_id": 182,
+          "rust_normalized_weights": {
+            "spine_01": 0.00011838967746542639,
+            "spine_02": 0.012005258393662298,
+            "spine_03": 0.721345397616449,
+            "clavicle_l": 0.020980432408048706,
+            "upperarm_l": 0.24555052190437454
+          },
+          "original_raw_weights": {
+            "spine_02": 0.012005258351564407,
+            "spine_03": 0.7213454246520996,
+            "clavicle_l": 0.020980432629585266,
+            "upperarm_l": 0.24555052816867828
+          },
+          "original_normalized_weights": {
+            "spine_02": 0.012006679416491618,
+            "spine_03": 0.721430810459998,
+            "clavicle_l": 0.020982916087757885,
+            "upperarm_l": 0.24557959403575252
+          },
+          "rust_displacement_m": [
+            0.0,
+            -1.1920928955078125e-07,
+            2.421438694000244e-07
+          ],
+          "original_displacement_m": [
+            -2.9802322387695312e-08,
+            -5.960464477539063e-08,
+            -3.725290298461914e-09
+          ]
+        }
+      ],
+      "analytical_same_historical_skin_swaps": {
+        "rust_rest_rust_weights": 1.0000096436245052,
+        "rust_rest_mpfb_weights": 1.0000096411537263,
+        "mpfb_rest_rust_weights": 1.0000096390115194,
+        "mpfb_rest_mpfb_weights": 1.000009636541326
+      },
+      "analytical_swaps_scope": "Counterfactual arithmetic on actual frozen rest/weights; not Blender execution or a product candidate"
+    }
+  ],
+  "candidate": "NONE",
+  "product_policy": "UNCHANGED: all positive aggregate influences",
+  "quality": "HOLD",
+  "limitations": [
+    "No original author body recipe authentication",
+    "Historical Nvwa CPU captures; no fresh product capture",
+    "No rendering, visual acceptance, GPU or performance evidence",
+    "Analytical swaps isolate numerical effects only; no new correction candidate"
+  ]
+}
