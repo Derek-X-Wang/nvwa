@@ -133,7 +133,7 @@ jobs:
     needs: portable
     runs-on: macos-14
     # The measured original lane already takes about 30 minutes cold. Keep a
-    # finite bound for the real B1 source build, tests, recovery and Web check.
+    # finite bound for native tests, mutation witnesses and continuous motion.
     timeout-minutes: 60
     env:
       CARGO_BUILD_JOBS: '1'
@@ -181,19 +181,9 @@ jobs:
           # require real source/upload data, not an invented portable fixture.
           python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
           python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
-      - name: Compile the actual Web target
-        run: |
-          bash experiments/27-ci-baseline/check.sh wasm
-          cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
-          cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
-          cargo check --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
-          cargo check --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
-          cargo check --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
-          cargo check --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
-          cargo check --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
   b1-source-regression:
     name: macOS B1 source regression and viewer checks
-    # Keep the independent cold B1 build inside its own finite budget.
+    # Keep the independent cold B1 build and Web checks inside a finite budget.
     needs: portable
     runs-on: macos-14
     timeout-minutes: 60
@@ -234,3 +224,13 @@ jobs:
         run: |
           cargo check --manifest-path experiments/58-b1-desktop-web/Cargo.toml --locked --offline
           cargo check --manifest-path experiments/58-b1-desktop-web/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+      - name: Compile the actual Web target
+        run: |
+          bash experiments/27-ci-baseline/check.sh wasm
+          cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
