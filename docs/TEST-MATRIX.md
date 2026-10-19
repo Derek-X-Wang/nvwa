@@ -1,5 +1,7 @@
 # Actual verification matrix
 
+Current policy (2026-10-19): prioritize relevant Web and CLI acceptance for ordinary changes; retain targeted native checks for desktop-specific behavior and collect routine desktop UI checks at larger version milestones. Existing automated tests, compilation and CI gates remain unchanged. See the [verification policy](agents/verification.md). The dated matrices below preserve historical observations and limits; deferred native checks are not implied passes.
+
 ## M1.1 source cohort and actual continuation — 2026-10-13
 
 Source cohort `9df6d3a` has113 passing Rust workspace tests and successful
