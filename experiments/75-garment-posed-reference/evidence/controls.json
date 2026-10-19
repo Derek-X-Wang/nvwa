@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "scope": "Actual comparison CLI controls; synthetic mutations never original-tool evidence",
+  "runs": [
+    {
+      "mode": "normal",
+      "tests": 11,
+      "passed": 11,
+      "receipt_sha256": "48a43af58bf61aed7a67deffe3fe5990bf426001e23640719c7c526759c51e5d",
+      "cases": [
+        {
+          "name": "actual-pass",
+          "exit_code": 0,
+          "expected_error": null,
+          "passed": true,
+          "scope": "Frozen provenance or actual baseline"
+        },
+        {
+          "name": "frozen-position-tamper",
+          "exit_code": 1,
+          "expected_error": "original run frozen hash mismatch",
+          "passed": true,
+          "scope": "Frozen provenance or actual baseline"
+        },
+        {
+          "name": "prepared-tamper",
+          "exit_code": 1,
+          "expected_error": "prepared input frozen hash mismatch",
+          "passed": true,
+          "scope": "Frozen provenance or actual baseline"
+        },
+        {
+          "name": "stale-capture-identity",
+          "exit_code": 1,
+          "expected_error": "case/capture identity mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "bone-name-identity",
+          "exit_code": 1,
+          "expected_error": "reference53-bone identity mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "bone-rest-relation",
+          "exit_code": 1,
+          "expected_error": "reference canonical rest mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "bone-skin-relation",
+          "exit_code": 1,
+          "expected_error": "reference authored skin mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "mesh-source-coverage",
+          "exit_code": 1,
+          "expected_error": "reference source mesh coverage",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "mesh-source-order",
+          "exit_code": 1,
+          "expected_error": "reference fitted rest/source ID mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "modifier-policy",
+          "exit_code": 1,
+          "expected_error": "reference modifier policy mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "modifier-position-lbs",
+          "exit_code": 1,
+          "expected_error": "reference modifier/LBS reconstruction mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        }
+      ]
+    },
+    {
+      "mode": "optimized",
+      "tests": 11,
+      "passed": 11,
+      "receipt_sha256": "104eba6bd01e3270b3ad5b0a85bb20ee20d83d6da4d0dc4df310bcd51a20480b",
+      "cases": [
+        {
+          "name": "actual-pass",
+          "exit_code": 0,
+          "expected_error": null,
+          "passed": true,
+          "scope": "Frozen provenance or actual baseline"
+        },
+        {
+          "name": "frozen-position-tamper",
+          "exit_code": 1,
+          "expected_error": "original run frozen hash mismatch",
+          "passed": true,
+          "scope": "Frozen provenance or actual baseline"
+        },
+        {
+          "name": "prepared-tamper",
+          "exit_code": 1,
+          "expected_error": "prepared input frozen hash mismatch",
+          "passed": true,
+          "scope": "Frozen provenance or actual baseline"
+        },
+        {
+          "name": "stale-capture-identity",
+          "exit_code": 1,
+          "expected_error": "case/capture identity mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "bone-name-identity",
+          "exit_code": 1,
+          "expected_error": "reference53-bone identity mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "bone-rest-relation",
+          "exit_code": 1,
+          "expected_error": "reference canonical rest mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "bone-skin-relation",
+          "exit_code": 1,
+          "expected_error": "reference authored skin mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "mesh-source-coverage",
+          "exit_code": 1,
+          "expected_error": "reference source mesh coverage",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "mesh-source-order",
+          "exit_code": 1,
+          "expected_error": "reference fitted rest/source ID mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "modifier-policy",
+          "exit_code": 1,
+          "expected_error": "reference modifier policy mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        },
+        {
+          "name": "modifier-position-lbs",
+          "exit_code": 1,
+          "expected_error": "reference modifier/LBS reconstruction mismatch",
+          "passed": true,
+          "scope": "Synthetic modified output with updated freeze"
+        }
+      ]
+    }
+  ]
+}
