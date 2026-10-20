@@ -12,7 +12,12 @@ the original maximum of two heavy compiles. Each native job retains 60 minutes.
 No extra runner type, permission, token, repository setting or paid storage is used.
 
 Cold starts with an absent/empty owned root target and requires a unique exact-key
-miss. The key includes source SHA/tree, toolchain, native build environment, full
+miss. The cold lookup uses one bounded anonymous public GitHub REST request,
+without a ref filter, and requires HTTP 200 with integer total_count=0 and an empty
+actions_caches array. This proves repository-wide key-prefix absence; network,
+HTTP, redirect, size or schema failures stop before compiling. A cache action
+warning cannot masquerade as a verified miss. No token or permission is added.
+The key includes source SHA/tree, toolchain, native build environment, full
 manifest/lock/config/workflow/catalog digest, OS/architecture, image version, run
 ID and attempt. It has no restore prefixes. Checkout and Cargo mtimes/fingerprints
 are read, never normalized or modified by this experiment. Normal mutation tests
@@ -31,7 +36,7 @@ hosted cache behavior.
 Only after every gate and the existing timing report pass does the producer check
 restored sources, mutation/motion receipts, target integrity and the 4 GiB logical
 cap. It uses split official cache v6.1.0 actions pinned to
-`55cc8345863c7cc4c66a329aec7e433d2d1c52a9`. Each cache action has a four-minute
+`55cc8345863c7cc4c66a329aec7e433d2d1c52a9`. The cold REST step and each cache action have a four-minute
 limit within the existing job limit. Green save alone is insufficient: a second
 lookup-only exact hit must succeed before the producer is green. Warm restore also
 requires literal `cache-hit=true`, equal primary/matched keys, and verified saved

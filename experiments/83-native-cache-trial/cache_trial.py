@@ -9,6 +9,8 @@ import stat
 import subprocess
 import sys
 import time
+import urllib.parse
+import urllib.request
 
 ROOT = Path(__file__).resolve().parents[2]
 MARKER = '.nvwa-native-cache-trial.json'
@@ -102,12 +104,32 @@ def key_for(value, env):
     return 'nvwa-native-trial-v1-'+value['sha']+'-'+value['tree']+'-'+sha(encoded(value))+'-'+env['GITHUB_RUN_ID']+'-'+env['GITHUB_RUN_ATTEMPT']
 
 
+def public_cold_miss(key):
+    # Repository-wide prefix absence covers every scope visible to restore. No
+    # token, alternate endpoint, ref filter, pagination or fallback is permitted.
+    url = 'https://api.github.com/repos/Derek-X-Wang/nvwa/actions/caches?'+urllib.parse.urlencode({'key': key})
+    request = urllib.request.Request(url, headers={
+        'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28',
+        'User-Agent': 'nvwa-native-cache-trial',
+    })
+    with urllib.request.urlopen(request, timeout=30) as response:
+        require(type(response.status) is int and response.status == 200 and response.geturl() == url, 'cold cache lookup requires unredirected HTTP 200')
+        body = response.read(65537)
+    require(len(body) <= 65536, 'cold cache lookup response exceeds bound')
+    data = json.loads(body)
+    require(type(data) is dict and set(data) == {'total_count', 'actions_caches'}
+            and type(data['total_count']) is int and data['total_count'] == 0
+            and type(data['actions_caches']) is list and data['actions_caches'] == [],
+            'cold cache lookup must prove zero repository-wide key-prefix matches')
+    return {'lane': 'cold', 'key': key, 'query_key': key, 'http_status': 200,
+            'total_count': 0, 'actions_caches_count': 0, 'miss_verified': True,
+            'scope': 'repository-wide-key-prefix', 'transport': 'anonymous-public-rest'}
+
+
 def exact_receipt(lane, hit, primary, matched, key):
+    require(lane in ['warm', 'persisted'], 'cold miss requires independently verified public REST lookup')
     require(primary == key, 'cache primary key mismatch/missing')
-    if lane == 'cold':
-        require(hit in ['', 'false'] and matched == '', 'cold requires an exact miss with no matched key')
-    else:
-        require(hit == 'true' and matched == key, 'exact persisted cache hit required; cold fallback forbidden')
+    require(hit == 'true' and matched == key, 'exact persisted cache hit required; cold fallback forbidden')
 
 
 def inventory(target):
@@ -190,7 +212,7 @@ def output(values):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage', choices=['prepare', 'receipt', 'finish'])
+    parser.add_argument('stage', choices=['prepare', 'cold-miss', 'receipt', 'finish'])
     parser.add_argument('--lane', choices=['cold', 'warm', 'persisted'], required=True)
     args = parser.parse_args()
     env = os.environ
@@ -207,11 +229,14 @@ def main():
             require(env.get('TRIAL_EXPECTED_KEY') == key, 'producer source/toolchain/image/config differs')
         output({'enabled': 'true', 'key': key})
         emit('prepare', {'lane': args.lane, 'key': key, 'identity': value})
+    elif args.stage == 'cold-miss':
+        require(args.lane == 'cold', 'public miss lookup is cold only')
+        empty_target(target)
+        emit('cold-miss', public_cold_miss(key))
+        empty_target(target)
     elif args.stage == 'receipt':
         exact_receipt(args.lane, env.get('TRIAL_HIT', ''), env.get('TRIAL_PRIMARY', ''), env.get('TRIAL_MATCHED', ''), key)
         record = {'lane': args.lane, 'key': key, 'hit': env.get('TRIAL_HIT', ''), 'matched_key': env.get('TRIAL_MATCHED', '')}
-        if args.lane == 'cold':
-            empty_target(target)
         if args.lane == 'warm':
             marker = json.loads((target / MARKER).read_text())
             require(marker == {'key': key, 'identity': value, 'inventory': inventory(target)}, 'restored target receipt/integrity mismatch')

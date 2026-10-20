@@ -103,20 +103,8 @@ jobs:
         run: python3 -B experiments/83-native-cache-trial/cache_trial.py prepare --lane cold
       - name: Measure cold exact-key miss
         if: ${{ steps.trial-prepare.outputs.enabled == 'true' }}
-        id: trial-restore
         timeout-minutes: 4
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ${{ github.workspace }}/target
-          key: ${{ steps.trial-prepare.outputs.key }}
-          lookup-only: true
-      - name: Assert cold miss and empty target
-        if: ${{ steps.trial-prepare.outputs.enabled == 'true' }}
-        env:
-          TRIAL_HIT: ${{ steps.trial-restore.outputs.cache-hit }}
-          TRIAL_PRIMARY: ${{ steps.trial-restore.outputs.cache-primary-key }}
-          TRIAL_MATCHED: ${{ steps.trial-restore.outputs.cache-matched-key }}
-        run: python3 -B experiments/83-native-cache-trial/cache_trial.py receipt --lane cold
+        run: python3 -B experiments/83-native-cache-trial/cache_trial.py cold-miss --lane cold
       # native-cache-trial end
       - name: Run workspace CPU tests
         run: |

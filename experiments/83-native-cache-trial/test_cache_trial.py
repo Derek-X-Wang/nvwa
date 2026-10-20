@@ -67,7 +67,7 @@ class CacheTrial(unittest.TestCase):
         return subprocess.check_output(['git', '-C', str(self.root), *args], text=True).strip()
 
     def call(self, stage, lane='cold', **env):
-        return subprocess.run([sys.executable, '-B', str(self.script), stage, '--lane', lane],
+        return subprocess.run([sys.executable, '-B', *(['-O'] if sys.flags.optimize else []), str(self.script), stage, '--lane', lane],
                               cwd=self.root, env={**self.env, **env}, capture_output=True, text=True)
 
     def prepare(self):
@@ -80,6 +80,33 @@ class CacheTrial(unittest.TestCase):
         values = dict(TRIAL_HIT='', TRIAL_PRIMARY=key, TRIAL_MATCHED='')
         values.update(overrides)
         return self.call('receipt', lane, **values)
+
+    def cold_lookup(self, key, response=None, fault=None, status=200, redirect=False, raw=None):
+        # Invoke the actual production __main__ CLI in a fresh process. Only the
+        # HTTP transport is replaced; production exposes no alternate URL switch.
+        payload = json.dumps({'response': response if response is not None else
+                              {'total_count': 0, 'actions_caches': []},
+                              'fault': fault, 'status': status, 'redirect': redirect, 'raw': raw})
+        launcher = r'''import io,json,runpy,sys,urllib.error,urllib.request
+settings=json.loads(sys.argv[1]); script=sys.argv[2]; key=sys.argv[3]
+class Response(io.BytesIO):
+    status=settings['status']
+    def geturl(self):
+        return 'https://example.invalid/redirect' if settings['redirect'] else expected
+expected='https://api.github.com/repos/Derek-X-Wang/nvwa/actions/caches?key='+key
+def boundary(request,timeout):
+    if request.full_url!=expected or timeout!=30 or request.has_header('Authorization'):
+        raise ValueError('unexpected endpoint/query/timeout/credential')
+    if settings['fault']=='network': raise urllib.error.URLError('fixture unavailable')
+    if settings['fault']=='http': raise urllib.error.HTTPError(expected,429,'fixture rate limit',{},None)
+    if settings['fault']=='oversize': return Response(b'x'*65537)
+    return Response(settings['raw'].encode() if settings['raw'] is not None else json.dumps(settings['response']).encode())
+urllib.request.urlopen=boundary
+sys.argv=[script,'cold-miss','--lane','cold']
+runpy.run_path(script,run_name='__main__')
+'''
+        return subprocess.run([sys.executable, '-B', *(['-O'] if sys.flags.optimize else []), '-c', launcher, payload, str(self.script), key],
+                              cwd=self.root, env=self.env, capture_output=True, text=True)
 
     def gate_fixtures(self):
         original = (self.root / 'source.rs').read_bytes()
@@ -113,7 +140,7 @@ class CacheTrial(unittest.TestCase):
     def test_real_cli_same_source_pair_integrity_and_source_mtimes(self):
         before = (self.root / 'source.rs').stat().st_mtime_ns
         key = self.prepare()
-        self.assertEqual(self.receipt(key).returncode, 0)
+        self.assertEqual(self.cold_lookup(key).returncode, 0)
         self.target.mkdir()
         (self.target / 'compiled').write_bytes(b'tiny compiled-target fixture')
         self.gate_fixtures()
@@ -171,6 +198,37 @@ class CacheTrial(unittest.TestCase):
         self.assertNotEqual(self.receipt(key, TRIAL_PRIMARY='foreign').returncode, 0)
         for change in [{'ImageVersion':'changed'}, {'GITHUB_RUN_ATTEMPT':'2'}, {'GITHUB_RUN_ID':'124'}]:
             self.assertNotEqual(self.call('prepare', 'warm', TRIAL_EXPECTED_KEY=key, **change).returncode, 0)
+
+    def test_actual_cli_cold_lookup_requires_unambiguous_repository_wide_absence(self):
+        key = self.prepare()
+        valid = self.cold_lookup(key)
+        self.assertEqual(valid.returncode, 0, valid.stderr)
+        receipt = next(json.loads(line.removeprefix('NVWA_NATIVE_CACHE ')) for line in valid.stdout.splitlines()
+                       if '"stage": "cold-miss"' in line)
+        self.assertEqual(receipt['query_key'], key)
+        self.assertTrue(receipt['miss_verified'])
+        self.assertEqual(receipt['total_count'], 0)
+        failures = [
+            {'fault': 'network'}, {'fault': 'http'}, {'status': 500}, {'status': 206},
+            {'redirect': True}, {'fault': 'oversize'}, {'raw': '{'},
+            {'response': {'total_count': 1, 'actions_caches': [{'key': key}]}},
+            {'response': {'total_count': 0, 'actions_caches': [{'key': key}]}},
+            {'response': {'total_count': 1, 'actions_caches': []}},
+            {'response': {'total_count': False, 'actions_caches': []}},
+            {'response': {'total_count': '0', 'actions_caches': []}},
+            {'response': {'total_count': 0.0, 'actions_caches': []}},
+            {'response': {'total_count': 0}}, {'response': []},
+            {'response': {'total_count': 0, 'actions_caches': None}},
+            {'response': {'total_count': 0, 'actions_caches': [], 'partial': True}},
+        ]
+        for change in failures:
+            with self.subTest(change=change):
+                result = self.cold_lookup(key, **change)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertNotIn('"miss_verified": true', result.stdout)
+                self.assertFalse(self.target.exists())
+        self.assertNotEqual(self.receipt(key).returncode, 0,
+                            'empty action outputs can never establish a cold miss')
 
     def test_all_semantic_reds_and_restored_greens_and_actual_matrix_required(self):
         self.prepare()
@@ -235,10 +293,12 @@ class CacheTrial(unittest.TestCase):
         self.assertIn("if: ${{ needs.native-and-wasm.outputs.trial_enabled == 'true' }}\n", warm)
         self.assertEqual(native.count('timeout-minutes: 4\n'), 3)
         self.assertEqual(warm.count('timeout-minutes: 4\n'), 1)
-        self.assertEqual(workflow.count('actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9'), 3)
+        self.assertEqual(workflow.count('actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9'), 2)
         self.assertEqual(workflow.count('actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9'), 1)
         for forbidden in ['restore-keys:', 'ACTIONS_CACHE_SERVICE_V2', 'ACTIONS_RUNTIME_TOKEN:', 'pull_request_target:', 'workflow_run:']:
             self.assertNotIn(forbidden, workflow)
+        self.assertIn('run: python3 -B experiments/83-native-cache-trial/cache_trial.py cold-miss --lane cold', native)
+        self.assertEqual(native.count('lookup-only: true'), 1)
         self.assertNotIn('actions/cache/save@', warm)
         self.assertLess(native.index('Report existing command timing'), native.index('compression and save'))
         self.assertLess(native.index('compression and save'), native.index('Verify remote exact-key persistence'))
