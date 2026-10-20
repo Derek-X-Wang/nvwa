@@ -250,6 +250,68 @@ echo must-not-run
         self.assertIn("Existing command timing", summary.read_text())
         self.assertIn(b"NVWA_CI_TIMING ", result.stdout)
 
+    def test_queue_cli_repeated_directories_require_one_full_source_per_job(self):
+        run = {"id":123, "run_attempt":2, "head_sha":"e"*40,
+               "created_at":"2026-10-20T00:00:00Z"}
+        names = ["Core, CLI, and diagnostic controls", "macOS CPU tests and Wasm compile check",
+                 "macOS B1 source regression and viewer checks"]
+        jobs = [{"id":index+1, "name":name, "run_id":123, "run_attempt":2,
+                 "head_sha":"e"*40, "created_at":"2026-10-20T00:00:00Z",
+                 "started_at":"2026-10-20T00:00:03Z" if index == 0 else "2026-10-20T00:10:07Z",
+                 "completed_at":"2026-10-20T00:10:00Z" if index == 0 else "2026-10-20T00:20:00Z"}
+                for index,name in enumerate(names)]
+        metadata = self.temp / "metadata.json"
+        metadata.write_text(json.dumps({"run":run,"jobs":jobs}))
+        first,second = self.temp/"first",self.temp/"second"
+        first.mkdir(); second.mkdir()
+        row = {"schema":1,"id":"1"*32,"parent":None,
+               "source":{"head":"a"*40,"tree":"c"*40,"dirty":False},
+               "binding":{name:None for name in timing.BINDING},
+               "tool":"bash","phase":"shell-mixed","start_ns":1,"end_ns":2,
+               "status":"complete","exit_code":0}
+        row["binding"].update(GITHUB_WORKFLOW="Bounded CI",GITHUB_RUN_ID="123",
+                              GITHUB_RUN_ATTEMPT="2",GITHUB_JOB="portable",
+                              GITHUB_SHA="a"*40,NVWA_CI_HEAD_SHA="e"*40)
+        (first/"row.json").write_text(json.dumps(row))
+        other = copy.deepcopy(row); other["id"]="2"*32
+        target = second/"row.json"
+        def call(optimized):
+            command = [sys.executable,"-B"]+(["-O"] if optimized else [])
+            return subprocess.run(command+[str(SCRIPT),"queue",str(metadata),"--records",str(first),"--records",str(second)],
+                                  env=self.env,capture_output=True)
+        target.write_text(json.dumps(other))
+        for optimized in (False,True):
+            valid = call(optimized)
+            self.assertEqual(valid.returncode,0,valid.stderr)
+            joined = json.loads(valid.stdout.splitlines()[0])
+            self.assertEqual(joined["timing_records_joined"],2)
+            self.assertEqual(joined["checkout_sha"],"a"*40)
+            self.assertNotEqual(joined["checkout_sha"],run["head_sha"])
+        changes = [lambda r:r["source"].update(head="b"*40),
+                   lambda r:r["source"].update(tree="d"*40),
+                   lambda r:r["source"].update(dirty=True),
+                   lambda r:r["binding"].update(GITHUB_SHA="b"*40)]
+        for change in changes:
+            changed=copy.deepcopy(other); change(changed)
+            target.write_text(json.dumps(changed))
+            # Each directory remains independently valid; the join must reject.
+            self.assertEqual(len(timing.load_records(first)),1)
+            self.assertEqual(len(timing.load_records(second)),1)
+            for optimized in (False,True):
+                rejected=call(optimized)
+                self.assertEqual(rejected.returncode,1,rejected.stdout)
+                self.assertEqual(rejected.stdout,b"")
+                self.assertIn(b"source/checkout identities",rejected.stderr)
+        target.write_text(json.dumps(other))
+        for optimized in (False,True):
+            self.assertEqual(call(optimized).returncode,0)
+        # Valid records for a different job can have their own checkout identity.
+        other["source"].update(head="b"*40,tree="d"*40)
+        other["binding"].update(GITHUB_SHA="b"*40,GITHUB_JOB="native-and-wasm")
+        target.write_text(json.dumps(other))
+        for optimized in (False,True):
+            self.assertEqual(call(optimized).returncode,0)
+
     def test_queue_dependency_gate_ready_gap_attempt_and_event_head(self):
         run = {"id": 123, "run_attempt": 2, "head_sha": "e"*40, "created_at": "2026-10-20T00:00:00Z"}
         names = ["Core, CLI, and diagnostic controls", "macOS CPU tests and Wasm compile check", "macOS B1 source regression and viewer checks"]

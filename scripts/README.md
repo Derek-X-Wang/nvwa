@@ -174,6 +174,8 @@ The reader checks event head, run ID, attempt, expected job names and numeric jo
 IDs, and retains raw job creation/start/completion timestamps. Job names map to
 workflow keys unambiguously. Optional repeated `--records` directories join telemetry
 to numeric job IDs, checking event head/run/attempt; checkout SHA can differ for PRs.
+Repeated directories for one job must agree on the complete source identity and
+checkout SHA. Conflicts reject the entire join before any queue row is emitted.
 Without `--records`, the output is metadata-only and does not authenticate
 telemetry. It reports the portable dependency gate separately
 from eligible-to-creation and creation-to-start gaps. A job created before its

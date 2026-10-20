@@ -395,6 +395,8 @@ def queue_report(metadata, records=None):
                      "created_to_started_seconds": (start-job_created).total_seconds(),
                      "ready_to_started_seconds": (start - max(ready, job_created)).total_seconds(),
                      "limit": "Observed metadata gaps; scheduler/provisioning/concurrency causes unknown."})
+    sources_by_job = {}
+    joins = []
     for record in records or []:
         binding = record["binding"]
         if (binding.get("GITHUB_RUN_ID") != str(run["id"])
@@ -405,8 +407,17 @@ def queue_report(metadata, records=None):
         if len(matches) != 1:
             raise ValueError("timing job key cannot join metadata job ID")
         row = matches[0]
+        identity = (json.dumps(record["source"], sort_keys=True), binding.get("GITHUB_SHA"))
+        previous = sources_by_job.setdefault(row["job_key"], identity)
+        if previous != identity:
+            raise ValueError("timing records mix source/checkout identities for one job")
+        if record["source"]["head"] != binding.get("GITHUB_SHA"):
+            raise ValueError("timing checkout SHA differs from observed source HEAD")
+        joins.append((row, record))
+    # Validate every supplied directory before joining or emitting any row.
+    for row, record in joins:
         row["timing_records_joined"] = row.get("timing_records_joined", 0)+1
-        row["checkout_sha"] = record["source"]["head"]
+        row.setdefault("checkout_sha", record["source"]["head"])
     return rows
 
 
