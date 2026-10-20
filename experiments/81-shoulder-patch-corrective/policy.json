@@ -1,0 +1,21 @@
+{
+  "candidate_id": "nvwa-connected-shoulder-patch-v1",
+  "candidate_count": 1,
+  "source_center": 847,
+  "position_support_rule": "All source vertices in triangles incident to source847 in unchanged source-winding garment topology; require exactly [212,559,570,576,830,841,847] and graph connectivity.",
+  "position_source_ids": [212,559,570,576,830,841,847],
+  "max_support_rest_radius_m": 0.100,
+  "extent_guard": "Reject if any supported rest source is more than0.100m from rest source847 or support is not exactly the frozen radius1 source graph. Every per-source displacement has Euclidean length at most0.020m at authoring and application; activation bounded0..1 and rigid clavicle rotation preserve that bound. No support growth after rejection.",
+  "authoring_frame": "Retained actual h80proof-v1 combined arm2, all eight parameters zero. Require all three source proof gates and source payload hashes before use.",
+  "vector_rule": "For each supported source, select minimum squared Euclidean distance among all unchanged visible body source triangles. Use its source-winding unit normal only if its dot with barycentrically interpolated actual normal is positive. Delta = normal * max(0,0.001 - signed plane separation). Ties within1e-12 squared metres must agree in delta within1e-9m or reject. Reject degenerate/unsupported nearest triangle or vector over0.020m. Do not flip normals. Convert each vector to actual posed clavicle_l rotation frame and round components f32 once.",
+  "margin_m": 0.001,
+  "max_vector_m": 0.020,
+  "tie_distance_squared_m2": 1e-12,
+  "tie_vector_m": 1e-9,
+  "activation": "Reuse actual upperarm_l local-rest-relative joint angle smoothstep(clamp(angle/(pi/4),0,1)); apply vectors rotated by current actual posed clavicle_l. No clip/time switching. Exact zero leaves original position and normal bytes untouched.",
+  "normal_support": "All source vertices of triangles incident to any positional support source. Reuse existing angle-weighted normal computation only there when active.",
+  "fixed_cohort": "Same18 retained actual cases: torso -1/0/+1 x arm0/1/2/3/4 and knee2; plus fresh default actual arm2. No scoring before target freeze. No sweep or retune.",
+  "gates": ["Exact positions outside support", "Exact neutral/knee/end zero", "No new degeneracy or winding inversion", "No increase fixed body7941/7983 exposure probes", "No new strict proper cloth/body crossing pairs or nonadjacent cloth/cloth crossing pairs", "Strict measurable fresh default ROI body-first decrease"],
+  "thresholds": "Unchanged from experiments79 evaluator. Triangle double area1e-12m2; strict segment/barycentric epsilon1e-9; ray tie1e-5m; history/fresh component difference1e-5m.",
+  "acceptance_scope": "Offline analytical rejection/pass first. Eligible offline pass still requires actual current Web upload/normals, own-mesh bounds, same-update publication witnesses and visual improvement. Complete collision, coplanar/tangent contacts and ordinary desktop GUI remain unverified."
+}

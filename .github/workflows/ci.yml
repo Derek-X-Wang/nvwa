@@ -61,7 +61,7 @@ jobs:
           # The transfer tests run the actual experimental HTML handlers in
           # Node. A missing interpreter is an error, never a skipped green test.
           node --version
-          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls 73-high-poly-eyes 79-shoulder-pose-corrective 79-shoulder-pose-corrective/browser 80-hairline-export-diagnosis; do
+          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls 73-high-poly-eyes 79-shoulder-pose-corrective 79-shoulder-pose-corrective/browser 80-hairline-export-diagnosis 82-hairline-aba; do
             python3 -B -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
             python3 -B -O -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
           done
