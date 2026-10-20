@@ -10,6 +10,20 @@
 
 保留现有自动测试、数据及素材校验、原生／Wasm 编译和 CI 门禁。独立审查与适用 CI 通过后，按既有授权合并并验证 main。不得因调整人工验收频率而删除失败测试、放宽断言、吞掉错误或把 mock 当成实际运行。
 
+## 完整 portable 检查
+
+本地完整 portable 入口与 CI 的 portable job 共用同一命令目录：
+
+```sh
+python3 -B scripts/check-portable.py all
+```
+
+此入口按 CI 顺序运行全部 portable 组，包括实验 72／73 的真实控制、眼睛／头发控制、normal／`-O` 模式及原有 Node 缺失失败检查。需要 Bash、Git、Python 3.12 或更新版本、Node、仓库固定的 Rust 工具链及 Cargo 依赖。受支持的 Python 必须在 `PATH` 中以 `python3` 提供；嵌套命令仍调用 `python3`，只用绝对路径启动外层运行器并不足够。CLI 分发控制需要安全的 `tarfile.extractall(filter="data")` 接口。原有 fetch 与编译命令仍会运行。按资源政策安排完整执行。分组、前置条件、临时目录与环境说明见 [scripts/README.md](../../scripts/README.md)。
+
+运行器从自身位置确定 checkout，打印调用目录、完整 HEAD、分支／detached 状态及 dirty 状态，然后在该 checkout 运行检查。它不切换或更新 checkout。身份信息只是当前本地观察，不认证忽略的缓存、工具版本或远端状态。dirty 与 detached 本身不是失败。
+
+旧 `experiments/27-ci-baseline/check.sh portable` 仍只运行原有的核心／CLI 组，不能代替完整入口。`scripts/check-b1-work.sh` 保持原有的 native／Web 打包检查范围。portable 通过不替代既有 native、Wasm、源运行时或实际 Web／桌面验收。
+
 ## 需要桌面专项验证的变更
 
 涉及桌面专属行为或平台差异时，仍验证受影响的原生路径。例如：
