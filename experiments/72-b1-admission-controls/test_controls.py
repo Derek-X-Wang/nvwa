@@ -1,6 +1,7 @@
 """Runner tooling controls; synthetic logs below are NEVER runtime evidence."""
 import argparse
 import importlib.util
+import itertools
 import json
 from pathlib import Path
 import shutil
@@ -35,13 +36,110 @@ class ToolingControls(unittest.TestCase):
     def test_exact_current_context_is_explicit_and_execution_stays_historical(self):
         pins = runner.check_inputs(ROOT)
         context = pins['checked_input_context']
-        self.assertEqual(context['id'], 'issue86-runtime-retention-v1')
+        self.assertEqual(context['id'], 'character-stage-closeout-v1')
         self.assertEqual(context['current_rust_execution'], 'NOT-RUN')
         self.assertEqual(context['execution_source'], 'immutable baseline581 archive only')
         self.assertEqual(pins['files'][runner.RUNTIME], runner.RUNTIME_SHA)
         self.assertNotEqual(context['files'][runner.RUNTIME], runner.RUNTIME_SHA)
         with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
             runner.check_source_context(ROOT, pins, historical_only=True)
+
+    def test_complete_baseline_issue86_and_closeout_contexts_accept_without_history(self):
+        pins = json.loads((HERE / 'pins.json').read_text())
+        contexts = runner.source_contexts(pins)
+        self.assertEqual([name for name, _ in contexts],
+                         ['baseline581', 'issue86-runtime-retention-v1', 'character-stage-closeout-v1'])
+        for name, files in contexts:
+            with self.subTest(context=name):
+                self.assertEqual(runner.select_source_context(files, contexts), name)
+                if name == 'baseline581':
+                    self.assertEqual(runner.select_source_context(files, contexts, historical_only=True), name)
+                else:
+                    with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                        runner.select_source_context(files, contexts, historical_only=True)
+        self.assertEqual(contexts[1][0], 'issue86-runtime-retention-v1')
+        self.assertEqual(contexts[1][1][runner.RUNTIME],
+                         'fa89445f25c8337024c5c64abb31d9298a7c970d6f380cfec2de323e219f73ed')
+
+    def test_every_mixed_context_and_incomplete_map_rejects(self):
+        pins = json.loads((HERE / 'pins.json').read_text())
+        contexts = runner.source_contexts(pins)
+        changing = (runner.RUNTIME, 'crates/nvwa-runtime/src/appearance/mod.rs', 'crates/nvwa-core/src/b1.rs')
+        choices = [sorted({files[path] for _, files in contexts}) for path in changing]
+        accepted = rejected = 0
+        for combination in itertools.product(*choices):
+            actual = dict(pins['files'])
+            actual.update(zip(changing, combination))
+            matching = [name for name, files in contexts if actual == files]
+            with self.subTest(combination=combination):
+                if matching:
+                    self.assertEqual(runner.select_source_context(actual, contexts), matching[0])
+                    accepted += 1
+                else:
+                    with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                        runner.select_source_context(actual, contexts)
+                    rejected += 1
+        self.assertEqual((accepted, rejected), (3, 9))
+        for name, files in contexts:
+            for relative in files:
+                with self.subTest(context=name, missing=relative):
+                    actual = dict(files)
+                    actual.pop(relative)
+                    with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                        runner.select_source_context(actual, contexts)
+            for actual in ({}, dict(files, unreviewed='0' * 64)):
+                with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                    runner.select_source_context(actual, contexts)
+
+    def test_every_context_manifest_rejects_missing_symlink_empty_and_tampered(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa72-manifest-control-') as directory:
+            material = Path(directory) / 'material'
+            material.mkdir()
+            for name in runner.PACKAGE:
+                shutil.copyfile(HERE / name, material / name)
+            for name in ('pins.json', 'input-context-v1.json', 'input-context-v2.json'):
+                path = material / name
+                original = path.read_bytes()
+                target = Path(directory) / name
+                target.write_bytes(original)
+                for fault in ('missing', 'symlink', 'empty', 'tampered'):
+                    with self.subTest(manifest=name, fault=fault):
+                        path.unlink()
+                        try:
+                            if fault == 'symlink':
+                                path.symlink_to(target)
+                            elif fault == 'empty':
+                                path.write_bytes(b'')
+                            elif fault == 'tampered':
+                                path.write_bytes(original + b' ')
+                            with patch.object(runner, 'HERE', material):
+                                with self.assertRaisesRegex(ValueError, 'identity mismatch'):
+                                    runner.check_inputs(ROOT)
+                        finally:
+                            if path.exists() or path.is_symlink():
+                                path.unlink()
+                            path.write_bytes(original)
+                        with patch.object(runner, 'HERE', material):
+                            runner.check_inputs(ROOT)
+
+    def test_every_unchanged_numeric_section_mutation_rejects(self):
+        bridge = json.loads((HERE / 'input-context-v1.json').read_text())
+        with tempfile.TemporaryDirectory(prefix='nvwa72-section-control-') as directory:
+            root, _ = self.input_copy(directory)
+            path = root / runner.RUNTIME
+            original = path.read_text()
+            for section in bridge['unchanged_runtime_sections']:
+                with self.subTest(section=section['id']):
+                    changed = runner.patch_once(original, section['start'], section['start'] + '\n// changed numeric section\n')
+                    try:
+                        path.write_text(changed)
+                        with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                            runner.check_inputs(root)
+                        with self.assertRaisesRegex(ValueError, 'unchanged numeric section mismatch: ' + section['id']):
+                            runner.check_unchanged_sections(changed, bridge)
+                    finally:
+                        path.write_text(original)
+                    runner.check_inputs(root)
 
     def test_every_pinned_input_mutation_rejects_and_restores(self):
         with tempfile.TemporaryDirectory(prefix='nvwa72-input-control-') as directory:
