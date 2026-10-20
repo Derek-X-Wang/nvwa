@@ -29,8 +29,12 @@ verification and does not arrange omitted prerequisites. A failed command stops
 its group and prevents later selected groups. The original command arguments,
 normal/`-O` modes, Bash loops and failure boundaries are retained.
 
-Use Bash, Git, Python 3, Node and the repository's pinned Rust toolchain with
-rustfmt and Clippy. Install prerequisites separately. The runner does not install
+Use Bash, Git, Python 3.12 or newer, Node and the repository's pinned Rust toolchain
+with rustfmt and Clippy. The supported Python must be selected as `python3` on
+`PATH`: preserved nested commands invoke `python3`, so invoking only the outer
+runner through an absolute Python path is insufficient. The CLI distribution
+controls require the safe `tarfile.extractall(filter="data")` interface.
+Install prerequisites separately. The runner does not install
 tools. Existing Cargo commands retain their network behavior: `source-cli` may
 resolve/fetch locked dependencies and `offline-motion` explicitly runs
 `cargo fetch --locked`. Offline commands still require a prepared dependency cache.
