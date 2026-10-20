@@ -208,7 +208,7 @@ impl CharacterBackend {
         if version != 1 && !(matches!(version, 2 | 3) && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
-                format!("character backend version {version} is unsupported; expected 1"),
+                format!("character backend version {version} is unsupported"),
             ));
         }
         if let Self::B1Cpu { asset_id, .. } = self

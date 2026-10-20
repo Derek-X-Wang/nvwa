@@ -23,6 +23,76 @@ fn pose(id: &str) -> Command {
 }
 
 #[test]
+fn unsupported_backend_versions_report_rejection_without_claiming_expected_version_one() {
+    let glb = CharacterProfile::from_json(include_str!("../../../assets/character.profile.json"))
+        .unwrap();
+    for profile in [
+        CharacterProfile::b1_character(),
+        CharacterProfile::b1(),
+        CharacterProfile::b1_motion(),
+        glb,
+    ] {
+        let original = SceneDocument::from_profile(profile.clone()).unwrap();
+        assert_eq!(
+            SceneDocument::from_json(&original.to_json().unwrap()).unwrap(),
+            original
+        );
+        assert_eq!(
+            CharacterProfile::from_json(&profile.to_json().unwrap()).unwrap(),
+            profile
+        );
+        for version in [999, 0] {
+            let mut invalid = serde_json::to_value(&original).unwrap();
+            invalid["profile"]["backend"]["schema_version"] = json!(version);
+            for result in [
+                SceneDocument::from_json(&invalid.to_string()).map(|_| ()),
+                CharacterProfile::from_json(&invalid["profile"].to_string()).map(|_| ()),
+            ] {
+                let error = result.unwrap_err();
+                assert_eq!(error.code, "unsupported_character_version");
+                assert_eq!(
+                    error.message,
+                    format!("character backend version {version} is unsupported"),
+                    "{}",
+                    profile.id
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn backend_version_and_asset_mismatches_remain_distinct_from_unknown_versions() {
+    let glb = CharacterProfile::from_json(include_str!("../../../assets/character.profile.json"))
+        .unwrap();
+    for version in [2, 3] {
+        let mut invalid = serde_json::to_value(&glb).unwrap();
+        invalid["backend"]["schema_version"] = json!(version);
+        assert_eq!(
+            error(CharacterProfile::from_json(&invalid.to_string())),
+            "unsupported_character_version"
+        );
+    }
+    for (profile, wrong_asset) in [
+        (CharacterProfile::b1(), B1_V2_ASSET_ID),
+        (CharacterProfile::b1_motion(), B1_V2_ASSET_ID),
+        (CharacterProfile::b1_character(), B1_ASSET_ID),
+    ] {
+        let mut invalid =
+            serde_json::to_value(SceneDocument::from_profile(profile).unwrap()).unwrap();
+        invalid["profile"]["backend"]["asset_id"] = json!(wrong_asset);
+        assert_eq!(
+            error(SceneDocument::from_json(&invalid.to_string())),
+            "unsupported_character_asset"
+        );
+        assert_eq!(
+            error(CharacterProfile::from_json(&invalid["profile"].to_string())),
+            "unsupported_character_asset"
+        );
+    }
+}
+
+#[test]
 fn canonical_b1_defaults_roundtrip_and_reject_modified_profile_identity_or_bindings() {
     let original = document();
     assert_eq!(original.schema_version, 4);

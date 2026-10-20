@@ -61,6 +61,56 @@ fn copy_assets(dir: &Path) -> PathBuf {
 }
 
 #[test]
+fn unsupported_backend_version_reports_accurate_error_and_preserves_files() {
+    let dir = directory("unsupported-version");
+    let invalid_path = dir.join("invalid.json");
+    let output_path = dir.join("output.json");
+    let glb = CharacterProfile::from_json(include_str!("../../../assets/character.profile.json"))
+        .unwrap();
+    for profile in [
+        glb,
+        CharacterProfile::b1(),
+        CharacterProfile::b1_motion(),
+        CharacterProfile::b1_character(),
+    ] {
+        let original = SceneDocument::from_profile(profile).unwrap();
+        let retained = original.to_json().unwrap();
+        let mut invalid = serde_json::to_value(&original).unwrap();
+        invalid["profile"]["backend"]["schema_version"] = json!(999);
+        let invalid_bytes = serde_json::to_vec(&invalid).unwrap();
+        std::fs::write(&invalid_path, &invalid_bytes).unwrap();
+        for existing in [false, true] {
+            if existing {
+                std::fs::write(&output_path, &retained).unwrap();
+            }
+            for command in ["validate", "save"] {
+                let output = if command == "validate" {
+                    cli(&[command.as_ref(), &invalid_path, &root()])
+                } else {
+                    cli(&[command.as_ref(), &invalid_path, &output_path])
+                };
+                assert_eq!(output.status.code(), Some(1));
+                assert!(output.stdout.is_empty());
+                let value: Value = serde_json::from_slice(&output.stderr).unwrap();
+                assert_eq!(value["code"], "unsupported_character_version");
+                assert_eq!(
+                    value["message"],
+                    "character backend version 999 is unsupported"
+                );
+                assert_eq!(std::fs::read(&invalid_path).unwrap(), invalid_bytes);
+                if existing {
+                    assert_eq!(std::fs::read_to_string(&output_path).unwrap(), retained);
+                } else {
+                    assert!(!output_path.exists());
+                }
+            }
+        }
+        std::fs::remove_file(&output_path).unwrap();
+    }
+    std::fs::remove_dir_all(dir).unwrap();
+}
+
+#[test]
 fn no_window_new_discover_apply_validate_save_and_inspect_share_full_work() {
     let dir = directory("roundtrip");
     let input = dir.join("input.json");
