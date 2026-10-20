@@ -28,105 +28,32 @@ jobs:
           persist-credentials: false
       - name: Install repository Rust version
         run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Check shared portable runner controls
+        run: python3 -B scripts/check-portable.py runner-contract
       - name: Check portable source and real CLI paths
-        run: bash experiments/27-ci-baseline/check.sh portable
+        run: python3 -B scripts/check-portable.py source-cli
       - name: Check complete standalone CLI distribution
-        run: |
-          cargo build -p nvwa-cli --locked --offline
-          python3 -B scripts/test-cli-package.py --binary target/debug/nvwa-cli
-          python3 -B -O scripts/test-cli-package.py --binary target/debug/nvwa-cli
+        run: python3 -B scripts/check-portable.py cli-distribution
       - name: Verify admitted production character inputs and source
-        run: |
-          python3 -B scripts/verify-b1-inputs.py
-          python3 -B -O scripts/verify-b1-inputs.py
-          python3 -B scripts/test-b1-inputs.py
-          python3 -B -O scripts/test-b1-inputs.py
+        run: python3 -B scripts/check-portable.py b1-inputs
       - name: Check independent B1 motion comparator controls
-        run: |
-          python3 -B experiments/60-b1-continuous-motion/test_controls.py
-          python3 -B -O experiments/60-b1-continuous-motion/test_controls.py
-          python3 -B experiments/60-b1-continuous-motion/test_serve.py
-          python3 -B -O experiments/60-b1-continuous-motion/test_serve.py
+        run: python3 -B scripts/check-portable.py motion-comparator
       - name: Check bounded diagnostic controls
-        run: bash experiments/27-ci-baseline/check.sh diagnostics
+        run: python3 -B scripts/check-portable.py diagnostics
       - name: Check bounded appearance diagnostic controls
-        run: |
-          python3 -B -m unittest discover -s experiments/65-b1-appearance-quality -p 'test_*.py' -v
-          python3 -B -O -m unittest discover -s experiments/65-b1-appearance-quality -p 'test_*.py' -v
-          python3 -B -m unittest discover -s experiments/65-b1-appearance-quality/preview/build -p 'test_*.py' -v
-          python3 -B -O -m unittest discover -s experiments/65-b1-appearance-quality/preview/build -p 'test_*.py' -v
+        run: python3 -B scripts/check-portable.py appearance
       - name: Check eye, hair, and character parameter controls
         timeout-minutes: 3
-        run: |
-          # The transfer tests run the actual experimental HTML handlers in
-          # Node. A missing interpreter is an error, never a skipped green test.
-          node --version
-          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls 73-high-poly-eyes 79-shoulder-pose-corrective 79-shoulder-pose-corrective/browser 80-hairline-export-diagnosis 82-hairline-aba; do
-            python3 -B -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
-            python3 -B -O -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
-          done
+        run: python3 -B scripts/check-portable.py eye-hair-parameters
       - name: Check authenticated B1 source bundle and rejection controls
         timeout-minutes: 3
-        run: |
-          python3 -B -m unittest discover -s experiments/59-b1-ci-inputs -p 'test_*.py' -v
-          python3 -B -O -m unittest discover -s experiments/59-b1-ci-inputs -p 'test_*.py' -v
-          python3 -B -m unittest discover -s experiments/57-b1-pose-runtime -p 'test_prepare_ci.py' -v
-          python3 -B -O -m unittest discover -s experiments/57-b1-pose-runtime -p 'test_prepare_ci.py' -v
-          python3 -B experiments/59-b1-ci-inputs/prepare_ci_inputs.py --out "$RUNNER_TEMP/nvwa-b1-portable-seed"
-          python3 -B experiments/57-b1-pose-runtime/prepare.py --ci-inputs "$RUNNER_TEMP/nvwa-b1-portable-seed"
-          python3 -B experiments/58-b1-desktop-web/prepare.py --ci-inputs "$RUNNER_TEMP/nvwa-b1-portable-seed"
-          python3 -B -m unittest discover -s experiments/58-b1-desktop-web -p 'test_*.py' -v
-          python3 -B -O -m unittest discover -s experiments/58-b1-desktop-web -p 'test_*.py' -v
+        run: python3 -B scripts/check-portable.py authenticated-source
       - name: Prepare locked importer dependencies and check offline motion controls
         timeout-minutes: 6
-        run: |
-          cargo fetch --locked --manifest-path experiments/42-motion-import/Cargo.toml
-          python3 -B experiments/42-motion-import/check_model_free.py
-          python3 -B experiments/44-approved-cpu-motion-trial/verify_evidence.py
-          python3 -B experiments/45-genuine-rig-admission/probe.py
-          python3 -B experiments/45-genuine-rig-admission/test_controls.py
-          python3 -B experiments/46-soma-reference-calibration/calibrate.py
-          python3 -B experiments/46-soma-reference-calibration/test_controls.py
-          python3 -B -O experiments/46-soma-reference-calibration/test_controls.py
-          python3 -B experiments/46-soma-reference-calibration/independent/oracle.py
-          python3 -B experiments/46-soma-reference-calibration/independent/test_controls.py
-          python3 -B -O experiments/46-soma-reference-calibration/independent/test_controls.py
-          python3 -B experiments/47-fixture-rig-calibration/calibrate.py
-          python3 -B experiments/47-fixture-rig-calibration/test_controls.py
-          python3 -B -O experiments/47-fixture-rig-calibration/test_controls.py
-          python3 -B experiments/47-fixture-rig-calibration/reference/audit.py
-          python3 -B -O experiments/47-fixture-rig-calibration/reference/audit.py
-          python3 -B experiments/47-fixture-rig-calibration/reference/test_audit.py
-          python3 -B experiments/48-genuine-fixture-work/export.py verify experiments/48-genuine-fixture-work/artifacts
-          python3 -B experiments/48-genuine-fixture-work/test_controls.py
-          python3 -B -O experiments/48-genuine-fixture-work/test_controls.py
-          python3 -B experiments/48-genuine-fixture-work/independent/check_serialized.py
-          python3 -B -O experiments/48-genuine-fixture-work/independent/check_serialized.py
-          python3 -B experiments/48-genuine-fixture-work/independent/test_serialized.py
-          python3 -B -O experiments/48-genuine-fixture-work/independent/test_serialized.py
-          # Preserve every original49 CPU family and rejection control in its
-          # authenticated historical context after current product source advances.
-          # These retained captures are not fresh rehearsal-runtime evidence.
-          python3 -B experiments/51-rehearsal-history-compat/audit.py
-          python3 -B -O experiments/51-rehearsal-history-compat/audit.py
-          python3 -B experiments/51-rehearsal-history-compat/test_controls.py
-          python3 -B -O experiments/51-rehearsal-history-compat/test_controls.py
+        run: python3 -B scripts/check-portable.py offline-motion
       - name: Check frozen upper-arm comparison and retained runtime captures
         timeout-minutes: 5
-        run: |
-          python3 -B experiments/50-upper-arm-neutral-ab/test_candidate.py
-          python3 -B -O experiments/50-upper-arm-neutral-ab/test_candidate.py
-          python3 -B experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py
-          python3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py
-          python3 -B experiments/50-upper-arm-neutral-ab/test_runtime_measure.py
-          python3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_measure.py
-          python3 -B experiments/50-upper-arm-neutral-ab/runtime_evidence.py
-          mkdir -p .work/ci-neutral50
-          for platform in native web; do
-            for variant in baseline candidate; do
-              python3 -B experiments/50-upper-arm-neutral-ab/probe/compare.py "experiments/50-upper-arm-neutral-ab/results/$platform-$variant.json" --variant "$variant" --output ".work/ci-neutral50/$platform-$variant.json"
-            done
-          done
+        run: python3 -B scripts/check-portable.py frozen-upper-arm
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     # Reject cheap portable failures before spending a cold graphical compile.
