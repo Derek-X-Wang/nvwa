@@ -1,0 +1,85 @@
+{
+  "root_frozen": true,
+  "scope": "Exactly three fresh held-arm2 source correspondence captures. No target authored; no quality admission. Nested witness epochs/publication keys and actual geometry additionally require independent offline review before authoring.",
+  "runtime_sources": {
+    "experiments/79-shoulder-pose-corrective/src/lib.rs": {
+      "sha256": "6c8f3114cf9f9a7188c40a874905098f36f5ebec13b07afb807edf35b013d060",
+      "bytes": 39735
+    },
+    "experiments/79-shoulder-pose-corrective/src/source.rs": {
+      "sha256": "752df76fc642c296246bc5181a985c98ce3cc87af83a2bc09d1aa4d352d7a1e1",
+      "bytes": 43361
+    },
+    "experiments/79-shoulder-pose-corrective/src/diagnostic.rs": {
+      "sha256": "f7cf879c37537a3786f37fa3b17dc13681287ea85440de09c443dc90e1f99d2e",
+      "bytes": 12847
+    }
+  },
+  "stage_rules": {
+    "combined": {
+      "source_equals": {
+        "mode": "baseline",
+        "target_active": false,
+        "pre_visibility_publication_matches": true,
+        "target_authored": null,
+        "geometry": "unchanged production mesh/materials"
+      },
+      "required_source_keys": [
+        "publication_key_sha256",
+        "actual_render_publication",
+        "pre_visibility_witness",
+        "Last_independent_witness"
+      ]
+    },
+    "source_body": {
+      "source_equals": {
+        "mode": "SourceBody",
+        "target_active": false,
+        "pre_visibility_publication_matches": true,
+        "role": "body",
+        "source_face0": 7941,
+        "source_quad_ids": [
+          8319,
+          8318,
+          8309,
+          8310
+        ],
+        "ordered_triangle_positions_preserved": true,
+        "all_attributes_duplicated_by_existing_Bevy_API": true,
+        "only_selected_fan_vertex_colors_changed": true,
+        "material_visibility_culling_and_depth_unchanged": true
+      },
+      "required_source_keys": [
+        "publication_key_sha256",
+        "actual_render_publication",
+        "pre_visibility_witness",
+        "Last_independent_witness"
+      ]
+    },
+    "source_garment": {
+      "source_equals": {
+        "mode": "SourceGarment",
+        "target_active": false,
+        "pre_visibility_publication_matches": true,
+        "role": "garment",
+        "source_face0": 131,
+        "source_quad_ids": [
+          830,
+          168,
+          212,
+          847
+        ],
+        "ordered_triangle_positions_preserved": true,
+        "all_attributes_duplicated_by_existing_Bevy_API": true,
+        "only_selected_fan_vertex_colors_changed": true,
+        "material_visibility_culling_and_depth_unchanged": true
+      },
+      "required_source_keys": [
+        "publication_key_sha256",
+        "actual_render_publication",
+        "pre_visibility_witness",
+        "Last_independent_witness"
+      ]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "root_frozen": false,
+  "scope": "DRAFT ONLY. Root must replace unknown previsibility keys using final worker80 source/schema before a real run.",
+  "stage_rules": {
+    "combined": {"source_equals": {"mode": "baseline", "target_active": false}, "required_source_keys": ["__ROOT_FINAL_PREVISIBILITY_KEY__"]},
+    "source_body": {"source_equals": {"mode": "SourceBody", "target_active": false}, "required_source_keys": ["__ROOT_FINAL_PREVISIBILITY_KEY__"]},
+    "source_garment": {"source_equals": {"mode": "SourceGarment", "target_active": false}, "required_source_keys": ["__ROOT_FINAL_PREVISIBILITY_KEY__"]}
+  }
+}

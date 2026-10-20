@@ -1,0 +1,13 @@
+# Exact three-source browser helper
+
+This helper reads a separately built experiment79 site. It sends exactly held-arm2, combined, source_body and source_garment requests. It never authors a target or sends a corrective. The original transfer core is unchanged (SHA44698bd8f212ae656ccf6561b277ceb3bb4e9f01bbf9d51d1ceb3f318dbeab9a).
+
+Build/serve commands and the actual decision are in [the experiment README](../README.md). `contract.example.json` intentionally refuses startup. Use a root-frozen contract matching the reviewed source and built site. Output is create-only under this helper's ignored `actual/RUN_ID`; choose a fresh run ID for each page. The loopback receiver requires exact Host/Origin, bounded bodies and fixed paths; no CORS or arbitrary app-control endpoint.
+
+Default mode uses the real Next button after each qualified combined/body screenshot. Explicit `&pace=45` advances the same guarded Next after45seconds. Before advancing it rechecks the exact token/report/frame and stores a closing pre-next fence. A missing screenshot or closing fence is NOT-RUN, not inferred from exported geometry.
+
+The final garment mode never advances. A real Check screenshot button emits a receipt; explicit pace45 can emit automatic receipts. The bounded final watcher performs at most12 checks, closing at check12 or the first check at/after55seconds. Each successful continuation closes the previous screenshot interval and opens another. A screenshot must fall after a successful receipt's post-response event and before a later successful exact fence. Any stale token/string/identity becomes FAILED and clears the old token. End state explicitly says `FINAL-WINDOW-CLOSED-NO-CURRENT-PROOF` / `NO CURRENT TOKEN`; it does not retain permanent qualification.
+
+`verify_sources.py` separately verifies exact original bytes and independent request IDs, then report/frame readiness, epochs, measured stability, Work/camera/base identity, both publication witnesses and actual part bindings. Selected source meshes require their exact nonindexed layout and own exact bounds; baseline and other parts retain indexed layout. Full production references stay unchanged across the three captures. Publication keys are correlated, not recomputed by reserializing numeric JSON. This is source/binding validation, not a geometry oracle, screenshot proof or GPU ownership proof. It must be paired with actual source topology and observed same-frame colors before authoring.
+
+Twelve portable tests cover the original transfer/state machine/receiver and source verifier. They require Node and Python, use synthetic fixtures, and do not require private raw inputs. Full actual captures and historical failed helper versions remain in the local evidence archive.
