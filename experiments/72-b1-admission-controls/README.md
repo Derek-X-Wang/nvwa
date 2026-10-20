@@ -9,7 +9,7 @@ The immutable product baseline is `581f6c8329c984bf55a913ca999830430334e5a1`.
 [cases.json](cases.json) preserves the original eight recipes and five diagnostic
 poses; [pins.json](pins.json) authenticates the frozen inputs and product seams.
 
-## Current checkout compatibility after issue86
+## Current checkout compatibility after issue86 and stage closeout
 
 The portable Python controls now distinguish the checkout they inspect from the
 immutable source they execute. [input-context-v1.json](input-context-v1.json)
@@ -18,22 +18,34 @@ retention changes. Only `b1.rs` and `appearance/mod.rs` differ from baseline581;
 both must match their exact SHA-256 together. The other fifteen files in the
 seventeen-file baseline set retain their original hashes. Unknown changes,
 mixed baseline/current pairs, missing files and symlinks reject. The original
-pins file and the new context manifest each have a complete code-pinned hash.
+pins file and context manifest each retain their complete code-pinned hash.
 
-Five source sections retain byte-identical hashes across baseline581 and this
-context: signed target mapping, source IDs, visible-body indices, CPU upload and
+[input-context-v2.json](input-context-v2.json) admits one more complete context:
+the reviewed character-stage closeout. Its three exact overrides are the issue86
+appearance controller, `b1.rs` with the added CPU-feedback test assertion, and
+Core `b1.rs` with the unsupported-version diagnostic correction. The Core change
+removes the misleading `expected 1` suffix; version rejection and numerical
+catalogues do not change. The other fourteen baseline input hashes stay exact.
+The original baseline, issue86 context and closeout context remain separate;
+no mixture of their files is accepted. Both context manifests are mandatory and
+code-pinned, including when authenticating the historical baseline. Missing,
+symlinked, empty or altered manifests reject.
+
+Five source sections retain byte-identical hashes across all three
+contexts: signed target mapping, source IDs, visible-body indices, CPU upload and
 the existing endpoint semantic test. `appearance/geometry.rs`, the B1 adapter,
-core parameter catalogues, frozen original40 inputs and numeric evaluators also
-retain their original whole-file pins. These are source identity witnesses;
-they do not establish current issue86 runtime numeric results.
+frozen original40 inputs and numeric evaluators also retain their original
+whole-file pins. Core `b1.rs` has the separately pinned closeout identity described
+above. These are source identity witnesses; they do not establish current
+issue86 or closeout runtime numeric results.
 
 `--check-inputs` reports the selected checkout context separately from the
 baseline. `--execute` still archives **only baseline581**, verifies that archive
 in historical-only mode, and runs every original zero/original40/five-fault gate
 there. Its receipt records both identities. No current file is overlaid onto
 that archive. Existing execution receipts and historical pins stay unchanged.
-Current issue86 production tests and mutation gates remain separate checks;
-current issue86 original40 execution is **NOT-RUN** by this tooling fix.
+Current production tests and mutation gates remain separate checks; current
+issue86 and closeout original40 execution is **NOT-RUN** by this tooling fix.
 
 ## Cheap preparation controls
 
@@ -46,8 +58,10 @@ python3 -B experiments/72-b1-admission-controls/run.py --check-inputs
 rustfmt --edition 2024 --check experiments/72-b1-admission-controls/compatibility.rs
 ```
 
-The Python controls exercise patch identity, original case coverage, exclusive
-outputs and fail-closed interpretation of **synthetic log fixtures**. They are
+The Python controls exercise exact complete-context selection (all three accept,
+all nine mixed combinations reject), historical-only selection, manifest safety,
+every unchanged numeric section, patch identity, original case coverage,
+exclusive outputs and fail-closed interpretation of **synthetic log fixtures**. They are
 runner-tooling controls, never real Rust mutation-red evidence.
 
 ## Deferred actual CPU execution

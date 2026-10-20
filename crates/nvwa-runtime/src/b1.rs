@@ -3371,6 +3371,14 @@ mod tests {
         app: &mut App,
         expected: &nvwa_core::CharacterAppearance,
     ) -> serde_json::Value {
+        // Check scheduled feedback before explicit readback can repair it. CPU
+        // binding evidence must never imply an observed rendered presentation.
+        let status = app.world().resource::<RuntimeStatus>();
+        assert!(status.ready);
+        assert_eq!(
+            status.phase,
+            "CPU body + requested appearance bound · presentation unconfirmed"
+        );
         let snapshot = crate::appearance_snapshot(app.world_mut()).unwrap();
         assert_eq!(snapshot["applied"], serde_json::to_value(expected).unwrap());
         assert!(!snapshot["skin"].is_null());

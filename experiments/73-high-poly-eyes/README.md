@@ -14,6 +14,23 @@ The independently checked CPU source evidence is `CPU-REPLAY.json`: actual retai
 
 ## Source authentication and limits
 
+The portable source gate keeps the complete309-entry `FROZEN-INPUTS.json`
+unchanged. `frozen_context.py` authenticates that original manifest and
+`source-context-closeout-v1.json` with code-pinned hashes. It admits exactly two
+complete source contexts: the original frozen309 inputs, or the reviewed stage
+closeout with four exact overrides. Those overrides are the Core version-error
+diagnostic, its Core/CLI tests, and the runtime CPU-feedback test helper. The
+other305 input hashes and byte counts remain exact. Mixed contexts, unreviewed
+source edits, missing or symlinked files, and missing, empty or altered manifests
+reject. The CI-called gate retains its hash, byte-count and manifest-shape
+checks. Disposable-copy controls test both complete contexts and all fourteen
+mixed combinations without needing Git history.
+
+This admits source compatibility for the portable checks. It does not rerun or
+relabel historical eye captures, build receipts or quality results. Original
+frozen records keep their original source identities; current eye rendering and
+quality acceptance remain separate evidence.
+
 `SOURCE.json` pins the original280737770B system archive and exact785436B four-file subset. `source/` preserves original OBJ/MHCLO/MHMAT/PNG bytes. Selected ZIP decompression/CRC, SHA256 and sizes were checked against the replacement plan. Pack metadata and existing CC0 legal text are retained under `source/provenance/`; OBJ/MHCLO/MHMAT original headers name Data Collection AB, Joel Palmius and Jonas Hauquier. No bytes were downloaded. This is a selected-member CRC pass, not an all-member archive CRC pass.
 
 ```sh

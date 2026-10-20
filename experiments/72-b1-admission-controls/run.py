@@ -17,8 +17,9 @@ RUNTIME = 'crates/nvwa-runtime/src/b1.rs'
 RUNTIME_SHA = 'e798765fbe44f2ecbc7e0f4b96c71a89ebfe23492b39d696a78a0e9bedf8d687'
 PINS_SHA = '02637d4de1f782658c6363e88c92e22ed6384db2f20ea468d73a28b74f257208'
 CONTEXT_SHA = '48667ae5e9e0dc706c3c9b25f8c7cc3b23e99c37f72cb8a346002e4001b91b9c'
+CLOSEOUT_CONTEXT_SHA = '0f9015fefeff7897b814691a990f9b0c46d621a7d7b611e887fd8b28f18de210'
 HERE = Path(__file__).resolve().parent
-PACKAGE = ('run.py', 'test_controls.py', 'compatibility.rs', 'cases.json', 'pins.json', 'README.md', 'REVIEW.md', 'input-context-v1.json')
+PACKAGE = ('run.py', 'test_controls.py', 'compatibility.rs', 'cases.json', 'pins.json', 'README.md', 'REVIEW.md', 'input-context-v1.json', 'input-context-v2.json')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -103,16 +104,34 @@ def verdict(exit_code, text, test, fault=None):
     return True
 
 
+def source_contexts(pins):
+    """Load exact, code-pinned complete contexts, never per-file alternatives."""
+    contexts = [('baseline581', dict(pins['files']))]
+    for name, expected in (('input-context-v1.json', CONTEXT_SHA),
+                           ('input-context-v2.json', CLOSEOUT_CONTEXT_SHA)):
+        manifest = HERE / name
+        require(manifest.is_file() and not manifest.is_symlink() and file_sha(manifest) == expected,
+                'input context manifest identity mismatch: ' + name)
+        bridge = json.loads(manifest.read_text())
+        require(bridge['schema_version'] == 1 and bridge['baseline_commit'] == BASELINE,
+                'input context version/baseline mismatch')
+        current = dict(pins['files'])
+        current.update(bridge['overrides'])
+        contexts.append((bridge['context'], current))
+    return contexts
+
+
+def select_source_context(actual, contexts, historical_only=False):
+    """The whole authenticated file map must match one reviewed context."""
+    for name, expected in contexts:
+        if actual == expected and (not historical_only or name == 'baseline581'):
+            return name
+    raise ValueError('source input context mismatch: exact baseline581, reviewed issue86 pair, or reviewed closeout context required')
+
+
 def check_source_context(root, pins, historical_only=False):
     """Authenticate one complete source context; never mix baseline/current files."""
-    manifest = HERE / 'input-context-v1.json'
-    require(manifest.is_file() and not manifest.is_symlink() and file_sha(manifest) == CONTEXT_SHA,
-            'input context manifest identity mismatch')
-    bridge = json.loads(manifest.read_text())
-    require(bridge['schema_version'] == 1 and bridge['baseline_commit'] == BASELINE,
-            'input context version/baseline mismatch')
-    current = dict(pins['files'])
-    current.update(bridge['overrides'])
+    contexts = source_contexts(pins)
     actual = {}
     for relative in pins['files']:
         path = root
@@ -121,12 +140,8 @@ def check_source_context(root, pins, historical_only=False):
             require(not path.is_symlink(), 'source input symlink: ' + relative)
         require(path.is_file(), 'source input missing: ' + relative)
         actual[relative] = file_sha(path)
-    if actual == pins['files']:
-        context = 'baseline581'
-    else:
-        require(not historical_only and actual == current,
-                'source input context mismatch: exact baseline581 or reviewed issue86 pair required')
-        context = bridge['context']
+    context = select_source_context(actual, contexts, historical_only)
+    bridge = json.loads((HERE / 'input-context-v1.json').read_text())
     check_unchanged_sections((root / RUNTIME).read_text(), bridge)
     return {'id': context, 'files': actual, 'current_rust_execution': 'NOT-RUN',
             'execution_source': 'immutable baseline581 archive only'}
@@ -143,7 +158,9 @@ def check_unchanged_sections(raw, bridge):
 
 
 def check_inputs(root):
-    require(file_sha(HERE / 'pins.json') == PINS_SHA, 'immutable baseline pins identity mismatch')
+    pins_path = HERE / 'pins.json'
+    require(pins_path.is_file() and not pins_path.is_symlink() and file_sha(pins_path) == PINS_SHA,
+            'immutable baseline pins identity mismatch')
     pins = json.loads((HERE / 'pins.json').read_text())
     require(pins['baseline_commit'] == BASELINE and pins['files'][RUNTIME] == RUNTIME_SHA, 'immutable baseline pin mismatch')
     context = check_source_context(root, pins)

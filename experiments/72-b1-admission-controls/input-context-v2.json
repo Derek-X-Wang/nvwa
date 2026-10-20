@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "context": "character-stage-closeout-v1",
+  "baseline_commit": "581f6c8329c984bf55a913ca999830430334e5a1",
+  "scope": "exact reviewed closeout source identity only; historical execution remains immutable baseline581; current Rust original40 execution NOT-RUN by this runner",
+  "overrides": {
+    "crates/nvwa-runtime/src/b1.rs": "b1e5758d9bf146e8156f0aca20f178c90f9342f481cf8e17b737b4556874270d",
+    "crates/nvwa-runtime/src/appearance/mod.rs": "cd8abbac04b6fa0b176a9cc870557a0cfe9263e89bc9d3b7879da206d4a46727",
+    "crates/nvwa-core/src/b1.rs": "d1aa3098b87999693087c5f7a9ca1c9f9a110315a57fbd22e3ce6b1847e98984"
+  },
+  "unchanged_numeric_sections_manifest": {
+    "path": "input-context-v1.json",
+    "sha256": "48667ae5e9e0dc706c3c9b25f8c7cc3b23e99c37f72cb8a346002e4001b91b9c"
+  },
+  "reviewed_changes": [
+    "Runtime b1.rs adds the current CPU feedback assertion in the existing issue86 test helper; production runtime remains the issue86 retention context.",
+    "Core b1.rs removes the misleading expected-1 suffix from the unsupported-version error; version acceptance/rejection and numeric catalogues remain unchanged."
+  ]
+}
