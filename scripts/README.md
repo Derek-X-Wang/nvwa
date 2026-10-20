@@ -12,6 +12,7 @@ step selects one group from that same file. `all` runs these groups in this orde
 | Group | Checks and prerequisites |
 | --- | --- |
 | `runner-contract` | Shared runner extraction and subprocess controls, normal and optimized Python. |
+| `ci-timing-contract` | Observer, stream/failure, queue metadata, and complete workflow inventory controls, normal and optimized Python. |
 | `source-cli` | Existing portable source checks: Rust formatting, strict core/CLI Clippy, core/CLI tests. Requires the pinned Rust toolchain and Cargo dependencies. |
 | `cli-distribution` | Offline CLI build and standalone package controls, normal and optimized Python. Uses the dependencies prepared by `source-cli`. |
 | `b1-inputs` | Admitted production inputs and source verifier plus rejection controls, normal and optimized Python. |
@@ -79,3 +80,107 @@ existing narrow interface. Its `portable` option covers only the `source-cli`
 group. `scripts/check-b1-work.sh` remains the separate scoped native/Web package
 helper. Native CPU, source runtime, Wasm compilation and actual Web/native visual
 acceptance remain separate gates; portable success does not prove them.
+
+## CI phase observations
+
+`ci-timing.py` observes the existing bounded workflow. The same
+`ci-timing-contract` group runs locally in `all` and in CI. The three job names,
+runner types, timeouts, dependencies, PR/main triggers, and original command bodies
+remain unchanged. Each existing `run` body still executes with Bash `-e`.
+A scoped `PATH` directory wraps **Cargo only**, including Cargo launched inside
+Python and captured mutation subprocesses. It resolves the original Cargo before
+adding that directory, keeps proxy symlink spelling, and adds no Cargo arguments.
+Python, Node, the portable runner, and frozen experiment helpers retain their
+original code. The catalog gains only the timing-control group. The wrapper
+forwards command exit codes and signals to its direct child. A signaled Cargo
+shim terminates with the same signal after writing its receipt, so Python callers
+retain negative signal return codes and Bash retains its own signal convention.
+Process groups and Bash descendant cancellation behavior remain unchanged.
+Cancellation can therefore leave descendant observations incomplete. Cargo
+streams pass through a byte relay with a 64 KiB line buffer and a 4096-marker
+cap; truncated observations become **UNKNOWN**. No telemetry is added to either
+child stream.
+Within each stream the bytes and order are retained. Cross-stream interleaving,
+pipe buffering, terminal detection, and observer startup can differ. CI already
+uses pipes and sets Cargo color explicitly; local timing is an instrumented run.
+
+Each command writes an incomplete record before launch and atomically completes
+it after exit. Records contain monotonic start/end nanoseconds, a parent ID,
+status, command digest, limited Cargo scope, checkout HEAD/tree/dirty, and the
+allowlisted workflow/run/attempt/job identifiers. PR event head and checkout SHA
+are separate: checkout can be GitHub's synthetic merge commit. The source identity
+is observed at the outer command start; deliberate mutation witnesses later
+modify source temporarily. The record does not attest those temporary bytes or
+ignored caches. A dirty checkout's HEAD tree does not attest uncommitted bytes.
+There is no environment dump or general argument dump.
+
+An `always()` step in each job uses the original Bash shell to print JSON records
+with the `NVWA_CI_TIMING` prefix and append a table to `GITHUB_STEP_SUMMARY`.
+The report excludes itself. It rejects missing, corrupt, incomplete, mixed-source,
+mixed-attempt, or mixed-job records and reports **UNKNOWN**, rather than producing
+partial phase totals. Cancellation can prevent the report from running; retained
+logs are then incomplete. No upload action, new token permission, or network
+request is added. Raw records live under `$RUNNER_TEMP/nvwa-ci-timing/$GITHUB_JOB`.
+
+The report distinguishes these observed quantities:
+
+| Observation | Meaning and limit |
+| --- | --- |
+| Explicit `cargo fetch` command wall | Dependency fetching/resolution in that command only. Implicit fetching inside other Cargo commands is not separately measured. |
+| `cargo build/check/clippy` command wall | Compilation command envelope, including orchestration and any implicit dependency work when not offline. Formatting remains unclassified. |
+| `cargo test` command wall | Mixed preparation, compilation and execution. Never labeled pure compilation or pure tests. |
+| Cargo `Finished` then first `Running` markers | Best effort preparation and execution envelopes. Preparation includes implicit dependency work and launch. Execution can include later doctest compilation. Missing/truncated markers or a failed command leave both envelopes **UNKNOWN**. |
+| libtest `test result` durations | Cargo's test binaries report rounded seconds for the lines observed. Partial coverage, including failed tests, not the whole command or a phase total. |
+| Toolchain setup | Existing single-command rustup install step wall. |
+| Outer shell/control wall | Existing script/runtime/checker work and overhead after removing nested Cargo intervals. The motion-matrix build is therefore separate from its subsequent checker envelope. |
+
+Child interval unions are removed from parent command wall. Concurrent sibling
+commands can overlap, so category rows are not an additive job total. Categories
+with no command observation say `NOT OBSERVED`, rather than implying that
+unmeasured work took zero time. Marker
+observations and libtest values are inclusive evidence, not numbers to add to
+those rows. Interpreter children using `sys.executable`, shell builtins, tools
+other than Cargo, and absolute Cargo paths that bypass `PATH` are not individually
+observed. Existing nested importer and mutation Cargo calls use `PATH` and are
+covered. These are wall measurements, not CPU, network-transfer, GPU, or product
+performance claims. Rust/Cargo behavior references: [cargo test](https://doc.rust-lang.org/cargo/commands/cargo-test.html),
+[external tools](https://doc.rust-lang.org/cargo/reference/external-tools.html),
+[Cargo timings](https://doc.rust-lang.org/cargo/reference/timings.html).
+
+For a local instrumented invocation, choose a new directory outside the checkout:
+
+```sh
+NVWA_TIMING_DIR=/absolute/new/evidence/records python3 -B scripts/ci-timing.py run -- python3 -B scripts/check-portable.py all
+python3 -B scripts/ci-timing.py report --directory /absolute/new/evidence/records
+```
+
+Use the existing prerequisites and resource policy. Timing does not install them.
+A later invocation must not reuse a directory from a different source/run/job.
+Run observer controls without compiling product code:
+
+```sh
+python3 -B scripts/test-ci-timing.py
+python3 -B -O scripts/test-ci-timing.py
+```
+
+Queue analysis runs separately on **already retrieved**, attempt-specific GitHub
+REST metadata. Supply JSON with `run` (the run object) and `jobs` (the jobs array):
+
+```sh
+python3 -B scripts/ci-timing.py queue /absolute/evidence/metadata.json --records /absolute/evidence/portable-records
+```
+
+The reader checks event head, run ID, attempt, expected job names and numeric job
+IDs, and retains raw job creation/start/completion timestamps. Job names map to
+workflow keys unambiguously. Optional repeated `--records` directories join telemetry
+to numeric job IDs, checking event head/run/attempt; checkout SHA can differ for PRs.
+Repeated directories for one job must agree on the complete source identity and
+checkout SHA. Conflicts reject the entire join before any queue row is emitted.
+Without `--records`, the output is metadata-only and does not authenticate
+telemetry. It reports the portable dependency gate separately
+from eligible-to-creation and creation-to-start gaps. A job created before its
+dependency becomes ready has that overlap identified separately. None of these
+metadata gaps proves a scheduler, provisioning, concurrency, or capacity cause.
+Timestamps have GitHub's second precision. For reruns, retrieve the run and jobs
+from the [attempt-specific API](https://docs.github.com/en/rest/actions/workflow-jobs#list-jobs-for-a-workflow-run-attempt),
+not an all-attempt jobs collection. The timing code performs no API calls.

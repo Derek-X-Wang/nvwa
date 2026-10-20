@@ -10,11 +10,17 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 env:
+  # PR checkout can be a synthetic merge; keep the event head separately.
+  NVWA_CI_HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
   CARGO_TERM_COLOR: always
   CARGO_INCREMENTAL: '0'
   # Smaller cold builds on standard runners; local cached validation used defaults.
   CARGO_PROFILE_DEV_DEBUG: '0'
   CARGO_PROFILE_TEST_DEBUG: '0'
+defaults:
+  run:
+    # Original run bodies execute through Bash -e; scoped observers add no Cargo flags.
+    shell: python3 -B scripts/ci-timing.py shell {0}
 jobs:
   portable:
     name: Core, CLI, and diagnostic controls
@@ -30,6 +36,8 @@ jobs:
         run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
       - name: Check shared portable runner controls
         run: python3 -B scripts/check-portable.py runner-contract
+      - name: Check CI timing controls
+        run: python3 -B scripts/check-portable.py ci-timing-contract
       - name: Check portable source and real CLI paths
         run: python3 -B scripts/check-portable.py source-cli
       - name: Check complete standalone CLI distribution
@@ -54,6 +62,10 @@ jobs:
       - name: Check frozen upper-arm comparison and retained runtime captures
         timeout-minutes: 5
         run: python3 -B scripts/check-portable.py frozen-upper-arm
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     # Reject cheap portable failures before spending a cold graphical compile.
@@ -110,6 +122,10 @@ jobs:
           # require real source/upload data, not an invented portable fixture.
           python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
           python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
   b1-source-regression:
     name: macOS B1 source regression and viewer checks
     # Keep the independent cold B1 build and Web checks inside a finite budget.
@@ -164,3 +180,7 @@ jobs:
           cargo check --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
