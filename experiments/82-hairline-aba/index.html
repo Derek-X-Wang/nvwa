@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nvwa · hairline A/B76</title>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden}canvas{display:block}#controls{position:fixed;right:10px;top:10px;z-index:100;width:380px;max-height:90vh;overflow:auto;background:#17202bf2;color:white;padding:10px;font:12px system-ui;border:1px solid #9aa}button,textarea,select{font:inherit;margin:4px;padding:5px}textarea{box-sizing:border-box;width:96%}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:180px;overflow:auto}#matrix{display:grid;grid-template-columns:1fr 1fr}p{line-height:1.4}</style>
+<canvas id="nvwa"></canvas><details id="controls"><summary>79 · local hairline alpha · not saved <span id="brief">· loading</span></summary>
+<p>A uses the original short04 production hair. B uses the original short04 geometry with an explicit local alpha patch. Material policy, placement and all-positive weights stay fixed. B changes mesh and source PNG together. Current eyes stay fixed. Hairline quality remains HOLD. Collapse this panel for screenshots.</p>
+<select id="variant"><option value="a_original">A · original short04</option><option value="b_local_alpha">B · local alpha patch source</option></select><button id="hold0" disabled>Hold source0</button><button id="hold2" disabled>Hold source2</button><div id="matrix"></div><button id="play" disabled>Play current variant from0</button><button id="stop" disabled>Pause source2</button>
+<form id="form"><textarea id="command" rows="4">{"request_id":"custom-001","action":"diagnostic","mode":"combined","palette":"textured","variant":"a_original"}</textarea><button id="run" disabled>Send exact request</button></form><pre id="report" role="status">Loading…</pre><button id="prepare" disabled>Prepare exact CPU record</button><button id="export" disabled>Download prepared CPU record</button><button id="motion" disabled>Download CPU motion witness</button><details id="wire"><summary>Exact record transfer status</summary><p>Raw arrays stay out of the DOM. Prepare a current held capture, then download its exact Rust JSON. The bounded chunk API is a fallback; retain its manifest and verify the complete bytes before validation.</p><button id="wire-sync" disabled>Refresh transfer status</button><pre id="wire-status">No prepared transfer.</pre><label for="chunk-index">Fallback chunk index</label><input id="chunk-index" type="number" min="0" step="1" value="0"><button id="chunk-read" disabled>Show prepared chunk</button><pre id="wire-chunk">No chunk requested.</pre></details></details>
+<script src="./aba82-harness.js"></script>
+<div style="position:fixed;left:4px;bottom:4px;z-index:110;background:#111e;color:#aff;font:11px monospace;padding:5px;max-width:550px"><pre id="aba-status" style="margin:0;max-height:100px"></pre><button id="aba-next" disabled>Next hairline case</button><button id="aba-cancel">Cancel A/B/A</button></div>
+<script type="module">
+const $=id=>document.getElementById(id);let api=null,serial=0,last='';
+function send(value){try{transfer?.invalidate();api.b1_76_command(JSON.stringify(value));$('export').disabled=true;mirrorWire()}catch(e){$('report').textContent=String(e)}}
+function request(value){send({request_id:'web76-'+(++serial),...value})}
+for(const mode of ['combined','body_only','hair_only'])for(const palette of ['textured','unlit_textured']){const b=document.createElement('button');b.disabled=true;b.textContent=mode+' / '+palette;b.onclick=()=>request({action:'diagnostic',mode,palette,variant:$('variant').value});$('matrix').append(b)}
+$('hold0').onclick=()=>request({action:'playback',seek_seconds:0,playing:false});$('hold2').onclick=$('stop').onclick=()=>request({action:'playback',seek_seconds:2,playing:false});$('play').onclick=()=>request({action:'playback',seek_seconds:0,playing:true});
+$('form').onsubmit=e=>{e.preventDefault();try{send(JSON.parse($('command').value))}catch(e){$('report').textContent=String(e)}};
+function downloadText(text,name){const a=document.createElement('a'),url=URL.createObjectURL(new Blob([text],{type:'application/json'}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+// TRANSFER_CORE_BEGIN: tests execute this exact live export seam without Web/GPU.
+const CHUNK_BYTES=32768;
+async function sha256Text(text){return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))),b=>b.toString(16).padStart(2,'0')).join('')}
+function createTransfer(readReport,readFrame,digest=sha256Text){
+ let active=null,epoch=0,failure=null;
+ function invalidate(error=null){active=null;epoch++;failure=error}
+ function readCapture(){
+  const reportRaw=readReport(),frameRaw=readFrame();
+  const report=JSON.parse(reportRaw),frame=JSON.parse(frameRaw);
+  if(report.phase!=='ready'||report.current!==true||report.acknowledged!==true||report.request_succeeded!==true||!report.diagnostic)throw Error('No current successful diagnostic capture');
+  if(!report.request_id||report.request_id!==frame.request_id||report.work_sha256!==frame.work_sha256||report.endpoint!==frame.endpoint)throw Error('Capture correlation differs');
+  if(!Number.isInteger(frame.stable_updates)||frame.stable_updates<2||!frame.identity||JSON.stringify(report.captured_identity)!==JSON.stringify(frame.identity))throw Error('Capture identity/stability differs');
+  return {reportRaw,frameRaw,requestId:report.request_id};
+ }
+ function requireActive(token){
+  if(!active||active.manifest.token!==token)throw Error('Unknown or invalidated transfer token');
+  if(readReport()!==active.reportRaw||readFrame()!==active.frameRaw){invalidate('Prepared transfer is stale; prepare the current capture again');throw Error(failure)}
+  return active;
+ }
+ async function prepare(){
+  invalidate();const started=epoch,capture=readCapture();
+  // Concatenate original strings. Never serialize parsed numeric witnesses.
+  const text='{"report":'+capture.reportRaw+',"frame":'+capture.frameRaw+'}';
+  const [sha256,reportSha,frameSha]=await Promise.all([digest(text),digest(capture.reportRaw),digest(capture.frameRaw)]);
+  if(epoch!==started)throw Error('Transfer preparation superseded');
+  if(readReport()!==capture.reportRaw||readFrame()!==capture.frameRaw)throw Error('Capture changed during transfer preparation');
+  const bytes=new TextEncoder().encode(text);
+  const manifest={format:'nvwa76-raw-transfer-v1',token:'transfer-'+started+'-'+sha256,request_id:capture.requestId,encoding:'utf-8',chars:text.length,bytes:bytes.length,sha256,report_bytes:new TextEncoder().encode(capture.reportRaw).length,report_sha256:reportSha,frame_bytes:new TextEncoder().encode(capture.frameRaw).length,frame_sha256:frameSha,chunk_bytes:CHUNK_BYTES,chunks:Math.ceil(bytes.length/CHUNK_BYTES)};
+  active={...capture,text,bytes,manifest};return {...manifest};
+ }
+ function status(){if(!active)return failure?{ready:false,error:failure}:{ready:false};try{requireActive(active.manifest.token);return {ready:true,...active.manifest}}catch(e){return {ready:false,error:String(e)}}}
+ function chunk(token,index){const a=requireActive(token);if(!Number.isInteger(index)||index<0||index>=a.manifest.chunks)throw Error('Chunk index out of range');return {token,index,base64:btoa(String.fromCharCode(...a.bytes.slice(index*CHUNK_BYTES,(index+1)*CHUNK_BYTES)))}}
+ function exactText(token){return requireActive(token).text}
+ return {prepare,status,chunk,exactText,invalidate};
+}
+// TRANSFER_CORE_END
+let transfer=null;
+async function prepareTransfer(){try{$('prepare').disabled=true;$('export').disabled=true;$('wire-status').textContent='Preparing exact bytes…';$('wire-chunk').textContent='No chunk requested.';const manifest=await transfer.prepare();mirrorWire();return manifest}catch(e){$('wire-status').textContent=String(e);throw e}finally{$('prepare').disabled=false}}
+$('prepare').onclick=()=>prepareTransfer().catch(()=>{});
+$('export').onclick=()=>{try{const status=transfer.status();downloadText(transfer.exactText(status.token),status.request_id+'.json')}catch(e){$('wire-status').textContent=String(e)}};
+$('motion').onclick=()=>downloadText(api.b1_76_motion(),'motion76.json');
+function mirrorWire(){const status=transfer?transfer.status():{ready:false};$('wire-status').textContent=JSON.stringify(status,null,2);$('export').disabled=!status.ready;$('chunk-read').disabled=!status.ready;if(!status.ready)$('wire-chunk').textContent='No current prepared chunk.'}
+$('wire-sync').onclick=mirrorWire;
+$('chunk-read').onclick=()=>{try{const status=transfer.status();$('wire-chunk').textContent=JSON.stringify(transfer.chunk(status.token,Number($('chunk-index').value)))}catch(e){$('wire-chunk').textContent=String(e);mirrorWire()}};
+function compactReport(raw){try{const r=JSON.parse(raw);$('brief').textContent='· '+r.phase+(r.current?' / current':'');return JSON.stringify({phase:r.phase,request_id:r.request_id,action:r.action,current:r.current,acknowledged:r.acknowledged,request_succeeded:r.request_succeeded,variant:r.diagnostic?.variant,error:r.error||r.open_error},null,2)}catch{return 'Waiting for a valid Rust status.'}}
+
+const aba82=window.createHairlineABA({pace:new URLSearchParams(location.search).get('pace')==='60'?60:undefined,fetch:(...a)=>fetch(...a),now:()=>performance.now(),interval:(f,n)=>setInterval(f,n),timeout:(f,n)=>setTimeout(f,n),clearTimeout:t=>clearTimeout(t),clearInterval:t=>clearInterval(t),pause:n=>new Promise(r=>setTimeout(r,n)),readWork:()=>api.b1_76_work(),readReport:()=>api.b1_76_report(),readFrame:()=>api.b1_76_frame(),send:v=>send(v),prepare:()=>transfer.prepare(),status:()=>transfer.status(),exactText:t=>transfer.exactText(t),invalidate:()=>transfer?.invalidate(),warn:m=>console.warn('[ABA82]',m),render:s=>{$('aba-status').textContent=s.phase+'\n'+(s.request_id||'')+' '+(s.token||'')+'\n'+(s.remaining_ms===null?'':Math.ceil(s.remaining_ms/1000)+'s remaining');$('aba-next').disabled=!s.next_enabled}});
+$('aba-next').onclick=()=>aba82.next().catch(e=>console.error('[ABA82]',e));$('aba-cancel').onclick=()=>aba82.cancel();
+try{api=await import('./pkg/b1_hairline_ab.js');await api.default();window.b1_76=api;transfer=createTransfer(()=>api.b1_76_report(),()=>api.b1_76_frame());document.documentElement.dataset.diagnosticBridge='ready';for(const b of document.querySelectorAll('button'))b.disabled=false;mirrorWire();setInterval(()=>{const raw=api.b1_76_report();if(raw!==last){last=raw;$('report').textContent=compactReport(raw);mirrorWire()}},150);if(new URLSearchParams(location.search).get('case')==='aba')void aba82.start().catch(e=>console.error('[ABA82]',e));}catch(e){$('report').textContent='Start failed: '+String(e)}
+</script></html>
