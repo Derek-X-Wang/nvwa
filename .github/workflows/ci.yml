@@ -59,13 +59,13 @@ jobs:
       - name: Prepare locked importer dependencies and check offline motion controls
         timeout-minutes: 6
         run: python3 -B scripts/check-portable.py offline-motion
-      - name: Check frozen upper-arm comparison and retained runtime captures
-        timeout-minutes: 5
-        run: python3 -B scripts/check-portable.py frozen-upper-arm
       # native-cache-trial begin
       - name: Check bounded native cache trial controls
         run: python3 -B scripts/check-portable.py native-cache-contract
       # native-cache-trial end
+      - name: Check frozen upper-arm comparison and retained runtime captures
+        timeout-minutes: 5
+        run: python3 -B scripts/check-portable.py frozen-upper-arm
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash
