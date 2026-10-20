@@ -63,9 +63,10 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         return [line.split("|") for line in self.log.read_text().splitlines()] if self.log.exists() else []
 
     def test_exact_original_command_inventory_and_order(self):
-        self.assertEqual([group["name"] for group in CATALOG], ["runner-contract", *BASELINE])
+        self.assertEqual([group["name"] for group in CATALOG], ["runner-contract", "ci-timing-contract", *BASELINE])
         self.assertEqual(CATALOG[0]["run"], "python3 -B scripts/test-portable-checks.py\npython3 -B -O scripts/test-portable-checks.py\n")
-        for group in CATALOG[1:]:
+        self.assertEqual(CATALOG[1]["run"], "python3 -B scripts/test-ci-timing.py\npython3 -B -O scripts/test-ci-timing.py\n")
+        for group in CATALOG[2:]:
             self.assertEqual(hashlib.sha256(group["run"].encode()).hexdigest(), BASELINE[group["name"]])
 
     def test_workflow_uses_every_group_once_and_preserves_timeouts(self):
@@ -73,7 +74,7 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         portable = workflow.split("  portable:\n", 1)[1].split("  native-and-wasm:\n", 1)[0]
         calls = [line.strip().removeprefix("run: ") for line in portable.splitlines()
                  if "python3 -B scripts/check-portable.py " in line]
-        self.assertEqual(calls, [f"python3 -B scripts/check-portable.py {name}" for name in ["runner-contract", *BASELINE]])
+        self.assertEqual(calls, [f"python3 -B scripts/check-portable.py {name}" for name in ["runner-contract", "ci-timing-contract", *BASELINE]])
         self.assertEqual(portable.count("timeout-minutes: 3"), 2)
         self.assertIn("timeout-minutes: 6", portable)
         self.assertIn("timeout-minutes: 5", portable)
@@ -83,12 +84,12 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         result = self.call("all")
         self.assertEqual(result.returncode, 0, result.stderr)
         headings = [line.split("]", 1)[0][1:] for line in result.stdout.splitlines() if line.startswith("[")]
-        self.assertEqual(headings, ["runner-contract", *BASELINE])
+        self.assertEqual(headings, ["runner-contract", "ci-timing-contract", *BASELINE])
         records = self.records()
         self.assertEqual(records[0][:2], ["python3", "-B scripts/test-portable-checks.py"])
         self.assertEqual(records[1][:2], ["python3", "-B -O scripts/test-portable-checks.py"])
-        self.assertEqual(records[2][:2], ["bash", "experiments/27-ci-baseline/check.sh portable"])
-        self.assertEqual(records[3][:2], ["cargo", "build -p nvwa-cli --locked --offline"])
+        self.assertEqual(records[4][:2], ["bash", "experiments/27-ci-baseline/check.sh portable"])
+        self.assertEqual(records[5][:2], ["cargo", "build -p nvwa-cli --locked --offline"])
         self.assertTrue(all(row[2] == str(ROOT) for row in records))
         self.assertEqual({tuple(row[4:]) for row in records}, {("2", "0", "0", "0", "always")})
         temps = {row[3] for row in records}

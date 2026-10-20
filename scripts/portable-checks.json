@@ -5,6 +5,11 @@
     "run": "python3 -B scripts/test-portable-checks.py\npython3 -B -O scripts/test-portable-checks.py\n"
   },
   {
+    "name": "ci-timing-contract",
+    "title": "Check CI timing controls",
+    "run": "python3 -B scripts/test-ci-timing.py\npython3 -B -O scripts/test-ci-timing.py\n"
+  },
+  {
     "name": "source-cli",
     "title": "Check portable source and real CLI paths",
     "run": "bash experiments/27-ci-baseline/check.sh portable\n"
