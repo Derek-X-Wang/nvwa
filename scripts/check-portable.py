@@ -92,7 +92,10 @@ def main():
             raise ValueError("RUNNER_TEMP must name an existing absolute directory")
         return run(selected, environment)
     with tempfile.TemporaryDirectory(prefix="nvwa-portable-") as temporary:
-        environment["RUNNER_TEMP"] = temporary
+        # macOS can return /var/... through its /private/var symlink. Only our
+        # own fresh directory is canonicalized; strict source checks still reject
+        # arbitrary supplied paths with symlink ancestors.
+        environment["RUNNER_TEMP"] = str(Path(temporary).resolve())
         return run(selected, environment)
 
 

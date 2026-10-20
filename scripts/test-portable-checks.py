@@ -107,6 +107,35 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         self.assertTrue(all(row[3:5] == [str(self.temp), "7"] for row in self.records()))
         self.assertTrue(self.temp.is_dir())
 
+    def test_fresh_temp_uses_physical_path_through_symlinked_tmpdir_and_cleans_only_itself(self):
+        parent = self.temp / "physical-parent"
+        parent.mkdir()
+        alias = self.temp / "logical-parent"
+        alias.symlink_to(parent, target_is_directory=True)
+        self.env["TMPDIR"] = str(alias)
+        result = self.call("diagnostics")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        temporary = Path(self.records()[0][3])
+        self.assertEqual(temporary.parent, parent)
+        self.assertEqual(temporary, temporary.resolve())
+        self.assertFalse(temporary.exists())
+        self.assertTrue(parent.is_dir())
+        self.assertTrue(alias.is_symlink())
+        self.assertEqual(alias.resolve(), parent)
+        self.assertEqual(list(parent.iterdir()), [])
+
+    def test_inherited_temp_with_symlink_is_preserved_verbatim(self):
+        parent = self.temp / "physical-parent"
+        parent.mkdir()
+        alias = self.temp / "logical-parent"
+        alias.symlink_to(parent, target_is_directory=True)
+        self.env["RUNNER_TEMP"] = str(alias)
+        result = self.call("diagnostics")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.records()[0][3], str(alias))
+        self.assertTrue(parent.is_dir())
+        self.assertTrue(alias.is_symlink())
+
     def test_unknown_group_fails_before_any_command(self):
         for groups in [("typo",), (), ("all", "diagnostics")]:
             result = self.call(*groups)
