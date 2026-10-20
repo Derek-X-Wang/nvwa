@@ -1,0 +1,18 @@
+# One local shoulder pose target
+
+Source identification precedes authoring. The retained ordinary rear photo's notch is approximately x330–350/y185–205. Prior76 CPU geometry plus that newer saved camera predicts exposed body quad7941 (render triangle13661 (source quad fan1)) behind garment quad131; this remains analytical until fresh actual raw/source-color captures agree. Quad200/201 is outside this target.
+
+The diagnostic startup has no corrective target. Baseline, body7941 green, and garment131 magenta must produce three successful same-identity actual captures. Two distinct consecutive update epochs must have unchanged identity/source/publication observations and a same-epoch previsibility/Last association before ready. Source colors change only the exact quad's deindexed vertex colors; positions, materials, body deletion and visibility remain unchanged.
+
+After root confirms those captures, derive exactly one vector for source847:
+
+1. Use the fresh default8-parameter, arm source2 actual full-base garment point847 and body quad7941's two source-winding fan triangles, in their shared mesh-local metre frame. Require unchanged source hashes, profile, full positive LBS, signed fit, topology, stage placement and camera.
+2. Find the nearest point on those two body triangles. Select its geometric unit normal from source winding; require a positive dot with the actual body normal interpolated at that closest point. Do not flip a normal to make the result favorable.
+3. Measure the signed local triangle-side separation of847. If it is already at least0.001m, do not invent a displacement. Otherwise use `delta = normal * (0.001m - signed_separation)`. This is a local planar-side authoring rule, not global inside/outside or penetration depth. A degenerate/ambiguous unsupported frame or displacement over0.020m rejects.
+4. Express the one derived vector in the fresh posed `clavicle_l` rotation frame. Freeze its bytes/hash before any A/B. No camera-ray offset, screen-space fitting, endpoint vectors, repeated screenshot tuning, alternate support, or second candidate.
+
+The experimental evaluator runs ordinary unchanged full positive LBS first. It adds the frozen local vector, rotated by actual posed clavicle orientation, only at every rendered duplicate of source847. Its smooth activation is `smoothstep(clamp(actual_upperarm_joint_angle / 45deg,0,1))`, measured against that joint's actual local rest rotation. No playback-time switch. Neutral and knee require exact zero activation. Rest positions, source payloads, fit/weights, all other garment positions, body deletion, topology, materials, lights and cameras stay unchanged. Only normals in the changed face neighborhood may be recomputed for the changed displayed shape.
+
+Compare torso−1/0/+1 × arm0/arm2/knee2, plus arm1/3/4 at each torso, jaw/other parameters0, with the frozen front8°/rear180° cameras. Retain baseline failures and quantify selected source-body exposure, affected faces and neighboring surface strain/folds/intersections; these geometric descriptors are not complete collision or appearance evidence. Require exact unchanged neutral/knee and outside-support positions, no new winding inversion/degenerate face, reduced default arm2 notch exposure, and no new local exposed-body/intersection regression. Actual same-camera A/B must improve the selected visible notch without introducing an adjacent visible defect. Any failure rejects this one target; do not relax controls or grow support. Product admission and a saved Work capability require a separate decision.
+
+NOT-RUN — no actual source confirmation, target vector, target A/B, or quality acceptance exists at this contract freeze.

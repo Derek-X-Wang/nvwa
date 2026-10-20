@@ -1,0 +1,32 @@
+{
+  "target_sha256": "f88a431ab6dfb2da3bd9a64852f0c490bafe29b21a86e86b98d063862ad00b51",
+  "main_cohort": "torso -1/0/+1 x arm0/arm2/knee2",
+  "adjacent": "arm1/3/4 each torso",
+  "support": "source847 only; normal support from all triangles incident to847; one-ring surface from that fixed topology",
+  "default_ROI": [
+    330,
+    185,
+    350,
+    205
+  ],
+  "body_surface_probes": "four fixed interior barycentrics per fan of original body quads7941 and7983",
+  "ray_tie_m": 1e-05,
+  "triangle_degenerate_double_area_m2": 1e-12,
+  "proper_segment_barycentric_epsilon": 1e-09,
+  "history_vs_fresh_existing_upload_epsilon_m": 1e-05,
+  "gates": [
+    "exact unchanged positions outside847",
+    "exact neutral/knee/end-arm zero",
+    "no new degeneracy or winding inversion vs same-frame baseline",
+    "no increase in fixed local body-surface opaque exposure probes",
+    "no new proper cloth/body or nonadjacent cloth/cloth crossing pairs",
+    "strict measurable fresh default ROI body-first count improvement"
+  ],
+  "diagnostic_only": [
+    "area/edge ratios",
+    "fold angle including existing150deg descriptor",
+    "normal angles/zero counts",
+    "nearest local body-side signs"
+  ],
+  "numerical_scope": "Analytical f64 quaternion extraction, relative w rounded f32 and smooth bounded angle; f32 final delta/positions. Actual Rust f32 activation seam already tested on all18 actual bone matrices; this evaluator is not exact runtime upload emulation."
+}

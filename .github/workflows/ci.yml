@@ -61,7 +61,7 @@ jobs:
           # The transfer tests run the actual experimental HTML handlers in
           # Node. A missing interpreter is an error, never a skipped green test.
           node --version
-          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls 73-high-poly-eyes; do
+          for experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls 73-high-poly-eyes 79-shoulder-pose-corrective 79-shoulder-pose-corrective/browser 80-hairline-export-diagnosis; do
             python3 -B -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
             python3 -B -O -m unittest discover -s "experiments/$experiment" -p 'test_*.py' -v
           done
@@ -166,6 +166,8 @@ jobs:
           cargo test --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --locked --offline
           cargo fmt --manifest-path experiments/73-high-poly-eyes/Cargo.toml --package b1-high-poly-eyes --check
           cargo test --manifest-path experiments/73-high-poly-eyes/Cargo.toml --lib --locked --offline
+          cargo fmt --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --package b1-shoulder-source-corrective --check
+          cargo test --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --locked --offline
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
@@ -234,3 +236,4 @@ jobs:
           cargo check --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
           cargo check --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
+          cargo check --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --target wasm32-unknown-unknown --locked --offline
