@@ -24,6 +24,8 @@ step selects one group from that same file. `all` runs these groups in this orde
 | `offline-motion` | Locked importer dependency fetch, then retained CPU motion/calibration/history controls. |
 | `frozen-upper-arm` | Frozen comparison, runtime adapter/measure controls and retained native/Web capture comparisons. |
 
+The final `shoulder-rest-refit` group runs the isolated replay/evaluation/authoring/client rejection controls and both Rust hosts’ formatting checks in normal and optimized Python. It does not compile the replay probe or claim private full19 geometry evidence. The retained actual old crossing witness runs locally when `NVWA_SHOULDER_RETAINED` points to its authenticated retained directory; its absence is an explicit skip.
+
 `python3 -B scripts/check-portable.py --list` lists groups. Pass one or more names
 to run a subset; selected groups run once in catalog order. A subset is partial
 verification and does not arrange omitted prerequisites. A failed command stops

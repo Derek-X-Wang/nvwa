@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "status": "REJECT_WASM_CORPUS",
+  "experiment": "84-shoulder-rest-refit",
+  "candidate_count": 0,
+  "scope": "One actual CPU-only Wasm input attempt; first of18 slots rejected. No accepted corpus, candidate or geometry scoring.",
+  "historical_replay": "NOT-RUN_MISSING18",
+  "cohort_type": "hybrid-current18-wasm-original-anchor",
+  "capture_run_id": "nvwa84-current18-wasm-d8e190c8-57ca-452c-888a-249cf011eb36",
+  "actual_raw_records_retained": 1,
+  "accepted_cases": 0,
+  "complete18": false,
+  "failure": "EXACT original fixture field differs: clavicle_l/canonical_posed",
+  "source_unchanged": true,
+  "source_inventory_sha256": "8e205d81809500c730ddc0d19749b663d01e552f88fb56e03f8d4708661b2b01",
+  "manifest": {
+    "bytes": 1585,
+    "sha256": "f88c43885898a3cb60e0f28ad430239c446fafb662888db48ebb9cf25381c9b9"
+  },
+  "identity_receipt": {
+    "bytes": 3760,
+    "sha256": "afb6da3b94371d0fa29c4b0be51d2637ca1fa4da203e13840436cf41d2e2a314"
+  },
+  "build_receipt": {
+    "bytes": 44647,
+    "sha256": "e6dd302b16b436d2238e178ebf55d2f26dad83647bc5fa95957bf7f8e60aba21"
+  },
+  "source_receipts": {
+    "source-before": {
+      "bytes": 45447,
+      "sha256": "48a47d2c9df1952b1b0c7f8904cd154203b9d5a3ca29512ea5833ecd97d289be"
+    },
+    "source-at-run": {
+      "bytes": 45447,
+      "sha256": "48a47d2c9df1952b1b0c7f8904cd154203b9d5a3ca29512ea5833ecd97d289be"
+    },
+    "source-after": {
+      "bytes": 45447,
+      "sha256": "48a47d2c9df1952b1b0c7f8904cd154203b9d5a3ca29512ea5833ecd97d289be"
+    }
+  },
+  "raw_record": {
+    "case": "t-1__b1_arm_rehearsal_v1__k00.json.gz",
+    "compressed": {
+      "bytes": 3322843,
+      "sha256": "74806a9001485ba2b66db2733d40465c235a6274daaad19f2c74bab24ea29630"
+    },
+    "raw_bytes": 9158093,
+    "raw_sha256": "009840a167c370678f01a07329b7da93fb13e67a993fec82a9cf065e53cd2b18"
+  },
+  "build": {
+    "status": "PASS_COMPLETED_BUILD",
+    "exit_code": 0,
+    "target": "wasm32-unknown-unknown",
+    "build_run_id": "run_2b910a53552c782553db43d6d8801d23",
+    "toolchain": {
+      "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+      "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+      "wasm_bindgen": "wasm-bindgen 0.2.129"
+    },
+    "artifacts": [
+      {
+        "path": "pkg/nvwa_shoulder_wasm_replay.d.ts",
+        "bytes": 2742,
+        "sha256": "49f2cccee70570b9da85dedfaac7db460a0932bcbd8eb935db172f8bc1f1fddc"
+      },
+      {
+        "path": "pkg/nvwa_shoulder_wasm_replay.js",
+        "bytes": 25202,
+        "sha256": "902b3f94966d82d8ecb31bc1cfa05efd8dd0be9e7f792472addf16b81c6fec33"
+      },
+      {
+        "path": "pkg/nvwa_shoulder_wasm_replay_bg.wasm",
+        "bytes": 79076464,
+        "sha256": "8d53f98b856b3b2b0381d9a9665afd6c5d834389b90333f8acd05c655fc7a3ee"
+      },
+      {
+        "path": "pkg/nvwa_shoulder_wasm_replay_bg.wasm.d.ts",
+        "bytes": 1519,
+        "sha256": "dc0cfcbb712fb94cb5e792528118c7a459c9560d718d369015ba927c9a1a175f"
+      }
+    ]
+  },
+  "fixture": {
+    "path": "experiments/79-shoulder-pose-corrective/fixtures/historical-actual-activation.json",
+    "bytes": 61332,
+    "sha256": "f671f09952653b01126d1599e047e7011afabbf3979aedee95f5b83c4c401f87",
+    "matching_case": "t-1__b1_arm_rehearsal_v1__k00.json.gz",
+    "selected_bones": [
+      "clavicle_l",
+      "upperarm_l"
+    ],
+    "expected_missing_original_raw_case_sha256": "b02e3fcdecf0aeaae50107d3c7bad8714f636383dbf0f7d4f8297401318c4087"
+  },
+  "original_anchor_sha256": "fc4196e7f00fadf0dd2860418fd515ea0befd9de84e4dc0f527057dd5860aa67",
+  "request": {
+    "clip_id": "b1_arm_rehearsal_v1",
+    "jaw_drop": 0.0,
+    "k": 0,
+    "seconds": 0.0,
+    "torso_length": -1.0
+  },
+  "actual_parameters": {
+    "jaw_drop": 0.0,
+    "torso_length": -1.0
+  },
+  "actual_sample": {
+    "clip_id": "b1_arm_rehearsal_v1",
+    "completed": false,
+    "playing": false,
+    "position_seconds": 0.0,
+    "serial": 1,
+    "source_seconds": 0.0,
+    "timeline_id": "probe-entry"
+  },
+  "actual_profile": "nvwa-mpfb-b1-motion-v1",
+  "actual_backend": {
+    "asset_id": "mpfb-hm08-game-engine-female-sportsuit01-v1",
+    "schema_version": 2,
+    "type": "b1_cpu"
+  },
+  "requested_recipe_matches_frozen_slot": true,
+  "selected_fixture_exact_fields": [
+    {
+      "bone": "clavicle_l",
+      "field": "name"
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "local_rest"
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "local_posed"
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "name"
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "local_rest"
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "local_posed"
+    }
+  ],
+  "selected_fixture_different_components": 20,
+  "selected_fixture_max_absolute_delta": 3.5762786865234375e-07,
+  "selected_fixture_differences": [
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 0,
+      "current_wasm": -0.0357518270611763,
+      "original_fixture": -0.03575194627046585,
+      "absolute_delta": 1.1920928955078125e-07
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 1,
+      "current_wasm": -0.9966996908187866,
+      "original_fixture": -0.9967000484466553,
+      "absolute_delta": 3.5762786865234375e-07
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 2,
+      "current_wasm": -0.07287806272506714,
+      "original_fixture": -0.07287809252738953,
+      "absolute_delta": 2.9802322387695312e-08
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 4,
+      "current_wasm": 0.9321482181549072,
+      "original_fixture": 0.9321485161781311,
+      "absolute_delta": 2.980232238769531e-07
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 5,
+      "current_wasm": -0.006966317538172007,
+      "original_fixture": -0.006966438144445419,
+      "absolute_delta": 1.2060627341270447e-07
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 6,
+      "current_wasm": -0.3620096445083618,
+      "original_fixture": -0.36200985312461853,
+      "absolute_delta": 2.086162567138672e-07
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 8,
+      "current_wasm": 0.3603072762489319,
+      "original_fixture": 0.3603074550628662,
+      "absolute_delta": 1.7881393432617188e-07
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 9,
+      "current_wasm": -0.08087573945522308,
+      "original_fixture": -0.08087576925754547,
+      "absolute_delta": 2.9802322387695312e-08
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 10,
+      "current_wasm": 0.9293209314346313,
+      "original_fixture": 0.9293211698532104,
+      "absolute_delta": 2.384185791015625e-07
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 12,
+      "current_wasm": 0.026554998010396957,
+      "original_fixture": 0.026555003598332405,
+      "absolute_delta": 5.587935447692871e-09
+    },
+    {
+      "bone": "clavicle_l",
+      "field": "canonical_posed",
+      "component": 14,
+      "current_wasm": 0.06942523270845413,
+      "original_fixture": 0.06942524015903473,
+      "absolute_delta": 7.450580596923828e-09
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 0,
+      "current_wasm": -0.7671229243278503,
+      "original_fixture": -0.7671228647232056,
+      "absolute_delta": 5.960464477539063e-08
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 1,
+      "current_wasm": -0.636300265789032,
+      "original_fixture": -0.6363003253936768,
+      "absolute_delta": 5.960464477539063e-08
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 2,
+      "current_wasm": 0.08151522278785706,
+      "original_fixture": 0.08151515573263168,
+      "absolute_delta": 6.705522537231445e-08
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 4,
+      "current_wasm": 0.6380243301391602,
+      "original_fixture": 0.6380243897438049,
+      "absolute_delta": 5.960464477539063e-08
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 5,
+      "current_wasm": -0.7699915766716003,
+      "original_fixture": -0.7699915170669556,
+      "absolute_delta": 5.960464477539063e-08
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 6,
+      "current_wasm": -0.006167319603264332,
+      "original_fixture": -0.006167354062199593,
+      "absolute_delta": 3.4458935260772705e-08
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 8,
+      "current_wasm": 0.06669022142887115,
+      "original_fixture": 0.06669017672538757,
+      "absolute_delta": 4.470348358154297e-08
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 9,
+      "current_wasm": 0.047277528792619705,
+      "original_fixture": 0.04727745056152344,
+      "absolute_delta": 7.82310962677002e-08
+    },
+    {
+      "bone": "upperarm_l",
+      "field": "canonical_posed",
+      "component": 10,
+      "current_wasm": 0.9966528415679932,
+      "original_fixture": 0.9966530203819275,
+      "absolute_delta": 1.7881393432617188e-07
+    }
+  ],
+  "preceding_checks": {
+    "basis": "Production-called validator order and first raised failure; successful metric objects were not retained because admission stopped. No new tests/checker replay performed for this diagnosis.",
+    "reached_before_failure": [
+      "legacy request/profile/backend and actual paused time/timeline binding",
+      "authenticated original asset Source and unchanged independent source/FK/garment-fit checks",
+      "source/rest reconstruction ceiling1e-7",
+      "all53 bone ordering/hierarchy against source and authenticated anchor convention",
+      "exact duplicate source position/rest/influence identity",
+      "first actual arm0 establishes per-shape rest/placement identity (no multi-frame credit)",
+      "full positive source influence support and both-part independent posed LBS existing1e-5 bounds"
+    ],
+    "not_reached": [
+      "complete selected historical fixture exact equality",
+      "torso0 arm2 original Web-anchor full overlap",
+      "other17 requested slots",
+      "complete18 admission",
+      "full19 evaluator baseline",
+      "candidate authoring/scoring",
+      "candidate Web A/B and CLI exchange"
+    ]
+  },
+  "interpretation": {
+    "proven": "The first correct legacy recipe fails exact selected canonical_posed fixture values. It does not fail time/profile identity. No complete corpus exists.",
+    "inference": "Target/execution arithmetic remains a plausible source of numerical drift. Matching the anchor target alone did not satisfy the separate historical fixture identity.",
+    "unresolved": "First arithmetic operation and complete build-execution cause are unproven; no production regression is established."
+  },
+  "next_scope": "Separate future input-provenance repair only: define one source/toolchain/target execution identity for all19 new baseline slots while preserving original historical fixtures and failures as separate immutable controls. Resolve exact identity semantics before any newly authorized capture; no tolerance change or geometry candidate retry."
+}
