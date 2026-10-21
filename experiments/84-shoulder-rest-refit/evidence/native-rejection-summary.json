@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "derived native-input rejection summary; not a complete corpus or candidate-quality result",
+  "status": "REJECT_CORPUS",
+  "failure": "EXACT anchor full bone fields differ",
+  "manifest_sha256": "e5aaa57eb76182ef79afd1a8a2d0b53bd76ba2af56b77eb08f1b726fc9b225cc",
+  "original_anchor_sha256": "fc4196e7f00fadf0dd2860418fd515ea0befd9de84e4dc0f527057dd5860aa67",
+  "candidate_count": 0,
+  "historical18": "NOT-RUN_MISSING18",
+  "retained_raw_cases": [
+    {
+      "case": "t+0__b1_arm_rehearsal_v1__k00.json.gz",
+      "bytes": 3317291,
+      "sha256": "c0e5e5d9ed1af6b2d68bbb9cd30e12600abe5faa8bcd49e80406f8db69f41449"
+    },
+    {
+      "case": "t+0__b1_arm_rehearsal_v1__k08.json.gz",
+      "bytes": 3322134,
+      "sha256": "f0c677d5f2d4af8495a0470c7b0ffef1bcc87c94bc2183b9e781ae43604914dc"
+    },
+    {
+      "case": "t+0__b1_arm_rehearsal_v1__k16.json.gz",
+      "bytes": 3322855,
+      "sha256": "263f9a49af743773cd85c044b61dd6cb5276f838b67be07580ca6a994058a6bb"
+    },
+    {
+      "case": "t-1__b1_arm_rehearsal_v1__k00.json.gz",
+      "bytes": 3322222,
+      "sha256": "ba0853d09f2b78840537539686d45ba4dd39127d148bdcca46f8a6e6e373c85c"
+    },
+    {
+      "case": "t-1__b1_arm_rehearsal_v1__k08.json.gz",
+      "bytes": 3327400,
+      "sha256": "fa132b905e61e7307beea1b96c92ecd3f500c97a766ba21d11204f1b02e8d2f8"
+    },
+    {
+      "case": "t-1__b1_arm_rehearsal_v1__k16.json.gz",
+      "bytes": 3327403,
+      "sha256": "1fa406c8fe33ba65287da2999d983924648ca95d92d3a8d74c898c0ae7af4f7b"
+    },
+    {
+      "case": "t-1__b1_arm_rehearsal_v1__k24.json.gz",
+      "bytes": 3327405,
+      "sha256": "ae3a7dbc0ce4b85595fec98e2dd7f00ff7bc93f61e67a2b2502175cd09063a37"
+    },
+    {
+      "case": "t-1__b1_arm_rehearsal_v1__k32.json.gz",
+      "bytes": 3322235,
+      "sha256": "51bb3218f9228e3c6aea168e1d8a3d510ece0f976f8ab904fc7d3c7cf9e8d3e7"
+    },
+    {
+      "case": "t-1__b1_knee_flex_v1__k16.json.gz",
+      "bytes": 3328087,
+      "sha256": "c6e6a38c3a8c4c4240de0057992332ddd13b3de2aa8364edad38fe01ae7776e0"
+    }
+  ],
+  "changed_bones": [
+    {
+      "bone": "middle_03_l",
+      "scalar_differences": 93,
+      "fields": [
+        "canonical_posed",
+        "canonical_rest",
+        "frame_gauge",
+        "inverse_bind",
+        "local_posed",
+        "local_rest",
+        "posed",
+        "rest",
+        "skin"
+      ],
+      "max_component_delta": 2.980232238769531e-07,
+      "first": {
+        "path": [
+          "canonical_posed",
+          0
+        ],
+        "native": 0.42095276713371277,
+        "original_web": 0.420952707529068,
+        "abs_delta": 5.960464477539063e-08
+      }
+    },
+    {
+      "bone": "middle_03_r",
+      "scalar_differences": 93,
+      "fields": [
+        "canonical_posed",
+        "canonical_rest",
+        "frame_gauge",
+        "inverse_bind",
+        "local_posed",
+        "local_rest",
+        "posed",
+        "rest",
+        "skin"
+      ],
+      "max_component_delta": 2.980232238769531e-07,
+      "first": {
+        "path": [
+          "canonical_posed",
+          1
+        ],
+        "native": 0.2751300632953644,
+        "original_web": 0.27513012290000916,
+        "abs_delta": 5.960464477539063e-08
+      }
+    },
+    {
+      "bone": "calf_l",
+      "scalar_differences": 82,
+      "fields": [
+        "canonical_posed",
+        "canonical_rest",
+        "frame_gauge",
+        "inverse_bind",
+        "local_posed",
+        "local_rest",
+        "posed",
+        "rest",
+        "skin"
+      ],
+      "max_component_delta": 2.384185791015625e-07,
+      "first": {
+        "path": [
+          "canonical_posed",
+          1
+        ],
+        "native": 0.15533937513828278,
+        "original_web": 0.15533940494060516,
+        "abs_delta": 2.9802322387695312e-08
+      }
+    },
+    {
+      "bone": "foot_l",
+      "scalar_differences": 43,
+      "fields": [
+        "canonical_posed",
+        "local_posed",
+        "local_rest",
+        "posed",
+        "skin"
+      ],
+      "max_component_delta": 1.7881393432617188e-07,
+      "first": {
+        "path": [
+          "canonical_posed",
+          0
+        ],
+        "native": 0.9967817068099976,
+        "original_web": 0.9967817664146423,
+        "abs_delta": 5.960464477539063e-08
+      }
+    },
+    {
+      "bone": "ball_l",
+      "scalar_differences": 29,
+      "fields": [
+        "canonical_posed",
+        "posed",
+        "skin"
+      ],
+      "max_component_delta": 2.384185791015625e-07,
+      "first": {
+        "path": [
+          "canonical_posed",
+          0
+        ],
+        "native": 0.42891111969947815,
+        "original_web": 0.42891114950180054,
+        "abs_delta": 2.9802322387695312e-08
+      }
+    },
+    {
+      "bone": "calf_r",
+      "scalar_differences": 82,
+      "fields": [
+        "canonical_posed",
+        "canonical_rest",
+        "frame_gauge",
+        "inverse_bind",
+        "local_posed",
+        "local_rest",
+        "posed",
+        "rest",
+        "skin"
+      ],
+      "max_component_delta": 2.384185791015625e-07,
+      "first": {
+        "path": [
+          "canonical_posed",
+          1
+        ],
+        "native": -0.15533937513828278,
+        "original_web": -0.15533940494060516,
+        "abs_delta": 2.9802322387695312e-08
+      }
+    },
+    {
+      "bone": "foot_r",
+      "scalar_differences": 43,
+      "fields": [
+        "canonical_posed",
+        "local_posed",
+        "local_rest",
+        "posed",
+        "skin"
+      ],
+      "max_component_delta": 1.7881393432617188e-07,
+      "first": {
+        "path": [
+          "canonical_posed",
+          0
+        ],
+        "native": 0.9967817068099976,
+        "original_web": 0.9967817664146423,
+        "abs_delta": 5.960464477539063e-08
+      }
+    },
+    {
+      "bone": "ball_r",
+      "scalar_differences": 29,
+      "fields": [
+        "canonical_posed",
+        "posed",
+        "skin"
+      ],
+      "max_component_delta": 2.384185791015625e-07,
+      "first": {
+        "path": [
+          "canonical_posed",
+          0
+        ],
+        "native": 0.42891111969947815,
+        "original_web": 0.42891114950180054,
+        "abs_delta": 2.9802322387695312e-08
+      }
+    }
+  ],
+  "scalar_difference_count": 494,
+  "parts": [
+    {
+      "part": "body",
+      "exact_attributes": {
+        "source_ids": true,
+        "indices": true,
+        "rest_positions": true,
+        "rest_normals": true,
+        "full_joint_influences": true,
+        "model_to_world": true,
+        "display_transform": true
+      },
+      "max_posed_component_delta_m": 3.5762786865234375e-07
+    },
+    {
+      "part": "garment",
+      "exact_attributes": {
+        "source_ids": true,
+        "indices": true,
+        "rest_positions": true,
+        "rest_normals": true,
+        "full_joint_influences": true,
+        "model_to_world": true,
+        "display_transform": true
+      },
+      "max_posed_component_delta_m": 1.7881393432617188e-07
+    }
+  ],
+  "cause": "Target-specific f32 arithmetic remains an inference; first divergent operation NOT-RUN. No production regression established. Exact gates unchanged."
+}

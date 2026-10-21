@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "exit_code": 0,
+  "seconds": 4.48,
+  "scope": "both host formatting checks,52replay+25evaluation+3authoring+4client per normal/-O mode; actualoldcrossingwitnessenabled; notfull19quality",
+  "log": "portable-84-local.log",
+  "command": "NVWA_SHOULDER_RETAINED=<original-source-proof> python3 -B scripts/check-portable.py shoulder-rest-refit",
+  "per_mode": {
+    "replay": 52,
+    "evaluation": 25,
+    "authoring": 3,
+    "client": 4
+  },
+  "modes": [
+    "normal",
+    "-O"
+  ],
+  "total_control_executions": 168,
+  "old_actual_rejection_witness": "enabled and passed, including disabled-predicate mutationred",
+  "log_sha256": "ca2e2a547edfe0aec0567242189638fa95d9461d096f76a0306ea82f1235cea4",
+  "not_evidence_for": [
+    "complete19corpus",
+    "candidatequality",
+    "WebA/B",
+    "CLIpersistence",
+    "GPUorperformance",
+    "nativeUI"
+  ],
+  "affected_cache_regression": {
+    "command": "python3 -B scripts/check-portable.py native-cache-contract native-main-cache-contract",
+    "status": "PASS",
+    "seconds": 150.86,
+    "scope": "full affected groups in normal/-O; originalworkflowhash unchanged; addition missing/duplicate controls retained"
+  }
+}
