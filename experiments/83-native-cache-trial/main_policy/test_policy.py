@@ -301,7 +301,8 @@ class Policy(unittest.TestCase):
         class UnreadBody(io.BytesIO):
             def read(self,*args): raise AssertionError('remote error body must never be read')
         bad=['PRIVATE_SENTINEL', 'https://secret.invalid?token=private', '/Users/private',
-             '1\nPRIVATE_SENTINEL', '-1', '1.0', ' 0', '0 ', '９', '9'*10000]
+             '1\nPRIVATE_SENTINEL', '-1', '1.0', ' 0', '0 ', '９', '9'*10000,
+             'A:B:C', 'A:B:C:D:E:F', 'A'*17+':B:C:D', ':'.join(['A'*16]*4), 'A:B:C:D:E\n']
         fields=['X-GitHub-Request-Id','X-RateLimit-Remaining','X-RateLimit-Reset','Retry-After']
         cases=[]
         for value in bad:
@@ -330,6 +331,20 @@ class Policy(unittest.TestCase):
         for status in [True, '403', 999]:
             self.transport_error=urllib.error.HTTPError('https://secret.invalid',status,'PRIVATE_SENTINEL',None,UnreadBody())
             self.assertEqual(self.prepare()['api'],{'known':False,'reason':'HTTPError','cause':'http_error'})
+
+    def test_cli_http_request_id_accepts_observed_four_and_five_group_formats(self):
+        for request_id in ['AB12:CD34:EF56:7890', '4FE8:224A50:28245E:2FBA2E:6AD261CB',
+                           ':'.join(['A'*16]*3+['B'*13]), ':'.join(['A'*16]*3+['B'*11,'C'])]:
+            with self.subTest(request_id=request_id):
+                headers=Message();headers['X-GitHub-Request-Id']=request_id
+                body=io.BytesIO(b'PRIVATE_SENTINEL')
+                self.transport_error=urllib.error.HTTPError('https://secret.invalid',403,'PRIVATE_SENTINEL',headers,body)
+                before=self.requests;text=self.call('prepare')
+                self.assertEqual(self.requests-before,1)
+                self.assertEqual(self.state()['api'],{'known':False,'reason':'HTTPError','cause':'http_forbidden',
+                                 'http_status':403,'diagnostics':{'request_id':request_id}})
+                self.assertNotIn('PRIVATE_SENTINEL',text)
+                self.assertTrue(body.closed)
 
     def test_cli_transport_and_schema_failures_are_safe_and_distinct(self):
         secret='PRIVATE_SENTINEL https://secret.invalid?token=private /Users/private'

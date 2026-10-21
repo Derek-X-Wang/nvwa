@@ -280,7 +280,7 @@ def http_failure(error):
                     continue
                 value = values[0]
                 if field == 'request_id':
-                    if len(value) <= 64 and re.fullmatch(r'[A-Fa-f0-9]{1,16}(?::[A-Fa-f0-9]{1,16}){3}', value):
+                    if len(value) <= 64 and re.fullmatch(r'[A-Fa-f0-9]{1,16}(?::[A-Fa-f0-9]{1,16}){3,4}', value):
                         diagnostics[field] = value
                 elif len(value) <= 19 and re.fullmatch(r'[0-9]+', value) and int(value) <= 2**63-1:
                     diagnostics[field] = int(value)
