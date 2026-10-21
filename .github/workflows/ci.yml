@@ -63,6 +63,10 @@ jobs:
       - name: Check bounded native cache trial controls
         run: python3 -B scripts/check-portable.py native-cache-contract
       # native-cache-trial end
+      # native-main-cache begin
+      - name: Check main-only native cache policy
+        run: python3 -B scripts/check-portable.py native-main-cache-contract
+      # native-main-cache end
       - name: Check frozen upper-arm comparison and retained runtime captures
         timeout-minutes: 5
         run: python3 -B scripts/check-portable.py frozen-upper-arm
@@ -97,6 +101,28 @@ jobs:
           persist-credentials: false
       - name: Install repository Rust version
         run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      # native-main-cache begin
+      - name: Prepare main-only native seed
+        id: main-prepare
+        run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py prepare
+      - name: Restore exact main native seed
+        if: ${{ steps.main-prepare.outputs.enabled == 'true' && steps.main-prepare.outputs.restore == 'true' }}
+        id: main-restore
+        continue-on-error: true
+        timeout-minutes: 4
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/target
+          key: ${{ steps.main-prepare.outputs.key }}
+      - name: Verify main restore or safely prepare complete cold fallback
+        if: ${{ steps.main-prepare.outputs.enabled == 'true' }}
+        env:
+          MAIN_RESTORE_OUTCOME: ${{ steps.main-restore.outcome }}
+          MAIN_RESTORE_HIT: ${{ steps.main-restore.outputs.cache-hit }}
+          MAIN_RESTORE_PRIMARY: ${{ steps.main-restore.outputs.cache-primary-key }}
+          MAIN_RESTORE_MATCHED: ${{ steps.main-restore.outputs.cache-matched-key }}
+        run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py restore
+      # native-main-cache end
       # native-cache-trial begin
       - name: Prepare bounded native cache trial
         id: trial-prepare
@@ -177,6 +203,41 @@ jobs:
           TRIAL_MATCHED: ${{ steps.trial-persisted.outputs.cache-matched-key }}
         run: python3 -B experiments/83-native-cache-trial/cache_trial.py receipt --lane persisted
       # native-cache-trial end
+      # native-main-cache begin
+      - name: Verify main seed gates and complete logical size
+        if: ${{ steps.main-prepare.outputs.enabled == 'true' }}
+        id: main-finish
+        run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py finish
+      - name: Save only independently absent main seed
+        if: ${{ steps.main-finish.outputs.save == 'true' }}
+        id: main-save
+        continue-on-error: true
+        timeout-minutes: 4
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/target
+          key: ${{ steps.main-prepare.outputs.key }}
+      - name: Look up exact main seed persistence
+        if: ${{ steps.main-finish.outputs.save == 'true' }}
+        id: main-persist
+        continue-on-error: true
+        timeout-minutes: 4
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/target
+          key: ${{ steps.main-prepare.outputs.key }}
+          lookup-only: true
+          fail-on-cache-miss: true
+      - name: Record verified persistence or explicit cache service failure
+        if: ${{ steps.main-finish.outputs.save == 'true' }}
+        env:
+          MAIN_SAVE_OUTCOME: ${{ steps.main-save.outcome }}
+          MAIN_PERSIST_OUTCOME: ${{ steps.main-persist.outcome }}
+          MAIN_PERSIST_HIT: ${{ steps.main-persist.outputs.cache-hit }}
+          MAIN_PERSIST_PRIMARY: ${{ steps.main-persist.outputs.cache-primary-key }}
+          MAIN_PERSIST_MATCHED: ${{ steps.main-persist.outputs.cache-matched-key }}
+        run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py persist
+      # native-main-cache end
   b1-source-regression:
     name: macOS B1 source regression and viewer checks
     # Keep the independent cold B1 build and Web checks inside a finite budget.

@@ -1,8 +1,15 @@
 # Native compiled-target cache trial (#106)
 
-Status: **TRIAL / NO ADOPTION DECISION**. Default main caching remains off.
-`phase.json` admits `trial`, `off`, or `adopted`; only `trial` has an implementation.
-`adopted` deliberately enables nothing until separate authorization and review.
+Status: **ADOPTED — MAIN PUSH ONLY**, after the reviewed fixed-source trial
+passed every predeclared threshold. See [actual results and limits](RESULTS.md).
+Production-main seed/reuse remain NOT-RUN until ordinary main pushes execute.
+`phase.json` admits `trial`, `off`, or `adopted`. Adopted enables the separate
+[main policy](main_policy/policy.py) only for validated pushes to this repository's
+`main`. Every PR/fork, other branch/event and the optional trial pair are disabled
+for production caching. Trial and main use different namespaces and receipts.
+
+The completed trial, retained here for reproduction, behaved as follows in
+`trial` phase (inactive in the adopted configuration).
 
 Only a same-repository pull request whose head is `codex/native-cache-trial` may
 produce this experiment. Main, fork PRs and unrelated branches run their existing
@@ -138,3 +145,59 @@ receipts retain `marker_bytes`, `marker_added_bytes`, and
 Near-cap filesystem controls cover sparse files, internal symlink payloads and a
 large receipt, with a test-only small cap injected into the production CLI entry.
 Production has no cap override and retains the exact 4GiB bound.
+
+## Main-only immutable seed policy
+
+Main admission checks the actual push payload repository, fork=false, ref, deleted
+flag and after-SHA against the clean immutable checkout. Compatibility binds
+all tracked manifests/locks/toolchain/config/build scripts; native non-Rust
+embedded inputs, vendor inputs, assets and examples; workflow, script/catalog,
+checker/mutation and helper code; actual compiler/linker/SDK metadata, runner
+image, Rust toolchain, build environment, and archive runtime. Ordinary Rust
+source is excluded from the compatibility key, while build scripts and the
+matrix gate producer remain included. Current and stored producer SHA/tree/run
+identities are separate receipts. Original source mtimes remain natural; Cargo
+rechecks source changes and every original gate executes on both dispositions.
+
+The one fixed key is `nvwa-native-main-seed-v1-<compatibility-SHA256>`. There are no
+restore prefixes or latest searches. An exact restored action key, bounded main
+marker, full inventory and exact main-ref API ID/key/version/stored-byte receipt
+are required for `VERIFIED_RESTORE`. A PR trial entry cannot satisfy these checks.
+Unknown/partial/corrupt/nonexact restore becomes `CLEAN_FALLBACK` only after safe,
+owned-target-only, descriptor-relative deletion and an empty-target assertion.
+Unsafe cleanup stops before original gates. Stock empty hit outputs do not prove
+an ordinary miss; the precise action outcome/outputs remain in the receipt.
+
+Only an independently absent immutable seed can be saved, after every original
+gate, restored sources, complete target sizing and exact marker-byte cap proof.
+Consumed seeds never save again. Unknown service state or an existing but
+unusable entry cannot authorize a replacement. Every activated final path still
+validates full target size, source restoration and actual mutation/matrix gates.
+Save plus lookup-only and exact main API proof produces `VERIFIED_PERSISTED`;
+cache-only failures produce explicit `NOT_PERSISTED_UNKNOWN` while product gates
+keep their real result. A persistence lookup proves existence, not that this
+run authored the blob; remote producer stays UNKNOWN until its marker is
+verified on restore. No permission, token, settings or paid-storage changes.
+
+The main policy captures SDK/compiler identity once per job and checks the same
+consumer, key/version, owned checkout and build environment at later boundaries.
+Unsupported or missing identity disables caching honestly. Each action retains
+4minutes; native retains60minutes and the full logical cap remains4GiB.
+`NVWA_NATIVE_MAIN_CACHE` lines retain policy state, API/action receipts, target
+size, gate results and complete helper wall. Use enclosing GitHub step timings
+for total cost, without double-counting nested receipts.
+
+The separate `native-main-cache-contract` portable group runs normal/-O controls
+before the legacy final report generator. It does not amplify the retained trial
+ordering regression. Its tiny offline Cargo control compiles and runs actual
+changed source with natural mtimes in its own temporary target, with no packages
+or downloads. This proves source invalidation behavior only, not cache speed.
+
+```sh
+python3 -B scripts/check-portable.py native-main-cache-contract
+```
+
+One immutable seed can grow old as ordinary sources change. Cross-commit main
+reuse, future hit rate and whole-workflow savings remain unmeasured. Image or
+compatibility-input changes create a new seed; repository eviction may also
+remove a seed. There is no refresh-on-hit, fallback-key search or benchmark loop.

@@ -22,7 +22,8 @@ spec.loader.exec_module(trial)
 def without_trial(text):
     # Exact indentation disambiguates the whole optional warm job from its steps.
     text = re.sub(r'(?ms)^  # native-cache-trial begin\n.*?^  # native-cache-trial end\n', '', text)
-    return re.sub(r'(?ms)^ +# native-cache-trial begin\n.*?^ +# native-cache-trial end\n', '', text)
+    text = re.sub(r'(?ms)^ +# native-cache-trial begin\n.*?^ +# native-cache-trial end\n', '', text)
+    return re.sub(r'(?ms)^ +# native-main-cache begin\n.*?^ +# native-main-cache end\n', '', text)
 
 
 class CacheTrial(unittest.TestCase):
@@ -426,6 +427,7 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
     def test_exact_original_workflow_and_full_warm_step_policy_parity(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
         baseline = without_trial(workflow)
+        workflow = re.sub(r'(?ms)^ +# native-main-cache begin\n.*?^ +# native-main-cache end\n', '', workflow)
         self.assertEqual(hashlib.sha256(baseline.encode()).hexdigest(), '5bdd5efa6b48150c2fbf19eb9cb1b9f1ae64303caea87bfc9c2615b58c201302')
         native = workflow.split('  native-and-wasm:\n', 1)[1].split('  b1-source-regression:\n', 1)[0]
         warm = workflow.split('  native-cache-warm:\n', 1)[1].rsplit('  # native-cache-trial end\n', 1)[0]

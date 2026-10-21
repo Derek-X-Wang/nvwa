@@ -192,12 +192,12 @@ def validate_matrix(matrix):
             'actual complete motion matrix coverage contract required')
 
 
-def inventory(target):
+def inventory(target, marker_name=MARKER):
     require(target.is_dir() and not target.is_symlink(), 'target directory missing/unsafe')
     rows, size = [], 0
     for path in sorted(target.rglob('*')):
         relative = path.relative_to(target).as_posix()
-        if relative == MARKER:
+        if relative == marker_name:
             continue
         mode = path.lstat().st_mode
         if stat.S_ISDIR(mode):
