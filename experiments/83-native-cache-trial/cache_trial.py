@@ -73,6 +73,7 @@ def target_path(root, env):
 
 
 def empty_target(target):
+    require(not target.is_symlink(), 'fresh target symlink rejected')
     require(not target.exists() or (target.is_dir() and not any(target.iterdir())), 'fresh target must be absent or empty')
 
 
@@ -204,7 +205,12 @@ def inventory(target, marker_name=MARKER):
             continue
         if stat.S_ISLNK(mode):
             link = os.readlink(path)
-            require(path.resolve().is_relative_to(target.resolve()), 'target symlink escapes cache')
+            try:
+                resolved = path.resolve(strict=True)
+            except (OSError, RuntimeError) as error:
+                raise ValueError('target symlink is unresolved or loops') from error
+            require(resolved.is_relative_to(target.resolve(strict=True)), 'target symlink escapes cache')
+            require(resolved.is_file(), 'target directory symlinks unsupported')
             rows.append([relative, 'link', link])
         else:
             require(stat.S_ISREG(mode), 'unsupported target entry')

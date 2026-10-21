@@ -5,6 +5,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import stat
@@ -30,6 +31,7 @@ NATIVE = ['crates/', 'vendor/', 'assets/', 'examples/',
           'experiments/71-b1-character-parameters/', 'experiments/73-high-poly-eyes/',
           'experiments/79-shoulder-pose-corrective/', 'experiments/62-b1-appearance-preview/assets/']
 GATE_RS = 'experiments/60-b1-continuous-motion/src/bin/matrix.rs'
+SDK_SELECTION = {'SDKROOT', 'DEVELOPER_DIR', 'MACOSX_DEPLOYMENT_TARGET'}
 NATIVE_ENV = ['SDKROOT', 'DEVELOPER_DIR', 'MACOSX_DEPLOYMENT_TARGET', 'CC', 'CXX', 'AR', 'RANLIB',
               'CFLAGS', 'CXXFLAGS', 'CPPFLAGS', 'LDFLAGS', 'PKG_CONFIG_PATH', 'PKG_CONFIG_SYSROOT_DIR',
               'PKG_CONFIG_LIBDIR', 'LIBRARY_PATH', 'CPATH', 'C_INCLUDE_PATH', 'CPLUS_INCLUDE_PATH']
@@ -106,7 +108,7 @@ def compatibility(root, env):
     permitted = {*shared.CARGO_ENV, 'CARGO_TARGET_DIR', 'CARGO_HOME', 'RUSTUP_HOME', 'RUSTUP_TOOLCHAIN'}
     extra = [key for key in env if key.startswith(('CARGO_', 'RUST')) and key not in permitted]
     extra += [key for key in env if key.startswith(('CC_', 'CXX_', 'AR_', 'CFLAGS_', 'CXXFLAGS_', 'PKG_CONFIG_'))]
-    require(not extra and not any(env.get(k) for k in NATIVE_ENV), 'unsupported compiler/Cargo environment override')
+    require(not extra and not any(env.get(k) for k in NATIVE_ENV if k not in SDK_SELECTION), 'unsupported compiler/Cargo environment override')
     require(env.get('RUNNER_OS') == 'macOS' and env.get('RUNNER_ARCH') == 'ARM64', 'unsupported runner')
     require(env.get('ImageOS') and env.get('ImageVersion'), 'runner image identity missing')
     # Cargo searches ancestors and CARGO_HOME; do not silently accept outside config.
@@ -118,6 +120,21 @@ def compatibility(root, env):
     require(rustc.startswith('rustc 1.95.0 ') and cargo.startswith('cargo 1.95.0 '), 'pinned toolchain mismatch')
     require(query(['uname', '-s']) == 'Darwin' and query(['uname', '-m']) == 'arm64', 'actual runner mismatch')
     sdk = Path(query(['xcrun', '--sdk', 'macosx', '--show-sdk-path'])).resolve()
+    sdk_root = env.get('SDKROOT')
+    if sdk_root:
+        requested = Path(sdk_root)
+        require(requested.is_absolute() and requested.is_dir() and requested.resolve() == sdk,
+                'SDKROOT does not select the queried macOS SDK')
+    deployment = env.get('MACOSX_DEPLOYMENT_TARGET')
+    require(not deployment or (len(deployment) <= 16 and re.fullmatch(r'[0-9]+(?:\.[0-9]+){0,2}', deployment)
+                              and int(deployment.split('.')[0]) > 0), 'invalid deployment target version')
+    developer = env.get('DEVELOPER_DIR')
+    if developer:
+        requested_developer = Path(developer)
+        require(requested_developer.is_absolute() and requested_developer.is_dir(), 'DEVELOPER_DIR is not an existing absolute root')
+        requested_developer = requested_developer.resolve()
+        require(requested_developer.name == 'Developer' and sdk.is_relative_to(requested_developer / 'Platforms'),
+                'DEVELOPER_DIR does not contain the queried SDK')
     sdk_metadata = {p.name: file_hash(p) for p in [sdk / 'SDKSettings.json', sdk / 'SDKSettings.plist',
                     sdk / 'System/Library/CoreServices/SystemVersion.plist'] if p.is_file()}
     require(sdk_metadata and any(name.startswith('SDKSettings.') for name in sdk_metadata), 'SDK metadata missing')
@@ -125,6 +142,8 @@ def compatibility(root, env):
     for name in ['clang', 'clang++', 'ld', 'ar', 'ranlib', 'strip']:
         path = Path(query(['xcrun', '--find', name])).resolve()
         require(path.is_file(), 'compiler/linker missing')
+        if developer:
+            require(path.is_relative_to(requested_developer / 'Toolchains'), 'DEVELOPER_DIR does not contain the selected toolchain')
         if path not in hashes:
             hashes[path] = file_hash(path)
         tools[name] = {'name': path.name, 'sha256': hashes[path]}
@@ -200,6 +219,15 @@ def clean_target(root, env):
         finally:
             os.close(parent)
     require(time.monotonic()-started < 30, 'target cleanup exceeded bound')
+    # A replacement after the descriptor-relative rmdir must never be
+    # certified as empty. lstat detects even dangling/empty-directory links.
+    owned_target(root, env)
+    try:
+        target.lstat()
+    except FileNotFoundError:
+        pass
+    else:
+        raise ValueError('fixed target reappeared after cleanup')
     shared.empty_target(target)
     return {'verified_empty': True, 'seconds': time.monotonic()-started}
 

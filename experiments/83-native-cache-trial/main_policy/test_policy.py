@@ -24,9 +24,10 @@ spec.loader.exec_module(policy)
 
 class Policy(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='nvwa-main-policy-')
+        self.temp = tempfile.TemporaryDirectory(prefix='nvwa-main-policy-', dir=Path('/tmp').resolve())
         self.addCleanup(self.temp.cleanup)
         self.path = Path(self.temp.name).resolve()
+        self.assertEqual(self.path.parent,Path('/tmp').resolve(),'fixture physical ancestors must be neutral')
         self.root = self.path / 'checkout'
         self.root.mkdir()
         phase = self.root / 'experiments/83-native-cache-trial/phase.json'
@@ -39,10 +40,12 @@ class Policy(unittest.TestCase):
         self.git('init', '-q')
         self.commit()
         self.target = self.root / 'target'
-        self.sdk = self.path / 'sdk'
-        self.sdk.mkdir()
+        self.developer = self.path / 'Xcode.app/Contents/Developer'
+        self.sdk = self.developer / 'Platforms/MacOSX.platform/Developer/SDKs/MacOSX.fixture.sdk'
+        self.sdk.mkdir(parents=True)
         (self.sdk / 'SDKSettings.json').write_text('{"fixture":"sdk"}')
-        self.tool = self.path / 'tool'
+        self.tool = self.developer / 'Toolchains/XcodeDefault.xctoolchain/usr/bin/clang'
+        self.tool.parent.mkdir(parents=True)
         self.tool.write_bytes(b'fixture compiler/archive executable')
         self.event = self.path / 'event.json'
         self.env = {**policy.shared.CARGO_ENV, 'PATH': os.environ['PATH'], 'HOME': str(self.path),
@@ -283,6 +286,76 @@ class Policy(unittest.TestCase):
         bad=json.loads(summary.read_text());bad['coverage']['observed']=593;summary.write_text(json.dumps(bad))
         with self.assertRaisesRegex(ValueError,'coverage contract'):self.call('finish')
         self.assertFalse((self.target/policy.MARKER).exists())
+
+    def test_actual_prepare_accepts_only_valid_recorded_sdk_selection(self):
+        baseline=self.prepare()
+        selections={'SDKROOT':str(self.sdk),'DEVELOPER_DIR':str(self.developer),'MACOSX_DEPLOYMENT_TARGET':'14.0'}
+        for name,value in selections.items():
+            self.env[name]=value
+            state=self.prepare()
+            self.assertEqual(state['compatibility']['native_env'][name],value)
+            self.assertNotEqual(state['key'],baseline['key'])
+            self.env.pop(name)
+        self.env.update(selections);state=self.prepare()
+        self.assertEqual(state['compatibility']['environment']['MACOSX_DEPLOYMENT_TARGET'],'14.0')
+        with self.assertRaisesRegex(ValueError,'environment'):self.call('restore',MACOSX_DEPLOYMENT_TARGET='13.0')
+        for name in selections:self.env.pop(name)
+        other=self.path/'Other/Developer';other.mkdir(parents=True)
+        bad=[{'SDKROOT':'relative-sdk'},{'SDKROOT':str(self.path)},{'SDKROOT':str(self.path/'missing')},
+             {'DEVELOPER_DIR':'relative-developer'},{'DEVELOPER_DIR':str(other)}]
+        bad += [{'MACOSX_DEPLOYMENT_TARGET':value} for value in ['14 beta','14.0;exit','-1.0','0.0','14.0.0.1','14e0',' 14.0']]
+        for values in bad:
+            self.assertIn('DISABLED_UNSUPPORTED_IDENTITY',self.call('prepare',**values),values)
+        outside=self.path/'outside-compiler';outside.write_bytes(b'outside tool')
+        original_query=self.query
+        def wrong_toolchain(argv):
+            return str(outside) if argv[:2]==['xcrun','--find'] else original_query(argv)
+        with patch.object(self,'query',wrong_toolchain):
+            self.assertIn('DISABLED_UNSUPPORTED_IDENTITY',self.call('prepare',DEVELOPER_DIR=str(self.developer)))
+
+    def test_owned_physical_ancestor_config_is_rejected(self):
+        config=self.path/'.cargo/config.toml';config.parent.mkdir();config.write_text('[net]\noffline=true\n')
+        self.assertNotEqual(config.parent,self.root/'.cargo')
+        self.assertNotEqual(config.parent,Path(self.env['CARGO_HOME']))
+        self.assertIn('DISABLED_UNSUPPORTED_IDENTITY',self.call('prepare'))
+        self.assertFalse((self.path/'nvwa-native-main-seed-state.json').exists())
+
+    def test_actual_restore_rejects_self_referential_target_link(self):
+        state=self.prepare();self.present(state)
+        for links in [[('loop','loop')],[('a','b'),('b','a')],[('dangling','missing')],[('parent','.')]]:
+            state=self.prepare();marker=self.restored(state)
+            for name,destination in links:(self.target/name).symlink_to(destination)
+            compiled=self.target/'compiled'
+            rows=[['compiled',compiled.stat().st_mode & 0o777,compiled.stat().st_size,policy.sha(compiled.read_bytes())]]
+            rows += [[name,'link',destination] for name,destination in links]
+            # A malformed archive can carry its own matching receipt. Supply
+            # the stored format explicitly, not the validator under test.
+            marker['inventory']={'logical_bytes':compiled.stat().st_size,'entries':len(rows),
+                                 'sha256':policy.sha(policy.encoded(sorted(rows)))}
+            (self.target/policy.MARKER).write_bytes(policy.encoded(marker))
+            text=self.call('restore',**self.action(state['key']))
+            self.assertIn('CLEAN_FALLBACK',text,links)
+            self.assertNotIn('VERIFIED_RESTORE',text,links)
+            self.assertFalse(self.target.exists())
+
+    def test_actual_restore_stops_on_post_cleanup_target_link_race(self):
+        state=self.prepare();self.present(state);state=self.prepare();self.restored(state)
+        outside=self.path/'empty-outside';outside.mkdir()
+        original=policy.os.rmdir
+        def raced(path,*args,**kwargs):
+            result=original(path,*args,**kwargs)
+            if path=='target' and 'dir_fd' in kwargs:
+                self.target.symlink_to(outside,target_is_directory=True)
+            return result
+        # Preserve the actual dir_fd capability while injecting the one OS
+        # boundary race; otherwise the capability guard would stop earlier.
+        with patch.object(policy.os,'rmdir',raced), patch.object(policy.os,'supports_dir_fd',{*policy.os.supports_dir_fd,raced}):
+            with self.assertRaisesRegex(ValueError,'symlink|reappeared'):
+                self.call('restore',MAIN_RESTORE_OUTCOME='failure')
+        self.assertTrue(self.target.is_symlink())
+        self.assertTrue(outside.is_dir())
+        self.assertEqual(list(outside.iterdir()),[])
+        self.assertEqual(self.state()['status'],'PREPARED','unsafe cleanup cannot attest fallback')
 
     def test_real_target_marker_cap_and_unsafe_cleanup_refusal(self):
         state=self.prepare();self.call('restore');self.gate_files()

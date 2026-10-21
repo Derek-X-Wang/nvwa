@@ -181,6 +181,10 @@ verified on restore. No permission, token, settings or paid-storage changes.
 
 The main policy captures SDK/compiler identity once per job and checks the same
 consumer, key/version, owned checkout and build environment at later boundaries.
+Known SDK selection is recorded and checked: absolute SDKROOT must resolve to
+the queried macOS SDK; absolute DEVELOPER_DIR must resolve to a Developer root
+containing the actual selected toolchain and SDK; MACOSX_DEPLOYMENT_TARGET must
+be a strict numeric version. These checks change no selection, default or flag.
 Unsupported or missing identity disables caching honestly. Each action retains
 4minutes; native retains60minutes and the full logical cap remains4GiB.
 `NVWA_NATIVE_MAIN_CACHE` lines retain policy state, API/action receipts, target
@@ -201,3 +205,12 @@ One immutable seed can grow old as ordinary sources change. Cross-commit main
 reuse, future hit rate and whole-workflow savings remain unmeasured. Image or
 compatibility-input changes create a new seed; repository eviction may also
 remove a seed. There is no refresh-on-hit, fallback-key search or benchmark loop.
+
+Restore inventory admits only strictly resolved internal regular-file links;
+dangling, looping, directory or escaping links cannot qualify as a verified
+restore. Python versions that report symlink loops differently fail the same
+closed check. After descriptor-relative target deletion, no-follow checks reject
+any replacement, including a link to an empty outside directory. Local controls
+inject both failures into the actual restore boundary and preserve outside
+sentinels. Fixtures live in owned neutral physical temporary directories, while
+an explicit owned ancestor-config fixture must still disable production caching.
