@@ -65,13 +65,13 @@
     "run": "python3 -B experiments/83-native-cache-trial/main_policy/test_policy.py\npython3 -B -O experiments/83-native-cache-trial/main_policy/test_policy.py\n"
   },
   {
-    "name": "frozen-upper-arm",
-    "title": "Check frozen upper-arm comparison and retained runtime captures",
-    "run": "python3 -B experiments/50-upper-arm-neutral-ab/test_candidate.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_candidate.py\npython3 -B experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py\npython3 -B experiments/50-upper-arm-neutral-ab/test_runtime_measure.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_measure.py\npython3 -B experiments/50-upper-arm-neutral-ab/runtime_evidence.py\nmkdir -p .work/ci-neutral50\nfor platform in native web; do\n  for variant in baseline candidate; do\n    python3 -B experiments/50-upper-arm-neutral-ab/probe/compare.py \"experiments/50-upper-arm-neutral-ab/results/$platform-$variant.json\" --variant \"$variant\" --output \".work/ci-neutral50/$platform-$variant.json\"\n  done\ndone\n"
-  },
-  {
     "name": "shoulder-rest-refit",
     "title": "Check isolated shoulder rest-refit controls",
     "run": "cargo fmt --manifest-path experiments/84-shoulder-rest-refit/replay/Cargo.toml --package nvwa-shoulder-rest-replay --check\ncargo fmt --manifest-path experiments/84-shoulder-rest-refit/wasm-replay/Cargo.toml --package nvwa-shoulder-wasm-replay --check\nfor part in replay evaluation authoring wasm-replay; do\n  python3 -B -m unittest discover -s \"experiments/84-shoulder-rest-refit/$part\" -p 'test_*.py' -v\n  python3 -B -O -m unittest discover -s \"experiments/84-shoulder-rest-refit/$part\" -p 'test_*.py' -v\ndone\n"
+  },
+  {
+    "name": "frozen-upper-arm",
+    "title": "Check frozen upper-arm comparison and retained runtime captures",
+    "run": "python3 -B experiments/50-upper-arm-neutral-ab/test_candidate.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_candidate.py\npython3 -B experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py\npython3 -B experiments/50-upper-arm-neutral-ab/test_runtime_measure.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_measure.py\npython3 -B experiments/50-upper-arm-neutral-ab/runtime_evidence.py\nmkdir -p .work/ci-neutral50\nfor platform in native web; do\n  for variant in baseline candidate; do\n    python3 -B experiments/50-upper-arm-neutral-ab/probe/compare.py \"experiments/50-upper-arm-neutral-ab/results/$platform-$variant.json\" --variant \"$variant\" --output \".work/ci-neutral50/$platform-$variant.json\"\n  done\ndone\n"
   }
 ]
