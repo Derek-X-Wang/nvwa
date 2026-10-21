@@ -8,12 +8,16 @@ import json
 import os
 from pathlib import Path
 import re
+import socket
+import ssl
 import subprocess
 import sys
 import tempfile
 import unittest
 from unittest.mock import patch
 import urllib.parse
+import urllib.error
+from email.message import Message
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -60,6 +64,8 @@ class Policy(unittest.TestCase):
         self.event.write_text(json.dumps(self.payload))
         self.remote = {'total_count': 0, 'actions_caches': []}
         self.network = False
+        self.transport_error = None
+        self.requests = 0
 
     def git(self, *args):
         return subprocess.check_output(['git', '-C', str(self.root), *args], text=True).strip()
@@ -87,11 +93,14 @@ class Policy(unittest.TestCase):
         raise AssertionError('unexpected external query: '+repr(argv))
 
     def transport(self, request, timeout):
+        self.requests += 1
         self.assertEqual(timeout, 20)
         self.assertFalse(request.has_header('Authorization'))
         url = urllib.parse.urlsplit(request.full_url)
         self.assertEqual(url.scheme+'://'+url.netloc+url.path, 'https://api.github.com/repos/'+policy.REPO+'/actions/caches')
         self.assertEqual(urllib.parse.parse_qs(url.query)['ref'], [policy.REF])
+        if self.transport_error is not None:
+            raise self.transport_error
         if self.network:
             raise OSError('offline fixture failure')
         body = self.remote if isinstance(self.remote, bytes) else json.dumps(self.remote).encode()
@@ -256,6 +265,117 @@ class Policy(unittest.TestCase):
         for response in bad:
             self.remote=response
             self.assertFalse(self.prepare()['api']['known'])
+
+    def test_cli_http_error_retains_safe_diagnostics_and_refuses_save(self):
+        state=self.prepare();self.call('restore');self.target.mkdir()
+        (self.target/'compiled').write_bytes(b'compiled');self.gate_files()
+        headers=Message()
+        headers['X-GitHub-Request-Id']='AB12:CD34:EF56:7890'
+        headers['X-RateLimit-Remaining']='0'
+        headers['X-RateLimit-Reset']='1792540800'
+        headers['Retry-After']='60'
+        headers['Authorization']='Bearer PRIVATE_SENTINEL'
+        for status,cause in [(403,'http_forbidden'),(429,'http_rate_limited'),(503,'http_server_error')]:
+            with self.subTest(status=status):
+                body=io.BytesIO(b'{"message":"PRIVATE_SENTINEL /Users/private https://secret.invalid?token=private"}')
+                self.transport_error=urllib.error.HTTPError('https://secret.invalid?token=private',status,
+                                                       'PRIVATE_SENTINEL',headers,body)
+                before=self.requests
+                text=self.call('finish')
+                self.assertEqual(self.requests-before,1,'diagnostics must not retry')
+                self.assertIn('NOT_PERSISTED_ABSENCE_NOT_RECONFIRMED',text)
+                self.assertIn('save=false',(self.path/'output').read_text())
+                self.assertFalse(self.state()['save_ready'])
+                self.assertFalse((self.target/policy.MARKER).exists())
+                self.assertNotIn('PRIVATE_SENTINEL',text)
+                receipt=[json.loads(line.split(' ',1)[1]) for line in text.splitlines()
+                         if line.startswith('NVWA_NATIVE_MAIN_CACHE ') and '"stage": "finish"' in line][0]['api']
+                self.assertFalse(receipt['known'])
+                self.assertEqual(receipt.get('http_status'),status)
+                self.assertEqual(receipt.get('cause'),cause)
+                self.assertEqual(receipt.get('diagnostics'),{'request_id':'AB12:CD34:EF56:7890',
+                                 'rate_limit_remaining':0,'rate_limit_reset':1792540800,'retry_after_seconds':60})
+                self.assertTrue(body.closed)
+
+    def test_cli_http_diagnostics_reject_malformed_duplicate_and_oversize_values(self):
+        class UnreadBody(io.BytesIO):
+            def read(self,*args): raise AssertionError('remote error body must never be read')
+        bad=['PRIVATE_SENTINEL', 'https://secret.invalid?token=private', '/Users/private',
+             '1\nPRIVATE_SENTINEL', '-1', '1.0', ' 0', '0 ', '９', '9'*10000]
+        fields=['X-GitHub-Request-Id','X-RateLimit-Remaining','X-RateLimit-Reset','Retry-After']
+        cases=[]
+        for value in bad:
+            headers=Message()
+            for field in fields: headers[field]=value
+            cases.append(headers)
+        headers=Message()
+        for field in fields:
+            headers[field]='0';headers[field]='0'
+        cases += [headers, None, {'Retry-After':'PRIVATE_SENTINEL'}]
+        headers=Message()
+        for field in fields[1:]: headers[field]=str(2**63)
+        cases.append(headers)
+        for headers in cases:
+            with self.subTest(headers=type(headers).__name__):
+                body=UnreadBody(b'PRIVATE_SENTINEL'*100000)
+                self.transport_error=urllib.error.HTTPError('https://secret.invalid',403,'PRIVATE_SENTINEL',headers,body)
+                before=self.requests;text=self.call('prepare');receipt=self.state()['api']
+                self.assertEqual(self.requests-before,1)
+                self.assertEqual(receipt,{'known':False,'reason':'HTTPError','http_status':403,'cause':'http_forbidden'})
+                self.assertNotIn('PRIVATE_SENTINEL',text)
+                self.assertNotIn('https://secret.invalid',text)
+                self.assertNotIn('/Users/private',text)
+                self.assertTrue(body.closed)
+        # Malformed status is not published as a typed HTTP fact.
+        for status in [True, '403', 999]:
+            self.transport_error=urllib.error.HTTPError('https://secret.invalid',status,'PRIVATE_SENTINEL',None,UnreadBody())
+            self.assertEqual(self.prepare()['api'],{'known':False,'reason':'HTTPError','cause':'http_error'})
+
+    def test_cli_transport_and_schema_failures_are_safe_and_distinct(self):
+        secret='PRIVATE_SENTINEL https://secret.invalid?token=private /Users/private'
+        cases=[(urllib.error.URLError(TimeoutError(secret)),'URLError','timeout'),
+               (urllib.error.URLError(ssl.SSLError(secret)),'URLError','tls_error'),
+               (urllib.error.URLError(socket.gaierror(secret)),'URLError','dns_error'),
+               (urllib.error.URLError(secret),'URLError','transport_error'),
+               (TimeoutError(secret),'OSError','timeout'),(ssl.SSLError(secret),'OSError','tls_error'),
+               (OSError(secret),'OSError','transport_error')]
+        for error,reason,cause in cases:
+            self.transport_error=error;before=self.requests;text=self.call('prepare')
+            self.assertEqual(self.requests-before,1)
+            self.assertEqual(self.state()['api'],{'known':False,'reason':reason,'cause':cause})
+            self.assertNotIn('PRIVATE_SENTINEL',text)
+        self.transport_error=None
+        for remote,cause in [(b'{PRIVATE_SENTINEL','invalid_json'), ({'message':secret},'response_validation_error'),
+                             (b'x'*65537,'response_validation_error')]:
+            self.remote=remote;text=self.call('prepare')
+            self.assertEqual(self.state()['api'],{'known':False,'reason':'ValueError','cause':cause})
+            self.assertNotIn('PRIVATE_SENTINEL',text)
+
+    def test_cli_restore_recheck_keeps_latest_failure_and_close_error_stays_unknown(self):
+        state=self.prepare();self.present(state);state=self.prepare();self.restored(state)
+        class BrokenClose(io.BytesIO):
+            def close(self):
+                super().close()
+                raise RuntimeError('PRIVATE_SENTINEL')
+        body=BrokenClose(b'PRIVATE_SENTINEL')
+        self.transport_error=urllib.error.HTTPError('https://secret.invalid',503,'PRIVATE_SENTINEL',None,body)
+        before=self.requests;text=self.call('restore',**self.action(state['key']))
+        self.assertEqual(self.requests-before,1)
+        self.assertIn('CLEAN_FALLBACK',text)
+        self.assertIn('"http_status": 503',text)
+        self.assertIn('"known": false',text)
+        restored=[json.loads(line.split(' ',1)[1]) for line in text.splitlines()
+                  if line.startswith('NVWA_NATIVE_MAIN_CACHE ') and '"stage": "restore"' in line][0]
+        self.assertEqual(restored['api'],state['api'])
+        self.assertEqual(self.state()['api'],state['api'])
+        self.assertEqual(restored['recheck_api'],{'known':False,'reason':'HTTPError',
+                                                'http_status':503,'cause':'http_server_error'})
+        self.assertNotIn('PRIVATE_SENTINEL',text)
+        self.assertFalse(self.target.exists())
+        self.assertTrue(body.closed)
+        self.target.mkdir();self.gate_files()
+        self.assertIn('NOT_PERSISTED_UNKNOWN_OR_EXISTING',self.call('finish'))
+        self.assertFalse((self.target/policy.MARKER).exists())
 
     def test_cli_absent_seed_requires_real_shared_gates_full_marker_cap_and_persistence(self):
         state=self.prepare();self.call('restore')
