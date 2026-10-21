@@ -25,6 +25,17 @@ ASSERTIONS = {CASES[0]: 'assertion failed: part_position_deltas(&rest, &middle)'
 TESTS = {CASES[0]: 'b1::tests::actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit',
          CASES[1]: 'b1::tests::actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit',
          CASES[2]: 'b1::tests::authored_knee_counterrotation_keeps_actual_early_and_full_cycle_feet_above_floor'}
+# matrix.rs: 3 torsos x 3 jaws x 2 clips x 33 times, then 8 seeks and
+# 1 pause per neutral-recipe clip. run_matrix.py checks all non-complete
+# events; its final complete marker increments only the stream total.
+MATRIX_GRID = 3 * 3 * 2 * 33
+MATRIX_CHECKED = MATRIX_GRID + 2 * (8 + 1)
+MATRIX_STREAM = MATRIX_CHECKED + 1
+MATRIX_COVERAGE = {'expected': MATRIX_GRID, 'observed': MATRIX_GRID, 'missing': [],
+                   'deep_keyframes_expected': 3 * 2 * 5,
+                   'deep_keyframes_observed': 3 * 2 * 5,
+                   'complete': True, 'body_variants': 3, 'face_settings': 3}
+
 
 
 def require(condition, message):
@@ -132,6 +143,55 @@ def exact_receipt(lane, hit, primary, matched, key):
     require(hit == 'true' and matched == key, 'exact persisted cache hit required; cold fallback forbidden')
 
 
+def target_measurement(target, lane):
+    """Stat every owned entry without following links or hashing file contents."""
+    measurement = {'logical_bytes': 0, 'files': 0, 'symlinks': 0,
+                   'directories': 0, 'entries': 0, 'complete': False}
+    started = time.monotonic()
+    try:
+        require(target.is_dir() and not target.is_symlink(), 'target directory missing/unsafe')
+        def scan_error(error):
+            raise error
+        for parent, directories, files in os.walk(target, followlinks=False, onerror=scan_error):
+            for name in directories + files:
+                path = Path(parent) / name
+                measurement['entries'] += 1
+                require(measurement['entries'] <= 1_000_000 and time.monotonic()-started <= 30,
+                        'target stat scan bound exceeded; full logical size unknown')
+                item = path.lstat()
+                if stat.S_ISDIR(item.st_mode):
+                    measurement['directories'] += 1
+                else:
+                    measurement['logical_bytes'] += item.st_size
+                    if stat.S_ISLNK(item.st_mode):
+                        measurement['symlinks'] += 1
+                    else:
+                        require(stat.S_ISREG(item.st_mode), 'unsupported target entry')
+                        measurement['files'] += 1
+        measurement['complete'] = True
+    finally:
+        # A failed scan is explicitly partial. Gate/cap failures occur only
+        # after this receipt; oversize scans still retain the entire total.
+        emit('target-size', {'lane': lane, **measurement})
+    return measurement
+
+
+def validate_matrix(matrix):
+    require(type(matrix) is dict and matrix.get('passed') is True
+            and type(matrix.get('probe_exit')) is int and matrix['probe_exit'] == 0
+            and matrix.get('probe_complete_marker') is True
+            and type(matrix.get('records')) is int and matrix['records'] == MATRIX_STREAM
+            and type(matrix.get('passing_records')) is int and matrix['passing_records'] == MATRIX_CHECKED
+            and type(matrix.get('failures')) is list and matrix['failures'] == [],
+            'actual complete motion matrix event contract required')
+    coverage = matrix.get('coverage')
+    require(type(coverage) is dict and set(coverage) == set(MATRIX_COVERAGE),
+            'actual complete motion matrix coverage schema required')
+    require(all(type(coverage[key]) is type(expected) and coverage[key] == expected
+                for key, expected in MATRIX_COVERAGE.items()),
+            'actual complete motion matrix coverage contract required')
+
+
 def inventory(target):
     require(target.is_dir() and not target.is_symlink(), 'target directory missing/unsafe')
     rows, size = [], 0
@@ -194,9 +254,7 @@ def gates(root, temporary):
                                   'red_log_sha256': mutation['hashes'][name+'-red.log'],
                                   'restored_log_sha256': mutation['hashes'][name+'-restored-green.log']})
     matrix = json.loads((temporary / 'nvwa-b1-motion-matrix/summary.json').read_text())
-    require(matrix.get('passed') is True and matrix.get('records') == 594 and matrix.get('passing_records') == 594
-            and matrix.get('probe_exit') == 0 and matrix.get('probe_complete_marker') is True
-            and matrix.get('coverage', {}).get('complete') is True and matrix.get('failures') == [], 'actual complete motion matrix required')
+    validate_matrix(matrix)
     return {'mutations': mutation, 'semantic_receipts': semantic_receipts, 'matrix': matrix}
 
 
@@ -220,6 +278,11 @@ def main():
     if args.stage == 'prepare' and args.lane == 'cold' and not selected(ROOT, env):
         output({'enabled': 'false'})
         return
+    measured = None
+    if args.stage == 'finish':
+        require(selected(ROOT, env), 'trial is not authorized for this phase/event/repository/branch')
+        measured = target_measurement(target_path(ROOT, env), args.lane)
+        require(measured['logical_bytes'] <= CAP, 'full logical target exceeds 4 GiB cap')
     value = identity(ROOT, env)
     target = target_path(ROOT, env)
     key = key_for(value, env)
@@ -245,10 +308,23 @@ def main():
     else:
         evidence = gates(ROOT, Path(env['RUNNER_TEMP']))
         source(ROOT, env)
+        marker = target / MARKER
+        if args.lane == 'cold':
+            require(not marker.exists() and not marker.is_symlink(), 'cold target receipt must be absent')
         saved = inventory(target)
         if args.lane == 'cold':
-            (target / MARKER).write_bytes(encoded({'key': key, 'identity': value, 'inventory': saved}))
-        emit('finish', {'lane': args.lane, 'key': key, 'inventory': saved, 'gates': evidence, 'source_restored': True})
+            payload = encoded({'key': key, 'identity': value, 'inventory': saved})
+            size = {'marker_bytes': len(payload), 'marker_added_bytes': len(payload),
+                    'full_saved_logical_bytes': measured['logical_bytes'] + len(payload)}
+            emit('target-save-size', {'lane': args.lane, **size})
+            require(size['full_saved_logical_bytes'] <= CAP, 'full logical target plus exact receipt exceeds 4 GiB cap')
+            marker.write_bytes(payload)
+        else:
+            require(marker.is_file() and not marker.is_symlink(), 'warm target receipt missing/unsafe')
+            size = {'marker_bytes': marker.stat().st_size, 'marker_added_bytes': 0,
+                    'full_saved_logical_bytes': measured['logical_bytes']}
+        emit('finish', {'lane': args.lane, 'key': key, 'inventory': saved, 'target_size': measured,
+                        **size, 'gates': evidence, 'source_restored': True})
     emit('boundary-cost', {'stage_name': args.stage, 'lane': args.lane, 'seconds': time.monotonic()-start})
 
 

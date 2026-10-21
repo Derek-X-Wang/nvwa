@@ -98,7 +98,7 @@ group. That legacy group regenerates three tracked retained reports:
 platforms. Its original terminal position and the original observer boundaries
 remain intact; the timing report still rejects mixed source identities.
 
-The ordering regression runs the actual frozen group, actual eight cache controls
+The ordering regression runs the actual frozen group, actual nine cache controls
 in both Python modes, production timing shells and the real report in a disposable
 checkout. A harmless retained-JSON whitespace difference emulates generated-byte
 variance: the actual generator removes it and leaves the fixture dirty. The old
@@ -106,3 +106,35 @@ trailing-control order fails the identity report; the shipping order passes with
 all observations made before the final regeneration. This is controlled causal
 evidence; the exact generated Ubuntu bytes from the failed initial run are
 UNKNOWN. No generator, retained artifact or identity assertion is changed.
+
+The retained [hosted motion summary](fixtures/motion-summary-run39518452707.json)
+and its [provenance manifest](fixtures/motion-summary-run39518452707.manifest.json)
+come from run39518452707/job118960012261. The producer emits 594 matrix samples
+(3 body settings ×3 face settings ×2 clips ×33 times), plus 16 seek and 2 pause
+checks for the neutral recipe, then one complete marker. `run_matrix.py` therefore
+reports **613 total events and 612 successful checks**, while checker coverage
+separately requires exactly **594 expected/observed samples, 30 expected/observed
+deep keyframes, 3 body variants, 3 face settings, and no missing samples**. The
+trial validates all of these with strict integer/boolean/list types. Missing,
+extra, partially passing or inconsistent evidence cannot prepare a cache save.
+The original probe, checker and native commands remain unchanged.
+
+Every authorized finish attempt first emits a `target-size` receipt from a stat-only scan of
+the complete owned target. It counts regular file bytes and symlink payload bytes,
+regular files, links, directories and entries without following links or reading
+file contents. The scan is bounded to 30seconds and one million entries; scan
+failure is explicitly `complete=false` and never presented as the full size. A
+complete receipt precedes source, gate or cap rejection. Oversize receipts retain
+the full total rather than stopping at the first file above 4GiB. Hashing runs
+only after a complete scan fits the unchanged cap and all gate receipts pass.
+A measurement does not authorize saving a failed or oversized target.
+
+Cold finish also requires its receipt marker to be absent. It encodes the exact
+marker payload and verifies `measured logical bytes + actual marker bytes` against
+4GiB before writing. This includes symlink payload bytes and does not rely on the
+older regular-file reserve alone. `target-save-size` and successful `finish`
+receipts retain `marker_bytes`, `marker_added_bytes`, and
+`full_saved_logical_bytes`; warm adds zero marker bytes and never saves again.
+Near-cap filesystem controls cover sparse files, internal symlink payloads and a
+large receipt, with a test-only small cap injected into the production CLI entry.
+Production has no cap override and retains the exact 4GiB bound.

@@ -108,6 +108,24 @@ runpy.run_path(script,run_name='__main__')
         return subprocess.run([sys.executable, '-B', *(['-O'] if sys.flags.optimize else []), '-c', launcher, payload, str(self.script), key],
                               cwd=self.root, env=self.env, capture_output=True, text=True)
 
+    def finish_with_test_cap(self, cap):
+        # Test-only constant injection: no production argument/environment can
+        # change the 4GiB cap. Execute the actual parser/main and serialization.
+        launcher = r'''import runpy,subprocess,sys
+script=sys.argv[1]; cap=int(sys.argv[2])
+module=runpy.run_path(script,run_name='cache_cap_fixture')
+module['main'].__globals__['CAP']=cap
+sys.argv=[script,'finish','--lane','cold']
+try:
+    module['main']()
+except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
+    print('FAIL: '+str(error),file=sys.stderr)
+    sys.exit(1)
+'''
+        return subprocess.run([sys.executable, '-B', *(['-O'] if sys.flags.optimize else []),
+                               '-c', launcher, str(self.script), str(cap)],
+                              cwd=self.root, env=self.env, capture_output=True, text=True)
+
     def gate_fixtures(self):
         original = (self.root / 'source.rs').read_bytes()
         cases = [{'name': name, 'source': 'source.rs', 'before_sha256': trial.sha(original),
@@ -129,8 +147,7 @@ runpy.run_path(script,run_name='__main__')
                 (directory / filename).write_text(text)
                 hashes[filename] = trial.sha(text.encode())
         mutation = {'passed': True, 'cases': cases, 'hashes': hashes}
-        matrix = {'passed': True, 'records': 594, 'passing_records': 594, 'probe_exit': 0,
-                  'probe_complete_marker': True, 'coverage': {'complete': True}, 'failures': []}
+        matrix = json.loads((ROOT / 'experiments/83-native-cache-trial/fixtures/motion-summary-run39518452707.json').read_text())
         for name, value in [('nvwa-b1-motion-mutations', mutation), ('nvwa-b1-motion-matrix', matrix)]:
             path = self.temp / name
             path.mkdir(exist_ok=True)
@@ -263,6 +280,95 @@ runpy.run_path(script,run_name='__main__')
             (self.temp / 'nvwa-b1-motion-matrix/summary.json').write_text(json.dumps({**matrix, **change}))
             self.assertNotEqual(self.call('finish').returncode, 0)
 
+    def test_actual_retained_matrix_summary_and_strict_event_coverage_contract(self):
+        self.prepare()
+        _, actual = self.gate_fixtures()
+        self.target.mkdir()
+        (self.target / 'compiled').write_bytes(b'tiny fixture; no native build')
+        path = self.temp / 'nvwa-b1-motion-matrix/summary.json'
+        accepted = self.call('finish')
+        self.assertEqual(accepted.returncode, 0, accepted.stderr)
+        finish = next(json.loads(line.removeprefix('NVWA_NATIVE_CACHE '))
+                      for line in accepted.stdout.splitlines() if '"stage": "finish"' in line)
+        self.assertEqual(finish['gates']['matrix'], actual)
+        retained = ROOT / 'experiments/83-native-cache-trial/fixtures/motion-summary-run39518452707.json'
+        manifest = json.loads(retained.with_suffix('.manifest.json').read_text())
+        self.assertEqual(manifest['source_run'], 39518452707)
+        self.assertEqual(manifest['source_job'], 118960012261)
+        self.assertEqual(manifest['run_attempt'], 1)
+        self.assertEqual(manifest['retained_fixture_sha256'], trial.sha(retained.read_bytes()))
+        self.assertEqual(finish['target_size']['logical_bytes'], len(b'tiny fixture; no native build'))
+        self.assertEqual(finish['target_size']['files'], 1)
+        self.assertEqual(finish['marker_bytes'], (self.target / trial.MARKER).stat().st_size)
+        self.assertEqual(finish['full_saved_logical_bytes'],
+                         finish['target_size']['logical_bytes']+finish['marker_bytes'])
+        self.assertIs(finish['target_size']['complete'], True)
+        (self.target / trial.MARKER).unlink()
+        invalid = []
+        for field in ['records', 'passing_records', 'probe_exit', 'probe_complete_marker', 'passed', 'coverage', 'failures']:
+            value = copy.deepcopy(actual)
+            value.pop(field)
+            invalid.append(value)
+        # Missing/extra event and successful-check counts, including the former
+        # incorrect fixture that mistook all events for just the matrix grid.
+        for changes in [{'records':612}, {'records':614}, {'passing_records':611},
+                        {'passing_records':613}, {'records':594, 'passing_records':594},
+                        {'probe_exit':False}, {'probe_exit':1}, {'records':613.0},
+                        {'passing_records':612.0}, {'passed':1}, {'probe_complete_marker':1},
+                        {'failures':[{'technical_pass':False}]}]:
+            invalid.append({**copy.deepcopy(actual), **changes})
+        expected = {'expected':594, 'observed':594, 'deep_keyframes_expected':30,
+                    'deep_keyframes_observed':30, 'body_variants':3, 'face_settings':3}
+        for field, count in expected.items():
+            for replacement in [count-1, count+1, float(count), True, None]:
+                value = copy.deepcopy(actual)
+                value['coverage'][field] = replacement
+                invalid.append(value)
+            value = copy.deepcopy(actual)
+            value['coverage'].pop(field)
+            invalid.append(value)
+        for changes in [{'complete':False}, {'complete':1}, {'missing':[['missing-grid-cell']]},
+                        {'missing':None}, {'unexpected_partial_schema':True}]:
+            value = copy.deepcopy(actual)
+            value['coverage'].update(changes)
+            invalid.append(value)
+        # Exhaustive coercion/schema vectors exercise the real validation seam
+        # called by finish, without repeating Git/toolchain subprocesses for
+        # each equivalent boundary. Keep representative failure families through
+        # the complete production CLI and its pre-rejection size receipt too.
+        for value in invalid:
+            with self.subTest(summary=value):
+                with self.assertRaises(ValueError):
+                    trial.validate_matrix(value)
+        cli_invalid = []
+        for changes in [{'records':612}, {'records':614}, {'passing_records':611},
+                        {'passing_records':613}, {'records':594, 'passing_records':594}]:
+            cli_invalid.append({**copy.deepcopy(actual), **changes})
+        for field in ['records', 'passing_records', 'coverage']:
+            value = copy.deepcopy(actual)
+            value.pop(field)
+            cli_invalid.append(value)
+        for field, count in expected.items():
+            value = copy.deepcopy(actual)
+            value['coverage'][field] = count-1
+            cli_invalid.append(value)
+        for changes in [{'complete':False}, {'missing':[['missing-grid-cell']]},
+                        {'unexpected_partial_schema':True}]:
+            value = copy.deepcopy(actual)
+            value['coverage'].update(changes)
+            cli_invalid.append(value)
+        for value in cli_invalid:
+            with self.subTest(cli_summary=value):
+                path.write_text(json.dumps(value))
+                rejected = self.call('finish')
+                self.assertNotEqual(rejected.returncode, 0)
+                size = next(json.loads(line.removeprefix('NVWA_NATIVE_CACHE '))
+                            for line in rejected.stdout.splitlines() if '"stage": "target-size"' in line)
+                self.assertEqual(size['logical_bytes'], len(b'tiny fixture; no native build'))
+                self.assertEqual(size['files'], 1)
+                self.assertIs(size['complete'], True)
+                self.assertFalse((self.target / trial.MARKER).exists(), 'failed evidence must not prepare cache save')
+
     def test_oversize_sparse_target_and_escaping_symlink_reject_before_save(self):
         self.prepare()
         self.gate_fixtures()
@@ -270,11 +376,52 @@ runpy.run_path(script,run_name='__main__')
         path = self.target / 'oversize'
         with path.open('wb') as stream:
             stream.truncate(trial.CAP+1)
-        self.assertNotEqual(self.call('finish').returncode, 0)
+        (self.target / 'tail').write_bytes(b'1234567')
+        rejected = self.call('finish')
+        self.assertNotEqual(rejected.returncode, 0)
+        size = next(json.loads(line.removeprefix('NVWA_NATIVE_CACHE '))
+                    for line in rejected.stdout.splitlines() if '"stage": "target-size"' in line)
+        self.assertEqual(size['logical_bytes'], trial.CAP+8, 'retain full total after crossing the cap')
+        self.assertEqual(size['files'], 2)
+        self.assertIs(size['complete'], True)
+        self.assertNotIn('"stage": "finish"', rejected.stdout)
         self.assertFalse((self.target / trial.MARKER).exists())
         path.unlink()
         path.symlink_to(self.root / 'source.rs')
         self.assertNotEqual(self.call('finish').returncode, 0)
+
+        # The former 64KiB regular-file reserve misses links that consume that
+        # margin, and receipts larger than the reserve. Both real-filesystem
+        # cases must fail before writing the exact serialized marker.
+        for scenario in ['symlink-margin', 'large-receipt']:
+            shutil.rmtree(self.target)
+            self.target.mkdir()
+            with (self.target / 'compiled').open('wb') as stream:
+                stream.truncate(65536)
+            if scenario == 'symlink-margin':
+                for number in range(315):
+                    (self.target / f'link-{number:03}').symlink_to('./'*100+'compiled')
+            else:
+                rustc = self.bin / 'rustc'
+                text = 'rustc 1.95.0 (fixture)\nhost: aarch64-apple-darwin\n'+'x'*70000
+                rustc.write_text('#!/bin/sh\nprintf "%s\\n" '+repr(text)+'\n')
+                rustc.chmod(0o755)
+            rejected = self.finish_with_test_cap(131072)
+            self.assertNotEqual(rejected.returncode, 0, scenario)
+            rows = [json.loads(line.removeprefix('NVWA_NATIVE_CACHE ')) for line in rejected.stdout.splitlines()]
+            measured = next(row for row in rows if row['stage'] == 'target-size')
+            projected = next(row for row in rows if row['stage'] == 'target-save-size')
+            self.assertTrue(measured['complete'])
+            self.assertLessEqual(measured['logical_bytes'], 131072)
+            self.assertGreater(projected['full_saved_logical_bytes'], 131072)
+            self.assertEqual(projected['full_saved_logical_bytes'],
+                             measured['logical_bytes']+projected['marker_bytes'])
+            self.assertFalse((self.target / trial.MARKER).exists())
+            self.assertNotIn('"stage": "finish"', rejected.stdout)
+        marker = self.target / trial.MARKER
+        marker.write_bytes(b'prior-receipt-must-not-be-overwritten')
+        self.assertNotEqual(self.call('finish').returncode, 0)
+        self.assertEqual(marker.read_bytes(), b'prior-receipt-must-not-be-overwritten')
 
     def test_exact_original_workflow_and_full_warm_step_policy_parity(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
