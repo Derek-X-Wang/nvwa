@@ -191,6 +191,19 @@ Unsupported or missing identity disables caching honestly. Each action retains
 size, gate results and complete helper wall. Use enclosing GitHub step timings
 for total cost, without double-counting nested receipts.
 
+Unknown main API receipts retain a safe error category. HTTP failures also retain
+an integer status and, when strictly valid, the GitHub request ID, remaining rate
+count, reset epoch and retry delay in seconds. A 403 means `http_forbidden` here;
+it does not establish rate limiting. Error response bodies, URLs, exception text
+and other headers are never included. Error bodies are not read, and responses
+are closed. Missing, duplicate, malformed or oversized diagnostic values are
+omitted. Transport timeout, TLS, DNS and response-validation failures have fixed
+categories. All remain `known=false`, authorize no save and introduce no retry.
+Restore fallback keeps its original `api` admission snapshot and adds
+`recheck_api` only when the post-restore lookup ran. The exact HTTP status and
+cause of historical run39546704999 remain UNKNOWN; these diagnostics apply to
+future observations and do not revise retained evidence.
+
 The separate `native-main-cache-contract` portable group runs normal/-O controls
 before the legacy final report generator. It does not amplify the retained trial
 ordering regression. Its tiny offline Cargo control compiles and runs actual

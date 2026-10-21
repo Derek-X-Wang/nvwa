@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """One immutable native seed per compatibility digest; trusted main pushes only."""
 import argparse
+from email.message import Message
 import hashlib
 import importlib.util
 import json
@@ -9,10 +10,13 @@ import re
 from pathlib import Path
 import shutil
 import stat
+import socket
+import ssl
 import subprocess
 import sys
 import time
 import urllib.parse
+import urllib.error
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -255,11 +259,63 @@ def api_entry(key, version):
     return {name: row[name] for name in ['id', 'key', 'ref', 'version', 'size_in_bytes']}
 
 
+def http_failure(error):
+    # Never read remote error prose. These are facts, not a root-cause claim.
+    receipt = {'known': False, 'reason': 'HTTPError', 'cause': 'http_error'}
+    try:
+        status = error.code
+        if type(status) is int and 100 <= status <= 599:
+            receipt['http_status'] = status
+            receipt['cause'] = {401: 'http_unauthorized', 403: 'http_forbidden',
+                                404: 'http_not_found', 429: 'http_rate_limited'}.get(
+                                    status, 'http_server_error' if status >= 500 else 'http_error')
+        diagnostics = {}
+        if isinstance(error.headers, Message):
+            fields = [('X-GitHub-Request-Id', 'request_id'),
+                      ('X-RateLimit-Remaining', 'rate_limit_remaining'),
+                      ('X-RateLimit-Reset', 'rate_limit_reset'), ('Retry-After', 'retry_after_seconds')]
+            for header, field in fields:
+                values = error.headers.get_all(header, [])
+                if len(values) != 1 or type(values[0]) is not str:
+                    continue
+                value = values[0]
+                if field == 'request_id':
+                    if len(value) <= 64 and re.fullmatch(r'[A-Fa-f0-9]{1,16}(?::[A-Fa-f0-9]{1,16}){3,4}', value):
+                        diagnostics[field] = value
+                elif len(value) <= 19 and re.fullmatch(r'[0-9]+', value) and int(value) <= 2**63-1:
+                    diagnostics[field] = int(value)
+        if diagnostics:
+            receipt['diagnostics'] = diagnostics
+        return receipt
+    finally:
+        try:
+            error.close()
+        except Exception:
+            pass  # A close failure cannot authorize saving or hide HTTP facts.
+
+
+def transport_cause(error):
+    if isinstance(error, TimeoutError):
+        return 'timeout'
+    if isinstance(error, ssl.SSLError):
+        return 'tls_error'
+    if isinstance(error, socket.gaierror):
+        return 'dns_error'
+    return 'transport_error'
+
+
 def probe(key, version):
     try:
         return {'known': True, 'entry': api_entry(key, version)}
-    except (OSError, ValueError, KeyError) as error:
-        return {'known': False, 'reason': type(error).__name__}
+    except urllib.error.HTTPError as error:
+        return http_failure(error)
+    except urllib.error.URLError as error:
+        return {'known': False, 'reason': 'URLError', 'cause': transport_cause(error.reason)}
+    except OSError as error:
+        return {'known': False, 'reason': 'OSError', 'cause': transport_cause(error)}
+    except (ValueError, KeyError) as error:
+        return {'known': False, 'reason': 'ValueError' if isinstance(error, ValueError) else 'KeyError',
+                'cause': 'invalid_json' if isinstance(error, json.JSONDecodeError) else 'response_validation_error'}
 
 
 def action(env, prefix):
@@ -280,6 +336,7 @@ def producer(source, env):
 def verify_restore(root, env, state):
     target = owned_target(root, env)
     row = action(env, 'MAIN_RESTORE')
+    receipt = None
     reason = 'cache absence independently verified' if state['api']['known'] and state['api']['entry'] is None else 'unverified action/API restore'
     try:
         require(state['api']['known'] and state['api']['entry'] is not None and exact(row, state['key']), 'exact restore/API required')
@@ -308,7 +365,7 @@ def verify_restore(root, env, state):
     cleanup = clean_target(root, env)
     state.update(status='CLEAN_FALLBACK', restore=row)
     emit('restore', status=state['status'], reason=reason, action=row, api=state['api'], cleanup=cleanup,
-         consumer=state['consumer'], warm=False)
+         consumer=state['consumer'], warm=False, **({'recheck_api': receipt} if receipt is not None else {}))
 
 
 def finish(root, env, state):
