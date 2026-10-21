@@ -25,5 +25,11 @@
     "CLIpersistence",
     "GPUorperformance",
     "nativeUI"
-  ]
+  ],
+  "affected_cache_regression": {
+    "command": "python3 -B scripts/check-portable.py native-cache-contract native-main-cache-contract",
+    "status": "PASS",
+    "seconds": 150.86,
+    "scope": "full affected groups in normal/-O; originalworkflowhash unchanged; addition missing/duplicate controls retained"
+  }
 }

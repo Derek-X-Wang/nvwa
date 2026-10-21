@@ -72,9 +72,11 @@ Wasm scoring policy or authoring GO was issued: an admitted manifest and complet
 baseline receipt do not exist. It must not be passed off as a completed candidate
 policy.
 
-Original product source, assets, root dependencies and historical experiments
-remain unchanged. CI gains a shared local/hosted control group; existing command
-bodies, tests, thresholds, jobs and gates remain. CI controls do not reconstruct
+Original product source, assets, root dependencies and historical character
+comparison inputs/guards remain unchanged. CI gains a shared local/hosted control group; existing command
+bodies, tests, thresholds, jobs and gates remain. The cache workflow checkers
+require the exact new step separately and retain their original historical
+workflow hash. CI controls do not reconstruct
 the missing historical18 or certify a complete new corpus. The private actual
 old-witness control explicitly skips when its authenticated input is unavailable.
 
