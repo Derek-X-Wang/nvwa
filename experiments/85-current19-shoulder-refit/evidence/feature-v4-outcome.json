@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "kind": "nvwa85-current19-feature-v4-rejected-outcome-summary",
+  "status": "REJECT_NO_CANDIDATE_QUALITY_HOLD",
+  "base_commit": "301c3d3d8ee4cefdad2c983e2e65c456f8291be7",
+  "candidate_id": "nvwa-current19-shoulder-feature-refit-v4",
+  "authoring_policy_version": 4,
+  "attempts": 1,
+  "candidate_created": false,
+  "candidate_files": 0,
+  "manifest_files": 0,
+  "authoring_receipt": {
+    "bytes": 3103250,
+    "sha256": "e2950b175f7a84ae15062d5a29b68492cf2ee73a91eef95594bdc89438ee832d",
+    "status": "REJECT_AUTHORING_SINGLE_ATTEMPT",
+    "error": "infeasible fixed/zero-slope sample"
+  },
+  "process": {
+    "bytes": 1455,
+    "sha256": "84c0f20d5cffb79f1af0fcdd0369db43ad74cde7f88005f9c0cdd9473ad0c43b",
+    "bound_seconds": 1200,
+    "exit_code": 1,
+    "timed_out": false,
+    "wall_seconds": 163.119873166,
+    "source_changes": 0,
+    "wefty_run_id": "run_4885f621eebf4571c7af00e8af7f4cbf"
+  },
+  "freeze": {
+    "bytes": 58685,
+    "sha256": "3f9a2a48390436f4955d65cef684e811ecfaeaab6dcdf755a0ac844a7cf53e48"
+  },
+  "source_identity": {
+    "execution_files": 309,
+    "execution_files_sha256": "b61b7241b99a556f0b9cc50ffa3aad8b387df1a2c5e27e7506ec7cb209ef3d25",
+    "feature_policy_sha256": "b97e60b086204256a9a546502abf3605cee6317af78702e20708586e88c330df",
+    "reference_policy_sha256": "864df1a9956712dda02942fdc3a5a099a8c1d789ab91776a648258d268cafc53",
+    "support_sha256": "66dd2cc157b92bf5651e3c1e88c33d3ce72e6f6ec9fed8694a27984970b05053",
+    "capture_source_files": 284,
+    "capture_source_sha256": "f617f38550b27ebba0b66bf446d1659bbd3cf33364e87077c079525d36cdf27a",
+    "old298_sha256": "58e32a763ffef40ada0051ff305364d2fe51e6eee31c9a07e1954a24d5917e9f",
+    "old298_and_capture284_and_historical117_preserved": true
+  },
+  "baseline": {
+    "cohort_kind": "current19-native-production-v1",
+    "manifest_sha256": "bd3d5763bc15eadc258327e2bbefb625788663daa0ed8b8d20dcefd99726e7e6",
+    "baseline_geometry_sha256": "15cd5b78e2ed0709c8903f7ecfed0d3631a194e0f4c5e92edf02550f94df35ad",
+    "independent_audit_sha256": "5bacb587289abd50956e3498fb9d46f6d6edb0207d0f696e677cbd4b294a2d43",
+    "actual_admission_all19_baseline_checks": "PASS",
+    "independent19_reaudit_this_attempt": "NOT-RUN; earlier independent audit retained"
+  },
+  "previous_rejection": {
+    "bytes": 2146411,
+    "sha256": "10c8394cdb980d347a3c8bfbf0c034b858efdbf6bd13ba7750b804192759fd99",
+    "public_summary": "authoring-rejection.json",
+    "retained": true
+  },
+  "completed": {
+    "source_directions": 30,
+    "logical_samples": 581,
+    "face_constraints": 623
+  },
+  "fixed_blockers": {
+    "plane_count": 30,
+    "unique_logical_samples": 27,
+    "unique_body_faces": 16,
+    "all_exact_zero_slope": true,
+    "all_active_sources_outside30_support": true,
+    "negative_d_plane_count": 26,
+    "positive_but_below1mm_plane_count": 4
+  },
+  "first_blocker": {
+    "logical_sample0": 198,
+    "garment_triangle0": 420,
+    "sample0": 2,
+    "garment_sources": [
+      24,
+      115,
+      258
+    ],
+    "barycentric": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "source258_mapping_tokens": [
+      "16951",
+      "16959",
+      "16958",
+      "0.33194",
+      "0.41163",
+      "0.25643",
+      "-0.000955",
+      "-0.001353",
+      "0.000285"
+    ],
+    "signed_normalized_f32_helper_weights": [
+      0.3319399952888489,
+      0.4116300046443939,
+      0.2564300000667572
+    ],
+    "helper_source_ids": [
+      16951,
+      16959,
+      16958
+    ],
+    "offset_f32": [
+      -0.0009549999958835542,
+      -0.001353000057861209,
+      0.0002849999873433262
+    ],
+    "scales_f32": [
+      1.0586552619934082,
+      1.0566942691802979,
+      1.0411678552627563
+    ],
+    "independent_original_neutral_point": [
+      0.20390428602695465,
+      0.5531846880912781,
+      0.006918079219758511
+    ],
+    "source258_in_support": false,
+    "source258_displacement_direction": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "body_triangle0": 13665,
+    "body_source_ids": [
+      8318,
+      8308,
+      8309
+    ],
+    "body_vertices": [
+      [
+        0.24639999866485596,
+        0.4794900119304657,
+        -0.008369999937713146
+      ],
+      [
+        0.22849999368190765,
+        0.489190012216568,
+        -0.02027999982237816
+      ],
+      [
+        0.2400899976491928,
+        0.4909600019454956,
+        -0.007639999967068434
+      ]
+    ],
+    "closest_point": [
+      0.23520642345571074,
+      0.4902141975275404,
+      -0.012966001344914966
+    ],
+    "body_barycentric": [
+      0.0,
+      0.4213608733238412,
+      0.5786391266761588
+    ],
+    "normal": [
+      0.6478276348921463,
+      0.3977405888040229,
+      -0.6497089960035008
+    ],
+    "d_m": -0.008151335683567537,
+    "slope": 0.0,
+    "distance_squared_m2": 0.0053404831493489326,
+    "closest_distance_m": 0.07307860938297152,
+    "required_margin_m": 0.001,
+    "fixed_margin_deficit_m": 0.009151335683567536,
+    "amplitude_reason": "Sample barycentric selects only258. Source258 is outside frozen support and has zero direction, so slope=0 and d+amplitude*0=d<.001 for every amplitude.",
+    "known_point_nearest_query_count": 1,
+    "nearest_face_ids": [
+      13665
+    ]
+  },
+  "surface_limit": {
+    "closest_feature": "edge8308-8309",
+    "displayed_edge_incident_faces": [
+      13665
+    ],
+    "is_displayed_boundary_edge": true,
+    "original_obj_faces_containing_edge": [
+      {
+        "obj_face0": 7934,
+        "source_ids": [
+          8309,
+          8308,
+          8298,
+          8299
+        ],
+        "helper_excluded": false,
+        "garment_delete_all_vertices": true,
+        "displayed": false
+      },
+      {
+        "obj_face0": 7943,
+        "source_ids": [
+          8318,
+          8317,
+          8308,
+          8309
+        ],
+        "helper_excluded": false,
+        "garment_delete_all_vertices": false,
+        "displayed": true
+      }
+    ],
+    "source_mask_rule": "source OBJ fan triangles; omit a polygon with any helper source>=13380 or all sources in garment delete_verts",
+    "deleted_vertices_membership": {
+      "8318": false,
+      "8308": true,
+      "8309": true
+    },
+    "scope": "Open masked displayed body, not a closed full-body collision surface. No alternate full-body nearest query performed.",
+    "interpretation": "Negative supporting-plane distance to a triangle about73mm away is not8mm physical penetration. The exact unsupported source plus the frozen infinite-plane margin rule makes this attempt infeasible; no garment quality defect, source defect, or sufficient support-expansion fix is established."
+  },
+  "independent_outcome_audit": {
+    "bytes": 26492,
+    "sha256": "522f893de82a7ab33a770e980b2924a49ec53ed99a285af08e0f0bd00111eeb0",
+    "status": "PASS_INDEPENDENT_V4_REJECTED_OUTCOME_AUDIT",
+    "known_point_nearest_queries": 1,
+    "other_actual_nearest_queries": "NOT-RUN; retained schema and claimed coverage checked",
+    "full_actual_direction_reconstruction": "NOT-RUN",
+    "audit_script": {
+      "bytes": 16361,
+      "sha256": "ccfa4755fcbfe4a03f871255c66b71c5ae61a363170fe3c982e35e2bbb94dc3d"
+    }
+  },
+  "controls": {
+    "original137_retained": true,
+    "new_controls": 102,
+    "total_each_mode": 239,
+    "normal_seconds": 16.688,
+    "optimized_seconds": 15.501,
+    "command": "python3 -B scripts/check-portable.py current19-shoulder-refit",
+    "both_modes": "PASS",
+    "rust_fmt": "PASS",
+    "unchanged_catalog_discovers_new_tests": true,
+    "source_mutation_proof": "EXPECTED_RED for omitted face, saved residual, slope, interval lower endpoint, saved offset and final-save lifecycle"
+  },
+  "pre_freeze_independent_review": [
+    {
+      "role": "geometry and lifecycle",
+      "initial": "NO-GO; two P2s retained",
+      "repaired": "TECHNICAL_FREEZE_GO",
+      "report": {
+        "bytes": 7981,
+        "sha256": "34e18bb0f6b6c646fc479c8d4964cd3da3ee1e4284e91d334ff07c2bbabe448f"
+      }
+    },
+    {
+      "role": "contract and provenance",
+      "initial": "NO-GO; numeric provenance P2 retained",
+      "repaired": "TECHNICAL_FREEZE_GO",
+      "report": {
+        "bytes": 7377,
+        "sha256": "bd46efcfde9f6870581fa579e033ce0a28e7477edeeb3087d1ff7bb723432d68"
+      }
+    }
+  ],
+  "conditional_stages": {
+    "candidate_quality_scoring": "NOT-RUN; no candidate",
+    "Web_AB": "NOT-RUN; offline candidate pass required",
+    "CLI_candidate_save_reload_exchange": "NOT-RUN; offline candidate pass required",
+    "GPU_shading_upload_parity": "NOT-RUN",
+    "ordinary_desktop_GUI": "NOT-RUN; deferred by policy"
+  },
+  "limits": [
+    "Signed supporting-plane distance is not physical penetration depth on this open masked surface.",
+    "One known point independently re-queried, not all623 planes.",
+    "No support expansion, alternative surface, changed margin, retry or parameter sweep.",
+    "No new download, model, build or capture.",
+    "Raw evidence stays in the local archive; this summary cannot substitute for it.",
+    "#80 HOLD; #79 and M2 not expanded; #3 blocked; #4 measurement gaps retained."
+  ]
+}
