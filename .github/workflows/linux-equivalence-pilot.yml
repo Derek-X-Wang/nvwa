@@ -1,0 +1,140 @@
+name: Bounded same-source Linux equivalence pilot
+on:
+  push:
+    branches: [codex/linux-equivalence-pilot]
+    paths: [.github/workflows/linux-equivalence-pilot.yml]
+permissions:
+  contents: read
+concurrency:
+  group: linux-equivalence-pilot-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  strict-linux:
+    name: Strict Linux / ${{ matrix.lane }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        lane: [native-and-wasm, b1-source-regression]
+    env:
+      CARGO_TERM_COLOR: never
+      CARGO_INCREMENTAL: '0'
+      CARGO_BUILD_JOBS: '1'
+      CARGO_PROFILE_DEV_DEBUG: '0'
+      CARGO_PROFILE_TEST_DEBUG: '0'
+    steps:
+      - name: Checkout experiment harness
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, same pinned checkout as baseline
+        with:
+          path: harness
+          persist-credentials: false
+      - name: Checkout immutable baseline source separately
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: baa0b6bbda0d9709f0fab37c9e7d962fd8d926c1
+          path: source
+          persist-credentials: false
+      - name: Inspect existing runner tools and SDKs before any install
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/linux-equivalence-${{ matrix.lane }}"
+          mkdir -p "$out"
+          {
+            date -u +%FT%TZ
+            uname -a
+            cat /etc/os-release
+            python3 --version
+            git --version
+            node --version
+            cc --version
+            pkg-config --version
+            df -h . "$RUNNER_TEMP"
+            free -h
+            dpkg-query -W -f='${Package}\t${Version}\n' 'libx11*' 'libxkbcommon*' 'libwayland*' 'libudev*' 'libasound*' 'libvulkan*' 'mesa*' 2>&1 || true
+          } > "$out/platform.log" 2>&1
+          cat "$out/platform.log"
+          # Inspect, do not install. A missing SDK remains a reported prerequisite.
+          {
+            for package in x11 xcursor xrandr xi xkbcommon wayland-client libudev alsa vulkan; do
+              if pkg-config --exists "$package"; then
+                printf '%s: ' "$package"
+                pkg-config --modversion "$package"
+              else
+                printf '%s: MISSING (not installed by pilot)\n' "$package"
+              fi
+            done
+          } > "$out/sdk.log" 2>&1
+          cat "$out/sdk.log"
+          python3 -B harness/experiments/86-linux-equivalence/run.py plan --source source --out "$out/results" --lane "${{ matrix.lane }}" --arm strict > "$out/plan-before-install.json"
+      - name: Install repository Rust version
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/linux-equivalence-${{ matrix.lane }}"
+          start=$(date +%s)
+          # Exact baseline provisioning command; registry dependencies are timed later.
+          rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown 2>&1 | tee "$out/rust-install.log"
+          {
+            printf 'elapsed_seconds=%s\n' "$(( $(date +%s) - start ))"
+            rustc +1.95.0 --version --verbose
+            cargo +1.95.0 --version --verbose
+            rustup target list --toolchain 1.95.0 --installed
+          } > "$out/rust-toolchain.log" 2>&1
+      - name: Execute full frozen strict inventory
+        shell: bash
+        run: |
+          python3 -B harness/experiments/86-linux-equivalence/run.py run --source source --out "$RUNNER_TEMP/linux-equivalence-${{ matrix.lane }}/results" --lane "${{ matrix.lane }}" --arm strict --max-seconds 3300
+      - name: Verify final source and fail closed on incomplete evidence
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          out="$RUNNER_TEMP/linux-equivalence-${{ matrix.lane }}/results"
+          if [[ -f "$out/report.json" ]]; then
+            python3 -B harness/experiments/86-linux-equivalence/run.py finalize --source source --out "$out"
+          else
+            echo 'NOT-RUN: harness did not create a runtime report; inspect provisioning/platform logs.'
+            exit 1
+          fi
+      - name: Count retained evidence bytes without target, source seed or Cargo cache
+        if: ${{ always() }}
+        shell: bash
+        env:
+          PILOT_OUT: ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['PILOT_OUT'])
+          root.mkdir(parents=True, exist_ok=True)
+          paths = list(root.glob('*.log')) + list(root.glob('*.json'))
+          results = root / 'results'
+          paths += list(results.glob('*.json')) + list(results.glob('*.log'))
+          for name in ['nvwa-b1-motion-mutations', 'nvwa-b1-motion-matrix', 'nvwa-b1-viewer-runtime']:
+              paths += list((results / 'runtime' / name).rglob('*'))
+          files = {str(p.relative_to(root)): p.stat().st_size for p in paths if p.is_file() and p.name != 'artifact-bytes.json'}
+          receipt = {'files': files, 'file_count': len(files), 'bytes_excluding_this_receipt': sum(files.values()), 'excluded': ['target', 'source seed', 'Cargo cache', 'source checkout']}
+          (root / 'artifact-bytes.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          print(json.dumps(receipt))
+          PY
+      - name: Retain timing, exact commands, logs and actual witnesses
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4, pinned official ref
+        with:
+          name: linux-equivalence-${{ matrix.lane }}-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/platform.log
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/sdk.log
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/plan-before-install.json
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/rust-install.log
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/rust-toolchain.log
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/artifact-bytes.json
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/results/*.json
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/results/*.log
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/results/runtime/nvwa-b1-motion-mutations
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/results/runtime/nvwa-b1-motion-matrix
+            ${{ runner.temp }}/linux-equivalence-${{ matrix.lane }}/results/runtime/nvwa-b1-viewer-runtime
+          if-no-files-found: error
+          retention-days: 7
