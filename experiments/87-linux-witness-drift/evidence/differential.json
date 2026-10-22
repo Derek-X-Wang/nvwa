@@ -1,0 +1,895 @@
+{
+  "schema_version": 1,
+  "analyzer_sha256": "e15fdd26eceb0c5cf992b5f81ca8abcd925f537c501b4e48ca54b63e18de93e9",
+  "source_manifest_sha256": "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18",
+  "case": {
+    "torso_length": 1.0,
+    "jaw_drop": 0.0,
+    "clip_id": "b1_arm_rehearsal_v1",
+    "seconds": 2.0
+  },
+  "core_source_ids": [
+    246,
+    244,
+    182
+  ],
+  "frames": {
+    "linux": {
+      "provenance": {
+        "label": "linux",
+        "frame_sha256": "cf74fade5f05e05da4166a5e1607709ca2377b5752a5e4259dc072afd0998825",
+        "schema": "matrix",
+        "identity_limit": "source/run binding is retained in the original experiment86 CI archive, not inferred from this filename"
+      },
+      "geometry": {
+        "numerator_m2": 0.00041466291597743203,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.005667838827247
+      },
+      "original_scalar_assertion": {
+        "passed": false,
+        "expected": 22.0056357384,
+        "places": 6,
+        "failure": "22.005667838827247 != 22.0056357384 within 6 places (3.210042724788309e-05 difference)"
+      },
+      "core": [
+        {
+          "source_id": 246,
+          "rest_m": [
+            0.17206358909606934,
+            0.5732240080833435,
+            -0.03863012418150902
+          ],
+          "upload_m": [
+            0.19656087458133698,
+            0.5881050825119019,
+            -0.040974996984004974
+          ],
+          "weights": [
+            [
+              4,
+              0.16727830469608307
+            ],
+            [
+              5,
+              0.11287213861942291
+            ],
+            [
+              6,
+              0.7198495268821716
+            ]
+          ]
+        },
+        {
+          "source_id": 244,
+          "rest_m": [
+            0.1674603670835495,
+            0.5532670617103577,
+            -0.034685928374528885
+          ],
+          "upload_m": [
+            0.20708337426185608,
+            0.5717299580574036,
+            -0.03821283578872681
+          ],
+          "weights": [
+            [
+              4,
+              0.11354994028806686
+            ],
+            [
+              5,
+              0.0880507156252861
+            ],
+            [
+              6,
+              0.7983993887901306
+            ]
+          ]
+        },
+        {
+          "source_id": 182,
+          "rest_m": [
+            0.16160550713539124,
+            0.5343639254570007,
+            -0.02979627437889576
+          ],
+          "upload_m": [
+            0.1775413155555725,
+            0.5403441786766052,
+            -0.031146030873060226
+          ],
+          "weights": [
+            [
+              2,
+              0.00011838968202937394
+            ],
+            [
+              3,
+              0.012005259282886982
+            ],
+            [
+              4,
+              0.7213454246520996
+            ],
+            [
+              5,
+              0.020980434492230415
+            ],
+            [
+              6,
+              0.24555052816867828
+            ]
+          ]
+        }
+      ]
+    },
+    "mac-v1": {
+      "provenance": {
+        "label": "mac-v1",
+        "frame_sha256": "50b87505309402b8f8724863dc9d0f209d77b5c44391bb17f4c9f74803f847e7",
+        "manifest_sha256": "71aeb921f16969aa98570a475a2988ff8d6abca248a6056b85cc85c192665087",
+        "identity_sha256": "2cb05418de76a45e0838236069fff1a9db2d708c85e5119ac99f8945ab7afaa0",
+        "schema": "sample",
+        "source_head_claim": "199b41dc171aabd2f17abde2cfcd2aeb477f1d96",
+        "source_dirty_paths_claim": [
+          " M .github/workflows/ci.yml",
+          " M experiments/83-native-cache-trial/main_policy/test_policy.py",
+          " M experiments/83-native-cache-trial/test_cache_trial.py",
+          " M experiments/83-native-cache-trial/test_timing_order.py",
+          " M scripts/README.md",
+          " M scripts/portable-checks.json",
+          " M scripts/test-ci-timing.py",
+          " M scripts/test-portable-checks.py",
+          "?? experiments/85-current19-shoulder-refit/README.md",
+          "?? experiments/85-current19-shoulder-refit/capture.py",
+          "?? experiments/85-current19-shoulder-refit/current19.py",
+          "?? experiments/85-current19-shoulder-refit/geometry_checks.py",
+          "?? experiments/85-current19-shoulder-refit/provenance.py",
+          "?? experiments/85-current19-shoulder-refit/replay/Cargo.lock",
+          "?? experiments/85-current19-shoulder-refit/replay/Cargo.toml",
+          "?? experiments/85-current19-shoulder-refit/replay/main.rs",
+          "?? experiments/85-current19-shoulder-refit/scoring.py",
+          "?? experiments/85-current19-shoulder-refit/test_capture.py",
+          "?? experiments/85-current19-shoulder-refit/test_current19.py",
+          "?? experiments/85-current19-shoulder-refit/test_geometry_checks.py",
+          "?? experiments/85-current19-shoulder-refit/test_provenance.py",
+          "?? experiments/85-current19-shoulder-refit/test_scoring.py",
+          "?? experiments/85-current19-shoulder-refit/topology-reference.json"
+        ],
+        "binary_claim": {
+          "bytes": 81264880,
+          "sha256": "498b74b5224882ebe9ad346f1052f4f497e0bf24a0e8bc0f4acc69a3eda402ce"
+        },
+        "target_claim": "aarch64-apple-darwin",
+        "toolchain_claim": {
+          "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+          "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)"
+        },
+        "identity_limit": "historical current19 capsule; source-head labels do not audit the compiled source closure; different producer from experiment60 CI"
+      },
+      "geometry": {
+        "numerator_m2": 0.0004146623110947154,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.005635738420796
+      },
+      "original_scalar_assertion": {
+        "passed": true,
+        "expected": 22.0056357384,
+        "places": 6
+      },
+      "core": [
+        {
+          "source_id": 246,
+          "rest_m": [
+            0.17206358909606934,
+            0.5732240080833435,
+            -0.03863012418150902
+          ],
+          "upload_m": [
+            0.19656087458133698,
+            0.5881049633026123,
+            -0.040974996984004974
+          ],
+          "weights": [
+            [
+              4,
+              0.16727830469608307
+            ],
+            [
+              5,
+              0.11287213861942291
+            ],
+            [
+              6,
+              0.7198495268821716
+            ]
+          ]
+        },
+        {
+          "source_id": 244,
+          "rest_m": [
+            0.1674603670835495,
+            0.5532670617103577,
+            -0.034685928374528885
+          ],
+          "upload_m": [
+            0.2070833444595337,
+            0.571729838848114,
+            -0.03821282833814621
+          ],
+          "weights": [
+            [
+              4,
+              0.11354994028806686
+            ],
+            [
+              5,
+              0.0880507156252861
+            ],
+            [
+              6,
+              0.7983993887901306
+            ]
+          ]
+        },
+        {
+          "source_id": 182,
+          "rest_m": [
+            0.16160550713539124,
+            0.5343639254570007,
+            -0.02979627437889576
+          ],
+          "upload_m": [
+            0.17754130065441132,
+            0.5403440594673157,
+            -0.031146038323640823
+          ],
+          "weights": [
+            [
+              2,
+              0.00011838968202937394
+            ],
+            [
+              3,
+              0.012005259282886982
+            ],
+            [
+              4,
+              0.7213454246520996
+            ],
+            [
+              5,
+              0.020980434492230415
+            ],
+            [
+              6,
+              0.24555052816867828
+            ]
+          ]
+        }
+      ]
+    },
+    "mac-v2": {
+      "provenance": {
+        "label": "mac-v2",
+        "frame_sha256": "3ea67240c55e1be81abee8cd4665e312d3d4342962731fad105f7c157ba8ffd9",
+        "manifest_sha256": "bd3d5763bc15eadc258327e2bbefb625788663daa0ed8b8d20dcefd99726e7e6",
+        "identity_sha256": "caf16669a990a97f6b47db8f697a9fd0a7b662c589681f851ddc07af12eac655",
+        "schema": "sample",
+        "source_head_claim": "199b41dc171aabd2f17abde2cfcd2aeb477f1d96",
+        "source_dirty_paths_claim": [
+          " M .github/workflows/ci.yml",
+          " M experiments/83-native-cache-trial/main_policy/test_policy.py",
+          " M experiments/83-native-cache-trial/test_cache_trial.py",
+          " M experiments/83-native-cache-trial/test_timing_order.py",
+          " M scripts/README.md",
+          " M scripts/portable-checks.json",
+          " M scripts/test-ci-timing.py",
+          " M scripts/test-portable-checks.py",
+          "?? experiments/85-current19-shoulder-refit/README.md",
+          "?? experiments/85-current19-shoulder-refit/capture.py",
+          "?? experiments/85-current19-shoulder-refit/current19.py",
+          "?? experiments/85-current19-shoulder-refit/geometry_checks.py",
+          "?? experiments/85-current19-shoulder-refit/provenance.py",
+          "?? experiments/85-current19-shoulder-refit/replay/Cargo.lock",
+          "?? experiments/85-current19-shoulder-refit/replay/Cargo.toml",
+          "?? experiments/85-current19-shoulder-refit/replay/main.rs",
+          "?? experiments/85-current19-shoulder-refit/scoring.py",
+          "?? experiments/85-current19-shoulder-refit/test_capture.py",
+          "?? experiments/85-current19-shoulder-refit/test_current19.py",
+          "?? experiments/85-current19-shoulder-refit/test_geometry_checks.py",
+          "?? experiments/85-current19-shoulder-refit/test_provenance.py",
+          "?? experiments/85-current19-shoulder-refit/test_scoring.py",
+          "?? experiments/85-current19-shoulder-refit/topology-reference.json"
+        ],
+        "binary_claim": {
+          "bytes": 81264880,
+          "sha256": "498b74b5224882ebe9ad346f1052f4f497e0bf24a0e8bc0f4acc69a3eda402ce"
+        },
+        "target_claim": "aarch64-apple-darwin",
+        "toolchain_claim": {
+          "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+          "cargo": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)"
+        },
+        "identity_limit": "historical current19 capsule; source-head labels do not audit the compiled source closure; different producer from experiment60 CI"
+      },
+      "geometry": {
+        "numerator_m2": 0.0004146623110947154,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.005635738420796
+      },
+      "original_scalar_assertion": {
+        "passed": true,
+        "expected": 22.0056357384,
+        "places": 6
+      },
+      "core": [
+        {
+          "source_id": 246,
+          "rest_m": [
+            0.17206358909606934,
+            0.5732240080833435,
+            -0.03863012418150902
+          ],
+          "upload_m": [
+            0.19656087458133698,
+            0.5881049633026123,
+            -0.040974996984004974
+          ],
+          "weights": [
+            [
+              4,
+              0.16727830469608307
+            ],
+            [
+              5,
+              0.11287213861942291
+            ],
+            [
+              6,
+              0.7198495268821716
+            ]
+          ]
+        },
+        {
+          "source_id": 244,
+          "rest_m": [
+            0.1674603670835495,
+            0.5532670617103577,
+            -0.034685928374528885
+          ],
+          "upload_m": [
+            0.2070833444595337,
+            0.571729838848114,
+            -0.03821282833814621
+          ],
+          "weights": [
+            [
+              4,
+              0.11354994028806686
+            ],
+            [
+              5,
+              0.0880507156252861
+            ],
+            [
+              6,
+              0.7983993887901306
+            ]
+          ]
+        },
+        {
+          "source_id": 182,
+          "rest_m": [
+            0.16160550713539124,
+            0.5343639254570007,
+            -0.02979627437889576
+          ],
+          "upload_m": [
+            0.17754130065441132,
+            0.5403440594673157,
+            -0.031146038323640823
+          ],
+          "weights": [
+            [
+              2,
+              0.00011838968202937394
+            ],
+            [
+              3,
+              0.012005259282886982
+            ],
+            [
+              4,
+              0.7213454246520996
+            ],
+            [
+              5,
+              0.020980434492230415
+            ],
+            [
+              6,
+              0.24555052816867828
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "comparisons": {
+    "mac-v1_to_linux": {
+      "left_geometry": {
+        "numerator_m2": 0.0004146623110947154,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.005635738420796
+      },
+      "right_geometry": {
+        "numerator_m2": 0.00041466291597743203,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.005667838827247
+      },
+      "ratio_delta": 3.2100406450297214e-05,
+      "numerator_delta_m2": 6.048827166146159e-10,
+      "denominator_delta_m2": 0.0,
+      "exact_full_array_equal": {
+        "source_ids": true,
+        "indices": true,
+        "rest_positions": true,
+        "full_joint_influences": true
+      },
+      "bones": {
+        "canonical_posed": {
+          "changed_bones": 51,
+          "max_component_delta": 9.5367431640625e-07,
+          "changed_f32_components": 568
+        },
+        "canonical_rest": {
+          "changed_bones": 41,
+          "max_component_delta": 5.960464477539062e-07,
+          "changed_f32_components": 405
+        },
+        "frame_gauge": {
+          "changed_bones": 40,
+          "max_component_delta": 7.152557373046875e-07,
+          "changed_f32_components": 383
+        },
+        "inverse_bind": {
+          "changed_bones": 41,
+          "max_component_delta": 5.960464477539062e-07,
+          "changed_f32_components": 379
+        },
+        "local_posed": {
+          "changed_bones": 51,
+          "max_component_delta": 9.5367431640625e-07,
+          "changed_f32_components": 520
+        },
+        "local_rest": {
+          "changed_bones": 52,
+          "max_component_delta": 7.152557373046875e-07,
+          "changed_f32_components": 518
+        },
+        "name": {
+          "changed_bones": 0
+        },
+        "parent": {
+          "changed_bones": 0
+        },
+        "posed": {
+          "changed_bones": 51,
+          "max_component_delta": 9.5367431640625e-07,
+          "changed_f32_components": 547
+        },
+        "rest": {
+          "changed_bones": 41,
+          "max_component_delta": 7.152557373046875e-07,
+          "changed_f32_components": 369
+        },
+        "skin": {
+          "changed_bones": 52,
+          "max_component_delta": 7.748603820800781e-07,
+          "changed_f32_components": 553
+        }
+      },
+      "individual_core_upload_swaps": {
+        "246": {
+          "coordinate_delta_m": [
+            0.0,
+            1.1920928955078125e-07,
+            0.0
+          ],
+          "only_this_upload_replaced": {
+            "numerator_m2": 0.0004146640541655015,
+            "denominator_m2": 1.884345974021258e-05,
+            "ratio": 22.005728241114575
+          }
+        },
+        "244": {
+          "coordinate_delta_m": [
+            2.9802322387695312e-08,
+            1.1920928955078125e-07,
+            -7.450580596923828e-09
+          ],
+          "only_this_upload_replaced": {
+            "numerator_m2": 0.0004146618968659295,
+            "denominator_m2": 1.884345974021258e-05,
+            "ratio": 22.005613755791725
+          }
+        },
+        "182": {
+          "coordinate_delta_m": [
+            1.4901161193847656e-08,
+            1.1920928955078125e-07,
+            7.450580596923828e-09
+          ],
+          "only_this_upload_replaced": {
+            "numerator_m2": 0.0004146615871359539,
+            "denominator_m2": 1.884345974021258e-05,
+            "ratio": 22.005597318790244
+          }
+        }
+      },
+      "independent_f64_replay_baseline": {
+        "numerator_m2": 0.00041466367703983144,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.00570822750374
+      },
+      "independent_f64_component_swaps": {
+        "rest": {
+          "numerator_m2": 0.00041466367703983144,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.00570822750374
+        },
+        "weights": {
+          "numerator_m2": 0.00041466367703983144,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.00570822750374
+        },
+        "bones": {
+          "numerator_m2": 0.000414664105302495,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.00573095489401
+        }
+      },
+      "source_shaped_f32_replay": {
+        "left": {
+          "numerator_m2": 0.0004146623110947154,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.005635738420796
+        },
+        "only_bones_swapped": {
+          "numerator_m2": 0.00041466291597743203,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.005667838827247
+        },
+        "left_upload_exact": true,
+        "swapped_upload_exact_right": true,
+        "core_upload_changed_f32_components": 7
+      },
+      "individual_skin_matrix_ratio_deltas": {
+        "spine_01": 1.3072849469608627e-09,
+        "spine_02": 2.0616575113763247e-09,
+        "spine_03": -1.4467680458096766e-05,
+        "clavicle_l": 9.846354629416965e-06,
+        "upperarm_l": 2.734535193837928e-05
+      },
+      "causal_limit": "The rounded-f32 model can explain the captured upload delta by changing only captured skin matrices. It does not identify why the matrices differ, the executed machine instructions, compiler behavior or an OS/architecture cause."
+    },
+    "mac-v1_to_mac-v2": {
+      "left_geometry": {
+        "numerator_m2": 0.0004146623110947154,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.005635738420796
+      },
+      "right_geometry": {
+        "numerator_m2": 0.0004146623110947154,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.005635738420796
+      },
+      "ratio_delta": 0.0,
+      "numerator_delta_m2": 0.0,
+      "denominator_delta_m2": 0.0,
+      "exact_full_array_equal": {
+        "source_ids": true,
+        "indices": true,
+        "rest_positions": true,
+        "full_joint_influences": true
+      },
+      "bones": {
+        "canonical_posed": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        },
+        "canonical_rest": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        },
+        "frame_gauge": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        },
+        "inverse_bind": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        },
+        "local_posed": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        },
+        "local_rest": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        },
+        "name": {
+          "changed_bones": 0
+        },
+        "parent": {
+          "changed_bones": 0
+        },
+        "posed": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        },
+        "rest": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        },
+        "skin": {
+          "changed_bones": 0,
+          "max_component_delta": 0.0,
+          "changed_f32_components": 0
+        }
+      },
+      "individual_core_upload_swaps": {
+        "246": {
+          "coordinate_delta_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "only_this_upload_replaced": {
+            "numerator_m2": 0.0004146623110947154,
+            "denominator_m2": 1.884345974021258e-05,
+            "ratio": 22.005635738420796
+          }
+        },
+        "244": {
+          "coordinate_delta_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "only_this_upload_replaced": {
+            "numerator_m2": 0.0004146623110947154,
+            "denominator_m2": 1.884345974021258e-05,
+            "ratio": 22.005635738420796
+          }
+        },
+        "182": {
+          "coordinate_delta_m": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "only_this_upload_replaced": {
+            "numerator_m2": 0.0004146623110947154,
+            "denominator_m2": 1.884345974021258e-05,
+            "ratio": 22.005635738420796
+          }
+        }
+      },
+      "independent_f64_replay_baseline": {
+        "numerator_m2": 0.00041466367703983144,
+        "denominator_m2": 1.884345974021258e-05,
+        "ratio": 22.00570822750374
+      },
+      "independent_f64_component_swaps": {
+        "rest": {
+          "numerator_m2": 0.00041466367703983144,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.00570822750374
+        },
+        "weights": {
+          "numerator_m2": 0.00041466367703983144,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.00570822750374
+        },
+        "bones": {
+          "numerator_m2": 0.00041466367703983144,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.00570822750374
+        }
+      },
+      "source_shaped_f32_replay": {
+        "left": {
+          "numerator_m2": 0.0004146623110947154,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.005635738420796
+        },
+        "only_bones_swapped": {
+          "numerator_m2": 0.0004146623110947154,
+          "denominator_m2": 1.884345974021258e-05,
+          "ratio": 22.005635738420796
+        },
+        "left_upload_exact": true,
+        "swapped_upload_exact_right": true,
+        "core_upload_changed_f32_components": 0
+      },
+      "individual_skin_matrix_ratio_deltas": {},
+      "causal_limit": "The rounded-f32 model can explain the captured upload delta by changing only captured skin matrices. It does not identify why the matrices differ, the executed machine instructions, compiler behavior or an OS/architecture cause."
+    }
+  },
+  "historical": {
+    "report_sha256": "a548dfd0bcec2caaa9d45f8b62277e8aeff53639665b882f3d7632f81da8668f",
+    "input_sha256_claim": "5df0c97e5c51b3e71741e115ca4040d441189dd5853a505c1076d9ed0a53ae5e",
+    "geometry": {
+      "numerator_m2": 0.0004146623110947154,
+      "denominator_m2": 1.884345974021258e-05,
+      "ratio": 22.005635738420796
+    },
+    "core_trace": [
+      {
+        "source_id": 246,
+        "mapping": {
+          "helpers": [
+            17235,
+            17238,
+            16990
+          ],
+          "coefficients": [
+            0.40531,
+            0.38123,
+            0.21346
+          ],
+          "offset_m": [
+            0.000673,
+            -0.001139,
+            -0.002492
+          ]
+        },
+        "normalized_weights": {
+          "spine_03": 0.16727830563703686,
+          "clavicle_l": 0.11287213851193814,
+          "upperarm_l": 0.7198495558510251
+        },
+        "raw_obj_m": [
+          0.17763,
+          0.40888,
+          -0.03584
+        ],
+        "fitted_rest_m": [
+          0.17206358909606934,
+          0.5732240080833435,
+          -0.03863012418150902
+        ],
+        "actual_upload_m": [
+          0.19656087458133698,
+          0.5881049633026123,
+          -0.040974996984004974
+        ],
+        "replayed_upload_m": [
+          0.19656086840250658,
+          0.5881049661617361,
+          -0.04097499538003314
+        ],
+        "actual_stage_m": [
+          0.19656087458133698,
+          1.4048649668693542,
+          -0.040974996984004974
+        ]
+      },
+      {
+        "source_id": 244,
+        "mapping": {
+          "helpers": [
+            17238,
+            17235,
+            16971
+          ],
+          "coefficients": [
+            0.22499775002249978,
+            0.5488945110548895,
+            0.22610773892261077
+          ],
+          "offset_m": [
+            -0.003135,
+            -0.008129,
+            -0.005816
+          ]
+        },
+        "normalized_weights": {
+          "spine_03": 0.11354994508587794,
+          "clavicle_l": 0.08805071376368377,
+          "upperarm_l": 0.7983993411504382
+        },
+        "raw_obj_m": [
+          0.17344,
+          0.3893,
+          -0.02816
+        ],
+        "fitted_rest_m": [
+          0.1674603670835495,
+          0.5532670617103577,
+          -0.034685928374528885
+        ],
+        "actual_upload_m": [
+          0.2070833444595337,
+          0.571729838848114,
+          -0.03821282833814621
+        ],
+        "replayed_upload_m": [
+          0.20708336056211263,
+          0.5717297601270411,
+          -0.038212828332413636
+        ],
+        "actual_stage_m": [
+          0.2070833444595337,
+          1.388489842414856,
+          -0.03821282833814621
+        ]
+      },
+      {
+        "source_id": 182,
+        "mapping": {
+          "helpers": [
+            17224,
+            17223,
+            16954
+          ],
+          "coefficients": [
+            0.23534,
+            0.59183,
+            0.17283
+          ],
+          "offset_m": [
+            0.014105,
+            -0.003642,
+            -0.004865
+          ]
+        },
+        "normalized_weights": {
+          "spine_01": 0.00011838967746542639,
+          "spine_02": 0.012005258393662298,
+          "spine_03": 0.721345397616449,
+          "clavicle_l": 0.020980432408048706,
+          "upperarm_l": 0.24555052190437454
+        },
+        "raw_obj_m": [
+          0.15673,
+          0.39153,
+          -0.03298
+        ],
+        "fitted_rest_m": [
+          0.16160550713539124,
+          0.5343639254570007,
+          -0.02979627437889576
+        ],
+        "actual_upload_m": [
+          0.17754130065441132,
+          0.5403440594673157,
+          -0.031146038323640823
+        ],
+        "replayed_upload_m": [
+          0.17754130742874352,
+          0.5403440314691472,
+          -0.03114603774160781
+        ],
+        "actual_stage_m": [
+          0.17754130065441132,
+          1.3571040630340576,
+          -0.031146038323640823
+        ]
+      }
+    ],
+    "identity_limit": "retained report trace only; original full capture not authenticated here"
+  },
+  "scope": "Offline replay of preserved arrays only. Original CI remains FAIL. No source/test/tolerance fix, fresh runtime, GUI, GPU or architecture attribution."
+}
