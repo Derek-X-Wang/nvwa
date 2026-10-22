@@ -88,9 +88,15 @@ acceptance remain separate gates; portable success does not prove them.
 ## CI phase observations
 
 `ci-timing.py` observes the existing bounded workflow. The same
-`ci-timing-contract` group runs locally in `all` and in CI. The three job names,
-runner types, timeouts, dependencies, PR/main triggers, and original command bodies
-remain unchanged. Each existing `run` body still executes with Bash `-e`.
+`ci-timing-contract` group runs locally in `all` and in CI. The `linux-b1-v2`
+policy moves only B1 to Ubuntu 24.04 with the display name `Linux B1 source
+regression and viewer checks` and nine exact locked dependency fetches before
+its original preparation. Job IDs, timeouts, dependencies, PR/main triggers,
+other Mac jobs and all original command bodies remain unchanged. The three
+frozen consumers validate that complete addition before comparing the original
+command hashes and historical workflow baseline. Each existing `run` body still
+executes with Bash `-e`. The accepted Mac coverage loss and milestone commands
+are in [the verification policy](../docs/agents/verification.md).
 A scoped `PATH` directory wraps **Cargo only**, including Cargo launched inside
 Python and captured mutation subprocesses. It resolves the original Cargo before
 adding that directory, keeps proxy symlink spelling, and adds no Cargo arguments.
@@ -176,7 +182,13 @@ python3 -B scripts/ci-timing.py queue /absolute/evidence/metadata.json --records
 
 The reader checks event head, run ID, attempt, expected job names and numeric job
 IDs, and retains raw job creation/start/completion timestamps. Job names map to
-workflow keys unambiguously. Optional repeated `--records` directories join telemetry
+workflow keys unambiguously. Complete three-producer inventories select either
+`macos-b1-v1` (historical Mac B1) or `linux-b1-v2` (current Linux B1); each row
+retains the raw job name and records `policy_version`. Mixed, duplicate, unknown
+or extra names reject the entire inventory. This reader still accepts only the
+three producers: the external cache observer must validate the complete run
+inventory before filtering the optional warm job, as before. Optional repeated
+`--records` directories join telemetry
 to numeric job IDs, checking event head/run/attempt; checkout SHA can differ for PRs.
 Repeated directories for one job must agree on the complete source identity and
 checkout SHA. Conflicts reject the entire join before any queue row is emitted.

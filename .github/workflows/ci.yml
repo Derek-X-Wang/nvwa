@@ -243,10 +243,10 @@ jobs:
         run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py persist
       # native-main-cache end
   b1-source-regression:
-    name: macOS B1 source regression and viewer checks
+    name: Linux B1 source regression and viewer checks
     # Keep the independent cold B1 build and Web checks inside a finite budget.
     needs: portable
-    runs-on: macos-14
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
       CARGO_BUILD_JOBS: '1'
@@ -258,6 +258,17 @@ jobs:
           persist-credentials: false
       - name: Install repository Rust version
         run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Fetch locked dependencies for Linux B1 checks
+        run: |
+          cargo fetch --locked --manifest-path Cargo.toml
+          cargo fetch --locked --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/60-b1-continuous-motion/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/66-b1-appearance-work/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/71-b1-character-parameters/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml
       - name: Prepare pinned B1 inputs without asset or tool downloads
         run: |
           mkdir -p .work

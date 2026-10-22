@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts/ci-timing.py"
@@ -35,6 +36,48 @@ def run_bodies(text):
                 value = "".join(body)
             output.append(value)
     return output
+
+
+# linux-b1-v2: validate the complete approved addition before historical comparison.
+B1_LINUX_HEADER = """  b1-source-regression:
+    name: Linux B1 source regression and viewer checks
+    # Keep the independent cold B1 build and Web checks inside a finite budget.
+    needs: portable
+    runs-on: ubuntu-24.04
+"""
+B1_MACOS_HEADER = """  b1-source-regression:
+    name: macOS B1 source regression and viewer checks
+    # Keep the independent cold B1 build and Web checks inside a finite budget.
+    needs: portable
+    runs-on: macos-14
+"""
+B1_FETCH_STEP = """      - name: Fetch locked dependencies for Linux B1 checks
+        run: |
+          cargo fetch --locked --manifest-path Cargo.toml
+          cargo fetch --locked --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/60-b1-continuous-motion/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/66-b1-appearance-work/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/71-b1-character-parameters/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml
+"""
+B1_PREPARE_STEP = """      - name: Prepare pinned B1 inputs without asset or tool downloads
+"""
+
+
+def historical_b1_workflow(workflow, checks):
+    checks.assertEqual(workflow.count(B1_LINUX_HEADER), 1, 'required exact Linux B1 policy')
+    checks.assertEqual(workflow.count(B1_FETCH_STEP), 1, 'required exact Linux B1 fetch step')
+    before, b1_and_warm = workflow.split(B1_LINUX_HEADER)
+    b1, separator, warm = b1_and_warm.partition('  # native-cache-trial begin\n')
+    install = ('      - name: Install repository Rust version\n'
+               '        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt '
+               '--component clippy --target wasm32-unknown-unknown\n')
+    checks.assertEqual(b1.count(install+B1_FETCH_STEP+B1_PREPARE_STEP), 1,
+                       'Linux B1 fetch must follow Rust installation and precede preparation')
+    return before+B1_MACOS_HEADER+b1.replace(B1_FETCH_STEP, '')+separator+warm
 
 
 class Timing(unittest.TestCase):
@@ -64,8 +107,54 @@ class Timing(unittest.TestCase):
     def records(self):
         return timing.load_records(self.directory)
 
+    def test_linux_b1_overlay_rejects_unapproved_policy_and_fetch_changes(self):
+        workflow_path = ROOT / '.github/workflows/ci.yml'
+        original = workflow_path.read_text()
+        read_text = Path.read_text
+        commands = B1_FETCH_STEP.splitlines(keepends=True)[2:]
+        mutations = [original.replace(B1_LINUX_HEADER, B1_MACOS_HEADER),
+                     original.replace('name: Linux B1 source', 'name: Other B1 source'),
+                     original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('ubuntu-24.04', 'ubuntu-latest')),
+                     original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('needs: portable', 'needs: native-and-wasm')),
+                     original.replace(B1_FETCH_STEP, ''),
+                     original.replace(B1_FETCH_STEP, B1_FETCH_STEP*2),
+                     original.replace(B1_FETCH_STEP+B1_PREPARE_STEP, B1_PREPARE_STEP+B1_FETCH_STEP),
+                     original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        shell: bash\n        run: |'))]
+        mutations.extend([
+            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('Linux B1', 'macOS B1')),
+            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('ubuntu-24.04', 'macos-14')),
+            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER*2),
+            original.replace(B1_FETCH_STEP, B1_FETCH_STEP+'          true\n'),
+            original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        if: true\n        run: |')),
+            original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        continue-on-error: true\n        run: |')),
+            original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        env:\n          CARGO_BUILD_JOBS: 2\n        run: |')),
+        ])
+        for command in commands:
+            for replacement in ('', command*2, command.replace('--locked', '--offline'),
+                                command.replace('--locked', '--locked --offline'),
+                                command.replace('--locked', '--locked --features extra'),
+                                command.replace('Cargo.toml', 'Other.toml')):
+                mutations.append(original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace(command, replacement)))
+        mutations.append(original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace(
+            commands[0]+commands[1], commands[1]+commands[0])))
+        mutations.extend([original.replace('-- --nocapture', '-- --exact'),
+                          original.replace('python3 -B -O experiments/58-b1-desktop-web/verify_native.py',
+                                           'python3 -B experiments/58-b1-desktop-web/verify_native.py'),
+                          original.replace(' --lib --locked --offline', ' --lib --locked'),
+                          original.replace('bash experiments/27-ci-baseline/check.sh wasm',
+                                           'bash experiments/27-ci-baseline/check.sh wasm --offline'),
+                          original.replace(B1_PREPARE_STEP, '      - name: Unsupported extra command\n        run: true\n'+B1_PREPARE_STEP)])
+        for index, mutant in enumerate(mutations):
+            self.assertNotEqual(mutant, original)
+            def read(path, *args, **kwargs):
+                return mutant if path == workflow_path else read_text(path, *args, **kwargs)
+            with self.subTest(mutation=index), patch.object(Path, 'read_text', read):
+                with self.assertRaises(AssertionError):
+                    self.test_original_command_bodies_and_all_job_policies_are_frozen()
+
     def test_original_command_bodies_and_all_job_policies_are_frozen(self):
         workflow = (ROOT / ".github/workflows/ci.yml").read_text()
+        workflow = historical_b1_workflow(workflow, self)
         # Remove only explicitly delimited trial additions. The complete original
         # three-job policy and command-body hashes below remain unchanged.
         workflow = re.sub(r"(?ms)^  # native-cache-trial begin\n.*?^  # native-cache-trial end\n", "", workflow)
@@ -323,37 +412,73 @@ echo must-not-run
 
     def test_queue_dependency_gate_ready_gap_attempt_and_event_head(self):
         run = {"id": 123, "run_attempt": 2, "head_sha": "e"*40, "created_at": "2026-10-20T00:00:00Z"}
-        names = ["Core, CLI, and diagnostic controls", "macOS CPU tests and Wasm compile check", "macOS B1 source regression and viewer checks"]
-        jobs = [{"id": index+1, "name": name, "run_id":123, "run_attempt":2, "head_sha":"e"*40,
-                 "created_at": "2026-10-20T00:00:00Z" if index == 0 else "2026-10-20T00:10:00Z",
-                 "started_at":start, "completed_at": "2026-10-20T00:10:00Z" if index == 0 else "2026-10-20T00:20:00Z"}
-                for index,(name,start) in enumerate(zip(names,["2026-10-20T00:00:03Z", "2026-10-20T00:10:07Z", "2026-10-20T00:10:15Z"]))]
-        rows = timing.queue_report({"run":run,"jobs":jobs})
-        self.assertEqual([r["dependency_gate_seconds"] for r in rows], [0,600,600])
-        self.assertEqual([r["ready_to_started_seconds"] for r in rows], [3,7,15])
-        self.assertEqual([r["created_to_started_seconds"] for r in rows], [3,7,15])
-        self.assertEqual([r["job_key"] for r in rows], ["portable", "native-and-wasm", "b1-source-regression"])
-        later = copy.deepcopy(jobs)
-        later[1]["created_at"] = "2026-10-20T00:10:02Z"
-        row = timing.queue_report({"run":run,"jobs":later})[1]
-        self.assertEqual(row["eligible_to_creation_seconds"],2)
-        self.assertEqual(row["ready_to_started_seconds"],5)
-        for field,value in [("run_id",999),("run_attempt",1),("head_sha","different"),
-                            ("started_at","2026-10-20T00:09:59Z")]:
-            changed = copy.deepcopy(jobs); changed[1][field]=value
+        for version, b1_name in [("macos-b1-v1", "macOS B1 source regression and viewer checks"),
+                                 ("linux-b1-v2", "Linux B1 source regression and viewer checks")]:
+            names = ["Core, CLI, and diagnostic controls", "macOS CPU tests and Wasm compile check", b1_name]
+            jobs = [{"id": index+1, "name": name, "run_id":123, "run_attempt":2, "head_sha":"e"*40,
+                     "created_at": "2026-10-20T00:00:00Z" if index == 0 else "2026-10-20T00:10:00Z",
+                     "started_at":start, "completed_at": "2026-10-20T00:10:00Z" if index == 0 else "2026-10-20T00:20:00Z"}
+                    for index,(name,start) in enumerate(zip(names,["2026-10-20T00:00:03Z", "2026-10-20T00:10:07Z", "2026-10-20T00:10:15Z"]))]
+            rows = timing.queue_report({"run":run,"jobs":jobs})
+            self.assertEqual({r["policy_version"] for r in rows}, {version})
+            self.assertEqual([r["job"] for r in rows], names)
+            self.assertEqual([r["dependency_gate_seconds"] for r in rows], [0,600,600])
+            self.assertEqual([r["ready_to_started_seconds"] for r in rows], [3,7,15])
+            self.assertEqual([r["created_to_started_seconds"] for r in rows], [3,7,15])
+            self.assertEqual([r["job_key"] for r in rows], ["portable", "native-and-wasm", "b1-source-regression"])
+            later = copy.deepcopy(jobs)
+            later[1]["created_at"] = "2026-10-20T00:10:02Z"
+            row = timing.queue_report({"run":run,"jobs":later})[1]
+            self.assertEqual(row["eligible_to_creation_seconds"],2)
+            self.assertEqual(row["ready_to_started_seconds"],5)
+            for field,value in [("run_id",999),("run_attempt",1),("head_sha","different"),
+                                ("started_at","2026-10-20T00:09:59Z")]:
+                changed = copy.deepcopy(jobs); changed[1][field]=value
+                with self.assertRaises(ValueError):
+                    timing.queue_report({"run":run,"jobs":changed})
             with self.assertRaises(ValueError):
-                timing.queue_report({"run":run,"jobs":changed})
-        with self.assertRaises(ValueError):
-            timing.queue_report({"run":run,"jobs":jobs+jobs[:1]})
-        records = [{"binding": {"GITHUB_RUN_ID":"123", "GITHUB_RUN_ATTEMPT":"2",
-                                "GITHUB_JOB":"native-and-wasm", "NVWA_CI_HEAD_SHA":"e"*40,
-                                "GITHUB_SHA":"m"*40}, "source":{"head":"m"*40}}]
-        self.assertEqual(timing.queue_report({"run":run,"jobs":jobs}, records)[1]["timing_records_joined"], 1)
-        for key,value in [("GITHUB_RUN_ID","456"),("GITHUB_RUN_ATTEMPT","1"),
-                          ("NVWA_CI_HEAD_SHA","m"*40),("GITHUB_JOB","unknown-job")]:
-            changed=copy.deepcopy(records); changed[0]["binding"][key]=value
+                timing.queue_report({"run":run,"jobs":jobs+jobs[:1]})
+            records = [{"binding": {"GITHUB_RUN_ID":"123", "GITHUB_RUN_ATTEMPT":"2",
+                                    "GITHUB_JOB":"b1-source-regression", "NVWA_CI_HEAD_SHA":"e"*40,
+                                    "GITHUB_SHA":"m"*40}, "source":{"head":"m"*40}}]
+            self.assertEqual(timing.queue_report({"run":run,"jobs":jobs}, records)[2]["timing_records_joined"], 1)
+            for key,value in [("GITHUB_RUN_ID","456"),("GITHUB_RUN_ATTEMPT","1"),
+                              ("NVWA_CI_HEAD_SHA","m"*40),("GITHUB_JOB","unknown-job")]:
+                changed=copy.deepcopy(records); changed[0]["binding"][key]=value
+                with self.assertRaises(ValueError):
+                    timing.queue_report({"run":run,"jobs":jobs},changed)
+            other_name = ("Linux B1 source regression and viewer checks" if version == "macos-b1-v1"
+                          else "macOS B1 source regression and viewer checks")
+            for other in (other_name, "unknown job", "macOS native target cache warm trial"):
+                extra = {**jobs[2], "id": 99, "name": other}
+                for inventory in (jobs+[extra], jobs[:2]+[{**extra, "name": "unknown job"}],
+                                  jobs[:1]+[jobs[2], extra]):
+                    with self.assertRaises(ValueError):
+                        timing.queue_report({"run":run,"jobs":inventory})
+            duplicate_id = copy.deepcopy(jobs)
+            duplicate_id[2]["id"] = duplicate_id[1]["id"]
             with self.assertRaises(ValueError):
-                timing.queue_report({"run":run,"jobs":jobs},changed)
+                timing.queue_report({"run":run,"jobs":duplicate_id})
+            # Exercise the production queue CLI under both interpreter modes.
+            metadata = self.temp / 'queue-policy.json'
+            metadata.write_text(json.dumps({"run":run,"jobs":jobs}))
+            for optimized in (False, True):
+                result = subprocess.run([sys.executable, '-B']+(['-O'] if optimized else [])+
+                                        [str(SCRIPT), 'queue', str(metadata)],
+                                        env=self.env, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                actual = [json.loads(line) for line in result.stdout.splitlines()]
+                self.assertEqual(actual, rows)
+            invalid = copy.deepcopy(jobs)
+            invalid[2]["head_sha"] = "wrong source"
+            for inventory in (invalid, jobs+[dict(jobs[2], id=99, name=other_name)]):
+                metadata.write_text(json.dumps({"run":run,"jobs":inventory}))
+                for optimized in (False, True):
+                    result = subprocess.run([sys.executable, '-B']+(['-O'] if optimized else [])+
+                                            [str(SCRIPT), 'queue', str(metadata)],
+                                            env=self.env, capture_output=True)
+                    self.assertEqual(result.returncode, 1, result.stderr)
+                    self.assertEqual(result.stdout, b'')
 
 
 ORIGINAL_RUN_SHA256 = ['2633535201ac85bcd48438d308efb8428304d1057586dad9a7f9fbbd358136d9', 'f768e45ccae4351531879991b96334d596198345e0cf895aa686160fdf97a333', 'e5855e8901a2d4a3895e2514bd8a0a8b0dc567510ab155a8436066dac7b8a3b5', '41b996d55dfefee65f945fd49cd1b06ec1dfbcd341430b414a2ca92e8d80494a', '2db8f9d36d7743978f990744869cb845e3c94c18ed6b0eb109ca663f8da61bbf', '0f5f49e2e13f0b23bbc5eca9f2a312e7f6c58fec2753d472756eed46a9c58f92', 'cfa41f09c43e82eafd4a1d65d9f2abe902fa906c8b3210fbd669715c4e5dc2a4', '50cd014ced45830a06ee19771c10ea1574f2c45f9d86aab2a11028c2548a4aa3', '65afc9eaa4b2a3d25c0397d3d8d2d9b8f601eb0c8f6b22b548c7f6b96ff2adfc', '64c2bd552d20cdee49ed761702c4f1d44752ca4e0fdf7c4fec783d5663b60b2f', '6604f190b1082829e17740678d7fdd79f889e57386af4f483c644d46522e8fc1', 'cc6684cfd471f8d5e1b43b215ef695297e77c2a95ad6cb8392bc2662adf74c8a', '2633535201ac85bcd48438d308efb8428304d1057586dad9a7f9fbbd358136d9', '04397b68162f4940de63e839b2a2fa43babcc760adf2156fc09168f0383085bc', 'ccd97d09c5bfd2a196ea3641b266aa452e4775926743a33723aadd5e2c190cbc', 'dc5d8e964ccbb6ffdc9bc1ad430b0b207624e4f43c79d0802b809a41464f214a', '69a46e3289cabf55b80263620a59e1615d721d18590c4d580e92c43266f21766', '2633535201ac85bcd48438d308efb8428304d1057586dad9a7f9fbbd358136d9', '6cdaa5b64e167420b8fdcd2f18d32b29fc6caa4ed039c5dd46e6ad1ce7ba8a13', '5a5831187c185e215376ce647c1d1695cdc8ad368923b954d53bc346946f638c', '8525fb5875a8685926f62522e6e527b5467c17ae110fa5116e28558620109c38', '3f4fc200cf25a55d7faa1d4943c54a75d277971ae095b7a6943f3e20db647411']

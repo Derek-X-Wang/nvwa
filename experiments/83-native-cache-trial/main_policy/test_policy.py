@@ -36,6 +36,48 @@ WORKFLOW_ADDITIONS = (
 )
 
 
+# linux-b1-v2: validate the complete approved addition before historical comparison.
+B1_LINUX_HEADER = """  b1-source-regression:
+    name: Linux B1 source regression and viewer checks
+    # Keep the independent cold B1 build and Web checks inside a finite budget.
+    needs: portable
+    runs-on: ubuntu-24.04
+"""
+B1_MACOS_HEADER = """  b1-source-regression:
+    name: macOS B1 source regression and viewer checks
+    # Keep the independent cold B1 build and Web checks inside a finite budget.
+    needs: portable
+    runs-on: macos-14
+"""
+B1_FETCH_STEP = """      - name: Fetch locked dependencies for Linux B1 checks
+        run: |
+          cargo fetch --locked --manifest-path Cargo.toml
+          cargo fetch --locked --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/60-b1-continuous-motion/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/66-b1-appearance-work/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/71-b1-character-parameters/Cargo.toml
+          cargo fetch --locked --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml
+"""
+B1_PREPARE_STEP = """      - name: Prepare pinned B1 inputs without asset or tool downloads
+"""
+
+
+def historical_b1_workflow(workflow, checks):
+    checks.assertEqual(workflow.count(B1_LINUX_HEADER), 1, 'required exact Linux B1 policy')
+    checks.assertEqual(workflow.count(B1_FETCH_STEP), 1, 'required exact Linux B1 fetch step')
+    before, b1_and_warm = workflow.split(B1_LINUX_HEADER)
+    b1, separator, warm = b1_and_warm.partition('  # native-cache-trial begin\n')
+    install = ('      - name: Install repository Rust version\n'
+               '        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt '
+               '--component clippy --target wasm32-unknown-unknown\n')
+    checks.assertEqual(b1.count(install+B1_FETCH_STEP+B1_PREPARE_STEP), 1,
+                       'Linux B1 fetch must follow Rust installation and precede preparation')
+    return before+B1_MACOS_HEADER+b1.replace(B1_FETCH_STEP, '')+separator+warm
+
+
 class Policy(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='nvwa-main-policy-', dir=Path('/tmp').resolve())
@@ -562,6 +604,51 @@ class Policy(unittest.TestCase):
                     with self.assertRaisesRegex(AssertionError,message):
                         self.test_workflow_original_bodies_main_scope_and_trial_phase_policy()
 
+    def test_linux_b1_overlay_rejects_unapproved_policy_and_fetch_changes(self):
+        workflow_path = ROOT / '.github/workflows/ci.yml'
+        original = workflow_path.read_text()
+        read_text = Path.read_text
+        commands = B1_FETCH_STEP.splitlines(keepends=True)[2:]
+        mutations = [original.replace(B1_LINUX_HEADER, B1_MACOS_HEADER),
+                     original.replace('name: Linux B1 source', 'name: Other B1 source'),
+                     original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('ubuntu-24.04', 'ubuntu-latest')),
+                     original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('needs: portable', 'needs: native-and-wasm')),
+                     original.replace(B1_FETCH_STEP, ''),
+                     original.replace(B1_FETCH_STEP, B1_FETCH_STEP*2),
+                     original.replace(B1_FETCH_STEP+B1_PREPARE_STEP, B1_PREPARE_STEP+B1_FETCH_STEP),
+                     original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        shell: bash\n        run: |'))]
+        mutations.extend([
+            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('Linux B1', 'macOS B1')),
+            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('ubuntu-24.04', 'macos-14')),
+            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER*2),
+            original.replace(B1_FETCH_STEP, B1_FETCH_STEP+'          true\n'),
+            original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        if: true\n        run: |')),
+            original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        continue-on-error: true\n        run: |')),
+            original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        env:\n          CARGO_BUILD_JOBS: 2\n        run: |')),
+        ])
+        for command in commands:
+            for replacement in ('', command*2, command.replace('--locked', '--offline'),
+                                command.replace('--locked', '--locked --offline'),
+                                command.replace('--locked', '--locked --features extra'),
+                                command.replace('Cargo.toml', 'Other.toml')):
+                mutations.append(original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace(command, replacement)))
+        mutations.append(original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace(
+            commands[0]+commands[1], commands[1]+commands[0])))
+        mutations.extend([original.replace('-- --nocapture', '-- --exact'),
+                          original.replace('python3 -B -O experiments/58-b1-desktop-web/verify_native.py',
+                                           'python3 -B experiments/58-b1-desktop-web/verify_native.py'),
+                          original.replace(' --lib --locked --offline', ' --lib --locked'),
+                          original.replace('bash experiments/27-ci-baseline/check.sh wasm',
+                                           'bash experiments/27-ci-baseline/check.sh wasm --offline'),
+                          original.replace(B1_PREPARE_STEP, '      - name: Unsupported extra command\n        run: true\n'+B1_PREPARE_STEP)])
+        for index, mutant in enumerate(mutations):
+            self.assertNotEqual(mutant, original)
+            def read(path, *args, **kwargs):
+                return mutant if path == workflow_path else read_text(path, *args, **kwargs)
+            with self.subTest(mutation=index), patch.object(Path, 'read_text', read):
+                with self.assertRaises(AssertionError):
+                    self.test_workflow_original_bodies_main_scope_and_trial_phase_policy()
+
     def test_workflow_original_bodies_main_scope_and_trial_phase_policy(self):
         text=(ROOT/'.github/workflows/ci.yml').read_text()
         for addition,message in WORKFLOW_ADDITIONS:
@@ -577,7 +664,8 @@ class Policy(unittest.TestCase):
         self.assertIn("steps.main-prepare.outputs.restore == 'true'",body)
         self.assertLess(text.index('policy.py restore'),text.index('Run workspace CPU tests'))
         self.assertGreater(text.index('policy.py finish'),text.index('Report existing command timing',text.index('  native-and-wasm:')))
-        stripped=re.sub(r'(?ms)^  # native-cache-trial begin\n.*?^  # native-cache-trial end\n','',text)
+        historical=historical_b1_workflow(text, self)
+        stripped=re.sub(r'(?ms)^  # native-cache-trial begin\n.*?^  # native-cache-trial end\n','',historical)
         stripped=re.sub(r'(?ms)^ +# native-cache-trial begin\n.*?^ +# native-cache-trial end\n','',stripped)
         stripped=re.sub(r'(?ms)^ +# native-main-cache begin\n.*?^ +# native-main-cache end\n','',stripped)
         for addition,message in WORKFLOW_ADDITIONS:
