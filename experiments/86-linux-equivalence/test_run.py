@@ -201,7 +201,7 @@ class RuntimeControls(unittest.TestCase):
             self.assertEqual(pilot.finalize(self.root, self.root, report), 1)
         self.assertEqual(report["stage_logs"], "FAILED")
 
-    def test_matrix_and_six_mutation_logs_are_all_required(self):
+    def matrix_fixture(self):
         # Tiny control-only files test retained-evidence integrity, without
         # generating or claiming a real production motion/mutation witness.
         mutations = self.root / "runtime/nvwa-b1-motion-mutations"
@@ -217,25 +217,69 @@ class RuntimeControls(unittest.TestCase):
                 (mutations / (name + suffix)).write_text("control only")
         mutation_summary = {"passed": True, "cases": cases, "hashes": pilot.file_hashes(mutations)}
         (mutations / "summary.json").write_text(json.dumps(mutation_summary))
-        retained_name = "t+1__b1_arm_rehearsal_v1__k16.json.gz"
-        for name in [retained_name] + [f"control-{n}.json.gz" for n in range(29)]:
-            (matrix / "keyframes" / name).write_bytes(b"control-only frame bytes")
-        (matrix / "summary.json").write_text(json.dumps({"passed": True, "passing_records": 594, "records": 595,
-                                                         "probe_complete_marker": True, "coverage": {"complete": True}}))
+        expected, frames = pilot.expected_matrix_cohorts()
+        for name in frames:
+            (matrix / name).write_bytes(b"control-only frame bytes")
+        records = []
+        for (kind, torso, jaw, clip, k, seconds), count in expected.items():
+            records.extend([{"kind": kind, "technical_pass": True, "request": {"torso_length": torso,
+                            "jaw_drop": jaw, "clip_id": clip, "k": k, "seconds": seconds}}] * count)
+        (matrix / "metrics.jsonl").write_text("".join(json.dumps(record) + "\n" for record in records))
+        (matrix / "summary.json").write_text(json.dumps({"passed": True, "probe_exit": 0, "passing_records": 612, "records": 613,
+            "probe_complete_marker": True, "coverage": {"complete": True, "expected": 594, "observed": 594, "missing": [],
+                                                        "deep_keyframes_expected": 30, "deep_keyframes_observed": 30}}))
         (matrix / "SHA256SUMS.json").write_text(json.dumps(pilot.file_hashes(matrix)))
+        return mutations, matrix
+
+    def test_matrix_and_six_mutation_logs_are_all_required(self):
+        mutations, matrix = self.matrix_fixture()
         pilot.validate_witnesses(self.root, "native-and-wasm")
         bad_log = mutations / "control-0-red.log"
         bad_log.unlink()
         with self.assertRaisesRegex(ValueError, "missing"):
             pilot.validate_witnesses(self.root, "native-and-wasm")
         bad_log.write_text("control only")
-        bad_frame = matrix / "keyframes/control-2.json.gz"
+        bad_frame = matrix / sorted(pilot.expected_matrix_cohorts()[1])[0]
         bad_frame.write_bytes(b"changed after producer")
         with self.assertRaisesRegex(ValueError, "hash mismatch"):
             pilot.validate_witnesses(self.root, "native-and-wasm")
         bad_frame.unlink()
         with self.assertRaisesRegex(ValueError, "missing"):
             pilot.validate_witnesses(self.root, "native-and-wasm")
+
+    def test_old_594_total_summary_is_rejected(self):
+        _, matrix = self.matrix_fixture()
+        summary = json.loads((matrix / "summary.json").read_text())
+        summary.update(passing_records=594, records=595)
+        with self.assertRaisesRegex(ValueError, "total record counts"):
+            pilot.validate_matrix_records(matrix, summary)
+
+    def test_matrix_manifest_missing_frame_hash_is_rejected(self):
+        _, matrix = self.matrix_fixture()
+        path = matrix / "SHA256SUMS.json"
+        hashes = json.loads(path.read_text())
+        del hashes[sorted(pilot.expected_matrix_cohorts()[1])[0]]
+        path.write_text(json.dumps(hashes))
+        with self.assertRaisesRegex(ValueError, "file inventory changed"):
+            pilot.validate_witnesses(self.root, "native-and-wasm")
+
+    def test_each_seek_pause_or_matrix_cohort_is_required(self):
+        _, matrix = self.matrix_fixture()
+        rows = (matrix / "metrics.jsonl").read_text().splitlines()
+        summary = json.loads((matrix / "summary.json").read_text())
+        for missing_kind in ("seek", "pause", "matrix"):
+            index = next(i for i, line in enumerate(rows) if json.loads(line)["kind"] == missing_kind)
+            (matrix / "metrics.jsonl").write_text("\n".join(rows[:index] + rows[index + 1:]) + "\n")
+            with self.assertRaisesRegex(ValueError, "metric cohort"):
+                pilot.validate_matrix_records(matrix, summary)
+
+    def test_frozen_source_derives_all_record_kinds_and_deep_frames(self):
+        records, frames = pilot.expected_matrix_cohorts()
+        self.assertEqual(sum(count for key, count in records.items() if key[0] == "matrix"), 594)
+        self.assertEqual(sum(count for key, count in records.items() if key[0] == "seek"), 16)
+        self.assertEqual(sum(count for key, count in records.items() if key[0] == "pause"), 2)
+        self.assertEqual(sum(records.values()), 612)
+        self.assertEqual(len(frames), 30)
 
     def test_source_identity_rejects_real_tracked_drift(self):
         subprocess.run(["git", "init", "-q", str(self.root)], check=True)

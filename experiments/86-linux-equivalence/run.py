@@ -6,6 +6,7 @@ downloads. It requires a separate, disposable checkout at the frozen baseline.
 No graphical, GPU, desktop, or browser acceptance is inferred from this replay.
 """
 import argparse
+from collections import Counter
 import hashlib
 import json
 import os
@@ -14,6 +15,7 @@ import platform
 import re
 import shlex
 import signal
+import struct
 import subprocess
 import sys
 import time
@@ -22,6 +24,8 @@ BASE_SHA = "baa0b6bbda0d9709f0fab37c9e7d962fd8d926c1"
 BASE_TREE = "f14ea4fa6ea749fdd06c36e0fca5d622feb5bb95"
 CI_SHA256 = "f05fab4054cd9b2909b4724c53b89397c2e875b863d631ea46a073e969c365b3"
 DRIVER_SHA256 = "a3e450f1e6f6033fc9506862d476033b2b642f0c0a1e49520228d940e9ac438a"
+MATRIX_PRODUCER_SHA256 = "c8778eac5d610ef7ea165952c06a7ab8f32a9391fd285ce861b97a5c1fe60776"
+MATRIX_CHECKER_SHA256 = "cbdd941ee671dba23d3fa7b7e9b183664222597c7b69df6241897846048da22b"
 LANES = {
     "native-and-wasm": [
         "Run workspace CPU tests",
@@ -211,22 +215,82 @@ def validate_witnesses(out, lane):
                 "six mutation red/green log hashes required")
         verify_file_hashes(temp / "nvwa-b1-motion-mutations", mutations["hashes"])
         matrix = json.loads((temp / "nvwa-b1-motion-matrix/summary.json").read_text())
-        require(matrix.get("passed") is True and matrix.get("passing_records") == 594 and matrix.get("records") == 595,
-                "actual 594-frame matrix missing/incomplete")
-        require(matrix.get("probe_complete_marker") is True and matrix.get("coverage", {}).get("complete") is True,
-                "matrix coverage/completion witness missing")
+        validate_matrix_records(temp / "nvwa-b1-motion-matrix", matrix)
         frame = temp / "nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
         require(frame.is_file() and frame.stat().st_size > 0, "real garment frame missing")
         matrix_root = temp / "nvwa-b1-motion-matrix"
         hashes = json.loads((matrix_root / "SHA256SUMS.json").read_text())
         verify_file_hashes(matrix_root, hashes)
         require(set(hashes) == set(file_hashes(matrix_root)) - {"SHA256SUMS.json"}, "matrix file inventory changed")
-        require(sum(name.startswith("keyframes/") and name.endswith(".json.gz") for name in hashes) == 30,
-                "30 retained deep matrix frames required")
+        _, expected_frames = expected_matrix_cohorts()
+        require({name for name in hashes if name.startswith("keyframes/")} == expected_frames,
+                "retained deep matrix frame cohort missing/changed")
     else:
         viewer = json.loads((temp / "nvwa-b1-viewer-runtime/native-runtime.json").read_text())
         require(viewer.get("native_actual_source_headless") is True and viewer.get("native_graphical_executed") is False,
                 "actual headless viewer witness missing")
+
+
+def expected_matrix_cohorts():
+    """Read cohort constants from the frozen production probe, without running it."""
+    root = HARN_ROOT / "experiments/60-b1-continuous-motion"
+    producer = (root / "src/bin/matrix.rs").read_text()
+    checker = (root / "checker.py").read_text()
+    require(sha(producer.encode()) == MATRIX_PRODUCER_SHA256 and sha(checker.encode()) == MATRIX_CHECKER_SHA256,
+            "frozen matrix producer/checker extraction drift")
+    def numbers(pattern):
+        match = re.search(pattern, producer)
+        require(match is not None, "matrix cohort extraction missing")
+        return [float(token.strip().replace("_f32", "")) for token in match.group(1).split(",")]
+    clips = re.findall(r'"([^"]+)"', re.search(r"let clips = \[([^\]]+)\];", producer).group(1))
+    torsos = numbers(r"for torso in \[([^\]]+)\]")
+    jaws = numbers(r"for jaw in \[([^\]]+)\]")
+    seeks = [struct.unpack("f", struct.pack("f", value))[0]
+             for value in numbers(r"for seconds in \[([^\]]+)\]")]
+    last_k = int(re.search(r"for k in 0\.\.=([0-9]+)", producer).group(1))
+    divisor = float(re.search(r"let seconds = k as f32 / ([0-9.]+);", producer).group(1))
+    pause_seconds = float(re.search(r'"pause",\s*json!\([^\n]+"seconds":([0-9.]+)', producer).group(1))
+    deep_stride = int(re.search(r"req\['k'\]%([0-9]+)==0", checker).group(1))
+    expected = Counter()
+    frames = set()
+    for torso in torsos:
+        for jaw in jaws:
+            for clip in clips:
+                for k in range(last_k + 1):
+                    expected[("matrix", torso, jaw, clip, k, k / divisor)] += 1
+                    if jaw == 0 and k % deep_stride == 0:
+                        frames.add(f"keyframes/t{torso:+g}__{clip}__k{k:02}.json.gz")
+                if torso == 0 and jaw == 0:
+                    for seconds in seeks:
+                        expected[("seek", torso, jaw, clip, None, seconds)] += 1
+                    expected[("pause", torso, jaw, clip, None, pause_seconds)] += 1
+    return expected, frames
+
+
+def validate_matrix_records(root, summary):
+    expected, frames = expected_matrix_cohorts()
+    expected_kinds = Counter()
+    for key, count in expected.items():
+        expected_kinds[key[0]] += count
+    observed = Counter()
+    for line in (root / "metrics.jsonl").read_text().splitlines():
+        record = json.loads(line)
+        require(record.get("technical_pass") is True, "matrix metric lacks technical pass")
+        request = record["request"]
+        kind = record["kind"]
+        observed[(kind, request["torso_length"], request["jaw_drop"], request["clip_id"],
+                  request.get("k") if kind == "matrix" else None, request["seconds"])] += 1
+    require(observed == expected, "matrix/seek/pause metric cohort missing/changed")
+    passing = sum(expected.values())
+    coverage = summary.get("coverage", {})
+    require(summary.get("passed") is True and summary.get("probe_exit") == 0
+            and summary.get("passing_records") == passing and summary.get("records") == passing + 1,
+            "matrix producer total record counts missing/incomplete")
+    require(summary.get("probe_complete_marker") is True and coverage.get("complete") is True
+            and coverage.get("expected") == coverage.get("observed") == expected_kinds["matrix"]
+            and coverage.get("missing") == []
+            and coverage.get("deep_keyframes_expected") == coverage.get("deep_keyframes_observed") == len(frames),
+            "matrix coverage/completion witness missing")
 
 
 def file_hashes(root):

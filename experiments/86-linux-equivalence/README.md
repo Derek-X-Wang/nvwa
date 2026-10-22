@@ -5,6 +5,10 @@ standard Ubuntu, against one immutable source commit. It does not change the
 production workflow or its required checks. See [CONTRACT.md](CONTRACT.md) and
 [RESOURCE-REQUEST.md](RESOURCE-REQUEST.md).
 
+The bounded same-source run is complete: **B1 PASS, full native FAIL**. See
+[RESULTS.md](RESULTS.md) for measurements, the exact garment assertion failure,
+the separate local driver repair, and all unverified scope. No migration adopted.
+
 ## Reproduce the local runner controls
 
 No Linux, network or Rust compilation is needed for these harness controls:
@@ -51,8 +55,10 @@ python3 -B experiments/86-linux-equivalence/run.py run \
 Outputs are never overwritten. Any failed command stops the lane; remaining
 commands are `NOT-RUN`. Missing runtime receipts or changed tracked source/locks
 prevent a pass. The source mutation tests must detect all three real faults and
-pass after restoration. The motion matrix must validate all 594 frames and its
-completion marker. The source viewer must produce its actual headless receipt.
+pass after restoration. The motion matrix must validate 594 matrix samples,
+16 seek controls, 2 pause controls, 30 retained deep frames and its completion
+marker (612 passing records, 613 total). The source viewer must produce its
+actual headless receipt.
 
 The isolated workflow is branch-scoped and limited to two 60-minute jobs. It
 records toolchain acquisition, per-command logs/timing, artifact bytes and both
