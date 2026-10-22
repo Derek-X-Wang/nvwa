@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "authoring_policy_version": 4,
+  "kind": "nvwa85-current19-feature-policy-v4",
+  "candidate_id": "nvwa-current19-shoulder-feature-refit-v4",
+  "candidate_count": 1,
+  "reference_policy_sha256": "864df1a9956712dda02942fdc3a5a099a8c1d789ab91776a648258d268cafc53",
+  "support_sha256": "66dd2cc157b92bf5651e3c1e88c33d3ce72e6f6ec9fed8694a27984970b05053",
+  "source_direction": {
+    "normal": "normalize oriented source-triangle area sum in frozen source order",
+    "interpolation": "normalize source-ID keyed barycentric vertex-normal interpolation before feathering",
+    "feature": "exact nonzero barycentric source IDs, exact projected point and exact source-keyed weights",
+    "ties": "all nearest faces must identify the same feature; no fallback or averaging",
+    "normal_agreement": 1e-09,
+    "local_topology": "connected manifold oriented incident fan; open boundary allowed",
+    "refusals": [
+      "invalid indices",
+      "nonfinite inputs",
+      "repeated source index",
+      "relevant degenerate face",
+      "disconnected fan",
+      "nonmanifold fan",
+      "inconsistent winding",
+      "zero normal",
+      "nonpositive applicable orientation",
+      "distinct nearest features"
+    ]
+  },
+  "constraints": {
+    "logical_sample_count": 581,
+    "faces": "all nearest faces retain their own projected point and oriented geometric normal",
+    "identity": [
+      "logical_sample0",
+      "body_triangle0"
+    ],
+    "preserve_duplicate_logical_samples": true,
+    "nearest_tie_distance_squared_m2": 1e-12,
+    "margin_m": 0.001,
+    "saved_text_residual_floor_m": 0.0009999,
+    "slope_epsilon": 1e-12,
+    "amplitude": "one original positive lower endpoint of the complete feasible interval; no retry",
+    "realized": "every retained face after saved-f32 and MHCLO text round trip"
+  },
+  "unchanged": {
+    "position_sources": 30,
+    "support_radius_m": 0.07,
+    "ring_weights": [
+      1.0,
+      0.75,
+      0.25
+    ],
+    "max_displacement_m": 0.02,
+    "samples_per_triangle": 7,
+    "topology_helpers_full_weights_material_body_mask_and_quality_thresholds": "original geometry policy exact"
+  }
+}

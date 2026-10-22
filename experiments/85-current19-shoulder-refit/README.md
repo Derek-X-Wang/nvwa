@@ -59,3 +59,9 @@ The original eighteen historical raw arrays are still missing. Their exact gates
 remain unchanged; the new baseline is not recovered historical evidence.
 GPU, candidate shading/upload parity, Web A/B, CLI candidate exchange, and visual
 adoption remain unverified until their own conditional stages pass.
+
+## Later feature-direction attempt
+
+The separate [v4 outcome](FEATURE-V4-RESULTS.md) completes30 directions and581
+logical samples, then rejects a fixed clearance inequality. It creates no asset;
+the original v3 result above is preserved.
