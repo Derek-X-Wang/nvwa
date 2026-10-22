@@ -359,10 +359,20 @@ def queue_report(metadata, records=None):
     if len(portable) != 1:
         raise ValueError("expected one portable job in one run attempt")
     gate = timestamp(portable[0]["completed_at"])
-    names = {"Core, CLI, and diagnostic controls": False, "macOS CPU tests and Wasm compile check": True,
-             "macOS B1 source regression and viewer checks": True}
-    if len(jobs) != 3 or {j["name"] for j in jobs} != set(names):
+    # The external observer validates and removes the optional warm job first.
+    # Match a complete historical/current producer inventory, never loose aliases.
+    policies = {
+        "macos-b1-v1": "macOS B1 source regression and viewer checks",
+        "linux-b1-v2": "Linux B1 source regression and viewer checks",
+    }
+    common = {"Core, CLI, and diagnostic controls": "portable",
+              "macOS CPU tests and Wasm compile check": "native-and-wasm"}
+    matches = [(version, {**common, b1: "b1-source-regression"})
+               for version, b1 in policies.items()
+               if len(jobs) == 3 and {j["name"] for j in jobs} == set(common) | {b1}]
+    if len(matches) != 1:
         raise ValueError("unexpected job inventory")
+    policy_version, job_keys = matches[0]
     if (type(run.get("id")) is not int or run["id"] <= 0
             or type(run.get("run_attempt")) is not int or run["run_attempt"] <= 0
             or any(type(job.get("id")) is not int or job["id"] <= 0 for job in jobs)
@@ -376,16 +386,15 @@ def queue_report(metadata, records=None):
         completed = timestamp(job["completed_at"])
         if completed < start:
             raise ValueError("job completes before starting")
-        ready = max(created, gate) if names[job["name"]] else created
+        ready = max(created, gate) if job_keys[job["name"]] != "portable" else created
         if start < ready:
             raise ValueError("job starts before dependency gate")
         job_created = timestamp(job["created_at"])
         if job_created < created or start < job_created:
             raise ValueError("invalid job creation/start order")
-        job_key = {"Core, CLI, and diagnostic controls": "portable",
-                   "macOS CPU tests and Wasm compile check": "native-and-wasm",
-                   "macOS B1 source regression and viewer checks": "b1-source-regression"}[job["name"]]
-        rows.append({"job": job["name"], "job_key": job_key, "job_id": job["id"], "run_id": run["id"],
+        job_key = job_keys[job["name"]]
+        rows.append({"job": job["name"], "job_key": job_key, "policy_version": policy_version,
+                     "job_id": job["id"], "run_id": run["id"],
                      "attempt": run["run_attempt"], "head_sha": run["head_sha"],
                      "run_created_at": run["created_at"], "job_created_at": job["created_at"],
                      "job_started_at": job["started_at"], "job_completed_at": job["completed_at"],

@@ -25,7 +25,7 @@ class TimingOrder(unittest.TestCase):
             copied = set()
             for relative in tracked:
                 # Nested native-cache-contract runs nine original boundary
-                # controls plus the new addition guard. Omit only this recursive regression.
+                # controls plus the addition and Linux policy guards. Omit only this recursive regression.
                 if not relative or relative == SELF:
                     continue
                 destination = root / relative
@@ -75,7 +75,7 @@ class TimingOrder(unittest.TestCase):
                                         env=environment, capture_output=True, text=True)
                 self.assertEqual(result.returncode, 0, result.stdout[-4000:]+result.stderr[-4000:])
                 if group == 'native-cache-contract':
-                    self.assertEqual(result.stderr.count('Ran 10 tests'), 2, result.stderr[-4000:])
+                    self.assertEqual(result.stderr.count('Ran 11 tests'), 2, result.stderr[-4000:])
                 states.append({'group': group, 'status_after': git('status', '--porcelain')})
             self.assertEqual(git('diff', '--name-only'), GENERATED)
             self.assertTrue(states[-1]['status_after'], 'actual legacy generation must change its retained fixture')
