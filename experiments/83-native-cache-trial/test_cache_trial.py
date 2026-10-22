@@ -20,6 +20,16 @@ trial = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(trial)
 
 
+WORKFLOW_ADDITIONS = (
+    ('      - name: Check isolated shoulder rest-refit controls\n'
+     '        run: python3 -B scripts/check-portable.py shoulder-rest-refit\n',
+     'required exact shoulder rest-refit addition'),
+    ('      - name: Check current nineteen-case shoulder controls\n'
+     '        run: python3 -B scripts/check-portable.py current19-shoulder-refit\n',
+     'required exact current19 shoulder addition'),
+)
+
+
 def without_trial(text):
     # Exact indentation disambiguates the whole optional warm job from its steps.
     text = re.sub(r'(?ms)^  # native-cache-trial begin\n.*?^  # native-cache-trial end\n', '', text)
@@ -428,23 +438,23 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
     def test_missing_or_duplicate_shoulder_step_rejects_existing_workflow_contract(self):
         workflow_path = ROOT / '.github/workflows/ci.yml'
         original = workflow_path.read_text()
-        addition = ('      - name: Check isolated shoulder rest-refit controls\n'
-                    '        run: python3 -B scripts/check-portable.py shoulder-rest-refit\n')
         read_text = Path.read_text
-        for replacement in ('', addition + addition):
-            mutant = original.replace(addition, replacement)
-            def read(path, *args, **kwargs):
-                return mutant if path == workflow_path else read_text(path, *args, **kwargs)
-            with self.subTest(step_count=mutant.count(addition)), patch.object(Path, 'read_text', read):
-                with self.assertRaisesRegex(AssertionError, 'required exact shoulder rest-refit addition'):
-                    self.test_exact_original_workflow_and_full_warm_step_policy_parity()
+        for addition, message in WORKFLOW_ADDITIONS:
+            for replacement in ('', addition + addition):
+                mutant = original.replace(addition, replacement)
+                def read(path, *args, **kwargs):
+                    return mutant if path == workflow_path else read_text(path, *args, **kwargs)
+                with self.subTest(addition=message, step_count=mutant.count(addition)), patch.object(Path, 'read_text', read):
+                    with self.assertRaisesRegex(AssertionError, message):
+                        self.test_exact_original_workflow_and_full_warm_step_policy_parity()
 
     def test_exact_original_workflow_and_full_warm_step_policy_parity(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
-        addition = ('      - name: Check isolated shoulder rest-refit controls\n'
-                    '        run: python3 -B scripts/check-portable.py shoulder-rest-refit\n')
-        self.assertEqual(workflow.count(addition), 1, 'required exact shoulder rest-refit addition')
-        baseline = without_trial(workflow.replace(addition, ''))
+        baseline = workflow
+        for addition, message in WORKFLOW_ADDITIONS:
+            self.assertEqual(workflow.count(addition), 1, message)
+            baseline = baseline.replace(addition, '')
+        baseline = without_trial(baseline)
         workflow = re.sub(r'(?ms)^ +# native-main-cache begin\n.*?^ +# native-main-cache end\n', '', workflow)
         self.assertEqual(hashlib.sha256(baseline.encode()).hexdigest(), '5bdd5efa6b48150c2fbf19eb9cb1b9f1ae64303caea87bfc9c2615b58c201302')
         native = workflow.split('  native-and-wasm:\n', 1)[1].split('  b1-source-regression:\n', 1)[0]

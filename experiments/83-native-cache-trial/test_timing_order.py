@@ -60,9 +60,11 @@ class TimingOrder(unittest.TestCase):
                                GITHUB_SHA=head, NVWA_CI_HEAD_SHA=head)
             catalog = json.loads((root / 'scripts/portable-checks.json').read_text())
             selected = [group['name'] for group in catalog
-                        if group['name'] in ['frozen-upper-arm', 'native-cache-contract', 'shoulder-rest-refit']]
-            self.assertEqual(set(selected), {'frozen-upper-arm', 'native-cache-contract', 'shoulder-rest-refit'})
+                        if group['name'] in ['frozen-upper-arm', 'native-cache-contract', 'shoulder-rest-refit', 'current19-shoulder-refit']]
+            self.assertEqual(set(selected), {'frozen-upper-arm', 'native-cache-contract', 'shoulder-rest-refit', 'current19-shoulder-refit'})
             self.assertLess(selected.index('shoulder-rest-refit'), selected.index('frozen-upper-arm'))
+            self.assertLess(selected.index('shoulder-rest-refit'), selected.index('current19-shoulder-refit'))
+            self.assertLess(selected.index('current19-shoulder-refit'), selected.index('frozen-upper-arm'))
             command = [sys.executable, '-B', *(['-O'] if sys.flags.optimize else []),
                        str(root / 'scripts/ci-timing.py')]
             states = []
@@ -81,9 +83,9 @@ class TimingOrder(unittest.TestCase):
                                     capture_output=True, text=True)
             self.assertEqual(report.returncode, 0, report.stdout+report.stderr+json.dumps(states))
             rows = [json.loads(path.read_text()) for path in records.glob('*.json')]
-            self.assertEqual(len([row for row in rows if row['tool']=='bash']), 3)
-            self.assertEqual(len([row for row in rows if row['parent'] is None]), 3)
-            self.assertGreaterEqual(len([row for row in rows if row['tool']=='cargo']), 2)
+            self.assertEqual(len([row for row in rows if row['tool']=='bash']), 4)
+            self.assertEqual(len([row for row in rows if row['parent'] is None]), 4)
+            self.assertGreaterEqual(len([row for row in rows if row['tool']=='cargo']), 3)
             self.assertEqual({row['source']['head'] for row in rows}, {head})
             self.assertEqual({row['source']['dirty'] for row in rows}, {False})
             self.assertEqual({row['binding']['GITHUB_RUN_ID'] for row in rows}, {'900001'})

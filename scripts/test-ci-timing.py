@@ -74,12 +74,14 @@ class Timing(unittest.TestCase):
         bodies = run_bodies(workflow)
         additions = ["python3 -B scripts/check-portable.py ci-timing-contract\n",
                      "python3 -B scripts/check-portable.py shoulder-rest-refit\n",
+                     "python3 -B scripts/check-portable.py current19-shoulder-refit\n",
                      "python3 -B scripts/ci-timing.py report\n"]
         retained = [body for body in bodies if body not in additions]
         # Entire original workflow run bodies at 6473b768; independent of the
         # current catalog and shell observer. No test, flag, mode or order may drop.
         self.assertEqual([hashlib.sha256(body.encode()).hexdigest() for body in retained], ORIGINAL_RUN_SHA256)
-        self.assertEqual(len(bodies), len(retained)+5)
+        self.assertEqual(len(bodies), len(retained)+6)
+        self.assertEqual(bodies.count("python3 -B scripts/check-portable.py current19-shoulder-refit\n"), 1)
         self.assertEqual(workflow.count("if: ${{ always() }}\n        shell: bash\n"), 3)
         for literal, count in [("runs-on: ubuntu-24.04", 1), ("runs-on: macos-14", 2),
                                ("timeout-minutes: 15", 1), ("timeout-minutes: 60", 2),

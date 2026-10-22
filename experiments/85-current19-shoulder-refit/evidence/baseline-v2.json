@@ -1,0 +1,2010 @@
+{
+  "schema_version": 1,
+  "status": "PASS_CURRENT19_BASELINE_AND_INDEPENDENT_REPLAY",
+  "cohort_kind": "current19-native-production-v1",
+  "manifest_sha256": "bd3d5763bc15eadc258327e2bbefb625788663daa0ed8b8d20dcefd99726e7e6",
+  "source_inventory_sha256": "f617f38550b27ebba0b66bf446d1659bbd3cf33364e87077c079525d36cdf27a",
+  "independent_audit_sha256": "5bacb587289abd50956e3498fb9d46f6d6edb0207d0f696e677cbd4b294a2d43",
+  "cases": 19,
+  "raw_records_including_completion": 20,
+  "binary": {
+    "name": "nvwa-current19-replay",
+    "bytes": 81264880,
+    "sha256": "498b74b5224882ebe9ad346f1052f4f497e0bf24a0e8bc0f4acc69a3eda402ce"
+  },
+  "build_run_id": "run_38514525b0c49a1477b00d6c737f3feb",
+  "capture_run_id": "run_a922d0d8ce85d29a921066e0ce095f13",
+  "compiled_source_files": 237,
+  "capture_source_files": 284,
+  "historical_files_unchanged": 117,
+  "historical_exact18": "NOT-RUN_MISSING_ORIGINAL_RAW; original exact checks unchanged",
+  "quality_acceptance": false,
+  "candidate_read": false,
+  "maxima": {
+    "ordered_source_fit_f32_morph_roundtrip": 0.0,
+    "scalar_f32_PreparedSkin_matrix_blend": 0.0,
+    "independent_source_weights_FK_binary64_LBS": 4.861928033506047e-07,
+    "independent_binary64_source_rest_error_m": 1.095930359795716e-07,
+    "independent_normalized_source_weight_error": 3.632476242021454e-08,
+    "FK_max_matrix_error": 7.757509332684265e-07,
+    "FK_max_head_error_m": 4.645044728857073e-07,
+    "FK_max_bind_error": 1.0800307315150803e-07
+  },
+  "limits": {
+    "ordered_source_fit_f32_morph_rest_m": 1e-07,
+    "scalar_f32_posed_m": 1e-05,
+    "source_weights_FK_binary64_LBS_m": 1e-05,
+    "binary64_signed_helper_source_rest_m": 1e-06,
+    "source_normalized_weights": 1e-06,
+    "FK_matrix": 0.0001,
+    "FK_heads_m": 1e-05,
+    "rest_inverse_bind": 1e-05
+  },
+  "scope_limit": "Independent authored FK uses captured canonical_rest/frame_gauge. It does not independently reconstruct anatomical source-only rest frames. CPU baseline validation is no visual quality, GPU, candidate, Web, or CLI proof.",
+  "original_attempt": {
+    "status": "REJECT_CURRENT19_BASELINE",
+    "failure": "current19 geometry audit rejected 19 slots",
+    "manifest_sha256": "71aeb921f16969aa98570a475a2988ff8d6abca248a6056b85cc85c192665087",
+    "repair": "Source axes is a dictionary; corrected axis lookup without changing arithmetic or limits. Original rejected raw and 284-file source capsule retained."
+  },
+  "raw_retention": "Actual raw20/gzip19 and source/build receipts retained locally. This summary does not replace the raw corpus.",
+  "results": [
+    {
+      "slot": 1,
+      "case": "t-1__b1_arm_rehearsal_v1__k00.json.gz",
+      "status": "PASS",
+      "raw_sha256": "ac370f2585694b56a33b25527c876bf5a30121c118bd8519fcc5ed06e653c927",
+      "publication": {
+        "generation": 1,
+        "revision": 2,
+        "serial": 1,
+        "character_entity": "306v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 0}",
+            "display_entity": "225v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 10, generation: 0}",
+            "display_entity": "226v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t-1__b1_arm_rehearsal_v1__k00.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.1108227044329695e-07,
+              "component_count": 66231,
+              "exact_component_count": 6676,
+              "nonexact_component_count": 59555
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 8.465882606056852e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.7148105498017716e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1185142500326037
+    },
+    {
+      "slot": 2,
+      "case": "t-1__b1_arm_rehearsal_v1__k08.json.gz",
+      "status": "PASS",
+      "raw_sha256": "4a26db0fdaf6406724cda2bfad2ee0503d87bcae785b50f26ae25fbc2a534b58",
+      "publication": {
+        "generation": 1,
+        "revision": 2,
+        "serial": 2,
+        "character_entity": "306v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 0}",
+            "display_entity": "225v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 10, generation: 0}",
+            "display_entity": "226v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t-1__b1_arm_rehearsal_v1__k08.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.304160936246081e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 8.465882606056852e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.757509332684265e-07,
+          "max_head_error_m": 2.817723219195045e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.159157916903496
+    },
+    {
+      "slot": 3,
+      "case": "t-1__b1_arm_rehearsal_v1__k16.json.gz",
+      "status": "PASS",
+      "raw_sha256": "d65511472e8f64af9dd4438f0540ace131b0bde011d58ec89c6676c302b02838",
+      "publication": {
+        "generation": 1,
+        "revision": 2,
+        "serial": 3,
+        "character_entity": "306v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 0}",
+            "display_entity": "225v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 10, generation: 0}",
+            "display_entity": "226v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t-1__b1_arm_rehearsal_v1__k16.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.807392468524462e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 8.465882606056852e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 3.153876260847399e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1785879160743207
+    },
+    {
+      "slot": 4,
+      "case": "t-1__b1_arm_rehearsal_v1__k24.json.gz",
+      "status": "PASS",
+      "raw_sha256": "7828897939288b768fd211354f6d601e3ba5c792bdd4a3e523cfe617d36d4dfd",
+      "publication": {
+        "generation": 1,
+        "revision": 2,
+        "serial": 4,
+        "character_entity": "306v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 0}",
+            "display_entity": "225v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 10, generation: 0}",
+            "display_entity": "226v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t-1__b1_arm_rehearsal_v1__k24.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.304160936246081e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 8.465882606056852e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.757509332684265e-07,
+          "max_head_error_m": 2.817723219195045e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1578589170239866
+    },
+    {
+      "slot": 5,
+      "case": "t-1__b1_arm_rehearsal_v1__k32.json.gz",
+      "status": "PASS",
+      "raw_sha256": "2778dafbf55c2ea6ac25ce24a4f5d7f5a88c25cfe3f546149e3ca8440a4ecd4c",
+      "publication": {
+        "generation": 1,
+        "revision": 2,
+        "serial": 5,
+        "character_entity": "306v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 0}",
+            "display_entity": "225v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 10, generation: 0}",
+            "display_entity": "226v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t-1__b1_arm_rehearsal_v1__k32.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.1108227044329695e-07,
+              "component_count": 66231,
+              "exact_component_count": 6676,
+              "nonexact_component_count": 59555
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 8.465882606056852e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.7148105498017716e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.2159806669224054
+    },
+    {
+      "slot": 6,
+      "case": "t-1__b1_knee_flex_v1__k16.json.gz",
+      "status": "PASS",
+      "raw_sha256": "d6b4f4f1c6c9782de45ad746ffc423f11bf46d0c733a1ce68885fd4d616196d8",
+      "publication": {
+        "generation": 1,
+        "revision": 3,
+        "serial": 6,
+        "character_entity": "306v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 0}",
+            "display_entity": "225v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 10, generation: 0}",
+            "display_entity": "226v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t-1__b1_knee_flex_v1__k16.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.763735060280382e-07,
+              "component_count": 66231,
+              "exact_component_count": 6655,
+              "nonexact_component_count": 59576
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.6378508350143335e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 8.465882606056852e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.7148105498017716e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1379831249359995
+    },
+    {
+      "slot": 7,
+      "case": "t+0__b1_arm_rehearsal_v1__k00.json.gz",
+      "status": "PASS",
+      "raw_sha256": "ae8a6fe95ffb95b76421995b4df0f344bcdfbf7ab36b187e2a33015e4a1e96ac",
+      "publication": {
+        "generation": 1,
+        "revision": 5,
+        "serial": 1,
+        "character_entity": "158v1",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 3, generation: 1}",
+            "display_entity": "246v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 5, generation: 1}",
+            "display_entity": "245v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+0__b1_arm_rehearsal_v1__k00.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.1108227044329695e-07,
+              "component_count": 66231,
+              "exact_component_count": 6676,
+              "nonexact_component_count": 59555
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 9.083495988715384e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.756714821035289e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.0916875831317157
+    },
+    {
+      "slot": 8,
+      "case": "t+0__b1_arm_rehearsal_v1__k08.json.gz",
+      "status": "PASS",
+      "raw_sha256": "23fa0aad877968c9b7e2ba643f6087876f03c4614c49bf41bc4db13742db46d2",
+      "publication": {
+        "generation": 1,
+        "revision": 5,
+        "serial": 2,
+        "character_entity": "158v1",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 3, generation: 1}",
+            "display_entity": "246v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 5, generation: 1}",
+            "display_entity": "245v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+0__b1_arm_rehearsal_v1__k08.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.1108227044329695e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 9.083495988715384e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.756714821035289e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.113049666862935
+    },
+    {
+      "slot": 9,
+      "case": "t+0__b1_arm_rehearsal_v1__k16.json.gz",
+      "status": "PASS",
+      "raw_sha256": "561cfb810e516f5820eb10df2b1fb15e5101dbf5de9282a9fd613137826649a5",
+      "publication": {
+        "generation": 1,
+        "revision": 5,
+        "serial": 3,
+        "character_entity": "158v1",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 3, generation: 1}",
+            "display_entity": "246v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 5, generation: 1}",
+            "display_entity": "245v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+0__b1_arm_rehearsal_v1__k16.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.4415107874608e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 9.083495988715384e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.756714821035289e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.135994875105098
+    },
+    {
+      "slot": 10,
+      "case": "t+0__b1_arm_rehearsal_v1__k24.json.gz",
+      "status": "PASS",
+      "raw_sha256": "ea8b9ec78c023ef1a3844a64b4d7d2a7fb74d89cc41818d29854b366316b1f6c",
+      "publication": {
+        "generation": 1,
+        "revision": 5,
+        "serial": 4,
+        "character_entity": "158v1",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 3, generation: 1}",
+            "display_entity": "246v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 5, generation: 1}",
+            "display_entity": "245v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+0__b1_arm_rehearsal_v1__k24.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.1108227044329695e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 9.083495988715384e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.756714821035289e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.115175124956295
+    },
+    {
+      "slot": 11,
+      "case": "t+0__b1_arm_rehearsal_v1__k32.json.gz",
+      "status": "PASS",
+      "raw_sha256": "2c82eda00260182b9aa3b8caf507e4970b477996d0955f3afb201019bfe66252",
+      "publication": {
+        "generation": 1,
+        "revision": 5,
+        "serial": 5,
+        "character_entity": "158v1",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 3, generation: 1}",
+            "display_entity": "246v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 5, generation: 1}",
+            "display_entity": "245v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+0__b1_arm_rehearsal_v1__k32.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.1108227044329695e-07,
+              "component_count": 66231,
+              "exact_component_count": 6676,
+              "nonexact_component_count": 59555
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 9.083495988715384e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.756714821035289e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.0826644159387797
+    },
+    {
+      "slot": 12,
+      "case": "t+0__b1_knee_flex_v1__k16.json.gz",
+      "status": "PASS",
+      "raw_sha256": "0933052269f74dd213106d03f8fe11122c2ef77e2d70984f21e1405adbba8054",
+      "publication": {
+        "generation": 1,
+        "revision": 6,
+        "serial": 6,
+        "character_entity": "158v1",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 3, generation: 1}",
+            "display_entity": "246v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 5, generation: 1}",
+            "display_entity": "245v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+0__b1_knee_flex_v1__k16.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.763735060280382e-07,
+              "component_count": 66231,
+              "exact_component_count": 6655,
+              "nonexact_component_count": 59576
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.6378508350143335e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 9.083495988715384e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.756714821035289e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1577229171525687
+    },
+    {
+      "slot": 13,
+      "case": "t+1__b1_arm_rehearsal_v1__k00.json.gz",
+      "status": "PASS",
+      "raw_sha256": "be4d4813986e6a40a47effa19f1d129dc0b31350c75e8a08e77f6f791e50cf09",
+      "publication": {
+        "generation": 1,
+        "revision": 8,
+        "serial": 1,
+        "character_entity": "244v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 7, generation: 1}",
+            "display_entity": "339v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 1}",
+            "display_entity": "338v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+1__b1_arm_rehearsal_v1__k00.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 4.233642564577256e-07,
+              "component_count": 66231,
+              "exact_component_count": 6676,
+              "nonexact_component_count": 59555
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.879360671588117e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 1.095930359795716e-07,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 3.960591470342223e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.2105765000451356
+    },
+    {
+      "slot": 14,
+      "case": "t+1__b1_arm_rehearsal_v1__k08.json.gz",
+      "status": "PASS",
+      "raw_sha256": "6180ca58f3a598aca247aa81e2f2bca0fe402d7bd3e6e09c3e20dd5a93fe01d3",
+      "publication": {
+        "generation": 1,
+        "revision": 8,
+        "serial": 2,
+        "character_entity": "244v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 7, generation: 1}",
+            "display_entity": "339v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 1}",
+            "display_entity": "338v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+1__b1_arm_rehearsal_v1__k08.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 4.861928033506047e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.879360671588117e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 1.095930359795716e-07,
+        "independent_FK": {
+          "max_matrix_error": 7.605708078894935e-07,
+          "max_head_error_m": 4.645044728857073e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.2454766251612455
+    },
+    {
+      "slot": 15,
+      "case": "t+1__b1_arm_rehearsal_v1__k16.json.gz",
+      "status": "PASS",
+      "raw_sha256": "90a5a8454cea8bd82531ce5453c1b4fb51d3aa8a00a7e0f4c21cbb2ea0462191",
+      "publication": {
+        "generation": 1,
+        "revision": 8,
+        "serial": 3,
+        "character_entity": "244v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 7, generation: 1}",
+            "display_entity": "339v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 1}",
+            "display_entity": "338v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+1__b1_arm_rehearsal_v1__k16.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 4.412168702477848e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.879360671588117e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 1.095930359795716e-07,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 3.9648939678671447e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1795093750115484
+    },
+    {
+      "slot": 16,
+      "case": "t+1__b1_arm_rehearsal_v1__k24.json.gz",
+      "status": "PASS",
+      "raw_sha256": "2763ea61a0f150c01fcaf689cc2847d3ca15d51bdb4ad5b1a96fdb3b6bda6179",
+      "publication": {
+        "generation": 1,
+        "revision": 8,
+        "serial": 4,
+        "character_entity": "244v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 7, generation: 1}",
+            "display_entity": "339v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 1}",
+            "display_entity": "338v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+1__b1_arm_rehearsal_v1__k24.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 4.861928033506047e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.879360671588117e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 1.095930359795716e-07,
+        "independent_FK": {
+          "max_matrix_error": 7.605708078894935e-07,
+          "max_head_error_m": 4.645044728857073e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.193460874957964
+    },
+    {
+      "slot": 17,
+      "case": "t+1__b1_arm_rehearsal_v1__k32.json.gz",
+      "status": "PASS",
+      "raw_sha256": "54105908db4304ce54e0883b23787439eb74ca5168211fd82395bb0266c09d3e",
+      "publication": {
+        "generation": 1,
+        "revision": 8,
+        "serial": 5,
+        "character_entity": "244v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 7, generation: 1}",
+            "display_entity": "339v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 1}",
+            "display_entity": "338v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+1__b1_arm_rehearsal_v1__k32.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 4.233642564577256e-07,
+              "component_count": 66231,
+              "exact_component_count": 6676,
+              "nonexact_component_count": 59555
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.879360671588117e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 1.095930359795716e-07,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 3.960591470342223e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1685664588585496
+    },
+    {
+      "slot": 18,
+      "case": "t+1__b1_knee_flex_v1__k16.json.gz",
+      "status": "PASS",
+      "raw_sha256": "3a6f83d4b9265903e69ec9c9eea7a257b4d3f211a6852064050de78da10cb463",
+      "publication": {
+        "generation": 1,
+        "revision": 9,
+        "serial": 6,
+        "character_entity": "244v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 7, generation: 1}",
+            "display_entity": "339v0"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 9, generation: 1}",
+            "display_entity": "338v0"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "t+1__b1_knee_flex_v1__k16.json.gz",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 4.233642564577256e-07,
+              "component_count": 66231,
+              "exact_component_count": 6655,
+              "nonexact_component_count": 59576
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.879360671588117e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 1.095930359795716e-07,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 3.960591470342223e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1705495410133153
+    },
+    {
+      "slot": 19,
+      "case": "fresh-default-arm2",
+      "status": "PASS",
+      "raw_sha256": "aba451b7c08335cc3fc1065aa905b2640a954fbd62d5e352f3419aaded457a28",
+      "publication": {
+        "generation": 2,
+        "revision": 1,
+        "serial": 2,
+        "character_entity": "337v0",
+        "parts": {
+          "body": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 6, generation: 2}",
+            "display_entity": "171v2"
+          },
+          "garment": {
+            "mesh_handle": "AssetId<bevy_mesh::mesh::Mesh>{ index: 3, generation: 2}",
+            "display_entity": "172v2"
+          }
+        }
+      },
+      "independent_source_influences": {
+        "body": {
+          "source_ids": 19158,
+          "render_rows": 22077,
+          "source_triangles": 22892,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 7,
+          "max_normalized_source_weight_error": 0.0
+        },
+        "garment": {
+          "source_ids": 1797,
+          "render_rows": 1986,
+          "source_triangles": 3436,
+          "exact_source_triangle_order": true,
+          "max_positive_influences": 6,
+          "max_normalized_source_weight_error": 3.632476242021454e-08
+        }
+      },
+      "checks": {
+        "case": "fresh-default-arm2",
+        "parts": {
+          "body": {
+            "render_rows": 22077,
+            "full_positive_rows": 22077,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 66231,
+              "exact_component_count": 66231,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 3.4415107874608e-07,
+              "component_count": 66231,
+              "exact_component_count": 6640,
+              "nonexact_component_count": 59591
+            }
+          },
+          "garment": {
+            "render_rows": 1986,
+            "full_positive_rows": 1986,
+            "ordered_source_fit_f32_morph_roundtrip": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "scalar_f32_PreparedSkin_matrix_blend": {
+              "max_component_error_m": 0.0,
+              "component_count": 5958,
+              "exact_component_count": 5958,
+              "nonexact_component_count": 0
+            },
+            "independent_source_weights_FK_binary64_LBS": {
+              "max_component_error_m": 2.9327517525601365e-07,
+              "component_count": 5958,
+              "exact_component_count": 57,
+              "nonexact_component_count": 5901
+            }
+          }
+        },
+        "independent_binary64_source_rest_error_m": 9.083495988715384e-08,
+        "independent_FK": {
+          "max_matrix_error": 7.293033377209213e-07,
+          "max_head_error_m": 2.756714821035289e-07,
+          "max_bind_error": 1.0800307315150803e-07
+        },
+        "scale_f32": [
+          1.0586552619934082,
+          1.0566942691802979,
+          1.0411678552627563
+        ],
+        "geometry": "PASS_CURRENT_BASELINE_ONLY",
+        "GPU_pixels_shading": "NOT-RUN"
+      },
+      "elapsed_seconds": 2.1475934160407633
+    }
+  ]
+}

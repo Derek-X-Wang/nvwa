@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "status": "REJECT_AUTHORING_SINGLE_ATTEMPT",
+  "cohort_kind": "current19-native-production-v1",
+  "candidate_id": "nvwa-current19-shoulder-rest-refit-v1",
+  "authoring_attempts": 1,
+  "candidate_created": false,
+  "candidate_files": 0,
+  "error": "ambiguous nearest normal tie",
+  "diagnostic": {
+    "phase": "source_direction_nearest_plane",
+    "source_id": 213,
+    "point": [
+      0.23986494541168213,
+      0.5030818581581116,
+      0.037759795784950256
+    ],
+    "feather_weight": 0.25,
+    "completed_source_planes": 21,
+    "completed_sample_records": 0,
+    "expected_sample_records": 581,
+    "nearest_distance_squared_m2": 0.000157272933748287,
+    "plane_under_check": {
+      "body_triangle0": 13524,
+      "body_source_ids": [
+        8128,
+        8147,
+        8144
+      ],
+      "point": [
+        0.24233999848365784,
+        0.4907900094985962,
+        0.03751999884843826
+      ],
+      "body_barycentric": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "normal_unnormalized": [
+        0.00012887174182185657,
+        8.977345665667213e-05,
+        5.984850260620789e-05
+      ],
+      "double_area_m2": 0.0001680745150952158,
+      "distance_squared_m2": 0.000157272933748287,
+      "normal": [
+        0.7667536137102612,
+        0.5341289047052411,
+        0.35608314902650856
+      ],
+      "smooth_normal": [
+        0.648487329830408,
+        0.48106648987859674,
+        0.5899484853487749
+      ]
+    },
+    "completed_distance_ties": 2,
+    "eligible_distance_ties": 3,
+    "nearest_ties": [
+      [
+        0.000157272933748287,
+        13494,
+        [
+          0.24233999848365784,
+          0.4907900094985962,
+          0.03751999884843826
+        ],
+        [
+          0.5547440933959239,
+          0.46592633799030564,
+          0.6893269459474786
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      [
+        0.000157272933748287,
+        13495,
+        [
+          0.24233999848365784,
+          0.4907900094985962,
+          0.03751999884843826
+        ],
+        [
+          0.603257811306886,
+          0.4277327947852292,
+          0.673145355300356
+        ],
+        [
+          1.0,
+          0.0,
+          0.0
+        ]
+      ],
+      [
+        0.000157272933748287,
+        13524,
+        [
+          0.24233999848365784,
+          0.4907900094985962,
+          0.03751999884843826
+        ],
+        [
+          0.7667536137102612,
+          0.5341289047052411,
+          0.35608314902650856
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ]
+    ]
+  },
+  "frozen_reference_policy_sha256": "864df1a9956712dda02942fdc3a5a099a8c1d789ab91776a648258d268cafc53",
+  "execution_files_sha256": "58e32a763ffef40ada0051ff305364d2fe51e6eee31c9a07e1954a24d5917e9f",
+  "execution_files_unchanged": 298,
+  "cohort_manifest_sha256": "bd3d5763bc15eadc258327e2bbefb625788663daa0ed8b8d20dcefd99726e7e6",
+  "source_inventory_sha256": "f617f38550b27ebba0b66bf446d1659bbd3cf33364e87077c079525d36cdf27a",
+  "authoring_receipt_sha256": "10c8394cdb980d347a3c8bfbf0c034b858efdbf6bd13ba7750b804192759fd99",
+  "authoring_run_id": "run_930017897ca2ff776d7ac73a9c91d23d",
+  "authoring_exit_code": 1,
+  "authoring_seconds": 42.134692907333374,
+  "all581_constraints": "NOT-RUN_0_COMPLETED",
+  "candidate_quality_scoring": "NOT-RUN_NO_CANDIDATE",
+  "Web_AB_and_CLI_candidate_exchange": "NOT-RUN_OFFLINE_PASS_REQUIRED",
+  "quality_acceptance": false,
+  "conclusion": "The fixed nearest-face-normal policy cannot choose a unique direction at source213. This is not a measured candidate garment quality failure. No alternative direction, support, amplitude, or policy was tried.",
+  "independent_result_audit_sha256": "8ae9826abf242329a4c0a835b2f34e3f407743ee3f05127fefc4035d3d3a0f79",
+  "independent_result_audit": "PASS_REJECTION_CAUSE_CONFIRMED",
+  "normal_distance_from_first": [
+    0.0,
+    0.06382923659243854,
+    0.40081299254979913
+  ]
+}

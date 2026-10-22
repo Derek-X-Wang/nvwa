@@ -23,9 +23,10 @@ step selects one group from that same file. `all` runs these groups in this orde
 | `authenticated-source` | Authenticated source/rejection controls; prepare the pinned seed, pose adapter and viewer; viewer controls. Requires the committed inputs. |
 | `offline-motion` | Locked importer dependency fetch, then retained CPU motion/calibration/history controls. |
 | `shoulder-rest-refit` | Isolated rest-refit controls and Rust host formatting checks. |
+| `current19-shoulder-refit` | Current nineteen-case controls and replay-host formatting check, normal and optimized Python. |
 | `frozen-upper-arm` | Frozen comparison, runtime adapter/measure controls and retained native/Web capture comparisons. |
 
-`shoulder-rest-refit` runs before `frozen-upper-arm`: the latter's legacy generator rewrites tracked evidence, so it must remain the last timing observer. The shoulder group runs the isolated replay/evaluation/authoring/client rejection controls and both Rust hosts’ formatting checks in normal and optimized Python. It does not compile the replay probe or claim private full19 geometry evidence. The retained actual old crossing witness runs locally when `NVWA_SHOULDER_RETAINED` points to its authenticated retained directory; its absence is an explicit skip.
+`current19-shoulder-refit` runs immediately after `shoulder-rest-refit` and before `frozen-upper-arm`: the latter's legacy generator rewrites tracked evidence, so it must remain the last timing observer. The shoulder group runs the isolated replay/evaluation/authoring/client rejection controls and both Rust hosts’ formatting checks in normal and optimized Python. It does not compile the replay probe or claim private full19 geometry evidence. The retained actual old crossing witness runs locally when `NVWA_SHOULDER_RETAINED` points to its authenticated retained directory; its absence is an explicit skip. The current19 group adds only its isolated formatting and Python controls; it does not compile the host or establish actual nineteen-case capture or candidate evidence.
 
 `python3 -B scripts/check-portable.py --list` lists groups. Pass one or more names
 to run a subset; selected groups run once in catalog order. A subset is partial
