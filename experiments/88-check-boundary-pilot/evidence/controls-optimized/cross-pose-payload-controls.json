@@ -1,0 +1,103 @@
+{
+  "pilot_py_sha256": "c6d73900cbe6423c666fdf3bb85c6bff624375f5e2539bfb177dd3d1b0c32f4d",
+  "test_pilot_py_sha256": "cb438760da58ec0495fda26128e227a3a181f234a2686d3e7b5e9f5423da962c",
+  "baseline_case": "t+1__b1_arm_rehearsal_v1__k16.json.gz",
+  "different_pose_case": "t+1__b1_arm_rehearsal_v1__k00.json.gz",
+  "source_closure": {
+    "experiments/84-shoulder-rest-refit/evaluation/evaluate_rest.py": "365c71abc32f51a2d338815d1eeb042cd1314427e435d7b077f2b8b667cb1fc9",
+    "experiments/81-shoulder-patch-corrective/evaluate_patch.py": "38fa51cb3be5940a301fef741550546c7f5c3d84797f636c5c12c9dc43217d2b",
+    "experiments/81-shoulder-patch-corrective/author_patch.py": "47aef17c869c0da6f114c9e121d3e1940bd98f494d02ada8371040f010ba5f7e",
+    "experiments/79-shoulder-pose-corrective/derive_target.py": "cffb73284c3eb5f1590498e6efae7b6e708e6bec1f410b45266d40eefc4d6c45",
+    "experiments/79-shoulder-pose-corrective/map_notch.py": "a5207c5895ec34e7ebe250c919006eeb171123cb8e3f527c9e606aa118d7e357",
+    "experiments/84-shoulder-rest-refit/replay/collect.py": "5a31244a342ada64c9e790c380ff42fe94e0ee76328ce72981c3903a1e5bfc63",
+    "experiments/70-b1-garment-defect/diagnose.py": "84c36d5a68c94c61503661d5096967608d47a15225f1c043084a957d6ee5b2d3",
+    "experiments/60-b1-continuous-motion/checker.py": "cbdd941ee671dba23d3fa7b7e9b183664222597c7b69df6241897846048da22b",
+    "experiments/60-b1-continuous-motion/geometry.py": "26b676e5880bf5a0a228574676215db6b2aa31b5b5d3004458af33fea9d4f5aa",
+    "experiments/85-current19-shoulder-refit/topology-reference.json": "cd886797a4a221934dc8dfbda73fc9194edbf9370ea4d4e82f746ace90648215",
+    "experiments/70-b1-garment-defect/test_controls.py": "8cd854388f6f5d4411355217e21d97f38303693db2289cf6782e23e8040c728a",
+    "experiments/70-b1-garment-defect/evidence/pre-interop-source/diagnose.py": "d3a3a7d3cb2183a462db918f74be264fe94e08059f88ec50368076b3598a286f",
+    "experiments/70-b1-garment-defect/evidence/pre-interop-source/compare.py": "64ad52656fd0dbd0523653b7522cc2d8cd559d8590ff420cd2a87be18d9a8e18",
+    "experiments/70-b1-garment-defect/evidence/pre-interop-source/test_controls.py": "7b8ec8ef54c9471e8549ea18f89fe86a1504be8980f9052303b3f091b0416ad5",
+    "experiments/70-b1-garment-defect/evidence/verification.json": "97a7bb5ea8194b8bc5d55d979ac244f3be46a9809926e320e6d50f1c6968e6aa",
+    "experiments/70-b1-garment-defect/evidence/final-retained30/report.json": "a548dfd0bcec2caaa9d45f8b62277e8aeff53639665b882f3d7632f81da8668f"
+  },
+  "controls": [
+    {
+      "fault": "sub_bound_rest",
+      "expected": {
+        "torso_length": 1,
+        "jaw_drop": 0,
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0.0,
+        "k": 0
+      },
+      "admitted_template_sha256": "00bed5324159ddd5a65bad3d4752adbc59eedcb2428409c62c9e924e68e4119d",
+      "derived_payload_sha256": "0d7e260344459be01e6d44cf457b0b07d732653e5b3c6ee2e22b4fdb94078cf7",
+      "initial_numeric_validation": "PASS_WITHOUT_PRIOR_REST_IDENTITY",
+      "persistent_batch_rejection": "cross_pose_rest_identity",
+      "same_validator_restoration": "PASS"
+    },
+    {
+      "fault": "common_placement",
+      "expected": {
+        "torso_length": 1,
+        "jaw_drop": 0,
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0.0,
+        "k": 0
+      },
+      "admitted_template_sha256": "00bed5324159ddd5a65bad3d4752adbc59eedcb2428409c62c9e924e68e4119d",
+      "derived_payload_sha256": "b9a76224a4c9eaaf9cff7f9ea671ebfc15631c707619e4ddbc0a90846ea3049c",
+      "initial_numeric_validation": "PASS_WITHOUT_PRIOR_REST_IDENTITY",
+      "persistent_batch_rejection": "cross_pose_rest_identity",
+      "same_validator_restoration": "PASS"
+    },
+    {
+      "fault": "rest_normal",
+      "expected": {
+        "torso_length": 1,
+        "jaw_drop": 0,
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0.0,
+        "k": 0
+      },
+      "admitted_template_sha256": "00bed5324159ddd5a65bad3d4752adbc59eedcb2428409c62c9e924e68e4119d",
+      "derived_payload_sha256": "815e41930bd7f26ddefb1ba5abd9b8e8172d8af65311e91f1e991bbfa04cb4a3",
+      "initial_numeric_validation": "PASS_WITHOUT_PRIOR_REST_IDENTITY",
+      "persistent_batch_rejection": "cross_pose_rest_identity",
+      "same_validator_restoration": "PASS"
+    },
+    {
+      "fault": "raw_weight_scale",
+      "expected": {
+        "torso_length": 1,
+        "jaw_drop": 0,
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0.0,
+        "k": 0
+      },
+      "admitted_template_sha256": "00bed5324159ddd5a65bad3d4752adbc59eedcb2428409c62c9e924e68e4119d",
+      "derived_payload_sha256": "5fb3ea837861fd963f2d0b32b1a5c7f0e4b74aaf3e304a29ae43f9bb6390783e",
+      "initial_numeric_validation": "PASS_WITHOUT_PRIOR_REST_IDENTITY",
+      "persistent_batch_rejection": "cross_pose_rest_identity",
+      "same_validator_restoration": "PASS"
+    },
+    {
+      "fault": "bone_local_rest",
+      "expected": {
+        "torso_length": 1,
+        "jaw_drop": 0,
+        "clip_id": "b1_arm_rehearsal_v1",
+        "seconds": 0.0,
+        "k": 0
+      },
+      "admitted_template_sha256": "00bed5324159ddd5a65bad3d4752adbc59eedcb2428409c62c9e924e68e4119d",
+      "derived_payload_sha256": "95eab062dec57bec10432840d7a30350e5809c1379203c1e4ad71333a772f4b1",
+      "initial_numeric_validation": "PASS_WITHOUT_PRIOR_REST_IDENTITY",
+      "persistent_batch_rejection": "cross_pose_rest_identity",
+      "same_validator_restoration": "PASS"
+    }
+  ],
+  "scope": "derived payload controls through actual persistent GeometryValidator; not Rust production mutations",
+  "full_current_runtime": "NOT_VERIFIED_RIG_ORACLE"
+}

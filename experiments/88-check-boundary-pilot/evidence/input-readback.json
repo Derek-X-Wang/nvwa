@@ -1,0 +1,212 @@
+{
+  "scope": "root readback of protected files and exact existing inputs, not runtime proof",
+  "protected_files": {
+    ".github/workflows/ci.yml": true,
+    ".github/workflows/linux-equivalence-pilot.yml": true,
+    "experiments/70-b1-garment-defect/test_controls.py": true,
+    "experiments/70-b1-garment-defect/diagnose.py": true,
+    "experiments/60-b1-continuous-motion/checker.py": true,
+    "experiments/84-shoulder-rest-refit/evaluation/evaluate_rest.py": true,
+    "experiments/85-current19-shoulder-refit/geometry_checks.py": true
+  },
+  "closure": {
+    "experiments/84-shoulder-rest-refit/evaluation/evaluate_rest.py": true,
+    "experiments/81-shoulder-patch-corrective/evaluate_patch.py": true,
+    "experiments/81-shoulder-patch-corrective/author_patch.py": true,
+    "experiments/79-shoulder-pose-corrective/derive_target.py": true,
+    "experiments/79-shoulder-pose-corrective/map_notch.py": true,
+    "experiments/84-shoulder-rest-refit/replay/collect.py": true,
+    "experiments/70-b1-garment-defect/diagnose.py": true,
+    "experiments/60-b1-continuous-motion/checker.py": true,
+    "experiments/60-b1-continuous-motion/geometry.py": true,
+    "experiments/85-current19-shoulder-refit/topology-reference.json": true,
+    "experiments/70-b1-garment-defect/test_controls.py": true,
+    "experiments/70-b1-garment-defect/evidence/pre-interop-source/diagnose.py": true,
+    "experiments/70-b1-garment-defect/evidence/pre-interop-source/compare.py": true,
+    "experiments/70-b1-garment-defect/evidence/pre-interop-source/test_controls.py": true,
+    "experiments/70-b1-garment-defect/evidence/verification.json": true,
+    "experiments/70-b1-garment-defect/evidence/final-retained30/report.json": true
+  },
+  "frames": {
+    "t-1__b1_arm_rehearsal_v1__k00.json.gz": {
+      "sha256": "c3fd9eb5ce255264959d94bb10ebb8cd08381adc9817b1192eafc558e129d31a",
+      "bytes": 3322499
+    },
+    "t-1__b1_arm_rehearsal_v1__k08.json.gz": {
+      "sha256": "8b45da62115ec950d453aafc3645e891b121c3302996c4d27ab324efdb4934a4",
+      "bytes": 3327577
+    },
+    "t-1__b1_arm_rehearsal_v1__k16.json.gz": {
+      "sha256": "ce71e0f6b7bcc3a5abb556ce91bb4dc6f0a720e9b8f277b51027666dd2da0d4f",
+      "bytes": 3328087
+    },
+    "t-1__b1_arm_rehearsal_v1__k24.json.gz": {
+      "sha256": "84682df221d91f46889823d35a2f6c1a92ac5f12afc27b5356fd531f2d4ef79f",
+      "bytes": 3327581
+    },
+    "t-1__b1_arm_rehearsal_v1__k32.json.gz": {
+      "sha256": "f4cd6765e6e07e8da553ea3d5ed2d278eb8d1028bd0de0d32fff72fd610459af",
+      "bytes": 3322512
+    },
+    "t-1__b1_knee_flex_v1__k00.json.gz": {
+      "sha256": "b8af9c9ff7a44991ae3f1754616c2d42bf7270948b73b771b9a4898cd020c594",
+      "bytes": 3322489
+    },
+    "t-1__b1_knee_flex_v1__k08.json.gz": {
+      "sha256": "ce7cdb2cad3ac7652106b5717d0be6e61ae0c0523696d24b266f6ed6c2762e60",
+      "bytes": 3329038
+    },
+    "t-1__b1_knee_flex_v1__k16.json.gz": {
+      "sha256": "af401818f94610a4644b630d60c48e44bfe63239d6cb924df3c6ce186eac5427",
+      "bytes": 3328708
+    },
+    "t-1__b1_knee_flex_v1__k24.json.gz": {
+      "sha256": "b421e92607d2b799f7bfcca60c74dd5ffce7318d74b6652e6ee8b18b99693bfa",
+      "bytes": 3329041
+    },
+    "t-1__b1_knee_flex_v1__k32.json.gz": {
+      "sha256": "ff27b7c99e955c6206cdedd993b9daa74453ed70a2552f5657aa8406b979a42d",
+      "bytes": 3322501
+    },
+    "t+0__b1_arm_rehearsal_v1__k00.json.gz": {
+      "sha256": "6d3a525a92bc9e1e1ebff11b5e9fde930725856c29bf4e52f0d40929bf51d8f3",
+      "bytes": 3316980
+    },
+    "t+0__b1_arm_rehearsal_v1__k08.json.gz": {
+      "sha256": "c71ba1ddcec0e4ed44869b97a695da8a7b9a1ce81b34a2cd111042be2257092c",
+      "bytes": 3321925
+    },
+    "t+0__b1_arm_rehearsal_v1__k16.json.gz": {
+      "sha256": "6baefaaabd3a53d1e7d73785fdd35d5c9af5175ebe84b384ee9c659cee0027b4",
+      "bytes": 3322829
+    },
+    "t+0__b1_arm_rehearsal_v1__k24.json.gz": {
+      "sha256": "1b088761b80d34aaaec967e1dcceb4deced127133d42be9285aad977d044db0d",
+      "bytes": 3321926
+    },
+    "t+0__b1_arm_rehearsal_v1__k32.json.gz": {
+      "sha256": "5e00af52f7116d1ed69e7b6db07fa8e7a9d62515f172a9198621cd88120139c0",
+      "bytes": 3316997
+    },
+    "t+0__b1_knee_flex_v1__k00.json.gz": {
+      "sha256": "3e6feac98a7b13bedc0a9e7ee0d0b351d3c11a8de1297d9ee377a16ab11346cf",
+      "bytes": 3316971
+    },
+    "t+0__b1_knee_flex_v1__k08.json.gz": {
+      "sha256": "e853cf0a22c0c2d21ef14051f159e244002d028e446c64869625f05a8249df87",
+      "bytes": 3324637
+    },
+    "t+0__b1_knee_flex_v1__k16.json.gz": {
+      "sha256": "4c79a45eba0b4275d9059f889feda5fb0afe9ced80ee5d2ffd1af0c6d38efd9f",
+      "bytes": 3324383
+    },
+    "t+0__b1_knee_flex_v1__k24.json.gz": {
+      "sha256": "0ff718fa21d5ebe7fc3b80ca3974d4f82951e57d0fd8381aefb1d8fa30f98ede",
+      "bytes": 3324639
+    },
+    "t+0__b1_knee_flex_v1__k32.json.gz": {
+      "sha256": "0211ec1525aebda69123921e2351fba44d5445056717ffd17514b251f0186762",
+      "bytes": 3316987
+    },
+    "t+1__b1_arm_rehearsal_v1__k00.json.gz": {
+      "sha256": "00bed5324159ddd5a65bad3d4752adbc59eedcb2428409c62c9e924e68e4119d",
+      "bytes": 3318000
+    },
+    "t+1__b1_arm_rehearsal_v1__k08.json.gz": {
+      "sha256": "607532d46ecc48756a8ad152ad01503423c11784a56413083c16e0a77940b3a8",
+      "bytes": 3323973
+    },
+    "t+1__b1_arm_rehearsal_v1__k16.json.gz": {
+      "sha256": "cf74fade5f05e05da4166a5e1607709ca2377b5752a5e4259dc072afd0998825",
+      "bytes": 3324981
+    },
+    "t+1__b1_arm_rehearsal_v1__k24.json.gz": {
+      "sha256": "4a039d099bbca28581f227117cbb6e2e60b4d406846835349caf3710c7d6060b",
+      "bytes": 3323978
+    },
+    "t+1__b1_arm_rehearsal_v1__k32.json.gz": {
+      "sha256": "55da0b43044a34dc7d8b65dcaca79e6721693ad0be2fe6b8929f228ec3e4e2a8",
+      "bytes": 3318014
+    },
+    "t+1__b1_knee_flex_v1__k00.json.gz": {
+      "sha256": "19a5dce70eb4c62a00c490b7cbd3c0f830769fa325fddeee9650d2c7c867545e",
+      "bytes": 3317988
+    },
+    "t+1__b1_knee_flex_v1__k08.json.gz": {
+      "sha256": "908ddb22d347591e8d4e797b170a28ab7141e07186654d0c293175cf6b9cde66",
+      "bytes": 3325329
+    },
+    "t+1__b1_knee_flex_v1__k16.json.gz": {
+      "sha256": "9d7b76d237e05961ba54c54ac906376a320ac221947e574a4c561c0f087cfd14",
+      "bytes": 3325083
+    },
+    "t+1__b1_knee_flex_v1__k24.json.gz": {
+      "sha256": "fdf4f1e1a44275bc4eb1cf52b5f0d22ceb7ac7e4de8f9b9bff5e1df97a26ac53",
+      "bytes": 3325330
+    },
+    "t+1__b1_knee_flex_v1__k32.json.gz": {
+      "sha256": "8dd387dbdff894e2a3f5880875a3bb972fe84d85ccc0a20326ba03314e6e2d68",
+      "bytes": 3318004
+    }
+  },
+  "frame_count": 30,
+  "compressed_frame_bytes": 99688987,
+  "v1_assets": {
+    "base.obj": {
+      "bytes": 1798283,
+      "sha256": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2"
+    },
+    "body.mhclo": {
+      "bytes": 103864,
+      "sha256": "152e68fcc03cdbd08566b42d53dcb253546d7a71e3dabd62a95f8c72763aa5aa"
+    },
+    "composite.json": {
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    "empty.macro": {
+      "bytes": 20,
+      "sha256": "e0ca0537a591ee9d362fb69c381d793f0e4a64f6ce62d21c0d607edfdd8bf37c"
+    },
+    "garment/female_sportsuit01.mhclo": {
+      "bytes": 127990,
+      "sha256": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7"
+    },
+    "garment/female_sportsuit01.obj": {
+      "bytes": 146887,
+      "sha256": "f9f91788c1dd2918fceedd4dd4ada520f56fb8dfd68cbbeb9a4f6bfbd8e101a9"
+    },
+    "rig.game_engine.json": {
+      "bytes": 40936,
+      "sha256": "b324ddb4b707721c19630bfadb87c3e3b38eed3b6e4590bb3cead43ea918f799"
+    },
+    "targets/chin-jaw-drop-decr.target": {
+      "bytes": 1072,
+      "sha256": "6bf2cab4e65e5dd7456405ad3d0b68f4ec80b6130ff78349a02f650f33f7f443"
+    },
+    "targets/chin-jaw-drop-incr.target": {
+      "bytes": 857,
+      "sha256": "789b8d79f920786244d8e7de1d87ce4fff7e2650d7bf171a35ad22b9011d5238"
+    },
+    "targets/torso-scale-vert-decr.target": {
+      "bytes": 201357,
+      "sha256": "a7deb8343fb3ecfef46c6118662b1a40f0cfc33d79ff959c641dd796a17bed9f"
+    },
+    "targets/torso-scale-vert-incr.target": {
+      "bytes": 195076,
+      "sha256": "caa5e04cebd43ba40c9a98717fc7f177b14b43c1f01c37e15fef7a4cb4e6660c"
+    },
+    "vertex_groups.json": {
+      "bytes": 81984,
+      "sha256": "8cb1417bc55ae5ec8aa99f90734e81ed5fbb556511ff6a2c00e0534b70911444"
+    },
+    "weights.game_engine.json": {
+      "bytes": 3026778,
+      "sha256": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473"
+    }
+  },
+  "v1_payload_count": 13,
+  "v1_payload_bytes": 5725107,
+  "elapsed_seconds": 0.10887612495571375,
+  "status": "PASS"
+}
