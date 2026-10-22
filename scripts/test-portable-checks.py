@@ -63,25 +63,28 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         return [line.split("|") for line in self.log.read_text().splitlines()] if self.log.exists() else []
 
     def test_exact_original_command_inventory_and_order(self):
-        self.assertEqual([group["name"] for group in CATALOG], ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "frozen-upper-arm"])
+        self.assertEqual([group["name"] for group in CATALOG], ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "current19-shoulder-refit", "frozen-upper-arm"])
         self.assertEqual(CATALOG[0]["run"], "python3 -B scripts/test-portable-checks.py\npython3 -B -O scripts/test-portable-checks.py\n")
         self.assertEqual(CATALOG[1]["run"], "python3 -B scripts/test-ci-timing.py\npython3 -B -O scripts/test-ci-timing.py\n")
-        self.assertEqual(CATALOG[-4]["run"],
+        self.assertEqual(CATALOG[-5]["run"],
                          "python3 -B -m unittest discover -s experiments/83-native-cache-trial -p 'test_*.py' -v\n"
                          "python3 -B -O -m unittest discover -s experiments/83-native-cache-trial -p 'test_*.py' -v\n")
-        self.assertEqual(CATALOG[-3]["run"], "python3 -B experiments/83-native-cache-trial/main_policy/test_policy.py\npython3 -B -O experiments/83-native-cache-trial/main_policy/test_policy.py\n")
-        for group in [*CATALOG[2:-4], CATALOG[-1]]:
+        self.assertEqual(CATALOG[-4]["run"], "python3 -B experiments/83-native-cache-trial/main_policy/test_policy.py\npython3 -B -O experiments/83-native-cache-trial/main_policy/test_policy.py\n")
+        for group in [*CATALOG[2:-5], CATALOG[-1]]:
             self.assertEqual(hashlib.sha256(group["run"].encode()).hexdigest(), BASELINE[group["name"]])
 
     def test_rest_refit_controls_retain_both_modes(self):
-        self.assertEqual(CATALOG[-2]["run"], 'cargo fmt --manifest-path experiments/84-shoulder-rest-refit/replay/Cargo.toml --package nvwa-shoulder-rest-replay --check\ncargo fmt --manifest-path experiments/84-shoulder-rest-refit/wasm-replay/Cargo.toml --package nvwa-shoulder-wasm-replay --check\nfor part in replay evaluation authoring wasm-replay; do\n  python3 -B -m unittest discover -s "experiments/84-shoulder-rest-refit/$part" -p \'test_*.py\' -v\n  python3 -B -O -m unittest discover -s "experiments/84-shoulder-rest-refit/$part" -p \'test_*.py\' -v\ndone\n')
+        self.assertEqual(CATALOG[-3]["run"], 'cargo fmt --manifest-path experiments/84-shoulder-rest-refit/replay/Cargo.toml --package nvwa-shoulder-rest-replay --check\ncargo fmt --manifest-path experiments/84-shoulder-rest-refit/wasm-replay/Cargo.toml --package nvwa-shoulder-wasm-replay --check\nfor part in replay evaluation authoring wasm-replay; do\n  python3 -B -m unittest discover -s "experiments/84-shoulder-rest-refit/$part" -p \'test_*.py\' -v\n  python3 -B -O -m unittest discover -s "experiments/84-shoulder-rest-refit/$part" -p \'test_*.py\' -v\ndone\n')
+
+    def test_current19_controls_retain_exact_commands_and_both_modes(self):
+        self.assertEqual(CATALOG[-2]["run"], "cargo fmt --manifest-path experiments/85-current19-shoulder-refit/replay/Cargo.toml --package nvwa-current19-replay --check\npython3 -B -m unittest discover -s experiments/85-current19-shoulder-refit -p 'test_*.py' -v\npython3 -B -O -m unittest discover -s experiments/85-current19-shoulder-refit -p 'test_*.py' -v\n")
 
     def test_workflow_uses_every_group_once_and_preserves_timeouts(self):
         workflow = (ROOT / ".github/workflows/ci.yml").read_text()
         portable = workflow.split("  portable:\n", 1)[1].split("  native-and-wasm:\n", 1)[0]
         calls = [line.strip().removeprefix("run: ") for line in portable.splitlines()
                  if "python3 -B scripts/check-portable.py " in line]
-        self.assertEqual(calls, [f"python3 -B scripts/check-portable.py {name}" for name in ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "frozen-upper-arm"]])
+        self.assertEqual(calls, [f"python3 -B scripts/check-portable.py {name}" for name in ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "current19-shoulder-refit", "frozen-upper-arm"]])
         self.assertEqual(portable.count("timeout-minutes: 3"), 2)
         self.assertIn("timeout-minutes: 6", portable)
         self.assertIn("timeout-minutes: 5", portable)
@@ -91,7 +94,7 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         result = self.call("all")
         self.assertEqual(result.returncode, 0, result.stderr)
         headings = [line.split("]", 1)[0][1:] for line in result.stdout.splitlines() if line.startswith("[")]
-        self.assertEqual(headings, ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "frozen-upper-arm"])
+        self.assertEqual(headings, ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "current19-shoulder-refit", "frozen-upper-arm"])
         records = self.records()
         self.assertEqual(records[0][:2], ["python3", "-B scripts/test-portable-checks.py"])
         self.assertEqual(records[1][:2], ["python3", "-B -O scripts/test-portable-checks.py"])

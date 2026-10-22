@@ -26,6 +26,16 @@ policy = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(policy)
 
 
+WORKFLOW_ADDITIONS = (
+    ('      - name: Check isolated shoulder rest-refit controls\n'
+     '        run: python3 -B scripts/check-portable.py shoulder-rest-refit\n',
+     'required exact shoulder rest-refit addition'),
+    ('      - name: Check current nineteen-case shoulder controls\n'
+     '        run: python3 -B scripts/check-portable.py current19-shoulder-refit\n',
+     'required exact current19 shoulder addition'),
+)
+
+
 class Policy(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='nvwa-main-policy-', dir=Path('/tmp').resolve())
@@ -542,22 +552,20 @@ class Policy(unittest.TestCase):
     def test_missing_or_duplicate_shoulder_step_rejects_existing_workflow_contract(self):
         workflow_path=ROOT/'.github/workflows/ci.yml'
         original=workflow_path.read_text()
-        addition=('      - name: Check isolated shoulder rest-refit controls\n'
-                  '        run: python3 -B scripts/check-portable.py shoulder-rest-refit\n')
         read_text=Path.read_text
-        for replacement in ('',addition+addition):
-            mutant=original.replace(addition,replacement)
-            def read(path,*args,**kwargs):
-                return mutant if path==workflow_path else read_text(path,*args,**kwargs)
-            with self.subTest(step_count=mutant.count(addition)),patch.object(Path,'read_text',read):
-                with self.assertRaisesRegex(AssertionError,'required exact shoulder rest-refit addition'):
-                    self.test_workflow_original_bodies_main_scope_and_trial_phase_policy()
+        for addition,message in WORKFLOW_ADDITIONS:
+            for replacement in ('',addition+addition):
+                mutant=original.replace(addition,replacement)
+                def read(path,*args,**kwargs):
+                    return mutant if path==workflow_path else read_text(path,*args,**kwargs)
+                with self.subTest(addition=message,step_count=mutant.count(addition)),patch.object(Path,'read_text',read):
+                    with self.assertRaisesRegex(AssertionError,message):
+                        self.test_workflow_original_bodies_main_scope_and_trial_phase_policy()
 
     def test_workflow_original_bodies_main_scope_and_trial_phase_policy(self):
         text=(ROOT/'.github/workflows/ci.yml').read_text()
-        addition=('      - name: Check isolated shoulder rest-refit controls\n'
-                  '        run: python3 -B scripts/check-portable.py shoulder-rest-refit\n')
-        self.assertEqual(text.count(addition),1,'required exact shoulder rest-refit addition')
+        for addition,message in WORKFLOW_ADDITIONS:
+            self.assertEqual(text.count(addition),1,message)
         blocks=re.findall(r'(?ms)^ +# native-main-cache begin\n.*?^ +# native-main-cache end\n',text)
         self.assertEqual(len(blocks),3)
         body=''.join(blocks)
@@ -572,7 +580,8 @@ class Policy(unittest.TestCase):
         stripped=re.sub(r'(?ms)^  # native-cache-trial begin\n.*?^  # native-cache-trial end\n','',text)
         stripped=re.sub(r'(?ms)^ +# native-cache-trial begin\n.*?^ +# native-cache-trial end\n','',stripped)
         stripped=re.sub(r'(?ms)^ +# native-main-cache begin\n.*?^ +# native-main-cache end\n','',stripped)
-        stripped=stripped.replace(addition,'')
+        for addition,message in WORKFLOW_ADDITIONS:
+            stripped=stripped.replace(addition,'')
         self.assertEqual(hashlib.sha256(stripped.encode()).hexdigest(),'5bdd5efa6b48150c2fbf19eb9cb1b9f1ae64303caea87bfc9c2615b58c201302')
         self.assertEqual(json.loads((ROOT/'experiments/83-native-cache-trial/phase.json').read_text()),{'phase':'adopted'})
         native=text.split('  native-and-wasm:\n',1)[1].split('  b1-source-regression:\n',1)[0]

@@ -70,6 +70,11 @@
     "run": "cargo fmt --manifest-path experiments/84-shoulder-rest-refit/replay/Cargo.toml --package nvwa-shoulder-rest-replay --check\ncargo fmt --manifest-path experiments/84-shoulder-rest-refit/wasm-replay/Cargo.toml --package nvwa-shoulder-wasm-replay --check\nfor part in replay evaluation authoring wasm-replay; do\n  python3 -B -m unittest discover -s \"experiments/84-shoulder-rest-refit/$part\" -p 'test_*.py' -v\n  python3 -B -O -m unittest discover -s \"experiments/84-shoulder-rest-refit/$part\" -p 'test_*.py' -v\ndone\n"
   },
   {
+    "name": "current19-shoulder-refit",
+    "title": "Check current nineteen-case shoulder controls",
+    "run": "cargo fmt --manifest-path experiments/85-current19-shoulder-refit/replay/Cargo.toml --package nvwa-current19-replay --check\npython3 -B -m unittest discover -s experiments/85-current19-shoulder-refit -p 'test_*.py' -v\npython3 -B -O -m unittest discover -s experiments/85-current19-shoulder-refit -p 'test_*.py' -v\n"
+  },
+  {
     "name": "frozen-upper-arm",
     "title": "Check frozen upper-arm comparison and retained runtime captures",
     "run": "python3 -B experiments/50-upper-arm-neutral-ab/test_candidate.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_candidate.py\npython3 -B experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py\npython3 -B experiments/50-upper-arm-neutral-ab/test_runtime_measure.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_measure.py\npython3 -B experiments/50-upper-arm-neutral-ab/runtime_evidence.py\nmkdir -p .work/ci-neutral50\nfor platform in native web; do\n  for variant in baseline candidate; do\n    python3 -B experiments/50-upper-arm-neutral-ab/probe/compare.py \"experiments/50-upper-arm-neutral-ab/results/$platform-$variant.json\" --variant \"$variant\" --output \".work/ci-neutral50/$platform-$variant.json\"\n  done\ndone\n"

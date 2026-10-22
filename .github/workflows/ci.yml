@@ -69,6 +69,8 @@ jobs:
       # native-main-cache end
       - name: Check isolated shoulder rest-refit controls
         run: python3 -B scripts/check-portable.py shoulder-rest-refit
+      - name: Check current nineteen-case shoulder controls
+        run: python3 -B scripts/check-portable.py current19-shoulder-refit
       - name: Check frozen upper-arm comparison and retained runtime captures
         timeout-minutes: 5
         run: python3 -B scripts/check-portable.py frozen-upper-arm
