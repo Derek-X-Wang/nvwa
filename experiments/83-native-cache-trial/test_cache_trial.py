@@ -54,6 +54,9 @@ def historical_macos_workflow(workflow, checks):
     for header in MACOS15_HEADERS:
         checks.assertEqual(workflow.count(header), 1, 'required exact retained Mac job policy')
         workflow = workflow.replace(header, header.replace('macos-15', 'macos-14'))
+    # Preserve the existing exact addition diagnostics before the stronger digest.
+    for addition, message in WORKFLOW_ADDITIONS:
+        checks.assertEqual(workflow.count(addition), 1, message)
     # Keep the entire reviewed 2e6dc2e workflow, including optional warm/cache
     # policy blocks which the older historical comparisons deliberately remove.
     checks.assertEqual(hashlib.sha256(workflow.encode()).hexdigest(),
