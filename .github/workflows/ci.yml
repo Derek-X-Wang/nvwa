@@ -82,7 +82,7 @@ jobs:
     name: macOS CPU tests and Wasm compile check
     # Reject cheap portable failures before spending a cold graphical compile.
     needs: portable
-    runs-on: macos-14
+    runs-on: macos-15
     # The measured original lane already takes about 30 minutes cold. Keep a
     # finite bound for native tests, mutation witnesses and continuous motion.
     timeout-minutes: 60
@@ -317,7 +317,7 @@ jobs:
     # Reject cheap portable failures before spending a cold graphical compile.
     if: ${{ needs.native-and-wasm.outputs.trial_enabled == 'true' }}
     needs: [native-and-wasm, b1-source-regression]
-    runs-on: macos-14
+    runs-on: macos-15
     # The measured original lane already takes about 30 minutes cold. Keep a
     # finite bound for native tests, mutation witnesses and continuous motion.
     timeout-minutes: 60

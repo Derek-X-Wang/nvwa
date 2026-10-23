@@ -30,6 +30,41 @@ WORKFLOW_ADDITIONS = (
 )
 
 
+# macos15-arm64-v1: admit only the paired retained-job image replacement.
+MACOS15_HEADERS = (
+    """  native-and-wasm:
+    name: macOS CPU tests and Wasm compile check
+    # Reject cheap portable failures before spending a cold graphical compile.
+    needs: portable
+    runs-on: macos-15
+""",
+    """  native-cache-warm:
+    name: macOS native target cache warm trial
+    # Reject cheap portable failures before spending a cold graphical compile.
+    if: ${{ needs.native-and-wasm.outputs.trial_enabled == 'true' }}
+    needs: [native-and-wasm, b1-source-regression]
+    runs-on: macos-15
+""",
+)
+
+
+def historical_macos_workflow(workflow, checks):
+    checks.assertEqual(workflow.count('    runs-on: macos-15\n'), 2,
+                       'required paired standard ARM64 macos-15 migration')
+    for header in MACOS15_HEADERS:
+        checks.assertEqual(workflow.count(header), 1, 'required exact retained Mac job policy')
+        workflow = workflow.replace(header, header.replace('macos-15', 'macos-14'))
+    # Preserve the existing exact addition diagnostics before the stronger digest.
+    for addition, message in WORKFLOW_ADDITIONS:
+        checks.assertEqual(workflow.count(addition), 1, message)
+    # Keep the entire reviewed 2e6dc2e workflow, including optional warm/cache
+    # policy blocks which the older historical comparisons deliberately remove.
+    checks.assertEqual(hashlib.sha256(workflow.encode()).hexdigest(),
+                       'de16867ec382bb3915ce676ec5bddd68aaf239f51808663650e0b9d805181757',
+                       'runner migration must be exactly the paired label replacement')
+    return workflow
+
+
 # linux-b1-v2: validate the complete approved addition before historical comparison.
 B1_LINUX_HEADER = """  b1-source-regression:
     name: Linux B1 source regression and viewer checks
@@ -258,6 +293,22 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
         shutil.rmtree(self.target)
         self.target.symlink_to(self.temp, target_is_directory=True)
         self.assertNotEqual(self.call('prepare').returncode, 0)
+
+    def test_macos15_cannot_consume_old_image_trial_key(self):
+        old_key = self.prepare()  # Historical macos14 fixture, same source/run.
+        for changes in [{'ImageOS': 'macos15'}, {'ImageOS': 'macos15', 'ImageVersion': 'new-image'}]:
+            with self.subTest(changes=changes):
+                result = self.call('prepare', **changes)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                rows = [json.loads(line.removeprefix('NVWA_NATIVE_CACHE ')) for line in result.stdout.splitlines()]
+                new_key = next(row['key'] for row in rows if row['stage'] == 'prepare')
+                self.assertNotEqual(new_key, old_key)
+                warm = self.call('prepare', 'warm', TRIAL_EXPECTED_KEY=old_key, **changes)
+                self.assertNotEqual(warm.returncode, 0)
+                self.assertIn('producer source/toolchain/image/config differs', warm.stderr)
+                hit = self.receipt(old_key, 'warm', TRIAL_HIT='true', TRIAL_MATCHED=old_key, **changes)
+                self.assertNotEqual(hit.returncode, 0)
+                self.assertIn('cache primary key mismatch', hit.stderr)
 
     def test_receipts_cannot_convert_unavailable_or_warning_save_into_warm_hit(self):
         key = self.prepare()
@@ -535,8 +586,35 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
                 with self.assertRaises(AssertionError):
                     self.test_exact_original_workflow_and_full_warm_step_policy_parity()
 
+    def test_macos15_overlay_rejects_partial_mixed_and_unrelated_changes(self):
+        workflow_path = ROOT / '.github/workflows/ci.yml'
+        original = workflow_path.read_text()
+        read_text = Path.read_text
+        mutations = []
+        for header in MACOS15_HEADERS:
+            for label in ['macos-14', 'macos-latest', 'macos-26', 'macos-15-intel',
+                          'macos-15-large', 'macos-15-xlarge', 'unknown']:
+                mutations.append(original.replace(header, header.replace('macos-15', label)))
+            mutations.append(original.replace(header, header+'    continue-on-error: true\n'))
+            mutations.append(original.replace(header, header*2))
+            mutations.append(original.replace(header, header.replace('needs:', 'extra:')))
+        for label in ['macos-14', 'macos-latest', 'macos-15-intel', 'macos-15-xlarge']:
+            mutations.append(original.replace('runs-on: macos-15', 'runs-on: '+label))
+        mutations.extend([original.replace("CARGO_BUILD_JOBS: '1'", "CARGO_BUILD_JOBS: '2'"),
+                          original.replace('timeout-minutes: 60', 'timeout-minutes: 61'),
+                          original.replace('cargo test --manifest-path', 'cargo check --manifest-path'),
+                          original.replace('runs-on: ubuntu-24.04', 'runs-on: macos-15')])
+        for index, mutant in enumerate(mutations):
+            self.assertNotEqual(mutant, original)
+            def read(path, *args, **kwargs):
+                return mutant if path == workflow_path else read_text(path, *args, **kwargs)
+            with self.subTest(mutation=index), patch.object(Path, 'read_text', read):
+                with self.assertRaises(AssertionError):
+                    self.test_exact_original_workflow_and_full_warm_step_policy_parity()
+
     def test_exact_original_workflow_and_full_warm_step_policy_parity(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+        workflow = historical_macos_workflow(workflow, self)
         baseline = historical_b1_workflow(workflow, self)
         for addition, message in WORKFLOW_ADDITIONS:
             self.assertEqual(workflow.count(addition), 1, message)

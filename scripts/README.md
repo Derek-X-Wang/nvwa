@@ -85,6 +85,50 @@ group. `scripts/check-b1-work.sh` remains the separate scoped native/Web package
 helper. Native CPU, source runtime, Wasm compilation and actual Web/native visual
 acceptance remain separate gates; portable success does not prove them.
 
+## Retained Mac runner migration (#114)
+
+The retained `native-and-wasm` and conditional `native-cache-warm` jobs use
+`macos-15`. This pins the OS major, not a particular image release. GitHub's
+[standard public-runner table](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories)
+and [image label table](https://github.com/actions/runner-images#available-images),
+checked on 2026-10-22, identify this label as ARM64 (M1), with three CPUs and
+7 GB RAM, free for public repositories. The Intel and larger-runner labels are
+separate labels. GitHub [retires macOS 14 on 2026-11-02](https://github.com/actions/runner-images/issues/13518).
+
+The [macOS 15 ARM64 software inventory](https://github.com/actions/runner-images/blob/main/images/macos/macos-15-arm64-Readme.md)
+currently lists default Xcode 16.4 and its macOS 15.5 SDK, Bash, Python, Node,
+Clang and the archive tools used by the existing commands. The workflow keeps
+its explicit Rust 1.95.0 installation and Wasm target. The [Rust 1.95.0
+platform contract](https://github.com/rust-lang/rust/blob/1.95.0/src/doc/rustc/src/platform-support/apple-darwin.md)
+supports ARM64 macOS 11 or later, requires Xcode 9.2 or later, and describes
+automatic host SDK discovery. These published requirements support the choice;
+actual SDK linking, tests, motion witnesses
+and Wasm compilation on that hosted image remain **NOT-RUN** until separately
+authorized acquisition and reviewed-PR/merged-main receipts exist. Availability
+of the label does not establish queue time or completion on a particular run.
+
+The three independent timing/trial/main-cache workflow contracts admit only
+the complete paired label replacement. Reversing that pair must reproduce the
+entire reviewed `2e6dc2e` workflow, including warm/cache policy blocks. The older
+historical hashes and command assertions remain intact. Partial, Intel, large, unknown and mixed runner
+replacements fail. Existing commands, profiles, dependencies, budgets, frequency,
+job dependencies and conditional trial activation stay unchanged. The adopted
+cache phase still does not enable an extra warm job. The B1 Linux migration
+and [B1 Mac milestone policy](../docs/agents/b1-macos-milestone.md) are unchanged.
+
+The existing main seed identity includes the actual runner image/version,
+Xcode, SDK metadata, compiler/linker bytes, Rust and archive tools. Trial keys
+include the actual image/version and Rust identity. Both also bind source or
+tracked compatibility inputs. The migration changes the key through these
+existing inputs; it does not change the key algorithm or add fallback keys.
+New controls prove that an old-image key or marker cannot count as a new-image
+hit, and that the main policy clears such a restore for the existing cold
+fallback. Historical cache receipts remain evidence for their original image.
+
+This migration leaves #112's original Linux native failure and optimized
+NOT-RUN, #3's blockage and #4's measurement gaps unchanged. It establishes no
+new desktop, performance or production acceptance.
+
 ## CI phase observations
 
 `ci-timing.py` observes the existing bounded workflow. The same
