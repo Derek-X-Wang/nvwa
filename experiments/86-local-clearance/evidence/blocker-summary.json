@@ -1,0 +1,4634 @@
+{
+  "schema_version": 1,
+  "kind": "nvwa86-local-clearance-diagnostic-v1",
+  "status": "PASS_BOUNDED_BLOCKER_REQUERY_NOT_CONTACT_POLICY",
+  "corpus": {
+    "authenticated_raw_records": 20,
+    "authenticated_gzip_cases": 19,
+    "full19_geometry_rerun": "NOT-RUN; original hash-bound audit retained",
+    "body_vertices": 19158,
+    "garment_mapping_rows": 1797,
+    "signed_mapping_rows": 30,
+    "f32_offset_scales": [
+      1.0586552619934082,
+      1.0566942691802979,
+      1.0411678552627563
+    ],
+    "full_positive_weights": {
+      "body": {
+        "source_rows": 19158,
+        "render_rows": 22077,
+        "max_positive_influences": 7,
+        "rows_above_four_influences": 981,
+        "source_to_raw_exact_match": true
+      },
+      "garment": {
+        "source_rows": 1797,
+        "render_rows": 1986,
+        "max_positive_influences": 6,
+        "rows_above_four_influences": 283,
+        "source_to_raw_exact_match": true
+      }
+    },
+    "posed_skin_arithmetic": "NOT-RUN; raw anchor aggregate weights only"
+  },
+  "surfaces": {
+    "displayed": {
+      "triangles": 22892,
+      "vertices_used": 11574,
+      "edges_by_incidence": {
+        "1": 246,
+        "2": 34215
+      },
+      "inconsistent_directed_edge_pairs": 0,
+      "closed_two_manifold_edge_test": false
+    },
+    "unmasked_real_body": {
+      "triangles": 26756,
+      "vertices_used": 13380,
+      "edges_by_incidence": {
+        "2": 40134
+      },
+      "inconsistent_directed_edge_pairs": 0,
+      "closed_two_manifold_edge_test": true
+    }
+  },
+  "body_mask": {
+    "owner": "garment/female_sportsuit01.mhclo:delete_verts",
+    "deleted_source_ids": 4678,
+    "predicate": "omit polygon if any ID >=13380 OR all IDs in garment delete_verts",
+    "unmasked_comparison_change": "omit only the all-IDs-in-delete_verts predicate"
+  },
+  "queries": {
+    "displayed": 27,
+    "unmasked_real_body": 27
+  },
+  "retained_fixed_inequalities": 30,
+  "unique_blocker_logical_samples": 27,
+  "unique_blocker_body_faces": 16,
+  "displayed_features_by_inequality": {
+    "edge": 13,
+    "vertex": 2,
+    "interior": 15
+  },
+  "displayed_mask_boundary_inequalities": 11,
+  "displayed_distance_m_range": [
+    0.0006285672158539618,
+    0.07739347531211585
+  ],
+  "unmasked_distance_m_range": [
+    0.0006285672158539618,
+    0.008799205248239591
+  ],
+  "surface_only_change_under_original_fixed_margin_model": {
+    "zero_direction_logical_samples": 27,
+    "unmasked_inequalities": 29,
+    "unmasked_below_1mm_inequalities": 19,
+    "unmasked_below_1mm_logical_samples": 17,
+    "unmasked_negative_projection_inequalities": 15,
+    "interpretation": "Still infeasible with unchanged patch/1mm supporting-plane model. No inside/outside conclusion."
+  },
+  "preserved": {
+    "historical117_exact_bytes": true,
+    "old_v3_rejection": true,
+    "old_v4_rejection": true,
+    "old_crossing_source_and_inputs": true,
+    "v4_309_source_files_and_capsule_exact_bytes": true
+  },
+  "not_run": [
+    "other554 logical nearest queries",
+    "full30 source-direction reconstruction",
+    "new contact predicate or inside/outside classification",
+    "posed full body reconstruction",
+    "old crossing algorithm replay",
+    "new authoring/refit/candidate/scoring",
+    "build/capture/download/model/GPU/UI",
+    "Web A/B and CLI candidate exchange"
+  ],
+  "elapsed_seconds": 37.64918083278462,
+  "raw_diagnostic_receipt": {
+    "bytes": 263465,
+    "sha256": "50ccf0c75a6a762dae1b6642411edfdb7f10d70a2e5ba09c0000b936c0a2baff"
+  },
+  "inputs": {
+    "public_v4_summary": {
+      "bytes": 9050,
+      "sha256": "966cfcd5cec4455cccbd90505c5aee8590a1eaf06ae3ecc1ea3a292c18589a05"
+    },
+    "v4_rejected_receipt": {
+      "bytes": 3103250,
+      "sha256": "e2950b175f7a84ae15062d5a29b68492cf2ee73a91eef95594bdc89438ee832d"
+    },
+    "v4_freeze": {
+      "bytes": 58685,
+      "sha256": "3f9a2a48390436f4955d65cef684e811ecfaeaab6dcdf755a0ac844a7cf53e48"
+    },
+    "corpus_manifest": {
+      "bytes": 11611,
+      "sha256": "bd3d5763bc15eadc258327e2bbefb625788663daa0ed8b8d20dcefd99726e7e6"
+    },
+    "capture_source_inventory": {
+      "bytes": 51370,
+      "sha256": "b5c9f5e9887bfa59de342bab153a94a225e7711e954a907e5348106e65f191fc"
+    },
+    "original_v3_rejection": {
+      "bytes": 2146411,
+      "sha256": "10c8394cdb980d347a3c8bfbf0c034b858efdbf6bd13ba7750b804192759fd99"
+    },
+    "previous_all19_independent_audit": {
+      "bytes": 72928,
+      "sha256": "5bacb587289abd50956e3498fb9d46f6d6edb0207d0f696e677cbd4b294a2d43"
+    },
+    "old_crossing_red_evidence": {
+      "bytes": 3842,
+      "sha256": "65b9f643f83b9d875d04e725349ba5e5c824308a0d9bb51e45e7e5d0bf716515"
+    },
+    "base.obj": {
+      "bytes": 1798283,
+      "sha256": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2"
+    },
+    "body.mhclo": {
+      "bytes": 103864,
+      "sha256": "152e68fcc03cdbd08566b42d53dcb253546d7a71e3dabd62a95f8c72763aa5aa"
+    },
+    "garment/female_sportsuit01.obj": {
+      "bytes": 146887,
+      "sha256": "f9f91788c1dd2918fceedd4dd4ada520f56fb8dfd68cbbeb9a4f6bfbd8e101a9"
+    },
+    "garment/female_sportsuit01.mhclo": {
+      "bytes": 127990,
+      "sha256": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7"
+    },
+    "weights.game_engine.json": {
+      "bytes": 3026778,
+      "sha256": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473"
+    },
+    "rig.game_engine.json": {
+      "bytes": 40936,
+      "sha256": "b324ddb4b707721c19630bfadb87c3e3b38eed3b6e4590bb3cead43ea918f799"
+    }
+  },
+  "audit_source": {
+    "bytes": 23027,
+    "sha256": "aa027e43fba6569a4b0a368b81cef0d84bf44a5b16a9fc3ca14580aacfb0fdef"
+  },
+  "geometry_source": {
+    "bytes": 4459,
+    "sha256": "20227baae5e94fae547b3b40ae0725fc29aa5e2572b38aa74c5797ef585ef78e"
+  },
+  "body_group": {
+    "polygons": 13378,
+    "excluded_source_id_ge13380": 0,
+    "displayed_polygons": 11446,
+    "garment_deleted_real_polygons": 1932
+  },
+  "excluded_group_polygon_totals": {
+    "helper-": 4358,
+    "joint-": 750
+  },
+  "rows": [
+    {
+      "logical_sample0": 198,
+      "body_triangle0": 13665,
+      "retained_d_m": -0.008151335683567537,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13665,
+        "obj_face0": 7943,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8318,
+          8308,
+          8309
+        ],
+        "point": [
+          0.23520642345571074,
+          0.4902141975275404,
+          -0.012966001344914966
+        ],
+        "barycentric": [
+          0.0,
+          0.4213608733238412,
+          0.5786391266761588
+        ],
+        "distance_squared_m2": 0.0053404831493489326,
+        "bounded_distance_m": 0.07307860938297152,
+        "normal": [
+          0.6478276348921463,
+          0.3977405888040229,
+          -0.6497089960035008
+        ],
+        "supporting_plane_projection_m": -0.008151335683567537,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8308,
+            8309
+          ],
+          "incident_triangle_ids": [
+            13665
+          ],
+          "boundary_edges": [
+            [
+              8308,
+              8309
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7934,
+              "obj_group": "body",
+              "sources": [
+                8309,
+                8308,
+                8298,
+                8299
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7943,
+              "obj_group": "body",
+              "sources": [
+                8318,
+                8317,
+                8308,
+                8309
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15807,
+          "obj_face0": 7903,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8276,
+            8235,
+            8236
+          ],
+          "point": [
+            0.20207350400158156,
+            0.5512017922904499,
+            0.0075062716522052274
+          ],
+          "barycentric": [
+            0.6668533370028619,
+            0.02195706814417228,
+            0.3111895948529658
+          ],
+          "distance_squared_m2": 7.629608918958993e-06,
+          "bounded_distance_m": 0.0027621746720580495,
+          "normal": [
+            0.6628045807143051,
+            0.7178748762295994,
+            -0.21294541521824664
+          ],
+          "supporting_plane_projection_m": 0.0027621746720580495,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8235,
+              8236,
+              8276
+            ],
+            "incident_triangle_ids": [
+              15807
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7903,
+                "obj_group": "body",
+                "sources": [
+                  8276,
+                  8275,
+                  8235,
+                  8236
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 204,
+      "body_triangle0": 13665,
+      "retained_d_m": -0.008151335683567537,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13665,
+        "obj_face0": 7943,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8318,
+          8308,
+          8309
+        ],
+        "point": [
+          0.23520642345571074,
+          0.4902141975275404,
+          -0.012966001344914966
+        ],
+        "barycentric": [
+          0.0,
+          0.4213608733238412,
+          0.5786391266761588
+        ],
+        "distance_squared_m2": 0.0053404831493489326,
+        "bounded_distance_m": 0.07307860938297152,
+        "normal": [
+          0.6478276348921463,
+          0.3977405888040229,
+          -0.6497089960035008
+        ],
+        "supporting_plane_projection_m": -0.008151335683567537,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8308,
+            8309
+          ],
+          "incident_triangle_ids": [
+            13665
+          ],
+          "boundary_edges": [
+            [
+              8308,
+              8309
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7934,
+              "obj_group": "body",
+              "sources": [
+                8309,
+                8308,
+                8298,
+                8299
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7943,
+              "obj_group": "body",
+              "sources": [
+                8318,
+                8317,
+                8308,
+                8309
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15807,
+          "obj_face0": 7903,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8276,
+            8235,
+            8236
+          ],
+          "point": [
+            0.20207350400158156,
+            0.5512017922904499,
+            0.0075062716522052274
+          ],
+          "barycentric": [
+            0.6668533370028619,
+            0.02195706814417228,
+            0.3111895948529658
+          ],
+          "distance_squared_m2": 7.629608918958993e-06,
+          "bounded_distance_m": 0.0027621746720580495,
+          "normal": [
+            0.6628045807143051,
+            0.7178748762295994,
+            -0.21294541521824664
+          ],
+          "supporting_plane_projection_m": 0.0027621746720580495,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8235,
+              8236,
+              8276
+            ],
+            "incident_triangle_ids": [
+              15807
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7903,
+                "obj_group": "body",
+                "sources": [
+                  8276,
+                  8275,
+                  8235,
+                  8236
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 207,
+      "body_triangle0": 13661,
+      "retained_d_m": -0.02168344586216176,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13661,
+        "obj_face0": 7941,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8319,
+          8309,
+          8310
+        ],
+        "point": [
+          0.24408834874309265,
+          0.4914409716434104,
+          -6.596719437208147e-05
+        ],
+        "barycentric": [
+          0.0,
+          0.5141736649886577,
+          0.4858263350113423
+        ],
+        "distance_squared_m2": 0.005989750020887087,
+        "bounded_distance_m": 0.07739347531211585,
+        "normal": [
+          0.8285967830737658,
+          0.3221452025852291,
+          -0.4578753537057093
+        ],
+        "supporting_plane_projection_m": -0.021683445862161782,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8309,
+            8310
+          ],
+          "incident_triangle_ids": [
+            13661
+          ],
+          "boundary_edges": [
+            [
+              8309,
+              8310
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7932,
+              "obj_group": "body",
+              "sources": [
+                8310,
+                8309,
+                8299,
+                8300
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7941,
+              "obj_group": "body",
+              "sources": [
+                8319,
+                8318,
+                8309,
+                8310
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15954,
+          "obj_face0": 7977,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8059,
+            8276,
+            8236
+          ],
+          "point": [
+            0.2007913310406494,
+            0.5522398162440181,
+            0.017492551371307636
+          ],
+          "barycentric": [
+            0.5035833312348126,
+            0.10886143627763195,
+            0.3875552324875555
+          ],
+          "distance_squared_m2": 1.1137906602366593e-05,
+          "bounded_distance_m": 0.0033373502366947634,
+          "normal": [
+            0.6864413422825293,
+            0.7268488695112162,
+            0.02211344603689311
+          ],
+          "supporting_plane_projection_m": 0.0033373502366947634,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8059,
+              8236,
+              8276
+            ],
+            "incident_triangle_ids": [
+              15954
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7977,
+                "obj_group": "body",
+                "sources": [
+                  8059,
+                  8276,
+                  8236,
+                  8069
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 214,
+      "body_triangle0": 13498,
+      "retained_d_m": -0.0020335117010280585,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13498,
+        "obj_face0": 7710,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8129,
+          8130,
+          8104
+        ],
+        "point": [
+          0.22403412905935666,
+          0.4865831337458138,
+          0.05122617128784525
+        ],
+        "barycentric": [
+          0.5832789795056145,
+          0.41672102049438553,
+          0.0
+        ],
+        "distance_squared_m2": 0.005237159244543849,
+        "bounded_distance_m": 0.07236821985197542,
+        "normal": [
+          0.29247704988931866,
+          0.2668605864900484,
+          0.9182824198830272
+        ],
+        "supporting_plane_projection_m": -0.0020335117010280438,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8129,
+            8130
+          ],
+          "incident_triangle_ids": [
+            13498
+          ],
+          "boundary_edges": [
+            [
+              8129,
+              8130
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7709,
+              "obj_group": "body",
+              "sources": [
+                8093,
+                8094,
+                8130,
+                8129
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7710,
+              "obj_group": "body",
+              "sources": [
+                8129,
+                8130,
+                8104,
+                8103
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15535,
+          "obj_face0": 7767,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8069,
+            8139,
+            8059
+          ],
+          "point": [
+            0.19896132925778837,
+            0.5503004426625331,
+            0.03554766924076046
+          ],
+          "barycentric": [
+            0.3294392381923892,
+            0.49352188211978754,
+            0.17703887968782328
+          ],
+          "distance_squared_m2": 2.3051542720201808e-05,
+          "bounded_distance_m": 0.004801202216133144,
+          "normal": [
+            0.6302891989900213,
+            0.7523712186535075,
+            0.19150215397836465
+          ],
+          "supporting_plane_projection_m": 0.004801202216133144,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8059,
+              8069,
+              8139
+            ],
+            "incident_triangle_ids": [
+              15535
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7767,
+                "obj_group": "body",
+                "sources": [
+                  8069,
+                  8140,
+                  8139,
+                  8059
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 233,
+      "body_triangle0": 13669,
+      "retained_d_m": -0.0012762757311396283,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13669,
+        "obj_face0": 7945,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8317,
+          8307,
+          8308
+        ],
+        "point": [
+          0.22138936329110986,
+          0.4877840584799046,
+          -0.024705182198384988
+        ],
+        "barycentric": [
+          0.0,
+          0.5057350727044847,
+          0.49426492729551535
+        ],
+        "distance_squared_m2": 0.0032710232407551646,
+        "bounded_distance_m": 0.057192860050492005,
+        "normal": [
+          0.47645001196165077,
+          0.2465580743127932,
+          -0.8439220948007642
+        ],
+        "supporting_plane_projection_m": -0.0012762757311396413,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8307,
+            8308
+          ],
+          "incident_triangle_ids": [
+            13669
+          ],
+          "boundary_edges": [
+            [
+              8307,
+              8308
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7936,
+              "obj_group": "body",
+              "sources": [
+                8308,
+                8307,
+                8297,
+                8298
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7945,
+              "obj_group": "body",
+              "sources": [
+                8317,
+                8316,
+                8307,
+                8308
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15819,
+          "obj_face0": 7909,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8279,
+            8274,
+            8275
+          ],
+          "point": [
+            0.20319805933795024,
+            0.5398170510784798,
+            -0.014337431756092032
+          ],
+          "barycentric": [
+            0.4317742146113219,
+            0.21840009800408286,
+            0.3498256873845952
+          ],
+          "distance_squared_m2": 1.4110077449313919e-05,
+          "bounded_distance_m": 0.0037563383033632526,
+          "normal": [
+            0.5985556895301465,
+            0.599304899198781,
+            -0.5315681746751115
+          ],
+          "supporting_plane_projection_m": 0.0037563383033632526,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8274,
+              8275,
+              8279
+            ],
+            "incident_triangle_ids": [
+              15819
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7909,
+                "obj_group": "body",
+                "sources": [
+                  8279,
+                  8278,
+                  8274,
+                  8275
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 235,
+      "body_triangle0": 13668,
+      "retained_d_m": -0.002062955814274406,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13668,
+        "obj_face0": 7945,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8317,
+          8316,
+          8307
+        ],
+        "point": [
+          0.2144400030374527,
+          0.486409991979599,
+          -0.029030000790953636
+        ],
+        "barycentric": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "distance_squared_m2": 0.00261936199597563,
+        "bounded_distance_m": 0.0511797029688101,
+        "normal": [
+          0.4403078683898299,
+          0.12998255311215862,
+          -0.8883881566750251
+        ],
+        "supporting_plane_projection_m": -0.0020629558142744057,
+        "feature": {
+          "kind": "vertex",
+          "sources": [
+            8307
+          ],
+          "incident_triangle_ids": [
+            13668,
+            13669,
+            13671
+          ],
+          "boundary_edges": [
+            [
+              8307,
+              8308
+            ],
+            [
+              8307,
+              8311
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7936,
+              "obj_group": "body",
+              "sources": [
+                8308,
+                8307,
+                8297,
+                8298
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7937,
+              "obj_group": "body",
+              "sources": [
+                8307,
+                8311,
+                8301,
+                8297
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7945,
+              "obj_group": "body",
+              "sources": [
+                8317,
+                8316,
+                8307,
+                8308
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            },
+            {
+              "obj_face0": 7946,
+              "obj_group": "body",
+              "sources": [
+                8316,
+                8320,
+                8311,
+                8307
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15818,
+          "obj_face0": 7909,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8279,
+            8278,
+            8274
+          ],
+          "point": [
+            0.20021036119427396,
+            0.534508012219963,
+            -0.025091196889875336
+          ],
+          "barycentric": [
+            0.09503648160875705,
+            0.7454722487155914,
+            0.15949126967565158
+          ],
+          "distance_squared_m2": 3.7143453683664557e-06,
+          "bounded_distance_m": 0.0019272636997480276,
+          "normal": [
+            0.589277678539484,
+            0.6661113915663909,
+            -0.45721705086381337
+          ],
+          "supporting_plane_projection_m": 0.0019272636997480276,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8274,
+              8278,
+              8279
+            ],
+            "incident_triangle_ids": [
+              15818
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7909,
+                "obj_group": "body",
+                "sources": [
+                  8279,
+                  8278,
+                  8274,
+                  8275
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 235,
+      "body_triangle0": 13671,
+      "retained_d_m": -0.004158892866949501,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13671,
+        "obj_face0": 7946,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8316,
+          8311,
+          8307
+        ],
+        "point": [
+          0.2144400030374527,
+          0.486409991979599,
+          -0.029030000790953636
+        ],
+        "barycentric": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "distance_squared_m2": 0.00261936199597563,
+        "bounded_distance_m": 0.0511797029688101,
+        "normal": [
+          0.32257632243304063,
+          0.05980540543175527,
+          -0.944652226846853
+        ],
+        "supporting_plane_projection_m": -0.004158892866949501,
+        "feature": {
+          "kind": "vertex",
+          "sources": [
+            8307
+          ],
+          "incident_triangle_ids": [
+            13668,
+            13669,
+            13671
+          ],
+          "boundary_edges": [
+            [
+              8307,
+              8308
+            ],
+            [
+              8307,
+              8311
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7936,
+              "obj_group": "body",
+              "sources": [
+                8308,
+                8307,
+                8297,
+                8298
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7937,
+              "obj_group": "body",
+              "sources": [
+                8307,
+                8311,
+                8301,
+                8297
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7945,
+              "obj_group": "body",
+              "sources": [
+                8317,
+                8316,
+                8307,
+                8308
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            },
+            {
+              "obj_face0": 7946,
+              "obj_group": "body",
+              "sources": [
+                8316,
+                8320,
+                8311,
+                8307
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15818,
+          "obj_face0": 7909,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8279,
+            8278,
+            8274
+          ],
+          "point": [
+            0.20021036119427396,
+            0.534508012219963,
+            -0.025091196889875336
+          ],
+          "barycentric": [
+            0.09503648160875705,
+            0.7454722487155914,
+            0.15949126967565158
+          ],
+          "distance_squared_m2": 3.7143453683664557e-06,
+          "bounded_distance_m": 0.0019272636997480276,
+          "normal": [
+            0.589277678539484,
+            0.6661113915663909,
+            -0.45721705086381337
+          ],
+          "supporting_plane_projection_m": 0.0019272636997480276,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8274,
+              8278,
+              8279
+            ],
+            "incident_triangle_ids": [
+              15818
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7909,
+                "obj_group": "body",
+                "sources": [
+                  8279,
+                  8278,
+                  8274,
+                  8275
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 239,
+      "body_triangle0": 13669,
+      "retained_d_m": -0.0012762757311396283,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13669,
+        "obj_face0": 7945,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8317,
+          8307,
+          8308
+        ],
+        "point": [
+          0.22138936329110986,
+          0.4877840584799046,
+          -0.024705182198384988
+        ],
+        "barycentric": [
+          0.0,
+          0.5057350727044847,
+          0.49426492729551535
+        ],
+        "distance_squared_m2": 0.0032710232407551646,
+        "bounded_distance_m": 0.057192860050492005,
+        "normal": [
+          0.47645001196165077,
+          0.2465580743127932,
+          -0.8439220948007642
+        ],
+        "supporting_plane_projection_m": -0.0012762757311396413,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8307,
+            8308
+          ],
+          "incident_triangle_ids": [
+            13669
+          ],
+          "boundary_edges": [
+            [
+              8307,
+              8308
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7936,
+              "obj_group": "body",
+              "sources": [
+                8308,
+                8307,
+                8297,
+                8298
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7945,
+              "obj_group": "body",
+              "sources": [
+                8317,
+                8316,
+                8307,
+                8308
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15819,
+          "obj_face0": 7909,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8279,
+            8274,
+            8275
+          ],
+          "point": [
+            0.20319805933795024,
+            0.5398170510784798,
+            -0.014337431756092032
+          ],
+          "barycentric": [
+            0.4317742146113219,
+            0.21840009800408286,
+            0.3498256873845952
+          ],
+          "distance_squared_m2": 1.4110077449313919e-05,
+          "bounded_distance_m": 0.0037563383033632526,
+          "normal": [
+            0.5985556895301465,
+            0.599304899198781,
+            -0.5315681746751115
+          ],
+          "supporting_plane_projection_m": 0.0037563383033632526,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8274,
+              8275,
+              8279
+            ],
+            "incident_triangle_ids": [
+              15819
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7909,
+                "obj_group": "body",
+                "sources": [
+                  8279,
+                  8278,
+                  8274,
+                  8275
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 240,
+      "body_triangle0": 13665,
+      "retained_d_m": -0.008151335683567537,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13665,
+        "obj_face0": 7943,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8318,
+          8308,
+          8309
+        ],
+        "point": [
+          0.23520642345571074,
+          0.4902141975275404,
+          -0.012966001344914966
+        ],
+        "barycentric": [
+          0.0,
+          0.4213608733238412,
+          0.5786391266761588
+        ],
+        "distance_squared_m2": 0.0053404831493489326,
+        "bounded_distance_m": 0.07307860938297152,
+        "normal": [
+          0.6478276348921463,
+          0.3977405888040229,
+          -0.6497089960035008
+        ],
+        "supporting_plane_projection_m": -0.008151335683567537,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8308,
+            8309
+          ],
+          "incident_triangle_ids": [
+            13665
+          ],
+          "boundary_edges": [
+            [
+              8308,
+              8309
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7934,
+              "obj_group": "body",
+              "sources": [
+                8309,
+                8308,
+                8298,
+                8299
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7943,
+              "obj_group": "body",
+              "sources": [
+                8318,
+                8317,
+                8308,
+                8309
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15807,
+          "obj_face0": 7903,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8276,
+            8235,
+            8236
+          ],
+          "point": [
+            0.20207350400158156,
+            0.5512017922904499,
+            0.0075062716522052274
+          ],
+          "barycentric": [
+            0.6668533370028619,
+            0.02195706814417228,
+            0.3111895948529658
+          ],
+          "distance_squared_m2": 7.629608918958993e-06,
+          "bounded_distance_m": 0.0027621746720580495,
+          "normal": [
+            0.6628045807143051,
+            0.7178748762295994,
+            -0.21294541521824664
+          ],
+          "supporting_plane_projection_m": 0.0027621746720580495,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8235,
+              8236,
+              8276
+            ],
+            "incident_triangle_ids": [
+              15807
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7903,
+                "obj_group": "body",
+                "sources": [
+                  8276,
+                  8275,
+                  8235,
+                  8236
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 242,
+      "body_triangle0": 13669,
+      "retained_d_m": -0.010084778363702055,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13669,
+        "obj_face0": 7945,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8317,
+          8307,
+          8308
+        ],
+        "point": [
+          0.2266917236321206,
+          0.4888324709166173,
+          -0.021405346565999437
+        ],
+        "barycentric": [
+          0.0,
+          0.1286110421773461,
+          0.8713889578226539
+        ],
+        "distance_squared_m2": 0.004220253678931266,
+        "bounded_distance_m": 0.06496347957838516,
+        "normal": [
+          0.47645001196165077,
+          0.2465580743127932,
+          -0.8439220948007642
+        ],
+        "supporting_plane_projection_m": -0.010084778363702064,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8307,
+            8308
+          ],
+          "incident_triangle_ids": [
+            13669
+          ],
+          "boundary_edges": [
+            [
+              8307,
+              8308
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7936,
+              "obj_group": "body",
+              "sources": [
+                8308,
+                8307,
+                8297,
+                8298
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7945,
+              "obj_group": "body",
+              "sources": [
+                8317,
+                8316,
+                8307,
+                8308
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15806,
+          "obj_face0": 7903,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8276,
+            8275,
+            8235
+          ],
+          "point": [
+            0.20303433526653877,
+            0.5459847914645785,
+            -0.0040222338490069525
+          ],
+          "barycentric": [
+            0.366047940954779,
+            0.6028808154264135,
+            0.031071243618807524
+          ],
+          "distance_squared_m2": 5.858406438144088e-06,
+          "bounded_distance_m": 0.002420414517834515,
+          "normal": [
+            0.6779938871879234,
+            0.6782615466610493,
+            -0.283347072080815
+          ],
+          "supporting_plane_projection_m": 0.002420414517834515,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8235,
+              8275,
+              8276
+            ],
+            "incident_triangle_ids": [
+              15806
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7903,
+                "obj_group": "body",
+                "sources": [
+                  8276,
+                  8275,
+                  8235,
+                  8236
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 246,
+      "body_triangle0": 13665,
+      "retained_d_m": -0.008151335683567537,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13665,
+        "obj_face0": 7943,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8318,
+          8308,
+          8309
+        ],
+        "point": [
+          0.23520642345571074,
+          0.4902141975275404,
+          -0.012966001344914966
+        ],
+        "barycentric": [
+          0.0,
+          0.4213608733238412,
+          0.5786391266761588
+        ],
+        "distance_squared_m2": 0.0053404831493489326,
+        "bounded_distance_m": 0.07307860938297152,
+        "normal": [
+          0.6478276348921463,
+          0.3977405888040229,
+          -0.6497089960035008
+        ],
+        "supporting_plane_projection_m": -0.008151335683567537,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8308,
+            8309
+          ],
+          "incident_triangle_ids": [
+            13665
+          ],
+          "boundary_edges": [
+            [
+              8308,
+              8309
+            ]
+          ],
+          "is_mask_boundary_feature": true,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7934,
+              "obj_group": "body",
+              "sources": [
+                8309,
+                8308,
+                8298,
+                8299
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": true,
+              "displayed": false
+            },
+            {
+              "obj_face0": 7943,
+              "obj_group": "body",
+              "sources": [
+                8318,
+                8317,
+                8308,
+                8309
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15807,
+          "obj_face0": 7903,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8276,
+            8235,
+            8236
+          ],
+          "point": [
+            0.20207350400158156,
+            0.5512017922904499,
+            0.0075062716522052274
+          ],
+          "barycentric": [
+            0.6668533370028619,
+            0.02195706814417228,
+            0.3111895948529658
+          ],
+          "distance_squared_m2": 7.629608918958993e-06,
+          "bounded_distance_m": 0.0027621746720580495,
+          "normal": [
+            0.6628045807143051,
+            0.7178748762295994,
+            -0.21294541521824664
+          ],
+          "supporting_plane_projection_m": 0.0027621746720580495,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8235,
+              8236,
+              8276
+            ],
+            "incident_triangle_ids": [
+              15807
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7903,
+                "obj_group": "body",
+                "sources": [
+                  8276,
+                  8275,
+                  8235,
+                  8236
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": true,
+                "displayed": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 254,
+      "body_triangle0": 13708,
+      "retained_d_m": -0.003857642968375574,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13708,
+        "obj_face0": 7997,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8375,
+          8374,
+          8327
+        ],
+        "point": [
+          0.2608909326206335,
+          0.4522494543805562,
+          -0.008714615960776674
+        ],
+        "barycentric": [
+          0.84118275065805,
+          0.07150743893407525,
+          0.08730981040787462
+        ],
+        "distance_squared_m2": 1.4881409271457503e-05,
+        "bounded_distance_m": 0.003857642968375573,
+        "normal": [
+          0.6213877089863008,
+          0.39648609520939837,
+          -0.6757781377244755
+        ],
+        "supporting_plane_projection_m": -0.003857642968375573,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8327,
+            8374,
+            8375
+          ],
+          "incident_triangle_ids": [
+            13708
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7997,
+              "obj_group": "body",
+              "sources": [
+                8375,
+                8374,
+                8327,
+                8328
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15994,
+          "obj_face0": 7997,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8375,
+            8374,
+            8327
+          ],
+          "point": [
+            0.2608909326206335,
+            0.4522494543805562,
+            -0.008714615960776674
+          ],
+          "barycentric": [
+            0.84118275065805,
+            0.07150743893407525,
+            0.08730981040787462
+          ],
+          "distance_squared_m2": 1.4881409271457503e-05,
+          "bounded_distance_m": 0.003857642968375573,
+          "normal": [
+            0.6213877089863008,
+            0.39648609520939837,
+            -0.6757781377244755
+          ],
+          "supporting_plane_projection_m": -0.003857642968375573,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8327,
+              8374,
+              8375
+            ],
+            "incident_triangle_ids": [
+              15994
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7997,
+                "obj_group": "body",
+                "sources": [
+                  8375,
+                  8374,
+                  8327,
+                  8328
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 257,
+      "body_triangle0": 13739,
+      "retained_d_m": -0.0006285672158539267,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13739,
+        "obj_face0": 8012,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8392,
+          8374,
+          8375
+        ],
+        "point": [
+          0.2578001476622743,
+          0.4490966647638505,
+          -0.013412605348576027
+        ],
+        "barycentric": [
+          0.012774084147939235,
+          0.5623547649149333,
+          0.42487115093712746
+        ],
+        "distance_squared_m2": 3.9509674484640104e-07,
+        "bounded_distance_m": 0.0006285672158539618,
+        "normal": [
+          0.6132659389560083,
+          0.41175906054223665,
+          -0.6740618400249195
+        ],
+        "supporting_plane_projection_m": -0.0006285672158539618,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8374,
+            8375,
+            8392
+          ],
+          "incident_triangle_ids": [
+            13739
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8012,
+              "obj_group": "body",
+              "sources": [
+                8392,
+                8391,
+                8374,
+                8375
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16025,
+          "obj_face0": 8012,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8392,
+            8374,
+            8375
+          ],
+          "point": [
+            0.2578001476622743,
+            0.4490966647638505,
+            -0.013412605348576027
+          ],
+          "barycentric": [
+            0.012774084147939235,
+            0.5623547649149333,
+            0.42487115093712746
+          ],
+          "distance_squared_m2": 3.9509674484640104e-07,
+          "bounded_distance_m": 0.0006285672158539618,
+          "normal": [
+            0.6132659389560083,
+            0.41175906054223665,
+            -0.6740618400249195
+          ],
+          "supporting_plane_projection_m": -0.0006285672158539618,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8374,
+              8375,
+              8392
+            ],
+            "incident_triangle_ids": [
+              16025
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8012,
+                "obj_group": "body",
+                "sources": [
+                  8392,
+                  8391,
+                  8374,
+                  8375
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 261,
+      "body_triangle0": 13715,
+      "retained_d_m": -0.008765553029452842,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13715,
+        "obj_face0": 8000,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8372,
+          8112,
+          8145
+        ],
+        "point": [
+          0.2622470962579248,
+          0.4609366769653475,
+          0.03154928762023533
+        ],
+        "barycentric": [
+          0.4771598981082727,
+          0.4738741169611296,
+          0.04896598493059773
+        ],
+        "distance_squared_m2": 7.683491991214992e-05,
+        "bounded_distance_m": 0.008765553029452844,
+        "normal": [
+          0.8084006855729442,
+          0.5422639526178716,
+          0.22899374938289538
+        ],
+        "supporting_plane_projection_m": -0.008765553029452842,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8112,
+            8145,
+            8372
+          ],
+          "incident_triangle_ids": [
+            13715
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8000,
+              "obj_group": "body",
+              "sources": [
+                8372,
+                8366,
+                8112,
+                8145
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16001,
+          "obj_face0": 8000,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8372,
+            8112,
+            8145
+          ],
+          "point": [
+            0.2622470962579248,
+            0.4609366769653475,
+            0.03154928762023533
+          ],
+          "barycentric": [
+            0.4771598981082727,
+            0.4738741169611296,
+            0.04896598493059773
+          ],
+          "distance_squared_m2": 7.683491991214992e-05,
+          "bounded_distance_m": 0.008765553029452844,
+          "normal": [
+            0.8084006855729442,
+            0.5422639526178716,
+            0.22899374938289538
+          ],
+          "supporting_plane_projection_m": -0.008765553029452842,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8112,
+              8145,
+              8372
+            ],
+            "incident_triangle_ids": [
+              16001
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8000,
+                "obj_group": "body",
+                "sources": [
+                  8372,
+                  8366,
+                  8112,
+                  8145
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 263,
+      "body_triangle0": 13715,
+      "retained_d_m": -0.0027742862386378655,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13715,
+        "obj_face0": 8000,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8372,
+          8112,
+          8145
+        ],
+        "point": [
+          0.2610892711760151,
+          0.4621896038612841,
+          0.03266970902802012
+        ],
+        "barycentric": [
+          0.3944152657908453,
+          0.3904963782487145,
+          0.21508835596044018
+        ],
+        "distance_squared_m2": 7.696664133895436e-06,
+        "bounded_distance_m": 0.0027742862386378655,
+        "normal": [
+          0.8084006855729442,
+          0.5422639526178716,
+          0.22899374938289538
+        ],
+        "supporting_plane_projection_m": -0.0027742862386378655,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8112,
+            8145,
+            8372
+          ],
+          "incident_triangle_ids": [
+            13715
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8000,
+              "obj_group": "body",
+              "sources": [
+                8372,
+                8366,
+                8112,
+                8145
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16001,
+          "obj_face0": 8000,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8372,
+            8112,
+            8145
+          ],
+          "point": [
+            0.2610892711760151,
+            0.4621896038612841,
+            0.03266970902802012
+          ],
+          "barycentric": [
+            0.3944152657908453,
+            0.3904963782487145,
+            0.21508835596044018
+          ],
+          "distance_squared_m2": 7.696664133895436e-06,
+          "bounded_distance_m": 0.0027742862386378655,
+          "normal": [
+            0.8084006855729442,
+            0.5422639526178716,
+            0.22899374938289538
+          ],
+          "supporting_plane_projection_m": -0.0027742862386378655,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8112,
+              8145,
+              8372
+            ],
+            "incident_triangle_ids": [
+              16001
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8000,
+                "obj_group": "body",
+                "sources": [
+                  8372,
+                  8366,
+                  8112,
+                  8145
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 267,
+      "body_triangle0": 13715,
+      "retained_d_m": -0.008765553029452842,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13715,
+        "obj_face0": 8000,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8372,
+          8112,
+          8145
+        ],
+        "point": [
+          0.2622470962579248,
+          0.4609366769653475,
+          0.03154928762023533
+        ],
+        "barycentric": [
+          0.4771598981082727,
+          0.4738741169611296,
+          0.04896598493059773
+        ],
+        "distance_squared_m2": 7.683491991214992e-05,
+        "bounded_distance_m": 0.008765553029452844,
+        "normal": [
+          0.8084006855729442,
+          0.5422639526178716,
+          0.22899374938289538
+        ],
+        "supporting_plane_projection_m": -0.008765553029452842,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8112,
+            8145,
+            8372
+          ],
+          "incident_triangle_ids": [
+            13715
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8000,
+              "obj_group": "body",
+              "sources": [
+                8372,
+                8366,
+                8112,
+                8145
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16001,
+          "obj_face0": 8000,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8372,
+            8112,
+            8145
+          ],
+          "point": [
+            0.2622470962579248,
+            0.4609366769653475,
+            0.03154928762023533
+          ],
+          "barycentric": [
+            0.4771598981082727,
+            0.4738741169611296,
+            0.04896598493059773
+          ],
+          "distance_squared_m2": 7.683491991214992e-05,
+          "bounded_distance_m": 0.008765553029452844,
+          "normal": [
+            0.8084006855729442,
+            0.5422639526178716,
+            0.22899374938289538
+          ],
+          "supporting_plane_projection_m": -0.008765553029452842,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8112,
+              8145,
+              8372
+            ],
+            "incident_triangle_ids": [
+              16001
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8000,
+                "obj_group": "body",
+                "sources": [
+                  8372,
+                  8366,
+                  8112,
+                  8145
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 268,
+      "body_triangle0": 13721,
+      "retained_d_m": -0.007359119769254886,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13721,
+        "obj_face0": 8003,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8366,
+          8329,
+          8112
+        ],
+        "point": [
+          0.2645256730910353,
+          0.4606118157445023,
+          0.017221025840677612
+        ],
+        "barycentric": [
+          0.5199494578640647,
+          0.3971010409818523,
+          0.08294950115408305
+        ],
+        "distance_squared_m2": 5.415664377823695e-05,
+        "bounded_distance_m": 0.007359119769254809,
+        "normal": [
+          0.8204058671204965,
+          0.569283735316504,
+          -0.05338765679775657
+        ],
+        "supporting_plane_projection_m": -0.007359119769254809,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8112,
+            8329,
+            8366
+          ],
+          "incident_triangle_ids": [
+            13721
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8003,
+              "obj_group": "body",
+              "sources": [
+                8366,
+                8376,
+                8329,
+                8112
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16007,
+          "obj_face0": 8003,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8366,
+            8329,
+            8112
+          ],
+          "point": [
+            0.2645256730910353,
+            0.4606118157445023,
+            0.017221025840677612
+          ],
+          "barycentric": [
+            0.5199494578640647,
+            0.3971010409818523,
+            0.08294950115408305
+          ],
+          "distance_squared_m2": 5.415664377823695e-05,
+          "bounded_distance_m": 0.007359119769254809,
+          "normal": [
+            0.8204058671204965,
+            0.569283735316504,
+            -0.05338765679775657
+          ],
+          "supporting_plane_projection_m": -0.007359119769254809,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8112,
+              8329,
+              8366
+            ],
+            "incident_triangle_ids": [
+              16007
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8003,
+                "obj_group": "body",
+                "sources": [
+                  8366,
+                  8376,
+                  8329,
+                  8112
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 270,
+      "body_triangle0": 13714,
+      "retained_d_m": -0.008799205248239546,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13714,
+        "obj_face0": 8000,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8372,
+          8366,
+          8112
+        ],
+        "point": [
+          0.26384871627136686,
+          0.46115812566191966,
+          0.02570279416857039
+        ],
+        "barycentric": [
+          0.14804353290637962,
+          0.3336079597744848,
+          0.5183485073191356
+        ],
+        "distance_squared_m2": 7.742601300064716e-05,
+        "bounded_distance_m": 0.008799205248239591,
+        "normal": [
+          0.7982656905610257,
+          0.5517787665793912,
+          0.24147894323367944
+        ],
+        "supporting_plane_projection_m": -0.008799205248239591,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8112,
+            8366,
+            8372
+          ],
+          "incident_triangle_ids": [
+            13714
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8000,
+              "obj_group": "body",
+              "sources": [
+                8372,
+                8366,
+                8112,
+                8145
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16000,
+          "obj_face0": 8000,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8372,
+            8366,
+            8112
+          ],
+          "point": [
+            0.26384871627136686,
+            0.46115812566191966,
+            0.02570279416857039
+          ],
+          "barycentric": [
+            0.14804353290637962,
+            0.3336079597744848,
+            0.5183485073191356
+          ],
+          "distance_squared_m2": 7.742601300064716e-05,
+          "bounded_distance_m": 0.008799205248239591,
+          "normal": [
+            0.7982656905610257,
+            0.5517787665793912,
+            0.24147894323367944
+          ],
+          "supporting_plane_projection_m": -0.008799205248239591,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8112,
+              8366,
+              8372
+            ],
+            "incident_triangle_ids": [
+              16000
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8000,
+                "obj_group": "body",
+                "sources": [
+                  8372,
+                  8366,
+                  8112,
+                  8145
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 275,
+      "body_triangle0": 13701,
+      "retained_d_m": -0.005799715707157146,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13701,
+        "obj_face0": 7993,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8376,
+          8328,
+          8329
+        ],
+        "point": [
+          0.26422421872762497,
+          0.4571775074062944,
+          0.003975323497231086
+        ],
+        "barycentric": [
+          0.7131858164136761,
+          0.2819811334536536,
+          0.004833050132670295
+        ],
+        "distance_squared_m2": 3.363670228384531e-05,
+        "bounded_distance_m": 0.005799715707157146,
+        "normal": [
+          0.788590531097074,
+          0.5159373214896578,
+          -0.3345648734671835
+        ],
+        "supporting_plane_projection_m": -0.005799715707157146,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8328,
+            8329,
+            8376
+          ],
+          "incident_triangle_ids": [
+            13701
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7993,
+              "obj_group": "body",
+              "sources": [
+                8376,
+                8375,
+                8328,
+                8329
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15987,
+          "obj_face0": 7993,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8376,
+            8328,
+            8329
+          ],
+          "point": [
+            0.26422421872762497,
+            0.4571775074062944,
+            0.003975323497231086
+          ],
+          "barycentric": [
+            0.7131858164136761,
+            0.2819811334536536,
+            0.004833050132670295
+          ],
+          "distance_squared_m2": 3.363670228384531e-05,
+          "bounded_distance_m": 0.005799715707157146,
+          "normal": [
+            0.788590531097074,
+            0.5159373214896578,
+            -0.3345648734671835
+          ],
+          "supporting_plane_projection_m": -0.005799715707157146,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8328,
+              8329,
+              8376
+            ],
+            "incident_triangle_ids": [
+              15987
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7993,
+                "obj_group": "body",
+                "sources": [
+                  8376,
+                  8375,
+                  8328,
+                  8329
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 281,
+      "body_triangle0": 13701,
+      "retained_d_m": -0.005799715707157146,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13701,
+        "obj_face0": 7993,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8376,
+          8328,
+          8329
+        ],
+        "point": [
+          0.26422421872762497,
+          0.4571775074062944,
+          0.003975323497231086
+        ],
+        "barycentric": [
+          0.7131858164136761,
+          0.2819811334536536,
+          0.004833050132670295
+        ],
+        "distance_squared_m2": 3.363670228384531e-05,
+        "bounded_distance_m": 0.005799715707157146,
+        "normal": [
+          0.788590531097074,
+          0.5159373214896578,
+          -0.3345648734671835
+        ],
+        "supporting_plane_projection_m": -0.005799715707157146,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8328,
+            8329,
+            8376
+          ],
+          "incident_triangle_ids": [
+            13701
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7993,
+              "obj_group": "body",
+              "sources": [
+                8376,
+                8375,
+                8328,
+                8329
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15987,
+          "obj_face0": 7993,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8376,
+            8328,
+            8329
+          ],
+          "point": [
+            0.26422421872762497,
+            0.4571775074062944,
+            0.003975323497231086
+          ],
+          "barycentric": [
+            0.7131858164136761,
+            0.2819811334536536,
+            0.004833050132670295
+          ],
+          "distance_squared_m2": 3.363670228384531e-05,
+          "bounded_distance_m": 0.005799715707157146,
+          "normal": [
+            0.788590531097074,
+            0.5159373214896578,
+            -0.3345648734671835
+          ],
+          "supporting_plane_projection_m": -0.005799715707157146,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8328,
+              8329,
+              8376
+            ],
+            "incident_triangle_ids": [
+              15987
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7993,
+                "obj_group": "body",
+                "sources": [
+                  8376,
+                  8375,
+                  8328,
+                  8329
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 282,
+      "body_triangle0": 13708,
+      "retained_d_m": -0.003857642968375574,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13708,
+        "obj_face0": 7997,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8375,
+          8374,
+          8327
+        ],
+        "point": [
+          0.2608909326206335,
+          0.4522494543805562,
+          -0.008714615960776674
+        ],
+        "barycentric": [
+          0.84118275065805,
+          0.07150743893407525,
+          0.08730981040787462
+        ],
+        "distance_squared_m2": 1.4881409271457503e-05,
+        "bounded_distance_m": 0.003857642968375573,
+        "normal": [
+          0.6213877089863008,
+          0.39648609520939837,
+          -0.6757781377244755
+        ],
+        "supporting_plane_projection_m": -0.003857642968375573,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8327,
+            8374,
+            8375
+          ],
+          "incident_triangle_ids": [
+            13708
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7997,
+              "obj_group": "body",
+              "sources": [
+                8375,
+                8374,
+                8327,
+                8328
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15994,
+          "obj_face0": 7997,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8375,
+            8374,
+            8327
+          ],
+          "point": [
+            0.2608909326206335,
+            0.4522494543805562,
+            -0.008714615960776674
+          ],
+          "barycentric": [
+            0.84118275065805,
+            0.07150743893407525,
+            0.08730981040787462
+          ],
+          "distance_squared_m2": 1.4881409271457503e-05,
+          "bounded_distance_m": 0.003857642968375573,
+          "normal": [
+            0.6213877089863008,
+            0.39648609520939837,
+            -0.6757781377244755
+          ],
+          "supporting_plane_projection_m": -0.003857642968375573,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8327,
+              8374,
+              8375
+            ],
+            "incident_triangle_ids": [
+              15994
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7997,
+                "obj_group": "body",
+                "sources": [
+                  8375,
+                  8374,
+                  8327,
+                  8328
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 284,
+      "body_triangle0": 13700,
+      "retained_d_m": -0.005184811987996659,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13700,
+        "obj_face0": 7993,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8376,
+          8375,
+          8328
+        ],
+        "point": [
+          0.26315301599632196,
+          0.4551600590955156,
+          -0.0017986568905999263
+        ],
+        "barycentric": [
+          0.33614522604195374,
+          0.465097985256984,
+          0.19875678870106228
+        ],
+        "distance_squared_m2": 2.688227535087386e-05,
+        "bounded_distance_m": 0.0051848119879966586,
+        "normal": [
+          0.7870655174387575,
+          0.5221932831231021,
+          -0.3283931276990686
+        ],
+        "supporting_plane_projection_m": -0.0051848119879966586,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8328,
+            8375,
+            8376
+          ],
+          "incident_triangle_ids": [
+            13700
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7993,
+              "obj_group": "body",
+              "sources": [
+                8376,
+                8375,
+                8328,
+                8329
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15986,
+          "obj_face0": 7993,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8376,
+            8375,
+            8328
+          ],
+          "point": [
+            0.26315301599632196,
+            0.4551600590955156,
+            -0.0017986568905999263
+          ],
+          "barycentric": [
+            0.33614522604195374,
+            0.465097985256984,
+            0.19875678870106228
+          ],
+          "distance_squared_m2": 2.688227535087386e-05,
+          "bounded_distance_m": 0.0051848119879966586,
+          "normal": [
+            0.7870655174387575,
+            0.5221932831231021,
+            -0.3283931276990686
+          ],
+          "supporting_plane_projection_m": -0.0051848119879966586,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8328,
+              8375,
+              8376
+            ],
+            "incident_triangle_ids": [
+              15986
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7993,
+                "obj_group": "body",
+                "sources": [
+                  8376,
+                  8375,
+                  8328,
+                  8329
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 289,
+      "body_triangle0": 13721,
+      "retained_d_m": -0.007359119769254886,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13721,
+        "obj_face0": 8003,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8366,
+          8329,
+          8112
+        ],
+        "point": [
+          0.2645256730910353,
+          0.4606118157445023,
+          0.017221025840677612
+        ],
+        "barycentric": [
+          0.5199494578640647,
+          0.3971010409818523,
+          0.08294950115408305
+        ],
+        "distance_squared_m2": 5.415664377823695e-05,
+        "bounded_distance_m": 0.007359119769254809,
+        "normal": [
+          0.8204058671204965,
+          0.569283735316504,
+          -0.05338765679775657
+        ],
+        "supporting_plane_projection_m": -0.007359119769254809,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8112,
+            8329,
+            8366
+          ],
+          "incident_triangle_ids": [
+            13721
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8003,
+              "obj_group": "body",
+              "sources": [
+                8366,
+                8376,
+                8329,
+                8112
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16007,
+          "obj_face0": 8003,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8366,
+            8329,
+            8112
+          ],
+          "point": [
+            0.2645256730910353,
+            0.4606118157445023,
+            0.017221025840677612
+          ],
+          "barycentric": [
+            0.5199494578640647,
+            0.3971010409818523,
+            0.08294950115408305
+          ],
+          "distance_squared_m2": 5.415664377823695e-05,
+          "bounded_distance_m": 0.007359119769254809,
+          "normal": [
+            0.8204058671204965,
+            0.569283735316504,
+            -0.05338765679775657
+          ],
+          "supporting_plane_projection_m": -0.007359119769254809,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8112,
+              8329,
+              8366
+            ],
+            "incident_triangle_ids": [
+              16007
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8003,
+                "obj_group": "body",
+                "sources": [
+                  8366,
+                  8376,
+                  8329,
+                  8112
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 295,
+      "body_triangle0": 13721,
+      "retained_d_m": -0.007359119769254886,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13721,
+        "obj_face0": 8003,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8366,
+          8329,
+          8112
+        ],
+        "point": [
+          0.2645256730910353,
+          0.4606118157445023,
+          0.017221025840677612
+        ],
+        "barycentric": [
+          0.5199494578640647,
+          0.3971010409818523,
+          0.08294950115408305
+        ],
+        "distance_squared_m2": 5.415664377823695e-05,
+        "bounded_distance_m": 0.007359119769254809,
+        "normal": [
+          0.8204058671204965,
+          0.569283735316504,
+          -0.05338765679775657
+        ],
+        "supporting_plane_projection_m": -0.007359119769254809,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8112,
+            8329,
+            8366
+          ],
+          "incident_triangle_ids": [
+            13721
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8003,
+              "obj_group": "body",
+              "sources": [
+                8366,
+                8376,
+                8329,
+                8112
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16007,
+          "obj_face0": 8003,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8366,
+            8329,
+            8112
+          ],
+          "point": [
+            0.2645256730910353,
+            0.4606118157445023,
+            0.017221025840677612
+          ],
+          "barycentric": [
+            0.5199494578640647,
+            0.3971010409818523,
+            0.08294950115408305
+          ],
+          "distance_squared_m2": 5.415664377823695e-05,
+          "bounded_distance_m": 0.007359119769254809,
+          "normal": [
+            0.8204058671204965,
+            0.569283735316504,
+            -0.05338765679775657
+          ],
+          "supporting_plane_projection_m": -0.007359119769254809,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8112,
+              8329,
+              8366
+            ],
+            "incident_triangle_ids": [
+              16007
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8003,
+                "obj_group": "body",
+                "sources": [
+                  8366,
+                  8376,
+                  8329,
+                  8112
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 296,
+      "body_triangle0": 13701,
+      "retained_d_m": -0.005799715707157146,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13701,
+        "obj_face0": 7993,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8376,
+          8328,
+          8329
+        ],
+        "point": [
+          0.26422421872762497,
+          0.4571775074062944,
+          0.003975323497231086
+        ],
+        "barycentric": [
+          0.7131858164136761,
+          0.2819811334536536,
+          0.004833050132670295
+        ],
+        "distance_squared_m2": 3.363670228384531e-05,
+        "bounded_distance_m": 0.005799715707157146,
+        "normal": [
+          0.788590531097074,
+          0.5159373214896578,
+          -0.3345648734671835
+        ],
+        "supporting_plane_projection_m": -0.005799715707157146,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8328,
+            8329,
+            8376
+          ],
+          "incident_triangle_ids": [
+            13701
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 7993,
+              "obj_group": "body",
+              "sources": [
+                8376,
+                8375,
+                8328,
+                8329
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 15987,
+          "obj_face0": 7993,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8376,
+            8328,
+            8329
+          ],
+          "point": [
+            0.26422421872762497,
+            0.4571775074062944,
+            0.003975323497231086
+          ],
+          "barycentric": [
+            0.7131858164136761,
+            0.2819811334536536,
+            0.004833050132670295
+          ],
+          "distance_squared_m2": 3.363670228384531e-05,
+          "bounded_distance_m": 0.005799715707157146,
+          "normal": [
+            0.788590531097074,
+            0.5159373214896578,
+            -0.3345648734671835
+          ],
+          "supporting_plane_projection_m": -0.005799715707157146,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8328,
+              8329,
+              8376
+            ],
+            "incident_triangle_ids": [
+              15987
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 7993,
+                "obj_group": "body",
+                "sources": [
+                  8376,
+                  8375,
+                  8328,
+                  8329
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 298,
+      "body_triangle0": 13720,
+      "retained_d_m": -0.007112907423725926,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13720,
+        "obj_face0": 8003,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8366,
+          8376,
+          8329
+        ],
+        "point": [
+          0.26495866733893203,
+          0.4592618283730095,
+          0.01127067215793259
+        ],
+        "barycentric": [
+          0.19882328747902217,
+          0.4011355261928424,
+          0.4000411863281354
+        ],
+        "distance_squared_m2": 5.059345201849539e-05,
+        "bounded_distance_m": 0.007112907423725926,
+        "normal": [
+          0.827967249030501,
+          0.5564567413778252,
+          -0.06947034984823856
+        ],
+        "supporting_plane_projection_m": -0.007112907423725926,
+        "feature": {
+          "kind": "interior",
+          "sources": [
+            8329,
+            8366,
+            8376
+          ],
+          "incident_triangle_ids": [
+            13720
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8003,
+              "obj_group": "body",
+              "sources": [
+                8366,
+                8376,
+                8329,
+                8112
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16006,
+          "obj_face0": 8003,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8366,
+            8376,
+            8329
+          ],
+          "point": [
+            0.26495866733893203,
+            0.4592618283730095,
+            0.01127067215793259
+          ],
+          "barycentric": [
+            0.19882328747902217,
+            0.4011355261928424,
+            0.4000411863281354
+          ],
+          "distance_squared_m2": 5.059345201849539e-05,
+          "bounded_distance_m": 0.007112907423725926,
+          "normal": [
+            0.827967249030501,
+            0.5564567413778252,
+            -0.06947034984823856
+          ],
+          "supporting_plane_projection_m": -0.007112907423725926,
+          "feature": {
+            "kind": "interior",
+            "sources": [
+              8329,
+              8366,
+              8376
+            ],
+            "incident_triangle_ids": [
+              16006
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8003,
+                "obj_group": "body",
+                "sources": [
+                  8366,
+                  8376,
+                  8329,
+                  8112
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 386,
+      "body_triangle0": 13716,
+      "retained_d_m": 0.0009730854135441886,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13716,
+        "obj_face0": 8001,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8373,
+          8377,
+          8330
+        ],
+        "point": [
+          0.2318415541722301,
+          0.4374635788577203,
+          -0.029341341599585846
+        ],
+        "barycentric": [
+          0.0,
+          0.9671663604099255,
+          0.032833639590074494
+        ],
+        "distance_squared_m2": 9.472996242473683e-07,
+        "bounded_distance_m": 0.0009732931851438025,
+        "normal": [
+          0.289956991740083,
+          0.17768723771714712,
+          -0.9404000151496658
+        ],
+        "supporting_plane_projection_m": 0.0009730854135441774,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8330,
+            8377
+          ],
+          "incident_triangle_ids": [
+            13716,
+            13719
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8001,
+              "obj_group": "body",
+              "sources": [
+                8373,
+                8377,
+                8330,
+                8326
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            },
+            {
+              "obj_face0": 8002,
+              "obj_group": "body",
+              "sources": [
+                8377,
+                8378,
+                8331,
+                8330
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16002,
+          "obj_face0": 8001,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8373,
+            8377,
+            8330
+          ],
+          "point": [
+            0.2318415541722301,
+            0.4374635788577203,
+            -0.029341341599585846
+          ],
+          "barycentric": [
+            0.0,
+            0.9671663604099255,
+            0.032833639590074494
+          ],
+          "distance_squared_m2": 9.472996242473683e-07,
+          "bounded_distance_m": 0.0009732931851438025,
+          "normal": [
+            0.289956991740083,
+            0.17768723771714712,
+            -0.9404000151496658
+          ],
+          "supporting_plane_projection_m": 0.0009730854135441774,
+          "feature": {
+            "kind": "edge",
+            "sources": [
+              8330,
+              8377
+            ],
+            "incident_triangle_ids": [
+              16002,
+              16005
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8001,
+                "obj_group": "body",
+                "sources": [
+                  8373,
+                  8377,
+                  8330,
+                  8326
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              },
+              {
+                "obj_face0": 8002,
+                "obj_group": "body",
+                "sources": [
+                  8377,
+                  8378,
+                  8331,
+                  8330
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        },
+        {
+          "triangle0": 16005,
+          "obj_face0": 8002,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8377,
+            8331,
+            8330
+          ],
+          "point": [
+            0.23184155417223007,
+            0.4374635788577203,
+            -0.029341341599585843
+          ],
+          "barycentric": [
+            0.9671663604099255,
+            0.0,
+            0.03283363959007446
+          ],
+          "distance_squared_m2": 9.472996242473896e-07,
+          "bounded_distance_m": 0.0009732931851438134,
+          "normal": [
+            -0.07034706101138355,
+            -0.09020465423576594,
+            -0.993435660403464
+          ],
+          "supporting_plane_projection_m": 0.0008824934875749463,
+          "feature": {
+            "kind": "edge",
+            "sources": [
+              8330,
+              8377
+            ],
+            "incident_triangle_ids": [
+              16002,
+              16005
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8001,
+                "obj_group": "body",
+                "sources": [
+                  8373,
+                  8377,
+                  8330,
+                  8326
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              },
+              {
+                "obj_face0": 8002,
+                "obj_group": "body",
+                "sources": [
+                  8377,
+                  8378,
+                  8331,
+                  8330
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 386,
+      "body_triangle0": 13719,
+      "retained_d_m": 0.0008824934875749463,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13719,
+        "obj_face0": 8002,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8377,
+          8331,
+          8330
+        ],
+        "point": [
+          0.23184155417223007,
+          0.4374635788577203,
+          -0.029341341599585843
+        ],
+        "barycentric": [
+          0.9671663604099255,
+          0.0,
+          0.03283363959007446
+        ],
+        "distance_squared_m2": 9.472996242473896e-07,
+        "bounded_distance_m": 0.0009732931851438134,
+        "normal": [
+          -0.07034706101138355,
+          -0.09020465423576594,
+          -0.993435660403464
+        ],
+        "supporting_plane_projection_m": 0.0008824934875749463,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8330,
+            8377
+          ],
+          "incident_triangle_ids": [
+            13716,
+            13719
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8001,
+              "obj_group": "body",
+              "sources": [
+                8373,
+                8377,
+                8330,
+                8326
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            },
+            {
+              "obj_face0": 8002,
+              "obj_group": "body",
+              "sources": [
+                8377,
+                8378,
+                8331,
+                8330
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16002,
+          "obj_face0": 8001,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8373,
+            8377,
+            8330
+          ],
+          "point": [
+            0.2318415541722301,
+            0.4374635788577203,
+            -0.029341341599585846
+          ],
+          "barycentric": [
+            0.0,
+            0.9671663604099255,
+            0.032833639590074494
+          ],
+          "distance_squared_m2": 9.472996242473683e-07,
+          "bounded_distance_m": 0.0009732931851438025,
+          "normal": [
+            0.289956991740083,
+            0.17768723771714712,
+            -0.9404000151496658
+          ],
+          "supporting_plane_projection_m": 0.0009730854135441774,
+          "feature": {
+            "kind": "edge",
+            "sources": [
+              8330,
+              8377
+            ],
+            "incident_triangle_ids": [
+              16002,
+              16005
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8001,
+                "obj_group": "body",
+                "sources": [
+                  8373,
+                  8377,
+                  8330,
+                  8326
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              },
+              {
+                "obj_face0": 8002,
+                "obj_group": "body",
+                "sources": [
+                  8377,
+                  8378,
+                  8331,
+                  8330
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        },
+        {
+          "triangle0": 16005,
+          "obj_face0": 8002,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8377,
+            8331,
+            8330
+          ],
+          "point": [
+            0.23184155417223007,
+            0.4374635788577203,
+            -0.029341341599585843
+          ],
+          "barycentric": [
+            0.9671663604099255,
+            0.0,
+            0.03283363959007446
+          ],
+          "distance_squared_m2": 9.472996242473896e-07,
+          "bounded_distance_m": 0.0009732931851438134,
+          "normal": [
+            -0.07034706101138355,
+            -0.09020465423576594,
+            -0.993435660403464
+          ],
+          "supporting_plane_projection_m": 0.0008824934875749463,
+          "feature": {
+            "kind": "edge",
+            "sources": [
+              8330,
+              8377
+            ],
+            "incident_triangle_ids": [
+              16002,
+              16005
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8001,
+                "obj_group": "body",
+                "sources": [
+                  8373,
+                  8377,
+                  8330,
+                  8326
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              },
+              {
+                "obj_face0": 8002,
+                "obj_group": "body",
+                "sources": [
+                  8377,
+                  8378,
+                  8331,
+                  8330
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 568,
+      "body_triangle0": 13716,
+      "retained_d_m": 0.0009730854135441886,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13716,
+        "obj_face0": 8001,
+        "obj_group": "body",
+        "fan_triangle0": 0,
+        "sources": [
+          8373,
+          8377,
+          8330
+        ],
+        "point": [
+          0.2318415541722301,
+          0.4374635788577203,
+          -0.029341341599585846
+        ],
+        "barycentric": [
+          0.0,
+          0.9671663604099255,
+          0.032833639590074494
+        ],
+        "distance_squared_m2": 9.472996242473683e-07,
+        "bounded_distance_m": 0.0009732931851438025,
+        "normal": [
+          0.289956991740083,
+          0.17768723771714712,
+          -0.9404000151496658
+        ],
+        "supporting_plane_projection_m": 0.0009730854135441774,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8330,
+            8377
+          ],
+          "incident_triangle_ids": [
+            13716,
+            13719
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8001,
+              "obj_group": "body",
+              "sources": [
+                8373,
+                8377,
+                8330,
+                8326
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            },
+            {
+              "obj_face0": 8002,
+              "obj_group": "body",
+              "sources": [
+                8377,
+                8378,
+                8331,
+                8330
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16002,
+          "obj_face0": 8001,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8373,
+            8377,
+            8330
+          ],
+          "point": [
+            0.2318415541722301,
+            0.4374635788577203,
+            -0.029341341599585846
+          ],
+          "barycentric": [
+            0.0,
+            0.9671663604099255,
+            0.032833639590074494
+          ],
+          "distance_squared_m2": 9.472996242473683e-07,
+          "bounded_distance_m": 0.0009732931851438025,
+          "normal": [
+            0.289956991740083,
+            0.17768723771714712,
+            -0.9404000151496658
+          ],
+          "supporting_plane_projection_m": 0.0009730854135441774,
+          "feature": {
+            "kind": "edge",
+            "sources": [
+              8330,
+              8377
+            ],
+            "incident_triangle_ids": [
+              16002,
+              16005
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8001,
+                "obj_group": "body",
+                "sources": [
+                  8373,
+                  8377,
+                  8330,
+                  8326
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              },
+              {
+                "obj_face0": 8002,
+                "obj_group": "body",
+                "sources": [
+                  8377,
+                  8378,
+                  8331,
+                  8330
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        },
+        {
+          "triangle0": 16005,
+          "obj_face0": 8002,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8377,
+            8331,
+            8330
+          ],
+          "point": [
+            0.23184155417223007,
+            0.4374635788577203,
+            -0.029341341599585843
+          ],
+          "barycentric": [
+            0.9671663604099255,
+            0.0,
+            0.03283363959007446
+          ],
+          "distance_squared_m2": 9.472996242473896e-07,
+          "bounded_distance_m": 0.0009732931851438134,
+          "normal": [
+            -0.07034706101138355,
+            -0.09020465423576594,
+            -0.993435660403464
+          ],
+          "supporting_plane_projection_m": 0.0008824934875749463,
+          "feature": {
+            "kind": "edge",
+            "sources": [
+              8330,
+              8377
+            ],
+            "incident_triangle_ids": [
+              16002,
+              16005
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8001,
+                "obj_group": "body",
+                "sources": [
+                  8373,
+                  8377,
+                  8330,
+                  8326
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              },
+              {
+                "obj_face0": 8002,
+                "obj_group": "body",
+                "sources": [
+                  8377,
+                  8378,
+                  8331,
+                  8330
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "logical_sample0": 568,
+      "body_triangle0": 13719,
+      "retained_d_m": 0.0008824934875749463,
+      "retained_slope": 0.0,
+      "reconstructed_zero_direction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "displayed": {
+        "triangle0": 13719,
+        "obj_face0": 8002,
+        "obj_group": "body",
+        "fan_triangle0": 1,
+        "sources": [
+          8377,
+          8331,
+          8330
+        ],
+        "point": [
+          0.23184155417223007,
+          0.4374635788577203,
+          -0.029341341599585843
+        ],
+        "barycentric": [
+          0.9671663604099255,
+          0.0,
+          0.03283363959007446
+        ],
+        "distance_squared_m2": 9.472996242473896e-07,
+        "bounded_distance_m": 0.0009732931851438134,
+        "normal": [
+          -0.07034706101138355,
+          -0.09020465423576594,
+          -0.993435660403464
+        ],
+        "supporting_plane_projection_m": 0.0008824934875749463,
+        "feature": {
+          "kind": "edge",
+          "sources": [
+            8330,
+            8377
+          ],
+          "incident_triangle_ids": [
+            13716,
+            13719
+          ],
+          "boundary_edges": [],
+          "is_mask_boundary_feature": false,
+          "original_obj_polygon_ownership": [
+            {
+              "obj_face0": 8001,
+              "obj_group": "body",
+              "sources": [
+                8373,
+                8377,
+                8330,
+                8326
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            },
+            {
+              "obj_face0": 8002,
+              "obj_group": "body",
+              "sources": [
+                8377,
+                8378,
+                8331,
+                8330
+              ],
+              "helper_excluded": false,
+              "garment_delete_all_vertices": false,
+              "displayed": true
+            }
+          ]
+        }
+      },
+      "unmasked_real_body": [
+        {
+          "triangle0": 16002,
+          "obj_face0": 8001,
+          "obj_group": "body",
+          "fan_triangle0": 0,
+          "sources": [
+            8373,
+            8377,
+            8330
+          ],
+          "point": [
+            0.2318415541722301,
+            0.4374635788577203,
+            -0.029341341599585846
+          ],
+          "barycentric": [
+            0.0,
+            0.9671663604099255,
+            0.032833639590074494
+          ],
+          "distance_squared_m2": 9.472996242473683e-07,
+          "bounded_distance_m": 0.0009732931851438025,
+          "normal": [
+            0.289956991740083,
+            0.17768723771714712,
+            -0.9404000151496658
+          ],
+          "supporting_plane_projection_m": 0.0009730854135441774,
+          "feature": {
+            "kind": "edge",
+            "sources": [
+              8330,
+              8377
+            ],
+            "incident_triangle_ids": [
+              16002,
+              16005
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8001,
+                "obj_group": "body",
+                "sources": [
+                  8373,
+                  8377,
+                  8330,
+                  8326
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              },
+              {
+                "obj_face0": 8002,
+                "obj_group": "body",
+                "sources": [
+                  8377,
+                  8378,
+                  8331,
+                  8330
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        },
+        {
+          "triangle0": 16005,
+          "obj_face0": 8002,
+          "obj_group": "body",
+          "fan_triangle0": 1,
+          "sources": [
+            8377,
+            8331,
+            8330
+          ],
+          "point": [
+            0.23184155417223007,
+            0.4374635788577203,
+            -0.029341341599585843
+          ],
+          "barycentric": [
+            0.9671663604099255,
+            0.0,
+            0.03283363959007446
+          ],
+          "distance_squared_m2": 9.472996242473896e-07,
+          "bounded_distance_m": 0.0009732931851438134,
+          "normal": [
+            -0.07034706101138355,
+            -0.09020465423576594,
+            -0.993435660403464
+          ],
+          "supporting_plane_projection_m": 0.0008824934875749463,
+          "feature": {
+            "kind": "edge",
+            "sources": [
+              8330,
+              8377
+            ],
+            "incident_triangle_ids": [
+              16002,
+              16005
+            ],
+            "boundary_edges": [],
+            "is_mask_boundary_feature": false,
+            "original_obj_polygon_ownership": [
+              {
+                "obj_face0": 8001,
+                "obj_group": "body",
+                "sources": [
+                  8373,
+                  8377,
+                  8330,
+                  8326
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              },
+              {
+                "obj_face0": 8002,
+                "obj_group": "body",
+                "sources": [
+                  8377,
+                  8378,
+                  8331,
+                  8330
+                ],
+                "helper_excluded": false,
+                "garment_delete_all_vertices": false,
+                "displayed": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
