@@ -36,6 +36,38 @@ WORKFLOW_ADDITIONS = (
 )
 
 
+# macos15-arm64-v1: admit only the paired retained-job image replacement.
+MACOS15_HEADERS = (
+    """  native-and-wasm:
+    name: macOS CPU tests and Wasm compile check
+    # Reject cheap portable failures before spending a cold graphical compile.
+    needs: portable
+    runs-on: macos-15
+""",
+    """  native-cache-warm:
+    name: macOS native target cache warm trial
+    # Reject cheap portable failures before spending a cold graphical compile.
+    if: ${{ needs.native-and-wasm.outputs.trial_enabled == 'true' }}
+    needs: [native-and-wasm, b1-source-regression]
+    runs-on: macos-15
+""",
+)
+
+
+def historical_macos_workflow(workflow, checks):
+    checks.assertEqual(workflow.count('    runs-on: macos-15\n'), 2,
+                       'required paired standard ARM64 macos-15 migration')
+    for header in MACOS15_HEADERS:
+        checks.assertEqual(workflow.count(header), 1, 'required exact retained Mac job policy')
+        workflow = workflow.replace(header, header.replace('macos-15', 'macos-14'))
+    # Keep the entire reviewed 2e6dc2e workflow, including optional warm/cache
+    # policy blocks which the older historical comparisons deliberately remove.
+    checks.assertEqual(hashlib.sha256(workflow.encode()).hexdigest(),
+                       'de16867ec382bb3915ce676ec5bddd68aaf239f51808663650e0b9d805181757',
+                       'runner migration must be exactly the paired label replacement')
+    return workflow
+
+
 # linux-b1-v2: validate the complete approved addition before historical comparison.
 B1_LINUX_HEADER = """  b1-source-regression:
     name: Linux B1 source regression and viewer checks
@@ -265,6 +297,39 @@ class Policy(unittest.TestCase):
         (self.root / 'ordinary.rs').write_text('ordinary source')
         self.env['CC']='custom'
         self.assertIn('DISABLED_UNSUPPORTED_IDENTITY',self.call('prepare'))
+
+    def test_macos15_image_sdk_and_xcode_change_seed_identity(self):
+        old = self.prepare()  # Historical macos14 fixture, same source and target.
+        self.env['ImageOS'] = 'macos15'
+        current = self.prepare()
+        self.assertNotEqual(current['key'], old['key'])
+        self.assertEqual(current['version'], old['version'])  # Archive algorithm unchanged.
+        self.env['ImageVersion'] = 'new-image'
+        image_update = self.prepare()
+        self.assertNotEqual(image_update['key'], current['key'])
+        original_query = self.query
+        self.query = lambda argv: 'Xcode updated fixture' if argv == ['xcodebuild', '-version'] else original_query(argv)
+        xcode_update = self.prepare()
+        self.assertNotEqual(xcode_update['key'], image_update['key'])
+        (self.sdk/'SDKSettings.json').write_text('{"fixture":"updated-sdk"}')
+        sdk_update = self.prepare()
+        self.assertNotEqual(sdk_update['key'], xcode_update['key'])
+
+    def test_macos15_old_image_action_or_marker_requires_clean_cold_fallback(self):
+        old = self.prepare()
+        self.env['ImageOS'] = 'macos15'
+        current = self.prepare()
+        self.present(current)
+        for action_key in [old['key'], current['key']]:
+            with self.subTest(action_key=action_key):
+                self.prepare()
+                self.restored(old)  # Exact old image inventory and marker.
+                result = self.call('restore', **self.action(action_key))
+                self.assertIn('CLEAN_FALLBACK', result)
+                self.assertIn('"warm": false', result)
+                self.assertNotIn('VERIFIED_RESTORE', result)
+                self.assertEqual(self.state()['status'], 'CLEAN_FALLBACK')
+                self.assertFalse(self.target.exists())
 
     def test_exact_main_restore_keeps_distinct_producer_and_consumer_and_never_resaves(self):
         state=self.prepare();self.present(state);state=self.prepare();marker=self.restored(state)
@@ -649,8 +714,35 @@ class Policy(unittest.TestCase):
                 with self.assertRaises(AssertionError):
                     self.test_workflow_original_bodies_main_scope_and_trial_phase_policy()
 
+    def test_macos15_overlay_rejects_partial_mixed_and_unrelated_changes(self):
+        workflow_path = ROOT / '.github/workflows/ci.yml'
+        original = workflow_path.read_text()
+        read_text = Path.read_text
+        mutations = []
+        for header in MACOS15_HEADERS:
+            for label in ['macos-14', 'macos-latest', 'macos-26', 'macos-15-intel',
+                          'macos-15-large', 'macos-15-xlarge', 'unknown']:
+                mutations.append(original.replace(header, header.replace('macos-15', label)))
+            mutations.append(original.replace(header, header+'    continue-on-error: true\n'))
+            mutations.append(original.replace(header, header*2))
+            mutations.append(original.replace(header, header.replace('needs:', 'extra:')))
+        for label in ['macos-14', 'macos-latest', 'macos-15-intel', 'macos-15-xlarge']:
+            mutations.append(original.replace('runs-on: macos-15', 'runs-on: '+label))
+        mutations.extend([original.replace("CARGO_BUILD_JOBS: '1'", "CARGO_BUILD_JOBS: '2'"),
+                          original.replace('timeout-minutes: 60', 'timeout-minutes: 61'),
+                          original.replace('cargo test --manifest-path', 'cargo check --manifest-path'),
+                          original.replace('runs-on: ubuntu-24.04', 'runs-on: macos-15')])
+        for index, mutant in enumerate(mutations):
+            self.assertNotEqual(mutant, original)
+            def read(path, *args, **kwargs):
+                return mutant if path == workflow_path else read_text(path, *args, **kwargs)
+            with self.subTest(mutation=index), patch.object(Path, 'read_text', read):
+                with self.assertRaises(AssertionError):
+                    self.test_workflow_original_bodies_main_scope_and_trial_phase_policy()
+
     def test_workflow_original_bodies_main_scope_and_trial_phase_policy(self):
         text=(ROOT/'.github/workflows/ci.yml').read_text()
+        text = historical_macos_workflow(text, self)
         for addition,message in WORKFLOW_ADDITIONS:
             self.assertEqual(text.count(addition),1,message)
         blocks=re.findall(r'(?ms)^ +# native-main-cache begin\n.*?^ +# native-main-cache end\n',text)
