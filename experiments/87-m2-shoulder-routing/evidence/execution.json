@@ -1,0 +1,80 @@
+{
+  "status": "STOP_NO_RETRY",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/87-m2-shoulder-routing/candidate.py",
+        "--preflight",
+        "--output",
+        "<task-output>/source-preflight.json"
+      ],
+      "exit": 0,
+      "result": "SOURCE_RULE_PASS; maximum_weight_error1.254442032749825e-7; new_weights_constructed=false"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/87-m2-shoulder-routing/test_controls.py"
+      ],
+      "exit": 0,
+      "result": "PASS; source mismatch rejected before new weight seam;20% discarded mass rejected at actual constructor seam;nonfinite rejected;actual skin slot/node roundtrip passed"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "experiments/87-m2-shoulder-routing/candidate.py",
+        "--output",
+        "<task-output>/construction.json"
+      ],
+      "exit": 1,
+      "result": {
+        "status": "STOP",
+        "error": "original-fixture union discarded mass exceeds1%: 0.012913903560846783",
+        "candidate_retry_authorized": false
+      }
+    }
+  ],
+  "experiment_files": [
+    {
+      "path": "experiments/87-m2-shoulder-routing/test_controls.py",
+      "bytes": 1881,
+      "sha256": "aa66a8b9a5d597f589979b506185ba77a57ee9f8700d48e9b7c0c09f41ded77d"
+    },
+    {
+      "path": "experiments/87-m2-shoulder-routing/candidate.py",
+      "bytes": 9750,
+      "sha256": "000cc9215cc1d265c71422fd5754809877cb670971730448ce6a6fcbee759ff6"
+    },
+    {
+      "path": "experiments/87-m2-shoulder-routing/PROPOSAL.md",
+      "bytes": 6563,
+      "sha256": "9dcf13fc550c1c72625e8ba459a8a05f81c5f8ee8213184d72e1885bb56bc450"
+    },
+    {
+      "path": "experiments/87-m2-shoulder-routing/region.json",
+      "bytes": 6280,
+      "sha256": "3f1b28f7d75717b961f388479b15e93dbabac973da1acdfbbc7ca202a5729092"
+    }
+  ],
+  "derived_artifacts_published": false,
+  "offline_mechanism": "NOT-RUN: frozen construction stop",
+  "surface": "NOT-RUN: frozen construction stop",
+  "CLI": "NOT-RUN: no passing derivative",
+  "new_build": "NOT-RUN: stop before build gate",
+  "current_Web": "NOT-RUN: stop before browser/build gate",
+  "native": "NOT-RUN: outside task scope",
+  "cleanup": {
+    "owned_persistent_processes": [],
+    "owned_tabs": [],
+    "owned_ports": [],
+    "owned_run_ids": [],
+    "retained_checkout": true,
+    "preexisting86": "READ ONLY retained",
+    "native_instance_disposal": "NOT-RUN; no new native instance created"
+  },
+  "public_projection": "Only task-local output paths are replaced by <task-output>; outcomes, values and source hashes unchanged. Original receipt retained privately."
+}
