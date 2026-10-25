@@ -1,0 +1,177 @@
+{
+  "experiment": "91-hair-short01-ab",
+  "result": "FRONT_PILOT_PASS_FULL_ACCEPTANCE_NOT_RUN",
+  "base_source_commit": "6c11ac4d79b4ca7f9c45279201b60ee4c713017e",
+  "source_freeze_sha256": "0d16a3c5a6afc878c0da02820994f81dd2994b03994c05bb932c7f923cea90ca",
+  "preserved_old_files": 135,
+  "whole_source_files": 8516,
+  "whole_source_before_after_sha256": "ebf5a6b4f3f663f5b3b13aa832c16415adeacb117f409aec04e579304c038d68",
+  "bundle_sha256": "c1ff8f9e21eb8b56eb55b32f358de62f8d466a1c4962e77e155afa94722a0284",
+  "site_manifest_sha256": "52e9f4a70736c7754e70af65e401f400ca8acd2d7feab6bc1b26b9e154ca7afa",
+  "native": {
+    "run_id": "run_ba430a83e7725c6fbb62f302010fab06",
+    "ledger": "succeeded",
+    "actual_test_result": "test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.16s",
+    "wrapper_seconds": 643.345116333,
+    "receipt_sha256": "a5bee4b70c261c819416772a62c7dd81cea43a7a7ad04e94c102cbb9becb962d",
+    "cargo_log_sha256": "9f479cd3fe0b9a60cd7e0fae23a0461749ffb72d120b9b0572a9aeea93bc048d"
+  },
+  "native_executable_sha256": [
+    "e4d2db87e890fb01ba74cb83bc24afa0b951bc227369bb73787555e0cda45d20"
+  ],
+  "web_build": {
+    "run_id": "run_d9f3b1fd5e9376adf3719e8be00fca4e",
+    "ledger": "succeeded",
+    "cargo_compile_line": [
+      "    Finished `dev` profile [optimized] target(s) in 57.13s"
+    ],
+    "wrapper_seconds": 62.74155175,
+    "receipt_sha256": "f7e4da4b0559e3e97308d65022030e00e9de98b0a145890c15d128c383c5597b",
+    "cargo_log_sha256": "006405a04a255c7f46e4a6494a246564b28b973eea29629a655cf6ce4836b117",
+    "cleanup_readback_sha256": "39875c297ec1a27cf65e72e59588d96644935d7db65d0e9e2b1981a5999f129a"
+  },
+  "raw_wasm_sha256": "22961fd2a6491550ac0ceba825724f67e7ed419fb9b3a7b633c2b7f7caf4e90e",
+  "package": {
+    "b1_hairline_ab.d.ts": {
+      "size": 5913,
+      "sha256": "e8d246bd7bfa8bd6bcaf55fef96efe55a8cf3924def8cf58734135cfd0a53fdf"
+    },
+    "b1_hairline_ab.js": {
+      "size": 129054,
+      "sha256": "8232242d2b152a13b829d81360a8328159ab7e0f8a7275d135833138c3b02ea4"
+    },
+    "b1_hairline_ab_bg.wasm": {
+      "size": 150335631,
+      "sha256": "977320aa3789db2d69bb63cffe578b8d096f9db91a78b4a3676746babd890b04"
+    },
+    "b1_hairline_ab_bg.wasm.d.ts": {
+      "size": 4684,
+      "sha256": "f28a5aae2bbf8ec24275ddfea1e814e7592e09ca5135bd6bf44830c9274838d9"
+    }
+  },
+  "python_controls": {
+    "python-normal-fixed.json": {
+      "command": "retained normal/optimized unittest command",
+      "elapsed_seconds": 147.9820705,
+      "exit_code": 0
+    },
+    "python-optimized.json": {
+      "command": "retained normal/optimized unittest command",
+      "elapsed_seconds": 141.322742458,
+      "exit_code": 0
+    }
+  },
+  "preserved_failed_normal": {
+    "receipt": {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "experiments/91-hair-short01-ab",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "elapsed_seconds": 139.70674258399998,
+      "exit_code": 1
+    },
+    "log_sha256": "d916b531aa5556e91d524d1c2c91b2d4cf3fd81d58f8ef54fa578bf7e93b91c6",
+    "cause": "accidental A digest replacement; restored before final freeze and successful runs"
+  },
+  "web_records": [
+    {
+      "tag": "A1",
+      "request_id": "web76-2",
+      "bytes": 14258697,
+      "sha256": "0c3efcedd53cff1364b508272e3dd1a06843f2d175977e5edbe169bc0283119d",
+      "report_sha256": "7c2329da0f01ac6b16810ff84ba056493f60ff4f220aae74aa5e6040c3f0466b",
+      "frame_sha256": "2207f21a6f77adc7f874ca7dcdcd744d7acc185ef31431b430b228b7afd7e708"
+    },
+    {
+      "tag": "B",
+      "request_id": "web76-3",
+      "bytes": 15115517,
+      "sha256": "65e83b68559a211b799c72bdcb4dbd745f453d7b02cf3ead9764fd824fd1a6db",
+      "report_sha256": "c518e6b21112ee3f360312a7b4e917d2c4667e34e04228f8c419e1321e73961f",
+      "frame_sha256": "86ff852e368917e41253d9a1a9f8cef99cf647394ce32ca570de42f296ead9cd"
+    },
+    {
+      "tag": "A2",
+      "request_id": "web76-4",
+      "bytes": 14258697,
+      "sha256": "778b609086a84220a3d9b264304a844a67b0cec92ded77ec15d28800e55bc38d",
+      "report_sha256": "e96e2d80d070407d30b05205d553f15af0cd370aee2d6832ca13fcd4073978df",
+      "frame_sha256": "e54b8a62bf5e46face4991af1b7f0c0097c1ce0a5c6002f336f24017de23666d"
+    }
+  ],
+  "validation": {
+    "result": "PASS",
+    "asset": "authenticated short01, exact source map and diffuse decode",
+    "errors": [
+      {
+        "positions": 0.0,
+        "normals": 0.0,
+        "uv_0": 0.0,
+        "source_rest": 0.0,
+        "source_normals": 1.1102230246251565e-16,
+        "source_scales": 0.0
+      },
+      {
+        "positions": 0.0,
+        "normals": 0.0,
+        "uv_0": 0.0,
+        "source_rest": 0.0,
+        "source_normals": 1.1102230246251565e-16,
+        "source_scales": 0.0
+      },
+      {
+        "positions": 0.0,
+        "normals": 0.0,
+        "uv_0": 0.0,
+        "source_rest": 0.0,
+        "source_normals": 1.1102230246251565e-16,
+        "source_scales": 0.0
+      }
+    ],
+    "invariants": "complete envelope equality except declared B asset fields; exact A1/A2 restoration",
+    "limits": "CPU source replay only; no GPU contact, visual gain, full cohort, native, save or adoption proof"
+  },
+  "validation_receipt": {
+    "command": "python3 -B experiments/91-hair-short01-ab/validate.py A1.json B.json A2.json",
+    "exit_code": 0,
+    "timed_out": false,
+    "seconds": 4.11963675,
+    "budget_seconds": 240
+  },
+  "images": {
+    "A1.jpg": "1ef7e32752509126b1900bcc6b428df137124c7f85d10fe2a63ec271afaafcec",
+    "B.jpg": "f4b862f62f7175d330889a8beb28b895e9bb219979806385a21dc31454e5c32b"
+  },
+  "reviews": {
+    "WEB-REVIEW.md": "4dbbd4273000bb51884927b12c38cb2ec14aea7922b20c66ab3ede6cde105053",
+    "VISUAL-REVIEW.md": "ed78de4b95037fbb7c040a0d055b52852686e6a270376382b65bd0562233ba65"
+  },
+  "human_action": "B selection and combined/textured click only; not human aesthetic acceptance",
+  "not_run": [
+    "wider shape/motion/side/back cohort",
+    "GPU contact/depth",
+    "native UI",
+    "genuine CLI B persistence",
+    "full acceptance",
+    "CI",
+    "production integration"
+  ],
+  "ui_cleanup": {
+    "owned_tab5_closed": true,
+    "provider2_tabs": [],
+    "viewport_reset": true,
+    "visibility_hidden_after_empty_inventory": true,
+    "server_exec89784_exited": true,
+    "port9205_free": true,
+    "source0_ABA_complete": true
+  },
+  "build_targets": "native and Web retained at this receipt; later cleanup receipt records final disposition"
+}
