@@ -1,0 +1,968 @@
+{
+  "status": "MEASURED",
+  "space": "serialized expected scene, CPU linear blend skinning",
+  "glb_sha256": "2779b012405a915cbc84b38dc18e5eb7a91215661b54ac0c7753ecebb49feae7",
+  "criterion": "Noncoplanar strict triangle surface crossing between arm-weighted and torso-weighted partitions. Each triangle vertex has >=0.8 actual total skin weight in its named node-index set. Segment t and triangle barycentrics strictly interior with epsilon1e-8; determinant abs>1e-14. Weight-transition triangles excluded.",
+  "joint_node_sets": {
+    "left_arm_weighted": [
+      2,
+      3,
+      4
+    ],
+    "right_arm_weighted": [
+      5,
+      6,
+      7
+    ],
+    "torso_weighted": [
+      8,
+      9,
+      16
+    ]
+  },
+  "partition_triangle_counts": {
+    "left_arm_weighted": 3958,
+    "right_arm_weighted": 3958,
+    "torso_weighted": 8436
+  },
+  "samples": [
+    {
+      "key_index": 0,
+      "time_seconds": 0.0,
+      "pairs": {
+        "left_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 87,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1165,
+                "vertex_indices": [
+                  654,
+                  637,
+                  653
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1565,
+                "vertex_indices": [
+                  869,
+                  888,
+                  863
+                ]
+              },
+              "crossing_point_m": [
+                -0.26020863399472643,
+                1.3666658865351888,
+                0.05130622023802817
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1162,
+                "vertex_indices": [
+                  653,
+                  637,
+                  542
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1561,
+                "vertex_indices": [
+                  896,
+                  887,
+                  888
+                ]
+              },
+              "crossing_point_m": [
+                -0.2597684075402624,
+                1.360858355560922,
+                0.04792417358639878
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1162,
+                "vertex_indices": [
+                  653,
+                  637,
+                  542
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1563,
+                "vertex_indices": [
+                  896,
+                  868,
+                  895
+                ]
+              },
+              "crossing_point_m": [
+                -0.26009276258741704,
+                1.3578434195297682,
+                0.046326838292742346
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 2811
+        },
+        "right_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 69,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13201,
+                "vertex_indices": [
+                  6791,
+                  6773,
+                  6790
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12304,
+                "vertex_indices": [
+                  6316,
+                  6326,
+                  6318
+                ]
+              },
+              "crossing_point_m": [
+                0.24919327932992216,
+                1.3682018573022825,
+                0.05908813001363838
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13200,
+                "vertex_indices": [
+                  6791,
+                  6774,
+                  6773
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12304,
+                "vertex_indices": [
+                  6316,
+                  6326,
+                  6318
+                ]
+              },
+              "crossing_point_m": [
+                0.24919327932992216,
+                1.3682018573022825,
+                0.05908813001363838
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12989,
+                "vertex_indices": [
+                  6686,
+                  6664,
+                  6679
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12323,
+                "vertex_indices": [
+                  6333,
+                  6326,
+                  6325
+                ]
+              },
+              "crossing_point_m": [
+                0.2533866788490015,
+                1.3559527234789976,
+                0.052528191967363094
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 3213
+        }
+      }
+    },
+    {
+      "key_index": 15,
+      "time_seconds": 0.5,
+      "pairs": {
+        "left_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 0,
+          "examples": [],
+          "bvh_pairs_visited": 1
+        },
+        "right_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 62,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13160,
+                "vertex_indices": [
+                  6772,
+                  6755,
+                  6647
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12302,
+                "vertex_indices": [
+                  6326,
+                  6316,
+                  6315
+                ]
+              },
+              "crossing_point_m": [
+                0.25807486993125295,
+                1.3561473363370478,
+                0.014029058091188913
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13160,
+                "vertex_indices": [
+                  6772,
+                  6755,
+                  6647
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12304,
+                "vertex_indices": [
+                  6316,
+                  6326,
+                  6318
+                ]
+              },
+              "crossing_point_m": [
+                0.25684965882163646,
+                1.358668489568174,
+                0.015237476177055216
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13165,
+                "vertex_indices": [
+                  6773,
+                  6755,
+                  6772
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12304,
+                "vertex_indices": [
+                  6316,
+                  6326,
+                  6318
+                ]
+              },
+              "crossing_point_m": [
+                0.25684965882163646,
+                1.358668489568174,
+                0.015237476177055216
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 2245
+        }
+      }
+    },
+    {
+      "key_index": 30,
+      "time_seconds": 1.0,
+      "pairs": {
+        "left_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 0,
+          "examples": [],
+          "bvh_pairs_visited": 1
+        },
+        "right_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 69,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13165,
+                "vertex_indices": [
+                  6773,
+                  6755,
+                  6772
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12346,
+                "vertex_indices": [
+                  6349,
+                  6334,
+                  6333
+                ]
+              },
+              "crossing_point_m": [
+                0.2529503825003521,
+                1.3492148335910215,
+                -0.02548175022083006
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13165,
+                "vertex_indices": [
+                  6773,
+                  6755,
+                  6772
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12348,
+                "vertex_indices": [
+                  6334,
+                  6349,
+                  6343
+                ]
+              },
+              "crossing_point_m": [
+                0.253327362534827,
+                1.3517152441252311,
+                -0.02431542106259256
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13164,
+                "vertex_indices": [
+                  6773,
+                  6756,
+                  6755
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12348,
+                "vertex_indices": [
+                  6334,
+                  6349,
+                  6343
+                ]
+              },
+              "crossing_point_m": [
+                0.253327362534827,
+                1.3517152441252311,
+                -0.02431542106259256
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 2769
+        }
+      }
+    },
+    {
+      "key_index": 45,
+      "time_seconds": 1.5,
+      "pairs": {
+        "left_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 0,
+          "examples": [],
+          "bvh_pairs_visited": 1
+        },
+        "right_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 64,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13165,
+                "vertex_indices": [
+                  6773,
+                  6755,
+                  6772
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12349,
+                "vertex_indices": [
+                  6334,
+                  6343,
+                  6326
+                ]
+              },
+              "crossing_point_m": [
+                0.2544481807723881,
+                1.3585496104076544,
+                0.003037087211917335
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13164,
+                "vertex_indices": [
+                  6773,
+                  6756,
+                  6755
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12349,
+                "vertex_indices": [
+                  6334,
+                  6343,
+                  6326
+                ]
+              },
+              "crossing_point_m": [
+                0.2544481807723881,
+                1.3585496104076544,
+                0.003037087211917335
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13162,
+                "vertex_indices": [
+                  6670,
+                  6773,
+                  6772
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12349,
+                "vertex_indices": [
+                  6334,
+                  6343,
+                  6326
+                ]
+              },
+              "crossing_point_m": [
+                0.2539985053722257,
+                1.3556617458183875,
+                0.0015730498049633308
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 2701
+        }
+      }
+    },
+    {
+      "key_index": 60,
+      "time_seconds": 2.0,
+      "pairs": {
+        "left_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 0,
+          "examples": [],
+          "bvh_pairs_visited": 1
+        },
+        "right_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 66,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13164,
+                "vertex_indices": [
+                  6773,
+                  6756,
+                  6755
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12349,
+                "vertex_indices": [
+                  6334,
+                  6343,
+                  6326
+                ]
+              },
+              "crossing_point_m": [
+                0.25279762908151265,
+                1.3612772375445208,
+                0.020962232890087848
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13164,
+                "vertex_indices": [
+                  6773,
+                  6756,
+                  6755
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12322,
+                "vertex_indices": [
+                  6333,
+                  6334,
+                  6326
+                ]
+              },
+              "crossing_point_m": [
+                0.25306783497658486,
+                1.3599239237596426,
+                0.020187703048567533
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12972,
+                "vertex_indices": [
+                  6679,
+                  6664,
+                  6663
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12323,
+                "vertex_indices": [
+                  6333,
+                  6326,
+                  6325
+                ]
+              },
+              "crossing_point_m": [
+                0.2562188215175295,
+                1.3489846643553989,
+                0.013653450801111789
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 2233
+        }
+      }
+    },
+    {
+      "key_index": 75,
+      "time_seconds": 2.5,
+      "pairs": {
+        "left_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 57,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 973,
+                "vertex_indices": [
+                  540,
+                  546,
+                  533
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1527,
+                "vertex_indices": [
+                  876,
+                  871,
+                  872
+                ]
+              },
+              "crossing_point_m": [
+                -0.2769876063839132,
+                1.3426891242036796,
+                0.03166232635304806
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 935,
+                "vertex_indices": [
+                  534,
+                  520,
+                  533
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1494,
+                "vertex_indices": [
+                  854,
+                  855,
+                  852
+                ]
+              },
+              "crossing_point_m": [
+                -0.2869171539384278,
+                1.3439138800211279,
+                0.03919106436418562
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 935,
+                "vertex_indices": [
+                  534,
+                  520,
+                  533
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1523,
+                "vertex_indices": [
+                  855,
+                  868,
+                  852
+                ]
+              },
+              "crossing_point_m": [
+                -0.2816786158666466,
+                1.3468375409771949,
+                0.0385872681159823
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 1273
+        },
+        "right_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 64,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13200,
+                "vertex_indices": [
+                  6791,
+                  6774,
+                  6773
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12305,
+                "vertex_indices": [
+                  6316,
+                  6318,
+                  6308
+                ]
+              },
+              "crossing_point_m": [
+                0.24214845408224864,
+                1.3707833505045532,
+                0.05659635803274626
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13201,
+                "vertex_indices": [
+                  6791,
+                  6773,
+                  6790
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12304,
+                "vertex_indices": [
+                  6316,
+                  6326,
+                  6318
+                ]
+              },
+              "crossing_point_m": [
+                0.24259999333960028,
+                1.3692253604980336,
+                0.055852649537937595
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13201,
+                "vertex_indices": [
+                  6791,
+                  6773,
+                  6790
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12305,
+                "vertex_indices": [
+                  6316,
+                  6318,
+                  6308
+                ]
+              },
+              "crossing_point_m": [
+                0.242455508483188,
+                1.3697221406177784,
+                0.05607071103958885
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 2851
+        }
+      }
+    },
+    {
+      "key_index": 89,
+      "time_seconds": 2.9666666984558105,
+      "pairs": {
+        "left_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 130,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 942,
+                "vertex_indices": [
+                  526,
+                  539,
+                  532
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1533,
+                "vertex_indices": [
+                  878,
+                  873,
+                  874
+                ]
+              },
+              "crossing_point_m": [
+                -0.26986395887322345,
+                1.3216674033081104,
+                0.011712073294662409
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 940,
+                "vertex_indices": [
+                  539,
+                  526,
+                  525
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1533,
+                "vertex_indices": [
+                  878,
+                  873,
+                  874
+                ]
+              },
+              "crossing_point_m": [
+                -0.26986395887322345,
+                1.3216674033081104,
+                0.011712073294662409
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 938,
+                "vertex_indices": [
+                  538,
+                  525,
+                  524
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 1588,
+                "vertex_indices": [
+                  877,
+                  902,
+                  900
+                ]
+              },
+              "crossing_point_m": [
+                -0.2671639572339009,
+                1.312470060050511,
+                0.003100988153388812
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 2941
+        },
+        "right_arm_weighted_vs_torso": {
+          "strict_crossing_triangle_pairs": 67,
+          "examples": [
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13200,
+                "vertex_indices": [
+                  6791,
+                  6774,
+                  6773
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12304,
+                "vertex_indices": [
+                  6316,
+                  6326,
+                  6318
+                ]
+              },
+              "crossing_point_m": [
+                0.24084372432843318,
+                1.371524508856988,
+                0.06753828935932477
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13167,
+                "vertex_indices": [
+                  6774,
+                  6756,
+                  6773
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12304,
+                "vertex_indices": [
+                  6316,
+                  6326,
+                  6318
+                ]
+              },
+              "crossing_point_m": [
+                0.24084372432843318,
+                1.371524508856988,
+                0.06753828935932477
+              ]
+            },
+            {
+              "arm_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 13167,
+                "vertex_indices": [
+                  6774,
+                  6756,
+                  6773
+                ]
+              },
+              "torso_triangle": {
+                "mesh_node": 22,
+                "primitive": 1,
+                "triangle_index": 12305,
+                "vertex_indices": [
+                  6316,
+                  6318,
+                  6308
+                ]
+              },
+              "crossing_point_m": [
+                0.24072879110109366,
+                1.3718596001301628,
+                0.06766890897111832
+              ]
+            }
+          ],
+          "bvh_pairs_visited": 2935
+        }
+      }
+    }
+  ],
+  "limits": [
+    "not anatomical quality",
+    "not runtime/GPU deformation readback",
+    "not signed penetration depth or enclosed-volume test",
+    "coplanarity, containment, transition triangles, and lower-weight surfaces excluded; zero crossings cannot prove no intersection"
+  ]
+}
