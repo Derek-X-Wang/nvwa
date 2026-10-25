@@ -1,0 +1,131 @@
+{
+  "experiment": "89-hair-short03-ab",
+  "issue": 79,
+  "result": "TECHNICAL_PASS_VISUAL_NO_GO_STOP_HOLD",
+  "selected": "AOriginal",
+  "base_commit": "bf7a87baaf55dca688ef1d70026b272781ad759a",
+  "code_manifest_sha256": "e1a9a11cfeb39a9e1ef4713cc45ca01e6936de75ebdb8a45a336f1a88e98f5e5",
+  "rust_manifest_sha256": "2a9e9e9eda22adc51adca0872150a726c251c9227474aff92ab416f6ce9185c9",
+  "bundle_manifest_sha256": "5cd89522773976ea6e08a0a2437c2382754aad84190577625f56074ebaec28cb",
+  "site_manifest_sha256": "d77b8487cfc813563dbdf7004082d174c733f9242b8d9b9ac7b13cf6783b2b69",
+  "python": [
+    {
+      "mode": "normal",
+      "exit": 0,
+      "seconds": 128.3199835,
+      "timeout_seconds": 240
+    },
+    {
+      "mode": "optimized",
+      "exit": 0,
+      "seconds": 127.53428525000001,
+      "timeout_seconds": 240
+    }
+  ],
+  "native": {
+    "run_id": "run_0c1e9dba1beae5e094cf5336d31dd2af",
+    "ledger": "succeeded",
+    "receipt_sha256": "f7263bd81f7f1108cd4c4c1c0d28ae20e6c41eb45830966a16a270e9238dd402",
+    "tests": "5 passed,0 failed,20 filtered;0.15s",
+    "cargo_reported": "8m36s",
+    "wrapper_seconds": 521.747267875,
+    "retained_outputs_sha256": "6496d7f7df82091e4ca8eba337d5974fe4bd15ca162ca7ce5afbc13e5077cc4b"
+  },
+  "wasm": {
+    "run_id": "run_54a17d0c3b7e0cab6f1346a24b940af7",
+    "ledger": "succeeded",
+    "receipt_sha256": "8eebb67b19bbc13127e897506aa9cfb2e7d75868eaaffe997090e43fb032f972",
+    "cargo_reported": "53.22s",
+    "wrapper_seconds": 58.331349875,
+    "retained_outputs_sha256": "9203ca250b5db21f3b53d30cd8adc6ae83e1a003bf2303c42f340d89c56e3cd9"
+  },
+  "web_records": [
+    {
+      "tag": "A1",
+      "request_id": "web76-2",
+      "bytes": 14258697,
+      "sha256": "0c3efcedd53cff1364b508272e3dd1a06843f2d175977e5edbe169bc0283119d",
+      "report_sha256": "7c2329da0f01ac6b16810ff84ba056493f60ff4f220aae74aa5e6040c3f0466b",
+      "frame_sha256": "2207f21a6f77adc7f874ca7dcdcd744d7acc185ef31431b430b228b7afd7e708",
+      "retained_local": "web/A1.json"
+    },
+    {
+      "tag": "B",
+      "request_id": "web76-3",
+      "bytes": 14323573,
+      "sha256": "04b08cef8ccb21b3181eb1fc1cea131ac0bdfe7f101cbef413b4d905df6c6355",
+      "report_sha256": "c518e6b21112ee3f360312a7b4e917d2c4667e34e04228f8c419e1321e73961f",
+      "frame_sha256": "31b2a5d80f1561398b5cc76f27488ea1c24eecffab513bfdc2cebc72309c9e81",
+      "retained_local": "web/B.json"
+    },
+    {
+      "tag": "A2",
+      "request_id": "web76-4",
+      "bytes": 14258697,
+      "sha256": "778b609086a84220a3d9b264304a844a67b0cec92ded77ec15d28800e55bc38d",
+      "report_sha256": "e96e2d80d070407d30b05205d553f15af0cd370aee2d6832ca13fcd4073978df",
+      "frame_sha256": "e54b8a62bf5e46face4991af1b7f0c0097c1ce0a5c6002f336f24017de23666d",
+      "retained_local": "web/A2.json"
+    }
+  ],
+  "web_validation": {
+    "result": "PASS",
+    "asset": "authenticated short03, exact source map and diffuse decode",
+    "errors": [
+      {
+        "positions": 0.0,
+        "normals": 0.0,
+        "uv_0": 0.0,
+        "source_rest": 0.0,
+        "source_normals": 1.1102230246251565e-16,
+        "source_scales": 0.0
+      },
+      {
+        "positions": 0.0,
+        "normals": 0.0,
+        "uv_0": 0.0,
+        "source_rest": 0.0,
+        "source_normals": 1.1102230246251565e-16,
+        "source_scales": 0.0
+      },
+      {
+        "positions": 0.0,
+        "normals": 0.0,
+        "uv_0": 0.0,
+        "source_rest": 0.0,
+        "source_normals": 1.1102230246251565e-16,
+        "source_scales": 0.0
+      }
+    ],
+    "invariants": "complete envelope equality except declared B asset fields; exact A1/A2 restoration",
+    "limits": "CPU source replay only; no GPU contact, visual gain, full cohort, native, save or adoption proof"
+  },
+  "validation_execution": {
+    "exit_code": 0,
+    "elapsed_seconds": 7.46050275,
+    "budget_seconds": 240
+  },
+  "images": {
+    "A1.jpg": "da49f26c59cacad2f6db805461bc94ceac73709a1a98c5439d959831771ee2a9",
+    "B.jpg": "d63688a1723e269e07c275ac861fba81fd7a70c143fcc7762bc78a8592e1ff09"
+  },
+  "independent_review_sha256": "3c0d2eeebb98b074f652c474934b7bda172b97ae4fa53ec0c453d01b54df3fd7",
+  "preserved_old_files": 80,
+  "scope": "one default Work/source0/Combined Textured A-B-A; no new capture framework",
+  "not_run": [
+    "head-width-plus",
+    "wider view/pose cohort",
+    "20 filtered Rust tests",
+    "native UI",
+    "GPU depth/contact/intersections",
+    "CLI/Work-save",
+    "full acceptance",
+    "CI",
+    "main merge"
+  ],
+  "cleanup": {
+    "owned_tab_closed": true,
+    "viewport_reset": true,
+    "owned_server_exited": true
+  }
+}
