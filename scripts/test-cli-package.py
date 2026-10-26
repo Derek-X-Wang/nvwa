@@ -71,6 +71,9 @@ class CLIPackageTests(unittest.TestCase):
 
     def test_actual_archive_inventory_and_notices_are_complete(self):
         bundle = json.loads((self.home / "BUNDLE.json").read_text())
+        self.assertEqual(bundle["format"], "nvwa-standalone-cli")
+        self.assertEqual(bundle["schema_version"], 1)
+        self.assertEqual(bundle["asset_trees"], list(PACKAGER.ASSET_TREES))
         files = {str(p.relative_to(self.home)) for p in self.home.rglob("*") if p.is_file()}
         self.assertEqual(files, set(bundle["files"]) | {"BUNDLE.json"})
         self.assertTrue(os.access(self.cli, os.X_OK))
@@ -131,6 +134,54 @@ class CLIPackageTests(unittest.TestCase):
         self.run_cli("new", self.assets / "character.profile.json", work)
         self.run_cli("validate", work, self.assets)
 
+    def test_discovered_v2_sets_apply_and_preserve_full_work_from_the_real_archive(self):
+        original = self.home / "works/b1-character.nvwa.json"
+        before = self.run_cli("inspect", original)
+        contract = self.run_cli("describe-capabilities", original)["cli_contract"]["set_appearance"]
+        self.assertEqual(contract["asset_set_id"], "mpfb-b1-cc0-appearance-v2")
+        self.assertEqual(contract["current"], before["character"]["appearance"])
+        self.assertEqual(len(contract["compatible_sets"]), 2)
+        for index, selection in enumerate(contract["compatible_sets"]):
+            self.assertEqual(len(selection), 7)
+            self.assertEqual([selection[role] for role in ("skin", "eyes", "hair")], [True] * 3)
+            envelope = {
+                "command_id": f"compatible-{index}", "expected_revision": before["revision"],
+                "command": {"type": "set_appearance", "character_id": before["character"]["id"], "appearance": selection},
+            }
+            command = self.cwd / f"compatible-{index}.json"
+            command.write_text(json.dumps(envelope))
+            output = self.cwd / f"compatible-work-{index}.json"
+            saved = self.cwd / f"compatible-saved-{index}.json"
+            self.run_cli("apply", original, command, output)
+            self.run_cli("validate", output, self.assets)
+            self.run_cli("save", output, saved)
+            actual = self.run_cli("inspect", saved)
+            expected = json.loads(json.dumps(before))
+            expected["revision"] += 1
+            expected["character"]["appearance"] = selection
+            self.assertEqual(actual, expected)
+            self.assertEqual(output.read_bytes(), saved.read_bytes())
+        self.assertEqual(self.run_cli("inspect", original), before)
+
+    def test_short01_descriptor_and_all_fourteen_payloads_authenticate_with_hair_and_eyes_off(self):
+        document = self.run_cli("inspect", self.home / "works/b1-short01.nvwa.json")
+        document["character"]["appearance"].update(eyes=False, hair=False)
+        work = self.cwd / "short01-skin-only.json"
+        work.write_text(json.dumps(document))
+        self.run_cli("validate", work, self.assets)
+        directory = self.assets / "appearances/mpfb-b1-cc0-v2-short01-v1"
+        manifest = json.loads((directory / "manifest.json").read_bytes())
+        self.assertEqual(len(manifest["files"]), 14)
+        for relative in ["manifest.json", *manifest["files"]]:
+            path = directory / relative
+            original = path.read_bytes()
+            try:
+                path.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+                self.run_cli("validate", work, self.assets, error="asset_hash_mismatch")
+            finally:
+                path.write_bytes(original)
+            self.run_cli("validate", work, self.assets)
+
     def test_preexisting_base_only_distribution_layout_still_fails(self):
         old = self.cwd / "old-base-only-assets"
         old.mkdir()
@@ -143,9 +194,10 @@ class CLIPackageTests(unittest.TestCase):
         self.run_cli("validate", work, self.home, error="asset_missing")
 
     def test_removed_corrupt_and_symlinked_payloads_reject_then_restore(self):
-        for base, appearance, work in (
-            ("mpfb-b1-v1", "mpfb-b1-cc0-v1", "b1-appearance.nvwa.json"),
-            ("mpfb-b1-v2", "mpfb-b1-cc0-v2", "b1-character.nvwa.json"),
+        for base, appearance, work, hair in (
+            ("mpfb-b1-v1", "mpfb-b1-cc0-v1", "b1-appearance.nvwa.json", "short04"),
+            ("mpfb-b1-v2", "mpfb-b1-cc0-v2", "b1-character.nvwa.json", "short04"),
+            ("mpfb-b1-v2", "mpfb-b1-cc0-v2-short01-v1", "b1-short01.nvwa.json", "short01"),
         ):
             document = self.home / "works" / work
             paths = (
@@ -154,7 +206,7 @@ class CLIPackageTests(unittest.TestCase):
                 self.assets / "appearances" / appearance / "manifest.json",
                 self.assets / "appearances" / appearance / "skins/young_caucasian_female2/young_lightskinned_female_diffuse2.png",
                 self.assets / "appearances" / appearance / "eyes/materials/brown_eye.png",
-                self.assets / "appearances" / appearance / "hair/short04/short04_diffuse.png",
+                self.assets / "appearances" / appearance / f"hair/{hair}/{hair}_diffuse.png",
             )
             for path in paths:
                 with self.subTest(payload=str(path.relative_to(self.assets))):
@@ -213,21 +265,25 @@ class CLIPackageTests(unittest.TestCase):
         PACKAGER.copy_file(self.home / "README.md", source / "docs/CLI-STANDALONE.md")
         PACKAGER.copy_file(self.home / "docs/cli-authoring.md", source / "docs/agents/cli-authoring.md")
         shutil.copytree(self.home / "notices/build-inputs", source, dirs_exist_ok=True)
-        payload = source / "assets/appearances/mpfb-b1-cc0-v2/eyes/materials/brown_eye.png"
-        original = payload.read_bytes()
         output = self.cwd / "refused-package"
-        for action in ("missing", "corrupt"):
-            with self.subTest(action=action):
-                if action == "missing":
-                    payload.unlink()
-                else:
-                    payload.write_bytes(bytes([original[0] ^ 1]) + original[1:])
-                with self.assertRaisesRegex(ValueError, "Packaged Work does not authenticate"):
-                    PACKAGER.package(self.binary, output, repo=source)
-                self.assertFalse(output.exists())
-                self.assertFalse(output.with_name(output.name + ".tar.gz").exists())
-                self.assertFalse(list(output.parent.glob(".nvwa-cli-*")))
-                payload.write_bytes(original)
+        for relative in (
+            "appearances/mpfb-b1-cc0-v2/eyes/materials/brown_eye.png",
+            "appearances/mpfb-b1-cc0-v2-short01-v1/provenance/makehuman_system_assets.json",
+        ):
+            payload = source / "assets" / relative
+            original = payload.read_bytes()
+            for action in ("missing", "corrupt"):
+                with self.subTest(payload=relative, action=action):
+                    if action == "missing":
+                        payload.unlink()
+                    else:
+                        payload.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+                    with self.assertRaisesRegex(ValueError, "Packaged Work does not authenticate"):
+                        PACKAGER.package(self.binary, output, repo=source)
+                    self.assertFalse(output.exists())
+                    self.assertFalse(output.with_name(output.name + ".tar.gz").exists())
+                    self.assertFalse(list(output.parent.glob(".nvwa-cli-*")))
+                    payload.write_bytes(original)
 
     def test_late_destination_collisions_preserve_foreign_data_and_publish_nothing(self):
         for target in ("archive", "directory"):

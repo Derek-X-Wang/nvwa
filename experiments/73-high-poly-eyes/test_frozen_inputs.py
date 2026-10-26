@@ -1,5 +1,6 @@
 """Exercise the CI-called source gate in disposable repository copies."""
 import hashlib
+import importlib.util
 import itertools
 import json
 from pathlib import Path
@@ -11,6 +12,12 @@ import unittest
 
 EXP = Path(__file__).resolve().parent
 ROOT = EXP.parents[1]
+SPEC = importlib.util.spec_from_file_location('eye73_frozen_gate_controls', EXP / 'frozen_context.py')
+CONTEXT = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(CONTEXT)
+PRODUCT = 'hair79-short01-product-v1'
+ORIGINAL = 'original-frozen309'
+CLOSEOUT = 'character-stage-closeout-v1'
 
 
 class FrozenInputGate(unittest.TestCase):
@@ -28,35 +35,31 @@ class FrozenInputGate(unittest.TestCase):
             destination = cls.root / name
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / name, destination)
-        for name in ['test_prepare.py', 'cpu_probe.py', 'frozen_context.py', 'source-context-closeout-v1.json']:
+        for name in ['test_prepare.py', 'cpu_probe.py', 'frozen_context.py',
+                     'source-context-closeout-v1.json', 'source-context-hair79-short01-v1.json']:
             shutil.copyfile(EXP / name, cls.exp / name)
-        context = json.loads((EXP / 'source-context-closeout-v1.json').read_text())
-        cls.current = {name: (cls.root / name).read_bytes() for name in context['overrides']}
-        cls.original = {}
-        for name, raw in cls.current.items():
-            text = raw.decode()
-            if name == 'crates/nvwa-core/src/b1.rs':
-                before = 'character backend version {version} is unsupported"'
-                if text.count(before) != 1:
-                    raise ValueError('historical diagnostic fixture seam must occur once')
-                text = text.replace(before, 'character backend version {version} is unsupported; expected 1"')
-            else:
-                if name == 'crates/nvwa-cli/tests/b1.rs':
-                    start = '#[test]\nfn unsupported_backend_version_reports_accurate_error_and_preserves_files()'
-                    end = '#[test]\nfn no_window_new_discover_apply_validate_save_and_inspect_share_full_work()'
-                elif name == 'crates/nvwa-core/tests/b1.rs':
-                    start = '#[test]\nfn unsupported_backend_versions_report_rejection_without_claiming_expected_version_one()'
-                    end = '#[test]\nfn canonical_b1_defaults_roundtrip_and_reject_modified_profile_identity_or_bindings()'
-                else:
-                    start = '        // Check scheduled feedback before explicit readback can repair it.'
-                    end = '        let snapshot = crate::appearance_snapshot(app.world_mut()).unwrap();'
-                if text.count(start) != 1 or end not in text[text.index(start):]:
-                    raise ValueError('historical source fixture seams missing/duplicated: ' + name)
-                text = text[:text.index(start)] + text[text.index(end, text.index(start)):]
-            old = text.encode()
-            if hashlib.sha256(old).hexdigest() != cls.inputs[name]['sha256'] or len(old) != cls.inputs[name]['bytes']:
-                raise ValueError('historical fixture must reconstruct exact original bytes: ' + name)
-            cls.original[name] = old
+        shutil.copytree(EXP / 'fixtures', cls.exp / 'fixtures')
+        cls.contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
+        cls.maps = dict(cls.contexts)
+        historical = CONTEXT.historical_sources(EXP, cls.contexts)
+        cls.original = historical[ORIGINAL]
+        cls.current = {name: (cls.root / name).read_bytes() for name in cls.original}
+        cls.closeout = dict(cls.original)
+        closeout = json.loads((EXP / 'source-context-closeout-v1.json').read_bytes())
+        for name, item in closeout['overrides'].items():
+            raw = historical[CLOSEOUT].get(name, (cls.root / name).read_bytes())
+            if {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} != item:
+                raise ValueError('archived closeout fixture does not match old pin: ' + name)
+            cls.closeout[name] = raw
+        cls.snapshots = {ORIGINAL: cls.original, CLOSEOUT: cls.closeout, PRODUCT: cls.current}
+        for context, snapshot in cls.snapshots.items():
+            for name, raw in snapshot.items():
+                if {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} != cls.maps[context][name]:
+                    raise ValueError('complete source fixture mismatch: ' + context + ' ' + name)
+
+    def write_context(self, name):
+        for relative, raw in self.snapshots[name].items():
+            (self.root / relative).write_bytes(raw)
 
     def gate(self, raw, rejects):
         manifest = self.exp / 'FROZEN-INPUTS.json'
@@ -88,45 +91,118 @@ class FrozenInputGate(unittest.TestCase):
 
     def test_exact_original_context_accepts_at_actual_called_gate_without_git_history(self):
         try:
-            for name, raw in self.original.items():
-                (self.root / name).write_bytes(raw)
+            self.write_context(ORIGINAL)
             self.gate(self.raw, rejects=False)
         finally:
-            for name, raw in self.current.items():
-                (self.root / name).write_bytes(raw)
+            self.write_context(PRODUCT)
+
+    def test_exact_closeout_context_accepts_at_actual_called_gate_without_git_history(self):
+        try:
+            self.write_context(CLOSEOUT)
+            self.gate(self.raw, rejects=False)
+        finally:
+            self.write_context(PRODUCT)
 
     def test_all_fourteen_mixed_contexts_reject_at_actual_called_gate(self):
-        names = list(self.current)
+        names = list(json.loads((EXP / 'source-context-closeout-v1.json').read_bytes())['overrides'])
         try:
+            self.write_context(ORIGINAL)
             for choices in itertools.product((False, True), repeat=4):
                 if all(choices) or not any(choices):
                     continue
-                with self.subTest(current_files=choices):
-                    for name, current in zip(names, choices):
-                        (self.root / name).write_bytes((self.current if current else self.original)[name])
+                with self.subTest(closeout_files=choices):
+                    for name, closeout in zip(names, choices):
+                        (self.root / name).write_bytes((self.closeout if closeout else self.original)[name])
                     self.gate(self.raw, rejects=True)
         finally:
-            for name, raw in self.current.items():
-                (self.root / name).write_bytes(raw)
+            self.write_context(PRODUCT)
 
-    def test_context_manifest_missing_empty_corrupt_tampered_and_symlink_reject(self):
-        path = self.exp / 'source-context-closeout-v1.json'
+    def test_every_product_single_path_crossover_rejects_at_actual_called_gate(self):
+        try:
+            for historical in (ORIGINAL, CLOSEOUT):
+                for left, right in ((PRODUCT, historical), (historical, PRODUCT)):
+                    self.write_context(left)
+                    for name, raw in self.snapshots[left].items():
+                        other = self.snapshots[right][name]
+                        if raw == other:
+                            continue
+                        with self.subTest(context=left, substituted=right, source=name):
+                            (self.root / name).write_bytes(other)
+                            self.gate(self.raw, rejects=True)
+                            (self.root / name).write_bytes(raw)
+        finally:
+            self.write_context(PRODUCT)
+
+    def test_all_complete_context_maps_and_every_mixture_reject_except_three_admitted(self):
+        changing = list(self.original)
+        variants = [sorted({json.dumps(files[name], sort_keys=True) for _, files in self.contexts})
+                    for name in changing]
+        accepted = rejected = 0
+        for values in itertools.product(*variants):
+            actual = dict(self.inputs)
+            actual.update({name: json.loads(value) for name, value in zip(changing, values)})
+            matching = [name for name, expected in self.contexts if actual == expected]
+            if matching:
+                self.assertEqual(CONTEXT.select_context(actual, self.contexts)[0], matching[0])
+                accepted += 1
+            else:
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.contexts)
+                rejected += 1
+        self.assertEqual((accepted, rejected), (3, 12285))
+        for context, expected in self.contexts:
+            for name in expected:
+                actual = dict(expected)
+                actual.pop(name)
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.contexts)
+            for actual in ({}, dict(expected, unreviewed={'bytes': 0, 'sha256': '0' * 64})):
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.contexts)
+
+    def corrupt_required_file(self, relative, label):
+        path = self.exp / relative
         original = path.read_bytes()
-        target = self.root / 'original-context.json'
+        target = self.root / 'original-context-or-fixture'
         target.write_bytes(original)
-        for fault in ('missing', 'empty', 'corrupt', 'tampered', 'symlink'):
-            with self.subTest(fault=fault):
+        faults = ['missing', 'empty', 'corrupt', 'tampered', 'symlink']
+        if relative.endswith('.json'):
+            faults += ['empty-object', 'invalid-json']
+        for fault in faults:
+            with self.subTest(file=label, fault=fault):
                 path.unlink()
                 try:
                     if fault == 'symlink':
                         path.symlink_to(target)
                     elif fault != 'missing':
-                        path.write_bytes({'empty': b'{}', 'corrupt': b'{', 'tampered': original + b' '}[fault])
+                        path.write_bytes({'empty': b'', 'corrupt': bytes([original[0] ^ 1]) + original[1:],
+                                          'empty-object': b'{}', 'invalid-json': b'{',
+                                          'tampered': original + b' '}[fault])
                     self.gate(self.raw, rejects=True)
                 finally:
                     if path.exists() or path.is_symlink():
                         path.unlink()
                     path.write_bytes(original)
+        self.gate(self.raw, rejects=False)
+
+    def test_context_manifest_missing_empty_corrupt_tampered_and_symlink_reject(self):
+        for relative in (CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME):
+            self.corrupt_required_file(relative, relative)
+
+    def test_historical_fixture_manifest_and_every_blob_fail_closed_at_actual_called_gate(self):
+        self.corrupt_required_file(CONTEXT.FIXTURES_NAME, 'historical fixture manifest')
+        manifest = json.loads((EXP / CONTEXT.FIXTURES_NAME).read_bytes())
+        for context, items in manifest['contexts'].items():
+            for name, item in items.items():
+                self.corrupt_required_file(item['fixture'], context + ' ' + name)
+
+    def test_undeclared_historical_fixture_rejects_at_actual_called_gate(self):
+        path = self.exp / 'fixtures/source-contexts/unreviewed-source'
+        try:
+            path.write_bytes(b'unreviewed')
+            self.gate(self.raw, rejects=True)
+        finally:
+            path.unlink()
         self.gate(self.raw, rejects=False)
 
     def test_original_manifest_cannot_be_replaced_with_complete_current_hashes(self):

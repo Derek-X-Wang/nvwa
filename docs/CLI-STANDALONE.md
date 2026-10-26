@@ -4,9 +4,11 @@ This local source-built package contains `bin/nvwa-cli`, a complete `assets/`
 root, demonstration Works in `works/`, this guide, the command guide in
 `docs/cli-authoring.md`, and a `BUNDLE.json` byte inventory. It supports the
 original GLB character, static B1, motion B1, and the eight-parameter character.
-Both approved B1 base versions and both appearance versions are included.
+Both approved B1 base versions and all three appearance sets are included.
+The optional short01 set uses the eight-parameter V2 base; existing Works and
+creator defaults keep their original appearance selection.
 No new assets, models or dependencies are acquired by packaging or use.
-The packager runs the supplied native CLI against all three included Works
+The packager runs the supplied native CLI against all four included Works
 before writing the final directory and archive. Incomplete or changed
 descriptor/payload inputs fail that check.
 Use a local filesystem that supports hard links. The packager reserves the
@@ -30,11 +32,17 @@ WORK_DIR="$(mktemp -d)"
 "$CLI" new-character "$ASSETS" "$WORK_DIR/character.nvwa.json"
 "$CLI" describe-capabilities "$WORK_DIR/character.nvwa.json"
 "$CLI" inspect "$NVWA_CLI_HOME/works/b1-character.nvwa.json"
+"$CLI" validate "$NVWA_CLI_HOME/works/b1-short01.nvwa.json" "$ASSETS"
 ```
 
 The demonstration selects Skin, Eyes and Hair. New characters start with all
-three off. Use the discovered `set_appearance` identity, hash and command shape
-to select roles, then `apply` to a new output Work. The retained command guide
+three off. Read `set_appearance.compatible_sets` for complete selectable
+appearance objects, then copy one into the discovered command envelope and
+`apply` to a new output Work. Each example has all three role flags on; these
+flags are selectable defaults, not the loaded Work state. `current` reports
+that state. The existing identity/hash fields still describe the base default
+(short04); V2 additionally lists short01. V1 has one compatible set and GLB has
+none. Existing executable examples remain valid. The retained command guide
 describes revisions, atomic batches, errors and session history. Save Works
 outside the extracted package. The binary requires the operating system and
 architecture for which it was built; this is not a universal binary.
@@ -47,8 +55,10 @@ need the pinned Rust toolchain and locally available locked crates.
 
 `validate` authenticates the exact pinned descriptors and every bounded
 payload, including appearance roles that are off when another role is on.
-Missing roots, missing files, changed descriptors and corrupted payloads
-still reject. `apply` and `save` edit portable Work metadata; they do not
+The short01 descriptor pins fourteen payloads, including the original four
+hair files, full 39,220-byte package metadata and CC0 text; legacy descriptors
+still pin thirteen. Missing roots, missing files, changed descriptors and
+corrupted payloads still reject. `apply` and `save` edit portable Work metadata; they do not
 authenticate filesystem assets or establish rendered appearance readiness.
 Work schema and Studio behavior are unchanged.
 

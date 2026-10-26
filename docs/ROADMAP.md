@@ -1,6 +1,12 @@
 # Nvwa 路线图
 
-## 当前阶段：本地收口已验收；发布后冻结并复盘（2026-10-20）
+## 当前推进：short01 独立素材与作品交换（2026-10-25）
+
+#79 的 short01 已通过约定的体型、动作与正面发际有界对照，进入独立正式素材接入。CLI 可发现并选择它，普通 Web 可打开、切换 Hair、保存和重载；实际 Web 下载已由 CLI 校验，首次保存与 CLI 文件逐字节一致。旧作品及默认构造继续使用 short04，不自动替换。原始对照、产品验收及边界见[short01 记录](evidence/hair79-short01/README.md)。最终发布状态以关联 PR 的独立审查、精确 PR/main CI 为准。
+
+这一步交付可保存和交换的可选发型，不关闭 #79 的完整外观质量。眼睑、侧后视角及完整接触表现仍未准入；M2 和 #80 保持 HOLD，#112 保留原失败，#3 保持阻塞，#4 保留缺口。日常以 Web/CLI 验收推进，桌面画面集中到大版本节点，既有自动检查不减少。
+
+## 2026-10-20 阶段记录：本地收口已验收；发布后冻结并复盘
 
 共享 Rust Work／命令、Web／桌面／离线 CLI、B1 八参数、连续预制动作、外观保存交换和可调试演舞台已有各自的有界运行证据。本次 #87 文案修正、#86 已有反馈核验和普通 Web／CLI 回归已有[实际记录](evidence/character-closeout-20261020/README.md)：集成 69 项 Core／CLI、16 项运行时控制通过，249 个 Web 源哈希匹配，真实下载与 CLI 保存逐字节一致。仍捕获三次空场景，均显示 Preparing 而非 Ready；#86 保持开放。收口前 main 基线为 `d21dfcf0f717c2d25865a42b4094351bfdfe7069`，其[自然 main CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/39377322274)已通过。最终审查、PR／main CI 和合并由 [#87 关联 PR 完成账本](https://github.com/Derek-X-Wang/nvwa/issues/87)记录；发布门完成后才宣告有界冻结、ready for retro。
 

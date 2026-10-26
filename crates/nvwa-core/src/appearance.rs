@@ -17,10 +17,19 @@ pub const B1_V2_APPEARANCE_MANIFEST_BYTES: &[u8] =
     include_bytes!("../../../assets/appearances/mpfb-b1-cc0-v2/manifest.json");
 pub const B1_V2_APPEARANCE_MANIFEST_PATH: &str = "appearances/mpfb-b1-cc0-v2/manifest.json";
 
+pub const B1_V2_SHORT01_APPEARANCE_ID: &str = "mpfb-b1-cc0-appearance-v2-short01-v1";
+pub const B1_V2_SHORT01_APPEARANCE_MANIFEST_SHA256: &str =
+    "8c2044ee524a700abd75479c457d2e269f7e280a67509749c9fd780794c6d49a";
+pub const B1_V2_SHORT01_APPEARANCE_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/appearances/mpfb-b1-cc0-v2-short01-v1/manifest.json");
+pub const B1_V2_SHORT01_APPEARANCE_MANIFEST_PATH: &str =
+    "appearances/mpfb-b1-cc0-v2-short01-v1/manifest.json";
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum B1AppearanceSet {
     V1,
     V2,
+    V2Short01,
 }
 impl B1AppearanceSet {
     pub const fn for_base(base: B1AssetVersion) -> Self {
@@ -32,37 +41,41 @@ impl B1AppearanceSet {
     pub const fn base(self) -> B1AssetVersion {
         match self {
             Self::V1 => B1AssetVersion::V1,
-            Self::V2 => B1AssetVersion::V2,
+            Self::V2 | Self::V2Short01 => B1AssetVersion::V2,
         }
     }
     pub const fn schema_version(self) -> u32 {
         match self {
             Self::V1 => 1,
-            Self::V2 => 2,
+            Self::V2 | Self::V2Short01 => 2,
         }
     }
     pub const fn asset_id(self) -> &'static str {
         match self {
             Self::V1 => B1_APPEARANCE_ID,
             Self::V2 => B1_V2_APPEARANCE_ID,
+            Self::V2Short01 => B1_V2_SHORT01_APPEARANCE_ID,
         }
     }
     pub const fn manifest_path(self) -> &'static str {
         match self {
             Self::V1 => B1_APPEARANCE_MANIFEST_PATH,
             Self::V2 => B1_V2_APPEARANCE_MANIFEST_PATH,
+            Self::V2Short01 => B1_V2_SHORT01_APPEARANCE_MANIFEST_PATH,
         }
     }
     pub const fn manifest_sha256(self) -> &'static str {
         match self {
             Self::V1 => B1_APPEARANCE_MANIFEST_SHA256,
             Self::V2 => B1_V2_APPEARANCE_MANIFEST_SHA256,
+            Self::V2Short01 => B1_V2_SHORT01_APPEARANCE_MANIFEST_SHA256,
         }
     }
     pub const fn manifest_bytes(self) -> &'static [u8] {
         match self {
             Self::V1 => B1_APPEARANCE_MANIFEST_BYTES,
             Self::V2 => B1_V2_APPEARANCE_MANIFEST_BYTES,
+            Self::V2Short01 => B1_V2_SHORT01_APPEARANCE_MANIFEST_BYTES,
         }
     }
 }
@@ -161,10 +174,27 @@ impl CharacterAppearance {
                 "B1 CC0 appearance requires the B1 character backend",
             )
         })?;
+        Self::b1_cc0_for_set(backend, B1AppearanceSet::for_base(base), skin, eyes, hair)
+    }
+
+    /// Select an admitted set for its exact base; empty selections remain None.
+    pub fn b1_cc0_for_set(
+        backend: &CharacterBackend,
+        set: B1AppearanceSet,
+        skin: bool,
+        eyes: bool,
+        hair: bool,
+    ) -> Result<Self> {
+        backend.validate()?;
+        if backend.b1_asset_version() != Some(set.base()) {
+            return Err(CoreError::new(
+                "unsupported_character_operation",
+                "B1 CC0 appearance requires its exact versioned B1 base",
+            ));
+        }
         if !(skin || eyes || hair) {
             return Ok(Self::None);
         }
-        let set = B1AppearanceSet::for_base(base);
         Ok(Self::B1Cc0 {
             schema_version: set.schema_version(),
             asset_set_id: set.asset_id().into(),
@@ -196,6 +226,16 @@ impl CharacterAppearance {
                 && asset_set_sha256 == B1_V2_APPEARANCE_MANIFEST_SHA256 =>
             {
                 Some(B1AppearanceSet::V2)
+            }
+            Self::B1Cc0 {
+                schema_version: 2,
+                asset_set_id,
+                asset_set_sha256,
+                ..
+            } if asset_set_id == B1_V2_SHORT01_APPEARANCE_ID
+                && asset_set_sha256 == B1_V2_SHORT01_APPEARANCE_MANIFEST_SHA256 =>
+            {
+                Some(B1AppearanceSet::V2Short01)
             }
             _ => None,
         }
@@ -317,6 +357,7 @@ impl B1AppearanceManifest {
         let set = match self.asset_set_id.as_str() {
             B1_APPEARANCE_ID => B1AppearanceSet::V1,
             B1_V2_APPEARANCE_ID => B1AppearanceSet::V2,
+            B1_V2_SHORT01_APPEARANCE_ID => B1AppearanceSet::V2Short01,
             _ => {
                 return Err(CoreError::new(
                     "invalid_asset",
@@ -331,11 +372,16 @@ impl B1AppearanceManifest {
             || self.asset_set_id != set.asset_id()
             || self.base_asset_id != set.base().asset_id()
             || self.base_manifest_sha256 != set.base().manifest_sha256()
-            || self.files.len() != 13
+            || self.files.len()
+                != if set == B1AppearanceSet::V2Short01 {
+                    14
+                } else {
+                    13
+                }
         {
             return Err(CoreError::new(
                 "invalid_asset",
-                "B1 appearance requires the exact shipped thirteen-file descriptor and base identity",
+                "B1 appearance requires the exact shipped descriptor and base identity",
             ));
         }
         let mut total = 0usize;

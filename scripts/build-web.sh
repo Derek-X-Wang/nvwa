@@ -32,7 +32,7 @@ for dependency in humentity bevy_obj wobj; do
   fi
 done
 cp assets/fixtures/nvwa-humanoid.glb assets/fixtures/LICENSE.txt assets/fixtures/provenance-manifest.json dist/web/assets/fixtures/
-cp examples/m1-sequence.nvwa.json examples/b1-appearance.nvwa.json examples/b1-character.nvwa.json dist/web/works/
+cp examples/m1-sequence.nvwa.json examples/b1-appearance.nvwa.json examples/b1-character.nvwa.json examples/b1-short01.nvwa.json dist/web/works/
 cp assets/fonts/OFL.txt assets/fonts/NOTICE.md assets/fonts/PROVENANCE.json dist/web/licenses/fonts/
 mkdir -p dist/web/licenses/appearance
 cp assets/appearances/mpfb-b1-cc0-v1/SOURCE.json assets/appearances/mpfb-b1-cc0-v1/manifest.json dist/web/licenses/appearance/
@@ -40,6 +40,9 @@ cp -R assets/appearances/mpfb-b1-cc0-v1/licenses assets/appearances/mpfb-b1-cc0-
 mkdir -p dist/web/licenses/appearance/v2
 cp assets/appearances/mpfb-b1-cc0-v2/SOURCE.json assets/appearances/mpfb-b1-cc0-v2/manifest.json assets/appearances/mpfb-b1-cc0-v2/BASE-BINDING.json dist/web/licenses/appearance/v2/
 cp -R assets/appearances/mpfb-b1-cc0-v2/licenses assets/appearances/mpfb-b1-cc0-v2/provenance dist/web/licenses/appearance/v2/
+mkdir -p dist/web/licenses/appearance/v2-short01-v1
+cp assets/appearances/mpfb-b1-cc0-v2-short01-v1/SOURCE.json assets/appearances/mpfb-b1-cc0-v2-short01-v1/manifest.json dist/web/licenses/appearance/v2-short01-v1/
+cp -R assets/appearances/mpfb-b1-cc0-v2-short01-v1/licenses assets/appearances/mpfb-b1-cc0-v2-short01-v1/provenance dist/web/licenses/appearance/v2-short01-v1/
 cp licenses/craft-ui/LICENSE-MIT.txt dist/web/licenses/craft-ui/
 python3 scripts/bundle-sizes.py
 if [[ -n "${NVWA_WEB_EXPORT:-}" ]]; then

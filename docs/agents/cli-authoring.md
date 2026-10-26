@@ -57,9 +57,9 @@ The discovered retention policy describes the bounded editor session.
 
 Run `nvwa-cli validate output.nvwa.json assets` to check the actual referenced
 asset's hash and structure. For the original GLB backend, omitting the asset root checks the Work document
-only. B1 validation requires the explicit root and checks its descriptor and all
-thirteen raw files; omitting it returns `asset_root_required`. `save` validates and reserializes a work without changing its
-revision. Import the exact saved file into native Studio or Web Studio for
+only. B1 validation requires the explicit root and authenticates the selected
+base descriptor and every raw payload; omitting it returns `asset_root_required`.
+`save` validates and reserializes a work without changing its revision. Import the exact saved file into native Studio or Web Studio for
 separate rendering and continuing-edit proof.
 
 The [M1.2 adaptive agent evidence](../../experiments/38-agent-cli/REPORT.md)
@@ -100,8 +100,10 @@ to `{"type":"none"}`. Schema4 requires explicit non-null appearance.
 
 Use `set_appearance` with the loaded character ID and revision to save the
 selection. `none` has exactly `{"type":"none"}`. B1 accepts `b1_cc0` with
-`schema_version:1`, the fixed asset set ID and SHA-256 returned by discovery,
-and all three required booleans `skin`, `eyes`, `hair`. Select any independent
+the exact schema version, asset set ID and SHA-256 returned by discovery,
+and all three required booleans `skin`, `eyes`, `hair`. V1 uses appearance
+schema1; the eight-parameter V2 base uses appearance schema2. Work schema4 and
+the seven appearance fields stay unchanged. Select any independent
 combination with at least one true; use `none` for no roles. GLB supports `none`.
 The command uses the existing atomic transaction, retry, Undo and Redo rules.
 Unknown fields, missing/null values, duplicate keys, changed identities and
@@ -109,11 +111,25 @@ unsupported backends reject without saving the batch.
 
 `apply` and `save` edit portable metadata. `validate work.json asset_root`
 authenticates the fixed body asset and, when appearance is selected, its
-descriptor and all thirteen appearance payloads, including unselected roles.
+descriptor and every appearance payload, including unselected roles. Legacy
+sets have thirteen payloads; short01 has fourteen, including full original
+package metadata. The existing size limits still apply.
 These commands do not establish rendered appearance readiness.
 
+`set_appearance.compatible_sets` contains complete, typed appearance objects
+that can be copied into a `set_appearance` envelope. Its role flags are all
+true as selectable defaults; they do not describe the current Work. Read
+`current` for the actual selection. V1 lists its existing short04 set. V2 lists
+its existing short04 set and `mpfb-b1-cc0-appearance-v2-short01-v1`. Unsupported
+backends list no sets. The existing `schema_version`, `asset_set_id` and
+`asset_set_sha256` fields keep their base-default meaning, so old examples
+continue to select short04. Selecting short01 is explicit; saving old Works
+does not upgrade their appearance. `works/b1-short01.nvwa.json` in the standalone
+package (or `examples/b1-short01.nvwa.json` in the checkout) demonstrates the
+V2 selection with the existing authored timeline and stage.
+
 For use outside the source checkout, the complete standalone package provides
-an `assets/` root with both admitted B1 base and appearance versions. Set an
+an `assets/` root with both admitted B1 bases and all three appearance sets. Set an
 absolute root explicitly; do not substitute Studio's or the Web export's
 rendering asset directory, which omits filesystem appearance payloads.
 See `README.md` in the extracted standalone package for offline usage and

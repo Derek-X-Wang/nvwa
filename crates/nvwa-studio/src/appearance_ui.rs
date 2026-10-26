@@ -17,9 +17,15 @@ pub(super) fn draw(ui: &mut egui::Ui, document: &SceneDocument) -> Option<Comman
     if !(skin_changed || eyes_changed || hair_changed) {
         return None;
     }
+    let appearance = match document.character.appearance.b1_set() {
+        Some(set) => {
+            CharacterAppearance::b1_cc0_for_set(&document.profile.backend, set, skin, eyes, hair)
+        }
+        None => CharacterAppearance::b1_cc0_for(&document.profile.backend, skin, eyes, hair),
+    }
+    .ok()?;
     Some(Command::SetAppearance {
         character_id: document.character.id.clone(),
-        appearance: CharacterAppearance::b1_cc0_for(&document.profile.backend, skin, eyes, hair)
-            .ok()?,
+        appearance,
     })
 }

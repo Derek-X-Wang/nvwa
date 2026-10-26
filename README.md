@@ -95,6 +95,15 @@ cargo run -p nvwa-studio --locked -- --work "$CHARACTER_OUT/character.nvwa.json"
 
 Studio's **New character…** creates the same profile. Fresh characters start with Skin, Eyes and Hair off; the checked-in `examples/b1-character.nvwa.json` selects all three. `new-b1`, `new-b1-motion` and existing Works retain their original profiles. Use `describe-capabilities` for the selected Work before sending commands; old Works do not gain the new parameters automatically.
 
+For an explicit short01 hairstyle on the eight-parameter character, open
+[`examples/b1-short01.nvwa.json`](examples/b1-short01.nvwa.json), or use
+`http://127.0.0.1:9201/?work=works/b1-short01.nvwa.json` after a Web build.
+The CLI discovers its independent appearance identity through
+`describe-capabilities` → `cli_contract.set_appearance.compatible_sets`.
+Existing Works and default selections keep short04. Skin/Eyes/Hair toggles
+preserve the selected set while any role stays on; turning all roles off clears
+the selection. [CLI support](docs/CLI-SUPPORT.md) records the file contract.
+
 This quickstart builds the CLI, creates a fresh ignored `.work` directory, and writes every Work and command file there. It leaves the checked-in examples and existing Works untouched. The command values below come from the current bundled profile's `describe-capabilities` response; read that response before adapting the commands to another profile.
 
 ```sh
@@ -169,7 +178,7 @@ NVWA_CLI_HOME="/absolute/path/to/extracted/nvwa-cli"
   "$NVWA_CLI_HOME/works/b1-character.nvwa.json" "$NVWA_CLI_HOME/assets"
 ```
 
-Both B1 base versions, both Skin/Eyes/Hair payload bundles, the original GLB,
+Both B1 base versions, all three fixed Skin/Eyes/Hair payload bundles, the original GLB,
 examples, asset licenses and provenance travel together. Native Studio and
 Web export asset directories are rendering resources and omit filesystem
 appearance payloads; use the standalone package for CLI authentication.
