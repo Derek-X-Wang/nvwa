@@ -36,7 +36,7 @@ pub struct AppearanceStatus {
 }
 #[derive(Clone, PartialEq)]
 struct Key {
-    set: B1AppearanceSet,
+    set: Option<B1AppearanceSet>,
     generation: u64,
     character: Entity,
     body: Entity,
@@ -44,9 +44,13 @@ struct Key {
     flags: (bool, bool, bool),
 }
 impl Key {
-    fn new(frame: &AppearanceFrame, flags: (bool, bool, bool)) -> Self {
+    fn new(
+        frame: &AppearanceFrame,
+        set: Option<B1AppearanceSet>,
+        flags: (bool, bool, bool),
+    ) -> Self {
         Self {
-            set: B1AppearanceSet::for_base(frame.base),
+            set,
             generation: frame.generation,
             character: frame.character,
             body: frame.body,
@@ -199,12 +203,19 @@ type PreparedAccessory = (
 fn prepare(
     frame: &AppearanceFrame,
     fit: &AppearanceFit,
+    set: B1AppearanceSet,
     flags: (bool, bool, bool),
 ) -> Result<(Option<Image>, Vec<PreparedAccessory>), String> {
     let matrices = matrices(frame)?;
     // Decode, fit, transfer, and skin every selected role before allocating or publishing.
     let skin_image = if flags.0 {
-        Some(assets::decode(assets::SKIN_PNG, 2048)?)
+        Some(assets::decode(
+            assets::payload(
+                set,
+                "skins/young_caucasian_female2/young_lightskinned_female_diffuse2.png",
+            )?,
+            2048,
+        )?)
     } else {
         None
     };
@@ -218,7 +229,7 @@ fn prepare(
                 .map(|b| b.name.clone())
                 .collect::<Vec<_>>(),
         )?;
-        for p in geometry::prepare(B1AppearanceSet::for_base(frame.base))?
+        for p in geometry::prepare(set)?
             .into_iter()
             .filter(|p| if p.hair { flags.2 } else { flags.1 })
         {
@@ -246,7 +257,7 @@ pub(super) fn preflight(
             return Err("appearance: candidate base/set identity mismatch".into());
         }
         assets::authenticate(set)?;
-        let _ = prepare(frame, fit, flags)?;
+        let _ = prepare(frame, fit, set, flags)?;
     }
     Ok(())
 }
@@ -254,9 +265,12 @@ fn build(
     world: &mut World,
     state: &mut AppearanceRuntime,
     frame: &AppearanceFrame,
+    set: B1AppearanceSet,
     flags: (bool, bool, bool),
 ) -> Result<(), String> {
-    let set = B1AppearanceSet::for_base(frame.base);
+    if set.base() != frame.base {
+        return Err("appearance: selected base/set identity mismatch".into());
+    }
     if state.authenticated != Some(set) {
         assets::authenticate(set)?;
         state.authenticated = Some(set);
@@ -273,7 +287,7 @@ fn build(
         .ok_or("appearance: current body mesh absent")?
         .attribute(Mesh::ATTRIBUTE_UV_0)
         .cloned();
-    let (skin_image, prepared) = prepare(frame, &fit, flags)?;
+    let (skin_image, prepared) = prepare(frame, &fit, set, flags)?;
     if let Some(image) = skin_image {
         let texture = texture(world, image, 2048)?;
         let mut material = baseline;
@@ -351,7 +365,7 @@ fn build(
             hair: p.hair,
         });
     }
-    state.key = Some(Key::new(frame, flags));
+    state.key = Some(Key::new(frame, Some(set), flags));
     Ok(())
 }
 fn observe_texture(world: &World, texture: &Texture, pixels: bool) -> Result<Value, String> {
@@ -465,7 +479,9 @@ fn stream(
         .key
         .as_ref()
         .ok_or("appearance: no applied identity")?;
-    if *key != Key::new(frame, key.flags) {
+    if key.set.is_some_and(|set| set.base() != frame.base)
+        || *key != Key::new(frame, key.set, key.flags)
+    {
         return Err("appearance: stale generation/body binding".into());
     }
     if let Some(skin) = &state.skin {
@@ -536,7 +552,9 @@ fn retained_frame(
         return Ok(None);
     };
     let frame = last_display_frame(world)?;
-    if *key != Key::new(&frame, key.flags) {
+    if key.set.is_some_and(|set| set.base() != frame.base)
+        || *key != Key::new(&frame, key.set, key.flags)
+    {
         return Err("appearance: retained generation/body binding changed".into());
     }
     Ok(Some(frame))
@@ -710,7 +728,8 @@ pub(super) fn update(world: &mut World) {
                     status.character_entity = Some(format!("{:?}", frame.character));
                     status.body_entity = Some(format!("{:?}", frame.body));
                     let flags = status.requested.b1_flags().unwrap_or((false, false, false));
-                    let key = Key::new(&frame, flags);
+                    let set = status.requested.b1_set();
+                    let key = Key::new(&frame, set, flags);
                     let result = if let Some((_, _, error)) =
                         state.failed.as_ref().filter(|(failed_key, revision, _)| {
                             failed_key == &key && *revision == frame.revision
@@ -721,7 +740,13 @@ pub(super) fn update(world: &mut World) {
                             if state.key.as_ref() != Some(&key) {
                                 dispose(world, &mut state)?;
                                 if flags != (false, false, false) {
-                                    build(world, &mut state, &frame, flags)?;
+                                    build(
+                                        world,
+                                        &mut state,
+                                        &frame,
+                                        set.ok_or("appearance: selected set absent")?,
+                                        flags,
+                                    )?;
                                 } else {
                                     state.key = Some(key.clone());
                                 }
@@ -793,6 +818,7 @@ pub fn appearance_snapshot(world: &mut World) -> Result<Value, String> {
         if *key
             != Key::new(
                 &frame,
+                doc.character.appearance.b1_set(),
                 doc.character
                     .appearance
                     .b1_flags()
@@ -854,6 +880,7 @@ pub fn appearance_snapshot(world: &mut World) -> Result<Value, String> {
             item["normals_sha256"] = json!(hash(json!(expected_normals))?);
             item["uv_sha256"] = json!(hash(json!(live.obj.uv))?);
             item["indices_sha256"] = json!(hash(json!(live.obj.indices))?);
+            item["source_map_sha256"] = json!(hash(json!(live.obj.pairs))?);
             item["display_transform"] = json!(placement.to_cols_array());
             accessories.push(item);
         }
@@ -1050,7 +1077,11 @@ mod tests {
             hair: false,
         };
         let state = AppearanceRuntime {
-            key: Some(Key::new(&frame, (false, true, false))),
+            key: Some(Key::new(
+                &frame,
+                Some(B1AppearanceSet::V1),
+                (false, true, false),
+            )),
             live: vec![live],
             ..default()
         };
@@ -1194,7 +1225,7 @@ mod tests {
     }
     #[test]
     fn candidate_preflight_rejects_bad_fitted_cage_before_allocating() {
-        let (world, _state, frame) = fixture();
+        let (world, _state, mut frame) = fixture();
         let before = (
             world.resource::<Assets<Mesh>>().len(),
             world.resource::<Assets<StandardMaterial>>().len(),
@@ -1205,15 +1236,25 @@ mod tests {
             rest: vec![[0., 0., 0.]],
             uv: vec![[0., 0.]],
         };
-        assert!(
-            preflight(
-                &frame,
-                &fit,
-                &CharacterAppearance::b1_cc0(false, true, true)
-            )
-            .unwrap_err()
-            .contains("full19158 cage")
-        );
+        for (base, set) in [
+            (nvwa_core::B1AssetVersion::V1, B1AppearanceSet::V1),
+            (nvwa_core::B1AssetVersion::V2, B1AppearanceSet::V2),
+            (nvwa_core::B1AssetVersion::V2, B1AppearanceSet::V2Short01),
+        ] {
+            frame.base = base;
+            let backend = if base == nvwa_core::B1AssetVersion::V1 {
+                nvwa_core::CharacterProfile::b1_motion().backend
+            } else {
+                nvwa_core::CharacterProfile::b1_character().backend
+            };
+            let appearance =
+                CharacterAppearance::b1_cc0_for_set(&backend, set, false, true, true).unwrap();
+            assert!(
+                preflight(&frame, &fit, &appearance)
+                    .unwrap_err()
+                    .contains("full19158 cage")
+            );
+        }
         assert_eq!(
             before,
             (

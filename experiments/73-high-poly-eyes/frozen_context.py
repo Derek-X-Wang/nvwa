@@ -1,10 +1,15 @@
 """Exact source-context admission; no historical execution or render claim."""
 import hashlib
 import json
+from pathlib import Path
 
 FROZEN_INPUTS_SHA = '66f024238ef009d0544d617251c46754b202b3069254ce5df47dc6dfc6debc33'
 CONTEXT_NAME = 'source-context-closeout-v1.json'
 CONTEXT_SHA = '0cd9302848da7a996232bca4cbb58cc6c6e12ec77263f59c53b790be2dfd3604'
+SHORT01_CONTEXT_NAME = 'source-context-hair79-short01-v1.json'
+SHORT01_CONTEXT_SHA = '4212de5a650eb8120c49ec985bc00928cca43af33c95a2f8bcc207158311f13f'
+FIXTURES_NAME = 'fixtures/source-contexts/manifest.json'
+FIXTURES_SHA = '7416580f4c087ee831f6a4c9e0722b5b5fae2e172377a048936261e0938385a6'
 
 
 def require(ok, message):
@@ -12,24 +17,75 @@ def require(ok, message):
         raise ValueError('FROZEN-INPUTS.json source context: ' + message)
 
 
+def regular_file(exp, relative):
+    path = exp
+    for part in Path(relative).parts:
+        path = path / part
+        require(not path.is_symlink(), 'context/fixture symlink rejected: ' + relative)
+    require(path.is_file(), 'context/fixture missing: ' + relative)
+    return path
+
+
+def historical_sources(exp, contexts):
+    """Authenticate retained historical bytes against immutable old context pins."""
+    path = regular_file(exp, FIXTURES_NAME)
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == FIXTURES_SHA,
+            'historical fixture manifest identity mismatch')
+    manifest = json.loads(raw)
+    require(manifest['schema_version'] == 1
+            and manifest['baseline_manifest'] == 'FROZEN-INPUTS.json'
+            and manifest['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
+            'historical fixture baseline/version mismatch')
+    expected = dict(contexts)
+    result = {}
+    declared = {FIXTURES_NAME}
+    for items in manifest['contexts'].values():
+        declared.update(item['fixture'] for item in items.values())
+    paths = list((exp / 'fixtures/source-contexts').rglob('*'))
+    require(all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths),
+            'historical fixture tree contains unsafe input')
+    require({str(path.relative_to(exp)) for path in paths if path.is_file()} == declared,
+            'historical fixture inventory is incomplete or contains extra files')
+    for context, items in manifest['contexts'].items():
+        result[context] = {}
+        for name, item in items.items():
+            pinned = expected[context][name]
+            require({'bytes': item['bytes'], 'sha256': item['sha256']} == pinned,
+                    'historical fixture differs from original context pin: ' + name)
+            raw = regular_file(exp, item['fixture']).read_bytes()
+            require(len(raw) == pinned['bytes'] and hashlib.sha256(raw).hexdigest() == pinned['sha256'],
+                    'historical fixture bytes mismatch: ' + name)
+            result[context][name] = raw
+    return result
+
+
 def source_contexts(exp, raw, original):
     require(hashlib.sha256(raw).hexdigest() == FROZEN_INPUTS_SHA,
             'immutable original manifest identity mismatch')
-    path = exp / CONTEXT_NAME
-    require(path.is_file() and not path.is_symlink(), 'context manifest missing/unsafe')
-    require(hashlib.sha256(path.read_bytes()).hexdigest() == CONTEXT_SHA,
-            'context manifest identity mismatch')
-    context = json.loads(path.read_bytes())
-    require(context['schema_version'] == 1 and context['baseline_manifest'] == 'FROZEN-INPUTS.json'
-            and context['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
-            'context baseline/version mismatch')
-    current = dict(original)
-    current.update(context['overrides'])
-    return [('original-frozen309', original), (context['context'], current)]
+    require(original == json.loads(raw), 'original manifest map differs')
+    contexts = [('original-frozen309', original)]
+    for name, expected in ((CONTEXT_NAME, CONTEXT_SHA),
+                           (SHORT01_CONTEXT_NAME, SHORT01_CONTEXT_SHA)):
+        path = regular_file(exp, name)
+        raw = path.read_bytes()
+        require(hashlib.sha256(raw).hexdigest() == expected,
+                'context manifest identity mismatch: ' + name)
+        context = json.loads(raw)
+        require(context['schema_version'] == 1 and context['baseline_manifest'] == 'FROZEN-INPUTS.json'
+                and context['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
+                'context baseline/version mismatch')
+        current = dict(original)
+        current.update(context['overrides'])
+        contexts.append((context['context'], current))
+    # Historical fixtures are mandatory and independently authenticated even when
+    # selecting the product context. No Git history or current-byte reversal.
+    historical_sources(exp, contexts)
+    return contexts
 
 
 def select_context(actual, contexts):
     for name, expected in contexts:
         if actual == expected:
             return name, expected
-    raise ValueError('FROZEN-INPUTS.json source context: exact original309 or reviewed complete closeout309 required')
+    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, or reviewed short01 product309 required')

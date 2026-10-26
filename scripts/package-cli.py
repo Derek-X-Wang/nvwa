@@ -19,6 +19,7 @@ ASSET_TREES = (
     "characters/mpfb-b1-v2",
     "appearances/mpfb-b1-cc0-v1",
     "appearances/mpfb-b1-cc0-v2",
+    "appearances/mpfb-b1-cc0-v2-short01-v1",
 )
 ASSET_FILES = (
     "character.profile.json",
@@ -26,7 +27,12 @@ ASSET_FILES = (
     "fixtures/LICENSE.txt",
     "fixtures/provenance-manifest.json",
 )
-WORKS = ("m1-sequence.nvwa.json", "b1-appearance.nvwa.json", "b1-character.nvwa.json")
+WORKS = (
+    "m1-sequence.nvwa.json",
+    "b1-appearance.nvwa.json",
+    "b1-character.nvwa.json",
+    "b1-short01.nvwa.json",
+)
 
 
 def digest(path):

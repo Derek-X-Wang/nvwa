@@ -36,7 +36,7 @@ class ToolingControls(unittest.TestCase):
     def test_exact_current_context_is_explicit_and_execution_stays_historical(self):
         pins = runner.check_inputs(ROOT)
         context = pins['checked_input_context']
-        self.assertEqual(context['id'], 'character-stage-closeout-v1')
+        self.assertEqual(context['id'], 'hair79-short01-product-v1')
         self.assertEqual(context['current_rust_execution'], 'NOT-RUN')
         self.assertEqual(context['execution_source'], 'immutable baseline581 archive only')
         self.assertEqual(pins['files'][runner.RUNTIME], runner.RUNTIME_SHA)
@@ -48,7 +48,7 @@ class ToolingControls(unittest.TestCase):
         pins = json.loads((HERE / 'pins.json').read_text())
         contexts = runner.source_contexts(pins)
         self.assertEqual([name for name, _ in contexts],
-                         ['baseline581', 'issue86-runtime-retention-v1', 'character-stage-closeout-v1'])
+                         ['baseline581', 'issue86-runtime-retention-v1', 'character-stage-closeout-v1', 'hair79-short01-product-v1'])
         for name, files in contexts:
             with self.subTest(context=name):
                 self.assertEqual(runner.select_source_context(files, contexts), name)
@@ -64,7 +64,8 @@ class ToolingControls(unittest.TestCase):
     def test_every_mixed_context_and_incomplete_map_rejects(self):
         pins = json.loads((HERE / 'pins.json').read_text())
         contexts = runner.source_contexts(pins)
-        changing = (runner.RUNTIME, 'crates/nvwa-runtime/src/appearance/mod.rs', 'crates/nvwa-core/src/b1.rs')
+        changing = [path for path in pins['files']
+                    if len({files[path] for _, files in contexts}) > 1]
         choices = [sorted({files[path] for _, files in contexts}) for path in changing]
         accepted = rejected = 0
         for combination in itertools.product(*choices):
@@ -79,7 +80,7 @@ class ToolingControls(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
                         runner.select_source_context(actual, contexts)
                     rejected += 1
-        self.assertEqual((accepted, rejected), (3, 9))
+        self.assertEqual((accepted, rejected), (4, 92))
         for name, files in contexts:
             for relative in files:
                 with self.subTest(context=name, missing=relative):
@@ -97,7 +98,7 @@ class ToolingControls(unittest.TestCase):
             material.mkdir()
             for name in runner.PACKAGE:
                 shutil.copyfile(HERE / name, material / name)
-            for name in ('pins.json', 'input-context-v1.json', 'input-context-v2.json'):
+            for name in ('pins.json', 'input-context-v1.json', 'input-context-v2.json', 'input-context-v3.json'):
                 path = material / name
                 original = path.read_bytes()
                 target = Path(directory) / name

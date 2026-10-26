@@ -1,6 +1,6 @@
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
-from frozen_context import source_contexts,select_context
+from frozen_context import source_contexts,select_context,historical_sources
 ROOT=Path(__file__).resolve().parents[2];EXP=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('cpu_probe',EXP/'cpu_probe.py');probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -23,8 +23,11 @@ class SourceContract(unittest.TestCase):
   self.assertTrue(all(abs(sum(c)-1)<1e-12 for ids,c,o in rows))
   source_map=json.loads((EXP/'works/high-source-map.json').read_text());self.assertEqual(source_map['source_uv_pairs'],[list(p) for p in obj['pairs']]);self.assertEqual(source_map['uv_0'],obj['uv']);self.assertEqual(source_map['indices'],obj['indices'])
  def test_numeric_production_mirror_body_identity(self):
-  record=json.loads((EXP/'NUMERIC-SOURCE.json').read_text());source=ROOT/record['source'];self.assertEqual(digest(source),record['sha256'])
-  a=source.read_text();b=(EXP/'src/geometry.rs').read_text()
+  record=json.loads((EXP/'NUMERIC-SOURCE.json').read_text());source=ROOT/record['source']
+  frozen=(EXP/'FROZEN-INPUTS.json').read_bytes();contexts=source_contexts(EXP,frozen,json.loads(frozen))
+  historical=historical_sources(EXP,contexts)['original-frozen309'][record['source']]
+  self.assertEqual(hashlib.sha256(historical).hexdigest(),record['sha256'])
+  a=historical.decode();b=(EXP/'src/geometry.rs').read_text();current=source.read_text()
   # Compare each numeric function byte-for-byte after removing only visibility and whitespace.
   for name in ['number','id','mapping','obj','cage','weights','transfer','fit','source_normals','skin']:
    def function(text):
@@ -39,6 +42,7 @@ class SourceContract(unittest.TestCase):
      body=body.replace(added,'')
     return re.sub(r'\s+','',body)
    self.assertEqual(function(a),function(b),name)
+   self.assertEqual(function(a),function(current),name+' current production')
  def test_all_fixed_works_preserve_recipe_pose_stage_lights_camera(self):
   appearance=json.loads((ROOT/'experiments/68-b1-eye-render-diagnosis/works/short-front.nvwa.json').read_text())['character']['appearance']
   for case in ['short-front','long-front','short-quarter','long-quarter']:
@@ -74,7 +78,7 @@ class SourceContract(unittest.TestCase):
    actual[name]={'sha256':digest(ROOT/name),'bytes':(ROOT/name).stat().st_size}
   try:context,selected=select_context(actual,source_contexts(EXP,p.read_bytes(),inputs))
   except ValueError as error:self.fail(str(error))
-  self.assertIn(context,['original-frozen309','character-stage-closeout-v1'])
+  self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1'])
   self.assertEqual(len(selected),309,'FROZEN-INPUTS.json complete source set required')
   for name,item in selected.items():
    message=f'FROZEN-INPUTS.json entry {name}'

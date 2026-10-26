@@ -413,3 +413,314 @@ fn descriptor_and_all_payloads_are_authenticated_before_use_and_public_fields_ca
     forged.files.insert("../outside".into(), file);
     assert!(forged.validate_file_bytes("../outside", b"x").is_err());
 }
+
+#[test]
+fn short01_all_roles_keep_exact_wire_shape_and_legacy_defaults() {
+    let backend = CharacterProfile::b1_character().backend;
+    assert_eq!(
+        B1AppearanceSet::for_base(B1AssetVersion::V2),
+        B1AppearanceSet::V2
+    );
+    assert_eq!(
+        B1AppearanceSet::for_base(B1AssetVersion::V1),
+        B1AppearanceSet::V1
+    );
+    for bits in 0..8 {
+        let flags = (bits & 1 != 0, bits & 2 != 0, bits & 4 != 0);
+        let selected = CharacterAppearance::b1_cc0_for_set(
+            &backend,
+            B1AppearanceSet::V2Short01,
+            flags.0,
+            flags.1,
+            flags.2,
+        )
+        .unwrap();
+        assert_eq!(selected.b1_flags(), (bits != 0).then_some(flags));
+        assert_eq!(
+            selected.b1_set(),
+            (bits != 0).then_some(B1AppearanceSet::V2Short01)
+        );
+        let mut document = SceneDocument::from_profile(CharacterProfile::b1_character()).unwrap();
+        document.character.appearance = selected.clone();
+        assert_eq!(
+            SceneDocument::from_json(&document.to_json().unwrap()).unwrap(),
+            document
+        );
+        let wire = serde_json::to_value(&selected).unwrap();
+        assert_eq!(
+            wire.as_object().unwrap().len(),
+            if bits == 0 { 1 } else { 7 }
+        );
+        if bits != 0 {
+            assert_eq!(wire["schema_version"], 2);
+            assert_eq!(wire["asset_set_id"], B1_V2_SHORT01_APPEARANCE_ID);
+            assert_eq!(
+                wire["asset_set_sha256"],
+                B1_V2_SHORT01_APPEARANCE_MANIFEST_SHA256
+            );
+            assert_eq!(
+                CharacterAppearance::b1_cc0_for(&backend, flags.0, flags.1, flags.2)
+                    .unwrap()
+                    .b1_set(),
+                Some(B1AppearanceSet::V2)
+            );
+        }
+        for incompatible in [
+            CharacterProfile::b1().backend,
+            CharacterProfile::b1_motion().backend,
+            glb().profile.backend,
+        ] {
+            assert_eq!(
+                CharacterAppearance::b1_cc0_for_set(
+                    &incompatible,
+                    B1AppearanceSet::V2Short01,
+                    flags.0,
+                    flags.1,
+                    flags.2
+                )
+                .unwrap_err()
+                .code,
+                "unsupported_character_operation"
+            );
+        }
+    }
+}
+
+#[test]
+fn short01_strict_production_decoders_reject_forged_shapes_and_cross_base_work() {
+    let mut document = SceneDocument::from_profile(CharacterProfile::b1_character()).unwrap();
+    document.character.appearance = CharacterAppearance::b1_cc0_for_set(
+        &document.profile.backend,
+        B1AppearanceSet::V2Short01,
+        true,
+        true,
+        true,
+    )
+    .unwrap();
+    let canonical = serde_json::to_value(&document.character.appearance).unwrap();
+    let mut invalid = Vec::new();
+    for key in [
+        "type",
+        "schema_version",
+        "asset_set_id",
+        "asset_set_sha256",
+        "skin",
+        "eyes",
+        "hair",
+    ] {
+        let mut missing = canonical.clone();
+        missing.as_object_mut().unwrap().remove(key);
+        invalid.push(missing.to_string());
+        let mut null = canonical.clone();
+        null[key] = Value::Null;
+        invalid.push(null.to_string());
+        invalid.push(format!(
+            "{{\"{key}\":{},{}",
+            canonical[key],
+            &canonical.to_string()[1..]
+        ));
+    }
+    for (key, value) in [
+        ("schema_version", json!(1)),
+        ("asset_set_id", json!(B1_V2_APPEARANCE_ID)),
+        ("asset_set_sha256", json!(B1_V2_APPEARANCE_MANIFEST_SHA256)),
+        ("skin", json!(1)),
+        ("eyes", json!("true")),
+        ("extra", Value::Null),
+    ] {
+        let mut forged = canonical.clone();
+        forged[key] = value;
+        invalid.push(forged.to_string());
+    }
+    invalid.push(canonical.to_string().replace("true", "false"));
+    let work = document.to_json().unwrap();
+    let command = envelope("strict", 0, document.character.appearance.clone())
+        .to_json()
+        .unwrap();
+    // Inject raw JSON, preserving duplicate keys all the way into the production decoders.
+    let work_value: Value = serde_json::from_str(&work).unwrap();
+    let command_value: Value = serde_json::from_str(&command).unwrap();
+    let compact = canonical.to_string();
+    assert!(work_value.to_string().contains(&compact));
+    assert!(command_value.to_string().contains(&compact));
+    for raw in invalid {
+        assert!(
+            serde_json::from_str::<CharacterAppearance>(&raw).is_err(),
+            "{raw}"
+        );
+        assert!(
+            SceneDocument::from_json(&work_value.to_string().replacen(&compact, &raw, 1)).is_err(),
+            "{raw}"
+        );
+        assert!(
+            CommandEnvelope::from_json(&command_value.to_string().replacen(&compact, &raw, 1))
+                .is_err(),
+            "{raw}"
+        );
+    }
+    for profile in [
+        CharacterProfile::b1(),
+        CharacterProfile::b1_motion(),
+        glb().profile,
+    ] {
+        let mut cross = SceneDocument::from_profile(profile).unwrap();
+        cross.character.appearance = document.character.appearance.clone();
+        assert_eq!(
+            cross.validate().unwrap_err().code,
+            "unsupported_character_operation"
+        );
+        assert!(SceneDocument::from_json(&serde_json::to_string(&cross).unwrap()).is_err());
+    }
+}
+
+#[test]
+fn short01_descriptor_and_every_payload_are_pinned_and_source_bytes_preserved() {
+    let set = B1AppearanceSet::V2Short01;
+    assert_eq!(
+        appearance_sha256(set.manifest_bytes()),
+        set.manifest_sha256()
+    );
+    let manifest = B1AppearanceManifest::from_bytes_for(set, set.manifest_bytes()).unwrap();
+    assert_eq!(manifest.files.len(), 14);
+    assert_eq!(manifest.schema_version, 2);
+    assert_eq!(manifest.material_policy, "simple-srgb-mask-v1");
+    assert!(set.manifest_bytes().len() <= B1_APPEARANCE_MAX_MANIFEST_BYTES);
+    assert!(
+        manifest.files.values().map(|f| f.bytes).sum::<usize>()
+            <= B1_APPEARANCE_MAX_TOTAL_ASSET_BYTES
+    );
+    let assets = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets");
+    let root = assets.join(Path::new(set.manifest_path()).parent().unwrap());
+    for (path, file) in &manifest.files {
+        let bytes = std::fs::read(root.join(path)).unwrap();
+        assert_eq!(bytes.len(), file.bytes);
+        manifest.validate_file_bytes(path, &bytes).unwrap();
+        let mut corrupt = bytes.clone();
+        corrupt[0] ^= 1;
+        assert_eq!(
+            manifest
+                .validate_file_bytes(path, &corrupt)
+                .unwrap_err()
+                .code,
+            "asset_hash_mismatch"
+        );
+        assert_eq!(
+            manifest
+                .validate_file_bytes(path, &bytes[..bytes.len() - 1])
+                .unwrap_err()
+                .code,
+            "invalid_asset"
+        );
+        assert_eq!(
+            manifest.validate_file_bytes(path, &[]).unwrap_err().code,
+            "asset_missing"
+        );
+        let mut forged = manifest.clone();
+        forged.files.get_mut(path).unwrap().sha256 = appearance_sha256(&corrupt);
+        assert_eq!(
+            forged.validate_file_bytes(path, &corrupt).unwrap_err().code,
+            "invalid_asset"
+        );
+        if path.starts_with("skins/") || path.starts_with("eyes/") || path.starts_with("licenses/")
+        {
+            assert_eq!(
+                bytes,
+                std::fs::read(assets.join("appearances/mpfb-b1-cc0-v2").join(path)).unwrap()
+            );
+        }
+    }
+    let metadata = std::fs::read(root.join("provenance/makehuman_system_assets.json")).unwrap();
+    assert_eq!(metadata.len(), 39220);
+    assert_eq!(
+        appearance_sha256(&metadata),
+        "e86f1572432cfd062f372adddba4eb7c2e2e31280e96c29291a970320e0a5df0"
+    );
+    assert!(
+        std::fs::read(root.join("hair/short01/short01.mhclo"))
+            .unwrap()
+            .ends_with(b"\n\n")
+    );
+    let mut corrupt = set.manifest_bytes().to_vec();
+    corrupt[0] ^= 1;
+    assert_eq!(
+        B1AppearanceManifest::from_bytes_for(set, &corrupt)
+            .unwrap_err()
+            .code,
+        "asset_hash_mismatch"
+    );
+    for other in [B1AppearanceSet::V1, B1AppearanceSet::V2] {
+        assert_eq!(
+            B1AppearanceManifest::from_bytes_for(other, set.manifest_bytes())
+                .unwrap_err()
+                .code,
+            "asset_hash_mismatch"
+        );
+        assert_eq!(
+            B1AppearanceManifest::from_bytes_for(set, other.manifest_bytes())
+                .unwrap_err()
+                .code,
+            "asset_hash_mismatch"
+        );
+    }
+    let mut forged = manifest;
+    let file = forged.files.remove("SOURCE.json").unwrap();
+    forged.files.insert("../outside".into(), file);
+    assert_eq!(forged.validate().unwrap_err().code, "invalid_asset");
+}
+
+#[test]
+fn short01_switch_undo_redo_failed_command_and_retry_preserve_full_work() {
+    let mut original =
+        SceneDocument::from_json(include_str!("../../../examples/b1-character.nvwa.json")).unwrap();
+    original.stage = StageSettings::black_space();
+    original.revision = 17;
+    let mut editor = Editor::new(original.clone()).unwrap();
+    let selection = CharacterAppearance::b1_cc0_for_set(
+        &original.profile.backend,
+        B1AppearanceSet::V2Short01,
+        true,
+        false,
+        true,
+    )
+    .unwrap();
+    let request = envelope("short01", 17, selection.clone());
+    let mut expected = original.clone();
+    expected.character.appearance = selection.clone();
+    expected.revision = 18;
+    editor.apply(request.clone()).unwrap();
+    assert_eq!(editor.document(), &expected);
+    let stats = editor.retention_stats();
+    assert!(editor.apply(request).unwrap().duplicate);
+    assert_eq!(editor.retention_stats(), stats);
+    apply(&mut editor, "undo-short01", Command::Undo);
+    let mut undone = original.clone();
+    undone.revision = 19;
+    assert_eq!(editor.document(), &undone);
+    let stats = editor.retention_stats();
+    assert_eq!(
+        editor
+            .apply(envelope(
+                "recoverable-short01",
+                19,
+                CharacterAppearance::b1_cc0(true, true, true)
+            ))
+            .unwrap_err()
+            .code,
+        "unsupported_character_operation"
+    );
+    assert_eq!(editor.document(), &undone);
+    assert_eq!(editor.retention_stats(), stats);
+    apply(&mut editor, "redo-short01", Command::Redo);
+    expected.revision = 20;
+    assert_eq!(editor.document(), &expected);
+    editor
+        .apply(envelope(
+            "recoverable-short01",
+            20,
+            CharacterAppearance::None,
+        ))
+        .unwrap();
+    expected.revision = 21;
+    expected.character.appearance = CharacterAppearance::None;
+    assert_eq!(editor.document(), &expected);
+}

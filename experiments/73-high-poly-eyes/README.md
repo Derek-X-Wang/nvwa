@@ -16,9 +16,10 @@ The independently checked CPU source evidence is `CPU-REPLAY.json`: actual retai
 
 The portable source gate keeps the complete309-entry `FROZEN-INPUTS.json`
 unchanged. `frozen_context.py` authenticates that original manifest and
-`source-context-closeout-v1.json` with code-pinned hashes. It admits exactly two
-complete source contexts: the original frozen309 inputs, or the reviewed stage
-closeout with four exact overrides. Those overrides are the Core version-error
+`source-context-closeout-v1.json` with code-pinned hashes. It preserves two historical
+complete source contexts: the original frozen309 inputs and the reviewed stage
+closeout with four exact overrides. The explicit short01 context is described
+below. Those overrides are the Core version-error
 diagnostic, its Core/CLI tests, and the runtime CPU-feedback test helper. The
 other305 input hashes and byte counts remain exact. Mixed contexts, unreviewed
 source edits, missing or symlinked files, and missing, empty or altered manifests
@@ -30,6 +31,31 @@ This admits source compatibility for the portable checks. It does not rerun or
 relabel historical eye captures, build receipts or quality results. Original
 frozen records keep their original source identities; current eye rendering and
 quality acceptance remain separate evidence.
+
+The separately code-pinned `source-context-hair79-short01-v1.json` adds
+`hair79-short01-product-v1`: thirteen exact overrides from original309, or ten
+changed files relative to closeout. The original manifest, closeout context and
+`NUMERIC-SOURCE.json` remain byte-for-byte unchanged. Selection still requires
+one complete 309-entry map, without per-file alternatives. Exhaustive controls
+cover all 12,288 combinations of admitted per-path values: three complete maps
+accept and 12,285 mixtures reject. The actual subprocess-called gate also
+checks all three contexts, the original fourteen closeout mixtures and every
+single-path crossover to/from the product context.
+
+`fixtures/source-contexts/manifest.json` is a mandatory code-pinned inventory
+of fourteen archived historical source files (558,369 bytes). Each blob must
+also match its original frozen/closeout source pin. These bytes reconstruct
+historical fixture trees without Git or reversing edits in current source.
+Missing, empty, corrupt, altered or symlinked fixtures and manifests reject at
+the actual gate. The retained numeric-source pin authenticates the archived
+original geometry. Every existing numeric function is then compared with both
+the experiment mirror and current production using the same comparison rules.
+Numeric bodies, thresholds and all old controls remain unchanged.
+
+This source admission covers its declared 309 inputs. The separate product
+manifest/package/runtime checks cover the new short01 assets; these historical
+checks do not relabel old captures or claim new eye quality or numerical
+execution evidence. Historical execution and heavyweight rebuilds are separate.
 
 `SOURCE.json` pins the original280737770B system archive and exact785436B four-file subset. `source/` preserves original OBJ/MHCLO/MHMAT/PNG bytes. Selected ZIP decompression/CRC, SHA256 and sizes were checked against the replacement plan. Pack metadata and existing CC0 legal text are retained under `source/provenance/`; OBJ/MHCLO/MHMAT original headers name Data Collection AB, Joel Palmius and Jonas Hauquier. No bytes were downloaded. This is a selected-member CRC pass, not an all-member archive CRC pass.
 

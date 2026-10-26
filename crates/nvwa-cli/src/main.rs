@@ -3,8 +3,8 @@ use nvwa_core::{
     B1_APPEARANCE_MAX_ASSET_BYTES, B1_APPEARANCE_MAX_MANIFEST_BYTES,
     B1_APPEARANCE_MAX_TOTAL_ASSET_BYTES, B1_DIAGNOSTIC_POSES, B1_MAX_ASSET_BYTES,
     B1_MAX_MANIFEST_BYTES, B1_MAX_TOTAL_ASSET_BYTES, B1AppearanceManifest, B1AppearanceSet,
-    B1AssetManifest, B1AssetVersion, CharacterProfile, Command, CommandEnvelope, CoreError, Editor,
-    SceneDocument,
+    B1AssetManifest, B1AssetVersion, CharacterAppearance, CharacterProfile, Command,
+    CommandEnvelope, CoreError, Editor, SceneDocument,
 };
 use std::path::{Path, PathBuf};
 
@@ -272,6 +272,17 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         serde_json::from_str(&examples).map_err(|e| CoreError::new("serialize", e.to_string()))?;
     let base = document.profile.backend.b1_asset_version();
     let appearance_set = B1AppearanceSet::for_base(base.unwrap_or(B1AssetVersion::V1));
+    let compatible_sets: &[B1AppearanceSet] = match base {
+        Some(B1AssetVersion::V1) => &[B1AppearanceSet::V1],
+        Some(B1AssetVersion::V2) => &[B1AppearanceSet::V2, B1AppearanceSet::V2Short01],
+        None => &[],
+    };
+    let compatible_sets = compatible_sets
+        .iter()
+        .map(|set| {
+            CharacterAppearance::b1_cc0_for_set(&document.profile.backend, *set, true, true, true)
+        })
+        .collect::<Result<Vec<_>, CoreError>>()?;
     let targets: std::collections::BTreeMap<_, _> = base
         .into_iter()
         .flat_map(|v| v.parameters())
@@ -316,9 +327,10 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "schema_version": appearance_set.schema_version(),
             "asset_set_id": appearance_set.asset_id(),
             "asset_set_sha256": appearance_set.manifest_sha256(),
+            "compatible_sets": compatible_sets,
             "roles": ["skin", "eyes", "hair"],
             "selection": "independent_booleans_at_least_one_true_otherwise_use_none",
-            "asset_validation": "validate_with_asset_root_authenticates_all_thirteen_appearance_files",
+            "asset_validation": "validate_with_asset_root_authenticates_all_selected_set_appearance_files",
             "apply_save": "metadata_only_no_renderer_readiness_claim"
         },
         "character_backend": document.profile.backend,

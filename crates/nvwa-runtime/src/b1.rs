@@ -2980,6 +2980,279 @@ mod tests {
     }
 
     #[test]
+    fn saved_short01_shared_open_switches_same_frame_legacy_new_legacy_and_retains_on_failure() {
+        use crate::{appearance_snapshot, appearance_status};
+        use nvwa_core::{B1AppearanceSet, CharacterAppearance, Command};
+        let (mut app, dir, _) = motion_app();
+        fill_v2(&dir);
+        // Product Work bytes enter the same authenticated candidate/Open path as Studio Load.
+        let saved =
+            SceneDocument::from_json(include_str!("../../../examples/b1-short01.nvwa.json"))
+                .unwrap();
+        open_ready(&mut app, saved.clone());
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&saved)
+        );
+        let loaded = appearance_snapshot(app.world_mut()).unwrap();
+        let role = |snapshot: &serde_json::Value, name: &str| {
+            snapshot["accessories"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|v| v["name"] == name)
+                .unwrap()
+                .clone()
+        };
+        assert_eq!(role(&loaded, "hair")["source_vertices"], 2984);
+        assert_eq!(role(&loaded, "hair")["render_vertices"], 3177);
+        assert_eq!(role(&loaded, "hair")["triangles"], 3678);
+        assert_eq!(role(&loaded, "hair")["max_positive_influences"], 5);
+        let set = |app: &mut App, selected| {
+            let document = app.world().resource::<EditorState>().document().unwrap();
+            let character_id = document.character.id.clone();
+            let appearance = CharacterAppearance::b1_cc0_for_set(
+                &document.profile.backend,
+                selected,
+                true,
+                true,
+                true,
+            )
+            .unwrap();
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(Command::SetAppearance {
+                    character_id,
+                    appearance,
+                })
+                .unwrap();
+            // Call the production controller without advancing/refitting the body or sampling a new frame.
+            crate::appearance::update(app.world_mut());
+            appearance_snapshot(app.world_mut()).unwrap()
+        };
+        let old = set(&mut app, B1AppearanceSet::V2);
+        let new = set(&mut app, B1AppearanceSet::V2Short01);
+        let restored = set(&mut app, B1AppearanceSet::V2);
+        for snapshot in [&old, &new, &restored] {
+            for field in [
+                "base_asset_id",
+                "generation",
+                "serial",
+                "character_entity",
+                "body_entity",
+                "body_mesh",
+                "body_positions_sha256",
+            ] {
+                assert_eq!(
+                    snapshot[field], loaded[field],
+                    "same-frame appearance selection changed {field}"
+                );
+            }
+            for field in [
+                "positions_sha256",
+                "normals_sha256",
+                "uv_sha256",
+                "indices_sha256",
+                "source_map_sha256",
+                "texture",
+            ] {
+                if field == "texture" {
+                    assert_eq!(
+                        role(snapshot, "eyes")[field]["decoded_rgba_sha256"],
+                        role(&loaded, "eyes")[field]["decoded_rgba_sha256"]
+                    );
+                } else {
+                    assert_eq!(role(snapshot, "eyes")[field], role(&loaded, "eyes")[field]);
+                }
+            }
+            assert_eq!(snapshot["skin"]["uv_sha256"], loaded["skin"]["uv_sha256"]);
+            assert_eq!(
+                snapshot["skin"]["texture"]["decoded_rgba_sha256"],
+                loaded["skin"]["texture"]["decoded_rgba_sha256"]
+            );
+        }
+        assert_eq!(role(&old, "hair")["source_vertices"], 865);
+        assert_eq!(role(&old, "hair")["render_vertices"], 991);
+        assert_eq!(role(&new, "hair")["source_vertices"], 2984);
+        assert_eq!(role(&new, "hair")["render_vertices"], 3177);
+        assert_eq!(role(&new, "hair")["triangles"], 3678);
+        for field in [
+            "positions_sha256",
+            "normals_sha256",
+            "uv_sha256",
+            "indices_sha256",
+            "source_map_sha256",
+        ] {
+            assert_ne!(
+                role(&old, "hair")[field],
+                role(&new, "hair")[field],
+                "selected geometry must change actual {field}"
+            );
+            assert_eq!(
+                role(&old, "hair")[field],
+                role(&restored, "hair")[field],
+                "A/B/A must restore actual {field}"
+            );
+        }
+        assert_ne!(
+            role(&old, "hair")["texture"]["decoded_rgba_sha256"],
+            role(&new, "hair")["texture"]["decoded_rgba_sha256"]
+        );
+        assert_eq!(
+            role(&old, "hair")["texture"]["decoded_rgba_sha256"],
+            role(&restored, "hair")["texture"]["decoded_rgba_sha256"]
+        );
+        assert_ne!(
+            role(&old, "hair")["mesh_handle"],
+            role(&new, "hair")["mesh_handle"]
+        );
+        assert_ne!(
+            role(&new, "hair")["mesh_handle"],
+            role(&restored, "hair")["mesh_handle"]
+        );
+        set(&mut app, B1AppearanceSet::V2Short01);
+        let saved_text = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .to_json()
+            .unwrap();
+        let reopened_work = SceneDocument::from_json(&saved_text).unwrap();
+        open_ready(&mut app, reopened_work.clone());
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&reopened_work)
+        );
+        let reopened = appearance_snapshot(app.world_mut()).unwrap();
+        assert_ne!(reopened["generation"], loaded["generation"]);
+        assert_eq!(
+            role(&reopened, "hair")["source_map_sha256"],
+            role(&loaded, "hair")["source_map_sha256"]
+        );
+        assert_eq!(
+            role(&reopened, "hair")["texture"]["decoded_rgba_sha256"],
+            role(&loaded, "hair")["texture"]["decoded_rgba_sha256"]
+        );
+        issue86_torso_preview(&mut app, 0.42);
+        let status = appearance_status(app.world());
+        assert!(status.pending && status.retained && !status.ready && status.applied.is_none());
+        assert_eq!(status.requested, reopened_work.character.appearance);
+        assert!(appearance_snapshot(app.world_mut()).is_err());
+        motion_tick(&mut app, 31.0);
+        assert!(
+            app.world()
+                .resource::<RuntimeStatus>()
+                .error
+                .as_ref()
+                .unwrap()
+                .contains("exceeded 30 seconds")
+        );
+        assert!(appearance_status(app.world()).retained);
+        assert!(!appearance_status(app.world()).ready);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .cancel_preview();
+        motion_tick(&mut app, 0.0);
+        let recovered = appearance_snapshot(app.world_mut()).unwrap();
+        assert_eq!(recovered["applied"], reopened["applied"]);
+        assert_eq!(
+            role(&recovered, "hair")["source_map_sha256"],
+            role(&loaded, "hair")["source_map_sha256"]
+        );
+        // Candidate base authentication failure preserves the selected short01 display and Work.
+        dir.insert_asset(
+            Path::new("characters/mpfb-b1-v2/base.obj"),
+            b"corrupt candidate".to_vec(),
+        );
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(reopened_work.clone())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().open_error.is_some()
+        });
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&reopened_work)
+        );
+        let retained = appearance_snapshot(app.world_mut()).unwrap();
+        assert_eq!(retained["generation"], recovered["generation"]);
+        assert_eq!(retained["applied"], recovered["applied"]);
+        assert_eq!(
+            role(&retained, "hair")["source_map_sha256"],
+            role(&loaded, "hair")["source_map_sha256"]
+        );
+        // Real selected short01 resources retain the existing strict material/pixel disposal boundary.
+        for corrupt_pixels in [false, true] {
+            let current = appearance_snapshot(app.world_mut()).unwrap();
+            let hair = role(&current, "hair");
+            let entity = app
+                .world()
+                .iter_entities()
+                .find(|entity| format!("{:?}", entity.id()) == hair["entity"].as_str().unwrap())
+                .unwrap()
+                .id();
+            let mesh = app.world().get::<Mesh3d>(entity).unwrap().0.clone();
+            let material = app
+                .world()
+                .get::<MeshMaterial3d<StandardMaterial>>(entity)
+                .unwrap()
+                .0
+                .clone();
+            let image = app
+                .world()
+                .resource::<Assets<StandardMaterial>>()
+                .get(&material)
+                .unwrap()
+                .base_color_texture
+                .clone()
+                .unwrap();
+            if corrupt_pixels {
+                app.world_mut()
+                    .resource_mut::<Assets<Image>>()
+                    .get_mut(&image)
+                    .unwrap()
+                    .data
+                    .as_mut()
+                    .unwrap()[0] ^= 1;
+            } else {
+                app.world_mut()
+                    .resource_mut::<Assets<StandardMaterial>>()
+                    .get_mut(&material)
+                    .unwrap()
+                    .double_sided = false;
+            }
+            let error = appearance_snapshot(app.world_mut()).unwrap_err();
+            assert!(
+                error.contains(if corrupt_pixels {
+                    "pixels changed"
+                } else {
+                    "material policy"
+                }),
+                "{error}"
+            );
+            assert!(!appearance_status(app.world()).ready);
+            assert!(appearance_status(app.world()).applied.is_none());
+            assert!(app.world().get_entity(entity).is_err());
+            assert!(app.world().resource::<Assets<Mesh>>().get(&mesh).is_none());
+            assert!(
+                app.world()
+                    .resource::<Assets<StandardMaterial>>()
+                    .get(&material)
+                    .is_none()
+            );
+            assert!(
+                app.world()
+                    .resource::<Assets<Image>>()
+                    .get(&image)
+                    .is_none()
+            );
+            crate::appearance::update(app.world_mut());
+        }
+    }
+
+    #[test]
     fn isolated_appearance_set_disables_only_controller_not_body_publication() {
         let (mut app, _, _) = harness(false);
         app.configure_sets(

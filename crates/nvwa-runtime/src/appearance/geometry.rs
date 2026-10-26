@@ -226,27 +226,19 @@ pub(super) fn prepare(set: nvwa_core::B1AppearanceSet) -> Result<Vec<Prepared>, 
     let mut out = vec![];
     macro_rules! asset {
         ($name:literal,$stem:literal,$texture:literal,$count:literal,$size:literal,$hair:literal) => {{
-            let map = include_str!(concat!(
-                "../../../../assets/appearances/mpfb-b1-cc0-v1/",
-                $stem,
-                ".mhclo"
-            ));
-            let geometry = include_str!(concat!(
-                "../../../../assets/appearances/mpfb-b1-cc0-v1/",
-                $stem,
-                ".obj"
-            ));
-            let png = include_bytes!(concat!(
-                "../../../../assets/appearances/mpfb-b1-cc0-v1/",
-                $texture
-            ));
-            authenticated(set, concat!($stem, ".mhclo"), map.as_bytes())?;
-            authenticated(set, concat!($stem, ".obj"), geometry.as_bytes())?;
+            let map = super::assets::payload(set, concat!($stem, ".mhclo"))?;
+            let geometry = super::assets::payload(set, concat!($stem, ".obj"))?;
+            let png = super::assets::payload(set, $texture)?;
+            authenticated(set, concat!($stem, ".mhclo"), map)?;
+            authenticated(set, concat!($stem, ".obj"), geometry)?;
             authenticated(set, $texture, png)?;
             out.push(Prepared {
                 name: $name,
-                mapping: mapping(map, $count)?,
-                obj: obj(geometry, $count)?,
+                mapping: mapping(std::str::from_utf8(map).map_err(|e| e.to_string())?, $count)?,
+                obj: obj(
+                    std::str::from_utf8(geometry).map_err(|e| e.to_string())?,
+                    $count,
+                )?,
                 png,
                 size: $size,
                 hair: $hair,
@@ -261,14 +253,24 @@ pub(super) fn prepare(set: nvwa_core::B1AppearanceSet) -> Result<Vec<Prepared>, 
         1024,
         false
     );
-    asset!(
-        "hair",
-        "hair/short04/short04",
-        "hair/short04/short04_diffuse.png",
-        865,
-        2048,
-        true
-    );
+    match set {
+        nvwa_core::B1AppearanceSet::V1 | nvwa_core::B1AppearanceSet::V2 => asset!(
+            "hair",
+            "hair/short04/short04",
+            "hair/short04/short04_diffuse.png",
+            865,
+            2048,
+            true
+        ),
+        nvwa_core::B1AppearanceSet::V2Short01 => asset!(
+            "hair",
+            "hair/short01/short01",
+            "hair/short01/short01_diffuse.png",
+            2984,
+            2048,
+            true
+        ),
+    }
     Ok(out)
 }
 pub(super) fn cage(ids: &[u16], rest: &[[f32; 3]]) -> Result<ModelVectors, String> {
@@ -458,15 +460,35 @@ mod tests {
     use bevy::prelude::{Mat4, Vec3};
     #[test]
     fn fixed_inputs_parse_and_authenticate() {
-        let p = prepare(nvwa_core::B1AppearanceSet::V1).unwrap();
-        assert_eq!(p[0].obj.count, 96);
-        assert_eq!(p[1].obj.count, 865);
-        assert!(
-            p[1].mapping
-                .rows
-                .iter()
-                .any(|r| r.coefficients.iter().any(|x| *x < 0.))
-        );
+        for (set, sources, corners, triangles) in [
+            (nvwa_core::B1AppearanceSet::V1, 865, 991, 1050),
+            (nvwa_core::B1AppearanceSet::V2, 865, 991, 1050),
+            (nvwa_core::B1AppearanceSet::V2Short01, 2984, 3177, 3678),
+        ] {
+            let p = prepare(set).unwrap();
+            assert_eq!(p[0].obj.count, 96);
+            assert_eq!(p[1].obj.count, sources);
+            assert_eq!(p[1].obj.pairs.len(), corners);
+            assert_eq!(p[1].obj.indices.len() / 3, triangles);
+            assert_eq!(
+                p[1].png,
+                super::super::assets::payload(
+                    set,
+                    if set == nvwa_core::B1AppearanceSet::V2Short01 {
+                        "hair/short01/short01_diffuse.png"
+                    } else {
+                        "hair/short04/short04_diffuse.png"
+                    }
+                )
+                .unwrap()
+            );
+            assert!(
+                p[1].mapping
+                    .rows
+                    .iter()
+                    .any(|r| r.coefficients.iter().any(|x| *x < 0.))
+            );
+        }
     }
     #[test]
     fn signed_final_transfer_keeps_more_than_four() {

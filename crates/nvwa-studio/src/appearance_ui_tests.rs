@@ -75,6 +75,106 @@ fn actual_b1_checkboxes_preserve_other_roles_and_use_shared_undo_redo() {
     }
 }
 
+fn click_visible_appearance_control(app: &mut StudioHarness, size: egui::Vec2, label: &str) {
+    fn find(shape: &egui::Shape, clip: egui::Rect, label: &str) -> Option<egui::Rect> {
+        match shape {
+            egui::Shape::Text(text) if text.galley.job.text == label => {
+                let rect = egui::Rect::from_min_size(text.pos, text.galley.size());
+                clip.contains_rect(rect).then_some(rect)
+            }
+            egui::Shape::Vec(shapes) => shapes.iter().find_map(|shape| find(shape, clip, label)),
+            _ => None,
+        }
+    }
+    for _ in 0..12 {
+        let output = app.frame(vec![]);
+        let rect = output
+            .shapes
+            .iter()
+            .find_map(|shape| find(&shape.shape, shape.clip_rect, label));
+        output.drop_without_applying_deltas();
+        if let Some(rect) = rect {
+            app.click(rect.center());
+            return;
+        }
+        app.time = Some(app.time.unwrap_or(1.0) + 0.2);
+        app.frame(vec![
+            egui::Event::PointerMoved(egui::pos2(size.x - 120.0, 240.0)),
+            egui::Event::MouseWheel {
+                unit: egui::MouseWheelUnit::Point,
+                delta: egui::vec2(0.0, -80.0),
+                phase: egui::TouchPhase::Move,
+                modifiers: egui::Modifiers::default(),
+            },
+        ])
+        .drop_without_applying_deltas();
+    }
+    panic!("actual appearance control did not become visible: {label}");
+}
+
+#[test]
+fn actual_short01_checkboxes_preserve_selected_identity_and_shared_undo_redo() {
+    use nvwa_core::{B1AppearanceSet, CharacterAppearance, Command};
+    for size in [egui::vec2(1280.0, 720.0), egui::vec2(1024.0, 768.0)] {
+        let mut app = StudioHarness::new(size);
+        let mut document = SceneDocument::from_profile(CharacterProfile::b1_character()).unwrap();
+        document.character.appearance = CharacterAppearance::b1_cc0_for_set(
+            &document.profile.backend,
+            B1AppearanceSet::V2Short01,
+            true,
+            true,
+            true,
+        )
+        .unwrap();
+        app.editor.replace(document).unwrap();
+        for (label, flags) in [
+            ("头发 / Hair", (true, true, false)),
+            ("眼睛 / Eyes", (true, false, false)),
+            ("Undo", (true, true, false)),
+            ("Redo", (true, false, false)),
+            ("眼睛 / Eyes", (true, true, false)),
+            ("头发 / Hair", (true, true, true)),
+        ] {
+            click_visible_appearance_control(&mut app, size, label);
+            let appearance = &app.editor.document().unwrap().character.appearance;
+            assert_eq!(
+                appearance.b1_set(),
+                Some(B1AppearanceSet::V2Short01),
+                "{label}"
+            );
+            assert_eq!(appearance.b1_flags(), Some(flags), "{label}");
+            let saved = app.editor.document().unwrap().to_json().unwrap();
+            assert_eq!(
+                SceneDocument::from_json(&saved)
+                    .unwrap()
+                    .character
+                    .appearance,
+                *appearance
+            );
+        }
+        // All-off still becomes None. Undo restores the exact admitted tuple.
+        for label in ["头发 / Hair", "眼睛 / Eyes", "皮肤 / Skin"] {
+            click_visible_appearance_control(&mut app, size, label);
+        }
+        assert_eq!(
+            app.editor.document().unwrap().character.appearance,
+            CharacterAppearance::None
+        );
+        app.editor.apply(Command::Undo).unwrap();
+        assert_eq!(
+            app.editor.document().unwrap().character.appearance.b1_set(),
+            Some(B1AppearanceSet::V2Short01)
+        );
+        app.editor.apply(Command::Redo).unwrap();
+        click_visible_appearance_control(&mut app, size, "皮肤 / Skin");
+        assert_eq!(
+            app.editor.document().unwrap().character.appearance.b1_set(),
+            Some(B1AppearanceSet::V2),
+            "None retains the legacy default policy"
+        );
+    }
+}
+
 #[test]
 fn new_character_entry_stages_eight_parameters_and_all_bilingual_controls_are_reachable() {
     use std::collections::BTreeSet;

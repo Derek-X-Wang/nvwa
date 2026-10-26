@@ -31,7 +31,7 @@ no mixture of their files is accepted. Both context manifests are mandatory and
 code-pinned, including when authenticating the historical baseline. Missing,
 symlinked, empty or altered manifests reject.
 
-Five source sections retain byte-identical hashes across all three
+Five source sections retain byte-identical hashes across these three historical
 contexts: signed target mapping, source IDs, visible-body indices, CPU upload and
 the existing endpoint semantic test. `appearance/geometry.rs`, the B1 adapter,
 frozen original40 inputs and numeric evaluators also retain their original
@@ -47,6 +47,26 @@ that archive. Existing execution receipts and historical pins stay unchanged.
 Current production tests and mutation gates remain separate checks; current
 issue86 and closeout original40 execution is **NOT-RUN** by this tooling fix.
 
+## Explicit short01 product source context
+
+[input-context-v3.json](input-context-v3.json) adds `hair79-short01-product-v1`
+as one exact complete 17-input map. Five overrides are relative to baseline581;
+four inputs differ from closeout: runtime `b1.rs`, appearance controller,
+appearance geometry preparation, and Core appearance selection. The Core
+version diagnostic keeps its separately pinned closeout identity. The original
+pins and both older context files remain byte-for-byte unchanged. The new
+context is mandatory and code-pinned with the older contexts. Source admission
+still rejects every mixture, missing/extra map entry and unsafe source file.
+The five protected numeric sections and all bounds/mutations remain unchanged.
+The exhaustive selector control now checks 96 maps: four complete contexts
+accept and the other 92 reject.
+
+This only admits the declared current source inputs. It does not rerun current
+original40 arithmetic or authenticate the new short01 asset tree. Product
+asset/CLI/runtime checks provide that separate evidence. `--execute` still
+archives only baseline581 and accepts only that context for historical
+execution. Historical records and their source hashes remain unchanged.
+
 ## Cheap preparation controls
 
 From the repository root, without Cargo:
@@ -58,8 +78,8 @@ python3 -B experiments/72-b1-admission-controls/run.py --check-inputs
 rustfmt --edition 2024 --check experiments/72-b1-admission-controls/compatibility.rs
 ```
 
-The Python controls exercise exact complete-context selection (all three accept,
-all nine mixed combinations reject), historical-only selection, manifest safety,
+The Python controls exercise exact complete-context selection (all four accept,
+all 92 mixed combinations reject), historical-only selection, manifest safety,
 every unchanged numeric section, patch identity, original case coverage,
 exclusive outputs and fail-closed interpretation of **synthetic log fixtures**. They are
 runner-tooling controls, never real Rust mutation-red evidence.

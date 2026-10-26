@@ -15,7 +15,7 @@ The CLI supports these local operations:
 | `describe-capabilities` | Read the profile, current revision, supported parameters and authored clips, the saved stage, plus the CLI command contract. |
 | `inspect` | Read a Work as JSON. |
 | `apply` | Apply `set_parameters`, `set_scale`, `set_timeline`, `set_stage`, `set_diagnostic_pose` (B1), `set_appearance`, `undo` or `redo` commands and save the result to an output file. |
-| `validate` | Check a Work and optional GLB assets; B1 requires the explicit root and authenticates all thirteen body files plus all thirteen appearance files when a role is selected. |
+| `validate` | Check a Work and optional GLB assets; B1 requires the explicit root and authenticates every payload of the selected body and appearance manifests, including roles that are off. |
 | `save` | Validate and reserialize a Work without changing its revision. |
 
 Successful machine-readable responses use JSON on stdout. Help uses text. Handled errors return exit code 1 and a `{ "code": "...", "message": "..." }` JSON diagnostic on stderr when stderr is writable. The exact response and recovery rules are in the [CLI authoring guide](agents/cli-authoring.md).
@@ -25,6 +25,17 @@ Successful machine-readable responses use JSON on stdout. Help uses text. Handle
 New and saved Works use schema 4, including the explicit character backend, a present nullable diagnostic pose and a required non-null appearance. Exact schema 1/2 Works upgrade to the original GLB backend without changing their revision, identity, timeline or saved stage; schema 1 receives the default white stage. Exact schema 3 Works preserve their backend and pose. Schemas 1/2/3 migrate absent appearance to `{"type":"none"}` and reject any appearance field, including null. Unknown fields, duplicate keys and missing schema 4 fields are rejected. Saving writes schema 4, which older Nvwa versions cannot read. Historical fixtures retain their original format. B1 has two signed parameters and five static diagnostic poses. Static version1 has no timeline. Motion version2 adds two Nvwa-authored four-second rehearsal clips in a separate profile; it preserves static Works without silent upgrades. A nonempty timeline owns the motion pose, including when paused. Choosing a diagnostic pose clears that timeline atomically, and Undo restores both. Apply/save edit Work metadata without claiming asset or renderer readiness.
 
 `set_appearance` replaces the saved selection through the same atomic command, revision, retry and Undo/Redo path as Studio. `{"type":"none"}` is supported on every backend. B1 accepts the fixed `b1_cc0` schema version 1 asset set `mpfb-b1-cc0-appearance-v1` and manifest SHA-256 `c3cf2b1040eed083fb1a328f0494b0c978cec42c71f3b7c826e14992f97cef04`. Required booleans `skin`, `eyes` and `hair` select roles independently; at least one must be true. Use `none` to clear all roles. Unknown identities, hashes, fields and unsupported backends fail before commit. `apply` and `save` validate portable metadata. `validate` with an asset root also authenticates the descriptor and all thirteen appearance files before reporting asset success. Rendering remains a separate acceptance.
+
+The eight-parameter B1 character also accepts the separate schema 2 set
+`mpfb-b1-cc0-appearance-v2-short01-v1`, whose manifest SHA-256 is
+`8c2044ee524a700abd75479c457d2e269f7e280a67509749c9fd780794c6d49a`.
+This set has fourteen payloads, including its original source metadata. It uses
+the existing skin and eyes with short01 hair. Existing defaults remain short04.
+Use `describe-capabilities` and its `cli_contract.set_appearance.compatible_sets`
+to discover complete, compatible selections for the actual loaded character.
+These examples have all three roles on; `current` describes the saved selection.
+The [short01 Work](../examples/b1-short01.nvwa.json) can be opened in Studio or
+Player. No new command or Work schema is required.
 
 `set_stage` replaces the complete stage through the same atomic command as Studio. `describe-capabilities` returns the loaded stage, a serialized command example, numeric bounds and the quality profiles. `inspect`, `validate`, `save` and `apply` use the shared validator. Light intensity is lux, colors are three sRGB channels in `[0,1]`, and angles are degrees. Camera distance and target height use character-relative units, multiplied by the character scale only in the runtime. The floor remains at world height zero. Core scale validation remains finite and positive; the fixed presentation runtime reports an explicit camera error outside scale `0.001..=100` and preserves the Work.
 
@@ -42,7 +53,7 @@ Cargo needs the locked Rust crates available locally. A first build may fetch cr
 
 For use outside the checkout, `scripts/package-cli.py` creates a local source-built
 directory and archive containing the binary and a complete `assets/` root.
-Both B1 base and appearance versions and the original GLB are included, with
+Both B1 bases, all three fixed appearance sets and the original GLB are included, with
 the existing asset licenses and provenance. The packager authenticates the
 supplied Works with that binary before publishing; `scripts/test-cli-package.py`
 checks the actual extracted archive, relocation, creation/editing, and asset

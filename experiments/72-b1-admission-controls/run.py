@@ -18,8 +18,9 @@ RUNTIME_SHA = 'e798765fbe44f2ecbc7e0f4b96c71a89ebfe23492b39d696a78a0e9bedf8d687'
 PINS_SHA = '02637d4de1f782658c6363e88c92e22ed6384db2f20ea468d73a28b74f257208'
 CONTEXT_SHA = '48667ae5e9e0dc706c3c9b25f8c7cc3b23e99c37f72cb8a346002e4001b91b9c'
 CLOSEOUT_CONTEXT_SHA = '0f9015fefeff7897b814691a990f9b0c46d621a7d7b611e887fd8b28f18de210'
+SHORT01_CONTEXT_SHA = 'ed7accc23126ca827d21e25675148a34c00b8d550a09ff54944f183eca2bf84c'
 HERE = Path(__file__).resolve().parent
-PACKAGE = ('run.py', 'test_controls.py', 'compatibility.rs', 'cases.json', 'pins.json', 'README.md', 'REVIEW.md', 'input-context-v1.json', 'input-context-v2.json')
+PACKAGE = ('run.py', 'test_controls.py', 'compatibility.rs', 'cases.json', 'pins.json', 'README.md', 'REVIEW.md', 'input-context-v1.json', 'input-context-v2.json', 'input-context-v3.json')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -108,7 +109,8 @@ def source_contexts(pins):
     """Load exact, code-pinned complete contexts, never per-file alternatives."""
     contexts = [('baseline581', dict(pins['files']))]
     for name, expected in (('input-context-v1.json', CONTEXT_SHA),
-                           ('input-context-v2.json', CLOSEOUT_CONTEXT_SHA)):
+                           ('input-context-v2.json', CLOSEOUT_CONTEXT_SHA),
+                           ('input-context-v3.json', SHORT01_CONTEXT_SHA)):
         manifest = HERE / name
         require(manifest.is_file() and not manifest.is_symlink() and file_sha(manifest) == expected,
                 'input context manifest identity mismatch: ' + name)
@@ -126,7 +128,7 @@ def select_source_context(actual, contexts, historical_only=False):
     for name, expected in contexts:
         if actual == expected and (not historical_only or name == 'baseline581'):
             return name
-    raise ValueError('source input context mismatch: exact baseline581, reviewed issue86 pair, or reviewed closeout context required')
+    raise ValueError('source input context mismatch: exact baseline581, reviewed issue86 pair, or reviewed closeout, or reviewed short01 product context required')
 
 
 def check_source_context(root, pins, historical_only=False):
