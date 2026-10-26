@@ -24,6 +24,8 @@ LATEST = CONTEXT.RIG119_CONTEXT
 class FrozenInputGate(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.gate_calls = {'positive': 0, 'rejection': 0}
+        cls.gate_return_codes = {}
         cls.scratch = tempfile.TemporaryDirectory(prefix='nvwa73-freeze-')
         cls.addClassCleanup(cls.scratch.cleanup)
         cls.root = Path(cls.scratch.name)
@@ -69,6 +71,22 @@ class FrozenInputGate(unittest.TestCase):
         for name in CONTEXT.RIG119_SUPPLEMENTS:
             (cls.root / name).unlink()
 
+    def setUp(self):
+        # Verification never carries across test methods. Every method starts
+        # with a fresh actual gate green on the same isolated source copy.
+        self.gate(self.raw, rejects=False)
+
+    @classmethod
+    def tearDownClass(cls):
+        # Observations only: count actual completed children, without replacing
+        # any case/assertion or making timing/call-count estimates into gates.
+        print(json.dumps({'source_gate_subprocess_observations': {
+            'mode': 'optimized' if sys.flags.optimize else 'normal',
+            'requested_outcomes': cls.gate_calls,
+            'actual_return_codes': cls.gate_return_codes,
+            'completed_calls': sum(cls.gate_calls.values()),
+        }}, sort_keys=True), file=sys.stderr)
+
     def write_context(self, name):
         for relative in CONTEXT.RIG119_SUPPLEMENTS:
             path = self.root / relative
@@ -90,6 +108,9 @@ class FrozenInputGate(unittest.TestCase):
                     'SourceContract.test_frozen_source_inputs', '-v']
         result = subprocess.run(command, cwd=self.root, capture_output=True,
                                 text=True, timeout=30)
+        self.gate_calls['rejection' if rejects else 'positive'] += 1
+        code = str(result.returncode)
+        self.gate_return_codes[code] = self.gate_return_codes.get(code, 0) + 1
         output = result.stdout + result.stderr
         self.assertIn('Ran 1 test', output, output)
         self.assertNotIn('skipped', output, output)
@@ -111,6 +132,7 @@ class FrozenInputGate(unittest.TestCase):
             self.gate(self.raw, rejects=False)
         finally:
             self.write_context(PRODUCT)
+        self.gate(self.raw, rejects=False)
 
     def test_exact_closeout_context_accepts_at_actual_called_gate_without_git_history(self):
         try:
@@ -118,6 +140,7 @@ class FrozenInputGate(unittest.TestCase):
             self.gate(self.raw, rejects=False)
         finally:
             self.write_context(PRODUCT)
+        self.gate(self.raw, rejects=False)
 
     def test_exact_rig119_context_accepts_and_restores_at_actual_called_gate(self):
         self.gate(self.raw, rejects=False)
@@ -145,9 +168,9 @@ class FrozenInputGate(unittest.TestCase):
                 original = path.read_bytes()
                 target = self.root / 'outside-rig119-supplement'
                 target.write_bytes(original)
+                self.gate(self.raw, rejects=False)
                 for fault in ('tampered', 'missing', 'symlink'):
                     with self.subTest(source=relative, fault=fault):
-                        self.gate(self.raw, rejects=False)
                         try:
                             path.unlink()
                             if fault == 'tampered':
@@ -159,7 +182,9 @@ class FrozenInputGate(unittest.TestCase):
                             if path.exists() or path.is_symlink():
                                 path.unlink()
                             path.write_bytes(original)
-                        self.gate(self.raw, rejects=False)
+                    # Outside subTest: a failed restore green must stop the loop.
+                    # No guarded input changes before the next fault.
+                    self.gate(self.raw, rejects=False)
         finally:
             self.write_context(PRODUCT)
         self.gate(self.raw, rejects=False)
@@ -169,19 +194,21 @@ class FrozenInputGate(unittest.TestCase):
             for historical in (ORIGINAL, CLOSEOUT, PRODUCT):
                 for left, right in ((LATEST, historical), (historical, LATEST)):
                     self.write_context(left)
+                    self.gate(self.raw, rejects=False)
                     for name in self.original:
                         raw = self.snapshots[left][name]
                         other = self.snapshots[right][name]
                         if raw == other:
                             continue
                         with self.subTest(context=left, substituted=right, source=name):
-                            self.gate(self.raw, rejects=False)
                             try:
                                 (self.root / name).write_bytes(other)
                                 self.gate(self.raw, rejects=True)
                             finally:
                                 (self.root / name).write_bytes(raw)
-                            self.gate(self.raw, rejects=False)
+                        # Outside subTest: only a successful real restore green
+                        # can authorize the next mutation of this same copy.
+                        self.gate(self.raw, rejects=False)
         finally:
             self.write_context(PRODUCT)
         self.gate(self.raw, rejects=False)
@@ -190,6 +217,7 @@ class FrozenInputGate(unittest.TestCase):
         names = list(json.loads((EXP / 'source-context-closeout-v1.json').read_bytes())['overrides'])
         try:
             self.write_context(ORIGINAL)
+            self.gate(self.raw, rejects=False)
             for choices in itertools.product((False, True), repeat=4):
                 if all(choices) or not any(choices):
                     continue
@@ -199,12 +227,14 @@ class FrozenInputGate(unittest.TestCase):
                     self.gate(self.raw, rejects=True)
         finally:
             self.write_context(PRODUCT)
+        self.gate(self.raw, rejects=False)
 
     def test_every_product_single_path_crossover_rejects_at_actual_called_gate(self):
         try:
             for historical in (ORIGINAL, CLOSEOUT):
                 for left, right in ((PRODUCT, historical), (historical, PRODUCT)):
                     self.write_context(left)
+                    self.gate(self.raw, rejects=False)
                     for name, raw in self.snapshots[left].items():
                         other = self.snapshots[right][name]
                         if raw == other:
@@ -215,6 +245,7 @@ class FrozenInputGate(unittest.TestCase):
                             (self.root / name).write_bytes(raw)
         finally:
             self.write_context(PRODUCT)
+        self.gate(self.raw, rejects=False)
 
     def test_all_complete_context_maps_and_every_mixture_reject_except_three_admitted(self):
         changing = list(self.original)
@@ -251,9 +282,9 @@ class FrozenInputGate(unittest.TestCase):
         faults = ['missing', 'empty', 'corrupt', 'tampered', 'symlink']
         if relative.endswith('.json'):
             faults += ['empty-object', 'invalid-json']
+        self.gate(self.raw, rejects=False)
         for fault in faults:
             with self.subTest(file=label, fault=fault):
-                self.gate(self.raw, rejects=False)
                 path.unlink()
                 try:
                     if fault == 'symlink':
@@ -267,8 +298,9 @@ class FrozenInputGate(unittest.TestCase):
                     if path.exists() or path.is_symlink():
                         path.unlink()
                     path.write_bytes(original)
-                self.gate(self.raw, rejects=False)
-        self.gate(self.raw, rejects=False)
+            # Outside subTest: a failed restore green must stop the loop rather
+            # than permit the next fault to reuse an unverified baseline.
+            self.gate(self.raw, rejects=False)
 
     def test_context_manifest_missing_empty_corrupt_tampered_and_symlink_reject(self):
         for relative in (CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME, CONTEXT.RIG119_CONTEXT_NAME):
