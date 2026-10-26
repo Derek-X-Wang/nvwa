@@ -53,16 +53,39 @@ def verify_source(repo):
     allowed = {"crates/nvwa-b1-adapter/src/lib.rs", "crates/nvwa-b1-adapter/src/motion.rs"}
     require(set(extension["files"]) == allowed, "Motion extension must contain exactly the two reviewed adapter files")
     expected = dict(inventory)
+    expected_sizes = {}
     for path, entry in extension["files"].items():
         require(set(entry) == {"base_sha256", "bytes", "sha256"}, f"Motion extension entry fields changed: {path}")
         require(entry["base_sha256"] == inventory.get(path), f"Motion extension source baseline mismatch: {path}")
-        data = regular(repo / path)
-        require(type(entry["bytes"]) is int and entry["bytes"] > 0 and len(data) == entry["bytes"] and digest(data) == entry["sha256"], f"Admitted motion source changed: {path}")
+        require(type(entry["bytes"]) is int and entry["bytes"] > 0, f"Invalid motion extension byte count: {path}")
         expected[path] = entry["sha256"]
+        expected_sizes[path] = entry["bytes"]
+    # The prepared revision supersedes only these three adapter paths. Authenticate
+    # both historical layers before composing it; compare live bytes only after
+    # composition, so a superseded lib.rs is not required to match two revisions.
+    prepared_path = repo / "scripts/b1-prepared-source-inventory.json"
+    require(not any(p.is_symlink() for p in prepared_path.parents), "Prepared extension symlink ancestor")
+    prepared_bytes = regular(prepared_path)
+    require(digest(prepared_bytes) == "f5fbcbd47be1a75442185eda2ed812ab92fe39456c034ec969df7165d6798b88", "Admitted prepared source extension changed")
+    prepared = json.loads(prepared_bytes)
+    require(set(prepared) == {"format", "schema_version", "base_inventory_sha256", "motion_inventory_sha256", "change", "files"}, "Prepared extension fields changed")
+    require(prepared["format"] == "nvwa-b1-prepared-source-extension" and type(prepared["schema_version"]) is int and prepared["schema_version"] == 3, "Unsupported prepared source extension")
+    require(prepared["base_inventory_sha256"] == digest(inventory_bytes), "Prepared extension baseline mismatch")
+    require(prepared["motion_inventory_sha256"] == digest(extension_bytes), "Prepared extension motion parent mismatch")
+    allowed_prepared = {"crates/nvwa-b1-adapter/src/lib.rs", "crates/nvwa-b1-adapter/README.md", "crates/nvwa-b1-adapter/src/prepared.rs"}
+    require(set(prepared["files"]) == allowed_prepared, "Prepared extension must contain exactly the three reviewed adapter files")
+    for path, entry in prepared["files"].items():
+        require(set(entry) == {"base_sha256", "bytes", "sha256"}, f"Prepared extension entry fields changed: {path}")
+        require(entry["base_sha256"] == expected.get(path), f"Prepared extension source baseline mismatch: {path}")
+        require(type(entry["bytes"]) is int and entry["bytes"] > 0, f"Invalid prepared extension byte count: {path}")
+        expected[path] = entry["sha256"]
+        expected_sizes[path] = entry["bytes"]
     actual_files = {str(p.relative_to(repo)): digest(regular(p))
                     for directory in ["vendor/humentity", "vendor/bevy_obj", "vendor/wobj", "crates/nvwa-b1-adapter"]
                     for p in (repo / directory).rglob("*") if p.is_file() or p.is_symlink()}
     require(actual_files == expected, "Full admitted source file set or bytes changed")
+    for path, size in expected_sizes.items():
+        require(len(regular(repo / path)) == size, f"Admitted source byte count changed: {path}")
     vendor = repo / "vendor/humentity"
     provenance = json.loads(regular(vendor / "NVWA-PROVENANCE.json"))
     actual = {str(p.relative_to(vendor)): digest(regular(p)) for p in (vendor / "src").rglob("*") if p.is_file()}

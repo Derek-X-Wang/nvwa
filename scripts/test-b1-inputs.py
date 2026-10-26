@@ -24,7 +24,7 @@ def source_copy():
         for relative in ["vendor", "crates/nvwa-b1-adapter"]:
             shutil.copytree(REPO / relative, repo / relative, symlinks=True)
         (repo / "scripts").mkdir()
-        for name in ["b1-source-inventory.json", "b1-motion-source-inventory.json"]:
+        for name in ["b1-source-inventory.json", "b1-motion-source-inventory.json", "b1-prepared-source-inventory.json"]:
             shutil.copy2(REPO / "scripts" / name, repo / "scripts" / name)
         # Every negative case first proves that its complete copied input passes.
         VERIFIER.verify_source(repo)
@@ -113,6 +113,117 @@ class B1InputControls(unittest.TestCase):
                 path.write_text(json.dumps(document, indent=2) + "\n")
                 with self.assertRaises(ValueError):
                     VERIFIER.verify_source(repo)
+
+    def test_prepared_extension_missing_corrupt_and_identical_symlink_are_rejected_then_restored(self):
+        for action in ["missing", "corrupt", "symlink"]:
+            with self.subTest(action=action), source_copy() as repo:
+                path = repo / "scripts/b1-prepared-source-inventory.json"
+                original = path.read_bytes()
+                if action == "missing":
+                    path.unlink()
+                elif action == "corrupt":
+                    append(path, b" ")
+                else:
+                    outside = repo / "outside-prepared-inventory.json"
+                    path.rename(outside)
+                    path.symlink_to(outside)
+                # Use the real pinned verifier, including its manifest hash.
+                with self.assertRaises(ValueError):
+                    VERIFIER.verify_source(repo)
+                if path.exists() or path.is_symlink():
+                    path.unlink()
+                path.write_bytes(original)
+                self.assertGreater(VERIFIER.verify_source(repo), 0)
+
+    def test_prepared_extension_wrong_links_schema_and_fields_are_rejected_then_restored(self):
+        for action in ["wrong_base", "wrong_parent", "wrong_schema", "wrong_format", "extra_field", "missing_field"]:
+            with self.subTest(action=action), source_copy() as repo:
+                path = repo / "scripts/b1-prepared-source-inventory.json"
+                original = path.read_bytes()
+                document = json.loads(original)
+                if action == "wrong_base":
+                    document["base_inventory_sha256"] = "0" * 64
+                elif action == "wrong_parent":
+                    document["motion_inventory_sha256"] = document["base_inventory_sha256"]
+                elif action == "wrong_schema":
+                    document["schema_version"] = 2
+                elif action == "wrong_format":
+                    document["format"] = "nvwa-b1-motion-source-extension"
+                elif action == "extra_field":
+                    document["unapproved"] = True
+                else:
+                    del document["change"]
+                path.write_text(json.dumps(document, indent=2) + "\n")
+                with self.assertRaises(ValueError):
+                    VERIFIER.verify_source(repo)
+                path.write_bytes(original)
+                self.assertGreater(VERIFIER.verify_source(repo), 0)
+
+    def test_prepared_extension_exact_files_and_immediate_bases_are_pinned_then_restored(self):
+        for action in ["extra", "missing", "old_lib_base", "wrong_readme_base", "nonabsent_prepared_base", "extra_entry_field", "missing_entry_field"]:
+            with self.subTest(action=action), source_copy() as repo:
+                path = repo / "scripts/b1-prepared-source-inventory.json"
+                original = path.read_bytes()
+                document = json.loads(original)
+                entries = document["files"]
+                lib = entries["crates/nvwa-b1-adapter/src/lib.rs"]
+                prepared = entries["crates/nvwa-b1-adapter/src/prepared.rs"]
+                if action == "extra":
+                    entries["vendor/humentity/src/lib.rs"] = dict(lib)
+                elif action == "missing":
+                    del entries["crates/nvwa-b1-adapter/src/prepared.rs"]
+                elif action == "old_lib_base":
+                    # The immediate parent is V2, not the old V1 lib identity.
+                    lib["base_sha256"] = json.loads((repo / "scripts/b1-source-inventory.json").read_bytes())["files"]["crates/nvwa-b1-adapter/src/lib.rs"]
+                elif action == "wrong_readme_base":
+                    entries["crates/nvwa-b1-adapter/README.md"]["base_sha256"] = None
+                elif action == "nonabsent_prepared_base":
+                    prepared["base_sha256"] = "0" * 64
+                elif action == "extra_entry_field":
+                    prepared["unapproved"] = True
+                else:
+                    del prepared["sha256"]
+                path.write_text(json.dumps(document, indent=2) + "\n")
+                with self.assertRaises(ValueError):
+                    VERIFIER.verify_source(repo)
+                path.write_bytes(original)
+                self.assertGreater(VERIFIER.verify_source(repo), 0)
+
+    def test_prepared_extension_byte_counts_are_pinned_then_restored(self):
+        for byte_count in [0, -1, True, 24229.0, "24229", None, 24230]:
+            with self.subTest(byte_count=byte_count), source_copy() as repo:
+                path = repo / "scripts/b1-prepared-source-inventory.json"
+                original = path.read_bytes()
+                document = json.loads(original)
+                document["files"]["crates/nvwa-b1-adapter/src/prepared.rs"]["bytes"] = byte_count
+                path.write_text(json.dumps(document, indent=2) + "\n")
+                with self.assertRaises(ValueError):
+                    VERIFIER.verify_source(repo)
+                path.write_bytes(original)
+                self.assertGreater(VERIFIER.verify_source(repo), 0)
+
+    def test_prepared_revision_each_source_mutation_missing_and_symlink_are_rejected_then_restored(self):
+        for relative in ["crates/nvwa-b1-adapter/src/lib.rs", "crates/nvwa-b1-adapter/README.md", "crates/nvwa-b1-adapter/src/prepared.rs"]:
+            for action in ["mutation", "missing", "symlink"]:
+                with self.subTest(path=relative, action=action), source_copy() as repo:
+                    path = repo / relative
+                    original = path.read_bytes()
+                    if action == "mutation":
+                        data = bytearray(original)
+                        data[-1] ^= 1
+                        path.write_bytes(data)
+                    elif action == "missing":
+                        path.unlink()
+                    else:
+                        outside = repo / "outside-prepared-source"
+                        path.rename(outside)
+                        path.symlink_to(outside)
+                    with self.assertRaises(ValueError):
+                        VERIFIER.verify_source(repo)
+                    if path.exists() or path.is_symlink():
+                        path.unlink()
+                    path.write_bytes(original)
+                    self.assertGreater(VERIFIER.verify_source(repo), 0)
 
     def test_actual_pose_lookup_mutated_to_always_neutral_is_rejected(self):
         with source_copy() as repo:
