@@ -10,6 +10,7 @@ struct PreparedBone {
     name: String,
     entity: Entity,
     translation: Vec3,
+    composition_rest_rotation: Quat,
     rest_rotation: Quat,
     gauge_rotation: Quat,
 }
@@ -17,6 +18,27 @@ struct PreparedBone {
 // This guards decoded construction roundoff, not authored scale intent or output
 // acceptance. Exact source scale and inverse-bind checks establish that intent.
 const CONSTRUCTION_ROUNDOFF: f32 = 2e-5;
+
+// A single handoff after the existing f32 composition. Keep this scalar order:
+// the emitted f32 result is not bitwise idempotent under another handoff.
+fn ecs_unit_rotation(completed: Quat) -> Result<Quat, String> {
+    let [x, y, z, w] = completed.to_array().map(f64::from);
+    let norm_squared = ((x * x + y * y) + z * z) + w * w;
+    if !norm_squared.is_finite() || norm_squared <= 0.0 {
+        return Err("invalid prepared output rotation".into());
+    }
+    let inv_norm = 1.0_f64 / norm_squared.sqrt();
+    let rotation = Quat::from_xyzw(
+        (x * inv_norm) as f32,
+        (y * inv_norm) as f32,
+        (z * inv_norm) as f32,
+        (w * inv_norm) as f32,
+    );
+    if !rotation.is_finite() || rotation.to_array().iter().all(|v| *v == 0.0) {
+        return Err("invalid prepared output rotation".into());
+    }
+    Ok(rotation)
+}
 
 fn rigid_rotation(matrix: Mat4) -> Result<Quat, String> {
     let axes = [matrix.x_axis, matrix.y_axis, matrix.z_axis];
@@ -141,12 +163,14 @@ impl PreparedRig {
                     .ok_or("prepared parent absent")?
             };
             let fitted_rotation = rigid_rotation(fitted[i])?;
+            let composition_rest_rotation = (parent.conjugate() * model).normalize();
             rows.push(PreparedBone {
                 name: bone.name.clone(),
                 entity: skeleton.bone_map[bone.name.as_str()],
                 // Keep the original recovered rest translation, including root.
                 translation: rest.w_axis.truncate(),
-                rest_rotation: (parent.conjugate() * model).normalize(),
+                composition_rest_rotation,
+                rest_rotation: ecs_unit_rotation(composition_rest_rotation)?,
                 gauge_rotation: (fitted_rotation.conjugate() * model).normalize(),
             });
         }
@@ -173,30 +197,40 @@ impl PreparedRig {
             }
             rotations.insert(r.bone.as_str(), rotation.normalize());
         }
-        // Validate every target before any writes. Invalid input or a missing
-        // component must leave the entire previous pose intact.
+        // Precompute and validate every output and target before any ECS write.
+        // A later failure must leave the entire previous pose intact.
+        let mut outputs = Vec::with_capacity(self.rows.len());
         for row in &self.rows {
             if world.get::<Transform>(row.entity).is_none() {
                 return Err("bone transform absent".into());
             }
-        }
-        for row in &self.rows {
-            let rotation = rotations
+            let rotation = match rotations
                 .get(row.name.as_str())
                 .filter(|rotation| **rotation != Quat::IDENTITY)
-                .map(|rotation| {
-                    (row.rest_rotation
+            {
+                Some(rotation) => ecs_unit_rotation(
+                    (row.composition_rest_rotation
                         * row.gauge_rotation.conjugate()
                         * *rotation
                         * row.gauge_rotation)
-                        .normalize()
-                })
-                .unwrap_or(row.rest_rotation);
-            *world.get_mut::<Transform>(row.entity).unwrap() = Transform {
+                        .normalize(),
+                )?,
+                None => row.rest_rotation,
+            };
+            if !row.translation.is_finite()
+                || !rotation.is_finite()
+                || rotation.to_array().iter().all(|v| *v == 0.0)
+            {
+                return Err("invalid prepared output transform".into());
+            }
+            outputs.push(Transform {
                 translation: row.translation,
                 rotation,
                 scale: Vec3::ONE,
-            };
+            });
+        }
+        for (row, output) in self.rows.iter().zip(outputs) {
+            *world.get_mut::<Transform>(row.entity).unwrap() = output;
         }
         Ok(())
     }
@@ -228,6 +262,7 @@ mod tests {
 
     fn fixture() -> (World, PreparedRig) {
         let mut world = World::new();
+        let composition_rest_rotation = Quat::from_euler(EulerRot::XYZ, 0.3, -0.4, 0.6).normalize();
         let rows = ["parent", "child"]
             .into_iter()
             .enumerate()
@@ -235,7 +270,8 @@ mod tests {
                 name: name.into(),
                 entity: world.spawn(Transform::from_xyz(9.0, 8.0, 7.0)).id(),
                 translation: Vec3::new(0.12, 0.3 + i as f32, -0.2),
-                rest_rotation: Quat::from_euler(EulerRot::XYZ, 0.3, -0.4, 0.6).normalize(),
+                composition_rest_rotation,
+                rest_rotation: ecs_unit_rotation(composition_rest_rotation).unwrap(),
                 gauge_rotation: Quat::from_euler(EulerRot::XYZ, -0.7, 0.2, 0.8).normalize(),
             })
             .collect();
@@ -261,6 +297,18 @@ mod tests {
         rig.rows
             .iter()
             .map(|row| *world.get::<Transform>(row.entity).unwrap())
+            .collect()
+    }
+
+    fn transform_bits(world: &World, rig: &PreparedRig) -> Vec<[u32; 10]> {
+        transforms(world, rig)
+            .iter()
+            .map(|t| {
+                let [x, y, z] = t.translation.to_array();
+                let [qx, qy, qz, qw] = t.rotation.to_array();
+                let [sx, sy, sz] = t.scale.to_array();
+                [x, y, z, qx, qy, qz, qw, sx, sy, sz].map(f32::to_bits)
+            })
             .collect()
     }
 
@@ -332,7 +380,7 @@ mod tests {
         let actual = *world.get::<Transform>(row.entity).unwrap();
         let delta =
             Quat::from_axis_angle(Vec3::new(1.0, 2.0, -3.0).normalize(), 71_f32.to_radians());
-        let expected = Mat4::from_quat(row.rest_rotation)
+        let expected = Mat4::from_quat(row.composition_rest_rotation)
             * Mat4::from_quat(row.gauge_rotation.conjugate())
             * Mat4::from_quat(delta)
             * Mat4::from_quat(row.gauge_rotation);
@@ -390,5 +438,131 @@ mod tests {
             *world.get::<Transform>(rig.rows[0].entity).unwrap(),
             before[0]
         );
+    }
+
+    #[test]
+    fn prepared_apply_rejects_later_invalid_output_atomically() {
+        let input = pose(vec![rotation("parent", [1.0, 0.0, 0.0], 20.0)]);
+        for invalid_rotation in [true, false] {
+            let (mut world, mut rig) = fixture();
+            let before = transform_bits(&world, &rig);
+            if invalid_rotation {
+                rig.rows[1].rest_rotation = Quat::from_xyzw(f32::NAN, 0.0, 0.0, 1.0);
+            } else {
+                rig.rows[1].translation.x = f32::INFINITY;
+            }
+            assert!(rig.apply(&mut world, &input).is_err());
+            assert_eq!(transform_bits(&world, &rig), before);
+        }
+        for invalid in [
+            Quat::from_xyzw(0.0, 0.0, 0.0, 0.0),
+            Quat::from_xyzw(f32::NAN, 0.0, 0.0, 1.0),
+            Quat::from_xyzw(0.0, f32::INFINITY, 0.0, 1.0),
+        ] {
+            assert!(ecs_unit_rotation(invalid).is_err());
+        }
+    }
+
+    #[test]
+    fn prepared_apply_matches_frozen_once_only_handoff_bits() {
+        // Independent scalar audit of saved 01-neutral pelvis q, READOUT SHA256
+        // 303f04b87231d700daf882dcfab1ce4a5ebb3325fa0a77433015ea50546f0ca5.
+        // With identity gauge and X180, the old completed f32 q bits are
+        // [3f35fd03, 3a7ce366, 3a7f9e3a, bf340b78]. The once-only expected
+        // output below rejects both emitted-rest feedback and a second handoff:
+        // either defect instead gives [3f35fd03, 3a7ce364, 3a7f9e38, bf340b78].
+        // These literals were computed outside the Rust implementation.
+        let (mut world, mut rig) = fixture();
+        let raw =
+            Quat::from_array([0x3f340b77, 0xba7f9e3b, 0x3a7ce365, 0x3f35fd04].map(f32::from_bits));
+        rig.rows[1].composition_rest_rotation = raw;
+        rig.rows[1].rest_rotation = ecs_unit_rotation(raw).unwrap();
+        rig.rows[1].gauge_rotation = Quat::IDENTITY;
+        let neutral_q = [0x3f340b77, 0xba7f9e3a, 0x3a7ce364, 0x3f35fd04];
+        let moved_q = [0x3f35fd03, 0x3a7ce365, 0x3a7f9e39, 0xbf340b78];
+        let neutral = pose(Vec::new());
+        let identity = pose(vec![rotation("child", [1.0, 0.0, 0.0], 0.0)]);
+        let moved = pose(vec![rotation("child", [1.0, 0.0, 0.0], 180.0)]);
+        rig.apply(&mut world, &neutral).unwrap();
+        let neutral_bits = transform_bits(&world, &rig);
+        assert_eq!(&neutral_bits[1][3..7], &neutral_q);
+        rig.apply(&mut world, &moved).unwrap();
+        let moved_bits = transform_bits(&world, &rig);
+        assert_eq!(&moved_bits[1][3..7], &moved_q);
+        for (input, expected) in [
+            (&neutral, &neutral_bits),
+            (&neutral, &neutral_bits),
+            (&identity, &neutral_bits),
+            (&moved, &moved_bits),
+            (&neutral, &neutral_bits),
+            (&moved, &moved_bits),
+            (&moved, &moved_bits),
+        ] {
+            rig.apply(&mut world, input).unwrap();
+            assert_eq!(&transform_bits(&world, &rig), expected);
+        }
+    }
+
+    #[test]
+    fn prepared_reconstruction_uses_source_bind_not_emitted_local() {
+        let (mut world, original) = fixture();
+        let reference = Transform::from_rotation(Quat::from_rotation_y(0.7));
+        let fitted =
+            Mat4::from_rotation_translation(Quat::from_rotation_z(0.2), Vec3::new(0.1, 1.2, -0.3));
+        let source =
+            Transform::from_translation(fitted.w_axis.truncate()).with_rotation(reference.rotation);
+        let inverse_bind = source.to_matrix().inverse();
+        // Exercise the existing exact source-construction seam for both fits.
+        // Actual moved locals on these same entities must never become rest.
+        let reconstruct = || {
+            let composition_rest_rotation =
+                model_rotation(reference, fitted, inverse_bind).unwrap();
+            PreparedRig {
+                rows: original
+                    .rows
+                    .iter()
+                    .map(|row| PreparedBone {
+                        name: row.name.clone(),
+                        entity: row.entity,
+                        translation: row.translation,
+                        composition_rest_rotation,
+                        rest_rotation: ecs_unit_rotation(composition_rest_rotation).unwrap(),
+                        gauge_rotation: row.gauge_rotation,
+                    })
+                    .collect(),
+            }
+        };
+        let first = reconstruct();
+        let neutral = pose(Vec::new());
+        let moved = pose(vec![rotation("child", [1.0, 2.0, -3.0], 71.0)]);
+        first.apply(&mut world, &neutral).unwrap();
+        let neutral_bits = transform_bits(&world, &first);
+        first.apply(&mut world, &moved).unwrap();
+        let moved_bits = transform_bits(&world, &first);
+        let refitted = reconstruct();
+        for (before, after) in first.rows.iter().zip(&refitted.rows) {
+            assert_eq!(
+                before
+                    .composition_rest_rotation
+                    .to_array()
+                    .map(f32::to_bits),
+                after.composition_rest_rotation.to_array().map(f32::to_bits)
+            );
+            assert_eq!(
+                before.gauge_rotation.to_array().map(f32::to_bits),
+                after.gauge_rotation.to_array().map(f32::to_bits)
+            );
+        }
+        for (input, expected) in [
+            (&neutral, &neutral_bits),
+            (&neutral, &neutral_bits),
+            (&moved, &moved_bits),
+            (&neutral, &neutral_bits),
+            (&moved, &moved_bits),
+            (&moved, &moved_bits),
+        ] {
+            refitted.apply(&mut world, input).unwrap();
+            assert_eq!(&transform_bits(&world, &refitted), expected);
+        }
     }
 }
