@@ -1,6 +1,6 @@
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
-from frozen_context import source_contexts,select_context,historical_sources
+from frozen_context import source_contexts,select_context,historical_sources,RIG119_CONTEXT,RIG119_SUPPLEMENTS
 ROOT=Path(__file__).resolve().parents[2];EXP=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('cpu_probe',EXP/'cpu_probe.py');probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -76,10 +76,26 @@ class SourceContract(unittest.TestCase):
     path=path/part;self.assertFalse(path.is_symlink(),message+' symlink rejected')
    self.assertTrue((ROOT/name).is_file(),message+' file is required')
    actual[name]={'sha256':digest(ROOT/name),'bytes':(ROOT/name).stat().st_size}
-  try:context,selected=select_context(actual,source_contexts(EXP,p.read_bytes(),inputs))
+  try:contexts=source_contexts(EXP,p.read_bytes(),inputs,include_current=True)
   except ValueError as error:self.fail(str(error))
-  self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1'])
-  self.assertEqual(len(selected),309,'FROZEN-INPUTS.json complete source set required')
+  # Historical contexts keep their309 inputs. Current module/admission inputs
+  # are explicit additions; partial or mixed current maps cannot select history.
+  for name in RIG119_SUPPLEMENTS:
+   path=ROOT/name
+   if path.exists() or path.is_symlink():
+    message=f'FROZEN-INPUTS.json supplemental entry {name}'
+    path=ROOT
+    for part in Path(name).parts:
+     path=path/part;self.assertFalse(path.is_symlink(),message+' symlink rejected')
+    self.assertTrue(path.is_file(),message+' file is required')
+    actual[name]={'sha256':digest(path),'bytes':path.stat().st_size}
+  try:context,selected=select_context(actual,contexts)
+  except ValueError as error:self.fail(str(error))
+  if context==RIG119_CONTEXT:
+   self.assertEqual(len(selected),311,'current source set must include both explicit supplements')
+  else:
+   self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1'])
+   self.assertEqual(len(selected),309,'FROZEN-INPUTS.json complete source set required')
   for name,item in selected.items():
    message=f'FROZEN-INPUTS.json entry {name}'
    self.assertEqual(digest(ROOT/name),item['sha256'],message+' SHA256 mismatch')

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "baseline_manifest": "FROZEN-INPUTS.json",
+  "baseline_manifest_sha256": "66f024238ef009d0544d617251c46754b202b3069254ce5df47dc6dfc6debc33",
+  "parent_context_sha256": "4212de5a650eb8120c49ec985bc00928cca43af33c95a2f8bcc207158311f13f",
+  "context": "rig119-unit-handoff-v1",
+  "overrides": {
+    "crates/nvwa-b1-adapter/src/lib.rs": {
+      "bytes": 19637,
+      "sha256": "dc5e0cbf2033ecc9b73282489ba964e12b219192652736b48a1b9f30bdbd7453"
+    },
+    "crates/nvwa-b1-adapter/README.md": {
+      "bytes": 2901,
+      "sha256": "da9c0661571dfafc4f1fdcb663923a6b7a238af58869e5b62745d906d6991a68"
+    }
+  },
+  "supplemental_files": {
+    "crates/nvwa-b1-adapter/src/prepared.rs": {
+      "bytes": 24229,
+      "sha256": "fbfb1cf20bfdc8d70312e66bb31b92edc7ece4fb5b5ad7ae89c0678e2532014c"
+    },
+    "scripts/b1-prepared-source-inventory.json": {
+      "bytes": 1157,
+      "sha256": "f5fbcbd47be1a75442185eda2ed812ab92fe39456c034ec969df7165d6798b88"
+    }
+  },
+  "scope": "Exact current source compatibility: original309 input paths plus2 explicit supplements. Historical contexts, captures, numeric source and quality retain their identities; no new execution or render claim."
+}

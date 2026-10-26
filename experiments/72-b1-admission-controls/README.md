@@ -69,6 +69,28 @@ execution. Historical records and their source hashes remain unchanged.
 
 ## Cheap preparation controls
 
+### PreparedRig source compatibility
+
+[input-context-rig119-v1.json](input-context-rig119-v1.json) adds the separately
+code-pinned `rig119-unit-handoff-v1` current context. It inherits the exact
+short01 map, replaces only the adapter lib identity and explicitly authenticates
+three supplements: the adapter README, `src/prepared.rs` and the pinned V3
+production source-admission manifest. The current map has20 inputs. The original
+four17-input maps and their4 accepted/92 rejected selector controls stay intact.
+Missing, changed or symlinked supplements and partial/hybrid maps reject; real
+copied-source controls verify the complete positive before mutation and after
+restoration. Historical short01 fixtures use the separately pinned old adapter
+bytes retained under experiment73; no old source is reconstructed by reversing
+current edits.
+
+The new descriptor is included in the runner's copied control package. It
+does not change the archived execution source: `--execute` still archives only
+baseline581 and admits only that context with `historical_only=True`. The old
+archive has neither prepared/V3 marker and retains its original17-input scope.
+All old pins, cases, protected numeric sections, bounds and retained execution
+receipts remain unchanged. Current source compatibility does not establish fresh
+historical or current Rust, render, quality or formal Work workflow acceptance.
+
 From the repository root, without Cargo:
 
 ```sh

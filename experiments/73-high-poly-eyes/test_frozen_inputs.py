@@ -18,6 +18,7 @@ SPEC.loader.exec_module(CONTEXT)
 PRODUCT = 'hair79-short01-product-v1'
 ORIGINAL = 'original-frozen309'
 CLOSEOUT = 'character-stage-closeout-v1'
+LATEST = CONTEXT.RIG119_CONTEXT
 
 
 class FrozenInputGate(unittest.TestCase):
@@ -31,19 +32,26 @@ class FrozenInputGate(unittest.TestCase):
         cls.raw = (EXP / 'FROZEN-INPUTS.json').read_bytes()
         cls.inputs = json.loads(cls.raw)
         # Copy the real inputs, never link them: mutations must not reach the repo.
-        for name in cls.inputs:
+        for name in list(cls.inputs) + list(CONTEXT.RIG119_SUPPLEMENTS):
             destination = cls.root / name
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / name, destination)
         for name in ['test_prepare.py', 'cpu_probe.py', 'frozen_context.py',
-                     'source-context-closeout-v1.json', 'source-context-hair79-short01-v1.json']:
+                     'source-context-closeout-v1.json', 'source-context-hair79-short01-v1.json', CONTEXT.RIG119_CONTEXT_NAME]:
             shutil.copyfile(EXP / name, cls.exp / name)
         shutil.copytree(EXP / 'fixtures', cls.exp / 'fixtures')
+        shutil.copytree(EXP / 'compat-fixtures-rig119', cls.exp / 'compat-fixtures-rig119')
         cls.contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
-        cls.maps = dict(cls.contexts)
+        cls.all_contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs, include_current=True)
+        cls.maps = dict(cls.all_contexts)
         historical = CONTEXT.historical_sources(EXP, cls.contexts)
         cls.original = historical[ORIGINAL]
         cls.current = {name: (cls.root / name).read_bytes() for name in cls.original}
+        cls.latest = dict(cls.current)
+        cls.latest.update({name: (cls.root / name).read_bytes() for name in CONTEXT.RIG119_SUPPLEMENTS})
+        # PRODUCT keeps its original historical short01 meaning. The shared
+        # adapter bytes now come from their separate authenticated local archive.
+        cls.current.update(historical[PRODUCT])
         cls.closeout = dict(cls.original)
         closeout = json.loads((EXP / 'source-context-closeout-v1.json').read_bytes())
         for name, item in closeout['overrides'].items():
@@ -51,13 +59,21 @@ class FrozenInputGate(unittest.TestCase):
             if {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} != item:
                 raise ValueError('archived closeout fixture does not match old pin: ' + name)
             cls.closeout[name] = raw
-        cls.snapshots = {ORIGINAL: cls.original, CLOSEOUT: cls.closeout, PRODUCT: cls.current}
+        cls.snapshots = {ORIGINAL: cls.original, CLOSEOUT: cls.closeout, PRODUCT: cls.current, LATEST: cls.latest}
         for context, snapshot in cls.snapshots.items():
             for name, raw in snapshot.items():
                 if {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} != cls.maps[context][name]:
                     raise ValueError('complete source fixture mismatch: ' + context + ' ' + name)
+        for name, raw in cls.current.items():
+            (cls.root / name).write_bytes(raw)
+        for name in CONTEXT.RIG119_SUPPLEMENTS:
+            (cls.root / name).unlink()
 
     def write_context(self, name):
+        for relative in CONTEXT.RIG119_SUPPLEMENTS:
+            path = self.root / relative
+            if path.exists() or path.is_symlink():
+                path.unlink()
         for relative, raw in self.snapshots[name].items():
             (self.root / relative).write_bytes(raw)
 
@@ -102,6 +118,73 @@ class FrozenInputGate(unittest.TestCase):
             self.gate(self.raw, rejects=False)
         finally:
             self.write_context(PRODUCT)
+
+    def test_exact_rig119_context_accepts_and_restores_at_actual_called_gate(self):
+        self.gate(self.raw, rejects=False)
+        try:
+            self.write_context(LATEST)
+            self.gate(self.raw, rejects=False)
+            self.assertEqual(len(self.maps[LATEST]), 311)
+            self.assertEqual(CONTEXT.select_context(self.maps[LATEST], self.all_contexts)[0], LATEST)
+            for name in self.maps[LATEST]:
+                incomplete = dict(self.maps[LATEST])
+                incomplete.pop(name)
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(incomplete, self.all_contexts)
+            with self.assertRaisesRegex(ValueError, 'source context'):
+                CONTEXT.select_context(dict(self.maps[LATEST], unreviewed={'bytes': 0, 'sha256': '0' * 64}), self.all_contexts)
+        finally:
+            self.write_context(PRODUCT)
+        self.gate(self.raw, rejects=False)
+
+    def test_rig119_module_and_v3_mutation_missing_symlink_reject_and_restore(self):
+        try:
+            self.write_context(LATEST)
+            for relative in CONTEXT.RIG119_SUPPLEMENTS:
+                path = self.root / relative
+                original = path.read_bytes()
+                target = self.root / 'outside-rig119-supplement'
+                target.write_bytes(original)
+                for fault in ('tampered', 'missing', 'symlink'):
+                    with self.subTest(source=relative, fault=fault):
+                        self.gate(self.raw, rejects=False)
+                        try:
+                            path.unlink()
+                            if fault == 'tampered':
+                                path.write_bytes(original + b' ')
+                            elif fault == 'symlink':
+                                path.symlink_to(target)
+                            self.gate(self.raw, rejects=True)
+                        finally:
+                            if path.exists() or path.is_symlink():
+                                path.unlink()
+                            path.write_bytes(original)
+                        self.gate(self.raw, rejects=False)
+        finally:
+            self.write_context(PRODUCT)
+        self.gate(self.raw, rejects=False)
+
+    def test_every_rig119_historical_single_path_hybrid_rejects_and_restores(self):
+        try:
+            for historical in (ORIGINAL, CLOSEOUT, PRODUCT):
+                for left, right in ((LATEST, historical), (historical, LATEST)):
+                    self.write_context(left)
+                    for name in self.original:
+                        raw = self.snapshots[left][name]
+                        other = self.snapshots[right][name]
+                        if raw == other:
+                            continue
+                        with self.subTest(context=left, substituted=right, source=name):
+                            self.gate(self.raw, rejects=False)
+                            try:
+                                (self.root / name).write_bytes(other)
+                                self.gate(self.raw, rejects=True)
+                            finally:
+                                (self.root / name).write_bytes(raw)
+                            self.gate(self.raw, rejects=False)
+        finally:
+            self.write_context(PRODUCT)
+        self.gate(self.raw, rejects=False)
 
     def test_all_fourteen_mixed_contexts_reject_at_actual_called_gate(self):
         names = list(json.loads((EXP / 'source-context-closeout-v1.json').read_bytes())['overrides'])
@@ -170,6 +253,7 @@ class FrozenInputGate(unittest.TestCase):
             faults += ['empty-object', 'invalid-json']
         for fault in faults:
             with self.subTest(file=label, fault=fault):
+                self.gate(self.raw, rejects=False)
                 path.unlink()
                 try:
                     if fault == 'symlink':
@@ -183,10 +267,11 @@ class FrozenInputGate(unittest.TestCase):
                     if path.exists() or path.is_symlink():
                         path.unlink()
                     path.write_bytes(original)
+                self.gate(self.raw, rejects=False)
         self.gate(self.raw, rejects=False)
 
     def test_context_manifest_missing_empty_corrupt_tampered_and_symlink_reject(self):
-        for relative in (CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME):
+        for relative in (CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME, CONTEXT.RIG119_CONTEXT_NAME):
             self.corrupt_required_file(relative, relative)
 
     def test_historical_fixture_manifest_and_every_blob_fail_closed_at_actual_called_gate(self):
@@ -198,6 +283,22 @@ class FrozenInputGate(unittest.TestCase):
 
     def test_undeclared_historical_fixture_rejects_at_actual_called_gate(self):
         path = self.exp / 'fixtures/source-contexts/unreviewed-source'
+        try:
+            path.write_bytes(b'unreviewed')
+            self.gate(self.raw, rejects=True)
+        finally:
+            path.unlink()
+        self.gate(self.raw, rejects=False)
+
+    def test_compatibility_manifest_and_both_old_adapter_blobs_fail_closed_and_restore(self):
+        self.corrupt_required_file(CONTEXT.COMPAT_FIXTURES_NAME, 'rig119 compatibility fixture manifest')
+        manifest = json.loads((EXP / CONTEXT.COMPAT_FIXTURES_NAME).read_bytes())
+        for name, item in manifest['files'].items():
+            self.corrupt_required_file(item['fixture'], 'old shared adapter ' + name)
+
+    def test_undeclared_compatibility_fixture_rejects_and_restores(self):
+        path = self.exp / 'compat-fixtures-rig119/unreviewed-source'
+        self.gate(self.raw, rejects=False)
         try:
             path.write_bytes(b'unreviewed')
             self.gate(self.raw, rejects=True)

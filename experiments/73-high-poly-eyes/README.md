@@ -59,6 +59,31 @@ execution evidence. Historical execution and heavyweight rebuilds are separate.
 
 `SOURCE.json` pins the original280737770B system archive and exact785436B four-file subset. `source/` preserves original OBJ/MHCLO/MHMAT/PNG bytes. Selected ZIP decompression/CRC, SHA256 and sizes were checked against the replacement plan. Pack metadata and existing CC0 legal text are retained under `source/provenance/`; OBJ/MHCLO/MHMAT original headers name Data Collection AB, Joel Palmius and Jonas Hauquier. No bytes were downloaded. This is a selected-member CRC pass, not an all-member archive CRC pass.
 
+### PreparedRig current context and historical fixture supplement
+
+`source-context-rig119-v1.json` separately pins `rig119-unit-handoff-v1`. It
+inherits the exact short01 context, replaces only adapter lib/README identities
+and adds `src/prepared.rs` plus the V3 source-admission manifest as explicit
+dependencies. The actual current source gate checks all311 entries. The three
+historical309-entry maps, their3 accepted/12,285 rejected selector controls and
+all numeric-source assertions retain their original scope and bytes.
+
+`compat-fixtures-rig119/manifest.json` separately authenticates the two old
+shared adapter blobs: lib22798 bytes/SHA256 `9c7683612e637b66ecb976d961dfda817ed480fcb8692718768266249b033c3b`
+and README1787 bytes/SHA256 `195a9bc71906de5e6fff8e50c952c7339dae9bdbe3f65a4726d76d8b23d38e07`.
+They came from already-local Git commits28ada188 and36ebeef, respectively. They
+supplement the unchanged original14-blob archive. Whole historical fixture trees
+use these old bytes and omit current-only prepared/V3 inputs. The actual copied
+subprocess gate checks old/current complete contexts, hybrids, missing/changed/
+symlinked inputs and fixtures, then restoration on the same copy. No hash mock
+is used. New contexts and both fixture inventories are mandatory and code-pinned.
+
+This compatibility layer supplies no new Rust, numeric, rendering or quality
+result. Existing build.py inventories all current crate and experiment files,
+including the new module and these fixtures; historical build/capture receipts
+remain immutable. Work/profile/clip identities, thresholds, original failure
+records, M2/#80 HOLD and #3/#4 limits remain unchanged.
+
 ```sh
 python3 -B experiments/73-high-poly-eyes/authenticate.py --archive EXISTING_APPROVED_SYSTEM_ZIP
 python3 -B -m unittest discover -s experiments/73-high-poly-eyes -p 'test_*.py'
