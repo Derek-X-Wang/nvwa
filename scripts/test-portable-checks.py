@@ -81,14 +81,37 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
 
     def test_workflow_uses_every_group_once_and_preserves_timeouts(self):
         workflow = (ROOT / ".github/workflows/ci.yml").read_text()
-        portable = workflow.split("  portable:\n", 1)[1].split("  native-and-wasm:\n", 1)[0]
-        calls = [line.strip().removeprefix("run: ") for line in portable.splitlines()
-                 if "python3 -B scripts/check-portable.py " in line]
-        self.assertEqual(calls, [f"python3 -B scripts/check-portable.py {name}" for name in ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "current19-shoulder-refit", "frozen-upper-arm"]])
-        self.assertEqual(portable.count("timeout-minutes: 3"), 2)
-        self.assertIn("timeout-minutes: 6", portable)
-        self.assertIn("timeout-minutes: 5", portable)
-        self.assertIn("python3 -B scripts/check-portable.py runner-contract", portable)
+        eye_hair_step = ("      - name: Check eye, hair, and character parameter controls\n"
+                         "        timeout-minutes: 5\n"
+                         "        run: python3 -B scripts/check-portable.py eye-hair-parameters\n")
+
+        def check(text):
+            portable = text.split("  portable:\n", 1)[1].split("  native-and-wasm:\n", 1)[0]
+            calls = [line.strip().removeprefix("run: ") for line in portable.splitlines()
+                     if "python3 -B scripts/check-portable.py " in line]
+            self.assertEqual(calls, [f"python3 -B scripts/check-portable.py {name}" for name in ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "current19-shoulder-refit", "frozen-upper-arm"]])
+            self.assertEqual(portable.count(eye_hair_step.splitlines(keepends=True)[0]), 1)
+            self.assertEqual(portable.count(eye_hair_step), 1)
+            self.assertEqual([line.strip() for line in portable.splitlines() if "timeout-minutes:" in line],
+                             ["timeout-minutes: 15", "timeout-minutes: 5", "timeout-minutes: 3",
+                              "timeout-minutes: 6", "timeout-minutes: 5"])
+            self.assertIn("python3 -B scripts/check-portable.py runner-contract", portable)
+
+        check(workflow)
+        mutations = [workflow.replace(eye_hair_step, eye_hair_step.replace('timeout-minutes: 5', 'timeout-minutes: '+value))
+                     for value in ['3', '4', '6']]
+        mutations.extend([
+            workflow.replace(eye_hair_step, eye_hair_step.replace('        timeout-minutes: 5\n', '')),
+            workflow.replace(eye_hair_step, eye_hair_step.replace('        timeout-minutes: 5\n', '        timeout-minutes: 5\n'*2)),
+            workflow.replace(eye_hair_step, ''),
+            workflow.replace(eye_hair_step, eye_hair_step*2),
+            workflow.replace('    timeout-minutes: 15\n', '    timeout-minutes: 16\n'),
+            workflow.replace('check-portable.py authenticated-source', 'check-portable.py diagnostics'),
+        ])
+        for index, mutant in enumerate(mutations):
+            self.assertNotEqual(mutant, workflow)
+            with self.subTest(mutation=index), self.assertRaises(AssertionError):
+                check(mutant)
 
     def test_all_real_shell_groups_order_modes_defaults_and_local_temp_cleanup(self):
         result = self.call("all")

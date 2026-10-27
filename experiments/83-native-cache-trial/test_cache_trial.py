@@ -30,6 +30,22 @@ WORKFLOW_ADDITIONS = (
 )
 
 
+# eye-hair-step-budget-v1: admit only this named step's approved 180s -> 300s change.
+EYE_HAIR_BUDGET_STEP = """      - name: Check eye, hair, and character parameter controls
+        timeout-minutes: 5
+        run: python3 -B scripts/check-portable.py eye-hair-parameters
+"""
+
+
+def historical_eye_hair_budget_workflow(workflow, checks):
+    checks.assertEqual(workflow.count(EYE_HAIR_BUDGET_STEP.splitlines(keepends=True)[0]), 1,
+                       'required unique eye/hair budget step')
+    checks.assertEqual(workflow.count(EYE_HAIR_BUDGET_STEP), 1,
+                       'required exact 300-second eye/hair budget step')
+    return workflow.replace(EYE_HAIR_BUDGET_STEP,
+                            EYE_HAIR_BUDGET_STEP.replace('timeout-minutes: 5', 'timeout-minutes: 3'))
+
+
 # macos15-arm64-v1: admit only the paired retained-job image replacement.
 MACOS15_HEADERS = (
     """  native-and-wasm:
@@ -49,6 +65,7 @@ MACOS15_HEADERS = (
 
 
 def historical_macos_workflow(workflow, checks):
+    workflow = historical_eye_hair_budget_workflow(workflow, checks)
     checks.assertEqual(workflow.count('    runs-on: macos-15\n'), 2,
                        'required paired standard ARM64 macos-15 migration')
     for header in MACOS15_HEADERS:
@@ -604,6 +621,19 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
                           original.replace('timeout-minutes: 60', 'timeout-minutes: 61'),
                           original.replace('cargo test --manifest-path', 'cargo check --manifest-path'),
                           original.replace('runs-on: ubuntu-24.04', 'runs-on: macos-15')])
+        # Exercise the approved budget overlay through the complete workflow guard.
+        mutations.extend([
+            original.replace(EYE_HAIR_BUDGET_STEP, EYE_HAIR_BUDGET_STEP.replace('timeout-minutes: 5', 'timeout-minutes: '+value))
+            for value in ['3', '4', '6']
+        ])
+        mutations.extend([
+            original.replace(EYE_HAIR_BUDGET_STEP, EYE_HAIR_BUDGET_STEP.replace('        timeout-minutes: 5\n', '')),
+            original.replace(EYE_HAIR_BUDGET_STEP, EYE_HAIR_BUDGET_STEP.replace('        timeout-minutes: 5\n', '        timeout-minutes: 5\n'*2)),
+            original.replace(EYE_HAIR_BUDGET_STEP, ''),
+            original.replace(EYE_HAIR_BUDGET_STEP, EYE_HAIR_BUDGET_STEP*2),
+            original.replace('    timeout-minutes: 15\n', '    timeout-minutes: 16\n'),
+            original.replace('check-portable.py authenticated-source', 'check-portable.py diagnostics'),
+        ])
         for index, mutant in enumerate(mutations):
             self.assertNotEqual(mutant, original)
             def read(path, *args, **kwargs):
