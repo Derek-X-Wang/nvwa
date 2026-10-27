@@ -1,0 +1,41 @@
+{
+  "aggregate_seconds_max": 60,
+  "baseline_sha256": "2f0618a18173f891feb5e55c700909b4a2be4d69602417f4fb57fc5073bd6938",
+  "candidate_sha256": "3ff055441c2a91d81cfc2c5ad7bb61164331fd1e2087224be1dcb8e78f04397a",
+  "cell_order": [
+    "normal/positive",
+    "normal/earlyreject",
+    "optimized/positive",
+    "optimized/earlyreject"
+  ],
+  "child_environment": "remove all PYTHON* and NVWA73_GATE_*; only PYTHONDONTWRITEBYTECODE=1 and PYTHONNOUSERSITE=1; no observer; no added -I or cache change",
+  "decision_rule": {
+    "all_other_complete_results": "STOP_OPTIMIZATION_INVESTIGATION",
+    "complete_and_all_rules_pass": "CONTINUE_TO_SEPARATE_ACCEPTANCE_DECISION_ONLY",
+    "first_use": "keep separate; excluded from benefit decision; no cold-cache claim",
+    "incomplete_or_any_failure": "STOP; no retry; no further run authorized",
+    "meaning": "diagnostic only; no CI gate change, full-step prediction, significance, merge or acceptance claim",
+    "normal": "in each outcome, each opposing-order new-minus-old <= max(10000000ns, 5% paired old time), AND mean new-minus-old <= max(5000000ns, 2% mean old time)",
+    "optimized": "in each outcome, both opposing-order old-minus-new savings >=50000000ns AND each saving strictly greater than cell repeat scatter",
+    "scatter": "max(abs(old old-to-new time minus old new-to-old time), abs(new old-to-new time minus new new-to-old time)); excludes first-use"
+  },
+  "execution_host": "ubuntu-24.04 x64; preinstalled /usr/bin/python3 CPython3.12.x",
+  "fixture": "unchanged FrozenInputGate.setUpClass product309 with exact original valid manifest bytes; empty exactly {}",
+  "independent_run_max": 1,
+  "inventory_sha256": "362ef407648b48e5ae490ac844886befc720e8d65af679a88d046ca43ada7237",
+  "normal_ci_ledger": "unchanged; PR120 HOLD; main reserve unchanged",
+  "per_child_seconds": 30,
+  "raw_transport": "existing unchanged codec40 files/1MiB raw/2MiB wire;24 child-NN.raw.json records containing exact stdout_b64/stderr_b64;34 total evidence files",
+  "schedule_per_cell": [
+    "first-use:old",
+    "first-use:new",
+    "old-to-new:old",
+    "old-to-new:new",
+    "new-to-old:new",
+    "new-to-old:old"
+  ],
+  "selected_test": "SourceContract.test_frozen_source_inputs",
+  "source_head": "eb90badc63fd12753224f1691e8a57b3848241e8",
+  "total_actual_gate_children": 24,
+  "work_seconds": 50
+}

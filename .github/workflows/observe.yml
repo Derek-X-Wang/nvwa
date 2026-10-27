@@ -1,0 +1,267 @@
+name: exp73 independent Ubuntu A-B
+on:
+  push:
+    branches: [codex/exp73-ubuntu-ab-once]
+permissions:
+  contents: read
+jobs:
+  observe:
+    name: exp73 independent Ubuntu A-B
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Fixed public tooling Git acquisition and initial preflight
+        timeout-minutes: 2
+        run: |
+          /usr/bin/python3 -I -B - <<'PY'
+          """Fixed public Git acquisition only. No archive, fallback or script retry.
+          Bootstrap code is embedded verbatim in the reviewed workflow before tool fetch.
+          """
+          import time
+          PROCESS_START_NS=time.monotonic_ns()
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import signal
+          import subprocess
+          import sys
+          
+          REMOTE='https://github.com/Derek-X-Wang/nvwa.git'
+          SOURCE_SHA='eb90badc63fd12753224f1691e8a57b3848241e8'
+          REPO='Derek-X-Wang/nvwa'
+          REF='refs/heads/codex/exp73-ubuntu-ab-once'
+          TOOL_FILES=['.github/workflows/observe.yml', 'README.md', 'diagnostic/CONTRACT.json', 'diagnostic/FROZEN.json', 'diagnostic/INPUT-INVENTORY.json', 'diagnostic/RELEASE.json', 'diagnostic/acquire.py', 'diagnostic/admission.py', 'diagnostic/codec.py', 'diagnostic/export.py', 'diagnostic/guard.py', 'diagnostic/measure.py', 'diagnostic/test_prepare.candidate.py', 'diagnostic/probe.py']
+          LIVE=None
+          LAUNCHING=False
+          FINALIZING=False
+          PENDING=set()
+          GLOBAL_END_NS=None
+          GROUP_END_NS=None
+          LOG=None
+          READ_INDEX=0
+          
+          class AcquisitionAbort(Exception): pass
+          
+          def interrupted(signum,frame):
+              PENDING.add(signum)
+              if not LAUNCHING and not FINALIZING:
+                  raise AcquisitionAbort('catchable acquisition interruption')
+          
+          def git_environment():
+              # No inherited token, proxy, Git-config injection, credential helper or user
+              # hook/config. Changes are process-local; machine configuration is untouched.
+              return {'PATH':'/usr/bin:/bin','LANG':'C.UTF-8','LC_ALL':'C.UTF-8',
+                      'GIT_CONFIG_NOSYSTEM':'1','GIT_CONFIG_SYSTEM':'/dev/null',
+                      'GIT_CONFIG_GLOBAL':'/dev/null','GIT_TERMINAL_PROMPT':'0',
+                      'GIT_ASKPASS':'/bin/false','SSH_ASKPASS':'/bin/false',
+                      'GIT_TEMPLATE_DIR':str(Path(os.environ['RUNNER_TEMP'])/'exp73-empty-template')}
+          
+          def git_command(*args):
+              return ['/usr/bin/git','-c','credential.helper=','-c','core.hooksPath=/dev/null',
+                      '-c','protocol.file.allow=never','-c','protocol.ext.allow=never',*args]
+          
+          def remaining_ns(cleanup=False):
+              end=min(GLOBAL_END_NS,GROUP_END_NS)
+              return end-time.monotonic_ns()-(0 if cleanup else 2000000000)
+          
+          def group_exists():
+              if LIVE is None: return False
+              try: os.killpg(LIVE.pid,0);return True
+              except ProcessLookupError: return False
+          
+          def kill_group(sig):
+              if LIVE is not None:
+                  try: os.killpg(LIVE.pid,sig)
+                  except ProcessLookupError: pass
+          
+          def cleanup_owned():
+              global FINALIZING
+              FINALIZING=True
+              try:
+                  if group_exists():
+                      kill_group(signal.SIGTERM)
+                      grace=min(time.monotonic_ns()+500000000,min(GLOBAL_END_NS,GROUP_END_NS)-500000000)
+                      while group_exists() and time.monotonic_ns()<grace:
+                          LIVE.poll();time.sleep(.01)
+                      if group_exists(): kill_group(signal.SIGKILL)
+                  if LIVE is not None:
+                      seconds=remaining_ns(True)/1e9
+                      if seconds<=0:
+                          if LIVE.poll() is None: raise AcquisitionAbort('cleanup deadline; owned process exit unknown')
+                      else: LIVE.wait(timeout=seconds)
+                  if group_exists(): raise AcquisitionAbort('owned Git process group remains')
+              finally: FINALIZING=False
+          
+          def run_git(label,*args):
+              global LIVE,LAUNCHING
+              if PENDING or remaining_ns()<=0: raise AcquisitionAbort('shared/group work deadline or interruption')
+              out=LOG/(label+'.stdout');err=LOG/(label+'.stderr')
+              code=None
+              try:
+                  with out.open('xb') as stdout,err.open('xb') as stderr:
+                      LAUNCHING=True
+                      try:
+                          LIVE=subprocess.Popen(git_command(*args),env=git_environment(),stdout=stdout,stderr=stderr,start_new_session=True)
+                      finally: LAUNCHING=False
+                      if PENDING: raise AcquisitionAbort('interrupted during launch; handle retained')
+                      seconds=remaining_ns()/1e9
+                      if seconds<=0: raise AcquisitionAbort('Git launch exhausted remaining work allowance')
+                      code=LIVE.wait(timeout=seconds)
+                  if code!=0: raise AcquisitionAbort('Git operation failed: '+label)
+                  if group_exists(): raise AcquisitionAbort('Git descendants remain after command exit')
+              finally:
+                  cleanup_owned()
+                  LIVE=None
+              if PENDING: raise AcquisitionAbort('interrupted during owned cleanup; no continuation')
+              raw=out.read_bytes()
+              if len(raw)>1048576 or err.stat().st_size>1048576: raise AcquisitionAbort('Git diagnostic output exceeds ceiling')
+              return raw.decode('utf-8').strip()
+          
+          def read_git(root,*args):
+              global READ_INDEX
+              if GLOBAL_END_NS is not None:
+                  READ_INDEX+=1
+                  return run_git('admission-read-'+str(READ_INDEX),'-C',str(root),*args)
+              # Measurement source readback is still read-only and charged to the existing
+              # guard/probe package; acquisition uses the owned runner branch above.
+              return subprocess.run(git_command('-C',str(root),*args),env=git_environment(),
+                                    check=True,capture_output=True,text=True,timeout=5).stdout.strip()
+          
+          def setup_path(): return Path(os.environ['RUNNER_TEMP'])/'exp73-setup.json'
+          
+          def check_identity(bounds):
+              expected={'GITHUB_REPOSITORY':REPO,'GITHUB_EVENT_NAME':'push','GITHUB_REF':REF,'GITHUB_REF_TYPE':'branch','GITHUB_RUN_ATTEMPT':'1'}
+              if any(os.environ.get(k)!=v for k,v in expected.items()): raise AcquisitionAbort('event/repository/ref/attempt mismatch')
+              if (os.uname().machine!='x86_64' or sys.platform!='linux' or sys.implementation.name!='cpython'
+                  or sys.version_info[:2]!=(3,12)):
+                  raise AcquisitionAbort('requires standard Linux x64 preinstalled CPython3.12.x')
+              event=json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
+              sha=os.environ['GITHUB_SHA']
+              if (not re.fullmatch('[0-9a-f]{40}',sha) or event.get('deleted') is not False
+                  or event.get('created') is not True or event.get('after')!=sha
+                  or event.get('repository',{}).get('full_name')!=REPO): raise AcquisitionAbort('new-branch event identity mismatch')
+              if not bounds['publish_not_before_epoch']<=time.time()<=bounds['queue_expires_epoch']: raise AcquisitionAbort('absolute queue admission expired')
+              return sha
+          
+          def begin_group(name,origin_ns):
+              global GLOBAL_END_NS,GROUP_END_NS,LOG
+              GLOBAL_END_NS=origin_ns+120000000000
+              GROUP_END_NS=min(PROCESS_START_NS+60000000000,GLOBAL_END_NS)
+              if remaining_ns()<=0: raise AcquisitionAbort('no acquisition/cleanup allowance remains')
+              signal.signal(signal.SIGINT,interrupted);signal.signal(signal.SIGTERM,interrupted)
+              signal.signal(signal.SIGALRM,interrupted)
+              signal.setitimer(signal.ITIMER_REAL,max(.001,remaining_ns()/1e9))
+              LOG=Path(os.environ['RUNNER_TEMP'])/('exp73-'+name)
+              LOG.mkdir() # Exclusive attempt barrier, never reset/retry.
+              empty=Path(git_environment()['GIT_TEMPLATE_DIR'])
+              empty.mkdir(exist_ok=True)
+              if any(empty.iterdir()): raise AcquisitionAbort('Git template directory not empty')
+              version=run_git('version','--version')
+              match=re.fullmatch(r'git version (\d+)\.(\d+)(?:\.[0-9]+)?(?:[ .].*)?',version)
+              if not match or tuple(map(int,match.groups()))<(2,28): raise AcquisitionAbort('Git>=2.28 required')
+              return version
+          
+          def materialize(name,sha,names):
+              target=Path(os.environ['GITHUB_WORKSPACE'])/name
+              if target.exists() or target.is_symlink(): raise AcquisitionAbort('fresh absent destination required')
+              patterns=[]
+              for path in sorted(names):
+                  if Path(path).is_absolute() or '..' in Path(path).parts or any(x in path for x in '*?[]!\\\r\n'):
+                      raise AcquisitionAbort('nonliteral sparse path')
+                  patterns.append('/'+path)
+              run_git('init','init','--quiet',str(target))
+              run_git('remote','-C',str(target),'remote','add','origin',REMOTE)
+              for index,(key,value) in enumerate((('remote.origin.promisor','true'),('remote.origin.partialclonefilter','blob:none'),('core.sparseCheckout','true'),('core.sparseCheckoutCone','false'))):
+                  run_git('config-'+str(index),'-C',str(target),'config','--local',key,value)
+              sparse=target/'.git/info/sparse-checkout';sparse.parent.mkdir(exist_ok=True)
+              sparse.write_text('\n'.join(patterns)+'\n')
+              # Only one explicit fetch per group. Lazy blob requests/internal Git objects
+              # remain disclosed; no retry, branch/tag fetch, REST or archive fallback.
+              run_git('fetch','-C',str(target),'fetch','--quiet','--no-tags','--depth=1','--filter=blob:none','origin',sha)
+              run_git('checkout','-C',str(target),'checkout','--quiet','--detach','--no-recurse-submodules','FETCH_HEAD')
+              if run_git('head','-C',str(target),'rev-parse','HEAD')!=sha: raise AcquisitionAbort('checkout HEAD mismatch')
+              run_git('tree-clean','-C',str(target),'diff','--exit-code','HEAD','--')
+              actual=set()
+              for path in target.rglob('*'):
+                  rel=path.relative_to(target).as_posix()
+                  if rel=='.git' or rel.startswith('.git/'): continue
+                  if path.is_symlink(): raise AcquisitionAbort('materialized symlink')
+                  if path.is_file(): actual.add(rel)
+              if actual!=set(names) or sparse.read_text()!='\n'.join(patterns)+'\n': raise AcquisitionAbort('materialized file set/sparse state mismatch')
+              if remaining_ns()<=0: raise AcquisitionAbort('materialization exceeded shared/group work deadline')
+              return target
+          
+          def bootstrap(bounds):
+              # First monotonic origin precedes all acquisition and capability commands.
+              origin=PROCESS_START_NS
+              sha=check_identity(bounds)
+              record={'monotonic_ns':origin,'wall_epoch':time.time(),**bounds,'tooling_sha':sha,
+                      'run_id':os.environ['GITHUB_RUN_ID'],'run_attempt':'1','route':'explicit-public-git-v1'}
+              with setup_path().open('x') as f: json.dump(record,f)
+              version=begin_group('tooling',origin)
+              materialize('tooling',sha,TOOL_FILES)
+              record['git_version']=version;record['tooling_acquisition_elapsed_seconds']=(time.monotonic_ns()-origin)/1e9
+              record['tooling_owned_groups_absent']=True
+              setup_path().write_text(json.dumps(record,sort_keys=True)+'\n')
+              signal.setitimer(signal.ITIMER_REAL,0)
+          
+          def source_main():
+              bounds={k:int(os.environ['EXP73_'+k.upper()]) for k in ('publish_not_before_epoch','publish_expires_epoch','queue_expires_epoch')}
+              sha=check_identity(bounds);setup=json.loads(setup_path().read_text())
+              if (any(setup[k]!=v for k,v in bounds.items()) or setup['tooling_sha']!=sha
+                  or setup['run_id']!=os.environ['GITHUB_RUN_ID'] or setup['route']!='explicit-public-git-v1'): raise AcquisitionAbort('persisted setup identity mismatch')
+              begin_group('source',setup['monotonic_ns'])
+              here=Path(__file__).resolve().parent
+              inventory=json.loads((here/'INPUT-INVENTORY.json').read_text())
+              if len(inventory['files'])!=337: raise AcquisitionAbort('frozen337 inventory mismatch')
+              materialize('source',SOURCE_SHA,inventory['files'])
+              # Same process and same remaining setup deadline includes source hashes,
+              # runtime admission, tooling hashes and its final durable setup receipt.
+              sys.modules['acquire']=sys.modules[__name__]
+              import admission
+              # Keep the SAME work alarm and owned-command runner during admission.
+              # It remains inside both the60s source group and120s common deadline.
+              result={'setup':setup,'runtime':admission.runtime_identity(),
+                      'source':admission.authenticate_source(here.parents[1]/'source')}
+              frozen=json.loads((here/'FROZEN.json').read_text())
+              actual={name:hashlib.sha256((here/name).read_bytes()).hexdigest() for name in frozen}
+              if actual!=frozen: raise AcquisitionAbort('diagnostic frozen script hashes mismatch')
+              result['frozen_hashes']=actual;result['setup_after_admission']=admission.check_setup()
+              result['source_acquisition_and_admission_seconds']=(time.monotonic_ns()-PROCESS_START_NS)/1e9
+              result['source_owned_groups_absent']=True
+              if PENDING or remaining_ns()<=0: raise AcquisitionAbort('final source admission deadline/interruption')
+              (here/'SETUP.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n')
+              signal.setitimer(signal.ITIMER_REAL,0)
+          
+          def failure_record(error):
+              print(json.dumps({'acquisition_status':'FAIL_OR_INCOMPLETE','error_type':type(error).__name__,
+                                'owned_git_pgid':LIVE.pid if LIVE is not None else None,
+                                'owned_group_absent':not group_exists(),'pending_signals':sorted(PENDING),
+                                'observed_monotonic_ns':time.monotonic_ns(),
+                                'global_deadline_ns':GLOBAL_END_NS,'group_deadline_ns':GROUP_END_NS},sort_keys=True),flush=True)
+          
+          try:
+              bootstrap({'publish_not_before_epoch':1793137132,'publish_expires_epoch':1793137192,'queue_expires_epoch':1793137732})
+          except BaseException as error:
+              failure_record(error)
+              raise
+          PY
+      - name: Fixed337 source Git acquisition and remaining-deadline admission
+        timeout-minutes: 2
+        env:
+          EXP73_PUBLISH_NOT_BEFORE_EPOCH: "1793137132"
+          EXP73_PUBLISH_EXPIRES_EPOCH: "1793137192"
+          EXP73_QUEUE_EXPIRES_EPOCH: "1793137732"
+        run: |
+          env -u PYTHONPATH -u PYTHONOPTIMIZE PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -B "$GITHUB_WORKSPACE/tooling/diagnostic/acquire.py"
+      - name: One measured twenty-four-call A-B release
+        timeout-minutes: 1
+        run: |
+          env -u PYTHONPATH -u PYTHONOPTIMIZE PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -B "$GITHUB_WORKSPACE/tooling/diagnostic/measure.py" --release-one-guard
+      - name: Bounded lossless evidence export
+        if: ${{ always() }}
+        timeout-minutes: 1
+        run: |
+          env -u PYTHONPATH -u PYTHONOPTIMIZE PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -B tooling/diagnostic/export.py
