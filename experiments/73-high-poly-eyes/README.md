@@ -203,6 +203,77 @@ B has different authored mapping/scale references/offsets and checked fitted ext
 
 ## Issue #93 manifest gate checkpoint
 
+### Shared validator and lightweight source gate
+
+`frozen_context.validate_source_inputs(ROOT, EXP)` owns the existing source
+checks, in their original order. Both `SourceContract.test_frozen_source_inputs`
+and the no-argument `source_gate.py` call it afresh. Only the typed
+`SourceInputRejected` becomes a data rejection. Plain `ValueError`, read errors
+and missing validator imports retain their original traceback/error behavior.
+The legacy entry remains a real unittest test with authentic unittest output.
+
+The light CLI derives its checkout from its own copied path. Accepted output is
+one compact ASCII JSON object plus LF with exactly `protocol`, `outcome` and
+`context`, exit0, empty stderr. Rejected output has exactly `protocol`, `outcome`
+and nonempty `message` containing `FROZEN-INPUTS.json`, exit2, empty stderr.
+The protocol is `nvwa73-source-gate-v1`; outcomes are `accepted` and `rejected`.
+Any argument, including `--help`, gives exit64, empty stdout and exactly
+`usage: source_gate.py (no arguments)` plus LF on stderr. Unexpected errors are
+unhandled and never become data rejection records.
+
+The one consumer in `test_frozen_inputs.py` requires one LF-terminated object,
+exact string fields, correct code/outcome, empty stderr and equality with the
+specific context written by the case. It uses the standard JSON decoder once,
+including its duplicate-key final-value behavior. Captures keep the existing
+text-mode locale decoding and universal newline translation.
+
+All original509 child calls per mode use the light CLI, preserving case order,
+faults, restorations and in-process selector controls. One last control method
+adds its setup,128 parser-only vectors and20 real direct controls. These include
+exactly9 legacy calls;3 legacy and3 new unexpected errors (plain ValueError,
+missing import, actual permission failure), usage64, SIGTERM and a real30-second
+timeout with sleep60. Each child remains fresh, serial, `-B` and optional `-O`,
+with copied-root cwd and `capture_output=True, text=True, timeout=30`.
+
+The timeout child flushes exactly `CONTROL_TIMEOUT_ENTERED pid=<positive integer>`
+plus LF before sleeping. After `subprocess.run` performs its original kill/wait,
+one read-only `os.kill(pid, 0)` probe must raise `ProcessLookupError` before the
+final restored positive. Invalid marker or any other probe result is cleanup
+UNKNOWN and stops acceptance. There is no PID kill, retry, observer child or
+descendant. Copied helper bytes/paths and source modes/bytes restore in `finally`.
+An unavailable actual permission failure also stops complete acceptance.
+
+Stderr JSON observation lines are outside the CLI wire protocol. They identify
+each attempt and observed return/timeout by mode, method, local ID and ordinal;
+baseline `C001...` IDs restart per method. Added IDs are `SETUP`, `L01...L09`,
+`E01...E06`, `U01`, `S01...S02`, `T01...T02`. Parser `P001...P128` pass events
+launch no children. A cleanup event records only observed PID absence. The final
+summary separates attempts, confirmed starts, API returns, nonsignalled returns,
+signal returns, timeouts and adapter splits. Complete-path planning per mode is
+530 starts,529 API returns,528 nonsignalled returns,1signal and1timeout;260
+positives,261 data rejections,6 unexpected errors and1usage64;521 new/9 legacy.
+Logs on a stopped run describe only IDs actually reached.
+
+The enclosing eye/hair300-second and portable900-second clocks are unchanged.
+An external local observer may supply `NVWA73_LOCAL_GROUP_DEADLINE`, a finite
+monotonic-clock deadline for the whole eye/hair group. Immediately before T01,
+the test requires at least30seconds plus10seconds cleanup reserve. Invalid or
+insufficient values fail and stop; absence retains existing enclosing CI
+authority. This local trial hook adds no CLI protocol field or permanent timing
+gate. The local acceptance discovery uses `-f` so a failed subTest stops before
+another fault. No retry or skipped control can count as complete acceptance.
+
+Proposed local normal/optimized discovery, within the same enclosing group:
+
+```sh
+python3 -B -m unittest discover -s experiments/73-high-poly-eyes -p 'test_*.py' -f
+python3 -B -O -m unittest discover -s experiments/73-high-poly-eyes -p 'test_*.py' -f
+```
+
+Implementation timing and runtime acceptance are NOT-RUN until the separately
+authorized complete enclosing trial. No source inventory, historical receipt,
+CI/catalogue, cache, Rust or experiment72 change is part of this repair.
+
 `test_prepare.py` requires a nonempty, valid `FROZEN-INPUTS.json` object. Each
 entry must contain a nonnegative integer byte count and a lowercase SHA256;
 the named file must exist and match both. Missing, empty or corrupt manifests

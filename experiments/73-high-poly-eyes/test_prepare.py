@@ -1,6 +1,6 @@
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
-from frozen_context import source_contexts,select_context,historical_sources,RIG119_CONTEXT,RIG119_SUPPLEMENTS
+from frozen_context import source_contexts,select_context,historical_sources,SourceInputRejected,validate_source_inputs
 ROOT=Path(__file__).resolve().parents[2];EXP=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('cpu_probe',EXP/'cpu_probe.py');probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -56,48 +56,6 @@ class SourceContract(unittest.TestCase):
   packages=lambda x:{(p['name'],p['version'],p.get('checksum')) for p in x['package'] if not p['name'].startswith('b1-')}
   self.assertEqual(packages(lock),packages(tomllib.loads((ROOT/'experiments/68-b1-eye-render-diagnosis/Cargo.lock').read_text())))
  def test_frozen_source_inputs(self):
-  p=EXP/'FROZEN-INPUTS.json'
-  self.assertTrue(p.is_file(),'FROZEN-INPUTS.json is required')
-  self.assertFalse(p.is_symlink(),'FROZEN-INPUTS.json symlink rejected')
-  try:inputs=json.loads(p.read_text())
-  except (json.JSONDecodeError,UnicodeDecodeError) as error:self.fail(f'FROZEN-INPUTS.json must be valid JSON: {error}')
-  self.assertIsInstance(inputs,dict,'FROZEN-INPUTS.json must be an object')
-  self.assertTrue(inputs,'FROZEN-INPUTS.json must not be empty')
-  actual={}
-  for name,item in inputs.items():
-   message=f'FROZEN-INPUTS.json entry {name}'
-   self.assertIsInstance(item,dict,message+' must be an object')
-   self.assertEqual(type(item.get('bytes')),int,message+' needs integer bytes')
-   self.assertGreaterEqual(item['bytes'],0,message+' needs nonnegative bytes')
-   self.assertIsInstance(item.get('sha256'),str,message+' needs SHA256')
-   self.assertRegex(item['sha256'],r'\A[0-9a-f]{64}\Z',message+' needs lowercase SHA256')
-   path=ROOT
-   for part in Path(name).parts:
-    path=path/part;self.assertFalse(path.is_symlink(),message+' symlink rejected')
-   self.assertTrue((ROOT/name).is_file(),message+' file is required')
-   actual[name]={'sha256':digest(ROOT/name),'bytes':(ROOT/name).stat().st_size}
-  try:contexts=source_contexts(EXP,p.read_bytes(),inputs,include_current=True)
-  except ValueError as error:self.fail(str(error))
-  # Historical contexts keep their309 inputs. Current module/admission inputs
-  # are explicit additions; partial or mixed current maps cannot select history.
-  for name in RIG119_SUPPLEMENTS:
-   path=ROOT/name
-   if path.exists() or path.is_symlink():
-    message=f'FROZEN-INPUTS.json supplemental entry {name}'
-    path=ROOT
-    for part in Path(name).parts:
-     path=path/part;self.assertFalse(path.is_symlink(),message+' symlink rejected')
-    self.assertTrue(path.is_file(),message+' file is required')
-    actual[name]={'sha256':digest(path),'bytes':path.stat().st_size}
-  try:context,selected=select_context(actual,contexts)
-  except ValueError as error:self.fail(str(error))
-  if context==RIG119_CONTEXT:
-   self.assertEqual(len(selected),311,'current source set must include both explicit supplements')
-  else:
-   self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1'])
-   self.assertEqual(len(selected),309,'FROZEN-INPUTS.json complete source set required')
-  for name,item in selected.items():
-   message=f'FROZEN-INPUTS.json entry {name}'
-   self.assertEqual(digest(ROOT/name),item['sha256'],message+' SHA256 mismatch')
-   self.assertEqual((ROOT/name).stat().st_size,item['bytes'],message+' byte count mismatch')
+  try:validate_source_inputs(ROOT,EXP)
+  except SourceInputRejected as error:self.fail(str(error))
 if __name__=='__main__':unittest.main()

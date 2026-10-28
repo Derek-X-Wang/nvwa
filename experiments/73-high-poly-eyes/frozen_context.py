@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import re
 
 FROZEN_INPUTS_SHA = '66f024238ef009d0544d617251c46754b202b3069254ce5df47dc6dfc6debc33'
 CONTEXT_NAME = 'source-context-closeout-v1.json'
@@ -18,9 +19,13 @@ COMPAT_FIXTURES_NAME = 'compat-fixtures-rig119/manifest.json'
 COMPAT_FIXTURES_SHA = 'c44459eab6eae42d36dcc1db5644a8675b5fd8bcb576ad0bd021ff6faf5e3dd1'
 
 
+class SourceInputRejected(ValueError):
+    """An expected source-data rejection, distinct from validator defects."""
+
+
 def require(ok, message):
     if not ok:
-        raise ValueError('FROZEN-INPUTS.json source context: ' + message)
+        raise SourceInputRejected('FROZEN-INPUTS.json source context: ' + message)
 
 
 def regular_file(exp, relative):
@@ -148,4 +153,60 @@ def select_context(actual, contexts):
     for name, expected in contexts:
         if actual == expected:
             return name, expected
-    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, or reviewed rig119 current context required')
+    raise SourceInputRejected('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, or reviewed rig119 current context required')
+
+
+def validate_source_inputs(root, exp):
+    """Read and validate the complete source set afresh; return its exact context."""
+    p = exp / 'FROZEN-INPUTS.json'
+    require(p.is_file(), 'FROZEN-INPUTS.json is required')
+    require(not p.is_symlink(), 'FROZEN-INPUTS.json symlink rejected')
+    try:
+        inputs = json.loads(p.read_text())
+    except (json.JSONDecodeError, UnicodeDecodeError) as error:
+        raise SourceInputRejected(f'FROZEN-INPUTS.json must be valid JSON: {error}') from error
+    require(isinstance(inputs, dict), 'FROZEN-INPUTS.json must be an object')
+    require(bool(inputs), 'FROZEN-INPUTS.json must not be empty')
+    actual = {}
+    for name, item in inputs.items():
+        message = f'FROZEN-INPUTS.json entry {name}'
+        require(isinstance(item, dict), message + ' must be an object')
+        require(type(item.get('bytes')) is int, message + ' needs integer bytes')
+        require(item['bytes'] >= 0, message + ' needs nonnegative bytes')
+        require(isinstance(item.get('sha256'), str), message + ' needs SHA256')
+        require(re.fullmatch(r'[0-9a-f]{64}', item['sha256']) is not None,
+                message + ' needs lowercase SHA256')
+        path = root
+        for part in Path(name).parts:
+            path = path / part
+            require(not path.is_symlink(), message + ' symlink rejected')
+        require((root / name).is_file(), message + ' file is required')
+        actual[name] = {'sha256': hashlib.sha256((root / name).read_bytes()).hexdigest(),
+                        'bytes': (root / name).stat().st_size}
+    contexts = source_contexts(exp, p.read_bytes(), inputs, include_current=True)
+    # Historical contexts keep their309 inputs. Current module/admission inputs
+    # are explicit additions; partial or mixed current maps cannot select history.
+    for name in RIG119_SUPPLEMENTS:
+        path = root / name
+        if path.exists() or path.is_symlink():
+            message = f'FROZEN-INPUTS.json supplemental entry {name}'
+            path = root
+            for part in Path(name).parts:
+                path = path / part
+                require(not path.is_symlink(), message + ' symlink rejected')
+            require(path.is_file(), message + ' file is required')
+            actual[name] = {'sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+                            'bytes': path.stat().st_size}
+    context, selected = select_context(actual, contexts)
+    if context == RIG119_CONTEXT:
+        require(len(selected) == 311, 'current source set must include both explicit supplements')
+    else:
+        require(context in ['original-frozen309', 'character-stage-closeout-v1', 'hair79-short01-product-v1'],
+                'historical context required')
+        require(len(selected) == 309, 'FROZEN-INPUTS.json complete source set required')
+    for name, item in selected.items():
+        message = f'FROZEN-INPUTS.json entry {name}'
+        require(hashlib.sha256((root / name).read_bytes()).hexdigest() == item['sha256'],
+                message + ' SHA256 mismatch')
+        require((root / name).stat().st_size == item['bytes'], message + ' byte count mismatch')
+    return context
