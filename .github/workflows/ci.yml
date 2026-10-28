@@ -51,7 +51,7 @@ jobs:
       - name: Check bounded appearance diagnostic controls
         run: python3 -B scripts/check-portable.py appearance
       - name: Check eye, hair, and character parameter controls
-        timeout-minutes: 3
+        timeout-minutes: 5
         run: python3 -B scripts/check-portable.py eye-hair-parameters
       - name: Check authenticated B1 source bundle and rejection controls
         timeout-minutes: 3

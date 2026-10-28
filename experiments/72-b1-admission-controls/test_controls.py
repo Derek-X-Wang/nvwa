@@ -24,17 +24,29 @@ def log(test=runner.ENDPOINT, failed=False, marker=''):
 
 
 class ToolingControls(unittest.TestCase):
-    def input_copy(self, directory):
+    def input_copy(self, directory, historical=False):
         root = Path(directory) / 'source'
         pins = json.loads((HERE / 'pins.json').read_text())
-        for relative in pins['files']:
+        for relative in list(pins['files']) + ([] if historical else list(runner.RIG119_SUPPLEMENTS)):
             destination = root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, destination)
+        if historical:
+            relative = 'crates/nvwa-b1-adapter/src/lib.rs'
+            raw = (ROOT / 'experiments/73-high-poly-eyes/compat-fixtures-rig119/adapter-lib.rs').read_bytes()
+            self.assertEqual(runner.sha(raw), pins['files'][relative])
+            (root / relative).write_bytes(raw)
+        runner.check_inputs(root)
         return root, pins
 
     def test_exact_current_context_is_explicit_and_execution_stays_historical(self):
-        pins = runner.check_inputs(ROOT)
+        latest = runner.check_inputs(ROOT)['checked_input_context']
+        self.assertEqual(latest['id'], runner.RIG119_CONTEXT)
+        self.assertEqual(len(latest['files']), 20)
+        self.assertEqual(latest['current_rust_execution'], 'NOT-RUN')
+        with tempfile.TemporaryDirectory(prefix='nvwa72-short01-control-') as directory:
+            root, _ = self.input_copy(directory, historical=True)
+            pins = runner.check_inputs(root)
         context = pins['checked_input_context']
         self.assertEqual(context['id'], 'hair79-short01-product-v1')
         self.assertEqual(context['current_rust_execution'], 'NOT-RUN')
@@ -98,13 +110,15 @@ class ToolingControls(unittest.TestCase):
             material.mkdir()
             for name in runner.PACKAGE:
                 shutil.copyfile(HERE / name, material / name)
-            for name in ('pins.json', 'input-context-v1.json', 'input-context-v2.json', 'input-context-v3.json'):
+            for name in ('pins.json', 'input-context-v1.json', 'input-context-v2.json', 'input-context-v3.json', runner.RIG119_CONTEXT_NAME):
                 path = material / name
                 original = path.read_bytes()
                 target = Path(directory) / name
                 target.write_bytes(original)
                 for fault in ('missing', 'symlink', 'empty', 'tampered'):
                     with self.subTest(manifest=name, fault=fault):
+                        with patch.object(runner, 'HERE', material):
+                            runner.check_inputs(ROOT)
                         path.unlink()
                         try:
                             if fault == 'symlink':
@@ -122,6 +136,60 @@ class ToolingControls(unittest.TestCase):
                             path.write_bytes(original)
                         with patch.object(runner, 'HERE', material):
                             runner.check_inputs(ROOT)
+
+    def test_current_supplement_mutation_missing_symlink_and_restore(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa72-rig119-control-') as directory:
+            root, pins = self.input_copy(directory)
+            contexts = runner.source_contexts(pins, include_current=True)
+            current = dict(contexts)[runner.RIG119_CONTEXT]
+            self.assertEqual(set(current), set(pins['files']) | set(runner.RIG119_SUPPLEMENTS))
+            for relative in runner.RIG119_SUPPLEMENTS:
+                path = root / relative
+                original = path.read_bytes()
+                target = Path(directory) / 'outside-supplement'
+                target.write_bytes(original)
+                for fault in ('tampered', 'missing', 'symlink'):
+                    with self.subTest(source=relative, fault=fault):
+                        runner.check_inputs(root)
+                        try:
+                            path.unlink()
+                            if fault == 'tampered':
+                                path.write_bytes(original + b' ')
+                            elif fault == 'symlink':
+                                path.symlink_to(target)
+                            with self.assertRaisesRegex(ValueError, 'source input'):
+                                runner.check_inputs(root)
+                        finally:
+                            if path.exists() or path.is_symlink():
+                                path.unlink()
+                            path.write_bytes(original)
+                        self.assertEqual(runner.check_inputs(root)['checked_input_context']['id'], runner.RIG119_CONTEXT)
+
+    def test_current_complete_map_historical_crossover_and_restore(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa72-rig119-hybrid-') as directory:
+            root, pins = self.input_copy(directory)
+            contexts = runner.source_contexts(pins, include_current=True)
+            current = dict(contexts)[runner.RIG119_CONTEXT]
+            self.assertEqual(runner.select_source_context(current, contexts), runner.RIG119_CONTEXT)
+            for relative in current:
+                incomplete = dict(current)
+                incomplete.pop(relative)
+                with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                    runner.select_source_context(incomplete, contexts)
+            with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                runner.select_source_context(dict(current, unreviewed='0' * 64), contexts)
+            path = root / 'crates/nvwa-b1-adapter/src/lib.rs'
+            original = path.read_bytes()
+            old = (ROOT / 'experiments/73-high-poly-eyes/compat-fixtures-rig119/adapter-lib.rs').read_bytes()
+            self.assertEqual(runner.sha(old), pins['files']['crates/nvwa-b1-adapter/src/lib.rs'])
+            runner.check_inputs(root)
+            try:
+                path.write_bytes(old)
+                with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                    runner.check_inputs(root)
+            finally:
+                path.write_bytes(original)
+            self.assertEqual(runner.check_inputs(root)['checked_input_context']['id'], runner.RIG119_CONTEXT)
 
     def test_every_unchanged_numeric_section_mutation_rejects(self):
         bridge = json.loads((HERE / 'input-context-v1.json').read_text())

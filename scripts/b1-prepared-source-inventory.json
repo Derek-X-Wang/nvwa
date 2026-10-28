@@ -1,0 +1,24 @@
+{
+  "format": "nvwa-b1-prepared-source-extension",
+  "schema_version": 3,
+  "base_inventory_sha256": "bd86d7c597a464eb1b5ab484e3343c70b2fa0986a4c37d9dec3a8875dc90c5e0",
+  "motion_inventory_sha256": "9f1c722aafaa932aa6094ece5b390f7e494c90ab0166dc9deecefa70b61f4cf4",
+  "change": "PreparedRig module extraction and once-only final f64 unit-rotation handoff after existing f32 composition; source admission only, not numerical, workflow or motion-quality acceptance.",
+  "files": {
+    "crates/nvwa-b1-adapter/src/lib.rs": {
+      "base_sha256": "9c7683612e637b66ecb976d961dfda817ed480fcb8692718768266249b033c3b",
+      "bytes": 19637,
+      "sha256": "dc5e0cbf2033ecc9b73282489ba964e12b219192652736b48a1b9f30bdbd7453"
+    },
+    "crates/nvwa-b1-adapter/README.md": {
+      "base_sha256": "195a9bc71906de5e6fff8e50c952c7339dae9bdbe3f65a4726d76d8b23d38e07",
+      "bytes": 2901,
+      "sha256": "da9c0661571dfafc4f1fdcb663923a6b7a238af58869e5b62745d906d6991a68"
+    },
+    "crates/nvwa-b1-adapter/src/prepared.rs": {
+      "base_sha256": null,
+      "bytes": 24229,
+      "sha256": "fbfb1cf20bfdc8d70312e66bb31b92edc7ece4fb5b5ad7ae89c0678e2532014c"
+    }
+  }
+}
