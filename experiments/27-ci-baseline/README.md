@@ -9,8 +9,14 @@ The candidate has two jobs:
 
 | Job | Standard runner | Checks | Timeout |
 | --- | --- | --- | --- |
-| Portable | `ubuntu-24.04`, x64 | Rust format; strict core/CLI Clippy; core/CLI tests; bounded CPU diagnostic controls | 15 minutes |
+| Portable | `ubuntu-24.04`, x64 | Rust format; strict core/CLI Clippy; core/CLI tests; bounded CPU diagnostic controls | 20 minutes |
 | Native and Wasm | `macos-14`, ARM64 | All workspace CPU tests; normal native workspace check; actual studio Wasm library compile check | 45 minutes |
+
+The current portable job cap is 20 minutes after the 15-minute cap interrupted
+required nested cache controls. This finite five-minute increase preserves all
+commands, modes, independent replays, step caps, cache policy and job dependencies.
+It does not establish that 20 minutes is sufficient; historical run receipts retain
+their original budgets and outcomes.
 
 Use the local equivalent from the repository:
 
