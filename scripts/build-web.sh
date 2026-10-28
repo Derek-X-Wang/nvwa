@@ -19,6 +19,7 @@ mkdir -p dist/web/licenses/craft-ui
 artifact_root="${CARGO_TARGET_DIR:-target}"
 "$tool" --target web --out-dir dist/web "$artifact_root/wasm32-unknown-unknown/$profile/nvwa_studio.wasm"
 cp web/index.html dist/web/index.html
+cp web/start.html dist/web/start.html
 cp assets/character.profile.json dist/web/assets/
 mkdir -p dist/web/assets/characters dist/web/licenses/b1
 cp -R assets/characters/mpfb-b1-v1 assets/characters/mpfb-b1-v2 dist/web/assets/characters/

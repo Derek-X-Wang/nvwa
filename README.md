@@ -30,7 +30,7 @@ bash scripts/build-web.sh
 python3 scripts/serve-web.py
 ```
 
-Open `http://127.0.0.1:9201` in a WebGPU browser. This is an ordinary static bundle at `dist/web`; the development server listens on loopback only. If WebGPU is unavailable, the page displays a boot error. The small HTML/JS bootstrap carries no editor or character business logic. The tool installer currently supports macOS arm64 and downloads the exact official wasm-bindgen release with a pinned SHA-256.
+Open `http://127.0.0.1:9201/start.html` to choose an editable short04 or short01 character, or watch the authored nine-second Player example. The starter page also explains how to save and reopen a Work. Studio and Player need a WebGPU browser. Existing root and query-string links still open the app directly. This is an ordinary static bundle at `dist/web`; the development server listens on loopback only. If WebGPU is unavailable, the app displays a boot error. The small HTML/JS bootstrap carries no editor or character business logic. The tool installer currently supports macOS arm64 and downloads the exact official wasm-bindgen release with a pinned SHA-256.
 
 ```sh
 cargo build -p nvwa-studio --release --locked
