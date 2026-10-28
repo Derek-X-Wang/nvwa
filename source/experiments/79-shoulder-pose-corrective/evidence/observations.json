@@ -1,0 +1,148 @@
+{
+  "status": "SOURCE_CORRESPONDENCE_PASS_SINGLE_CORRECTIVE_REJECT",
+  "source_records": {
+    "combined": {
+      "request_id": "h80proof-v1-combined",
+      "bytes": 13956450,
+      "sha256": "fc4196e7f00fadf0dd2860418fd515ea0befd9de84e4dc0f527057dd5860aa67",
+      "capture_update_epoch": 25,
+      "stable_updates": 2
+    },
+    "source_body": {
+      "request_id": "h80proof-v1-source_body",
+      "bytes": 13960188,
+      "sha256": "533e1db94b62af8fa9088896af7233241e900e568d2ba60f604aa97db08985fb",
+      "capture_update_epoch": 712,
+      "stable_updates": 2
+    },
+    "source_garment": {
+      "request_id": "h80proof-v1-source_garment",
+      "bytes": 13960240,
+      "sha256": "82f66ee428f27feea2dea739c044a79e2685c26139257f9e207a42919b9c30a5",
+      "capture_update_epoch": 853,
+      "stable_updates": 2
+    }
+  },
+  "source_faces": {
+    "body_quad0": 7941,
+    "body_render_triangles0": [
+      13660,
+      13661
+    ],
+    "garment_quad0": 131,
+    "garment_render_triangles0": [
+      262,
+      263
+    ]
+  },
+  "source_mapping": {
+    "camera": "actual exported1280x720 rear180deg/elevation3deg/0.95m/FOV30deg; production SubCameraView",
+    "roi": [
+      330,
+      185,
+      350,
+      205
+    ],
+    "body_first_centers": 44,
+    "center_ray_body_distance_m": 0.981471140151208,
+    "center_ray_garment_distance_m": 0.982952886271466,
+    "scope": "CPU opaque/double-sided ray ordering plus actual source-color screenshots; not GPU object-ID or penetration depth"
+  },
+  "single_target": {
+    "sha256": "f88a431ab6dfb2da3bd9a64852f0c490bafe29b21a86e86b98d063862ad00b51",
+    "bytes": 399,
+    "source_id": 847,
+    "invocations": 1,
+    "status": "REJECT; no source/threshold/target retuning",
+    "authoring_rule_delta_length_m": 0.0013144221986248468
+  },
+  "analytical_evaluation": {
+    "cases": 19,
+    "historical_actual_full_inputs": 18,
+    "fresh_actual_default": 1,
+    "failing_raised_arm_cases": 10,
+    "failed_gate": "no new proper transverse crossing pair",
+    "fresh_default_body_first_ROI_centers": [
+      44,
+      24
+    ],
+    "fresh_default_fixed_body_surface_probes": [
+      8,
+      4
+    ],
+    "fresh_default_total_local_proper_pairs": [
+      8,
+      4
+    ],
+    "new_default_pair": {
+      "garment_triangle0": 240,
+      "body_triangle0": 13661
+    },
+    "neutral_knee_end_exact_zero_cases": 9,
+    "scope": "historical and fresh baseline actual geometry with analytical f64/f32 approximate candidate; pair migration does not prove overall collision is worse; coplanar/tangent/global collision and GPU pixel counts not measured"
+  },
+  "CLI": {
+    "commands": "actual Web Work validate/save/validate; all0",
+    "bytes": 3548,
+    "sha256": "0098c768ddeb3812a8c12a66772868b1c46eb06d219640d9b6049a0aa004f316",
+    "roundtrip_byte_equal": true,
+    "scope": "transient diagnostics/corrective are not saved Work features"
+  },
+  "native": "12 CPU/ECS tests and native compile passed; ordinary GUI deferred",
+  "Web_build": {
+    "wasm_sha256": "29da8e1a3a2926206c06b03ed6bd77429f681e2ce58515b6262effcd8f2bd8ec",
+    "wasm_bytes": 143760706,
+    "offline_build_seconds": 758,
+    "source_manifest_sha256": "3ca85f1d394384cfede9ebc149ba1b3368e5fd9b0e48a481c1fd12627ce9ece0"
+  },
+  "remaining": [
+    "ordinary desktop GUI deferred",
+    "complete collision/cloth simulation",
+    "all-parameter and all-camera quality admission",
+    "per-normal actual vector readback; actual normal hashes and source seam only",
+    "GPU object-ID/depth/presentation/performance proof"
+  ],
+  "raw_retention": "Full raw, source/build capsules, fences, mutation failures and evaluation outputs retained locally. Public hashes and pictures do not replace those raw inputs. The result is a rejected isolated experiment; product source/assets/dependencies unchanged.",
+  "actual_Web_corrective": {
+    "records": {
+      "baseline": {
+        "bytes": 13956462,
+        "sha256": "b6c39438984d25797cdd8b19cbbd1680cad69726ffc883c2ede6ce4e1e36227b",
+        "request_id": "h80proof-v1-combined",
+        "capture_update_epoch": 2030,
+        "stable_updates": 2
+      },
+      "corrective": {
+        "bytes": 14209430,
+        "sha256": "6c74f37bcbf18a7daed86ffe54b4849f46daf8ea8718c4d868c7c73d264b1419",
+        "request_id": "h80candidate-page2-corrective",
+        "capture_update_epoch": 5826,
+        "stable_updates": 2
+      }
+    },
+    "context": "new page32 independently rebuilt same-page proofs using the frozen target IDs; no proof inherited from closed31",
+    "source_proof_epochs": [
+      2030,
+      4652,
+      4756
+    ],
+    "author_epoch": 5098,
+    "changed_render_vertex0": 232,
+    "changed_source_id": 847,
+    "actual_weight": 1,
+    "outside_support_positions_bit_exact": true,
+    "uploaded_delta_vs_rotated_vector_max_component_m": 2.15918e-10,
+    "actual_position_vs_analytical_f32_max_component_m": 2.32831e-10,
+    "new_pair_independently_confirmed_on_actual_positions": {
+      "garment_triangle0": 240,
+      "body_triangle0": 13661,
+      "strict_intersections": 2,
+      "edge_fractions": [
+        0.2066724078,
+        0.4619004832
+      ]
+    },
+    "normal_readback": "actual full normal/attribute SHA bound in two same-epoch witnesses; individual corrected normal vectors were not separately exported",
+    "scope": "actual corrected position publication plus observed A/B, not full GPU readback or quality admission"
+  }
+}

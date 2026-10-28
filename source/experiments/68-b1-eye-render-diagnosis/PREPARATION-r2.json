@@ -1,0 +1,56 @@
+{
+  "scope": "r2 worker lightweight checks only; no Cargo compilation/Rust unit execution, app/browser/server/GPU launch or quality/cause claim",
+  "base_head": "ab4c16f81deddfc98faa97fcd1a8e7904c5f2f0b",
+  "checks": [
+    {
+      "check": "python312-tests",
+      "exit_code": 0,
+      "seconds": 3.178,
+      "stdout": "",
+      "stderr": "....................\n----------------------------------------------------------------------\nRan 20 tests in 3.083s\n\nOK\n"
+    },
+    {
+      "check": "python312-optimized-tests",
+      "exit_code": 0,
+      "seconds": 3.216,
+      "stdout": "",
+      "stderr": "....................\n----------------------------------------------------------------------\nRan 20 tests in 3.038s\n\nOK\n"
+    },
+    {
+      "check": "rustfmt",
+      "exit_code": 0,
+      "seconds": 0.052,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "check": "html-module-syntax",
+      "exit_code": 0,
+      "seconds": 0.166,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "check": "locked-offline-metadata",
+      "exit_code": 0,
+      "seconds": 0.087,
+      "stdout": "{\"package\": \"b1-eye-render-diagnosis\", \"targets\": [\"b1_eye_render_diagnosis\", \"studio68\"]}",
+      "stderr": ""
+    }
+  ],
+  "corrections": [
+    "Web identical replay preserves correlated FRAME through actual shared ingress/export/cache seam",
+    "complete3x3 distinct eye controls per endpoint required; actual roles/visibility/palettes checked",
+    "complete source0/source2 shoulder pair, pinned body/garment counts and full arrays required",
+    "first-capture actual projection matches retained65; reference65 subcamera UNKNOWN, actual68 subcamera mandatory and equal across controls",
+    "existing Python3.11+ required; child source tests use selected sys.executable"
+  ],
+  "not_run": [
+    "native/Wasm compilation",
+    "Rust unit execution including actual Web seam regression",
+    "actual native/Web launch and captures",
+    "GPU readback/material readiness",
+    "cause/fit/anatomical classification",
+    "performance"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "checks": [
+    {
+      "command": "python3 -B experiments/69-b1-hairline/check_alpha.py --output experiments/69-b1-hairline/alpha-reference.json",
+      "exit_code": 1,
+      "result": "expected CPU_REJECTED; failed_levels=[1]"
+    },
+    {
+      "command": "python3 -O -B experiments/69-b1-hairline/check_alpha.py --output experiments/69-b1-hairline/alpha-optimized.json",
+      "exit_code": 1,
+      "result": "expected CPU_REJECTED; byte-identical output; temporary duplicate removed"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s experiments/69-b1-hairline -p test_alpha.py -v",
+      "exit_code": 0,
+      "tests": 8
+    },
+    {
+      "command": "python3 -O -B -m unittest discover -s experiments/69-b1-hairline -p test_alpha.py -v",
+      "exit_code": 0,
+      "tests": 8
+    },
+    {
+      "command": "check_alpha.py --source POLICY.md --output ignored negative-output.json (paths resolved within experiment)",
+      "exit_code": 2,
+      "result": "source PNG hash mismatch; no output created"
+    }
+  ],
+  "evidence": {
+    "bytes": 38106,
+    "ordinary_optimized_byte_identity": true,
+    "path": "alpha-reference.json",
+    "sha256": "7040bc36ee2ae9a49774f50ffd6eeddc1aab4804b988b1b0084dd8107714e59e"
+  },
+  "helper_hashes": {
+    "check_alpha.py": "22adfb0844de7cbf2cb2bdb71439692f92210e7b0bda56f4c708b3ea317b028d",
+    "png_alpha.py": "22d69e25338c6e642d497e5a1ade97a1944cb8bfc774cc22206e8e6156677434",
+    "test_alpha.py": "0378708029a555406c02e8b00699142460dbb36f734e0ab1b070d0edfbf42921"
+  },
+  "limits": "CPU global alpha engineering rejection only; not artistic acceptance or universal mip/source-only cause proof",
+  "not_run": [
+    "RGB filtering",
+    "generated mip image bytes",
+    "Rust compilation/tests",
+    "app/native/Web/browser/server",
+    "GPU image descriptor/sampler observation",
+    "candidate rendering",
+    "GPU readback/pixel ownership",
+    "performance"
+  ],
+  "private_archive_inventory": {
+    "file_count": 26,
+    "path": ".private-runtime/inventory.json",
+    "published": false,
+    "sha256": "ba4179c22009f2bb5541f5f277357fcf75ca4e59706c39602a3504a5aed4f30a"
+  },
+  "python": "3.14.7",
+  "schema": "hairline69-validation-v1"
+}

@@ -1,0 +1,25 @@
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -244,6 +244,9 @@
+                 Update,
+                 (
+                     check_humentity_assets_ready
++                        .run_if(resource_exists::<basemesh::BaseMesh>)
++                        .run_if(resource_exists::<basemesh::VertexGroups>)
++                        .run_if(resource_exists::<morphs::MakeHumanMorphs>)
+                         .run_if(not(resource_exists::<HumentityAssetsReady>)),
+                     spawn_skeleton::enforce_skeleton_lod_config_frozen
+                         .after(rigs::build_rig_scenes),
+@@ -285,7 +288,11 @@
+             )
+             .add_observer(spawn_skeleton::on_teardown_character)
+             .add_observer(spawn_skeleton::on_refit_character)
+-            .add_observer(spawn_skeleton::on_reset_to_bind_pose)
++            .add_observer(
++                Observer::new(spawn_skeleton::on_reset_to_bind_pose)
++                    .run_if(resource_exists::<basemesh::BaseMesh>)
++                    .run_if(resource_exists::<basemesh::VertexGroups>),
++            )
+             .add_systems(
+                 Update,
+                 (

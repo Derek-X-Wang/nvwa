@@ -1,0 +1,40 @@
+{
+  "scope": "synthetic full-schema tool reproducer against old gate; not runtime/quality evidence; these acceptances are failures",
+  "old_freeze_sha256": "078c9fe9faa33d3eb05aeb921f367ec5ab7591b22b33a0858889168ac3016c39",
+  "old_verify_py_sha256": "7f9fbda997b0ba4fd98acf4fe7d3c5d93d5bb97c3f486bb466a99fed87749da0",
+  "results": [
+    {
+      "mutation": "eye_position",
+      "old_verifier_incorrectly_accepted": true
+    },
+    {
+      "mutation": "hair_normal",
+      "old_verifier_incorrectly_accepted": true
+    },
+    {
+      "mutation": "eye_uv",
+      "old_verifier_incorrectly_accepted": true
+    },
+    {
+      "mutation": "eye_indices",
+      "old_verifier_incorrectly_accepted": true
+    },
+    {
+      "mutation": "identity_work",
+      "old_verifier_incorrectly_accepted": true
+    },
+    {
+      "mutation": "identity_body",
+      "old_verifier_incorrectly_accepted": true
+    },
+    {
+      "mutation": "identity_clip",
+      "old_verifier_incorrectly_accepted": true
+    },
+    {
+      "mutation": "identity_timeline",
+      "old_verifier_incorrectly_accepted": true
+    }
+  ],
+  "conclusion": "all original13 green source tests were insufficient for these8 malformed cases"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "scope": "experiment71 typed transition/readiness observer rework only; no production, dependency, fixed-plan, expected Work, collector, geometry/material/threshold changes",
+  "baseline_product_commit": "581f6c8329c984bf55a913ca999830430334e5a1",
+  "prior_lib_sha256": "374b10e42029c5854bdbb0998cf7ce394a3bfd06e062b42040f3351dec69525a",
+  "historical_freeze_sha256": "f74ac1eb0da083b13ebe64042a2bc5dabcd20b102d2db926c9701e837ce327ba",
+  "files": {
+    "src/lib.rs": {
+      "sha256": "7e223aa9185fa0afc22bf6fc83483e562f46050d64d2dfc93cc3aeb2203ee899",
+      "bytes": 48951
+    },
+    "src/transition.rs": {
+      "sha256": "0470eb7ba095ad58ee1f3081b7900aff8ebedbc68e407626d199d799742e1e51",
+      "bytes": 6175
+    },
+    "README.md": {
+      "sha256": "0610a7a5a486ef9b972c8ff06d8029714935ecaa59e7e16f31d5e94c1120a414",
+      "bytes": 13063
+    }
+  },
+  "unchanged_contract_inputs": {
+    "Cargo.toml": "4200872e84947e204da73563a1a681deb04496755320a22c00c63011b791ab37",
+    "Cargo.lock": "b4509b927a48d48ef39f4ec9d45a89e410f4e495f177e0d9c2e92133160f41da",
+    "experiments/71-b1-character-parameters/Cargo.toml": "04469ebfa17cc3cfef49b6f534bb2096414988e6abaa6fb0220fd3c86fa3da3b",
+    "experiments/71-b1-character-parameters/Cargo.lock": "89b32846bb1bcf1898c3bf0efed1487cc351e6c7b34bad6a21a58b73940063da",
+    "experiments/71-b1-character-parameters/works/plan.json": "7d628a8353f9ac3821219e6466fb46faf3a4aa5df089fd9fd0b699478e77dbbb",
+    "experiments/71-b1-character-parameters/inputs/cases.json": "7abedf9e9c46245d7c9cf0aaeab77e716fb37dd538aa76cccdae935e6fda9185",
+    "crates/nvwa-runtime/src/b1.rs": "e798765fbe44f2ecbc7e0f4b96c71a89ebfe23492b39d696a78a0e9bedf8d687",
+    "crates/nvwa-runtime/src/appearance/mod.rs": "4fee7b62d2f4a1406820068c85e448d1d91fd6e4586ba521d965d6f7f5a74077"
+  },
+  "controls": {
+    "standalone_std_policy_tests": {
+      "passed": 7,
+      "failed": 0,
+      "scope": "production-called policy/stability functions; no Bevy/runtime capture proof",
+      "receipt_sha256": "860627cb1d41f13449cf37d2663d1e9887034e7d2f9585affc56bc56008b08ef"
+    },
+    "existing_python_tests": {
+      "normal_passed": 22,
+      "optimized_passed": 22,
+      "failures": 0
+    },
+    "format": "Rustfmt PASS",
+    "new_observer_transaction_identity_controls": "six authored, NOT-RUN",
+    "full_observer_cargo_native_wasm_ui_gpu": "NOT-RUN; root schedules after independent review"
+  },
+  "historical_requests": "original D failure and D2 separate recovery retained; no replay or changed success claim"
+}

@@ -1,0 +1,126 @@
+{
+  "schema_version": 4,
+  "revision": 6,
+  "profile": {
+    "backend": {
+      "type": "b1_cpu",
+      "schema_version": 2,
+      "asset_id": "mpfb-hm08-game-engine-female-sportsuit01-v1"
+    },
+    "id": "nvwa-mpfb-b1-motion-v1",
+    "asset_path": "characters/mpfb-b1-v1/manifest.json",
+    "asset_sha256": "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18",
+    "license": "CC0-1.0",
+    "parameters": [
+      {
+        "id": "torso_length",
+        "morph_index": 0,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "jaw_drop",
+        "morph_index": 1,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      }
+    ],
+    "clips": [
+      {
+        "id": "b1_arm_rehearsal_v1",
+        "animation_index": 0,
+        "duration_seconds": 4.0
+      },
+      {
+        "id": "b1_knee_flex_v1",
+        "animation_index": 1,
+        "duration_seconds": 4.0
+      }
+    ]
+  },
+  "character": {
+    "id": "character-1",
+    "profile_id": "nvwa-mpfb-b1-motion-v1",
+    "parameters": {
+      "jaw_drop": 0.0,
+      "torso_length": -1.0
+    },
+    "scale": 1.0,
+    "diagnostic_pose": "neutral",
+    "appearance": {
+      "type": "none"
+    }
+  },
+  "timeline": [
+    {
+      "id": "arms",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "start_seconds": 0.0,
+      "duration_seconds": 4.0,
+      "speed": 1.0,
+      "looping": false
+    },
+    {
+      "id": "knee",
+      "clip_id": "b1_knee_flex_v1",
+      "start_seconds": 4.0,
+      "duration_seconds": 4.0,
+      "speed": 1.0,
+      "looping": false
+    }
+  ],
+  "stage": {
+    "key_light": {
+      "illuminance_lux": 10000.0,
+      "color_srgb": [
+        1.0,
+        0.94,
+        0.86
+      ],
+      "azimuth_degrees": -35.0,
+      "elevation_degrees": 42.0
+    },
+    "fill_light": {
+      "illuminance_lux": 3000.0,
+      "color_srgb": [
+        0.8,
+        0.89,
+        1.0
+      ],
+      "azimuth_degrees": 55.0,
+      "elevation_degrees": 28.0
+    },
+    "ambient": {
+      "brightness": 180.0,
+      "color_srgb": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "background_color_srgb": [
+      0.88,
+      0.9,
+      0.93
+    ],
+    "floor": {
+      "visible": true,
+      "color_srgb": [
+        0.72,
+        0.75,
+        0.8
+      ],
+      "shadows": true
+    },
+    "camera": {
+      "azimuth_degrees": 8.0,
+      "elevation_degrees": 3.0,
+      "distance": 0.95,
+      "target_height": 1.5,
+      "fov_degrees": 30.0
+    },
+    "quality": "balanced"
+  }
+}

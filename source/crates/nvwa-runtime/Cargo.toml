@@ -1,0 +1,24 @@
+[package]
+name = "nvwa-runtime"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+bevy.workspace = true
+nvwa-core.workspace = true
+serde_json.workspace = true
+humentity.workspace = true
+nvwa-b1-adapter.workspace = true
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# Humentity's cached ahash entropy path; match the admitted native/Web adapter.
+getrandom = { version = "=0.3.4", features = ["wasm_js"] }
+wasm-bindgen = "=0.2.129"
+wasm-bindgen-futures = "=0.4.79"
+js-sys = "=0.3.106"
+web-sys = { version = "=0.3.106", features = [
+    "Window", "Location", "Url", "RequestInit", "RequestCache", "RequestMode", "RequestRedirect",
+    "RequestCredentials", "Response", "Headers", "ReadableStream",
+    "ReadableStreamDefaultReader", "ReadableStreamReadResult", "AbortController", "AbortSignal",
+] }

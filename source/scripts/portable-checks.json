@@ -1,0 +1,82 @@
+[
+  {
+    "name": "runner-contract",
+    "title": "Check shared portable runner controls",
+    "run": "python3 -B scripts/test-portable-checks.py\npython3 -B -O scripts/test-portable-checks.py\n"
+  },
+  {
+    "name": "ci-timing-contract",
+    "title": "Check CI timing controls",
+    "run": "python3 -B scripts/test-ci-timing.py\npython3 -B -O scripts/test-ci-timing.py\n"
+  },
+  {
+    "name": "source-cli",
+    "title": "Check portable source and real CLI paths",
+    "run": "bash experiments/27-ci-baseline/check.sh portable\n"
+  },
+  {
+    "name": "cli-distribution",
+    "title": "Check complete standalone CLI distribution",
+    "run": "cargo build -p nvwa-cli --locked --offline\npython3 -B scripts/test-cli-package.py --binary target/debug/nvwa-cli\npython3 -B -O scripts/test-cli-package.py --binary target/debug/nvwa-cli\n"
+  },
+  {
+    "name": "b1-inputs",
+    "title": "Verify admitted production character inputs and source",
+    "run": "python3 -B scripts/verify-b1-inputs.py\npython3 -B -O scripts/verify-b1-inputs.py\npython3 -B scripts/test-b1-inputs.py\npython3 -B -O scripts/test-b1-inputs.py\n"
+  },
+  {
+    "name": "motion-comparator",
+    "title": "Check independent B1 motion comparator controls",
+    "run": "python3 -B experiments/60-b1-continuous-motion/test_controls.py\npython3 -B -O experiments/60-b1-continuous-motion/test_controls.py\npython3 -B experiments/60-b1-continuous-motion/test_serve.py\npython3 -B -O experiments/60-b1-continuous-motion/test_serve.py\n"
+  },
+  {
+    "name": "diagnostics",
+    "title": "Check bounded diagnostic controls",
+    "run": "bash experiments/27-ci-baseline/check.sh diagnostics\n"
+  },
+  {
+    "name": "appearance",
+    "title": "Check bounded appearance diagnostic controls",
+    "run": "python3 -B -m unittest discover -s experiments/65-b1-appearance-quality -p 'test_*.py' -v\npython3 -B -O -m unittest discover -s experiments/65-b1-appearance-quality -p 'test_*.py' -v\npython3 -B -m unittest discover -s experiments/65-b1-appearance-quality/preview/build -p 'test_*.py' -v\npython3 -B -O -m unittest discover -s experiments/65-b1-appearance-quality/preview/build -p 'test_*.py' -v\n"
+  },
+  {
+    "name": "eye-hair-parameters",
+    "title": "Check eye, hair, and character parameter controls",
+    "run": "# The transfer tests run the actual experimental HTML handlers in\n# Node. A missing interpreter is an error, never a skipped green test.\nnode --version\nfor experiment in 67-b1-eye-surface-diagnosis 68-b1-eye-render-diagnosis 69-b1-hairline 71-b1-character-parameters 72-b1-admission-controls 73-high-poly-eyes 79-shoulder-pose-corrective 79-shoulder-pose-corrective/browser 80-hairline-export-diagnosis 82-hairline-aba; do\n  python3 -B -m unittest discover -s \"experiments/$experiment\" -p 'test_*.py' -v\n  python3 -B -O -m unittest discover -s \"experiments/$experiment\" -p 'test_*.py' -v\ndone\n"
+  },
+  {
+    "name": "authenticated-source",
+    "title": "Check authenticated B1 source bundle and rejection controls",
+    "run": "python3 -B -m unittest discover -s experiments/59-b1-ci-inputs -p 'test_*.py' -v\npython3 -B -O -m unittest discover -s experiments/59-b1-ci-inputs -p 'test_*.py' -v\npython3 -B -m unittest discover -s experiments/57-b1-pose-runtime -p 'test_prepare_ci.py' -v\npython3 -B -O -m unittest discover -s experiments/57-b1-pose-runtime -p 'test_prepare_ci.py' -v\npython3 -B experiments/59-b1-ci-inputs/prepare_ci_inputs.py --out \"$RUNNER_TEMP/nvwa-b1-portable-seed\"\npython3 -B experiments/57-b1-pose-runtime/prepare.py --ci-inputs \"$RUNNER_TEMP/nvwa-b1-portable-seed\"\npython3 -B experiments/58-b1-desktop-web/prepare.py --ci-inputs \"$RUNNER_TEMP/nvwa-b1-portable-seed\"\npython3 -B -m unittest discover -s experiments/58-b1-desktop-web -p 'test_*.py' -v\npython3 -B -O -m unittest discover -s experiments/58-b1-desktop-web -p 'test_*.py' -v\n"
+  },
+  {
+    "name": "offline-motion",
+    "title": "Prepare locked importer dependencies and check offline motion controls",
+    "run": "cargo fetch --locked --manifest-path experiments/42-motion-import/Cargo.toml\npython3 -B experiments/42-motion-import/check_model_free.py\npython3 -B experiments/44-approved-cpu-motion-trial/verify_evidence.py\npython3 -B experiments/45-genuine-rig-admission/probe.py\npython3 -B experiments/45-genuine-rig-admission/test_controls.py\npython3 -B experiments/46-soma-reference-calibration/calibrate.py\npython3 -B experiments/46-soma-reference-calibration/test_controls.py\npython3 -B -O experiments/46-soma-reference-calibration/test_controls.py\npython3 -B experiments/46-soma-reference-calibration/independent/oracle.py\npython3 -B experiments/46-soma-reference-calibration/independent/test_controls.py\npython3 -B -O experiments/46-soma-reference-calibration/independent/test_controls.py\npython3 -B experiments/47-fixture-rig-calibration/calibrate.py\npython3 -B experiments/47-fixture-rig-calibration/test_controls.py\npython3 -B -O experiments/47-fixture-rig-calibration/test_controls.py\npython3 -B experiments/47-fixture-rig-calibration/reference/audit.py\npython3 -B -O experiments/47-fixture-rig-calibration/reference/audit.py\npython3 -B experiments/47-fixture-rig-calibration/reference/test_audit.py\npython3 -B experiments/48-genuine-fixture-work/export.py verify experiments/48-genuine-fixture-work/artifacts\npython3 -B experiments/48-genuine-fixture-work/test_controls.py\npython3 -B -O experiments/48-genuine-fixture-work/test_controls.py\npython3 -B experiments/48-genuine-fixture-work/independent/check_serialized.py\npython3 -B -O experiments/48-genuine-fixture-work/independent/check_serialized.py\npython3 -B experiments/48-genuine-fixture-work/independent/test_serialized.py\npython3 -B -O experiments/48-genuine-fixture-work/independent/test_serialized.py\n# Preserve every original49 CPU family and rejection control in its\n# authenticated historical context after current product source advances.\n# These retained captures are not fresh rehearsal-runtime evidence.\npython3 -B experiments/51-rehearsal-history-compat/audit.py\npython3 -B -O experiments/51-rehearsal-history-compat/audit.py\npython3 -B experiments/51-rehearsal-history-compat/test_controls.py\npython3 -B -O experiments/51-rehearsal-history-compat/test_controls.py\n"
+  },
+  {
+    "name": "native-cache-contract",
+    "title": "Check bounded native cache trial controls",
+    "run": "python3 -B -m unittest discover -s experiments/83-native-cache-trial -p 'test_*.py' -v\npython3 -B -O -m unittest discover -s experiments/83-native-cache-trial -p 'test_*.py' -v\n"
+  },
+  {
+    "name": "native-main-cache-contract",
+    "title": "Check main-only native cache policy",
+    "run": "python3 -B experiments/83-native-cache-trial/main_policy/test_policy.py\npython3 -B -O experiments/83-native-cache-trial/main_policy/test_policy.py\n"
+  },
+  {
+    "name": "shoulder-rest-refit",
+    "title": "Check isolated shoulder rest-refit controls",
+    "run": "cargo fmt --manifest-path experiments/84-shoulder-rest-refit/replay/Cargo.toml --package nvwa-shoulder-rest-replay --check\ncargo fmt --manifest-path experiments/84-shoulder-rest-refit/wasm-replay/Cargo.toml --package nvwa-shoulder-wasm-replay --check\nfor part in replay evaluation authoring wasm-replay; do\n  python3 -B -m unittest discover -s \"experiments/84-shoulder-rest-refit/$part\" -p 'test_*.py' -v\n  python3 -B -O -m unittest discover -s \"experiments/84-shoulder-rest-refit/$part\" -p 'test_*.py' -v\ndone\n"
+  },
+  {
+    "name": "current19-shoulder-refit",
+    "title": "Check current nineteen-case shoulder controls",
+    "run": "cargo fmt --manifest-path experiments/85-current19-shoulder-refit/replay/Cargo.toml --package nvwa-current19-replay --check\npython3 -B -m unittest discover -s experiments/85-current19-shoulder-refit -p 'test_*.py' -v\npython3 -B -O -m unittest discover -s experiments/85-current19-shoulder-refit -p 'test_*.py' -v\n"
+  },
+  {
+    "name": "frozen-upper-arm",
+    "title": "Check frozen upper-arm comparison and retained runtime captures",
+    "run": "python3 -B experiments/50-upper-arm-neutral-ab/test_candidate.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_candidate.py\npython3 -B experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_adapter.py\npython3 -B experiments/50-upper-arm-neutral-ab/test_runtime_measure.py\npython3 -B -O experiments/50-upper-arm-neutral-ab/test_runtime_measure.py\npython3 -B experiments/50-upper-arm-neutral-ab/runtime_evidence.py\nmkdir -p .work/ci-neutral50\nfor platform in native web; do\n  for variant in baseline candidate; do\n    python3 -B experiments/50-upper-arm-neutral-ab/probe/compare.py \"experiments/50-upper-arm-neutral-ab/results/$platform-$variant.json\" --variant \"$variant\" --output \".work/ci-neutral50/$platform-$variant.json\"\n  done\ndone\n"
+  }
+]

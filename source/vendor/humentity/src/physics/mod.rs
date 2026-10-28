@@ -1,0 +1,191 @@
+// Shared constants consumed by the physics backend submodule: without a
+// backend nothing reads them, so silence dead-code there instead of hiding
+// real warnings when a backend is on.
+#![cfg_attr(
+    not(any(feature = "avian", feature = "jolt", feature = "boxddd")),
+    allow(dead_code)
+)]
+
+use bevy::prelude::*;
+
+pub const HEAD_VERTICES: [usize; 2] = [5063, 5389];
+pub const TORSO_VERTICES: [usize; 4] = [1553, 3753, 4097, 4049];
+pub const PELVIS_VERTICES: [usize; 4] = [4174, 4243, 4353, 4170];
+pub const UPPER_RIGHT_LEG_VERTICES: [usize; 4] = [4407, 4268, 4567, 4565];
+pub const LOWER_RIGHT_LEG_VERTICES: [usize; 4] = [4662, 4664, 6385, 6375];
+pub const UPPER_RIGHT_ARM_VERTICES: [usize; 4] = [1630, 1432, 3330, 3323];
+pub const LOWER_RIGHT_ARM_VERTICES: [usize; 4] = [3412, 3877, 3552, 3906];
+pub const UPPER_LEFT_ARM_VERTICES: [usize; 4] = [8302, 8120, 9998, 9991];
+pub const LOWER_LEFT_ARM_VERTICES: [usize; 4] = [10080, 10542, 10220, 10571];
+pub const UPPER_LEFT_LEG_VERTICES: [usize; 4] = [11025, 10898, 11185, 11183];
+pub const LOWER_LEFT_LEG_VERTICES: [usize; 4] = [11280, 11282, 12982, 12972];
+pub const RIGHT_HAND_VERTICES: [usize; 6] = [2776, 3189, 2119, 3909, 3247, 3650];
+pub const RIGHT_FOOT_VERTICES: [usize; 6] = [6251, 6705, 4972, 5845, 6214, 6298];
+pub const LEFT_HAND_VERTICES: [usize; 6] = [9444, 9857, 8787, 10574, 9915, 10318];
+pub const LEFT_FOOT_VERTICES: [usize; 6] = [12848, 13301, 11590, 12442, 12811, 12895];
+
+#[derive(Component, Hash, Copy, Clone, Eq, PartialEq, Debug)]
+pub enum ColliderBone {
+    Head,
+    Chest,
+    Pelvis,
+    UpperRightArm,
+    UpperLeftArm,
+    LowerRightArm,
+    LowerLeftArm,
+    UpperRightLeg,
+    UpperLeftLeg,
+    LowerRightLeg,
+    LowerLeftLeg,
+    LeftHand,
+    RightHand,
+    LeftFoot,
+    RightFoot,
+}
+
+pub const COLLIDERS: [ColliderBone; 15] = [
+    ColliderBone::Pelvis,
+    ColliderBone::Chest,
+    ColliderBone::UpperLeftLeg,
+    ColliderBone::UpperRightLeg,
+    ColliderBone::LowerLeftLeg,
+    ColliderBone::LowerRightLeg,
+    ColliderBone::LeftFoot,
+    ColliderBone::RightFoot,
+    ColliderBone::UpperLeftArm,
+    ColliderBone::UpperRightArm,
+    ColliderBone::LowerLeftArm,
+    ColliderBone::LowerRightArm,
+    ColliderBone::LeftHand,
+    ColliderBone::RightHand,
+    ColliderBone::Head,
+];
+
+pub const fn collider_index(bone: ColliderBone) -> usize {
+    match bone {
+        ColliderBone::Pelvis => 0,
+        ColliderBone::Chest => 1,
+        ColliderBone::UpperLeftLeg => 2,
+        ColliderBone::UpperRightLeg => 3,
+        ColliderBone::LowerLeftLeg => 4,
+        ColliderBone::LowerRightLeg => 5,
+        ColliderBone::LeftFoot => 6,
+        ColliderBone::RightFoot => 7,
+        ColliderBone::UpperLeftArm => 8,
+        ColliderBone::UpperRightArm => 9,
+        ColliderBone::LowerLeftArm => 10,
+        ColliderBone::LowerRightArm => 11,
+        ColliderBone::LeftHand => 12,
+        ColliderBone::RightHand => 13,
+        ColliderBone::Head => 14,
+    }
+}
+
+pub(crate) const DEFAULT_RIG_COLLIDER_BONE_NAMES: [&str; 15] = [
+    "root",
+    "spine03",
+    "upperleg01.L",
+    "upperleg01.R",
+    "lowerleg01.L",
+    "lowerleg01.R",
+    "foot.L",
+    "foot.R",
+    "upperarm01.L",
+    "upperarm01.R",
+    "lowerarm01.L",
+    "lowerarm01.R",
+    "wrist.L",
+    "wrist.R",
+    "head",
+];
+
+pub const fn get_collider_parent(bone: ColliderBone) -> Option<ColliderBone> {
+    match bone {
+        ColliderBone::Head => Some(ColliderBone::Chest),
+        ColliderBone::Chest => Some(ColliderBone::Pelvis),
+        ColliderBone::Pelvis => None,
+        ColliderBone::UpperRightArm => Some(ColliderBone::Chest),
+        ColliderBone::UpperLeftArm => Some(ColliderBone::Chest),
+        ColliderBone::LowerRightArm => Some(ColliderBone::UpperRightArm),
+        ColliderBone::LowerLeftArm => Some(ColliderBone::UpperLeftArm),
+        ColliderBone::UpperRightLeg => Some(ColliderBone::Pelvis),
+        ColliderBone::UpperLeftLeg => Some(ColliderBone::Pelvis),
+        ColliderBone::LowerRightLeg => Some(ColliderBone::UpperRightLeg),
+        ColliderBone::LowerLeftLeg => Some(ColliderBone::UpperLeftLeg),
+        ColliderBone::LeftHand => Some(ColliderBone::LowerLeftArm),
+        ColliderBone::RightHand => Some(ColliderBone::LowerRightArm),
+        ColliderBone::LeftFoot => Some(ColliderBone::LowerLeftLeg),
+        ColliderBone::RightFoot => Some(ColliderBone::LowerRightLeg),
+    }
+}
+/// SystemSet for ragdoll joint (re)spawn (`avian::set_ragdoll_state` or the
+/// `jolt` equivalent).
+///
+/// Order tooling that seats collider bodies and flips `CharacterRagdoll`
+/// before this set: joint rest frames are baked from the collider bodies as
+/// they stand when the set runs.
+#[derive(SystemSet, Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct HumentityRagdollSystemSet;
+
+/// Scales the mass of all ragdoll colliders on this character.
+///
+/// This is the `ColliderDensity` used on each collider bone.
+/// Default: `100.0`.
+#[derive(Component, Clone, Copy, Debug, Reflect)]
+#[reflect(Component, Debug)]
+pub struct RagdollDensity(pub f32);
+
+impl Default for RagdollDensity {
+    fn default() -> Self {
+        Self(100.0)
+    }
+}
+
+/// Linear and angular damping applied to each joint when the ragdoll activates.
+///
+/// Both `JointDamping.linear` and `JointDamping.angular` are set to this value.
+/// Default: `5.0`.
+#[derive(Component, Clone, Copy, Debug, Reflect)]
+#[reflect(Component, Debug)]
+pub struct RagdollDamping(pub f32);
+
+impl Default for RagdollDamping {
+    fn default() -> Self {
+        Self(5.0)
+    }
+}
+
+/// Controls the fraction of full joint range the ragdoll can use.
+///
+/// The joint limits are scaled by this value:
+///   - `1.0` = full anatomical range (default)
+///   - `0.5` = half the anatomical range
+///   - `0.0` = fully locked (no movement)
+///
+/// Apply to your character entity.
+#[derive(Component, Clone, Copy, Debug)]
+pub struct RagdollMobility(pub f32);
+
+impl Default for RagdollMobility {
+    fn default() -> Self {
+        Self(1.0)
+    }
+}
+
+#[cfg(feature = "avian")]
+pub mod avian;
+
+#[cfg(feature = "boxddd")]
+pub mod boxddd;
+
+#[cfg(feature = "jolt")]
+pub mod jolt;
+
+#[cfg(any(
+    all(feature = "avian", feature = "jolt"),
+    all(feature = "avian", feature = "boxddd"),
+    all(feature = "jolt", feature = "boxddd"),
+))]
+compile_error!(
+    "humentity physics backends are exclusive: enable only one of `avian`, `jolt`, `boxddd`"
+);

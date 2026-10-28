@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "context": "character-stage-closeout-v1",
+  "baseline_manifest": "FROZEN-INPUTS.json",
+  "baseline_manifest_sha256": "66f024238ef009d0544d617251c46754b202b3069254ce5df47dc6dfc6debc33",
+  "scope": "exact complete309-input source compatibility only; no current eye-render, runtime, or quality acceptance; historical records retain their original source identities",
+  "overrides": {
+    "crates/nvwa-cli/tests/b1.rs": {
+      "bytes": 18579,
+      "sha256": "ec3082149fe3b23b6df3fbf3e2cbbccccf15a6a776613e9e8a272ec958a727ef"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 17048,
+      "sha256": "d1aa3098b87999693087c5f7a9ca1c9f9a110315a57fbd22e3ce6b1847e98984"
+    },
+    "crates/nvwa-core/tests/b1.rs": {
+      "bytes": 15804,
+      "sha256": "d1ca91f3a6b587efb3915b8c2ed55a0d6d7d8ad515db22dc1f83a389cc9b047a"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 181280,
+      "sha256": "b1e5758d9bf146e8156f0aca20f178c90f9342f481cf8e17b737b4556874270d"
+    }
+  }
+}
