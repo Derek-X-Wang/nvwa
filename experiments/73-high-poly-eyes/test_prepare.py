@@ -78,7 +78,7 @@ class SourceContract(unittest.TestCase):
    actual[name]={'sha256':digest(ROOT/name),'bytes':(ROOT/name).stat().st_size}
   try:context,selected=select_context(actual,source_contexts(EXP,p.read_bytes(),inputs))
   except ValueError as error:self.fail(str(error))
-  self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1','hair79-selector-product-v1'])
+  self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1','hair79-selector-product-v1','b1-motion-authoring-product-v1'])
   self.assertEqual(len(selected),309,'FROZEN-INPUTS.json complete source set required')
   for name,item in selected.items():
    message=f'FROZEN-INPUTS.json entry {name}'

@@ -10,6 +10,12 @@ SHORT01_CONTEXT_NAME = 'source-context-hair79-short01-v1.json'
 SHORT01_CONTEXT_SHA = '4212de5a650eb8120c49ec985bc00928cca43af33c95a2f8bcc207158311f13f'
 SELECTOR_CONTEXT_NAME = 'source-context-hair79-selector-v1.json'
 SELECTOR_CONTEXT_SHA = 'c0416baa1cf9cb49e34217173ff37d00f02299fb782c83815602dab1977c5d35'
+AUTHORING_CONTEXT_NAME = 'source-context-b1-motion-authoring-v1.json'
+AUTHORING_CONTEXT_SHA = '9b518892e4317693d1b5ef43ec60665ce0fca9c030da817789a5ef9f4aba6c5b'
+AUTHORING_BASELINES = {
+    'crates/nvwa-studio/src/lib.rs': 'fixtures/b1-motion-authoring-baselines/studio-lib.rs',
+    'crates/nvwa-studio/src/editor_layout.rs': 'fixtures/b1-motion-authoring-baselines/editor-layout.rs',
+}
 FIXTURES_NAME = 'fixtures/source-contexts/manifest.json'
 FIXTURES_SHA = 'b70450a16e7fa59b13fc333de598864ed6e995b88522b04cf520ab75e239de3a'
 
@@ -62,6 +68,17 @@ def historical_sources(exp, contexts):
     return result
 
 
+def authoring_baselines(exp, original):
+    """Shared old UI bytes remain pinned by the immutable original309 map."""
+    result = {}
+    for name, relative in AUTHORING_BASELINES.items():
+        raw = regular_file(exp, relative).read_bytes()
+        require({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == original[name],
+                'authoring baseline differs from original context pin: ' + name)
+        result[name] = raw
+    return result
+
+
 def source_contexts(exp, raw, original):
     require(hashlib.sha256(raw).hexdigest() == FROZEN_INPUTS_SHA,
             'immutable original manifest identity mismatch')
@@ -69,7 +86,8 @@ def source_contexts(exp, raw, original):
     contexts = [('original-frozen309', original)]
     for name, expected in ((CONTEXT_NAME, CONTEXT_SHA),
                            (SHORT01_CONTEXT_NAME, SHORT01_CONTEXT_SHA),
-                           (SELECTOR_CONTEXT_NAME, SELECTOR_CONTEXT_SHA)):
+                           (SELECTOR_CONTEXT_NAME, SELECTOR_CONTEXT_SHA),
+                           (AUTHORING_CONTEXT_NAME, AUTHORING_CONTEXT_SHA)):
         path = regular_file(exp, name)
         raw = path.read_bytes()
         require(hashlib.sha256(raw).hexdigest() == expected,
@@ -84,6 +102,7 @@ def source_contexts(exp, raw, original):
     # Historical fixtures are mandatory and independently authenticated even when
     # selecting the product context. No Git history or current-byte reversal.
     historical_sources(exp, contexts)
+    authoring_baselines(exp, original)
     return contexts
 
 
@@ -91,4 +110,4 @@ def select_context(actual, contexts):
     for name, expected in contexts:
         if actual == expected:
             return name, expected
-    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, or reviewed selector product309 required')
+    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, reviewed selector product309, or reviewed B1 authoring product309 required')
