@@ -56,7 +56,38 @@ MACOS15_HEADERS = (
 )
 
 
+# native75: admit only the producer allowance; warm keeps its real 60-minute cap.
+NATIVE75_BUDGET = """    # The measured original lane already takes about 30 minutes cold. Keep a
+    # finite bound for native tests, mutation witnesses and continuous motion.
+    timeout-minutes: 75
+"""
+NATIVE75_MATRIX_COMMENT = '        #20minute step within the existing75minute job, including probe linking.\n'
+
+
+def historical_native_budget_workflow(workflow, checks):
+    jobs = []
+    for name, header, cap in [('native-and-wasm', MACOS15_HEADERS[0], '75'),
+                              ('native-cache-warm', MACOS15_HEADERS[1], '60')]:
+        blocks = re.findall(r'(?ms)^  '+name+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
+        checks.assertEqual(len(blocks), 1, 'required one '+name+' job')
+        block = blocks[0]
+        checks.assertTrue(block.startswith(header), 'required exact '+name+' header')
+        checks.assertEqual(re.findall(r'^    timeout-minutes:.*$', block, re.M),
+                           ['    timeout-minutes: '+cap], 'required exact current '+name+' cap')
+        jobs.append(block)
+    native = jobs[0]
+    checks.assertTrue(native.startswith(MACOS15_HEADERS[0]+NATIVE75_BUDGET),
+                      'required exact producer budget placement')
+    checks.assertEqual(native.count(NATIVE75_MATRIX_COMMENT), 1,
+                       'required exact producer matrix budget comment')
+    restored = native.replace(NATIVE75_BUDGET, NATIVE75_BUDGET.replace('75', '60'), 1)
+    restored = restored.replace(NATIVE75_MATRIX_COMMENT,
+                                NATIVE75_MATRIX_COMMENT.replace('75', '60'), 1)
+    return workflow.replace(native, restored, 1)
+
+
 def historical_macos_workflow(workflow, checks):
+    workflow = historical_native_budget_workflow(workflow, checks)
     checks.assertEqual(workflow.count('  portable:\n'), 1, 'required one portable job')
     checks.assertEqual(workflow.count(PORTABLE20_HEADER), 1,
                        'required exact portable job with 20-minute cap')
@@ -634,6 +665,37 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
                           original.replace('timeout-minutes: 60', 'timeout-minutes: 61'),
                           original.replace('cargo test --manifest-path', 'cargo check --manifest-path'),
                           original.replace('runs-on: ubuntu-24.04', 'runs-on: macos-15')])
+        native = re.search(r'(?ms)^  native-and-wasm:\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', original).group()
+        b1 = re.search(r'(?ms)^  b1-source-regression:\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', original).group()
+        warm = re.search(r'(?ms)^  native-cache-warm:\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', original).group()
+        budget_mutations = []
+        for cap in ['60', '74', '76', '0', '-1', '75.0', '"75"', "'75'"]:
+            budget_mutations.append(('native-cap-'+cap, original.replace(native, native.replace(
+                '    timeout-minutes: 75\n', '    timeout-minutes: '+cap+'\n', 1))))
+        budget_mutations.extend([
+            ('missing-native-cap', original.replace(native, native.replace('    timeout-minutes: 75\n', '', 1))),
+            ('duplicate-native-cap', original.replace(native, native.replace('    timeout-minutes: 75\n', '    timeout-minutes: 75\n'*2, 1))),
+            ('missing-native-job', original.replace(native, '')),
+            ('duplicate-native-job', original.replace(native, native*2)),
+            ('renamed-native-job', original.replace(native, native.replace('  native-and-wasm:', '  other:', 1))),
+            ('misplaced-native-cap', original.replace(native, native.replace('    timeout-minutes: 75\n', '', 1)+'    timeout-minutes: 75\n')),
+            ('missing-native-comment', original.replace(native, native.replace(NATIVE75_MATRIX_COMMENT, ''))),
+            ('duplicate-native-comment', original.replace(native, native.replace(NATIVE75_MATRIX_COMMENT, NATIVE75_MATRIX_COMMENT*2))),
+            ('stale-native-comment', original.replace(native, native.replace(NATIVE75_MATRIX_COMMENT, NATIVE75_MATRIX_COMMENT.replace('75', '60')))),
+            ('matrix-cap', original.replace(native, native.replace('        timeout-minutes: 20\n', '        timeout-minutes: 21\n', 1))),
+            ('mutation-cap', original.replace(native, native.replace('        timeout-minutes: 12\n', '        timeout-minutes: 13\n', 1))),
+            ('portable-cap', original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace('timeout-minutes: 20', 'timeout-minutes: 21'))),
+            ('b1-cap', original.replace(b1, b1.replace('    timeout-minutes: 60\n', '    timeout-minutes: 61\n', 1))),
+            ('warm-cap', original.replace(warm, warm.replace('    timeout-minutes: 60\n', '    timeout-minutes: 61\n', 1))),
+            ('cache-action-cap', original.replace(native, native.replace('        timeout-minutes: 4\n', '        timeout-minutes: 5\n', 1))),
+        ])
+        native60 = native.replace('    timeout-minutes: 75\n', '    timeout-minutes: 60\n', 1)
+        for name, job in [('b1', b1), ('warm', warm)]:
+            budget_mutations.append(('75-moved-to-'+name, original.replace(native, native60).replace(
+                job, job.replace('    timeout-minutes: 60\n', '    timeout-minutes: 75\n', 1))))
+        for name, mutant in budget_mutations:
+            self.assertNotEqual(mutant, original, name)
+            mutations.append(mutant)
         for index, mutant in enumerate(mutations):
             self.assertNotEqual(mutant, original)
             def read(path, *args, **kwargs):

@@ -15,7 +15,8 @@ Only a same-repository pull request whose head is `codex/native-cache-trial` may
 produce this experiment. Main, fork PRs and unrelated branches run their existing
 native checks without a cache action. The cold producer is the original required
 native job. The optional warm job waits for **both** original macOS jobs, keeping
-the original maximum of two heavy compiles. Each native job retains 60 minutes.
+the original maximum of two heavy compiles. Each native job retained 60 minutes
+in that historical trial. The current producer-only exception is described below.
 No extra runner type, permission, token, repository setting or paid storage is used.
 
 Cold starts with an absent/empty owned root target and requires a unique exact-key
@@ -186,7 +187,16 @@ the queried macOS SDK; absolute DEVELOPER_DIR must resolve to a Developer root
 containing the actual selected toolchain and SDK; MACOSX_DEPLOYMENT_TARGET must
 be a strict numeric version. These checks change no selection, default or flag.
 Unsupported or missing identity disables caching honestly. Each action retains
-4minutes; native retains60minutes and the full logical cap remains4GiB.
+4minutes; the full logical cap remains4GiB. The accepted 2026-10-29 exception
+raises only the current `native-and-wasm` producer to75minutes; the inactive
+optional warm trial remains60minutes. Mutation and full matrix steps retain12
+and20minutes. All commands, assertions, one-worker settings, phase, cache
+selection, trust and key algorithms remain unchanged. The three independent
+workflow contracts admit the exact current75/60 producer/warm pair, then reverse
+only the producer cap and matching matrix comment to historical60 for the
+original hashes and full-step parity checks. Changed compatibility inputs can
+require a new cold main seed; old-seed reuse or a speedup is not established.
+A75-minute cap is not a completion guarantee or authority for another increase.
 `NVWA_NATIVE_MAIN_CACHE` lines retain policy state, API/action receipts, target
 size, gate results and complete helper wall. Use enclosing GitHub step timings
 for total cost, without double-counting nested receipts.
