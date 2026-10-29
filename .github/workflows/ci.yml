@@ -51,7 +51,7 @@ jobs:
       - name: Check bounded appearance diagnostic controls
         run: python3 -B scripts/check-portable.py appearance
       - name: Check eye, hair, and character parameter controls
-        timeout-minutes: 3
+        timeout-minutes: 5
         run: python3 -B scripts/check-portable.py eye-hair-parameters
       - name: Check authenticated B1 source bundle and rejection controls
         timeout-minutes: 3
@@ -85,7 +85,7 @@ jobs:
     runs-on: macos-15
     # The measured original lane already takes about 30 minutes cold. Keep a
     # finite bound for native tests, mutation witnesses and continuous motion.
-    timeout-minutes: 60
+    timeout-minutes: 75
     # native-cache-trial begin
     outputs:
       trial_enabled: ${{ steps.trial-prepare.outputs.enabled }}
@@ -164,7 +164,7 @@ jobs:
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
       - name: Execute the actual B1 continuous motion matrix
         # Independent full-weight Python checks stream594frames; retain a finite
-        #20minute step within the existing60minute job, including probe linking.
+        #20minute step within the existing75minute job, including probe linking.
         timeout-minutes: 20
         run: |
           cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check

@@ -42,6 +42,35 @@ python3 -B scripts/check-portable.py all
 
 在既有较大版本或发布节点执行[完整 B1 Mac 命令清单](b1-macos-milestone.md)，保留相应 Mac 证据及失败控制。本次不新增周期作业或改变其他 Mac 作业频率。此项是明确接受的自动检查主机范围变更，日常桌面画面验收延后本身不授权减少其他自动测试。
 
+## 原生 producer 作业预算例外
+
+2026-10-29，仅将 `native-and-wasm` 整个作业的预算从 60 分钟提高到 75 分钟。
+此前完整正式作业达到 60 分钟上限；同一 source 的独立 [Mac 诊断运行](https://github.com/Derek-X-Wang/nvwa/actions/runs/40882014685)
+已完成完整 matrix（8 分 18 秒）和 normal／`-O` 的实际 frame 衣物控制。mutation 步骤
+保持 12 分钟，完整 matrix 步骤保持 20 分钟；所有命令、断言、素材、依赖、
+单 worker、runner、cache 规则和运行频率不变。portable 保持 20 分钟，Linux B1
+与未启用的 optional warm 作业保持 60 分钟，cache action 保持 4 分钟。
+
+三个独立合同先验证当前 producer 75／warm 60，再只将 producer 的 cap 与对应
+matrix 注释还原为历史 60 分钟字节，继续验证原有整份 workflow 与命令哈希。
+历史取消结果与全部负向控制保留。此例外不改 B1 的 Mac 版本节点政策，不代表
+性能改善或保证完成；新身份仍须通过完整正式 CI。若 75 分钟仍失败或超时，
+保留证据和 release HOLD，不自动再次加时。
+
+## Portable eye/hair 步骤预算例外
+
+2026-10-29，仅将具名 eye/hair/character-parameter 步骤从 3 分钟调整到
+5 分钟，整个 portable 作业仍为 20 分钟。此前同一命令曾完整通过，随后两次
+在原 180 秒步骤上限取消。此调整是有限的步骤分配，不保证新步骤或整个作业完成。
+authenticated-source 保持 3 分钟、offline-motion 保持 6 分钟、frozen-upper-arm
+保持 5 分钟；native75、其他所有作业／步骤上限和 cache 规则不变。
+
+四个独立合同验证具名步骤的位置、唯一性和原命令，再只还原 eye5 为历史 eye3，
+保留原有断言和哈希。全部 48 个 run body、catalog 顺序／用例、normal／`-O`、
+source admission 与既有 HOLD 均保留。仍须通过新身份的完整正式 PR／main CI；
+若 eye5 或 portable20 再次超时，保留 release HOLD，停止此路径的继续加时与
+无变化重跑，不自动拆作业或删减用例。
+
 ## 大版本节点的桌面回归
 
 下一个较大可玩版本或发布节点，集中核验该版本的桌面启动、人物及连续动作、编辑与撤销／重做、保存／重载、与 Web／CLI 的作品交换、错误恢复，以及相关输入与窗口行为。具体矩阵随版本确定；当前不另加每个小变更的人工桌面门禁。

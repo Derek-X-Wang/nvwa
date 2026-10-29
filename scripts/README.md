@@ -111,8 +111,9 @@ The three independent timing/trial/main-cache workflow contracts admit only
 the complete paired label replacement. Reversing that pair must reproduce the
 entire reviewed `2e6dc2e` workflow, including warm/cache policy blocks. The older
 historical hashes and command assertions remain intact. Partial, Intel, large, unknown and mixed runner
-replacements fail. Existing commands, profiles, dependencies, budgets, frequency,
-job dependencies and conditional trial activation stay unchanged. The adopted
+replacements fail. That image migration kept commands, profiles, dependencies,
+budgets, frequency, job dependencies and conditional trial activation unchanged.
+The producer-only budget exception below applies to the current workflow. The adopted
 cache phase still does not enable an extra warm job. The B1 Linux migration
 and [B1 Mac milestone policy](../docs/agents/b1-macos-milestone.md) are unchanged.
 
@@ -129,14 +130,54 @@ This migration leaves #112's original Linux native failure and optimized
 NOT-RUN, #3's blockage and #4's measurement gaps unchanged. It establishes no
 new desktop, performance or production acceptance.
 
+## Native producer budget exception (2026-10-29)
+
+The accepted `native-and-wasm` job allowance is now **75 minutes**, up from 60.
+Its mutation and full matrix steps remain **12** and **20 minutes**. Portable
+remains 20 minutes; Linux B1 and the inactive optional warm trial remain 60.
+Cache actions retain 4 minutes. All command bodies, assertions, one-worker
+settings, dependencies, runner labels, cache trust, cadence and job ownership
+stay unchanged. This adds a finite execution allowance; it is not a performance
+fix or a completion guarantee. A cancelled historical gate remains cancelled.
+
+Each of the three independent timing/trial/main-cache contracts first requires
+the exact current producer 75 / warm 60 policy. It reverses only the producer
+cap and its matching matrix comment to their historical 60-minute bytes before
+the existing runner/B1 overlays and frozen whole-workflow/command comparisons.
+Original hashes and negative cases remain intact; wrong, duplicate, missing or
+misplaced caps and changes to other limits fail. No source fixture changes are
+needed. Existing main compatibility inputs naturally produce a new cache key;
+old-seed reuse and a speedup are not established. No automatic further increase
+follows a 75-minute timeout.
+
+## Portable eye/hair step allowance (2026-10-29)
+
+The named eye/hair/character-parameter step now has **5 minutes**, up from 3,
+inside the unchanged **20-minute portable job**. Two unchanged 180-second
+attempts timed out after an earlier complete 141-second result. This is a
+finite step allocation; neither five-minute completion nor whole-job fit is
+established. Authenticated-source remains 3 minutes, offline-motion 6, and
+frozen-upper-arm 5. The native75 exception above and every other job/step cap
+remain unchanged.
+
+Four independent workflow consumers validate the unique named eye5 step,
+its exact command and position, then reverse only that step to its historical3
+bytes before existing assertions and frozen hashes. Other five-minute steps
+are retained. All48 run bodies, catalog cases/order/hash, normal/optimized
+modes, source admission, cache policy and runner behavior remain unchanged.
+A further eye5 or portable20 timeout preserves release HOLD and closes this
+allocation/retry path; no automatic higher cap, job split or case reduction
+follows. Fresh complete formal PR/main gates are still required.
+
 ## CI phase observations
 
 `ci-timing.py` observes the existing bounded workflow. The same
 `ci-timing-contract` group runs locally in `all` and in CI. The `linux-b1-v2`
 policy moves only B1 to Ubuntu 24.04 with the display name `Linux B1 source
 regression and viewer checks` and nine exact locked dependency fetches before
-its original preparation. Job IDs, timeouts, dependencies, PR/main triggers,
-other Mac jobs and all original command bodies remain unchanged. The three
+its original preparation. That B1 migration kept job IDs, timeouts, dependencies,
+PR/main triggers, other Mac jobs and all original command bodies unchanged; the
+current producer-only budget exception is described above. The three
 frozen consumers validate that complete addition before comparing the original
 command hashes and historical workflow baseline. Each existing `run` body still
 executes with Bash `-e`. The accepted Mac coverage loss and milestone commands

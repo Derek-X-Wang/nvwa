@@ -211,3 +211,29 @@ The issue #93 freeze is a separately verified inventory, not a new build,
 export or endpoint observation. Existing compiled/captured R5/R6 evidence keeps
 its original source identity. Issue #3 remains blocked, issue #4 gaps remain,
 and issue #79 quality admission stays **HOLD**.
+
+
+## short04/short01 editor selector candidate (2026-10-28)
+
+The approved selector slice adds one exact `hair79-selector-product-v1` map in
+`source-context-hair79-selector-v1.json`. Only the two Studio appearance UI
+source entries differ from `hair79-short01-product-v1`. The three prior complete
+contexts, their JSON/source pins, the original309 manifest, numeric contract,
+and all historical bytes remain unchanged. The two pre-selector UI files are
+retained under `fixtures/source-contexts/hair79-short01-product-v1/`; the fixture
+manifest gains only those entries and receives an honest new authentication pin.
+Old product controls reconstruct these bytes instead of reading changed live UI.
+
+The separate old matrix remains exactly3 accepted/12,285 rejected. The four-map
+inventory has ten binary paths and three ternary paths (runtime B1 and both UI
+files): `2^10 * 3^3 = 27,648` combinations, with expected4 complete admissions
+and27,644 rejections. These counts derive from the candidate maps; the actual
+production-called preservation controls are **NOT-RUN** at this candidate stage.
+All old subprocess crossover/fault controls remain, alongside new↔old crossover,
+new UI/manifest/fixture failures and old-subspace checks against all four maps.
+
+This is a source-admission candidate for independent review, not a historical
+render/quality result. Formal checks, Web/CLI file exchange, native/Wasm and
+PR/main CI acceptance for the selector remain **NOT-RUN**. See
+`docs/evidence/hair79-selector/PHASE1.md` for the staged evidence boundary.
+#120/M2/#80 HOLD, #112 original failure, #3 blocked and #4 gaps remain.

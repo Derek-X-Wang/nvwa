@@ -318,3 +318,297 @@ fn eight_parameter_preview_commit_reset_undo_and_appearance_use_same_work_contra
         panic!("skin checkbox must be visible at the wide initial inspector size");
     }
 }
+
+fn edited_selector_work(
+    set: nvwa_core::B1AppearanceSet,
+    flags: (bool, bool, bool),
+) -> SceneDocument {
+    let mut document =
+        SceneDocument::from_json(include_str!("../../../examples/b1-character.nvwa.json")).unwrap();
+    document.revision = 17;
+    document.character.id = "edited-selector-character".into();
+    document.character.scale = 1.1;
+    for (i, value) in document.character.parameters.values_mut().enumerate() {
+        *value = (i as f32 - 3.5) / 5.0;
+    }
+    document.stage = nvwa_core::StageSettings::black_space();
+    document.character.appearance = nvwa_core::CharacterAppearance::b1_cc0_for_set(
+        &document.profile.backend,
+        set,
+        flags.0,
+        flags.1,
+        flags.2,
+    )
+    .unwrap();
+    assert_eq!(document.character.parameters.len(), 8);
+    assert!(!document.timeline.is_empty());
+    document.validate().unwrap();
+    document
+}
+
+fn selector_key(key: egui::Key, pressed: bool) -> egui::Event {
+    egui::Event::Key {
+        key,
+        physical_key: None,
+        pressed,
+        repeat: false,
+        modifiers: egui::Modifiers::default(),
+    }
+}
+
+#[test]
+fn actual_hairstyle_switch_preserves_edited_work_and_one_step_history_and_noop_redo() {
+    use nvwa_core::{B1AppearanceSet, CharacterAppearance};
+    for size in [egui::vec2(1280.0, 720.0), egui::vec2(1024.0, 768.0)] {
+        for flags in [
+            (true, true, true),
+            (true, false, true),
+            (false, true, true),
+            (false, false, true),
+        ] {
+            let mut app = StudioHarness::new(size);
+            let original = edited_selector_work(B1AppearanceSet::V2, flags);
+            app.editor.replace(original.clone()).unwrap();
+            let mut expected = original.clone();
+            for (label, set) in [
+                ("short01", B1AppearanceSet::V2Short01),
+                ("short04", B1AppearanceSet::V2),
+            ] {
+                click_visible_appearance_control(&mut app, size, label);
+                expected.character.appearance = CharacterAppearance::b1_cc0_for_set(
+                    &expected.profile.backend,
+                    set,
+                    flags.0,
+                    flags.1,
+                    flags.2,
+                )
+                .unwrap();
+                expected.revision += 1;
+                assert_eq!(app.editor.document(), Some(&expected));
+                let saved = app.editor.document().unwrap().to_json().unwrap();
+                assert_eq!(SceneDocument::from_json(&saved).unwrap(), expected);
+                // Clicking the selected option and idle redraws must not create history.
+                click_visible_appearance_control(&mut app, size, label);
+                app.frame(vec![]).drop_without_applying_deltas();
+                assert_eq!(app.editor.document(), Some(&expected));
+            }
+            click_visible_appearance_control(&mut app, size, "Undo");
+            expected.revision += 1;
+            expected.character.appearance = CharacterAppearance::b1_cc0_for_set(
+                &expected.profile.backend,
+                B1AppearanceSet::V2Short01,
+                flags.0,
+                flags.1,
+                flags.2,
+            )
+            .unwrap();
+            assert_eq!(app.editor.document(), Some(&expected));
+            click_visible_appearance_control(&mut app, size, "short01");
+            assert_eq!(app.editor.document(), Some(&expected));
+            click_visible_appearance_control(&mut app, size, "Redo");
+            expected.revision += 1;
+            expected.character.appearance = original.character.appearance.clone();
+            assert_eq!(app.editor.document(), Some(&expected));
+            // Two switches require exactly two Undo operations to reach the original.
+            for set in [B1AppearanceSet::V2Short01, B1AppearanceSet::V2] {
+                click_visible_appearance_control(&mut app, size, "Undo");
+                expected.revision += 1;
+                expected.character.appearance = CharacterAppearance::b1_cc0_for_set(
+                    &expected.profile.backend,
+                    set,
+                    flags.0,
+                    flags.1,
+                    flags.2,
+                )
+                .unwrap();
+                assert_eq!(app.editor.document(), Some(&expected));
+            }
+            assert!(app.editor.apply(nvwa_core::Command::Undo).is_err());
+            assert_eq!(app.editor.document(), Some(&expected));
+        }
+    }
+}
+
+#[test]
+fn actual_hairstyle_hair_off_disables_pointer_and_keyboard_and_preserves_role_identity() {
+    use nvwa_core::{B1AppearanceSet, CharacterAppearance};
+    for size in [egui::vec2(1280.0, 720.0), egui::vec2(1024.0, 768.0)] {
+        for (set, other) in [
+            (B1AppearanceSet::V2, "short01"),
+            (B1AppearanceSet::V2Short01, "short04"),
+        ] {
+            let mut app = StudioHarness::new(size);
+            app.editor
+                .replace(edited_selector_work(set, (true, true, true)))
+                .unwrap();
+            click_visible_appearance_control(&mut app, size, "头发 / Hair");
+            let off = app.editor.document().unwrap().clone();
+            click_visible_appearance_control(&mut app, size, other);
+            app.frame(vec![
+                selector_key(egui::Key::Space, true),
+                selector_key(egui::Key::Space, false),
+            ])
+            .drop_without_applying_deltas();
+            app.frame(vec![
+                selector_key(egui::Key::Enter, true),
+                selector_key(egui::Key::Enter, false),
+            ])
+            .drop_without_applying_deltas();
+            assert_eq!(app.editor.document(), Some(&off));
+            // Disabled options must not take keyboard focus during traversal.
+            for _ in 0..40 {
+                app.frame(vec![
+                    selector_key(egui::Key::Tab, false),
+                    selector_key(egui::Key::Tab, true),
+                ])
+                .drop_without_applying_deltas();
+                if let Some(response) = app
+                    .ctx
+                    .memory(|m| m.focused())
+                    .and_then(|id| app.ctx.read_response(id))
+                {
+                    let output = app.frame(vec![]);
+                    for label in ["short04", "short01"] {
+                        let rect = text_rect(&output, label);
+                        assert!(
+                            !response.rect.contains(rect.center()),
+                            "disabled option gained focus: {label}"
+                        );
+                    }
+                    output.drop_without_applying_deltas();
+                }
+            }
+            assert_eq!(app.editor.document(), Some(&off));
+            for (label, flags) in [
+                ("眼睛 / Eyes", (true, false, false)),
+                ("头发 / Hair", (true, false, true)),
+            ] {
+                click_visible_appearance_control(&mut app, size, label);
+                let actual = app.editor.document().unwrap();
+                let mut expected = off.clone();
+                expected.revision = actual.revision;
+                expected.character.appearance = CharacterAppearance::b1_cc0_for_set(
+                    &expected.profile.backend,
+                    set,
+                    flags.0,
+                    flags.1,
+                    flags.2,
+                )
+                .unwrap();
+                assert_eq!(actual, &expected);
+            }
+        }
+    }
+}
+
+#[test]
+fn actual_hairstyle_keyboard_switch_and_loaded_work_share_the_saved_selection() {
+    use nvwa_core::{B1AppearanceSet, CharacterAppearance};
+    for size in [egui::vec2(1280.0, 720.0), egui::vec2(1024.0, 768.0)] {
+        let mut app = StudioHarness::new(size);
+        let original = edited_selector_work(B1AppearanceSet::V2Short01, (true, false, true));
+        app.editor.replace(original.clone()).unwrap();
+        // Find the existing production widget through actual Tab navigation.
+        let mut reached = false;
+        for _ in 0..48 {
+            app.frame(vec![
+                selector_key(egui::Key::Tab, false),
+                selector_key(egui::Key::Tab, true),
+            ])
+            .drop_without_applying_deltas();
+            if let Some(response) = app
+                .ctx
+                .memory(|m| m.focused())
+                .and_then(|id| app.ctx.read_response(id))
+            {
+                let output = app.frame(vec![]);
+                let target = text_rect(&output, "short04");
+                reached = response.rect.contains(target.center());
+                output.drop_without_applying_deltas();
+                if reached {
+                    break;
+                }
+            }
+        }
+        assert!(reached, "short04 must be keyboard reachable at {size:?}");
+        app.frame(vec![selector_key(egui::Key::Space, true)])
+            .drop_without_applying_deltas();
+        app.frame(vec![selector_key(egui::Key::Space, false)])
+            .drop_without_applying_deltas();
+        let mut expected = original.clone();
+        expected.revision += 1;
+        expected.character.appearance = CharacterAppearance::b1_cc0_for_set(
+            &expected.profile.backend,
+            B1AppearanceSet::V2,
+            true,
+            false,
+            true,
+        )
+        .unwrap();
+        assert_eq!(app.editor.document(), Some(&expected));
+        app.frame(vec![]).drop_without_applying_deltas();
+        assert_eq!(app.editor.document(), Some(&expected));
+        let saved = expected.to_json().unwrap();
+        app.editor
+            .replace(SceneDocument::from_json(&saved).unwrap())
+            .unwrap();
+        click_visible_appearance_control(&mut app, size, "short04");
+        assert_eq!(app.editor.document(), Some(&expected));
+        app.editor.replace(original.clone()).unwrap();
+        click_visible_appearance_control(&mut app, size, "short01");
+        assert_eq!(app.editor.document(), Some(&original));
+    }
+}
+
+#[test]
+fn hairstyle_options_are_absent_for_v1_and_glb_and_none_keeps_default_policy() {
+    use nvwa_core::{B1AppearanceSet, CharacterAppearance};
+    for profile in [
+        CharacterProfile::b1_motion(),
+        CharacterProfile::from_json(include_str!("../../../assets/character.profile.json"))
+            .unwrap(),
+    ] {
+        let mut app = StudioHarness::new(egui::vec2(1280.0, 720.0));
+        let document = SceneDocument::from_profile(profile).unwrap();
+        app.editor.replace(document.clone()).unwrap();
+        let output = app.frame(vec![]);
+        let mut text = String::new();
+        fn collect(shape: &egui::Shape, text: &mut String) {
+            match shape {
+                egui::Shape::Text(t) => text.push_str(&t.galley.job.text),
+                egui::Shape::Vec(shapes) => {
+                    for shape in shapes {
+                        collect(shape, text);
+                    }
+                }
+                _ => {}
+            }
+        }
+        for shape in &output.shapes {
+            collect(&shape.shape, &mut text);
+        }
+        output.drop_without_applying_deltas();
+        assert!(!text.contains("short01") && !text.contains("short04"));
+        assert_eq!(app.editor.document(), Some(&document));
+    }
+    // Existing tests retain all-off/Undo/Redo; also exercise the new disabled selector at None.
+    let size = egui::vec2(1280.0, 720.0);
+    let mut app = StudioHarness::new(size);
+    let mut document = edited_selector_work(B1AppearanceSet::V2Short01, (true, true, true));
+    document.character.appearance = CharacterAppearance::None;
+    app.editor.replace(document.clone()).unwrap();
+    click_visible_appearance_control(&mut app, size, "short01");
+    assert_eq!(app.editor.document(), Some(&document));
+    click_visible_appearance_control(&mut app, size, "头发 / Hair");
+    let actual = app.editor.document().unwrap();
+    document.revision += 1;
+    document.character.appearance = CharacterAppearance::b1_cc0_for_set(
+        &document.profile.backend,
+        B1AppearanceSet::V2,
+        false,
+        false,
+        true,
+    )
+    .unwrap();
+    assert_eq!(actual, &document);
+}
