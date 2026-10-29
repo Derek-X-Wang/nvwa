@@ -300,12 +300,13 @@ class FrozenInputGate(unittest.TestCase):
 
     def test_old_four_context_subspace_still_has_only_four_admissions_with_five_contexts(self):
         changing = list(self.original)
-        variants = [sorted({json.dumps(files[name], sort_keys=True) for _, files in self.contexts})
+        variants = [[json.loads(value) for value in
+                     sorted({json.dumps(files[name], sort_keys=True) for _, files in self.contexts})]
                     for name in changing]
         accepted = rejected = 0
         for values in itertools.product(*variants):
             actual = dict(self.inputs)
-            actual.update({name: json.loads(value) for name, value in zip(changing, values)})
+            actual.update({name: value.copy() for name, value in zip(changing, values)})
             matching = [name for name, expected in self.contexts if actual == expected]
             if matching:
                 self.assertEqual(CONTEXT.select_context(actual, self.all_contexts)[0], matching[0])
@@ -318,14 +319,15 @@ class FrozenInputGate(unittest.TestCase):
 
     def test_expanded_five_context_matrix_has_only_five_complete_admissions(self):
         changing = list(self.authoring)
-        variants = [sorted({json.dumps(files[name], sort_keys=True) for _, files in self.all_contexts})
+        variants = [[json.loads(value) for value in
+                     sorted({json.dumps(files[name], sort_keys=True) for _, files in self.all_contexts})]
                     for name in changing]
         self.assertEqual(sorted(map(len, variants)), [2] * 12 + [3] * 3)
         self.assertEqual(math.prod(map(len, variants)), 110592)
         accepted = rejected = 0
         for values in itertools.product(*variants):
             actual = dict(self.inputs)
-            actual.update({name: json.loads(value) for name, value in zip(changing, values)})
+            actual.update({name: value.copy() for name, value in zip(changing, values)})
             matching = [name for name, expected in self.all_contexts if actual == expected]
             if matching:
                 self.assertEqual(CONTEXT.select_context(actual, self.all_contexts)[0], matching[0])
