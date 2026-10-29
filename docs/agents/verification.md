@@ -57,6 +57,20 @@ matrix 注释还原为历史 60 分钟字节，继续验证原有整份 workflow
 性能改善或保证完成；新身份仍须通过完整正式 CI。若 75 分钟仍失败或超时，
 保留证据和 release HOLD，不自动再次加时。
 
+## Portable eye/hair 步骤预算例外
+
+2026-10-29，仅将具名 eye/hair/character-parameter 步骤从 3 分钟调整到
+5 分钟，整个 portable 作业仍为 20 分钟。此前同一命令曾完整通过，随后两次
+在原 180 秒步骤上限取消。此调整是有限的步骤分配，不保证新步骤或整个作业完成。
+authenticated-source 保持 3 分钟、offline-motion 保持 6 分钟、frozen-upper-arm
+保持 5 分钟；native75、其他所有作业／步骤上限和 cache 规则不变。
+
+四个独立合同验证具名步骤的位置、唯一性和原命令，再只还原 eye5 为历史 eye3，
+保留原有断言和哈希。全部 48 个 run body、catalog 顺序／用例、normal／`-O`、
+source admission 与既有 HOLD 均保留。仍须通过新身份的完整正式 PR／main CI；
+若 eye5 或 portable20 再次超时，保留 release HOLD，停止此路径的继续加时与
+无变化重跑，不自动拆作业或删减用例。
+
 ## 大版本节点的桌面回归
 
 下一个较大可玩版本或发布节点，集中核验该版本的桌面启动、人物及连续动作、编辑与撤销／重做、保存／重载、与 Web／CLI 的作品交换、错误恢复，以及相关输入与窗口行为。具体矩阵随版本确定；当前不另加每个小变更的人工桌面门禁。

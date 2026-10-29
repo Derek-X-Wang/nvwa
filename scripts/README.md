@@ -150,6 +150,25 @@ needed. Existing main compatibility inputs naturally produce a new cache key;
 old-seed reuse and a speedup are not established. No automatic further increase
 follows a 75-minute timeout.
 
+## Portable eye/hair step allowance (2026-10-29)
+
+The named eye/hair/character-parameter step now has **5 minutes**, up from 3,
+inside the unchanged **20-minute portable job**. Two unchanged 180-second
+attempts timed out after an earlier complete 141-second result. This is a
+finite step allocation; neither five-minute completion nor whole-job fit is
+established. Authenticated-source remains 3 minutes, offline-motion 6, and
+frozen-upper-arm 5. The native75 exception above and every other job/step cap
+remain unchanged.
+
+Four independent workflow consumers validate the unique named eye5 step,
+its exact command and position, then reverse only that step to its historical3
+bytes before existing assertions and frozen hashes. Other five-minute steps
+are retained. All48 run bodies, catalog cases/order/hash, normal/optimized
+modes, source admission, cache policy and runner behavior remain unchanged.
+A further eye5 or portable20 timeout preserves release HOLD and closes this
+allocation/retry path; no automatic higher cap, job split or case reduction
+follows. Fresh complete formal PR/main gates are still required.
+
 ## CI phase observations
 
 `ci-timing.py` observes the existing bounded workflow. The same
