@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="选择 Nvwa 示例角色，在 Studio 调整体型，保存并重新打开作品；或用 Player 观看预编排动作。">
+  <title>开始创作 · Nvwa</title>
+  <style>
+    :root { color:#203630; background:#f4f3ed; font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; line-height:1.65 }
+    * { box-sizing:border-box }
+    body { margin:0 }
+    a { color:inherit }
+    a:focus-visible { outline:3px solid #137b65; outline-offset:6px }
+    .shell { max-width:1040px; margin:auto; padding:32px 32px 44px }
+    header { display:flex; align-items:center; gap:12px; border-bottom:1px solid #d6dcd3; padding-bottom:20px }
+    .brand { font-size:23px; font-weight:750; letter-spacing:-1px }
+    .edition { font-size:12px; letter-spacing:.08em; color:#53685e }
+    .hero { padding:48px 0 32px }
+    .eyebrow { margin:0 0 10px; font-size:12px; font-weight:700; color:#4c6e61; letter-spacing:.12em }
+    h1 { margin:0 0 16px; font-size:clamp(32px,5vw,52px); line-height:1.2; letter-spacing:-.04em }
+    .intro { margin:0; color:#53645c; max-width:600px }
+    h2 { margin:0; font-size:19px }
+    .section-title { display:flex; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:16px }
+    .section-title p { margin:0; font-size:13px; color:#5e6f65 }
+    .characters { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px }
+    .card { display:flex; flex-direction:column; align-items:flex-start; background:#fffefa; border:1px solid #d6dcd3; border-radius:18px; padding:26px; text-decoration:none; transition:border-color .15s,background .15s }
+    .card:hover { border-color:#5a8b78; background:#f9fcf7 }
+    .card-top { display:flex; width:100%; align-items:center; justify-content:space-between; gap:12px; margin-bottom:22px }
+    .tag { font-size:12px; font-weight:650; color:#486656; background:#eaf0e7; border-radius:6px; padding:3px 9px }
+    .number { font-size:12px; color:#69776c; font-variant-numeric:tabular-nums }
+    h3 { margin:0 0 8px; font-size:25px; line-height:1.3 }
+    .card p { margin:0 0 24px; color:#5b6a60; font-size:14px }
+    .action { margin-top:auto; font-weight:650; font-size:14px; color:#16634f }
+    .action span { margin-left:10px }
+    .player { display:flex; align-items:center; justify-content:space-between; gap:28px; margin-top:22px; padding:26px; border-radius:18px; background:#203e35; color:#f5f6ef }
+    .player h2 { margin:3px 0 8px; font-size:22px }
+    .player p { margin:0; color:#d3e0d7; font-size:14px }
+    .player .eyebrow { color:#b9d5c4; font-size:11px }
+    .player a { flex-shrink:0; border:1px solid #94b4a4; border-radius:9px; padding:10px 16px; text-decoration:none; font-size:14px; font-weight:650 }
+    .player a:hover { background:#34574a }
+    .player a:focus-visible { outline-color:#d6eb8b }
+    .steps { margin-top:38px }
+    ol { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:26px; padding:0; margin:18px 0 0; list-style:none; counter-reset:step }
+    li { counter-increment:step; font-size:14px; color:#53645c }
+    li::before { content:"0" counter(step); display:block; color:#527360; font-size:12px; font-weight:700; margin-bottom:5px }
+    li strong { display:block; color:#203630; margin-bottom:5px; font-size:15px }
+    footer { margin-top:36px; padding-top:18px; border-top:1px solid #d6dcd3; color:#5e6f65; font-size:12px }
+    @media (max-width:600px) {
+      .shell { padding:22px 20px 32px }
+      .hero { padding:34px 0 26px }
+      .characters,ol { grid-template-columns:1fr }
+      .card { padding:22px }
+      .card-top { margin-bottom:16px }
+      .player { align-items:flex-start; flex-direction:column; gap:20px; padding:22px }
+      ol { gap:18px }
+    }
+    @media (prefers-reduced-motion:reduce) { .card { transition:none } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header><span class="brand">Nvwa</span><span class="edition">角色创作与动画沙盒</span></header>
+    <main>
+      <section class="hero" aria-labelledby="welcome">
+        <p class="eyebrow">从示例出发 · 保存你的修改</p>
+        <h1 id="welcome">从一个角色开始。</h1>
+        <p class="intro">选择发型，进入 Studio 调整体型与外观。把修改后的作品保存到本机，下次打开，接着创作。</p>
+      </section>
+      <section aria-labelledby="characters-title">
+        <div class="section-title"><h2 id="characters-title">选择角色示例</h2><p>同一 B1 角色 · 两种发型 · 可编辑</p></div>
+        <div class="characters">
+          <a class="card" href="index.html?work=works/b1-character.nvwa.json">
+            <div class="card-top"><span class="tag">Studio · 编辑</span><span class="number" aria-hidden="true">01</span></div>
+            <h3>short04 <span lang="en">/</span> 默认发型</h3>
+            <p>从默认发型开始，尝试八项体型参数，调整皮肤、眼睛与头发的显示。</p>
+            <span class="action">编辑 short04 角色<span aria-hidden="true">↗</span></span>
+          </a>
+          <a class="card" href="index.html?work=works/b1-short01.nvwa.json">
+            <div class="card-top"><span class="tag">Studio · 编辑</span><span class="number" aria-hidden="true">02</span></div>
+            <h3>short01 <span lang="en">/</span> 另一种发型</h3>
+            <p>从 short01 发型开始，使用同样的体型与外观工具，保存自己的修改。</p>
+            <span class="action">编辑 short01 角色<span aria-hidden="true">↗</span></span>
+          </a>
+        </div>
+      </section>
+      <section class="player" aria-labelledby="player-title">
+        <div>
+          <p class="eyebrow">Player · 观看示例</p>
+          <h2 id="player-title">看一段 9 秒动作</h2>
+          <p>原始示例角色的待机 → 挥手 → 转身。预编排动作，非 AI 生成。Player 提供播放与暂停，不显示编辑面板。</p>
+        </div>
+        <a href="index.html?player=1&amp;work=works/m1-sequence.nvwa.json">观看 9 秒示例 <span aria-hidden="true">↗</span></a>
+      </section>
+      <section class="steps" aria-labelledby="steps-title">
+        <h2 id="steps-title">改一点，存下来，下次继续。</h2>
+        <ol>
+          <li><strong>调整角色</strong>进入 Studio 后选中角色，拖动 Shape 滑块。Undo / Redo 可撤销或重做修改。</li>
+          <li><strong>保存到本机</strong>点击工具栏 Save，浏览器会下载 JSON 作品文件。请保留下载的文件。</li>
+          <li><strong>重新打开</strong>再次进入 Studio，点击 Open，选择之前下载的 JSON 文件，即可继续编辑。</li>
+        </ol>
+      </section>
+    </main>
+    <footer>Studio 需要支持 WebGPU 的桌面浏览器。体型编辑与文件保存已提供；人物外观和衣物效果仍在完善中。</footer>
+  </div>
+</body>
+</html>

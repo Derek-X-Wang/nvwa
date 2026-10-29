@@ -30,6 +30,14 @@ WORKFLOW_ADDITIONS = (
 )
 
 
+# Admit only the reviewed portable job cap before historical comparison.
+PORTABLE20_HEADER = """  portable:
+    name: Core, CLI, and diagnostic controls
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+"""
+
+
 # macos15-arm64-v1: admit only the paired retained-job image replacement.
 MACOS15_HEADERS = (
     """  native-and-wasm:
@@ -49,6 +57,11 @@ MACOS15_HEADERS = (
 
 
 def historical_macos_workflow(workflow, checks):
+    checks.assertEqual(workflow.count('  portable:\n'), 1, 'required one portable job')
+    checks.assertEqual(workflow.count(PORTABLE20_HEADER), 1,
+                       'required exact portable job with 20-minute cap')
+    workflow = workflow.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace(
+        '    timeout-minutes: 20\n', '    timeout-minutes: 15\n'), 1)
     checks.assertEqual(workflow.count('    runs-on: macos-15\n'), 2,
                        'required paired standard ARM64 macos-15 migration')
     for header in MACOS15_HEADERS:
@@ -591,6 +604,23 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
         original = workflow_path.read_text()
         read_text = Path.read_text
         mutations = []
+        for cap in ['15', '19', '21', '25', '0', '-1', '20.0', '"20"']:
+            mutations.append(original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace(
+                'timeout-minutes: 20', 'timeout-minutes: '+cap)))
+        mutations.extend([
+            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace('    timeout-minutes: 20\n', '')),
+            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER+'    timeout-minutes: 20\n'),
+            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER*2),
+            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace('  portable:', '  other:')),
+            original.replace('    timeout-minutes: 60\n', '    timeout-minutes: 20\n', 1),
+            original.replace('        timeout-minutes: 3\n', '        timeout-minutes: 4\n', 1),
+            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace(
+                'timeout-minutes: 20', 'timeout-minutes: 15')).replace(
+                    '    timeout-minutes: 60\n', '    timeout-minutes: 20\n', 1),
+            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace(
+                'timeout-minutes: 20', 'timeout-minutes: 15')).replace(
+                    '        timeout-minutes: 20\n', '        timeout-minutes: 25\n', 1),
+        ])
         for header in MACOS15_HEADERS:
             for label in ['macos-14', 'macos-latest', 'macos-26', 'macos-15-intel',
                           'macos-15-large', 'macos-15-xlarge', 'unknown']:
