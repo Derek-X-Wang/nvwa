@@ -1,0 +1,133 @@
+name: Isolated PR123 macOS matrix evidence
+on:
+  push:
+    branches: [codex/pr123-macos-matrix-evidence-20261029]
+    paths: [.github/workflows/pr123-macos-matrix-evidence.yml]
+permissions:
+  contents: read
+# One branch publication/run; no automatic retry, dispatch, cache or paid runner.
+env:
+  NVWA_CI_HEAD_SHA: a51fe46b9097398b4544f318f6b3583bca7ab24e
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: '0'
+  CARGO_PROFILE_DEV_DEBUG: '0'
+  CARGO_PROFILE_TEST_DEBUG: '0'
+defaults:
+  run:
+    shell: python3 -B scripts/ci-timing.py shell {0}
+jobs:
+  macos-matrix-evidence:
+    name: Isolated macOS matrix and actual-frame garment controls
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/codex/pr123-macos-matrix-evidence-20261029' && github.repository == 'Derek-X-Wang/nvwa' && github.run_attempt == 1 }}
+    runs-on: macos-15
+    # Includes Git acquisition, toolchain, fetch, cold prebuild, matrix and report.
+    timeout-minutes: 60
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - name: Prepare exact source and cold matrix binary
+        id: prepare
+        timeout-minutes: 38
+        shell: bash
+        env:
+          EVIDENCE_DRIVER: ${{ github.sha }}
+          EVIDENCE_WORKFLOW_SHA: ${{ github.workflow_sha }}
+          EVIDENCE_RUN: ${{ github.run_id }}
+          EVIDENCE_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+          SECONDS=0
+          trap 'rc=$?; printf "PREPARATION_EXIT=%s PREPARATION_SECONDS=%s\n" "$rc" "$SECONDS"' EXIT
+          test "$(uname -s)" = Darwin
+          test "$(uname -m)" = arm64
+          export GIT_TERMINAL_PROMPT=0
+          git init "$GITHUB_WORKSPACE"
+          git -C "$GITHUB_WORKSPACE" remote add origin https://github.com/Derek-X-Wang/nvwa.git
+          git -C "$GITHUB_WORKSPACE" config core.autocrlf false
+          git -C "$GITHUB_WORKSPACE" fetch --depth=1 --no-tags origin "$NVWA_CI_HEAD_SHA"
+          git -C "$GITHUB_WORKSPACE" checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$NVWA_CI_HEAD_SHA"
+          test "$(git rev-parse 'HEAD^{tree}')" = 24873fb20ba9981169fcc36810c058503641b0c1
+          source_status=$(git status --porcelain --untracked-files=all --ignored)
+          test -z "$source_status"
+          printf 'SOURCE_HEAD=%s\nSOURCE_TREE=%s\nDRIVER_SHA=%s\nWORKFLOW_SHA=%s\nRUN_ID=%s\nRUN_ATTEMPT=%s\n' "$NVWA_CI_HEAD_SHA" "$(git rev-parse 'HEAD^{tree}')" "$EVIDENCE_DRIVER" "$EVIDENCE_WORKFLOW_SHA" "$EVIDENCE_RUN" "$EVIDENCE_ATTEMPT"
+          shasum -a 256 .github/workflows/ci.yml experiments/60-b1-continuous-motion/Cargo.lock
+          # All source acquisition and cold preparation share this 38-minute step.
+          python3 -B scripts/ci-timing.py run -- rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+          rustc --version
+          cargo --version
+          python3 -B scripts/ci-timing.py run -- cargo fetch --locked --manifest-path experiments/60-b1-continuous-motion/Cargo.toml
+          python3 -B scripts/ci-timing.py run -- cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline
+      - name: Execute the actual B1 continuous motion matrix
+        id: matrix
+        # Independent full-weight Python checks stream594frames; retain a finite
+        #20minute step within the existing60minute job, including probe linking.
+        timeout-minutes: 20
+        run: |
+          cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
+          cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline
+          python3 -B experiments/60-b1-continuous-motion/run_matrix.py --binary "$CARGO_TARGET_DIR/debug/matrix" --asset-root "$GITHUB_WORKSPACE/assets" --out "$RUNNER_TEMP/nvwa-b1-motion-matrix"
+          # Use this job's actual retained source2 frame. The garment controls
+          # require real source/upload data, not an invented portable fixture.
+          python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
+          python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
+      - name: Report raw timing, matrix identity and completion
+        timeout-minutes: 1
+        if: ${{ always() }}
+        shell: bash
+        env:
+          PREPARATION_OUTCOME: ${{ steps.prepare.outcome }}
+          MATRIX_OUTCOME: ${{ steps.matrix.outcome }}
+        run: |
+          set -euo pipefail
+          trap 'rc=$?; printf "EVIDENCE_REPORT_EXIT=%s\n" "$rc"' EXIT
+          printf 'PHASE_OUTCOMES preparation=%s matrix=%s\n' "$PREPARATION_OUTCOME" "$MATRIX_OUTCOME"
+          # Existing observer prints raw phase/exit records, including incomplete
+          # records after cancellation. GitHub job timeout may prevent this step.
+          timing_rc=0
+          if test -f scripts/ci-timing.py; then
+            python3 -B scripts/ci-timing.py report || timing_rc=$?
+            test "$(git rev-parse HEAD)" = "$NVWA_CI_HEAD_SHA"
+            test "$(git rev-parse 'HEAD^{tree}')" = 24873fb20ba9981169fcc36810c058503641b0c1
+            source_status=$(git status --porcelain --untracked-files=normal)
+            test -z "$source_status"
+          else
+            timing_rc=1
+          fi
+          for evidence in identity.json summary.json SHA256SUMS.json probe-stderr.log; do
+            path="$RUNNER_TEMP/nvwa-b1-motion-matrix/$evidence"
+            if test -f "$path"; then
+              printf '\nMATRIX_FILE_BEGIN %s\n' "$evidence"
+              cat "$path"
+              printf '\nMATRIX_FILE_END %s\n' "$evidence"
+            fi
+          done
+          frame="$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
+          if test -f "$frame"; then shasum -a 256 "$frame"; fi
+          test "$PREPARATION_OUTCOME" = success
+          test "$MATRIX_OUTCOME" = success
+          test "$timing_rc" = 0
+          test -f "$frame"
+          python3 -B - <<'PYTHON'
+          import json, os
+          from pathlib import Path
+          summary = json.loads((Path(os.environ['RUNNER_TEMP'])/'nvwa-b1-motion-matrix/summary.json').read_text())
+          if summary.get('passed') is not True:
+              raise SystemExit('Matrix summary did not pass')
+          print('MATRIX_COMMANDS_COMPLETE; evidence requires successful artifact upload; formal PR CI clearance and merge remain separate')
+          PYTHON
+      - name: Preserve full or partial diagnostic evidence
+        if: ${{ always() }}
+        timeout-minutes: 1
+        # Exact pin already used in Nvwa's 2026-10-22 isolated evidence run.
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pr123-macos-matrix-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/nvwa-b1-motion-matrix/
+            ${{ runner.temp }}/nvwa-ci-timing/${{ github.job }}/
+          retention-days: 1
+          overwrite: false
+          if-no-files-found: error
+          compression-level: 0
