@@ -8,8 +8,10 @@ CONTEXT_NAME = 'source-context-closeout-v1.json'
 CONTEXT_SHA = '0cd9302848da7a996232bca4cbb58cc6c6e12ec77263f59c53b790be2dfd3604'
 SHORT01_CONTEXT_NAME = 'source-context-hair79-short01-v1.json'
 SHORT01_CONTEXT_SHA = '4212de5a650eb8120c49ec985bc00928cca43af33c95a2f8bcc207158311f13f'
+SELECTOR_CONTEXT_NAME = 'source-context-hair79-selector-v1.json'
+SELECTOR_CONTEXT_SHA = 'c0416baa1cf9cb49e34217173ff37d00f02299fb782c83815602dab1977c5d35'
 FIXTURES_NAME = 'fixtures/source-contexts/manifest.json'
-FIXTURES_SHA = '7416580f4c087ee831f6a4c9e0722b5b5fae2e172377a048936261e0938385a6'
+FIXTURES_SHA = 'b70450a16e7fa59b13fc333de598864ed6e995b88522b04cf520ab75e239de3a'
 
 
 def require(ok, message):
@@ -66,7 +68,8 @@ def source_contexts(exp, raw, original):
     require(original == json.loads(raw), 'original manifest map differs')
     contexts = [('original-frozen309', original)]
     for name, expected in ((CONTEXT_NAME, CONTEXT_SHA),
-                           (SHORT01_CONTEXT_NAME, SHORT01_CONTEXT_SHA)):
+                           (SHORT01_CONTEXT_NAME, SHORT01_CONTEXT_SHA),
+                           (SELECTOR_CONTEXT_NAME, SELECTOR_CONTEXT_SHA)):
         path = regular_file(exp, name)
         raw = path.read_bytes()
         require(hashlib.sha256(raw).hexdigest() == expected,
@@ -88,4 +91,4 @@ def select_context(actual, contexts):
     for name, expected in contexts:
         if actual == expected:
             return name, expected
-    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, or reviewed short01 product309 required')
+    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, or reviewed selector product309 required')

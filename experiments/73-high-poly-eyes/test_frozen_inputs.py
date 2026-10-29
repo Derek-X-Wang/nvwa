@@ -2,6 +2,7 @@
 import hashlib
 import importlib.util
 import itertools
+import math
 import json
 from pathlib import Path
 import shutil
@@ -16,6 +17,7 @@ SPEC = importlib.util.spec_from_file_location('eye73_frozen_gate_controls', EXP 
 CONTEXT = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CONTEXT)
 PRODUCT = 'hair79-short01-product-v1'
+SELECTOR = 'hair79-selector-product-v1'
 ORIGINAL = 'original-frozen309'
 CLOSEOUT = 'character-stage-closeout-v1'
 
@@ -36,14 +38,20 @@ class FrozenInputGate(unittest.TestCase):
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / name, destination)
         for name in ['test_prepare.py', 'cpu_probe.py', 'frozen_context.py',
-                     'source-context-closeout-v1.json', 'source-context-hair79-short01-v1.json']:
+                     'source-context-closeout-v1.json', 'source-context-hair79-short01-v1.json',
+                     'source-context-hair79-selector-v1.json']:
             shutil.copyfile(EXP / name, cls.exp / name)
         shutil.copytree(EXP / 'fixtures', cls.exp / 'fixtures')
         cls.contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
+        cls.old_contexts = [(name, files) for name, files in cls.contexts if name != SELECTOR]
         cls.maps = dict(cls.contexts)
         historical = CONTEXT.historical_sources(EXP, cls.contexts)
         cls.original = historical[ORIGINAL]
-        cls.current = {name: (cls.root / name).read_bytes() for name in cls.original}
+        cls.selector = {name: (cls.root / name).read_bytes() for name in cls.original}
+        # The old product is reconstructed from authenticated pre-selector UI bytes.
+        # All other product bytes remain identical; never reverse changed live UI.
+        cls.current = dict(cls.selector)
+        cls.current.update(historical[PRODUCT])
         cls.closeout = dict(cls.original)
         closeout = json.loads((EXP / 'source-context-closeout-v1.json').read_bytes())
         for name, item in closeout['overrides'].items():
@@ -51,7 +59,8 @@ class FrozenInputGate(unittest.TestCase):
             if {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} != item:
                 raise ValueError('archived closeout fixture does not match old pin: ' + name)
             cls.closeout[name] = raw
-        cls.snapshots = {ORIGINAL: cls.original, CLOSEOUT: cls.closeout, PRODUCT: cls.current}
+        cls.snapshots = {ORIGINAL: cls.original, CLOSEOUT: cls.closeout, PRODUCT: cls.current,
+                         SELECTOR: cls.selector}
         for context, snapshot in cls.snapshots.items():
             for name, raw in snapshot.items():
                 if {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} != cls.maps[context][name]:
@@ -94,14 +103,14 @@ class FrozenInputGate(unittest.TestCase):
             self.write_context(ORIGINAL)
             self.gate(self.raw, rejects=False)
         finally:
-            self.write_context(PRODUCT)
+            self.write_context(SELECTOR)
 
     def test_exact_closeout_context_accepts_at_actual_called_gate_without_git_history(self):
         try:
             self.write_context(CLOSEOUT)
             self.gate(self.raw, rejects=False)
         finally:
-            self.write_context(PRODUCT)
+            self.write_context(SELECTOR)
 
     def test_all_fourteen_mixed_contexts_reject_at_actual_called_gate(self):
         names = list(json.loads((EXP / 'source-context-closeout-v1.json').read_bytes())['overrides'])
@@ -115,7 +124,7 @@ class FrozenInputGate(unittest.TestCase):
                         (self.root / name).write_bytes((self.closeout if closeout else self.original)[name])
                     self.gate(self.raw, rejects=True)
         finally:
-            self.write_context(PRODUCT)
+            self.write_context(SELECTOR)
 
     def test_every_product_single_path_crossover_rejects_at_actual_called_gate(self):
         try:
@@ -131,12 +140,91 @@ class FrozenInputGate(unittest.TestCase):
                             self.gate(self.raw, rejects=True)
                             (self.root / name).write_bytes(raw)
         finally:
-            self.write_context(PRODUCT)
+            self.write_context(SELECTOR)
 
     def test_all_complete_context_maps_and_every_mixture_reject_except_three_admitted(self):
         changing = list(self.original)
+        variants = [sorted({json.dumps(files[name], sort_keys=True) for _, files in self.old_contexts})
+                    for name in changing]
+        accepted = rejected = 0
+        for values in itertools.product(*variants):
+            actual = dict(self.inputs)
+            actual.update({name: json.loads(value) for name, value in zip(changing, values)})
+            matching = [name for name, expected in self.old_contexts if actual == expected]
+            if matching:
+                self.assertEqual(CONTEXT.select_context(actual, self.old_contexts)[0], matching[0])
+                accepted += 1
+            else:
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.old_contexts)
+                rejected += 1
+        self.assertEqual((accepted, rejected), (3, 12285))
+        for context, expected in self.old_contexts:
+            for name in expected:
+                actual = dict(expected)
+                actual.pop(name)
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.old_contexts)
+            for actual in ({}, dict(expected, unreviewed={'bytes': 0, 'sha256': '0' * 64})):
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.old_contexts)
+
+    def test_exact_old_product_and_selector_accept_at_actual_called_gate(self):
+        try:
+            for context in (PRODUCT, SELECTOR):
+                with self.subTest(context=context):
+                    self.write_context(context)
+                    self.gate(self.raw, rejects=False)
+        finally:
+            self.write_context(SELECTOR)
+
+    def test_selector_bidirectional_single_path_crossovers_at_actual_called_gate(self):
+        try:
+            for historical in (ORIGINAL, CLOSEOUT, PRODUCT):
+                for left, right in ((SELECTOR, historical), (historical, SELECTOR)):
+                    self.write_context(left)
+                    for name, raw in self.snapshots[left].items():
+                        other = self.snapshots[right][name]
+                        if raw == other:
+                            continue
+                        actual = dict(self.maps[left])
+                        actual[name] = self.maps[right][name]
+                        # A crossover equal to a complete reviewed map must accept.
+                        matching = [context for context, expected in self.contexts if actual == expected]
+                        with self.subTest(context=left, substituted=right, source=name,
+                                          complete_match=matching):
+                            (self.root / name).write_bytes(other)
+                            self.gate(self.raw, rejects=not matching)
+                            (self.root / name).write_bytes(raw)
+        finally:
+            self.write_context(SELECTOR)
+
+    def test_old_subspace_forbidden_mixtures_still_reject_with_four_contexts(self):
+        changing = list(self.original)
+        variants = [sorted({json.dumps(files[name], sort_keys=True) for _, files in self.old_contexts})
+                    for name in changing]
+        accepted = rejected = 0
+        for values in itertools.product(*variants):
+            actual = dict(self.inputs)
+            actual.update({name: json.loads(value) for name, value in zip(changing, values)})
+            old_match = [name for name, expected in self.old_contexts if actual == expected]
+            if old_match:
+                self.assertEqual(CONTEXT.select_context(actual, self.contexts)[0], old_match[0])
+                accepted += 1
+            else:
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.contexts)
+                rejected += 1
+        self.assertEqual((accepted, rejected), (3, 12285))
+
+    def test_expanded_four_context_matrix_has_only_four_complete_admissions(self):
+        changing = list(self.original)
         variants = [sorted({json.dumps(files[name], sort_keys=True) for _, files in self.contexts})
                     for name in changing]
+        # The reviewed maps have ten binary paths and three ternary paths:
+        # runtime/b1.rs plus the two newly archived/reviewed UI paths.
+        self.assertEqual(sorted(map(len, variants)), [2] * 10 + [3] * 3)
+        self.assertEqual(math.prod(map(len, variants)), 27648)
         accepted = rejected = 0
         for values in itertools.product(*variants):
             actual = dict(self.inputs)
@@ -149,7 +237,7 @@ class FrozenInputGate(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'source context'):
                     CONTEXT.select_context(actual, self.contexts)
                 rejected += 1
-        self.assertEqual((accepted, rejected), (3, 12285))
+        self.assertEqual((accepted, rejected), (4, 27644))
         for context, expected in self.contexts:
             for name in expected:
                 actual = dict(expected)
@@ -159,6 +247,31 @@ class FrozenInputGate(unittest.TestCase):
             for actual in ({}, dict(expected, unreviewed={'bytes': 0, 'sha256': '0' * 64})):
                 with self.assertRaisesRegex(ValueError, 'source context'):
                     CONTEXT.select_context(actual, self.contexts)
+
+    def test_selector_ui_missing_symlink_and_changed_hash_size_reject_at_actual_called_gate(self):
+        self.write_context(SELECTOR)
+        for name in ('crates/nvwa-studio/src/appearance_ui.rs',
+                     'crates/nvwa-studio/src/appearance_ui_tests.rs'):
+            path = self.root / name
+            original = path.read_bytes()
+            target = self.root / 'selector-ui-source'
+            target.write_bytes(original)
+            for fault in ('missing', 'symlink', 'hash', 'size'):
+                with self.subTest(source=name, fault=fault):
+                    path.unlink()
+                    try:
+                        if fault == 'symlink':
+                            path.symlink_to(target)
+                        elif fault == 'hash':
+                            path.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+                        elif fault == 'size':
+                            path.write_bytes(original[:-1])
+                        self.gate(self.raw, rejects=True)
+                    finally:
+                        if path.exists() or path.is_symlink():
+                            path.unlink()
+                        path.write_bytes(original)
+        self.gate(self.raw, rejects=False)
 
     def corrupt_required_file(self, relative, label):
         path = self.exp / relative
@@ -186,7 +299,8 @@ class FrozenInputGate(unittest.TestCase):
         self.gate(self.raw, rejects=False)
 
     def test_context_manifest_missing_empty_corrupt_tampered_and_symlink_reject(self):
-        for relative in (CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME):
+        for relative in (CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME,
+                         CONTEXT.SELECTOR_CONTEXT_NAME):
             self.corrupt_required_file(relative, relative)
 
     def test_historical_fixture_manifest_and_every_blob_fail_closed_at_actual_called_gate(self):
