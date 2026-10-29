@@ -87,6 +87,34 @@ def environment(root, out, event_head=None, event_checkout=None):
     return env
 
 
+def toolchain_environment(product_env, deadline=None):
+    # Rustup's existing installation home is distinct from dependency isolation.
+    home = Path(product_env.get('HOME', ''))
+    if not home.is_absolute() or not home.is_dir():
+        raise ValueError('host HOME must be an absolute existing installation context')
+    if product_env.get('RUSTUP_HOME') and not Path(product_env['RUSTUP_HOME']).is_absolute():
+        raise ValueError('host RUSTUP_HOME must be absolute when explicitly supplied')
+    raw_cargo_home = os.environ.get('CARGO_HOME')
+    cargo_home = Path(raw_cargo_home) if raw_cargo_home else home / '.cargo'
+    if not cargo_home.is_absolute() or not cargo_home.is_dir():
+        raise ValueError('host Cargo installation home must already exist and be absolute')
+    installed = cargo_home / 'bin/rustup'
+    on_path = shutil.which('rustup', path=product_env.get('PATH', ''))
+    if not installed.is_file() or not os.access(installed, os.X_OK) or not on_path:
+        raise ValueError('host Cargo home lacks its existing executable rustup installation')
+    if sha(installed.resolve(), deadline) != sha(Path(on_path).resolve(), deadline):
+        raise ValueError('host Cargo home rustup bytes differ from PATH rustup')
+    setup_env = dict(product_env, CARGO_HOME=str(cargo_home))
+    return setup_env, {
+        'cargo_home': str(cargo_home),
+        'cargo_home_provenance': 'original CARGO_HOME' if raw_cargo_home else 'original HOME/.cargo default',
+        'rustup_home': product_env.get('RUSTUP_HOME', str(home / '.rustup')),
+        'rustup_home_provenance': 'original RUSTUP_HOME' if product_env.get('RUSTUP_HOME') else 'original HOME/.rustup default',
+        'installation_rustup': str(installed), 'path_rustup': on_path,
+        'installation_bytes_match_path': True,
+        'limit': 'Static installation-path admission only; actual setup and product-context proxy readiness require later execution.'}
+
+
 class ProcessFailure(RuntimeError):
     def __init__(self, message, group_quiescent):
         super().__init__(message)
@@ -176,7 +204,7 @@ def tool_receipts(root, env, deadline=None):
     return rows
 
 
-def build_tool_receipts(root, env, deadline):
+def build_tool_receipts(root, setup_env, env, deadline):
     rows = {}
     def remaining():
         value = deadline-time.monotonic()-10
@@ -184,8 +212,8 @@ def build_tool_receipts(root, env, deadline):
             raise TimeoutError('total budget exhausted during tool identity collection')
         return min(5, value)
     for tool in ('cargo', 'rustc', 'rustfmt', 'clippy-driver'):
-        path = subprocess.check_output(['rustup', 'which', '--toolchain', '1.95.0', tool], cwd=root, env=env, text=True, timeout=remaining()).strip()
-        version = subprocess.check_output([path, '--version'], cwd=root, env=env, text=True, timeout=remaining()).strip()
+        path = subprocess.check_output(['rustup', 'which', '--toolchain', '1.95.0', tool], cwd=root, env=setup_env, text=True, timeout=remaining()).strip()
+        version = subprocess.check_output([path, '--version'], cwd=root, env=setup_env, text=True, timeout=remaining()).strip()
         rows[tool] = {'path': path, 'sha256': sha(Path(path), deadline), 'version': version}
     if not rows['rustc']['version'].startswith('rustc 1.95.0 '):
         raise ValueError('unexpected Rust version')
@@ -197,7 +225,8 @@ def build_tool_receipts(root, env, deadline):
         observed = subprocess.check_output([tool, '--version'], cwd=root, env=env, text=True, timeout=remaining()).strip()
         if observed != rows[tool]['version']:
             raise ValueError(f'{tool} on PATH has a different version')
-    return rows
+    return {'tools': rows, 'discovery_environment_phase': 'toolchain',
+            'cargo_rustc_proxy_validation_environment_phase': 'product'}
 
 
 def verify_package(deadline=None):
@@ -224,6 +253,7 @@ def execute(args):
     root = out / 'checkout'
     env = environment(root, out, args.event_head, args.event_checkout)
     config_disposition = reject_cargo_config(root, Path(env['CARGO_HOME']))
+    setup_env, setup_provenance = toolchain_environment(env, deadline)
     tools = tool_receipts(root, env, deadline)
     out.mkdir(parents=True, exist_ok=False)
     (out / 'tmp').mkdir()
@@ -232,7 +262,9 @@ def execute(args):
     receipt = {'status': 'INCOMPLETE', 'source': source, 'checkout': str(root),
                'event_identity': {'declared_event_head': args.event_head, 'declared_event_checkout': args.event_checkout,
                                   'limit': 'Caller declarations only; no GitHub event authentication. Actual checkout identity is source.head/tree.'},
-               'environment': env, 'cargo_config': config_disposition, 'tools': tools, 'commands': [], 'excluded': plan['excluded'],
+               'environments': {'product': env, 'toolchain': setup_env},
+               'toolchain_home_provenance': setup_provenance, 'cargo_config': config_disposition, 'tools': tools,
+               'tools_environment_phase': 'product', 'commands': [], 'excluded': plan['excluded'],
                'adapter_sha256': sha(Path(__file__), deadline), 'package_sha256': read_json('PACKAGE-SHA256.json')}
     code = 1
     previous = {}
@@ -246,6 +278,7 @@ def execute(args):
         # Only this newly-created clone is mutable. Never restore into caller source.
         clone = ['git', 'clone', '--no-local', '--no-hardlinks', '--depth', '1', '--no-tags', '--', str(original_source), str(root)]
         result = run_process(clone, original_source, env, out / 'clone.log', deadline-time.monotonic()-10, deadline=deadline)
+        result['environment_phase'] = 'product'
         receipt['clone'] = result
         if result['exit']:
             raise ValueError('owned disposable clone failed; no fallback')
@@ -257,15 +290,17 @@ def execute(args):
             # and the original always-report. No retries or Mac fallback.
             step_budget = deadline - time.monotonic() - 10
             timeout = min(step_budget, step['timeout_seconds'] or step_budget)
-            receipt['commands'].append({'id': step['id'], 'status': 'INCOMPLETE', 'argv': command, 'timeout_seconds': timeout})
+            environment_phase = 'toolchain' if step['id'] == 'toolchain' else 'product'
+            step_env = setup_env if environment_phase == 'toolchain' else env
+            receipt['commands'].append({'id': step['id'], 'environment_phase': environment_phase, 'status': 'INCOMPLETE', 'argv': command, 'timeout_seconds': timeout})
             write_json(out / 'receipt.json', receipt)
-            result = run_process(command, root, env, out / (step['id'] + '.log'), timeout, deadline=deadline)
+            result = run_process(command, root, step_env, out / (step['id'] + '.log'), timeout, deadline=deadline)
             receipt['commands'][-1].update(result, status='COMPLETE')
             write_json(out / 'receipt.json', receipt)
             if result['exit']:
                 raise ValueError(f"first failure: {step['id']} exited {result['exit']}")
             if step['id'] == 'toolchain':
-                receipt['build_tools'] = build_tool_receipts(root, env, deadline)
+                receipt['build_tools'] = build_tool_receipts(root, setup_env, env, deadline)
         summary = json.loads((out / 'tmp/nvwa-b1-motion-mutations/summary.json').read_text())
         if summary.get('passed') is not True or len(summary.get('cases', [])) != 3 or not all(c.get('semantic_test_failure') and c.get('restored_green') for c in summary['cases']):
             raise ValueError('missing complete original mutation witness summary')
@@ -294,6 +329,7 @@ def execute(args):
             try:
                 timeout = remaining(deadline, 5)
                 result = run_process(['python3', '-B', str(root / 'scripts/ci-timing.py'), 'report'], root, env, out / 'timing-report.log', timeout, deadline=deadline)
+                result['environment_phase'] = 'product'
                 receipt['always_timing_report'] = result
                 if result['exit']:
                     code = 1

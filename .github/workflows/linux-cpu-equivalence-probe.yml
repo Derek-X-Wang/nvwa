@@ -67,7 +67,7 @@ jobs:
           from pathlib import Path
           b=Path(os.environ['PROBE_ROOT']); h=Path(os.environ['PROBE_HARNESS'])
           manifest=h/'PACKAGE-SHA256.json'
-          assert hashlib.sha256(manifest.read_bytes()).hexdigest()=='c731c4fcbebfa5e684f6896e40cd15c480cb9098a52253095145cdedc3fd03d0'
+          assert hashlib.sha256(manifest.read_bytes()).hexdigest()=='30eb15ba98d35d9ea31016c0b273d9298a84257ac780c0601e279862c82aa45b'
           for name,digest in json.loads(manifest.read_text()).items():
               assert hashlib.sha256((h/name).read_bytes()).hexdigest()==digest,name
           def git(*args):

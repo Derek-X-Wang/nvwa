@@ -30,7 +30,8 @@
       ],
       "original_body_sha256": "2633535201ac85bcd48438d308efb8428304d1057586dad9a7f9fbbd358136d9",
       "timeout_seconds": null,
-      "adaptation": null
+      "adaptation": null,
+      "environment_phase": "toolchain"
     },
     {
       "id": "fetch",
@@ -41,7 +42,8 @@
         272
       ],
       "timeout_seconds": null,
-      "adaptation": "Own locked graph provisioning: selected original fetch lines; omit unselected60; add73 with same --locked --manifest-path contract"
+      "adaptation": "Own locked graph provisioning: selected original fetch lines; omit unselected60; add73 with same --locked --manifest-path contract",
+      "environment_phase": "product"
     },
     {
       "id": "cpu",
@@ -53,7 +55,8 @@
       ],
       "original_body_sha256": "04397b68162f4940de63e839b2a2fa43babcc760adf2156fc09168f0383085bc",
       "timeout_seconds": null,
-      "adaptation": "Only native wrapper call replaced by explicit private Linux host wrapper"
+      "adaptation": "Only native wrapper call replaced by explicit private Linux host wrapper",
+      "environment_phase": "product"
     },
     {
       "id": "bridges",
@@ -65,7 +68,8 @@
       ],
       "original_body_sha256": "ccd97d09c5bfd2a196ea3641b266aa452e4775926743a33723aadd5e2c190cbc",
       "timeout_seconds": null,
-      "adaptation": null
+      "adaptation": null,
+      "environment_phase": "product"
     },
     {
       "id": "mutations",
@@ -77,7 +81,8 @@
       ],
       "original_body_sha256": "dc5d8e964ccbb6ffdc9bc1ad430b0b207624e4f43c79d0802b809a41464f214a",
       "timeout_seconds": 720,
-      "adaptation": null
+      "adaptation": null,
+      "environment_phase": "product"
     }
   ],
   "excluded": [
@@ -101,5 +106,12 @@
     "RUNNER_TEMP": "RUN/tmp",
     "NVWA_CI_HEAD_SHA": "separate supplied event-head or unset; never inferred from checkout SHA",
     "GITHUB_SHA": "separate supplied synthetic/event checkout SHA or unset; never inferred as event-head"
+  },
+  "environment_scope": "Existing environment map is product only: clone/fetch/CPU/bridges/mutations/report and actual cargo/rustc proxy validation",
+  "toolchain_environment": {
+    "base": "Same sanitized common environment as product; only CARGO_HOME differs",
+    "CARGO_HOME": "Original host CARGO_HOME, else original HOME/.cargo; existing matching executable rustup installation required",
+    "RUSTUP_HOME": "Same original absolute RUSTUP_HOME if supplied, otherwise original HOME/.rustup default",
+    "limit": "Rustup install/discovery use host home; private-context proxy readiness checked separately before fetch; actual Linux success NOT-RUN"
   }
 }
