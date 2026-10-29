@@ -1,0 +1,105 @@
+{
+  "status": "PREPARATION ONLY; Linux execution NOT-RUN and NOT AUTHORIZED in this stage",
+  "source_head": "a51fe46b9097398b4544f318f6b3583bca7ab24e",
+  "platform": "Ubuntu24.04 x86_64",
+  "total_seconds": 3600,
+  "mutation_seconds": 720,
+  "cargo_workers": 1,
+  "selected_top_level_commands": 19,
+  "selected_cargo_commands": 18,
+  "mutation_nested_cargo_starts": 6,
+  "graphs": [
+    "Cargo.toml",
+    "experiments/49-runtime-pose-parity/probe/Cargo.toml",
+    "experiments/50-upper-arm-neutral-ab/probe/Cargo.toml",
+    "experiments/65-b1-appearance-quality/preview/Cargo.toml",
+    "experiments/66-b1-appearance-work/Cargo.toml",
+    "experiments/68-b1-eye-render-diagnosis/Cargo.toml",
+    "experiments/71-b1-character-parameters/Cargo.toml",
+    "experiments/73-high-poly-eyes/Cargo.toml",
+    "experiments/79-shoulder-pose-corrective/Cargo.toml"
+  ],
+  "steps": [
+    {
+      "id": "toolchain",
+      "file": "commands/00-toolchain.sh",
+      "source": ".github/workflows/ci.yml",
+      "lines": [
+        107,
+        107
+      ],
+      "original_body_sha256": "2633535201ac85bcd48438d308efb8428304d1057586dad9a7f9fbbd358136d9",
+      "timeout_seconds": null,
+      "adaptation": null
+    },
+    {
+      "id": "fetch",
+      "file": "commands/01-fetch.sh",
+      "source": ".github/workflows/ci.yml",
+      "lines": [
+        264,
+        272
+      ],
+      "timeout_seconds": null,
+      "adaptation": "Own locked graph provisioning: selected original fetch lines; omit unselected60; add73 with same --locked --manifest-path contract"
+    },
+    {
+      "id": "cpu",
+      "file": "commands/02-cpu.sh",
+      "source": ".github/workflows/ci.yml",
+      "lines": [
+        140,
+        147
+      ],
+      "original_body_sha256": "04397b68162f4940de63e839b2a2fa43babcc760adf2156fc09168f0383085bc",
+      "timeout_seconds": null,
+      "adaptation": "Only native wrapper call replaced by explicit private Linux host wrapper"
+    },
+    {
+      "id": "bridges",
+      "file": "commands/03-bridges.sh",
+      "source": ".github/workflows/ci.yml",
+      "lines": [
+        149,
+        161
+      ],
+      "original_body_sha256": "ccd97d09c5bfd2a196ea3641b266aa452e4775926743a33723aadd5e2c190cbc",
+      "timeout_seconds": null,
+      "adaptation": null
+    },
+    {
+      "id": "mutations",
+      "file": "commands/04-mutations.sh",
+      "source": ".github/workflows/ci.yml",
+      "lines": [
+        164,
+        164
+      ],
+      "original_body_sha256": "dc5d8e964ccbb6ffdc9bc1ad430b0b207624e4f43c79d0802b809a41464f214a",
+      "timeout_seconds": 720,
+      "adaptation": null
+    }
+  ],
+  "excluded": [
+    "Complete portable suite (separate existing gate)",
+    "60continuous matrix:594grid frames, surfaces and actual-frame70 normal/-O controls",
+    "57/58B1 and10Wasm target job (separate existing gate)",
+    "All cache policy/restore/save operations",
+    "Mac platform, GUI, GPU, performance evidence",
+    "Exact17bundle/cadence classification; all gate/status/budget changes"
+  ],
+  "environment": {
+    "CARGO_TERM_COLOR": "always",
+    "CARGO_INCREMENTAL": "0",
+    "CARGO_PROFILE_DEV_DEBUG": "0",
+    "CARGO_PROFILE_TEST_DEBUG": "0",
+    "CARGO_BUILD_JOBS": "1",
+    "CARGO_TARGET_DIR": "CHECKOUT/target",
+    "CARGO_HOME": "RUN/cargo-home",
+    "RUSTUP_TOOLCHAIN": "1.95.0",
+    "GITHUB_WORKSPACE": "CHECKOUT",
+    "RUNNER_TEMP": "RUN/tmp",
+    "NVWA_CI_HEAD_SHA": "separate supplied event-head or unset; never inferred from checkout SHA",
+    "GITHUB_SHA": "separate supplied synthetic/event checkout SHA or unset; never inferred as event-head"
+  }
+}

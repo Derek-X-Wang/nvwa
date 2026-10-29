@@ -1,0 +1,9 @@
+cargo fetch --locked --manifest-path Cargo.toml
+cargo fetch --locked --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml
+cargo fetch --locked --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml
+cargo fetch --locked --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml
+cargo fetch --locked --manifest-path experiments/66-b1-appearance-work/Cargo.toml
+cargo fetch --locked --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml
+cargo fetch --locked --manifest-path experiments/71-b1-character-parameters/Cargo.toml
+cargo fetch --locked --manifest-path experiments/73-high-poly-eyes/Cargo.toml
+cargo fetch --locked --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml

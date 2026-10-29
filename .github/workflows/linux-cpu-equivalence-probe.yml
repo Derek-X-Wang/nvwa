@@ -1,0 +1,167 @@
+name: Isolated Linux CPU feasibility probe
+on:
+  push:
+    branches: [codex/linux-cpu-equivalence-20261028]
+permissions:
+  contents: read
+jobs:
+  linux-cpu-feasibility:
+    name: Linux CPU feasibility only
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      CARGO_BUILD_JOBS: '1'
+      PROBE_BRANCH: refs/heads/codex/linux-cpu-equivalence-20261028
+      PROBE_SOURCE: a51fe46b9097398b4544f318f6b3583bca7ab24e
+      PROBE_DRIVER: ${{ github.sha }}
+      PROBE_EVENT: ${{ github.event_name }}
+      PROBE_REF: ${{ github.ref }}
+      PROBE_WORKFLOW: ${{ github.workflow }}
+      PROBE_WORKFLOW_REF: ${{ github.workflow_ref }}
+      PROBE_WORKFLOW_SHA: ${{ github.workflow_sha }}
+      PROBE_JOB: ${{ github.job }}
+      PROBE_RUN_ID: ${{ github.run_id }}
+      PROBE_RUN_ATTEMPT: ${{ github.run_attempt }}
+      PROBE_REPOSITORY: ${{ github.repository }}
+      PROBE_SERVER: ${{ github.server_url }}
+    steps:
+      - name: Bootstrap exact inputs and run one bounded CPU probe
+        shell: bash
+        run: |
+          set -euo pipefail
+          B="$RUNNER_TEMP/linux-cpu-envelope"
+          mkdir "$B"
+          python3 -c 'import pathlib,time,sys; pathlib.Path(sys.argv[1]).write_text(str(time.monotonic()))' "$B/started"
+          command -v timeout
+          timeout --version
+          set +e
+          timeout --signal=TERM --kill-after=15s 3480s bash -euo pipefail > "$B/envelope.log" 2>&1 <<'PROBE'
+          B="$RUNNER_TEMP/linux-cpu-envelope"
+          test "$PROBE_EVENT" = push
+          test "$PROBE_REF" = "$PROBE_BRANCH"
+          test "$PROBE_RUN_ATTEMPT" = 1
+          test "$PROBE_REPOSITORY" = Derek-X-Wang/nvwa
+          test "$PROBE_SERVER" = https://github.com
+          for tool in git bash python3 rustup cargo rustc shasum timeout; do command -v "$tool"; done
+          export GIT_TERMINAL_PROMPT=0
+          URL="https://github.com/$PROBE_REPOSITORY.git"
+          git init "$B/driver"
+          git -C "$B/driver" remote add origin "$URL"
+          git -C "$B/driver" config core.autocrlf false
+          git -C "$B/driver" config remote.origin.promisor true
+          git -C "$B/driver" config remote.origin.partialclonefilter blob:none
+          git -C "$B/driver" sparse-checkout init --no-cone
+          git -C "$B/driver" sparse-checkout set --no-cone '/.ci-probes/linux-cpu-equivalence/'
+          git -C "$B/driver" -c protocol.version=2 fetch --depth=1 --filter=blob:none --no-tags origin "$PROBE_DRIVER"
+          git -C "$B/driver" checkout --detach FETCH_HEAD
+          test "$(git -C "$B/driver" rev-parse HEAD)" = "$PROBE_DRIVER"
+          git init "$B/source"
+          git -C "$B/source" remote add origin "$URL"
+          git -C "$B/source" config core.autocrlf false
+          git -C "$B/source" fetch --depth=1 --no-tags origin "$PROBE_SOURCE"
+          git -C "$B/source" checkout --detach FETCH_HEAD
+          H="$B/driver/.ci-probes/linux-cpu-equivalence"
+          export PROBE_ROOT="$B" PROBE_HARNESS="$H"
+          python3 -B - <<'PY'
+          import hashlib,json,os,subprocess
+          from pathlib import Path
+          b=Path(os.environ['PROBE_ROOT']); h=Path(os.environ['PROBE_HARNESS'])
+          manifest=h/'PACKAGE-SHA256.json'
+          assert hashlib.sha256(manifest.read_bytes()).hexdigest()=='c731c4fcbebfa5e684f6896e40cd15c480cb9098a52253095145cdedc3fd03d0'
+          for name,digest in json.loads(manifest.read_text()).items():
+              assert hashlib.sha256((h/name).read_bytes()).hexdigest()==digest,name
+          def git(*args):
+              return subprocess.check_output(['git','--no-optional-locks','-C',str(b/'source'),*args])
+          assert git('rev-parse','HEAD').decode().strip()==os.environ['PROBE_SOURCE']
+          assert git('rev-parse','HEAD^{tree}').decode().strip()=='24873fb20ba9981169fcc36810c058503641b0c1'
+          assert not git('status','--porcelain','--untracked-files=all','--ignored')
+          blobs=[line.split(b'\t',1)[0].split() for line in git('ls-tree','-rl','HEAD').splitlines()]
+          blobs=[row for row in blobs if row[1]==b'blob']
+          assert len(blobs)==8391
+          assert sum(int(row[3]) for row in blobs)==335088593
+          identity={k:v for k,v in os.environ.items() if k.startswith('PROBE_') and k not in ('PROBE_ROOT','PROBE_HARNESS')}
+          identity.update(source_tree='24873fb20ba9981169fcc36810c058503641b0c1',source_blobs=8391,source_logical_bytes=335088593,
+              budget={'authorized_jobs':1,'attempt':1,'outer_job_seconds':3600,'bootstrap_and_adapter_seconds':3480,'kill_grace_seconds':15,'collector_seconds':45},
+              adapter_event_arguments='omitted; authentic driver/event identities are here, not substituted for tested source',
+              adapter_identity_limit='adapter uses private workflow/job labels and omits run IDs; its timing identities are not authenticated GitHub gate receipts')
+          (b/'identity.json').write_text(json.dumps(identity,indent=2)+'\n')
+          PY
+          chmod -R a-w "$B/source"
+          python3 -B "$H/adapter.py" verify-source --checkout "$B/source"
+          for command in "$H"/commands/*.sh; do printf '\nSELECTED BODY %s\n' "${command##*/}"; cat "$command"; done
+          # The immutable adapter starts its own 60-minute timer. The surrounding
+          # timeout includes all bootstrap and can stop it earlier; no extra hour.
+          python3 -B "$H/adapter.py" execute --source "$B/source" --out "$B/run" --disposable-checkout
+          PROBE
+          rc=$?
+          printf '%s\n' "$rc" > "$B/exit-code"
+          exit "$rc"
+      - name: Preserve exact raw evidence and require complete receipt
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v timeout
+          timeout --signal=TERM --kill-after=5s 45s python3 -B - <<'PY'
+          import base64,hashlib,json,os,sys,time
+          from pathlib import Path
+          b=Path(os.environ['RUNNER_TEMP'])/'linux-cpu-envelope'
+          errors=[]; index=[]; total=0
+          def read_json(path):
+              try: return json.loads(path.read_text())
+              except Exception as error:
+                  errors.append(f'{path.relative_to(b)} missing/invalid: {type(error).__name__}')
+                  return {}
+          identity=read_json(b/'identity.json'); receipt=read_json(b/'run/receipt.json')
+          for key in ['PROBE_SOURCE','PROBE_DRIVER','PROBE_EVENT','PROBE_REF','PROBE_WORKFLOW','PROBE_WORKFLOW_REF','PROBE_WORKFLOW_SHA','PROBE_JOB','PROBE_RUN_ID','PROBE_RUN_ATTEMPT','PROBE_REPOSITORY','PROBE_SERVER']:
+              if not os.environ.get(key) or identity.get(key)!=os.environ.get(key): errors.append('envelope identity missing/mismatched: '+key)
+          try:
+              rc=int((b/'exit-code').read_text())
+              if rc: errors.append(f'wrapper exit {rc}; timeout/cancellation/failure is not a pass')
+          except Exception: errors.append('wrapper exit missing')
+          try:
+              elapsed=time.monotonic()-float((b/'started').read_text())
+              if elapsed>3555: errors.append('envelope exceeded reserved elapsed budget')
+          except Exception: elapsed=None; errors.append('start marker missing')
+          if receipt.get('status')!='PASS': errors.append('adapter has no PASS receipt')
+          if receipt.get('source_restored') is not True: errors.append('owned source restoration not verified')
+          if receipt.get('process_group_quiescent') is not True: errors.append('process group absence not verified')
+          if receipt.get('always_timing_report',{}).get('exit')!=0: errors.append('original timing report incomplete/failed')
+          if receipt.get('source',{}).get('head')!=os.environ['PROBE_SOURCE']: errors.append('adapter source identity mismatch')
+          commands=receipt.get('commands',[])
+          if [row.get('id') for row in commands]!=['toolchain','fetch','cpu','bridges','mutations'] or any(row.get('exit')!=0 or row.get('status')!='COMPLETE' for row in commands): errors.append('selected command receipts incomplete/failed')
+          required=['identity.json','exit-code','envelope.log','run/receipt.json','run/clone.log','run/toolchain.log','run/fetch.log','run/cpu.log','run/bridges.log','run/mutations.log','run/timing-report.log','run/tmp/nvwa-b1-motion-mutations/summary.json']
+          for name in required:
+              if not (b/name).is_file(): errors.append(f'required evidence missing: {name}')
+          mutation=read_json(b/'run/tmp/nvwa-b1-motion-mutations/summary.json')
+          if mutation.get('passed') is not True or len(mutation.get('cases',[]))!=3: errors.append('three original mutation witnesses incomplete')
+          hashes=mutation.get('hashes',{})
+          if len(hashes)!=6: errors.append('six original mutation logs missing')
+          for name,digest in hashes.items():
+              path=b/'run/tmp/nvwa-b1-motion-mutations'/name
+              if not path.is_file() or path.stat().st_size>16*1024*1024 or hashlib.sha256(path.read_bytes()).hexdigest()!=digest: errors.append('mutation log missing/drifted/oversize: '+name)
+          paths={b/name for name in required if (b/name).is_file()}
+          for directory in [b/'run/timing',b/'run/tmp/nvwa-b1-motion-mutations']:
+              if directory.is_dir(): paths.update(p for p in directory.rglob('*') if p.is_file())
+          if not (b/'run/timing').is_dir() or not list((b/'run/timing').glob('*.json')): errors.append('original timing records missing')
+          # A strict cap makes evidence overflow a failure. No truncated log can
+          # support PASS. Base64 preserves bytes and prevents workflow commands.
+          for p in sorted(paths):
+              if len(index)>=1024 or total+p.stat().st_size>16*1024*1024:
+                  errors.append('raw evidence cap exceeded; evidence incomplete'); break
+              if p.is_symlink(): errors.append('evidence symlink refused'); continue
+              data=p.read_bytes(); total+=len(data)
+              row={'path':str(p.relative_to(b)),'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()}; index.append(row)
+              print('RAW_EVIDENCE_BEGIN '+json.dumps(row),flush=True)
+              for start in range(0,len(data),3072): print(base64.b64encode(data[start:start+3072]).decode(),flush=True)
+              print('RAW_EVIDENCE_END '+row['path'],flush=True)
+          result={'status':'FAIL' if errors else 'PASS','errors':errors,'elapsed_seconds':elapsed,'identity':identity,'raw_evidence':index,
+              'limit':'Selected Linux CPU feasibility only. No PR123 clearance, merge, Mac/GPU/matrix/performance or cadence adoption. Hard host lifecycle remains subject to this real run.'}
+          print('ENVELOPE_RECEIPT '+json.dumps(result,sort_keys=True),flush=True)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as stream:
+              stream.write('## Isolated Linux CPU feasibility: '+result['status']+'\n\n')
+              stream.write('Source: `'+os.environ['PROBE_SOURCE']+'`; driver: `'+os.environ['PROBE_DRIVER']+'`.\n\n')
+              stream.write('Raw command, mutation and timing files are preserved as exact base64 bytes with SHA256 in this step log.\n\n')
+              stream.write('```json\n'+json.dumps(result,indent=2)+'\n```\n')
+          sys.exit(1 if errors else 0)
+          PY

@@ -1,0 +1,12 @@
+cargo fmt --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --package b1-appearance-quality-preview --check
+cargo fmt --manifest-path experiments/66-b1-appearance-work/Cargo.toml --package b1-appearance-work --check
+cargo test --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --lib --locked --offline
+cargo test --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --locked --offline
+cargo fmt --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --package b1-eye-render-diagnosis --check
+cargo fmt --manifest-path experiments/71-b1-character-parameters/Cargo.toml --package b1-character-parameters --check
+cargo test --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --locked --offline
+cargo test --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --locked --offline
+cargo fmt --manifest-path experiments/73-high-poly-eyes/Cargo.toml --package b1-high-poly-eyes --check
+cargo test --manifest-path experiments/73-high-poly-eyes/Cargo.toml --lib --locked --offline
+cargo fmt --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --package b1-shoulder-source-corrective --check
+cargo test --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --locked --offline
