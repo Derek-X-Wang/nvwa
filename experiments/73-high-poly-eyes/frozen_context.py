@@ -16,6 +16,11 @@ AUTHORING_BASELINES = {
     'crates/nvwa-studio/src/lib.rs': 'fixtures/b1-motion-authoring-baselines/studio-lib.rs',
     'crates/nvwa-studio/src/editor_layout.rs': 'fixtures/b1-motion-authoring-baselines/editor-layout.rs',
 }
+MULTISEGMENT_CONTEXT_NAME = 'source-context-b1-multisegment-v1.json'
+MULTISEGMENT_CONTEXT_SHA = '3a2a387c0753ee0104fecff4d91e67ef0aa15a93cca62e356fef300bdd763b9a'
+MULTISEGMENT_BASELINES = {
+    'crates/nvwa-studio/src/lib.rs': 'fixtures/b1-multisegment-baselines/studio-lib.rs',
+}
 FIXTURES_NAME = 'fixtures/source-contexts/manifest.json'
 FIXTURES_SHA = 'b70450a16e7fa59b13fc333de598864ed6e995b88522b04cf520ab75e239de3a'
 
@@ -79,6 +84,18 @@ def authoring_baselines(exp, original):
     return result
 
 
+def multisegment_baselines(exp, contexts):
+    """Retain the preceding authoring UI bytes under their existing exact pin."""
+    result = {}
+    authoring = dict(contexts)['b1-motion-authoring-product-v1']
+    for name, relative in MULTISEGMENT_BASELINES.items():
+        raw = regular_file(exp, relative).read_bytes()
+        require({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == authoring[name],
+                'multisegment baseline differs from authoring context pin: ' + name)
+        result[name] = raw
+    return result
+
+
 def source_contexts(exp, raw, original):
     require(hashlib.sha256(raw).hexdigest() == FROZEN_INPUTS_SHA,
             'immutable original manifest identity mismatch')
@@ -87,7 +104,8 @@ def source_contexts(exp, raw, original):
     for name, expected in ((CONTEXT_NAME, CONTEXT_SHA),
                            (SHORT01_CONTEXT_NAME, SHORT01_CONTEXT_SHA),
                            (SELECTOR_CONTEXT_NAME, SELECTOR_CONTEXT_SHA),
-                           (AUTHORING_CONTEXT_NAME, AUTHORING_CONTEXT_SHA)):
+                           (AUTHORING_CONTEXT_NAME, AUTHORING_CONTEXT_SHA),
+                           (MULTISEGMENT_CONTEXT_NAME, MULTISEGMENT_CONTEXT_SHA)):
         path = regular_file(exp, name)
         raw = path.read_bytes()
         require(hashlib.sha256(raw).hexdigest() == expected,
@@ -103,6 +121,7 @@ def source_contexts(exp, raw, original):
     # selecting the product context. No Git history or current-byte reversal.
     historical_sources(exp, contexts)
     authoring_baselines(exp, original)
+    multisegment_baselines(exp, contexts)
     return contexts
 
 
@@ -110,4 +129,4 @@ def select_context(actual, contexts):
     for name, expected in contexts:
         if actual == expected:
             return name, expected
-    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, reviewed selector product309, or reviewed B1 authoring product309 required')
+    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, reviewed selector product309, reviewed B1 authoring product309, or reviewed B1 multisegment product309 required')

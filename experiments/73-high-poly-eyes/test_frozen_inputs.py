@@ -19,6 +19,7 @@ SPEC.loader.exec_module(CONTEXT)
 PRODUCT = 'hair79-short01-product-v1'
 SELECTOR = 'hair79-selector-product-v1'
 AUTHORING = 'b1-motion-authoring-product-v1'
+MULTISEGMENT = 'b1-multisegment-product-v1'
 ORIGINAL = 'original-frozen309'
 CLOSEOUT = 'character-stage-closeout-v1'
 
@@ -41,13 +42,14 @@ class FrozenInputGate(unittest.TestCase):
         for name in ['test_prepare.py', 'cpu_probe.py', 'frozen_context.py',
                      'source-context-closeout-v1.json', 'source-context-hair79-short01-v1.json',
                      'source-context-hair79-selector-v1.json',
-                     CONTEXT.AUTHORING_CONTEXT_NAME]:
+                     CONTEXT.AUTHORING_CONTEXT_NAME, CONTEXT.MULTISEGMENT_CONTEXT_NAME]:
             shutil.copyfile(EXP / name, cls.exp / name)
         shutil.copytree(EXP / 'fixtures', cls.exp / 'fixtures')
-        cls.all_contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
+        cls.full_contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
+        cls.all_contexts = [(name, files) for name, files in cls.full_contexts if name != MULTISEGMENT]
         cls.contexts = [(name, files) for name, files in cls.all_contexts if name != AUTHORING]
         cls.old_contexts = [(name, files) for name, files in cls.contexts if name != SELECTOR]
-        cls.maps = dict(cls.all_contexts)
+        cls.maps = dict(cls.full_contexts)
         historical = CONTEXT.historical_sources(EXP, cls.contexts)
         cls.baselines = CONTEXT.authoring_baselines(EXP, cls.inputs)
         cls.original = historical[ORIGINAL]
@@ -67,7 +69,12 @@ class FrozenInputGate(unittest.TestCase):
                          SELECTOR: cls.selector}
         cls.authoring = dict(cls.selector)
         cls.authoring.update({name: (cls.root / name).read_bytes() for name in cls.baselines})
+        cls.authoring.update(CONTEXT.multisegment_baselines(EXP, cls.full_contexts))
         cls.snapshots[AUTHORING] = cls.authoring
+        cls.multisegment = dict(cls.authoring)
+        cls.multisegment.update({name: (cls.root / name).read_bytes()
+                                 for name in CONTEXT.MULTISEGMENT_BASELINES})
+        cls.snapshots[MULTISEGMENT] = cls.multisegment
         for context, snapshot in cls.snapshots.items():
             for name, raw in snapshot.items():
                 if {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} != cls.maps[context][name]:
@@ -399,6 +406,94 @@ class FrozenInputGate(unittest.TestCase):
         self.write_context(AUTHORING)
         for relative in [CONTEXT.AUTHORING_CONTEXT_NAME, *CONTEXT.AUTHORING_BASELINES.values()]:
             self.corrupt_required_file(relative, relative, restore_each=True)
+
+    def test_multisegment_six_context_matrix_has_only_six_complete_admissions(self):
+        changing = list(self.multisegment)
+        variants = [[json.loads(value) for value in
+                     sorted({json.dumps(files[name], sort_keys=True) for _, files in self.full_contexts})]
+                    for name in changing]
+        self.assertEqual(sorted(map(len, variants)), [2] * 11 + [3] * 4)
+        self.assertEqual(math.prod(map(len, variants)), 165888)
+        accepted = rejected = 0
+        for values in itertools.product(*variants):
+            actual = dict(self.inputs)
+            actual.update({name: value.copy() for name, value in zip(changing, values)})
+            matching = [name for name, expected in self.full_contexts if actual == expected]
+            if matching:
+                self.assertEqual(CONTEXT.select_context(actual, self.full_contexts)[0], matching[0])
+                accepted += 1
+            else:
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.full_contexts)
+                rejected += 1
+        self.assertEqual((accepted, rejected), (6, 165882))
+        # The original five-context matrix is still exercised above. Its former
+        # rejects must also remain rejected when the new context is admitted.
+        old_variants = [[json.loads(value) for value in
+                         sorted({json.dumps(files[name], sort_keys=True) for _, files in self.all_contexts})]
+                        for name in changing]
+        accepted = rejected = 0
+        for values in itertools.product(*old_variants):
+            actual = dict(self.inputs)
+            actual.update({name: value.copy() for name, value in zip(changing, values)})
+            matching = [name for name, expected in self.all_contexts if actual == expected]
+            if matching:
+                self.assertEqual(CONTEXT.select_context(actual, self.full_contexts)[0], matching[0])
+                accepted += 1
+            else:
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.full_contexts)
+                rejected += 1
+        self.assertEqual((accepted, rejected), (5, 110587))
+
+    def test_multisegment_and_all_old_contexts_accept_at_actual_called_gate(self):
+        try:
+            for context, expected in self.full_contexts:
+                self.write_context(context)
+                self.assertEqual(len(expected), 309)
+                self.gate(self.raw, rejects=False)
+        finally:
+            self.write_context(AUTHORING)
+
+    def test_multisegment_bidirectional_crossovers_and_source_fail_closed(self):
+        try:
+            for historical, _ in self.all_contexts:
+                for left, right in ((MULTISEGMENT, historical), (historical, MULTISEGMENT)):
+                    self.write_context(left)
+                    source = dict(self.baselines, **self.snapshots[left])
+                    other = dict(self.baselines, **self.snapshots[right])
+                    for name, raw in source.items():
+                        if raw == other[name]:
+                            continue
+                        actual = dict(self.maps[left])
+                        actual[name] = self.maps[right][name]
+                        matching = [context for context, expected in self.full_contexts if actual == expected]
+                        with self.subTest(context=left, substituted=right, source=name):
+                            (self.root / name).write_bytes(other[name])
+                            self.gate(self.raw, rejects=not matching)
+                            (self.root / name).write_bytes(raw)
+            self.write_context(MULTISEGMENT)
+            for name in CONTEXT.MULTISEGMENT_BASELINES:
+                path = self.root / name
+                raw = path.read_bytes()
+                target = self.root / 'multisegment-source-copy'
+                target.write_bytes(raw)
+                for fault in ('missing', 'symlink', 'hash', 'size'):
+                    with self.subTest(source=name, fault=fault):
+                        path.unlink()
+                        try:
+                            if fault == 'symlink': path.symlink_to(target)
+                            elif fault == 'hash': path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+                            elif fault == 'size': path.write_bytes(raw[:-1])
+                            self.gate(self.raw, rejects=True)
+                        finally:
+                            if path.exists() or path.is_symlink(): path.unlink()
+                            path.write_bytes(raw)
+                        self.gate(self.raw, rejects=False)
+            for relative in [CONTEXT.MULTISEGMENT_CONTEXT_NAME, *CONTEXT.MULTISEGMENT_BASELINES.values()]:
+                self.corrupt_required_file(relative, relative, restore_each=True)
+        finally:
+            self.write_context(AUTHORING)
 
     def corrupt_required_file(self, relative, label, restore_each=False):
         path = self.exp / relative
