@@ -285,3 +285,31 @@ metadata gaps proves a scheduler, provisioning, concurrency, or capacity cause.
 Timestamps have GitHub's second precision. For reruns, retrieve the run and jobs
 from the [attempt-specific API](https://docs.github.com/en/rest/actions/workflow-jobs#list-jobs-for-a-workflow-run-attempt),
 not an all-attempt jobs collection. The timing code performs no API calls.
+
+## Explicit B1 authoring eye8 exception (2026-10-29)
+
+Derek explicitly approved only the named eye/hair/character-parameter step's
+**5→8 minute** change. This new decision supersedes the automatic-stop rule above
+for this one allocation; its history and failures remain. Runs
+[40941068061](https://github.com/Derek-X-Wang/nvwa/actions/runs/40941068061) and
+[40958552457](https://github.com/Derek-X-Wang/nvwa/actions/runs/40958552457)
+both printed OK for all20 suite invocations before the step timed out. The
+second included the bounded test-setup optimization `7ca5ab0`; its local saving
+did not establish hosted completion.
+
+The portable job stays at20 minutes. Native75, B1/warm60, authenticated-source3,
+offline-motion6, frozen-upper-arm5, cache-action4 and all other settings stay
+unchanged. All four independent consumers require the unique named exact8 step,
+its command and position, then normalize **only8→historical3** before unchanged
+assertions and frozen hashes. Every prior negative remains; stale5, malformed8
+and an8-minute cap placed on the wrong step also reject. All48 run bodies,
+catalog cases/order, normal/optimized modes, original309/context/fixture source
+admission, runtime/assets/dependencies and cache behavior remain unchanged.
+
+This is a step allowance, not a runtime speedup or proof of an8-minute step or
+20-minute whole-job fit. Compiled runtime and actual Web/CLI acceptance stay
+pinned to `30aa99e`; the policy/docs commit does not claim a new build or visual
+result. Three nonruntime policy/docs inputs in that broader Web build receipt
+change; the other269 inputs retain their bytes. Fresh complete formal PR/main
+gates remain required. Any renewed eye8 or portable20 failure/timeout triggers
+critical STOP: no further increase, job split or case reduction.

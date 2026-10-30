@@ -86,3 +86,26 @@ source admission 与既有 HOLD 均保留。仍须通过新身份的完整正式
 分开记录编译、实际启动、功能、画面和性能。延后的桌面检查写为 `NOT-RUN（按策略延后）`，说明覆盖范围；不能从 Web、CLI 或 CI 推断桌面画面已通过。若任务结论依赖仍未验证的桌面专属行为，整体结论保持 `PARTIAL`。
 
 此约定替代旧任务书中日常双端同步验收的要求。历史报告、失败、哈希和实验结果原样保留，不改写为通过。人物审美与动作质量仍按其实际证据决定：#79 保留 A。早期 fringe-B 的额头／眼睛遮挡属于旧候选；[实验 82](../../experiments/82-hairline-aba/RESULTS.md)的当前 `BLocalAlpha` 是另一候选，在已测 source0 中未见新增遮挡，但实际发际改善不足，结论为 INCONCLUSIVE / NO-ADOPT，不扩大采集。完整发际／眼睑、#80 衣物与 M2 动作质量的 HOLD 不因验收频率变化或阶段冻结而解除。
+
+## B1 动作编排的 eye8 明确例外
+
+2026-10-29，Derek 明确批准“批准仅5→8分钟修正（推荐）”。此新决定只将
+具名 eye/hair/character-parameter 步骤从5分钟改为8分钟，覆盖上文 eye5
+失败后停止自动加时的规则；保留该历史规则与失败，不将其改写为通过。
+实际 [40941068061](https://github.com/Derek-X-Wang/nvwa/actions/runs/40941068061)
+和 [40958552457](https://github.com/Derek-X-Wang/nvwa/actions/runs/40958552457)
+均已输出全部20次 suite 的 OK，随后步骤超时。第二次包含 `7ca5ab0` 的有界
+测试初始化优化；该局部节省没有保证 hosted 步骤完成。
+
+portable 整个作业仍为20分钟，native75、B1/optional-warm60、auth3、offline6、
+upper-arm5、cache action4及所有其他设置保持不变。四个独立消费者先验证唯一
+具名步骤、原命令和 exact8，再只将该步骤8还原为历史3，继续原有断言与哈希。
+保留全部旧负向控制，增加 stale5、非整数／字符串／表达式8及错误步骤的拒绝。
+全部48个 run body、catalog顺序／用例、normal／`-O`、来源309及各上下文／fixture、
+运行时、素材、依赖、缓存行为和既有 HOLD 不变。
+
+这只是步骤预算分配，不是运行时提速，也不保证8分钟或整个20分钟作业完成。
+旧编译与实际 Web/CLI 验收仍属于 `30aa99e`；本次 policy/docs 提交不是新的编译
+或画面验收。旧 Web build receipt 的3个非运行时 policy/docs 输入随本次改变，
+其余269个输入保持原字节。仍须通过新的完整正式 PR／main CI。若 eye8 或
+portable20 再次失败或超时，触发 critical STOP；不继续加时、不拆作业、不删用例。
