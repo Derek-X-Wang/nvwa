@@ -108,4 +108,7 @@ upper-arm5、cache action4及所有其他设置保持不变。四个独立消费
 旧编译与实际 Web/CLI 验收仍属于 `30aa99e`；本次 policy/docs 提交不是新的编译
 或画面验收。旧 Web build receipt 的3个非运行时 policy/docs 输入随本次改变，
 其余269个输入保持原字节。仍须通过新的完整正式 PR／main CI。若 eye8 或
-portable20 再次失败或超时，触发 critical STOP；不继续加时、不拆作业、不删用例。
+portable20 再次超时，触发 critical STOP；不自动加时、拆作业或删用例。
+本次预算政策修正只限批准的七个文件及既有来源合同边界；需越界则触发
+critical STOP。七文件限制只约束本次预算政策修正，不撤销当前 Goal 先前
+已授权的普通功能 CI 故障修复权限。

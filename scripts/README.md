@@ -311,5 +311,9 @@ This is a step allowance, not a runtime speedup or proof of an8-minute step or
 pinned to `30aa99e`; the policy/docs commit does not claim a new build or visual
 result. Three nonruntime policy/docs inputs in that broader Web build receipt
 change; the other269 inputs retain their bytes. Fresh complete formal PR/main
-gates remain required. Any renewed eye8 or portable20 failure/timeout triggers
-critical STOP: no further increase, job split or case reduction.
+gates remain required. Any renewed eye8 or portable20 timeout triggers critical
+STOP: no automatic further increase, job split or case reduction. This budget
+policy correction stays within the seven approved files and existing source
+contract boundary; needing to cross that boundary triggers critical STOP.
+The seven-file limit applies to this budget policy correction. It does not
+revoke previously authorized ordinary feature CI repairs within the Goal.
