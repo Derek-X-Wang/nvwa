@@ -1,8 +1,10 @@
 # Nvwa 路线图
 
-更新：2026-10-29。目标：让用户捏好一个人物，为它编排动作，在试演舞台播放，并保存为可继续编辑、跨入口交换的作品（Work）。
+更新：2026-10-30。目标：让用户捏好一个人物，为它编排动作，在试演舞台播放，并保存为可继续编辑、跨入口交换的作品（Work）。
 
-本轮 B1 动作编排的编译与实际验收锁定 [`30aa99e`](https://github.com/Derek-X-Wang/nvwa/commit/30aa99e5bba3fef82ba4d533ce8a6ee01586a17b)，与后续文档提交分开。实现及实际 Web／CLI 验收已完成；发布回执由 [#124](https://github.com/Derek-X-Wang/nvwa/issues/124) 记录，此页不预判 PR／main CI。用户可在已编辑人物上创建／恢复八秒预制动作，修改行、撤销／重做、播放并保存交换；见[阶段证据](evidence/b1-motion-authoring/README.md)。
+八秒编排阶段的编译与实际验收锁定 [`30aa99e`](https://github.com/Derek-X-Wang/nvwa/commit/30aa99e5bba3fef82ba4d533ce8a6ee01586a17b)，与后续文档提交分开。用户可在已编辑人物上创建／恢复八秒预制动作，修改行、撤销／重做、播放并保存交换；见[阶段证据](evidence/b1-motion-authoring/README.md)与 [#124 发布回执](https://github.com/Derek-X-Wang/nvwa/issues/124)。
+
+该八秒阶段已随 PR #125 合并，main 验证通过。当前推进 [#126 多段编排](https://github.com/Derek-X-Wang/nvwa/issues/126) 与 [#127 agent CLI 实例](https://github.com/Derek-X-Wang/nvwa/issues/127)：在当前人物上添加／复制现有动作，制作三段以上、10–30 秒的有限作品。新界面的五段编排、真实播放与 Web→CLI→Web 交换已有本地证据；完整16组本地检查通过，发布仍需正式 PR／main CI。见[本轮阶段记录](evidence/b1-multisegment/README.md)与[可运行 CLI 实例](examples/b1-agent-authoring/README.md)。
 
 [PR #120](https://github.com/Derek-X-Wang/nvwa/pull/120) 候选 head `51cff65c34966a76511e317e76ba8bd4d75bafba` 仍保持 **HOLD**；数值候选不计为 main 产品交付，不继续其 CI 诊断或重试。
 
@@ -14,7 +16,7 @@
 | 薄 M1：编排与游玩 | 原始 GLB 人物的三段预制动作、5–10 秒编排、播放／暂停／定位、点击触发与恢复、Studio／Player | 有界功能已交付。预制动作不是 AI 生成；不承诺任意角色兼容。 |
 | M1.1：界面与稳定性 | 窄 UI、中文与输入恢复、有界历史／加载、CPU 绘制回归 | 技术范围已收束。#3 原始缩放复现仍阻塞；#4 性能测量仍有缺口。 |
 | M1.2：agent 创作 Alpha | 能力发现→CLI 创作与纠错→保存→桌面／Web 继续编辑播放；独立离线 CLI 资产包 | 技术交付及引导式真人观察已有证据。[#49 未引导完整试用](m12-unassisted-trial/README.md)仍开放，不能宣告完整 Alpha 关闭。 |
-| 正式 B1 人物 | 八个体型／面部参数、short04／short01 外观；在当前 Work 创建／恢复 arm4s→knee4s，编辑动作／时长／顺序并保存交换 | 动作编排实现及实际 Web／CLI 验收已完成，发布回执见 #124；[证据与原文件](evidence/b1-motion-authoring/README.md)。旧 Work／默认 short04 保留，完整外观与衣物质量仍 HOLD。 |
+| 正式 B1 人物 | 八个体型／面部参数、short04／short01 外观；已交付八秒编排，正在将添加／复制现有动作的多段创作发布到 main | 八秒阶段回执见 #124；多段编排的实现、实际 Web／CLI 交换与本地检查已通过，正式发布结果见 #126／#127。旧 Work／默认 short04 保留，完整外观与衣物质量仍 HOLD。 |
 | M2／M2-A：真实动作 | 既有真实 90 帧样本已在旧 GLB 人物完成工程标定、播放与保存交换；下一步接入正式 B1 | M2 质量 HOLD，产品生成服务未交付。[#118](https://github.com/Derek-X-Wang/nvwa/issues/118) 的正式 B1 导入、播放、CLI／Web 保存闭环尚未交付；数值候选不等于产品完成。 |
 | 人物试演室 | 阶段 A：可保存的灯光、背景／地面、相机和画质设置，随 Work 交换 | 阶段 A 已有桌面／Web／CLI 证据。房间导入与物理保留为后续 B／C；世界编辑器、多人及 Relais 不进入当前范围。 |
 
@@ -23,7 +25,9 @@
 | 优先级 | 可交付结果 | 完成或恢复条件 |
 | --- | --- | --- |
 | 已交付：[现有 main 可直接体验的捏人／试演入口 #121](https://github.com/Derek-X-Wang/nvwa/issues/121) | 静态 Web 入口可选择八参数 short04／short01 人物或原始九秒作品，一步进入编辑或 Player | PR #122 已合并，main CI 已通过；复用现有 Work 与路由。保留该轮实际进入、编辑／播放及保存交换证据。 |
-| 当前主线：B1 动作编排／#124 | 当前人物的有限八秒编排、行编辑、撤销／重做、播放／暂停／定位／结束及 Web→CLI→Web 交换 | 实现及实际验收已完成；240 项 workspace 测试、原生／Wasm 编译、Web 导出与完整16组 portable 通过。实际交换的 revision29 文件逐字节一致；发布回执由 [#124](https://github.com/Derek-X-Wang/nvwa/issues/124) 记录。普通桌面画面按策略记 NOT-RUN；不等同于真实动作导入或质量解禁。 |
+| 当前主线：[B1 多段编排 #126](https://github.com/Derek-X-Wang/nvwa/issues/126) | 给当前人物添加／复制现有动作，组合三段以上、10–30 秒作品，并复用排序、删除、时长、历史和播放控件 | 已实际制作五段20.5秒作品，CLI 将末段改短后，Web 正常打开、播放至20秒结束并保存；revision34 读回与 CLI 文件逐字节一致。本地81项 Studio 测试、源码控制、Wasm 构建和完整16组 portable 通过。发布待正式 PR／main CI；[阶段记录](evidence/b1-multisegment/README.md)。 |
+| 当前副线：[agent CLI 创作实例 #127](https://github.com/Derek-X-Wang/nvwa/issues/127) | agent 无需打开窗口，通过现有 CLI 发现能力、捏人、设置舞台和发型、编排约20秒动作，再修改并保存 | 脚本、真实 Work、命令及中文说明已有重复执行和独立审查证据；复用现有预制动作，不代表 AI 动作生成。随本轮发布核验；[运行方式](examples/b1-agent-authoring/README.md)。 |
+| 已交付：B1 八秒编排／#124 | 当前人物的有限八秒编排、行编辑、撤销／重做、播放／暂停／定位／结束及 Web→CLI→Web 交换 | PR #125 已合并且 main 通过。原阶段240项 workspace 测试、编译、完整16组 portable 及 revision29 逐字节交换证据保留于 [#124](https://github.com/Derek-X-Wang/nvwa/issues/124)。普通桌面画面按策略记 NOT-RUN；不等同于真实动作导入或质量解禁。 |
 | 上一阶段：GUI 发型选择 | 在已编辑的八参数人物上切换现有 short04／short01，保留体型、动作、舞台和历史 | 保留[该阶段快照](evidence/hair79-selector/RESULTS.md)与 [#79](https://github.com/Derek-X-Wang/nvwa/issues/79) 的发布记录；本轮不改写旧上下文、断言或质量结论。 |
 | 停放：M2-A／#118 | 正式 B1 播放既有真实短动作，完成 CLI→Web→CLI 文件闭环 | 依赖 #120 的旋转基础与来源准入。解除该依赖后，先完成实际标定和默认体型，再逐步验收播放／交换；不把数值候选当作完成。 |
 | 停放：#120、CI／缓存优化 | 保留原候选与失败记录，停止继续诊断和重试 | 仅在新的明确授权与有界验收方案具备后恢复。当前自然 main CI 预留一次，不挪用。 |
