@@ -18,6 +18,7 @@ CONTEXT = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CONTEXT)
 PRODUCT = 'hair79-short01-product-v1'
 SELECTOR = 'hair79-selector-product-v1'
+AUTHORING = 'b1-motion-authoring-product-v1'
 ORIGINAL = 'original-frozen309'
 CLOSEOUT = 'character-stage-closeout-v1'
 
@@ -39,13 +40,16 @@ class FrozenInputGate(unittest.TestCase):
             shutil.copyfile(ROOT / name, destination)
         for name in ['test_prepare.py', 'cpu_probe.py', 'frozen_context.py',
                      'source-context-closeout-v1.json', 'source-context-hair79-short01-v1.json',
-                     'source-context-hair79-selector-v1.json']:
+                     'source-context-hair79-selector-v1.json',
+                     CONTEXT.AUTHORING_CONTEXT_NAME]:
             shutil.copyfile(EXP / name, cls.exp / name)
         shutil.copytree(EXP / 'fixtures', cls.exp / 'fixtures')
-        cls.contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
+        cls.all_contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
+        cls.contexts = [(name, files) for name, files in cls.all_contexts if name != AUTHORING]
         cls.old_contexts = [(name, files) for name, files in cls.contexts if name != SELECTOR]
-        cls.maps = dict(cls.contexts)
+        cls.maps = dict(cls.all_contexts)
         historical = CONTEXT.historical_sources(EXP, cls.contexts)
+        cls.baselines = CONTEXT.authoring_baselines(EXP, cls.inputs)
         cls.original = historical[ORIGINAL]
         cls.selector = {name: (cls.root / name).read_bytes() for name in cls.original}
         # The old product is reconstructed from authenticated pre-selector UI bytes.
@@ -61,14 +65,22 @@ class FrozenInputGate(unittest.TestCase):
             cls.closeout[name] = raw
         cls.snapshots = {ORIGINAL: cls.original, CLOSEOUT: cls.closeout, PRODUCT: cls.current,
                          SELECTOR: cls.selector}
+        cls.authoring = dict(cls.selector)
+        cls.authoring.update({name: (cls.root / name).read_bytes() for name in cls.baselines})
+        cls.snapshots[AUTHORING] = cls.authoring
         for context, snapshot in cls.snapshots.items():
             for name, raw in snapshot.items():
                 if {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} != cls.maps[context][name]:
                     raise ValueError('complete source fixture mismatch: ' + context + ' ' + name)
 
     def write_context(self, name):
+        for relative, raw in self.baselines.items():
+            (self.root / relative).write_bytes(raw)
         for relative, raw in self.snapshots[name].items():
             (self.root / relative).write_bytes(raw)
+
+    def setUp(self):
+        self.write_context(AUTHORING)
 
     def gate(self, raw, rejects):
         manifest = self.exp / 'FROZEN-INPUTS.json'
@@ -103,14 +115,14 @@ class FrozenInputGate(unittest.TestCase):
             self.write_context(ORIGINAL)
             self.gate(self.raw, rejects=False)
         finally:
-            self.write_context(SELECTOR)
+            self.write_context(AUTHORING)
 
     def test_exact_closeout_context_accepts_at_actual_called_gate_without_git_history(self):
         try:
             self.write_context(CLOSEOUT)
             self.gate(self.raw, rejects=False)
         finally:
-            self.write_context(SELECTOR)
+            self.write_context(AUTHORING)
 
     def test_all_fourteen_mixed_contexts_reject_at_actual_called_gate(self):
         names = list(json.loads((EXP / 'source-context-closeout-v1.json').read_bytes())['overrides'])
@@ -124,7 +136,7 @@ class FrozenInputGate(unittest.TestCase):
                         (self.root / name).write_bytes((self.closeout if closeout else self.original)[name])
                     self.gate(self.raw, rejects=True)
         finally:
-            self.write_context(SELECTOR)
+            self.write_context(AUTHORING)
 
     def test_every_product_single_path_crossover_rejects_at_actual_called_gate(self):
         try:
@@ -140,7 +152,7 @@ class FrozenInputGate(unittest.TestCase):
                             self.gate(self.raw, rejects=True)
                             (self.root / name).write_bytes(raw)
         finally:
-            self.write_context(SELECTOR)
+            self.write_context(AUTHORING)
 
     def test_all_complete_context_maps_and_every_mixture_reject_except_three_admitted(self):
         changing = list(self.original)
@@ -176,7 +188,7 @@ class FrozenInputGate(unittest.TestCase):
                     self.write_context(context)
                     self.gate(self.raw, rejects=False)
         finally:
-            self.write_context(SELECTOR)
+            self.write_context(AUTHORING)
 
     def test_selector_bidirectional_single_path_crossovers_at_actual_called_gate(self):
         try:
@@ -197,7 +209,7 @@ class FrozenInputGate(unittest.TestCase):
                             self.gate(self.raw, rejects=not matching)
                             (self.root / name).write_bytes(raw)
         finally:
-            self.write_context(SELECTOR)
+            self.write_context(AUTHORING)
 
     def test_old_subspace_forbidden_mixtures_still_reject_with_four_contexts(self):
         changing = list(self.original)
@@ -273,7 +285,122 @@ class FrozenInputGate(unittest.TestCase):
                         path.write_bytes(original)
         self.gate(self.raw, rejects=False)
 
-    def corrupt_required_file(self, relative, label):
+    def test_authoring_and_every_historical_context_accept_with_both_old_ui_baselines(self):
+        try:
+            for context, expected in self.all_contexts:
+                with self.subTest(context=context):
+                    self.write_context(context)
+                    for name in self.baselines:
+                        raw = (self.root / name).read_bytes()
+                        self.assertEqual({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()},
+                                         expected[name])
+                    self.gate(self.raw, rejects=False)
+        finally:
+            self.write_context(AUTHORING)
+
+    def test_old_four_context_subspace_still_has_only_four_admissions_with_five_contexts(self):
+        changing = list(self.original)
+        variants = [[json.loads(value) for value in
+                     sorted({json.dumps(files[name], sort_keys=True) for _, files in self.contexts})]
+                    for name in changing]
+        accepted = rejected = 0
+        for values in itertools.product(*variants):
+            actual = dict(self.inputs)
+            actual.update({name: value.copy() for name, value in zip(changing, values)})
+            matching = [name for name, expected in self.contexts if actual == expected]
+            if matching:
+                self.assertEqual(CONTEXT.select_context(actual, self.all_contexts)[0], matching[0])
+                accepted += 1
+            else:
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.all_contexts)
+                rejected += 1
+        self.assertEqual((accepted, rejected), (4, 27644))
+
+    def test_expanded_five_context_matrix_has_only_five_complete_admissions(self):
+        changing = list(self.authoring)
+        variants = [[json.loads(value) for value in
+                     sorted({json.dumps(files[name], sort_keys=True) for _, files in self.all_contexts})]
+                    for name in changing]
+        self.assertEqual(sorted(map(len, variants)), [2] * 12 + [3] * 3)
+        self.assertEqual(math.prod(map(len, variants)), 110592)
+        accepted = rejected = 0
+        for values in itertools.product(*variants):
+            actual = dict(self.inputs)
+            actual.update({name: value.copy() for name, value in zip(changing, values)})
+            matching = [name for name, expected in self.all_contexts if actual == expected]
+            if matching:
+                self.assertEqual(CONTEXT.select_context(actual, self.all_contexts)[0], matching[0])
+                accepted += 1
+            else:
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.all_contexts)
+                rejected += 1
+        self.assertEqual((accepted, rejected), (5, 110587))
+        for _, expected in self.all_contexts:
+            for name in expected:
+                actual = dict(expected)
+                actual.pop(name)
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.all_contexts)
+            for actual in ({}, dict(expected, unreviewed={'bytes': 0, 'sha256': '0' * 64})):
+                with self.assertRaisesRegex(ValueError, 'source context'):
+                    CONTEXT.select_context(actual, self.all_contexts)
+
+    def test_authoring_bidirectional_single_path_crossovers_at_actual_called_gate(self):
+        try:
+            for historical in (ORIGINAL, CLOSEOUT, PRODUCT, SELECTOR):
+                for left, right in ((AUTHORING, historical), (historical, AUTHORING)):
+                    self.write_context(left)
+                    source = dict(self.baselines)
+                    source.update(self.snapshots[left])
+                    other = dict(self.baselines)
+                    other.update(self.snapshots[right])
+                    for name, raw in source.items():
+                        if raw == other[name]:
+                            continue
+                        actual = dict(self.maps[left])
+                        actual[name] = self.maps[right][name]
+                        matching = [context for context, expected in self.all_contexts if actual == expected]
+                        with self.subTest(context=left, substituted=right, source=name,
+                                          complete_match=matching):
+                            (self.root / name).write_bytes(other[name])
+                            self.gate(self.raw, rejects=not matching)
+                            (self.root / name).write_bytes(raw)
+        finally:
+            self.write_context(AUTHORING)
+
+    def test_authoring_sources_and_baselines_fail_closed_and_restore_at_actual_called_gate(self):
+        self.write_context(AUTHORING)
+        paths = [self.root / name for name in self.baselines]
+        paths += [self.exp / relative for relative in CONTEXT.AUTHORING_BASELINES.values()]
+        for path in paths:
+            original = path.read_bytes()
+            target = self.root / 'authoring-original-source'
+            target.write_bytes(original)
+            for fault in ('missing', 'symlink', 'hash', 'size'):
+                with self.subTest(source=str(path.relative_to(self.root)), fault=fault):
+                    path.unlink()
+                    try:
+                        if fault == 'symlink':
+                            path.symlink_to(target)
+                        elif fault == 'hash':
+                            path.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+                        elif fault == 'size':
+                            path.write_bytes(original[:-1])
+                        self.gate(self.raw, rejects=True)
+                    finally:
+                        if path.exists() or path.is_symlink():
+                            path.unlink()
+                        path.write_bytes(original)
+                    self.gate(self.raw, rejects=False)
+
+    def test_authoring_context_and_baseline_missing_empty_corrupt_tampered_symlink_restore(self):
+        self.write_context(AUTHORING)
+        for relative in [CONTEXT.AUTHORING_CONTEXT_NAME, *CONTEXT.AUTHORING_BASELINES.values()]:
+            self.corrupt_required_file(relative, relative, restore_each=True)
+
+    def corrupt_required_file(self, relative, label, restore_each=False):
         path = self.exp / relative
         original = path.read_bytes()
         target = self.root / 'original-context-or-fixture'
@@ -296,6 +423,8 @@ class FrozenInputGate(unittest.TestCase):
                     if path.exists() or path.is_symlink():
                         path.unlink()
                     path.write_bytes(original)
+                if restore_each:
+                    self.gate(self.raw, rejects=False)
         self.gate(self.raw, rejects=False)
 
     def test_context_manifest_missing_empty_corrupt_tampered_and_symlink_reject(self):

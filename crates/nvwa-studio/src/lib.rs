@@ -955,6 +955,13 @@ fn draw_editor_ui(
                         clips: nine_second_sequence(),
                     });
                 }
+                if doc.profile.backend.is_b1_motion() && ui.button("Create 8s rehearsal").clicked()
+                {
+                    let clips = b1_eight_second_rehearsal();
+                    if doc.timeline != clips {
+                        command = Some(Command::SetTimeline { clips });
+                    }
+                }
                 egui::ComboBox::from_id_salt("single_clip")
                     .selected_text("Single action…")
                     .show_ui(ui, |ui| {
@@ -1461,6 +1468,21 @@ fn nine_second_sequence() -> Vec<TimelineClip> {
             clip_id: (*clip_id).into(),
             start_seconds: index as f32 * 3.0,
             duration_seconds: 3.0,
+            speed: 1.0,
+            looping: false,
+        })
+        .collect()
+}
+
+fn b1_eight_second_rehearsal() -> Vec<TimelineClip> {
+    nvwa_core::B1_MOTION_CLIPS
+        .iter()
+        .enumerate()
+        .map(|(index, clip_id)| TimelineClip {
+            id: format!("sequence-{}", index + 1),
+            clip_id: (*clip_id).into(),
+            start_seconds: index as f32 * nvwa_core::B1_MOTION_DURATION_SECONDS,
+            duration_seconds: nvwa_core::B1_MOTION_DURATION_SECONDS,
             speed: 1.0,
             looping: false,
         })

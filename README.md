@@ -44,6 +44,18 @@ The local macOS bundle includes its fixture assets and demonstration work. It is
 
 The original B1 motion profile uses the admitted MakeHuman body and sportsuit through the full-influence CPU bridge. That legacy profile exposes `torso_length`, `jaw_drop`, two Nvwa-authored four-second rehearsal clips and five fixed diagnostic poses. Use the shared timeline transport to play, pause or seek; choosing a diagnostic pose clears the timeline in one undoable edit. Existing static B1 Works keep their static profile. B1 has no click-to-wave interaction. Appearance quality, clothing contact, arbitrary imports and generated actions remain separate gates. Assets are verified before a B1 Open replaces the current Work; rejected candidates leave the current Work and its history available. See [static integration evidence](docs/evidence/b1-work/) and [continuous-motion acceptance](docs/evidence/b1-motion/ACCEPTANCE.md).
 
+On a B1 motion Work, click **Create 8s rehearsal** to create or restore authored
+arm 4s → knee 4s on the current character. Edit action, duration or order in the
+rows; use Undo/Redo to restore an edit. The initializer keeps the character's
+shape, appearance, scale and stage. Repeating it on the identical sequence keeps
+the revision and Redo history. Play/Pause and seek cover the whole finite Work;
+at its end, Replay starts again. **Single action…** selects a looping preview.
+Web Save downloads a Work that the CLI can edit and save; normal Web Open loads
+that saved file for further editing. See the [actual Web/CLI acceptance and
+exchanged Works](docs/evidence/b1-motion-authoring/README.md). These actions are
+authored presets. Static B1 keeps its static capabilities, and GLB keeps
+**Create 9s sequence**.
+
 B1's Shape inspector has independent **皮肤 / Skin**, **眼睛 / Eyes**, and **头发 / Hair** checkboxes. Each edit uses the shared Undo/Redo path and travels with the Work. The approved fixed CC0 bundle is included in native and Web builds; this does not add arbitrary skins/hair imports, gaze, blink or hair physics. Full visual quality remains a separate gate.
 
 Open the [appearance demonstration](examples/b1-appearance.nvwa.json) to see all three selections with two continuous four-second authored actions:

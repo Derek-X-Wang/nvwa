@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-29",
+  "scope": "B1 authored rehearsal authoring and actual Web/CLI file exchange",
+  "compiled_source": {
+    "commit": "30aa99e5bba3fef82ba4d533ce8a6ee01586a17b",
+    "tree": "eebeb66c2c5fcfd9b473ed5f738f6a5d347dc38b",
+    "identity_scope": "Compiled implementation source, separate from the later documentation commit"
+  },
+  "publication": {
+    "tracking_issue": "https://github.com/Derek-X-Wang/nvwa/issues/124",
+    "stage": "Implementation + actual Web/CLI acceptance complete; publication receipt tracked by #124"
+  },
+  "artifacts": {
+    "cli": {
+      "bytes": 1918232,
+      "sha256": "3bdc412f87122aa92bc0507c091335d1e2d2db7eccf87312a48facfae36b4459"
+    },
+    "web_wasm": {
+      "sha256": "bd209275a1c4620a400ff00ceba896b03f288fd84f8be01f2b9d8d7de229ee56"
+    },
+    "web_build_receipt": {
+      "sha256": "954838271ef923835d1656a4dd4f52a22bfbf295c96943711b6222d3b6b557d7",
+      "source_entries": 272
+    }
+  },
+  "checks": {
+    "workspace_tests": {
+      "status": "PASS",
+      "passed": 240,
+      "studio_included": 77,
+      "command": "bash experiments/27-ci-baseline/check.sh native"
+    },
+    "experiment73": {
+      "status": "PASS",
+      "normal_passed": 56,
+      "optimized_passed": 56,
+      "old_contexts_pins_inventory_blobs_assertions_preserved": true,
+      "old_three_map_matrix": {
+        "accepted": 3,
+        "rejected": 12285
+      },
+      "old_four_map_matrix": {
+        "accepted": 4,
+        "rejected": 27644
+      },
+      "new_five_map_matrix": {
+        "accepted": 5,
+        "rejected": 110587
+      }
+    },
+    "portable": {
+      "status": "PASS",
+      "command": "python3 -B scripts/check-portable.py all",
+      "groups": 16,
+      "seconds": 839.000209,
+      "max_runtime_seconds": 1200,
+      "run_id": "run_44ea6deb72aac496c38fe862e6f0308b"
+    },
+    "builds": [
+      {
+        "name": "native",
+        "argv": [
+          "bash",
+          "experiments/27-ci-baseline/check.sh",
+          "native"
+        ],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 563.0295182919945
+      },
+      {
+        "name": "wasm",
+        "argv": [
+          "bash",
+          "experiments/27-ci-baseline/check.sh",
+          "wasm"
+        ],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 343.6272332080116
+      },
+      {
+        "name": "cli",
+        "argv": [
+          "cargo",
+          "build",
+          "-p",
+          "nvwa-cli",
+          "--locked",
+          "--offline"
+        ],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 36.48665070900461
+      },
+      {
+        "name": "web",
+        "argv": [
+          "bash",
+          "scripts/build-web.sh",
+          "dev"
+        ],
+        "status": "PASS",
+        "exit_code": 0,
+        "seconds": 1119.7498724999896
+      }
+    ],
+    "build_run_id": "run_1509851c2f391da69d7c104a393023e5"
+  },
+  "actual_web": {
+    "status": "PASS",
+    "viewport_pixels": [
+      1280,
+      720
+    ],
+    "controls": "Normal UI clicks, keyboard entry, scrolling, browser Save download and Open file chooser; no command bridge or app-state injection",
+    "steps": [
+      {
+        "case": "starting_work",
+        "revision": 21,
+        "observation": "Existing edited B1 motion character; one finite-source arm clip in loop mode; eight nondefault parameters, short01, scale 1.1 and custom stage."
+      },
+      {
+        "case": "create_eight_seconds",
+        "revision": 22,
+        "observation": "Actual Create 8s rehearsal click; arm 0-4 then knee 4-8; both finite."
+      },
+      {
+        "case": "duration_edit",
+        "revision": 23,
+        "observation": "Actual first-row +0.5s click; total 8.5 seconds."
+      },
+      {
+        "case": "undo",
+        "revision": 24,
+        "observation": "Actual Undo; restored eight seconds and enabled Redo."
+      },
+      {
+        "case": "idempotent_create",
+        "revision": 24,
+        "observation": "Actual Create on the identical eight-second sequence; revision and Redo preserved."
+      },
+      {
+        "case": "redo",
+        "revision": 25,
+        "observation": "Actual Redo restored the 8.5-second edit after the no-op."
+      },
+      {
+        "case": "order_edit",
+        "revision": 26,
+        "observation": "Actual second-row move-up click; knee first, then arm."
+      },
+      {
+        "case": "action_edit",
+        "revision": 27,
+        "observation": "Actual first-row action dropdown changed knee to arm."
+      },
+      {
+        "case": "restore_eight_seconds",
+        "revision": 28,
+        "observation": "Actual Create restored the canonical arm/knee finite sequence."
+      },
+      {
+        "case": "play_pause_seek",
+        "revision": 28,
+        "observation": "Actual Play advanced, Pause held, numeric seek set exactly 4.00s; active sequence-2 knee label observed."
+      },
+      {
+        "case": "finite_complete_replay",
+        "revision": 28,
+        "observation": "Actual Restart and elapsed playback reached 8.00s, Replay and sequence-2 complete; actual Replay restarted and Pause held again."
+      },
+      {
+        "case": "actual_browser_save",
+        "revision": 28,
+        "observation": "Normal toolbar Save produced a real completed browser download. Fresh exported CLI inspect/discover/validate all passed."
+      },
+      {
+        "case": "actual_cli_edit_save",
+        "revision": 29,
+        "observation": "Fresh CLI reordered knee first for 3s, then arm for 4.5s; validate, save and saved validation passed."
+      },
+      {
+        "case": "normal_web_open_readback",
+        "revision": 29,
+        "observation": "Normal toolbar Open and browser file chooser loaded the actual CLI saved file; pending candidate completed. Normal Save downloaded a byte-identical full document."
+      },
+      {
+        "case": "cli_sequence_actual_playback",
+        "revision": 29,
+        "observation": "Actual numeric seek to 5.00s displayed the arm pose. Actual Restart reached 7.50s and sequence-1 arm complete."
+      }
+    ],
+    "console_warning_error_entries": 0
+  },
+  "exchange": {
+    "status": "WEB_CLI_WEB_CONTENT_PASS",
+    "input": "works/edited-single.nvwa.json",
+    "browser_download": "works/browser-download.nvwa.json",
+    "browser_download_revision": 28,
+    "browser_download_sha256": "aa7dd48ece586e01e3efcca470fa0c39eeb1ab75a8917cf78e70d136681149a9",
+    "cli_command": "works/cli-edit-command.json",
+    "cli_saved": "works/cli-saved.nvwa.json",
+    "web_readback": "works/web-reopened-readback.nvwa.json",
+    "revision": 29,
+    "cli_saved_sha256": "1ea35aaa987db55eaa9cccaa15d964b8b7f32a2308c4367dbd3740d46e47c0a0",
+    "web_readback_sha256": "1ea35aaa987db55eaa9cccaa15d964b8b7f32a2308c4367dbd3740d46e47c0a0",
+    "byte_identical": true,
+    "complete_non_timeline_content_preserved": true,
+    "cli_steps": [
+      {
+        "name": "download-inspect",
+        "exit_code": 0
+      },
+      {
+        "name": "download-discover",
+        "exit_code": 0
+      },
+      {
+        "name": "download-validate",
+        "exit_code": 0
+      },
+      {
+        "name": "cli-apply",
+        "exit_code": 0
+      },
+      {
+        "name": "edited-validate",
+        "exit_code": 0
+      },
+      {
+        "name": "cli-save",
+        "exit_code": 0
+      },
+      {
+        "name": "saved-validate",
+        "exit_code": 0
+      }
+    ],
+    "readback_validate_exit": 0,
+    "finite_duration_seconds": 7.5,
+    "intended_timeline": [
+      {
+        "id": "sequence-2",
+        "clip_id": "b1_knee_flex_v1",
+        "start_seconds": 0.0,
+        "duration_seconds": 3.0,
+        "speed": 1.0,
+        "looping": false
+      },
+      {
+        "id": "sequence-1",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "start_seconds": 3.0,
+        "duration_seconds": 4.5,
+        "speed": 1.0,
+        "looping": false
+      }
+    ]
+  },
+  "limits": [
+    "Ordinary desktop GUI acceptance NOT-RUN, deferred by repository policy; native tests and compilation are separate evidence.",
+    "Authored presets only; no AI model or genuine-source transfer ran.",
+    "No GPU numerical readback, performance measurement or character/clothing quality clearance.",
+    "Web Open retains the existing download-name field; the actual downloaded full document proves content identity.",
+    "The child-session browser discovery failure is retained as a tooling limitation, not product acceptance evidence.",
+    "#120, M2 and #80 HOLD; #79 full appearance/contact quality HOLD; #112 original failure, #3 blocked and #4 measurement gaps remain."
+  ],
+  "curated_evidence": "evidence-manifest.json"
+}

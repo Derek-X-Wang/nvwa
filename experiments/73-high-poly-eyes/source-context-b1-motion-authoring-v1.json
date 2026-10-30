@@ -1,0 +1,69 @@
+{
+  "baseline_manifest": "FROZEN-INPUTS.json",
+  "baseline_manifest_sha256": "66f024238ef009d0544d617251c46754b202b3069254ce5df47dc6dfc6debc33",
+  "context": "b1-motion-authoring-product-v1",
+  "overrides": {
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 28438,
+      "sha256": "eaf7cbd2e9bbaf4765e9d0fcb0d8c9a71d3a323a3ca2e1fe5abc1005abb51714"
+    },
+    "crates/nvwa-cli/tests/appearance.rs": {
+      "bytes": 19155,
+      "sha256": "fd38c7cde5f1acc64cea2426869980cfc2c3662a25e131b60d99d34621b2f4fe"
+    },
+    "crates/nvwa-cli/tests/b1.rs": {
+      "bytes": 18579,
+      "sha256": "ec3082149fe3b23b6df3fbf3e2cbbccccf15a6a776613e9e8a272ec958a727ef"
+    },
+    "crates/nvwa-core/src/appearance.rs": {
+      "bytes": 15435,
+      "sha256": "db79a645a2f5f6ddf71b5575f3f598cd88fa14a5f59df3d92e24ad425cd80324"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 17048,
+      "sha256": "d1aa3098b87999693087c5f7a9ca1c9f9a110315a57fbd22e3ce6b1847e98984"
+    },
+    "crates/nvwa-core/tests/appearance.rs": {
+      "bytes": 25773,
+      "sha256": "a386daecd95414aeee1b80b8e77b5bbbd026ef4f56526a96106b1d72607d699d"
+    },
+    "crates/nvwa-core/tests/b1.rs": {
+      "bytes": 15804,
+      "sha256": "d1ca91f3a6b587efb3915b8c2ed55a0d6d7d8ad515db22dc1f83a389cc9b047a"
+    },
+    "crates/nvwa-runtime/src/appearance/assets.rs": {
+      "bytes": 10894,
+      "sha256": "5a92fcc8ce2341baf45660c062fb3537f8a627928bccc4a360a6b4778a698030"
+    },
+    "crates/nvwa-runtime/src/appearance/geometry.rs": {
+      "bytes": 18496,
+      "sha256": "aea3de764195c1a81bca9abbae361c47d127ebfbe7c475bcdcddf9ab35fee503"
+    },
+    "crates/nvwa-runtime/src/appearance/mod.rs": {
+      "bytes": 52692,
+      "sha256": "1ac97e3fc1e5208c05fe6e840fb33c5d1ca6b6bb2ca7e38419a44a279ea24eba"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 192139,
+      "sha256": "0e85e0d3354fd379ecffabfa3b9f538712792c01407ecd7044058b4d06a4b14b"
+    },
+    "crates/nvwa-studio/src/appearance_ui.rs": {
+      "bytes": 2282,
+      "sha256": "c8af599556fa6ff1c32276cb9b5a4aef8a384a297a832952b9a262a734bfc894"
+    },
+    "crates/nvwa-studio/src/appearance_ui_tests.rs": {
+      "bytes": 24912,
+      "sha256": "5e3aff9ae92295b6062b6ce0cfdf1f0d23839059709ce9f3550bb762080b3d34"
+    },
+    "crates/nvwa-studio/src/editor_layout.rs": {
+      "bytes": 33028,
+      "sha256": "43425b3395ee6aab833fd30502dca22b0c8bdf694e7a9cf2444aab85a51bcb88"
+    },
+    "crates/nvwa-studio/src/lib.rs": {
+      "bytes": 80919,
+      "sha256": "113bfc6162d2ced7b4ebf0ebadc917991db7ac0edefebb95ecc58c5f1e410e20"
+    }
+  },
+  "schema_version": 1,
+  "scope": "exact B1 authored arm4s then knee4s editor initializer source compatibility only; all historical contexts and captures retain original identities; no runtime/render/quality acceptance claim"
+}

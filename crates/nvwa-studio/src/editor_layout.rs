@@ -833,3 +833,7 @@ mod tests {
 #[cfg(test)]
 #[path = "appearance_ui_tests.rs"]
 mod appearance_tests;
+
+#[cfg(test)]
+#[path = "b1_rehearsal_ui_tests.rs"]
+mod rehearsal_tests;

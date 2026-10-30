@@ -237,3 +237,36 @@ render/quality result. Formal checks, Web/CLI file exchange, native/Wasm and
 PR/main CI acceptance for the selector remain **NOT-RUN**. See
 `docs/evidence/hair79-selector/PHASE1.md` for the staged evidence boundary.
 #120/M2/#80 HOLD, #112 original failure, #3 blocked and #4 gaps remain.
+
+## B1 authored rehearsal initializer (2026-10-29)
+
+The Studio motion timeline can create or restore a finite 8s rehearsal on the
+current Work: authored arm4s followed by authored knee4s. The initializer uses
+the existing `SetTimeline` command and row editor. Work identity, eight shape
+parameters, appearance, scale, stage and stored diagnostic pose stay intact.
+Undo/Redo includes the initializer; selecting an already identical rehearsal
+does not add history. GLB retains its 9s initializer, and static B1 has no
+timeline initializer. This does not introduce AI-generated or transferred motion.
+
+`source-context-b1-motion-authoring-v1.json` adds a fifth exact complete309 map,
+derived from the selector context with only `nvwa-studio/src/lib.rs` and
+`editor_layout.rs` changed. The original309 manifest, all four old contexts and
+pins, and `fixtures/source-contexts/manifest.json` with its existing digest and
+blobs remain unchanged. Separate `fixtures/b1-motion-authoring-baselines/`
+files preserve the two shared old UI sources, authenticated directly against
+their immutable original309 pins. Every historical scratch context restores
+both old sources; no live-byte reversal or Git history is needed at test time.
+
+The old three/four-context matrices and assertions remain. A separate five-map
+matrix has twelve binary and three ternary paths: `2^12 * 3^3 = 110,592`, with
+five complete admissions and110,587 rejections. The old four-map subspace is
+also checked against all five contexts. Actual subprocess controls exercise all
+historical maps, new↔old crossovers, and missing/symlink/hash/size failures for
+both changed sources and both baselines. New context/baseline corruption
+controls require recovery at the actual source gate after each restoration,
+under normal and optimized Python through the existing discovery commands.
+
+This additive source admission does not change historical render evidence or
+quality acceptance. Current Web/CLI exchange, native/Wasm, independent review
+and PR/main CI require separate evidence. #120/M2/#80 HOLD, #112 original
+failure, #3 blocked and #4 measurement gaps remain.

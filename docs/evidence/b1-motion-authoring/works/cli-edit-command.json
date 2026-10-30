@@ -1,0 +1,25 @@
+{
+  "command_id": "b1-authoring-cli-reorder-duration",
+  "expected_revision": 28,
+  "command": {
+    "type": "set_timeline",
+    "clips": [
+      {
+        "id": "sequence-2",
+        "clip_id": "b1_knee_flex_v1",
+        "start_seconds": 0.0,
+        "duration_seconds": 3.0,
+        "speed": 1.0,
+        "looping": false
+      },
+      {
+        "id": "sequence-1",
+        "clip_id": "b1_arm_rehearsal_v1",
+        "start_seconds": 3.0,
+        "duration_seconds": 4.5,
+        "speed": 1.0,
+        "looping": false
+      }
+    ]
+  }
+}
