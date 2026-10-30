@@ -1,0 +1,145 @@
+[
+  {
+    "command_id": "b1-agent-parameters",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": {
+        "torso_length": 0.25,
+        "jaw_drop": -0.2,
+        "head_width": 0.15,
+        "nose_width": -0.15,
+        "mouth_width": 0.2,
+        "chin_width": -0.25,
+        "neck_width": 0.1,
+        "hip_width": 0.2
+      }
+    }
+  },
+  {
+    "command_id": "b1-agent-short01",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_appearance",
+      "character_id": "character-1",
+      "appearance": {
+        "asset_set_id": "mpfb-b1-cc0-appearance-v2-short01-v1",
+        "asset_set_sha256": "8c2044ee524a700abd75479c457d2e269f7e280a67509749c9fd780794c6d49a",
+        "eyes": true,
+        "hair": true,
+        "schema_version": 2,
+        "skin": true,
+        "type": "b1_cc0"
+      }
+    }
+  },
+  {
+    "command_id": "b1-agent-stage",
+    "expected_revision": 2,
+    "command": {
+      "type": "set_stage",
+      "stage": {
+        "ambient": {
+          "brightness": 220.0,
+          "color_srgb": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "background_color_srgb": [
+          0.12,
+          0.17,
+          0.23
+        ],
+        "camera": {
+          "azimuth_degrees": 24.0,
+          "distance": 4.2,
+          "elevation_degrees": 8.0,
+          "fov_degrees": 36.0,
+          "target_height": 0.95
+        },
+        "fill_light": {
+          "azimuth_degrees": 55.0,
+          "color_srgb": [
+            0.8,
+            0.89,
+            1.0
+          ],
+          "elevation_degrees": 28.0,
+          "illuminance_lux": 3000.0
+        },
+        "floor": {
+          "color_srgb": [
+            0.32,
+            0.38,
+            0.44
+          ],
+          "shadows": true,
+          "visible": true
+        },
+        "key_light": {
+          "azimuth_degrees": -42.0,
+          "color_srgb": [
+            1.0,
+            0.94,
+            0.86
+          ],
+          "elevation_degrees": 42.0,
+          "illuminance_lux": 10000.0
+        },
+        "quality": "balanced"
+      }
+    }
+  },
+  {
+    "command_id": "b1-agent-sequence",
+    "expected_revision": 3,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "rehearsal-1",
+          "clip_id": "b1_arm_rehearsal_v1",
+          "start_seconds": 0.0,
+          "duration_seconds": 4.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "rehearsal-2",
+          "clip_id": "b1_knee_flex_v1",
+          "start_seconds": 4.0,
+          "duration_seconds": 4.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "rehearsal-3",
+          "clip_id": "b1_arm_rehearsal_v1",
+          "start_seconds": 8.0,
+          "duration_seconds": 4.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "rehearsal-4",
+          "clip_id": "b1_knee_flex_v1",
+          "start_seconds": 12.0,
+          "duration_seconds": 4.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "rehearsal-5",
+          "clip_id": "b1_arm_rehearsal_v1",
+          "start_seconds": 16.0,
+          "duration_seconds": 4.0,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  }
+]
