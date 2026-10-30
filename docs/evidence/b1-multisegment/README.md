@@ -31,7 +31,7 @@
 
 新 Web 导出确实完成编译：exit 0，1780.10 秒。捕获的 UI 提交为 `8c1c3e04989c8086a6c59836aca7830cc89e40fc`，树为 `d470e0ab33f5b14b8e4dc26bce5e7256e895ba9c`；273 个构建输入哈希与已审计 checkout `0817e4aa8822e2cba4eaaf1eef1332b372e6e1af` 一致。这里使用新界面做验收；CLI 仍复用来源等价的已有验证构建，不称为新 CLI 编译。
 
-本地现有检查结果：81 个 Studio 测试通过；prepare 为 normal 6／optimized 6；frozen 为 normal 30／optimized 30。完整 portable 命令的 16 组按目录顺序全部执行并通过，耗时 970.55 秒。单独 eye 类别在既定步骤预算内的完整计时仍未解决；本地 portable 通过不能证明 hosted 步骤预算通过。
+本地现有检查结果：81 个 Studio 测试通过；prepare 为 normal 6／optimized 6；frozen 为 normal 30／optimized 30。完整 portable 命令的 16 组按目录顺序全部执行并通过，耗时 970.55 秒。随后对未变的完整 eye 类别单独计时：20组 normal／optimized suite 全部通过，247.04／480 秒；测量源码为 `0817e4a`。本地计时不能保证 hosted 步骤或整个作业的耗时。
 
 CLI 输出与 Web 回读的共同 SHA-256：`328d9180471cedbd4d3db36383a802b436346dbf0654507925e23e86e7407e67`。
 
