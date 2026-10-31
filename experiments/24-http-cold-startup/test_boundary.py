@@ -79,6 +79,8 @@ class BoundaryTests(unittest.TestCase):
     def test_actual_http_has_no_store_ignores_conditional_cache_and_logs_body(self):
         # Temporary ephemeral fixture listener only; never reserved port9201.
         server = ThreadingHTTPServer(('127.0.0.1', 0), handler_for(self.exp))
+        # server_close must join request handlers before reading their JSONL logs.
+        server.daemon_threads = False
         worker = threading.Thread(target=server.serve_forever, daemon=True)
         worker.start()
         try:

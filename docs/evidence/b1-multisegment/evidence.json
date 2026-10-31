@@ -1,0 +1,365 @@
+{
+  "schema_version": 1,
+  "stage": "local functional acceptance; release pending",
+  "source_identity": {
+    "audited_head": "0817e4aa8822e2cba4eaaf1eef1332b372e6e1af",
+    "reviewed_UI_commit": "8c1c3e04989c8086a6c59836aca7830cc89e40fc",
+    "captured_UI_tree": "d470e0ab33f5b14b8e4dc26bce5e7256e895ba9c",
+    "studio_lib_sha256": "9d1ef0c90b303aa27b44be7f29ff7872e69b04d6d03b574466e38ea93f6f55d0",
+    "fresh_web_build": {
+      "exit_code": 0,
+      "seconds": 1780.1001645419747,
+      "wasm_sha256": "edf59b812b121726bc56a4b7d421895087d0dd6f75b4d0398b8d503d4015ac35",
+      "input_hashes_checked": 273,
+      "source_differences": []
+    },
+    "retained_cli_sha256": "3bdc412f87122aa92bc0507c091335d1e2d2db7eccf87312a48facfae36b4459"
+  },
+  "artifacts": {
+    "web-saved.nvwa.json": {
+      "sha256": "973bc433850e12062169a4d562e9149c71cc1923abf300acbc64c461f0b23ca6",
+      "bytes": 4289,
+      "source_ref": "qa/web-saved.nvwa.json"
+    },
+    "cli-saved.nvwa.json": {
+      "sha256": "328d9180471cedbd4d3db36383a802b436346dbf0654507925e23e86e7407e67",
+      "bytes": 4289,
+      "source_ref": "qa/cli-saved.nvwa.json"
+    },
+    "web-reopened-readback.nvwa.json": {
+      "sha256": "328d9180471cedbd4d3db36383a802b436346dbf0654507925e23e86e7407e67",
+      "bytes": 4289,
+      "source_ref": "qa/web-reopened-readback.nvwa.json"
+    },
+    "cli-edit.command.json": {
+      "sha256": "18d27366e11d6472d2503ea7296b278a115d5c7ea2bb04ec84dcabe954cd9695",
+      "bytes": 1123,
+      "source_ref": "qa/cli-edit.command.json"
+    },
+    "12-seek-knee.png": {
+      "sha256": "fc333f5e92d20fd844e39b3619bad9eab2999a2ec134a27495f50696f1e651d1",
+      "bytes": 90585,
+      "source_ref": "qa/12-seek-knee.png"
+    },
+    "15-complete-20.png": {
+      "sha256": "91b5651a46e75ce7b2ee8531f59406eb01149283381f7680f08f3be7cb10fe89",
+      "bytes": 90241,
+      "source_ref": "qa/15-complete-20.png"
+    }
+  },
+  "baseline": {
+    "source_ref": "qa/starting-edited-single.nvwa.json",
+    "sha256": "0050e116b69db20df9a3258d5118d7f5ee0334650663ab79d35ae38668fc35d3",
+    "revision": 21,
+    "timeline": "one four-second looping arm action",
+    "preserved_fields": [
+      "schema_version",
+      "profile",
+      "character (identity, eight parameters, scale 1.10, short01 roles)",
+      "stage"
+    ],
+    "all_preserved_fields_equal_across_baseline_web_cli_readback": true
+  },
+  "web_qa": {
+    "actual_actions": [
+      {
+        "action": "initial load",
+        "visible": "Revision21, original single4s arm, edited eight parameters, short01, scale1.10 and stage",
+        "status": "observed"
+      },
+      {
+        "action": "Append knee",
+        "visible": "Revision22, arm0–4 + knee4–8, finite8s",
+        "status": "observed"
+      },
+      {
+        "action": "Duplicate first arm",
+        "visible": "Revision23, arm0–4 + arm4–8 + knee8–12",
+        "status": "observed"
+      },
+      {
+        "action": "Undo duplicate",
+        "visible": "Revision24, original2rows8s restored",
+        "status": "observed"
+      },
+      {
+        "action": "Redo duplicate",
+        "visible": "Revision25,3rows12s restored",
+        "status": "observed"
+      },
+      {
+        "action": "Duplicate knee",
+        "visible": "Revision26,4rows16s",
+        "status": "observed"
+      },
+      {
+        "action": "Append arm at tail",
+        "visible": "Revision27,5rows20s",
+        "status": "observed"
+      },
+      {
+        "action": "Remove tail",
+        "visible": "Revision28,4rows16s",
+        "status": "observed"
+      },
+      {
+        "action": "Undo tail removal",
+        "visible": "Revision29,5rows20s restored",
+        "status": "observed"
+      },
+      {
+        "action": "Move knee row up",
+        "visible": "Revision30, arm/knee/arm/knee/arm, total20s",
+        "status": "observed"
+      },
+      {
+        "action": "Extend first row",
+        "visible": "Revision31, first4.5s; final row16.5–20.5s",
+        "status": "observed"
+      },
+      {
+        "action": "Undo duration",
+        "visible": "Revision32, first4s; total20s",
+        "status": "observed"
+      },
+      {
+        "action": "Redo duration",
+        "visible": "Revision33, first4.5s; total20.5s",
+        "status": "observed"
+      },
+      {
+        "action": "Play then Pause",
+        "visible": "Revision33, Play button restored at10.79s, arm raised",
+        "status": "observed"
+      },
+      {
+        "action": "Normal numeric seek while paused",
+        "visible": "6.00s, knee flex visible, unchangedRevision33",
+        "status": "observed"
+      },
+      {
+        "action": "Natural finite completion",
+        "visible": "20.5s, Replay button, lastarm pose at end, Revision33 unchanged",
+        "status": "observed"
+      },
+      {
+        "action": "Normal file chooser Open CLI output",
+        "visible": "Revision34, sameeditedcharacter, lastrow3.5s, total20s",
+        "status": "observed"
+      },
+      {
+        "action": "CLI output natural finite completion",
+        "visible": "Revision34,20.0s,Replay,CLIlastrow3.5s visible",
+        "status": "observed"
+      }
+    ],
+    "normal_file_save": {
+      "revision": 33,
+      "rows": 5,
+      "seconds": 20.5,
+      "sha256": "973bc433850e12062169a4d562e9149c71cc1923abf300acbc64c461f0b23ca6"
+    },
+    "play_pause_observed_seconds": 10.79,
+    "paused_seek_observed_seconds": 6.0,
+    "seek_active_clip": "b1_knee_flex_v1",
+    "finite_end_observed_seconds": [
+      20.5,
+      20.0
+    ],
+    "end_button": "Replay"
+  },
+  "exchange": {
+    "flow": [
+      "Web normal Save",
+      "CLI validate",
+      "CLI inspect",
+      "CLI apply",
+      "CLI validate",
+      "CLI save",
+      "CLI validate",
+      "Web normal file chooser Open",
+      "Web normal Save"
+    ],
+    "cli_calls": [
+      {
+        "argv": [
+          "$CLI",
+          "validate",
+          "web-saved.nvwa.json",
+          "$ASSET_ROOT"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"asset_checked\":true,\"revision\":33,\"valid\":true}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "$CLI",
+          "inspect",
+          "web-saved.nvwa.json"
+        ],
+        "exit_code": 0,
+        "stdout": "{\n  \"schema_version\": 4,\n  \"revision\": 33,\n  \"profile\": {\n    \"backend\": {\n      \"type\": \"b1_cpu\",\n      \"schema_version\": 3,\n      \"asset_id\": \"mpfb-hm08-game-engine-female-sportsuit01-v2\"\n    },\n    \"id\": \"nvwa-mpfb-b1-motion-v2\",\n    \"asset_path\": \"characters/mpfb-b1-v2/manifest.json\",\n    \"asset_sha256\": \"15834b6bea9bc7daff2d7189e15a66e044130c3b6b4cc75f4b3e508a4e97f3f4\",\n    \"license\": \"CC0-1.0\",\n    \"parameters\": [\n      {\n        \"id\": \"torso_length\",\n        \"morph_index\": 0,\n        \"min\": -1.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"jaw_drop\",\n        \"morph_index\": 1,\n        \"min\": -1.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"head_width\",\n        \"morph_index\": 2,\n        \"min\": -1.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"nose_width\",\n        \"morph_index\": 3,\n        \"min\": -1.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"mouth_width\",\n        \"morph_index\": 4,\n        \"min\": -1.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"chin_width\",\n        \"morph_index\": 5,\n        \"min\": -1.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"neck_width\",\n        \"morph_index\": 6,\n        \"min\": -1.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      },\n      {\n        \"id\": \"hip_width\",\n        \"morph_index\": 7,\n        \"min\": -1.0,\n        \"max\": 1.0,\n        \"default\": 0.0\n      }\n    ],\n    \"clips\": [\n      {\n        \"id\": \"b1_arm_rehearsal_v1\",\n        \"animation_index\": 0,\n        \"duration_seconds\": 4.0\n      },\n      {\n        \"id\": \"b1_knee_flex_v1\",\n        \"animation_index\": 1,\n        \"duration_seconds\": 4.0\n      }\n    ]\n  },\n  \"character\": {\n    \"id\": \"selector-edited-character\",\n    \"profile_id\": \"nvwa-mpfb-b1-motion-v2\",\n    \"parameters\": {\n      \"chin_width\": -0.7,\n      \"head_width\": -0.5,\n      \"hip_width\": -0.3,\n      \"jaw_drop\": -0.1,\n      \"mouth_width\": 0.1,\n      \"neck_width\": 0.3,\n      \"nose_width\": 0.5,\n      \"torso_length\": 0.7\n    },\n    \"scale\": 1.1,\n    \"diagnostic_pose\": \"neutral\",\n    \"appearance\": {\n      \"type\": \"b1_cc0\",\n      \"schema_version\": 2,\n      \"asset_set_id\": \"mpfb-b1-cc0-appearance-v2-short01-v1\",\n      \"asset_set_sha256\": \"8c2044ee524a700abd75479c457d2e269f7e280a67509749c9fd780794c6d49a\",\n      \"skin\": true,\n      \"eyes\": true,\n      \"hair\": true\n    }\n  },\n  \"timeline\": [\n    {\n      \"id\": \"input-single\",\n      \"clip_id\": \"b1_arm_rehearsal_v1\",\n      \"start_seconds\": 0.0,\n      \"duration_seconds\": 4.5,\n      \"speed\": 1.0,\n      \"looping\": false\n    },\n    {\n      \"id\": \"sequence-1\",\n      \"clip_id\": \"b1_knee_flex_v1\",\n      \"start_seconds\": 4.5,\n      \"duration_seconds\": 4.0,\n      \"speed\": 1.0,\n      \"looping\": false\n    },\n    {\n      \"id\": \"sequence-2\",\n      \"clip_id\": \"b1_arm_rehearsal_v1\",\n      \"start_seconds\": 8.5,\n      \"duration_seconds\": 4.0,\n      \"speed\": 1.0,\n      \"looping\": false\n    },\n    {\n      \"id\": \"sequence-3\",\n      \"clip_id\": \"b1_knee_flex_v1\",\n      \"start_seconds\": 12.5,\n      \"duration_seconds\": 4.0,\n      \"speed\": 1.0,\n      \"looping\": false\n    },\n    {\n      \"id\": \"sequence-4\",\n      \"clip_id\": \"b1_arm_rehearsal_v1\",\n      \"start_seconds\": 16.5,\n      \"duration_seconds\": 4.0,\n      \"speed\": 1.0,\n      \"looping\": false\n    }\n  ],\n  \"stage\": {\n    \"key_light\": {\n      \"illuminance_lux\": 13500.0,\n      \"color_srgb\": [\n        1.0,\n        0.94,\n        0.86\n      ],\n      \"azimuth_degrees\": -35.0,\n      \"elevation_degrees\": 42.0\n    },\n    \"fill_light\": {\n      \"illuminance_lux\": 3000.0,\n      \"color_srgb\": [\n        0.8,\n        0.89,\n        1.0\n      ],\n      \"azimuth_degrees\": 55.0,\n      \"elevation_degrees\": 28.0\n    },\n    \"ambient\": {\n      \"brightness\": 180.0,\n      \"color_srgb\": [\n        1.0,\n        1.0,\n        1.0\n      ]\n    },\n    \"background_color_srgb\": [\n      0.12,\n      0.18,\n      0.24\n    ],\n    \"floor\": {\n      \"visible\": true,\n      \"color_srgb\": [\n        0.72,\n        0.75,\n        0.8\n      ],\n      \"shadows\": true\n    },\n    \"camera\": {\n      \"azimuth_degrees\": 24.0,\n      \"elevation_degrees\": 8.0,\n      \"distance\": 4.2,\n      \"target_height\": 0.95,\n      \"fov_degrees\": 36.0\n    },\n    \"quality\": \"balanced\"\n  }\n}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "$CLI",
+          "apply",
+          "web-saved.nvwa.json",
+          "cli-edit.command.json",
+          "cli-edited.nvwa.json"
+        ],
+        "exit_code": 0,
+        "stdout": "[{\"revision\":34,\"summary\":\"Set 5 timeline clip(s)\",\"duplicate\":false}]\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "$CLI",
+          "validate",
+          "cli-edited.nvwa.json",
+          "$ASSET_ROOT"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"asset_checked\":true,\"revision\":34,\"valid\":true}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "$CLI",
+          "save",
+          "cli-edited.nvwa.json",
+          "cli-saved.nvwa.json"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"asset_checked\":false,\"revision\":34,\"saved\":\"cli-saved.nvwa.json\"}\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "$CLI",
+          "validate",
+          "cli-saved.nvwa.json",
+          "$ASSET_ROOT"
+        ],
+        "exit_code": 0,
+        "stdout": "{\"asset_checked\":true,\"revision\":34,\"valid\":true}\n",
+        "stderr": ""
+      }
+    ],
+    "argv_bindings": "Only CLI executable and filesystem asset-root machine paths replaced; stdout, stderr and exit codes unchanged",
+    "edit": {
+      "expected_revision": 33,
+      "result_revision": 34,
+      "only_work_changes": [
+        "revision 33 -> 34",
+        "last timeline row duration 4.0 -> 3.5"
+      ],
+      "whole_file_content_comparison": "all other values equal"
+    },
+    "CLI_output_equals_Web_readback_full_bytes": true,
+    "sha256": "328d9180471cedbd4d3db36383a802b436346dbf0654507925e23e86e7407e67"
+  },
+  "local_checks": {
+    "studio_tests": {
+      "passed": 81,
+      "failed": 0
+    },
+    "prepare_tests": {
+      "normal_passed": 6,
+      "optimized_passed": 6
+    },
+    "frozen_tests": {
+      "normal_passed": 30,
+      "optimized_passed": 30
+    },
+    "complete_portable": {
+      "command": "python3 -B scripts/check-portable.py all",
+      "exit_code": 0,
+      "all_16_catalog_groups_once_in_order": true,
+      "seconds": 970.5549139170034
+    },
+    "timing_limit": "Complete unchanged eye category passed locally at247.04/480seconds; hosted step and whole-job timing remain unverified and are not guaranteed by local measurements.",
+    "complete_eye_category_timing": {
+      "status": "VERIFIED_LOCAL",
+      "head": "0817e4aa8822e2cba4eaaf1eef1332b372e6e1af",
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/check-portable.py",
+        "eye-hair-parameters"
+      ],
+      "exit_code": 0,
+      "normal_optimized_suites": 20,
+      "seconds": 247.03556170800584,
+      "maximum_seconds": 480,
+      "result_receipt_sha256": "24017c00f3d03275c6cbb6bbadf7d1bb40074fe110a94d9c1c08183f24b2b8ff",
+      "scope": "single complete unchanged namedcategory; othercontrolledheavyandGUIstopped; local only, nothostedCIor#4performanceproof"
+    }
+  },
+  "source_receipts": [
+    {
+      "ref": "qa/action-ledger.json",
+      "sha256": "ff82e2ebd2f0984d2f03ac977ef8d114d2eb0db904c4aefd4114e03fa78d7bfb"
+    },
+    {
+      "ref": "qa/exchange.json",
+      "sha256": "22a2fa7ca11166e6bfff14f621afbe33721ca3de39855ef8e2e7de62b3bacfa5"
+    },
+    {
+      "ref": "qa/cli-exchange-calls.json",
+      "sha256": "15c3eccc157582b73cdd697cd26dd9b9d75ab791ea41c4afe2ce706d492cf173"
+    },
+    {
+      "ref": "qa/web-save-verified.json",
+      "sha256": "f0c9d57a5f7db351c923560237e1f4afade845b7d360889c08c0edf07675e1cd"
+    },
+    {
+      "ref": "main/WEB-BUILD-VERIFIED.json",
+      "sha256": "94ef7e93b4faeb147a1f6df68cb8bf14454eacf13147003a143c5ca8c07280c4"
+    },
+    {
+      "ref": "main/web-build-inputs.json",
+      "sha256": "7114b00b0dda9d73cc499c1f95f3bab9667ff86a9f269079487cee770d0b902f"
+    },
+    {
+      "ref": "main/PORTABLE-V3-VERIFIED.json",
+      "sha256": "c96345a22c7497162588ebfe69f8e5e3f50715edde749bc323dc3d399f82cab5"
+    },
+    {
+      "ref": "main/multisegment-studio-all.log",
+      "sha256": "263cf00026ec3d47a1cbff3a71867103a42d58f50fab45853b216477037311cf"
+    },
+    {
+      "ref": "main/multisegment-prepare-final-normal.log",
+      "sha256": "b6d2ee177a635e77c1085228ed3679b6419d198ae1138e7cd5f2f7f8a2bc1857"
+    },
+    {
+      "ref": "main/multisegment-prepare-final-optimized.log",
+      "sha256": "f06d547b770286ea1d9e816ed11689ce63386170a6dec82842470c51e53eec24"
+    },
+    {
+      "ref": "main/multisegment-frozen-final-normal.log",
+      "sha256": "8dfba8001358023325adbaf5df97d449cbbd4e1eac5e9fe82d7f8da447c7b687"
+    },
+    {
+      "ref": "main/multisegment-frozen-final-optimized.log",
+      "sha256": "3bd94fa9120facc4f6e3617b360320356f6111c8c588bdb49ff08550b6c86c7e"
+    }
+  ],
+  "reference_convention": "source_ref/ref identify files in the retained stage proof bundle; they are provenance labels, not repository links or public endpoints",
+  "not_run": [
+    "Release CI for the final integrated change",
+    "Merge and main-ref verification",
+    "Desktop GUI acceptance",
+    "Unassisted human Alpha trial",
+    "Performance acceptance",
+    "Body, clothing, appearance or motion quality acceptance"
+  ],
+  "holds": "Existing quality HOLDs remain; only existing Nvwa-authored clips are used, with no AI-generated motion claim",
+  "release_followup_issues": [
+    "https://github.com/Derek-X-Wang/nvwa/issues/126",
+    "https://github.com/Derek-X-Wang/nvwa/issues/127"
+  ]
+}

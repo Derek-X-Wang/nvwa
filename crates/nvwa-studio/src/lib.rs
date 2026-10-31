@@ -1009,9 +1009,32 @@ fn draw_editor_ui(
             .as_ref()
             .filter(|doc| doc.profile.backend.supports_timeline())
         {
+            if doc.profile.backend.is_b1_motion() {
+                egui::ComboBox::from_id_salt("append_clip")
+                    .selected_text("Append action…")
+                    .show_ui(ui, |ui| {
+                        for clip in &doc.profile.clips {
+                            if ui.selectable_label(false, &clip.id).clicked() {
+                                let mut clips = doc.timeline.clone();
+                                clips.sort_by(|a, b| a.start_seconds.total_cmp(&b.start_seconds));
+                                clips.push(TimelineClip {
+                                    id: next_timeline_id(&doc.timeline),
+                                    clip_id: clip.id.clone(),
+                                    start_seconds: 0.0,
+                                    duration_seconds: clip.duration_seconds,
+                                    speed: 1.0,
+                                    looping: false,
+                                });
+                                command = Some(Command::SetTimeline {
+                                    clips: finite_sequence(clips),
+                                });
+                            }
+                        }
+                    });
+            }
             let mut ordered = doc.timeline.clone();
             ordered.sort_by(|a, b| a.start_seconds.total_cmp(&b.start_seconds));
-            if !doc.is_single_loop() {
+            if !doc.is_single_loop() || doc.profile.backend.is_b1_motion() {
                 for (index, entry) in ordered.iter().enumerate() {
                     ui.horizontal(|ui| {
                         ui.label(format!(
@@ -1060,6 +1083,15 @@ fn draw_editor_ui(
                             clips.swap(index, index + 1);
                             command = Some(Command::SetTimeline {
                                 clips: compact_sequence(clips),
+                            });
+                        }
+                        if doc.profile.backend.is_b1_motion() && ui.button("Duplicate").clicked() {
+                            let mut clips = ordered.clone();
+                            let mut duplicate = entry.clone();
+                            duplicate.id = next_timeline_id(&doc.timeline);
+                            clips.insert(index + 1, duplicate);
+                            command = Some(Command::SetTimeline {
+                                clips: finite_sequence(clips),
                             });
                         }
                         if ui.button("Remove").clicked() {
@@ -1488,6 +1520,24 @@ fn b1_eight_second_rehearsal() -> Vec<TimelineClip> {
         })
         .collect()
 }
+
+fn next_timeline_id(clips: &[TimelineClip]) -> String {
+    // At most len IDs can be occupied, so this range always contains a free ID.
+    (1..=clips.len() + 1)
+        .map(|index| format!("sequence-{index}"))
+        .find(|id| clips.iter().all(|entry| entry.id != *id))
+        .unwrap()
+}
+
+fn finite_sequence(mut clips: Vec<TimelineClip>) -> Vec<TimelineClip> {
+    for entry in &mut clips {
+        entry.looping = false;
+    }
+    compact_sequence(clips)
+}
+
+#[cfg(test)]
+mod b1_multisegment_ui_tests;
 
 fn compact_sequence(mut clips: Vec<TimelineClip>) -> Vec<TimelineClip> {
     let mut start = 0.0;

@@ -270,3 +270,33 @@ This additive source admission does not change historical render evidence or
 quality acceptance. Current Web/CLI exchange, native/Wasm, independent review
 and PR/main CI require separate evidence. #120/M2/#80 HOLD, #112 original
 failure, #3 blocked and #4 measurement gaps remain.
+
+## B1 existing-motion append and duplicate (2026-10-30)
+
+`source-context-b1-multisegment-v1.json` adds one exact sixth complete309 map.
+Only `crates/nvwa-studio/src/lib.rs` differs from the preceding B1 authoring
+context. Its pre-change bytes are retained separately in
+`fixtures/b1-multisegment-baselines/studio-lib.rs` and authenticated against
+the immutable authoring context pin. All earlier context files, hashes,
+baselines, the original309 manifest, and the historical fixture inventory
+remain unchanged. No current-byte reversal or Git history reconstructs old UI.
+
+The existing matrices and their assertions still run, including the complete
+five-context110592 matrix. The new six-context matrix has eleven binary and
+four ternary paths: `2^11 * 3^4 = 165,888`, with six complete admissions and
+165,882 rejections. The complete old five-context subspace is also tested
+against the new gate, retaining five admissions and110,587 rejections.
+Actual subprocess controls exercise all six contexts, bidirectional new/old
+single-path crossovers, missing/symlink/hash/size source failures, and context
+and baseline corruption. Each restore must recover at the actual source gate.
+Normal and optimized Python use the existing discovery commands and budgets.
+
+The Studio controls append a selected existing action or duplicate a row in
+the current Work. Both create one undoable `SetTimeline`, join rows without
+gaps, and make every resulting row finite. Duplicating preserves the copied
+row's clip, wall duration, and speed. Appending preserves existing row duration
+and speed, including a former single loop. IDs are fresh against every row in
+the Work. The existing scroll area provides access to longer sequences.
+Static B1 capability, GLB's nine-second sequence, runtime, schema, CLI, assets,
+dependencies, and CI settings are unchanged. This source admission carries no
+new render, visual quality, performance, native desktop, or release claim.
