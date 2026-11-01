@@ -37,10 +37,10 @@ WORKFLOW_ADDITIONS = (
 
 
 # Admit only the reviewed portable job cap before historical comparison.
-PORTABLE20_HEADER = """  portable:
+PORTABLE25_HEADER = """  portable:
     name: Core, CLI, and diagnostic controls
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
 """
 
 
@@ -53,7 +53,7 @@ EYE8_STEP = """      - name: Check eye, hair, and character parameter controls
 
 def historical_eye_budget_workflow(workflow, checks):
     jobs = {}
-    for name, cap in [('portable', '20'), ('native-and-wasm', '75'),
+    for name, cap in [('portable', '25'), ('native-and-wasm', '75'),
                       ('b1-source-regression', '60'), ('native-cache-warm', '60')]:
         blocks = re.findall(r'(?ms)^  '+name+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
         checks.assertEqual(len(blocks), 1, 'required one '+name+' job')
@@ -61,7 +61,7 @@ def historical_eye_budget_workflow(workflow, checks):
                            ['    timeout-minutes: '+cap], 'required unchanged '+name+' cap')
         jobs[name] = blocks[0]
     portable = jobs['portable']
-    checks.assertTrue(portable.startswith(PORTABLE20_HEADER), 'required exact portable job header')
+    checks.assertTrue(portable.startswith(PORTABLE25_HEADER), 'required exact portable job header')
     checks.assertEqual(workflow.count(EYE8_STEP.splitlines(keepends=True)[0]), 1,
                        'required one named eye/hair step')
     checks.assertEqual(portable.count(EYE8_STEP), 1, 'required exact eye/hair 8-minute step')
@@ -134,10 +134,10 @@ def historical_macos_workflow(workflow, checks):
     workflow = historical_eye_budget_workflow(workflow, checks)
     workflow = historical_native_budget_workflow(workflow, checks)
     checks.assertEqual(workflow.count('  portable:\n'), 1, 'required one portable job')
-    checks.assertEqual(workflow.count(PORTABLE20_HEADER), 1,
-                       'required exact portable job with 20-minute cap')
-    workflow = workflow.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace(
-        '    timeout-minutes: 20\n', '    timeout-minutes: 15\n'), 1)
+    checks.assertEqual(workflow.count(PORTABLE25_HEADER), 1,
+                       'required exact portable job with 25-minute cap')
+    workflow = workflow.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
+        '    timeout-minutes: 25\n', '    timeout-minutes: 15\n'), 1)
     checks.assertEqual(workflow.count('    runs-on: macos-15\n'), 2,
                        'required paired standard ARM64 macos-15 migration')
     for header in MACOS15_HEADERS:
@@ -805,21 +805,22 @@ class Policy(unittest.TestCase):
         original = workflow_path.read_text()
         read_text = Path.read_text
         mutations = []
-        for cap in ['15', '19', '21', '25', '0', '-1', '20.0', '"20"']:
-            mutations.append(original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace(
-                'timeout-minutes: 20', 'timeout-minutes: '+cap)))
+        for cap in ['15', '19', '21', '20', '0', '-1', '20.0', '"20"',
+                    '24', '26', '25.0', '"25"', "'25'", '${{ 25 }}']:
+            mutations.append(original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
+                'timeout-minutes: 25', 'timeout-minutes: '+cap)))
         mutations.extend([
-            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace('    timeout-minutes: 20\n', '')),
-            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER+'    timeout-minutes: 20\n'),
-            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER*2),
-            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace('  portable:', '  other:')),
+            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('    timeout-minutes: 25\n', '')),
+            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER+'    timeout-minutes: 25\n'),
+            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER*2),
+            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('  portable:', '  other:')),
             original.replace('    timeout-minutes: 60\n', '    timeout-minutes: 20\n', 1),
             original.replace('        timeout-minutes: 3\n', '        timeout-minutes: 4\n', 1),
-            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace(
-                'timeout-minutes: 20', 'timeout-minutes: 15')).replace(
+            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
+                'timeout-minutes: 25', 'timeout-minutes: 15')).replace(
                     '    timeout-minutes: 60\n', '    timeout-minutes: 20\n', 1),
-            original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace(
-                'timeout-minutes: 20', 'timeout-minutes: 15')).replace(
+            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
+                'timeout-minutes: 25', 'timeout-minutes: 15')).replace(
                     '        timeout-minutes: 20\n', '        timeout-minutes: 25\n', 1),
         ])
         for header in MACOS15_HEADERS:
@@ -854,7 +855,7 @@ class Policy(unittest.TestCase):
             ('stale-native-comment', original.replace(native, native.replace(NATIVE75_MATRIX_COMMENT, NATIVE75_MATRIX_COMMENT.replace('75', '60')))),
             ('matrix-cap', original.replace(native, native.replace('        timeout-minutes: 20\n', '        timeout-minutes: 21\n', 1))),
             ('mutation-cap', original.replace(native, native.replace('        timeout-minutes: 12\n', '        timeout-minutes: 13\n', 1))),
-            ('portable-cap', original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace('timeout-minutes: 20', 'timeout-minutes: 21'))),
+            ('portable-cap', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('timeout-minutes: 25', 'timeout-minutes: 21'))),
             ('b1-cap', original.replace(b1, b1.replace('    timeout-minutes: 60\n', '    timeout-minutes: 61\n', 1))),
             ('warm-cap', original.replace(warm, warm.replace('    timeout-minutes: 60\n', '    timeout-minutes: 61\n', 1))),
             ('cache-action-cap', original.replace(native, native.replace('        timeout-minutes: 4\n', '        timeout-minutes: 5\n', 1))),
@@ -882,8 +883,8 @@ class Policy(unittest.TestCase):
             ('changed-eye-run-mode', original.replace(EYE8_STEP, EYE8_STEP.replace('python3 -B ', 'python3 -B -O '))),
             ('changed-step-order', original.replace(EYE8_STEP, '').replace('      - name: Check bounded appearance diagnostic controls\n', EYE8_STEP+'      - name: Check bounded appearance diagnostic controls\n')),
             ('eye-moved-to-native', original.replace(EYE8_STEP, '').replace('  native-and-wasm:\n', '  native-and-wasm:\n'+EYE8_STEP)),
-            ('duplicate-portable-job', original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER*2)),
-            ('portable-cap', original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace('timeout-minutes: 20', 'timeout-minutes: 25'))),
+            ('duplicate-portable-job', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER*2)),
+            ('portable-cap', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('timeout-minutes: 25', 'timeout-minutes: 20'))),
         ])
         for name, old, new in [
                 ('authenticated-source', '        timeout-minutes: 3\n        run: python3 -B scripts/check-portable.py authenticated-source\n', '5'),

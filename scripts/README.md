@@ -317,3 +317,43 @@ policy correction stays within the seven approved files and existing source
 contract boundary; needing to cross that boundary triggers critical STOP.
 The seven-file limit applies to this budget policy correction. It does not
 revoke previously authorized ordinary feature CI repairs within the Goal.
+
+
+## Explicit portable job allowance (2026-11-01)
+
+Derek approved additional CI time. This bounded implementation chooses the
+portable job's **20→25 minute** cap from the retained timings below. The new
+extra-time authorization supersedes the prior portable20 critical STOP only
+for this finite allocation. The dated eye5/eye8 decisions, failures and STOP
+rules above remain historical evidence.
+
+For the same source tree, PR run
+[41100580034](https://github.com/Derek-X-Wang/nvwa/actions/runs/41100580034)
+completed portable in 988 seconds. Natural main run
+[41148258038](https://github.com/Derek-X-Wang/nvwa/actions/runs/41148258038)
+was cancelled at 1215 seconds with the job's 20-minute timeout annotation. Its
+final frozen-upper-arm step began 1188 seconds into the job. That observed
+prefix plus the retained 300-second step allowance is 1488 seconds; the new
+finite job allowance is 1500 seconds. The final main group did not finish.
+These observations are not a speedup measurement or a completion guarantee.
+
+Only the portable job cap changes. Eye8, authenticated-source3, offline-motion6,
+frozen-upper-arm5, native75, B1/warm60, cache-action4, runner labels, command
+inventory/order, job dependencies, source contexts and cache behavior stay
+unchanged. Four independent consumers require exact 25 on the unique portable
+job; the three full historical workflow comparisons restore only that job's
+25→historical15 bytes before the unchanged frozen hashes. The runner consumer
+keeps its command inventory and step assertions. Prior negative controls remain;
+stale 20 and malformed 25 values reject. All 48 run bodies, catalog cases/order,
+normal/optimized modes, runtime, assets and dependencies remain unchanged.
+
+Fresh complete formal PR/main CI is required for this new identity. Actual
+eye8 or portable25 budget exhaustion, or a need to expand the budget, policy
+scope or verification framework, triggers critical STOP. Preserve the evidence
+and release HOLD; do not automatically add time, split jobs, reduce cases or
+blindly rerun unchanged inputs. Ordinary real feature failures remain eligible
+for bounded fixes and review under the existing Goal, including its same-class
+two-attempt Astra escalation and boundary STOP rules. This budget correction
+has a bounded eight-file policy scope. Existing #120/M2/#80/full #79 HOLD,
+#112's original failure, #3's blocked reproduction and #4's measurement gaps
+remain unchanged.

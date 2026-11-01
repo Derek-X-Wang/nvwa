@@ -112,3 +112,34 @@ portable20 再次超时，触发 critical STOP；不自动加时、拆作业或�
 本次预算政策修正只限批准的七个文件及既有来源合同边界；需越界则触发
 critical STOP。七文件限制只约束本次预算政策修正，不撤销当前 Goal 先前
 已授权的普通功能 CI 故障修复权限。
+
+
+## Portable 整个作业的 25 分钟明确例外
+
+2026-11-01，Derek 同意为 CI 多加时间。本轮有界实现依据下述保留的运行
+时间，选择将 portable 整个作业从20分钟改为25分钟。此次新增时间的授权
+仅为这次有限分配覆盖此前 portable20 的 critical STOP；上文有日期的
+eye5／eye8 决定、失败与停止规则保留为历史证据，不改写为通过。
+
+同一 source tree 的 PR [41100580034](https://github.com/Derek-X-Wang/nvwa/actions/runs/41100580034)
+portable 用时988秒；自然触发的 main
+[41148258038](https://github.com/Derek-X-Wang/nvwa/actions/runs/41148258038)
+在1215秒取消，并标注20分钟作业上限。最后的 frozen-upper-arm 步骤在作业
+第1188秒开始，仍保留自身300秒上限。已观察前缀加完整尾步骤预算为1488秒，
+本次给整个作业有限的1500秒。main 的最后一组没有完成；这不是提速测量，
+不保证25分钟或后续任何步骤完成。
+
+仅 portable job cap 改为25。eye8、auth3、offline6、upper-arm5、native75、
+B1／optional-warm60、cache action4，以及 runner、命令清单与顺序、依赖作业、
+来源上下文、缓存行为、运行时、素材与依赖均保持原样。四个独立消费者验证
+唯一 portable 作业的 exact25；其中三个完整历史 workflow 比较只将该作业
+25还原为历史15字节，再验证原有哈希。runner 消费者保留原命令与步骤断言。
+全部旧负向控制保留，旧20及非整数／字符串／表达式25拒绝；全部48个 run body、
+catalog 顺序／用例及 normal／`-O` 保留。
+
+新身份仍须通过完整正式 PR／main CI。实际 eye8 或 portable25 预算耗尽，
+或需要进一步扩大预算、政策范围或验证框架时，触发 critical STOP。保留证据
+和 release HOLD，不自动再次加时、拆作业、删用例或盲目无变化重跑。普通真实
+功能故障仍按原 Goal 进行有界修复与复审，保留同类两次转 Astra 及越界停止
+规则。本轮预算修正限定在八个 policy/docs 文件内，不改变 #120／M2／#80／
+完整 #79 HOLD、#112 的原始失败、#3 的阻塞或 #4 的测量缺口。
