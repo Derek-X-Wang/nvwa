@@ -29,10 +29,10 @@ BASELINE = {
 }
 
 
-PORTABLE20_HEADER = """  portable:
+PORTABLE25_HEADER = """  portable:
     name: Core, CLI, and diagnostic controls
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
 """
 
 
@@ -45,7 +45,7 @@ EYE8_STEP = """      - name: Check eye, hair, and character parameter controls
 
 def historical_eye_budget_workflow(workflow, checks):
     jobs = {}
-    for name, cap in [('portable', '20'), ('native-and-wasm', '75'),
+    for name, cap in [('portable', '25'), ('native-and-wasm', '75'),
                       ('b1-source-regression', '60'), ('native-cache-warm', '60')]:
         blocks = re.findall(r'(?ms)^  '+name+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
         checks.assertEqual(len(blocks), 1, 'required one '+name+' job')
@@ -53,7 +53,7 @@ def historical_eye_budget_workflow(workflow, checks):
                            ['    timeout-minutes: '+cap], 'required unchanged '+name+' cap')
         jobs[name] = blocks[0]
     portable = jobs['portable']
-    checks.assertTrue(portable.startswith(PORTABLE20_HEADER), 'required exact portable job header')
+    checks.assertTrue(portable.startswith(PORTABLE25_HEADER), 'required exact portable job header')
     checks.assertEqual(workflow.count(EYE8_STEP.splitlines(keepends=True)[0]), 1,
                        'required one named eye/hair step')
     checks.assertEqual(portable.count(EYE8_STEP), 1, 'required exact eye/hair 8-minute step')
@@ -154,9 +154,14 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
             ('changed-eye-run-mode', original.replace(EYE8_STEP, EYE8_STEP.replace('python3 -B ', 'python3 -B -O '))),
             ('changed-step-order', original.replace(EYE8_STEP, '').replace('      - name: Check bounded appearance diagnostic controls\n', EYE8_STEP+'      - name: Check bounded appearance diagnostic controls\n')),
             ('eye-moved-to-native', original.replace(EYE8_STEP, '').replace('  native-and-wasm:\n', '  native-and-wasm:\n'+EYE8_STEP)),
-            ('duplicate-portable-job', original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER*2)),
-            ('portable-cap', original.replace(PORTABLE20_HEADER, PORTABLE20_HEADER.replace('timeout-minutes: 20', 'timeout-minutes: 25'))),
+            ('duplicate-portable-job', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER*2)),
+            ('portable-cap', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('timeout-minutes: 25', 'timeout-minutes: 20'))),
         ])
+        for cap in ['15', '19', '21', '0', '-1', '20.0', '"20"',
+                    '24', '26', '25.0', '"25"', "'25'", '${{ 25 }}']:
+            eye_mutations.append(('portable-cap-'+cap, original.replace(
+                PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
+                    'timeout-minutes: 25', 'timeout-minutes: '+cap))))
         for name, old, new in [
                 ('authenticated-source', '        timeout-minutes: 3\n        run: python3 -B scripts/check-portable.py authenticated-source\n', '5'),
                 ('offline-motion', '        timeout-minutes: 6\n        run: python3 -B scripts/check-portable.py offline-motion\n', '5'),
