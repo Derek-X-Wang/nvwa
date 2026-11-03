@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Nvwa · Agent preview</title>
+<style>
+html,body {margin:0;width:1280px;height:720px;background:#101721;overflow:hidden}
+canvas {width:1280px;height:720px;display:block}
+#preview-status {position:absolute;top:0;left:0;max-width:1200px;color:white;background:#172331;white-space:pre-wrap}
+</style>
+<canvas id="nvwa" aria-label="Nvwa actual character preview" tabindex="0"></canvas>
+<pre id="preview-status" role="status">Loading preview request…</pre>
+<script type="module">
+import init, {start_preview} from './nvwa_preview.js';
+const status = document.getElementById('preview-status');
+let submitted = false;
+const finish = async payload => {
+  const response = await fetch('./finish', {
+    method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
+  });
+  if (!response.ok) throw new Error(`Preview receiver rejected result: ${response.status}`);
+  submitted = true;
+};
+try {
+  const response = await fetch('./request.json', {cache:'no-store'});
+  if (!response.ok) throw new Error(`Preview request failed: ${response.status}`);
+  const request = await response.json();
+  if (!navigator.gpu || !await navigator.gpu.requestAdapter()) throw new Error('WebGPU adapter unavailable');
+  const workResponse = await fetch('./work.nvwa.json', {cache:'no-store'});
+  if (!workResponse.ok) throw new Error(`Work fetch failed: ${workResponse.status}`);
+  const work = await workResponse.text();
+  const rendered = new Promise((resolve,reject) => {
+    const timeout = setTimeout(() => {observer.disconnect();reject(new Error('Preview render timeout'));},65000);
+    const observer = new MutationObserver(() => {
+      let result;
+      try {result = JSON.parse(status.textContent);} catch {return;}
+      if (!['rendered','failed'].includes(result.status)) return;
+      observer.disconnect(); clearTimeout(timeout);
+      if (result.status === 'failed') reject(new Error(result.error ?? 'Renderer rejected preview'));
+      else resolve(result);
+    });
+    observer.observe(status, {childList:true,subtree:true,characterData:true});
+  });
+  // Attach the rejection handler before starting the event loop.
+  rendered.catch(() => {});
+  await init();
+  start_preview(work, request.seconds);
+  const result = await rendered;
+  const current = () => JSON.parse(status.textContent);
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  if (JSON.stringify(current()) !== JSON.stringify(result)) throw new Error('Preview changed before canvas capture');
+  const blob = await new Promise(resolve => document.getElementById('nvwa').toBlob(resolve,'image/png'));
+  if (!blob || blob.size === 0) throw new Error('Actual canvas PNG unavailable');
+  const png = await new Promise((resolve,reject) => {
+    const reader = new FileReader(); reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Canvas PNG read failed')); reader.readAsDataURL(blob);
+  });
+  if (JSON.stringify(current()) !== JSON.stringify(result)) throw new Error('Preview changed during canvas capture');
+  await finish({status:'rendered',runtime:result,png_data_url:png});
+  status.hidden = true;
+} catch(error) {
+  status.hidden = false; status.textContent = `Preview failed: ${error.message ?? error}`;
+  if (!submitted) {
+    try {await finish({status:'failed',error:String(error.message ?? error)});} catch(receiverError) {
+      status.textContent += `\n${receiverError.message ?? receiverError}`;
+    }
+  }
+}
+</script>
+</html>

@@ -71,6 +71,11 @@ Revision checks compare the requested revision with the document loaded by that 
 
 The bundled GLB idle, wave and turn clips and the B1 arm/knee rehearsal clips are authored actions. The CLI selects and sequences them; it does not generate actions. The current data CLI does not sample poses or produce offscreen screenshots, video or exports of genuine generated motion. Studio remains the path for interactive rendering when it is useful.
 
+For an agent's visual feedback loop, the separate [Web preview workflow](agents/visual-preview.md)
+accepts a B1 Work and timeline time, then captures the actual saved camera through
+the existing renderer. It requires a WebGPU browser and the built preview adapter;
+it does not add rendering to this native data CLI or connect to a running Studio.
+
 ## Validation boundary
 
 On 2026-10-15, the six-operation path (`new`, `describe-capabilities`, `apply`, `validate`, `save`, `inspect`) passed locally on macOS arm64 using a private output directory and the bundled asset. Discovery supplied the parameter, character ID and authored clip used by the command batch. The final `inspect` response matched the saved Work. This was file-operation verification; it did not start Studio, a browser, a GPU or a motion model.

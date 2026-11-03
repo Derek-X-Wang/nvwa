@@ -1,0 +1,45 @@
+{
+  "status": "PASS observed ordinaryStudio Web/CLI exchange",
+  "work": "../../../examples/agent-visual-preview/face-review.nvwa.json",
+  "revision": 5,
+  "work_sha256": "36f64ba087e25be025bf962887b52fcea7e65d3e6caf89b9c0b2999acb578b27",
+  "source_web_cli_final_web_bytes_identical": true,
+  "ordinary_web_observations": [
+    "initial revision4 andshort01 visible",
+    "Play at0.140s thenReplay20.0 observed",
+    "normalfilechooser openedrevision5 portrait",
+    "actualSave downloadevent readbackmatchedsource",
+    "normalfilechooser restoredinitialrevision4 fullbody",
+    "normalfilechooser openedCLIresavedrevision5 portrait, waitedcandidatecommit",
+    "actualSave finaldownload exactsamebytes"
+  ],
+  "cli_calls": [
+    {
+      "operation": "validate",
+      "exit_code": 0
+    },
+    {
+      "operation": "save",
+      "exit_code": 0
+    },
+    {
+      "operation": "validate",
+      "exit_code": 0
+    }
+  ],
+  "fresh_native_cli_validation": {
+    "binary_sha256": "690f34d116cc50b6a4ccd377454b235e88992233471dcc33f73bf0d2602a5520",
+    "exit_code": 0
+  },
+  "retained_standard_web": {
+    "receipt_inputs": 273,
+    "unchanged": 270,
+    "nonruntime_changes": [
+      "scripts/README.md",
+      "scripts/test-ci-timing.py",
+      "scripts/test-portable-checks.py"
+    ],
+    "wasm_sha256": "edf59b812b121726bc56a4b7d421895087d0dd6f75b4d0398b8d503d4015ac35"
+  },
+  "scope": "Ordinary UI executed by root; original tool screenshots/logs retained privately. Public preview PNGs illustrate the separate preview path, not these file-dialog actions. No desktopGUI/performance/generalquality claim."
+}

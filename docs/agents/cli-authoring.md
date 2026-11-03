@@ -25,6 +25,32 @@ replaces the entire timeline. Timeline duration is wall time. Source pose time
 advances at `speed`; profile source durations do not set the wall-time span.
 Spans must not overlap. Adjacent spans and gaps are allowed.
 
+### Editing time without changing the intended action
+
+When shortening a span, decide whether later spans keep their absolute starts
+or move earlier to stay adjacent. `set_timeline` does not shift them for you.
+If the request is ambiguous, state the chosen interpretation. Preserve the
+previous Work and save the revision to a new path.
+
+For example, four five-second spans starting at `0, 5, 10, 15` end at 20 seconds.
+Shortening the third to four seconds while retaining the last start at 15 leaves
+a one-second gap. To make the sequence contiguous and 19 seconds long, change
+the last start to 14 as well. In a gap, playback holds the preceding endpoint;
+an adjacent timeline does not by itself guarantee a smooth pose transition.
+
+Source coverage is separate from wall time: `duration_seconds * speed` is the
+source time advanced during a span, subject to the source clip's endpoint.
+For a four-second authored clip, five seconds at speed `0.8` plays it once in
+full. After shortening the span to four seconds, speed `1.0` preserves a full
+playthrough; retaining `0.8` advances only 3.2 source seconds. Read the actual
+source duration from discovery instead of assuming every clip is four seconds.
+
+After editing, inspect starts, durations, speeds and the final end time. Validate
+the saved Work with its assets. These checks establish the file's meaning;
+inspect an actual rendered preview separately to judge framing and visible poses.
+Use the [agent visual-preview workflow](visual-preview.md) when you need an
+actual B1 image before deciding on the next edit.
+
 Save an envelope or array in a JSON file. Run
 `nvwa-cli apply input.nvwa.json commands.json output.nvwa.json`.
 Each successful nonduplicate command advances revision by one. A later envelope

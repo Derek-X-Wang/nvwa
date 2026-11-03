@@ -1,0 +1,113 @@
+{
+  "scope": "Paths normalized for public repository. Runtime/request/pixel hashes retained; not byte-identical to original private receipts.",
+  "captures": [
+    {
+      "name": "full-body",
+      "original_private_receipt_sha256": "f01ccc2aa9015bd7d97f7a4801fffd119f06dfbd0ddefe8dc74e78718d0ac841",
+      "normalized_receipt": {
+        "status": "rendered",
+        "request": {
+          "schema_version": 1,
+          "seconds": 2.0,
+          "effective_seconds": 2.0,
+          "work_sha256": "2731f451b11e959fde6e7e80c77c357c095031af69ca717cbfdd38e42bd8b1a1",
+          "document_revision": 4,
+          "camera": {
+            "azimuth_degrees": 16.0,
+            "elevation_degrees": 8.0,
+            "distance": 4.2,
+            "target_height": 0.95,
+            "fov_degrees": 36.0
+          },
+          "effective_camera": {
+            "azimuth_degrees": 16.0,
+            "elevation_degrees": 8.0,
+            "distance": 4.199999809265137,
+            "target_height": 0.949999988079071,
+            "fov_degrees": 36.0
+          }
+        },
+        "runtime": {
+          "camera": {
+            "azimuth_degrees": 16,
+            "distance": 4.199999809265137,
+            "elevation_degrees": 8,
+            "fov_degrees": 36,
+            "target_height": 0.949999988079071
+          },
+          "capture_callback": true,
+          "document_revision": 4,
+          "error": null,
+          "physical_height": 720,
+          "physical_width": 1280,
+          "playing": false,
+          "scale_factor": 1,
+          "schema_version": 1,
+          "seconds": 2,
+          "status": "rendered",
+          "work_sha256": "2731f451b11e959fde6e7e80c77c357c095031af69ca717cbfdd38e42bd8b1a1"
+        },
+        "png_sha256": "82a491a53ad4fc9b0e1fe7dad28ffa8764c9c5aa45d198581ed8c3960ba2303d",
+        "image": "full-body.png",
+        "work": "../../../examples/agent-visual-preview/full-body.nvwa.json",
+        "wasm_sha256": "0c79e606e4ebd4ec8736be15d83be1474a6aab15c9fe7475a91e40d15784a0dd",
+        "image_kind": "actual_canvas_after_screenshot_callback_with_held_pose",
+        "scope": "Visual preview; not performance, quality-HOLD release or motion generation"
+      }
+    },
+    {
+      "name": "face-review",
+      "original_private_receipt_sha256": "77825e5946bec953343b2b325b0197d3cd09accaae18ca0f9ac18875fa8c423b",
+      "normalized_receipt": {
+        "status": "rendered",
+        "request": {
+          "schema_version": 1,
+          "seconds": 2.0,
+          "effective_seconds": 2.0,
+          "work_sha256": "36f64ba087e25be025bf962887b52fcea7e65d3e6caf89b9c0b2999acb578b27",
+          "document_revision": 5,
+          "camera": {
+            "azimuth_degrees": 0.0,
+            "elevation_degrees": 0.0,
+            "distance": 1.05,
+            "target_height": 1.5,
+            "fov_degrees": 32.0
+          },
+          "effective_camera": {
+            "azimuth_degrees": 0.0,
+            "elevation_degrees": 0.0,
+            "distance": 1.0499999523162842,
+            "target_height": 1.5,
+            "fov_degrees": 32.0
+          }
+        },
+        "runtime": {
+          "camera": {
+            "azimuth_degrees": 0,
+            "distance": 1.0499999523162842,
+            "elevation_degrees": 0,
+            "fov_degrees": 32,
+            "target_height": 1.5
+          },
+          "capture_callback": true,
+          "document_revision": 5,
+          "error": null,
+          "physical_height": 720,
+          "physical_width": 1280,
+          "playing": false,
+          "scale_factor": 1,
+          "schema_version": 1,
+          "seconds": 2,
+          "status": "rendered",
+          "work_sha256": "36f64ba087e25be025bf962887b52fcea7e65d3e6caf89b9c0b2999acb578b27"
+        },
+        "png_sha256": "c48d6e57e40a2683eaa1a52d50ddf903b99c587907934ff8671a81fd3233512d",
+        "image": "face-review.png",
+        "work": "../../../examples/agent-visual-preview/face-review.nvwa.json",
+        "wasm_sha256": "0c79e606e4ebd4ec8736be15d83be1474a6aab15c9fe7475a91e40d15784a0dd",
+        "image_kind": "actual_canvas_after_screenshot_callback_with_held_pose",
+        "scope": "Visual preview; not performance, quality-HOLD release or motion generation"
+      }
+    }
+  ]
+}
