@@ -1,0 +1,277 @@
+{
+  "context": "b1-multisegment-product-v1",
+  "files": {
+    "crates/nvwa-b1-adapter/Cargo.toml": {
+      "bytes": 268,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-b1-adapter/Cargo.toml",
+      "sha256": "1fef950da11a9c56b499aa221f909a33c15ba799dfca30b5ffa4b11d7e68107b"
+    },
+    "crates/nvwa-b1-adapter/PROVENANCE.json": {
+      "bytes": 967,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-b1-adapter/PROVENANCE.json",
+      "sha256": "58826957e37767d837cf39f41de59ccd9b0c6e72a885fc0c4198f6cd9debd758"
+    },
+    "crates/nvwa-b1-adapter/README.md": {
+      "bytes": 1787,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-b1-adapter/README.md",
+      "sha256": "195a9bc71906de5e6fff8e50c952c7339dae9bdbe3f65a4726d76d8b23d38e07"
+    },
+    "crates/nvwa-b1-adapter/src/lib.rs": {
+      "bytes": 22798,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-b1-adapter/src/lib.rs",
+      "sha256": "9c7683612e637b66ecb976d961dfda817ed480fcb8692718768266249b033c3b"
+    },
+    "crates/nvwa-b1-adapter/src/motion.rs": {
+      "bytes": 3200,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-b1-adapter/src/motion.rs",
+      "sha256": "8f10acdb1f66ecce57a23787472e6745df570e47ebaa20d2667290d0d256e8b7"
+    },
+    "crates/nvwa-b1-adapter/src/poses.json": {
+      "bytes": 739,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-b1-adapter/src/poses.json",
+      "sha256": "8e51c044841eb1c6cb96d583ca927cceb51ddf7d0729f4526f61777c8b7adab2"
+    },
+    "crates/nvwa-b1-adapter/src/poses.rs": {
+      "bytes": 944,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-b1-adapter/src/poses.rs",
+      "sha256": "71685876699888f4fbbc97a31e4ef6db3625539ed81e7671ee8bfa758c5d14c2"
+    },
+    "crates/nvwa-cli/Cargo.toml": {
+      "bytes": 236,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/Cargo.toml",
+      "sha256": "8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508"
+    },
+    "crates/nvwa-cli/src/lib.rs": {
+      "bytes": 43,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/src/lib.rs",
+      "sha256": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2"
+    },
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 28438,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/src/main.rs",
+      "sha256": "eaf7cbd2e9bbaf4765e9d0fcb0d8c9a71d3a323a3ca2e1fe5abc1005abb51714"
+    },
+    "crates/nvwa-cli/tests/appearance.rs": {
+      "bytes": 19155,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/tests/appearance.rs",
+      "sha256": "fd38c7cde5f1acc64cea2426869980cfc2c3662a25e131b60d99d34621b2f4fe"
+    },
+    "crates/nvwa-cli/tests/b1.rs": {
+      "bytes": 18579,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/tests/b1.rs",
+      "sha256": "ec3082149fe3b23b6df3fbf3e2cbbccccf15a6a776613e9e8a272ec958a727ef"
+    },
+    "crates/nvwa-cli/tests/character.rs": {
+      "bytes": 8339,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/tests/character.rs",
+      "sha256": "c9e043b246cab0242b79af18b0777d0395888ce258de5ca09cd71d5b63fb4882"
+    },
+    "crates/nvwa-cli/tests/discovery.rs": {
+      "bytes": 10561,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/tests/discovery.rs",
+      "sha256": "0707c25bbe173e979fadc13a1ed0093c0ab653a62b77e1624c03e1e09bf8b87b"
+    },
+    "crates/nvwa-cli/tests/offline.rs": {
+      "bytes": 7970,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/tests/offline.rs",
+      "sha256": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5"
+    },
+    "crates/nvwa-cli/tests/response_transport.rs": {
+      "bytes": 3458,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/tests/response_transport.rs",
+      "sha256": "1e36e6b5c0d06718423369762850c81e2c97e27de199a49704819530aeb039c9"
+    },
+    "crates/nvwa-cli/tests/sequence.rs": {
+      "bytes": 4068,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-cli/tests/sequence.rs",
+      "sha256": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d"
+    },
+    "crates/nvwa-core/Cargo.toml": {
+      "bytes": 225,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/Cargo.toml",
+      "sha256": "56edf0d7b6947b4068f9fa39b37a852bb2d13e6a0349bbb0292ad3131a4edcad"
+    },
+    "crates/nvwa-core/src/appearance.rs": {
+      "bytes": 15435,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/src/appearance.rs",
+      "sha256": "db79a645a2f5f6ddf71b5575f3f598cd88fa14a5f59df3d92e24ad425cd80324"
+    },
+    "crates/nvwa-core/src/asset.rs": {
+      "bytes": 6011,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/src/asset.rs",
+      "sha256": "ec90b518f8dd95fb1aa47c236f52518b41ab4afe3bb84c70cb93efc7b7485e3f"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 17048,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/src/b1.rs",
+      "sha256": "d1aa3098b87999693087c5f7a9ca1c9f9a110315a57fbd22e3ce6b1847e98984"
+    },
+    "crates/nvwa-core/src/b1_character_tests.rs": {
+      "bytes": 7257,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/src/b1_character_tests.rs",
+      "sha256": "a05e433282c053bfef5e12f199794ae76e746e84f4dca7fd74650e16f8f9f65d"
+    },
+    "crates/nvwa-core/src/b1_motion_tests.rs": {
+      "bytes": 3961,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/src/b1_motion_tests.rs",
+      "sha256": "1122c33f27962c456d3bfe95179afed4bd9073e1c3142759b0ae965759204b0e"
+    },
+    "crates/nvwa-core/src/bounded_history_tests.rs": {
+      "bytes": 13337,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/src/bounded_history_tests.rs",
+      "sha256": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b"
+    },
+    "crates/nvwa-core/src/lib.rs": {
+      "bytes": 41780,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/src/lib.rs",
+      "sha256": "7aa91b5f66573fcc9def26639e07923c0dc4ffa558cce7857c1aaedb0766bb71"
+    },
+    "crates/nvwa-core/src/stage.rs": {
+      "bytes": 6274,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/src/stage.rs",
+      "sha256": "27acf1d66321c39a5cbc88f0502204b6c689d5bc7f8c02d1c641a7fb529ba21a"
+    },
+    "crates/nvwa-core/tests/appearance.rs": {
+      "bytes": 25773,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/tests/appearance.rs",
+      "sha256": "a386daecd95414aeee1b80b8e77b5bbbd026ef4f56526a96106b1d72607d699d"
+    },
+    "crates/nvwa-core/tests/b1.rs": {
+      "bytes": 15804,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/tests/b1.rs",
+      "sha256": "d1ca91f3a6b587efb3915b8c2ed55a0d6d7d8ad515db22dc1f83a389cc9b047a"
+    },
+    "crates/nvwa-core/tests/stage.rs": {
+      "bytes": 6871,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/tests/stage.rs",
+      "sha256": "f26ce5f455b57a0bfbc297e87eb1cdb49151f89b911169f0a97fac26fc67c934"
+    },
+    "crates/nvwa-core/tests/transactions.rs": {
+      "bytes": 16941,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-core/tests/transactions.rs",
+      "sha256": "974a321709a6220a1ea04c14b401477c4c6d96638485413f4f3a4541dc837d6c"
+    },
+    "crates/nvwa-runtime/Cargo.toml": {
+      "bytes": 849,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/Cargo.toml",
+      "sha256": "0d8644dd4bd145e9fde400abbfc2e1674d596b9307b60253aa472912c78ddc51"
+    },
+    "crates/nvwa-runtime/src/appearance/assets.rs": {
+      "bytes": 10894,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/appearance/assets.rs",
+      "sha256": "5a92fcc8ce2341baf45660c062fb3537f8a627928bccc4a360a6b4778a698030"
+    },
+    "crates/nvwa-runtime/src/appearance/geometry.rs": {
+      "bytes": 18496,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/appearance/geometry.rs",
+      "sha256": "aea3de764195c1a81bca9abbae361c47d127ebfbe7c475bcdcddf9ab35fee503"
+    },
+    "crates/nvwa-runtime/src/appearance/mod.rs": {
+      "bytes": 52692,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/appearance/mod.rs",
+      "sha256": "1ac97e3fc1e5208c05fe6e840fb33c5d1ca6b6bb2ca7e38419a44a279ea24eba"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 192139,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/b1.rs",
+      "sha256": "0e85e0d3354fd379ecffabfa3b9f538712792c01407ecd7044058b4d06a4b14b"
+    },
+    "crates/nvwa-runtime/src/b1_web.rs": {
+      "bytes": 3709,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/b1_web.rs",
+      "sha256": "211146e76bb5d7d268e7b8fdfbcfa43bd7f30f88bfd2018c3568a0dcac4e8f65"
+    },
+    "crates/nvwa-runtime/src/lib.rs": {
+      "bytes": 86016,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/lib.rs",
+      "sha256": "000dbaa6995bc36ed6a9bad7115a8fb98838c7510f7e74e2ec4239b806a6fbf5"
+    },
+    "crates/nvwa-runtime/src/loading_tests.rs": {
+      "bytes": 32030,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/loading_tests.rs",
+      "sha256": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804"
+    },
+    "crates/nvwa-runtime/src/stage.rs": {
+      "bytes": 21929,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/stage.rs",
+      "sha256": "a59147dfa7dfccd5e987c9040b3f4573cb1ce85da0ce6a1d652f355fdad2488c"
+    },
+    "crates/nvwa-runtime/src/stalled_http_tests.rs": {
+      "bytes": 14338,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-runtime/src/stalled_http_tests.rs",
+      "sha256": "7fa3c0055bc39e04f47f3f3f2cb532f4d2aac9945a89c5dcc625fc3feebe9b55"
+    },
+    "crates/nvwa-studio/Cargo.toml": {
+      "bytes": 1363,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/Cargo.toml",
+      "sha256": "909d902e11f8c9e6c51f501cb332ceb81eddb8586ebc76ba25656acddea9538e"
+    },
+    "crates/nvwa-studio/src/appearance_ui.rs": {
+      "bytes": 2282,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/appearance_ui.rs",
+      "sha256": "c8af599556fa6ff1c32276cb9b5a4aef8a384a297a832952b9a262a734bfc894"
+    },
+    "crates/nvwa-studio/src/appearance_ui_tests.rs": {
+      "bytes": 24912,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/appearance_ui_tests.rs",
+      "sha256": "5e3aff9ae92295b6062b6ce0cfdf1f0d23839059709ce9f3550bb762080b3d34"
+    },
+    "crates/nvwa-studio/src/editor_layout.rs": {
+      "bytes": 33028,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/editor_layout.rs",
+      "sha256": "43425b3395ee6aab833fd30502dca22b0c8bdf694e7a9cf2444aab85a51bcb88"
+    },
+    "crates/nvwa-studio/src/editor_layout_paint_tests.rs": {
+      "bytes": 11444,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/editor_layout_paint_tests.rs",
+      "sha256": "15a36a3b51a5f8fe79883e39353251edf6130ec145149380567667a77d1a2f6c"
+    },
+    "crates/nvwa-studio/src/first_save.rs": {
+      "bytes": 7595,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/first_save.rs",
+      "sha256": "34b68095ed6f0478d1074ef7ca96b7e2385cbd74f96e4b860840f9ae46cb74fc"
+    },
+    "crates/nvwa-studio/src/fonts.rs": {
+      "bytes": 6274,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/fonts.rs",
+      "sha256": "626af6577806de19310691a28891b00cc8cc1a89cc9ed95a4df930fc472ee0c2"
+    },
+    "crates/nvwa-studio/src/lib.rs": {
+      "bytes": 83260,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/lib.rs",
+      "sha256": "9d1ef0c90b303aa27b44be7f29ff7872e69b04d6d03b574466e38ea93f6f55d0"
+    },
+    "crates/nvwa-studio/src/main.rs": {
+      "bytes": 140,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/main.rs",
+      "sha256": "9253beb128e8e9b75f798cad61b8b8ca9280239dc4e01372b1fbc1adf61510b3"
+    },
+    "crates/nvwa-studio/src/platform.rs": {
+      "bytes": 22638,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/platform.rs",
+      "sha256": "4425db0f5b244be56f7cf1fa1cc8932c418df1f53e4e5eef4d27224ed18fb88a"
+    },
+    "crates/nvwa-studio/src/save_feedback_tests.rs": {
+      "bytes": 34273,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/save_feedback_tests.rs",
+      "sha256": "6b69595fe19c0df161784250c820276aec724eaf3e74f197701f2709d2a8fecb"
+    },
+    "crates/nvwa-studio/src/scene_view.rs": {
+      "bytes": 10513,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/scene_view.rs",
+      "sha256": "7f44aed40cf5a7e6b4b1e06821bf0fd6158724171a2ca562fdb34906d275ad54"
+    },
+    "crates/nvwa-studio/src/stage_ui.rs": {
+      "bytes": 28403,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/stage_ui.rs",
+      "sha256": "cc10a4c29c7c9b3efd3e31fc4e31a3c318e346e9d6b65eced9d0b723834730db"
+    },
+    "crates/nvwa-studio/src/web_input.rs": {
+      "bytes": 39460,
+      "fixture": "fixtures/b1-cheek-fullness-baselines/crates/nvwa-studio/src/web_input.rs",
+      "sha256": "30ee884731913c0d65bbaccb9e29b06e5681d82e25a8a95c4337fa9a043cb2d7"
+    }
+  },
+  "schema_version": 1,
+  "source_commit": "96cda1b6a63d7f271389b28d293f1223028f0de6"
+}

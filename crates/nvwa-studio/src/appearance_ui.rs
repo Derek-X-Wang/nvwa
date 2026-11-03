@@ -14,29 +14,36 @@ pub(super) fn draw(ui: &mut egui::Ui, document: &SceneDocument) -> Option<Comman
     let eyes_changed = ui.checkbox(&mut eyes, "眼睛 / Eyes").changed();
     let hair_changed = ui.checkbox(&mut hair, "头发 / Hair").changed();
     let mut set = document.character.appearance.b1_set();
-    let hairstyle_changed =
-        if document.profile.backend.b1_asset_version() == Some(B1AssetVersion::V2) {
-            let mut selected = set.unwrap_or(B1AppearanceSet::V2);
-            let changed = ui
-                .add_enabled_ui(hair, |ui| {
-                    ui.label("发型 / Hairstyle");
-                    ui.horizontal(|ui| {
-                        let short04 = ui
-                            .selectable_value(&mut selected, B1AppearanceSet::V2, "short04")
-                            .changed();
-                        let short01 = ui
-                            .selectable_value(&mut selected, B1AppearanceSet::V2Short01, "short01")
-                            .changed();
-                        short04 || short01
-                    })
-                    .inner
-                })
-                .inner;
-            set = Some(selected);
-            changed
+    let hairstyle_changed = if let Some(base @ (B1AssetVersion::V2 | B1AssetVersion::V3)) =
+        document.profile.backend.b1_asset_version()
+    {
+        let short04_set = B1AppearanceSet::for_base(base);
+        let short01_set = if base == B1AssetVersion::V3 {
+            B1AppearanceSet::V3Short01
         } else {
-            false
+            B1AppearanceSet::V2Short01
         };
+        let mut selected = set.unwrap_or(short04_set);
+        let changed = ui
+            .add_enabled_ui(hair, |ui| {
+                ui.label("发型 / Hairstyle");
+                ui.horizontal(|ui| {
+                    let short04 = ui
+                        .selectable_value(&mut selected, short04_set, "short04")
+                        .changed();
+                    let short01 = ui
+                        .selectable_value(&mut selected, short01_set, "short01")
+                        .changed();
+                    short04 || short01
+                })
+                .inner
+            })
+            .inner;
+        set = Some(selected);
+        changed
+    } else {
+        false
+    };
     ui.small("随作品保存 / Included in Work");
     if !(skin_changed || eyes_changed || hair_changed || hairstyle_changed) {
         return None;

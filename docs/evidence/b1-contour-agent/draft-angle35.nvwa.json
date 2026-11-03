@@ -1,0 +1,188 @@
+{
+  "schema_version": 4,
+  "revision": 4,
+  "profile": {
+    "backend": {
+      "type": "b1_cpu",
+      "schema_version": 4,
+      "asset_id": "mpfb-hm08-game-engine-female-sportsuit01-v3"
+    },
+    "id": "nvwa-mpfb-b1-motion-v3",
+    "asset_path": "characters/mpfb-b1-v3/manifest.json",
+    "asset_sha256": "e4bd47f3f3cf3ef38fd3400bfd5127b7ade52b630cef823f00bba939262796c3",
+    "license": "CC0-1.0",
+    "parameters": [
+      {
+        "id": "torso_length",
+        "morph_index": 0,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "jaw_drop",
+        "morph_index": 1,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "head_width",
+        "morph_index": 2,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "nose_width",
+        "morph_index": 3,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "mouth_width",
+        "morph_index": 4,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "chin_width",
+        "morph_index": 5,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "neck_width",
+        "morph_index": 6,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "hip_width",
+        "morph_index": 7,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "cheek_fullness",
+        "morph_index": 8,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      }
+    ],
+    "clips": [
+      {
+        "id": "b1_arm_rehearsal_v1",
+        "animation_index": 0,
+        "duration_seconds": 4.0
+      },
+      {
+        "id": "b1_knee_flex_v1",
+        "animation_index": 1,
+        "duration_seconds": 4.0
+      }
+    ]
+  },
+  "character": {
+    "id": "character-1",
+    "profile_id": "nvwa-mpfb-b1-motion-v3",
+    "parameters": {
+      "cheek_fullness": 0.5,
+      "chin_width": 0.0,
+      "head_width": 0.0,
+      "hip_width": 0.0,
+      "jaw_drop": 0.0,
+      "mouth_width": 0.0,
+      "neck_width": 0.0,
+      "nose_width": 0.0,
+      "torso_length": 0.0
+    },
+    "scale": 1.0,
+    "diagnostic_pose": "neutral",
+    "appearance": {
+      "type": "b1_cc0",
+      "schema_version": 3,
+      "asset_set_id": "mpfb-b1-cc0-appearance-v3-short01-v1",
+      "asset_set_sha256": "10b672c3cd15d1bbdbe97a3e75efe04bedb3d72bc864c0d05850bddae4c23b9e",
+      "skin": true,
+      "eyes": true,
+      "hair": true
+    }
+  },
+  "timeline": [
+    {
+      "id": "case1-arms",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "start_seconds": 0.0,
+      "duration_seconds": 4.0,
+      "speed": 1.0,
+      "looping": false
+    },
+    {
+      "id": "case1-knees",
+      "clip_id": "b1_knee_flex_v1",
+      "start_seconds": 4.0,
+      "duration_seconds": 4.0,
+      "speed": 1.0,
+      "looping": false
+    }
+  ],
+  "stage": {
+    "key_light": {
+      "illuminance_lux": 10000.0,
+      "color_srgb": [
+        1.0,
+        0.94,
+        0.86
+      ],
+      "azimuth_degrees": -35.0,
+      "elevation_degrees": 42.0
+    },
+    "fill_light": {
+      "illuminance_lux": 3000.0,
+      "color_srgb": [
+        0.8,
+        0.89,
+        1.0
+      ],
+      "azimuth_degrees": 55.0,
+      "elevation_degrees": 28.0
+    },
+    "ambient": {
+      "brightness": 180.0,
+      "color_srgb": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "background_color_srgb": [
+      0.88,
+      0.9,
+      0.93
+    ],
+    "floor": {
+      "visible": true,
+      "color_srgb": [
+        0.72,
+        0.75,
+        0.8
+      ],
+      "shadows": true
+    },
+    "camera": {
+      "azimuth_degrees": 35.0,
+      "elevation_degrees": 0.0,
+      "distance": 1.05,
+      "target_height": 1.5,
+      "fov_degrees": 32.0
+    },
+    "quality": "balanced"
+  }
+}

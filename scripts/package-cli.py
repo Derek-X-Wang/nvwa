@@ -17,9 +17,12 @@ REPO = Path(__file__).resolve().parent.parent
 ASSET_TREES = (
     "characters/mpfb-b1-v1",
     "characters/mpfb-b1-v2",
+    "characters/mpfb-b1-v3",
     "appearances/mpfb-b1-cc0-v1",
     "appearances/mpfb-b1-cc0-v2",
     "appearances/mpfb-b1-cc0-v2-short01-v1",
+    "appearances/mpfb-b1-cc0-v3",
+    "appearances/mpfb-b1-cc0-v3-short01-v1",
 )
 ASSET_FILES = (
     "character.profile.json",
@@ -32,6 +35,7 @@ WORKS = (
     "b1-appearance.nvwa.json",
     "b1-character.nvwa.json",
     "b1-short01.nvwa.json",
+    "b1-contour.nvwa.json",
 )
 
 

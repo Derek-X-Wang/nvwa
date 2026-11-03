@@ -612,3 +612,5 @@ fn hairstyle_options_are_absent_for_v1_and_glb_and_none_keeps_default_policy() {
     .unwrap();
     assert_eq!(actual, &document);
 }
+
+include!("contour_ui_tests.rs");

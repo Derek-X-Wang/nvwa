@@ -24,6 +24,22 @@ def log(test=runner.ENDPOINT, failed=False, marker=''):
 
 
 class ToolingControls(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # Existing methods retain their exact four-context assertions. Their
+        # former live inputs now have a verified immutable historical home.
+        global ROOT
+        current_root = ROOT
+        historical = HERE / 'fixtures/pre-contour'
+        pins = json.loads((HERE / 'pins.json').read_text())
+        expected = dict(runner.source_contexts(pins))['hair79-short01-product-v1']
+        for name, digest in expected.items():
+            path = historical / name
+            if not path.is_file() or path.is_symlink() or runner.file_sha(path) != digest:
+                raise ValueError('pre-contour historical input mismatch: ' + name)
+        ROOT = historical
+        cls.addClassCleanup(lambda: globals().__setitem__('ROOT', current_root))
+
     def input_copy(self, directory):
         root = Path(directory) / 'source'
         pins = json.loads((HERE / 'pins.json').read_text())

@@ -12,7 +12,27 @@ import unittest
 
 ROOT = Path(__file__).resolve().parent.parent
 RUNNER = ROOT / "scripts/check-portable.py"
-CATALOG = json.loads((ROOT / "scripts/portable-checks.json").read_text())
+CHEEK_INPUT_CHECKS = (
+    "python3 -B scripts/derive-cheek-volume.py\n"
+    "python3 -B -O scripts/derive-cheek-volume.py\n"
+    "python3 -B scripts/tests/test_derive_cheek_volume.py\n"
+    "python3 -B -O scripts/tests/test_derive_cheek_volume.py\n"
+)
+
+
+def historical_input_catalog(catalog):
+    """Verify the exact additive asset commands before the old body hashes."""
+    selected = [group for group in catalog if group['name'] == 'b1-inputs']
+    if len(selected) != 1 or not selected[0]['run'].endswith(CHEEK_INPUT_CHECKS):
+        raise ValueError('required exact cheek input commands at end of b1-inputs')
+    if selected[0]['run'].count(CHEEK_INPUT_CHECKS) != 1:
+        raise ValueError('duplicate cheek input commands')
+    return [dict(group, run=group['run'][:-len(CHEEK_INPUT_CHECKS)])
+            if group['name'] == 'b1-inputs' else dict(group) for group in catalog]
+
+
+CURRENT_CATALOG = json.loads((ROOT / "scripts/portable-checks.json").read_text())
+CATALOG = historical_input_catalog(CURRENT_CATALOG)
 # SHA-256 of the exact run bodies in the portable job at b03e7a345f01f6f6e940a19cf63906bff807e719.
 # Keep this independent of the catalog: a removed mode, argument or command fails.
 BASELINE = {
@@ -107,6 +127,35 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
 
     def records(self):
         return [line.split("|") for line in self.log.read_text().splitlines()] if self.log.exists() else []
+
+    def test_cheek_asset_checks_are_additive_and_run_in_both_modes(self):
+        result = self.call('b1-inputs')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual([row[:2] for row in self.records()][-4:], [
+            ['python3', '-B scripts/derive-cheek-volume.py'],
+            ['python3', '-B -O scripts/derive-cheek-volume.py'],
+            ['python3', '-B scripts/tests/test_derive_cheek_volume.py'],
+            ['python3', '-B -O scripts/tests/test_derive_cheek_volume.py'],
+        ])
+        self.assertEqual(len(self.records()), 8)
+        for group in CURRENT_CATALOG:
+            if group['name'] == 'b1-inputs':
+                old = next(item for item in CATALOG if item['name'] == 'b1-inputs')
+                self.assertEqual(group['run'], old['run'] + CHEEK_INPUT_CHECKS)
+
+    def test_cheek_asset_command_mutations_reject_and_failures_propagate(self):
+        for old, new in [('-B -O scripts/derive', '-B scripts/derive'),
+                         ('scripts/tests/test_derive_cheek_volume.py', 'scripts/tests/other.py'),
+                         (CHEEK_INPUT_CHECKS, ''),
+                         (CHEEK_INPUT_CHECKS, CHEEK_INPUT_CHECKS * 2)]:
+            changed = [dict(group, run=group['run'].replace(old, new)) for group in CURRENT_CATALOG]
+            with self.subTest(mutation=(old, new)), self.assertRaises(ValueError):
+                historical_input_catalog(changed)
+        self.env.update(FAIL_TOOL='python3', FAIL_MATCH='scripts/derive-cheek-volume.py')
+        result = self.call('b1-inputs', 'motion-comparator')
+        self.assertEqual(result.returncode, 79, result.stderr)
+        self.assertEqual(len(self.records()), 5)
+        self.assertEqual(self.records()[-1][:2], ['python3', '-B scripts/derive-cheek-volume.py'])
 
     def test_exact_original_command_inventory_and_order(self):
         self.assertEqual([group["name"] for group in CATALOG], ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "current19-shoulder-refit", "frozen-upper-arm"])

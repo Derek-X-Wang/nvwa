@@ -275,6 +275,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
     let compatible_sets: &[B1AppearanceSet] = match base {
         Some(B1AssetVersion::V1) => &[B1AppearanceSet::V1],
         Some(B1AssetVersion::V2) => &[B1AppearanceSet::V2, B1AppearanceSet::V2Short01],
+        Some(B1AssetVersion::V3) => &[B1AppearanceSet::V3, B1AppearanceSet::V3Short01],
         None => &[],
     };
     let compatible_sets = compatible_sets
@@ -297,13 +298,14 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "new-b1": ["asset_root", "output.json"],
             "new-b1-motion": ["asset_root", "output.json"],
             "new-character": ["asset_root", "output.json"],
+            "new-character-contour": ["asset_root", "output.json"],
             "inspect": ["input.json"],
             "describe-capabilities": ["input.json"],
             "validate": ["input.json", "optional_asset_root"],
             "apply": ["input.json", "command_or_array.json", "output.json"],
             "save": ["input.json", "output.json"]
         },
-        "creation": {"new-character":"eight_source_parameters_exact_v2_manifest_and_twenty_five_assets_verified_before_save", "new":"glb_profile_metadata_only", "new-b1":"exact_b1_manifest_and_thirteen_assets_verified_before_save", "new-b1-motion":"same_authenticated_b1_asset_explicit_version2_authored_rehearsal"},
+        "creation": {"new-character-contour":"nine_parameters_bilateral_cheek_fullness_exact_v3_manifest_and_twenty_seven_assets_verified_before_save", "new-character":"eight_source_parameters_exact_v2_manifest_and_twenty_five_assets_verified_before_save", "new":"glb_profile_metadata_only", "new-b1":"exact_b1_manifest_and_thirteen_assets_verified_before_save", "new-b1-motion":"same_authenticated_b1_asset_explicit_version2_authored_rehearsal"},
         "input": {
             "max_json_bytes": nvwa_core::MAX_JSON_BYTES,
             "unknown_fields": "rejected",
@@ -333,12 +335,13 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "asset_validation": "validate_with_asset_root_authenticates_all_selected_set_appearance_files",
             "apply_save": "metadata_only_no_renderer_readiness_claim"
         },
+        "cheek_fullness": {"supported":base == Some(B1AssetVersion::V3),"meaning":"symmetric_bilateral_cheek_volume_not_jaw_width","range":[-1,1],"default":0,"source_endpoints":"MPFB_left_and_right_cheek_volume_decr_incr","surface_effect":"adjoining_surfaces_may_change_no_mouth_or_nose_isolation_guarantee"},
         "character_backend": document.profile.backend,
         "authored_motion": {"supported":document.profile.backend.is_b1_motion(),"provenance":"Nvwa authored rehearsal; not AI-generated", "clips":document.profile.clips},
-        "diagnostic_poses": if document.profile.backend.is_b1() { serde_json::json!({"ids":B1_DIAGNOSTIC_POSES,"current":document.character.diagnostic_pose,"meaning":"authored_static_diagnostic_pose_not_animation","command":"set_diagnostic_pose","renderer":"fixed_positive_final_aggregate_cpu_no_four_cap","morph_index":"inert_legacy_metadata_unused_on_b1","targets":targets,"continuous_parameter_edits":true,"numeric_acceptance":if base == Some(B1AssetVersion::V2) { "HOLD_new_eight_parameter_profile_requires_separate_frozen_21_recipe_69_frame_acceptance" } else { "eight_reference_recipes_times_five_poses_only" },"timeline_supported":document.profile.backend.supports_timeline()}) } else { serde_json::json!({"ids":[],"current":null,"timeline_supported":true}) },
+        "diagnostic_poses": if document.profile.backend.is_b1() { serde_json::json!({"ids":B1_DIAGNOSTIC_POSES,"current":document.character.diagnostic_pose,"meaning":"authored_static_diagnostic_pose_not_animation","command":"set_diagnostic_pose","renderer":"fixed_positive_final_aggregate_cpu_no_four_cap","morph_index":"inert_legacy_metadata_unused_on_b1","targets":targets,"continuous_parameter_edits":true,"numeric_acceptance":if base == Some(B1AssetVersion::V3) { "HOLD_cheek_fullness_requires_separate_product_and_motion_acceptance" } else if base == Some(B1AssetVersion::V2) { "HOLD_new_eight_parameter_profile_requires_separate_frozen_21_recipe_69_frame_acceptance" } else { "eight_reference_recipes_times_five_poses_only" },"timeline_supported":document.profile.backend.supports_timeline()}) } else { serde_json::json!({"ids":[],"current":null,"timeline_supported":true}) },
         "set_timeline": {
             "animation_supported": document.profile.backend.supports_timeline(),
-            "b1": "v1_empty_only_v2_v3_authored_timeline_exclusive_diagnostic_command_clears_timeline",
+            "b1": "v1_empty_only_v2_v3_v4_authored_timeline_exclusive_diagnostic_command_clears_timeline",
             "effect": "replaces_entire_timeline",
             "clip_id": "must_reference_profile_clips_id",
             "id": "nonblank_unique_timeline_entry_id",
@@ -427,8 +430,10 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             .ok_or_else(|| CoreError::new("usage", "Missing argument; run nvwa-cli help"))
     };
     match command {
-        "new-b1" | "new-b1-motion" | "new-character" => {
-            let profile = if command == "new-character" {
+        "new-b1" | "new-b1-motion" | "new-character" | "new-character-contour" => {
+            let profile = if command == "new-character-contour" {
+                CharacterProfile::b1_character_contour()
+            } else if command == "new-character" {
                 CharacterProfile::b1_character()
             } else if command == "new-b1-motion" {
                 CharacterProfile::b1_motion()
@@ -447,7 +452,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             if profile.backend.is_b1() {
                 return Err(CoreError::new(
                     "unsupported_character_operation",
-                    "Use new-character, new-b1 or new-b1-motion <asset-root> <work.json> to authenticate all B1 assets before creation",
+                    "Use new-character-contour, new-character, new-b1 or new-b1-motion <asset-root> <work.json> to authenticate all B1 assets before creation",
                 ));
             }
             let document = SceneDocument::from_profile(profile)?;
@@ -540,7 +545,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             )?;
         }
         "help" | "--help" | "-h" => respond(
-            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
+            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
         )?,
         _ => {
             return Err(CoreError::new(

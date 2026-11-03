@@ -21,41 +21,55 @@ pub const B1_V2_ASSET_MANIFEST_SHA256: &str =
 pub const B1_V2_ASSET_MANIFEST_BYTES: &[u8] =
     include_bytes!("../../../assets/characters/mpfb-b1-v2/manifest.json");
 
+pub const B1_CONTOUR_PROFILE_ID: &str = "nvwa-mpfb-b1-motion-v3";
+pub const B1_V3_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v3";
+pub const B1_V3_ASSET_PATH: &str = "characters/mpfb-b1-v3/manifest.json";
+pub const B1_V3_ASSET_MANIFEST_SHA256: &str =
+    "e4bd47f3f3cf3ef38fd3400bfd5127b7ade52b630cef823f00bba939262796c3";
+pub const B1_V3_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v3/manifest.json");
+
 /// Finite shipped base catalogue. This is not a caller-defined asset registry.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum B1AssetVersion {
     V1,
     V2,
+    V3,
 }
 impl B1AssetVersion {
     pub const fn asset_id(self) -> &'static str {
         match self {
             Self::V1 => B1_ASSET_ID,
             Self::V2 => B1_V2_ASSET_ID,
+            Self::V3 => B1_V3_ASSET_ID,
         }
     }
     pub const fn manifest_path(self) -> &'static str {
         match self {
             Self::V1 => B1_ASSET_PATH,
             Self::V2 => B1_V2_ASSET_PATH,
+            Self::V3 => B1_V3_ASSET_PATH,
         }
     }
     pub const fn manifest_sha256(self) -> &'static str {
         match self {
             Self::V1 => B1_ASSET_MANIFEST_SHA256,
             Self::V2 => B1_V2_ASSET_MANIFEST_SHA256,
+            Self::V3 => B1_V3_ASSET_MANIFEST_SHA256,
         }
     }
     pub const fn manifest_bytes(self) -> &'static [u8] {
         match self {
             Self::V1 => B1_ASSET_MANIFEST_BYTES,
             Self::V2 => B1_V2_ASSET_MANIFEST_BYTES,
+            Self::V3 => B1_V3_ASSET_MANIFEST_BYTES,
         }
     }
     pub fn parameters(self) -> &'static [B1ParameterTargets] {
         match self {
             Self::V1 => &B1_PARAMETER_TARGETS[..2],
             Self::V2 => &B1_PARAMETER_TARGETS,
+            Self::V3 => &B1_CONTOUR_PARAMETER_TARGETS,
         }
     }
 }
@@ -106,6 +120,21 @@ pub const B1_PARAMETER_TARGETS: [B1ParameterTargets; 8] = [
         id: "hip_width",
         decrease: "hip-scale-horiz-decr",
         increase: "hip-scale-horiz-incr",
+    },
+];
+pub const B1_CONTOUR_PARAMETER_TARGETS: [B1ParameterTargets; 9] = [
+    B1_PARAMETER_TARGETS[0],
+    B1_PARAMETER_TARGETS[1],
+    B1_PARAMETER_TARGETS[2],
+    B1_PARAMETER_TARGETS[3],
+    B1_PARAMETER_TARGETS[4],
+    B1_PARAMETER_TARGETS[5],
+    B1_PARAMETER_TARGETS[6],
+    B1_PARAMETER_TARGETS[7],
+    B1ParameterTargets {
+        id: "cheek_fullness",
+        decrease: "cheek-volume-bilateral-decr",
+        increase: "cheek-volume-bilateral-incr",
     },
 ];
 pub const B1_DIAGNOSTIC_POSES: [&str; 5] = ["neutral", "shoulder", "elbow", "knee", "combined"];
@@ -177,7 +206,7 @@ impl CharacterBackend {
         matches!(
             self,
             Self::B1Cpu {
-                schema_version: 2 | 3,
+                schema_version: 2..=4,
                 ..
             }
         )
@@ -192,6 +221,10 @@ impl CharacterBackend {
                 schema_version: 3,
                 asset_id,
             } if asset_id == B1_V2_ASSET_ID => Some(B1AssetVersion::V2),
+            Self::B1Cpu {
+                schema_version: 4,
+                asset_id,
+            } if asset_id == B1_V3_ASSET_ID => Some(B1AssetVersion::V3),
             _ => None,
         }
     }
@@ -205,7 +238,7 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 && !(matches!(version, 2 | 3) && self.is_b1()) {
+        if version != 1 && !(matches!(version, 2..=4) && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported"),
@@ -292,6 +325,25 @@ impl CharacterProfile {
             .collect();
         profile
     }
+    /// Explicit nine-parameter profile. Existing Works are never migrated.
+    pub fn b1_character_contour() -> Self {
+        let mut profile = Self::b1_character();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 4,
+            asset_id: B1_V3_ASSET_ID.into(),
+        };
+        profile.id = B1_CONTOUR_PROFILE_ID.into();
+        profile.asset_path = B1_V3_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V3_ASSET_MANIFEST_SHA256.into();
+        profile.parameters.push(ParameterSpec {
+            id: "cheek_fullness".into(),
+            morph_index: 8,
+            min: -1.0,
+            max: 1.0,
+            default: 0.0,
+        });
+        profile
+    }
     pub(crate) fn validate_b1(&self) -> Result<()> {
         if (self.id == B1_PROFILE_ID && self.backend.is_b1_motion())
             || (self.id == B1_MOTION_PROFILE_ID && !self.backend.is_b1_motion())
@@ -301,7 +353,9 @@ impl CharacterProfile {
                 "B1 backend version does not match its canonical profile identity",
             ));
         }
-        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V2) {
+        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V3) {
+            Self::b1_character_contour()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V2) {
             Self::b1_character()
         } else if self.backend.is_b1_motion() {
             Self::b1_motion()
@@ -392,6 +446,7 @@ impl B1AssetManifest {
         let version = match self.asset_id.as_str() {
             B1_ASSET_ID => B1AssetVersion::V1,
             B1_V2_ASSET_ID => B1AssetVersion::V2,
+            B1_V3_ASSET_ID => B1AssetVersion::V3,
             _ => return Err(CoreError::new("invalid_asset", "unknown B1 asset identity")),
         };
         let canonical = Self::decode(version.manifest_bytes())?;
@@ -403,6 +458,7 @@ impl B1AssetManifest {
                 != match version {
                     B1AssetVersion::V1 => 13,
                     B1AssetVersion::V2 => 25,
+                    B1AssetVersion::V3 => 27,
                 }
         {
             return Err(CoreError::new(
