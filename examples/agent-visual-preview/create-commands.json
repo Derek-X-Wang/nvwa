@@ -1,0 +1,130 @@
+[
+  {
+    "command_id": "first-draft-1",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": {
+        "chin_width": -0.75
+      }
+    }
+  },
+  {
+    "command_id": "first-draft-2",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_appearance",
+      "character_id": "character-1",
+      "appearance": {
+        "asset_set_id": "mpfb-b1-cc0-appearance-v2-short01-v1",
+        "asset_set_sha256": "8c2044ee524a700abd75479c457d2e269f7e280a67509749c9fd780794c6d49a",
+        "eyes": true,
+        "hair": true,
+        "schema_version": 2,
+        "skin": true,
+        "type": "b1_cc0"
+      }
+    }
+  },
+  {
+    "command_id": "first-draft-3",
+    "expected_revision": 2,
+    "command": {
+      "type": "set_stage",
+      "stage": {
+        "ambient": {
+          "brightness": 180.0,
+          "color_srgb": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "background_color_srgb": [
+          0.12,
+          0.12,
+          0.13
+        ],
+        "camera": {
+          "azimuth_degrees": 16.0,
+          "distance": 4.2,
+          "elevation_degrees": 8.0,
+          "fov_degrees": 36.0,
+          "target_height": 0.95
+        },
+        "fill_light": {
+          "azimuth_degrees": 55.0,
+          "color_srgb": [
+            0.8,
+            0.89,
+            1.0
+          ],
+          "elevation_degrees": 28.0,
+          "illuminance_lux": 2000.0
+        },
+        "floor": {
+          "color_srgb": [
+            0.16,
+            0.16,
+            0.17
+          ],
+          "shadows": true,
+          "visible": true
+        },
+        "key_light": {
+          "azimuth_degrees": -35.0,
+          "color_srgb": [
+            1.0,
+            0.78,
+            0.58
+          ],
+          "elevation_degrees": 42.0,
+          "illuminance_lux": 10000.0
+        },
+        "quality": "balanced"
+      }
+    }
+  },
+  {
+    "command_id": "first-draft-4",
+    "expected_revision": 3,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "first-draft-segment-1",
+          "clip_id": "b1_arm_rehearsal_v1",
+          "start_seconds": 0.0,
+          "duration_seconds": 5.0,
+          "speed": 0.8,
+          "looping": false
+        },
+        {
+          "id": "first-draft-segment-2",
+          "clip_id": "b1_knee_flex_v1",
+          "start_seconds": 5.0,
+          "duration_seconds": 5.0,
+          "speed": 0.8,
+          "looping": false
+        },
+        {
+          "id": "first-draft-segment-3",
+          "clip_id": "b1_arm_rehearsal_v1",
+          "start_seconds": 10.0,
+          "duration_seconds": 5.0,
+          "speed": 0.8,
+          "looping": false
+        },
+        {
+          "id": "first-draft-segment-4",
+          "clip_id": "b1_knee_flex_v1",
+          "start_seconds": 15.0,
+          "duration_seconds": 5.0,
+          "speed": 0.8,
+          "looping": false
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,59 @@
+{
+  "command_id": "face-review-camera-1",
+  "expected_revision": 4,
+  "command": {
+    "type": "set_stage",
+    "stage": {
+      "ambient": {
+        "brightness": 180.0,
+        "color_srgb": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "background_color_srgb": [
+        0.12,
+        0.12,
+        0.13
+      ],
+      "camera": {
+        "azimuth_degrees": 0.0,
+        "elevation_degrees": 0.0,
+        "distance": 1.05,
+        "target_height": 1.5,
+        "fov_degrees": 32.0
+      },
+      "fill_light": {
+        "azimuth_degrees": 55.0,
+        "color_srgb": [
+          0.8,
+          0.89,
+          1.0
+        ],
+        "elevation_degrees": 28.0,
+        "illuminance_lux": 2000.0
+      },
+      "floor": {
+        "color_srgb": [
+          0.16,
+          0.16,
+          0.17
+        ],
+        "shadows": true,
+        "visible": true
+      },
+      "key_light": {
+        "azimuth_degrees": -35.0,
+        "color_srgb": [
+          1.0,
+          0.78,
+          0.58
+        ],
+        "elevation_degrees": 42.0,
+        "illuminance_lux": 10000.0
+      },
+      "quality": "balanced"
+    }
+  }
+}
