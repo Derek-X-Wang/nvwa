@@ -446,6 +446,51 @@ class CLIPackageTests(unittest.TestCase):
                     self.assertEqual(set(parent.iterdir()), {foreign}, observed)
 
 
+    def test_lower_face_squaring_relocated_v4_range_appearance_and_pair_authentication(self):
+        work = self.cwd / "lower-contour.json"
+        self.run_cli("new-character-lower-contour", self.assets, work)
+        before = self.run_cli("inspect", work)
+        caps = self.run_cli("describe-capabilities", work)
+        self.assertEqual(before["profile"]["backend"]["schema_version"], 5)
+        self.assertEqual(before["profile"]["id"], "nvwa-mpfb-b1-motion-v4")
+        self.assertEqual(len(caps["parameters"]), 10)
+        self.assertEqual(caps["cli_contract"]["lower_face_squareness"]["range"], [0, 1])
+        self.assertIn("rejected", caps["cli_contract"]["lower_face_squareness"]["negative"])
+        command = self.cwd / "lower-contour-command.json"
+        output = self.cwd / "lower-contour-edited.json"
+        for value in [-1, .5, 1]:
+            command.write_text(json.dumps({"command_id": "lower-edit", "expected_revision": before["revision"],
+                "command": {"type": "set_parameters", "character_id": before["character"]["id"],
+                            "values": {"lower_face_squareness": value}}}))
+            if value < 0:
+                output.write_bytes(b"preserve")
+                self.run_cli("apply", work, command, output, error="out_of_range")
+                self.assertEqual(output.read_bytes(), b"preserve")
+            else:
+                self.run_cli("apply", work, command, output)
+                self.run_cli("validate", output, self.assets)
+                self.assertEqual(self.run_cli("inspect", output)["character"]["parameters"]["lower_face_squareness"], value)
+        for selection in caps["cli_contract"]["set_appearance"]["compatible_sets"]:
+            self.assertEqual(selection["schema_version"], 4)
+            command.write_text(json.dumps({"command_id": "lower-look", "expected_revision": before["revision"],
+                "command": {"type": "set_appearance", "character_id": before["character"]["id"], "appearance": selection}}))
+            self.run_cli("apply", work, command, output)
+            self.run_cli("validate", output, self.assets)
+            self.assertEqual(self.run_cli("inspect", output)["character"]["appearance"], selection)
+        for suffix in ["decr", "incr"]:
+            path = self.assets / f"characters/mpfb-b1-v4/targets/chin-bones-{suffix}.target"
+            raw = path.read_bytes()
+            try:
+                path.unlink()
+                self.run_cli("validate", work, self.assets, error="asset_missing")
+                self.run_cli("new-character-contour", self.assets, self.cwd / "old-cheek-still-works.json")
+                path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+                self.run_cli("validate", work, self.assets, error="asset_hash_mismatch")
+            finally:
+                path.write_bytes(raw)
+            self.run_cli("validate", work, self.assets)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--binary", type=Path, required=True, help="Actual built native CLI")

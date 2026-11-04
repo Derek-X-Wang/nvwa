@@ -1,0 +1,182 @@
+{
+  "schema_version": 4,
+  "revision": 2,
+  "profile": {
+    "backend": {
+      "type": "b1_cpu",
+      "schema_version": 5,
+      "asset_id": "mpfb-hm08-game-engine-female-sportsuit01-v4"
+    },
+    "id": "nvwa-mpfb-b1-motion-v4",
+    "asset_path": "characters/mpfb-b1-v4/manifest.json",
+    "asset_sha256": "6b11cb9fc53158bf5673d0c5e1636d30d6e2347f4f51ce34f5fea8650baec090",
+    "license": "CC0-1.0",
+    "parameters": [
+      {
+        "id": "torso_length",
+        "morph_index": 0,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "jaw_drop",
+        "morph_index": 1,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "head_width",
+        "morph_index": 2,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "nose_width",
+        "morph_index": 3,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "mouth_width",
+        "morph_index": 4,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "chin_width",
+        "morph_index": 5,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "neck_width",
+        "morph_index": 6,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "hip_width",
+        "morph_index": 7,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "cheek_fullness",
+        "morph_index": 8,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "lower_face_squareness",
+        "morph_index": 9,
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.0
+      }
+    ],
+    "clips": [
+      {
+        "id": "b1_arm_rehearsal_v1",
+        "animation_index": 0,
+        "duration_seconds": 4.0
+      },
+      {
+        "id": "b1_knee_flex_v1",
+        "animation_index": 1,
+        "duration_seconds": 4.0
+      }
+    ]
+  },
+  "character": {
+    "id": "character-1",
+    "profile_id": "nvwa-mpfb-b1-motion-v4",
+    "parameters": {
+      "cheek_fullness": 0.45,
+      "chin_width": 0.0,
+      "head_width": 0.0,
+      "hip_width": 0.0,
+      "jaw_drop": 0.0,
+      "lower_face_squareness": 0.65,
+      "mouth_width": 0.0,
+      "neck_width": 0.0,
+      "nose_width": 0.0,
+      "torso_length": 0.0
+    },
+    "scale": 1.0,
+    "diagnostic_pose": "neutral",
+    "appearance": {
+      "type": "none"
+    }
+  },
+  "timeline": [
+    {
+      "id": "timeline-1",
+      "clip_id": "b1_arm_rehearsal_v1",
+      "start_seconds": 0.0,
+      "duration_seconds": 4.0,
+      "speed": 1.0,
+      "looping": true
+    }
+  ],
+  "stage": {
+    "key_light": {
+      "illuminance_lux": 10000.0,
+      "color_srgb": [
+        1.0,
+        0.94,
+        0.86
+      ],
+      "azimuth_degrees": -35.0,
+      "elevation_degrees": 42.0
+    },
+    "fill_light": {
+      "illuminance_lux": 3000.0,
+      "color_srgb": [
+        0.8,
+        0.89,
+        1.0
+      ],
+      "azimuth_degrees": 55.0,
+      "elevation_degrees": 28.0
+    },
+    "ambient": {
+      "brightness": 180.0,
+      "color_srgb": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "background_color_srgb": [
+      0.88,
+      0.9,
+      0.93
+    ],
+    "floor": {
+      "visible": true,
+      "color_srgb": [
+        0.72,
+        0.75,
+        0.8
+      ],
+      "shadows": true
+    },
+    "camera": {
+      "azimuth_degrees": 16.0,
+      "elevation_degrees": 8.0,
+      "distance": 3.8,
+      "target_height": 0.95,
+      "fov_degrees": 36.0
+    },
+    "quality": "balanced"
+  }
+}

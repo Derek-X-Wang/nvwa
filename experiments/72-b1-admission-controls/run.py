@@ -20,9 +20,11 @@ CONTEXT_SHA = '48667ae5e9e0dc706c3c9b25f8c7cc3b23e99c37f72cb8a346002e4001b91b9c'
 CLOSEOUT_CONTEXT_SHA = '0f9015fefeff7897b814691a990f9b0c46d621a7d7b611e887fd8b28f18de210'
 SHORT01_CONTEXT_SHA = 'ed7accc23126ca827d21e25675148a34c00b8d550a09ff54944f183eca2bf84c'
 CHEEK_CONTEXT_SHA = 'd743b42f361cf271603b7cbba950bd5005989aacff5a137804f776ebb7f6dc14'
+LOWER_CONTEXT_SHA = '5663c4470d9332f8e3fc02da1d094b48c39c5b9903caa1ce8a22aac45307b2e9'
+LOWER_BASELINES_SHA = '993525f21e2f298b46373f3609319e6b1a1db50ef9cb01dbe488d406a64c861f'
 HERE = Path(__file__).resolve().parent
 PACKAGE = ('run.py', 'test_controls.py', 'compatibility.rs', 'cases.json', 'pins.json', 'README.md', 'REVIEW.md', 'input-context-v1.json', 'input-context-v2.json', 'input-context-v3.json')
-PACKAGE += ('input-context-v4.json',)
+PACKAGE += ('input-context-v4.json', 'input-context-v5.json')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -152,9 +154,60 @@ def admitted_source_contexts(pins):
     return contexts
 
 
+
+def pre_lower_contour_root(pins):
+    """Authenticate the complete former live cheek source, without Git history."""
+    root = HERE / 'fixtures/pre-lower-contour'
+    path = root / 'manifest.json'
+    require(path.is_file() and not path.is_symlink() and file_sha(path) == LOWER_BASELINES_SHA,
+            'pre-lower-contour fixture manifest identity mismatch')
+    manifest = json.loads(path.read_text())
+    expected = dict(admitted_source_contexts(pins))['b1-cheek-fullness-product-v1']
+    require(set(manifest) == {'schema_version', 'context', 'source_commit', 'files'}
+            and manifest['schema_version'] == 1
+            and manifest['context'] == 'b1-cheek-fullness-product-v1'
+            and manifest['source_commit'] == 'e3c02689d7f59d97141ffe70835fa3524231c28a'
+            and set(manifest['files']) == set(expected), 'pre-lower-contour complete cheek fixture required')
+    for name, digest in expected.items():
+        item = manifest['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'} and item['fixture'] == name
+                and item['sha256'] == digest, 'pre-lower-contour historical pin mismatch: ' + name)
+        path = root
+        for part in Path(name).parts:
+            path = path / part
+            require(not path.is_symlink(), 'pre-lower-contour fixture symlink: ' + name)
+        require(path.is_file() and path.stat().st_size == item['bytes'] and file_sha(path) == digest,
+                'pre-lower-contour fixture bytes mismatch: ' + name)
+    declared = set(expected) | {'manifest.json'}
+    paths = list(root.rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(root)) for p in paths if p.is_file()} == declared,
+            'pre-lower-contour fixture inventory mismatch')
+    return root
+
+
+def current_source_contexts(pins):
+    """Append the exact new product without changing the old five-context cohort."""
+    contexts = admitted_source_contexts(pins)
+    path = HERE / 'input-context-v5.json'
+    require(path.is_file() and not path.is_symlink() and file_sha(path) == LOWER_CONTEXT_SHA,
+            'lower contour input context manifest identity mismatch')
+    bridge = json.loads(path.read_text())
+    require(set(bridge) == {'schema_version', 'baseline_commit', 'context', 'overrides', 'scope'}
+            and bridge['schema_version'] == 1 and bridge['baseline_commit'] == BASELINE
+            and bridge['context'] == 'b1-lower-face-squareness-product-v1',
+            'lower contour input context version/baseline mismatch')
+    require(bridge['overrides'] and set(bridge['overrides']) <= set(pins['files']),
+            'lower contour input context must retain exact historical source paths')
+    current = dict(pins['files'])
+    current.update(bridge['overrides'])
+    contexts.append((bridge['context'], current))
+    return contexts
+
+
 def check_source_context(root, pins, historical_only=False):
     """Authenticate one complete source context; never mix baseline/current files."""
-    contexts = admitted_source_contexts(pins)
+    contexts = current_source_contexts(pins)
     actual = {}
     for relative in pins['files']:
         path = root

@@ -256,7 +256,8 @@ pub(super) fn prepare(set: nvwa_core::B1AppearanceSet) -> Result<Vec<Prepared>, 
     match set {
         nvwa_core::B1AppearanceSet::V1
         | nvwa_core::B1AppearanceSet::V2
-        | nvwa_core::B1AppearanceSet::V3 => asset!(
+        | nvwa_core::B1AppearanceSet::V3
+        | nvwa_core::B1AppearanceSet::V4 => asset!(
             "hair",
             "hair/short04/short04",
             "hair/short04/short04_diffuse.png",
@@ -264,7 +265,9 @@ pub(super) fn prepare(set: nvwa_core::B1AppearanceSet) -> Result<Vec<Prepared>, 
             2048,
             true
         ),
-        nvwa_core::B1AppearanceSet::V2Short01 | nvwa_core::B1AppearanceSet::V3Short01 => asset!(
+        nvwa_core::B1AppearanceSet::V2Short01
+        | nvwa_core::B1AppearanceSet::V3Short01
+        | nvwa_core::B1AppearanceSet::V4Short01 => asset!(
             "hair",
             "hair/short01/short01",
             "hair/short01/short01_diffuse.png",

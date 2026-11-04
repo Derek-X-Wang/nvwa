@@ -717,6 +717,7 @@ fn draw_editor_ui(
     let mut file_action = None;
     let mut new_b1 = false;
     let mut new_contour = false;
+    let mut new_lower_contour = false;
     let mut command = None;
     let mut preview: Option<BTreeMap<String, f32>> = None;
     let mut commit_drag = false;
@@ -751,6 +752,13 @@ fn draw_editor_ui(
                         .clicked()
                     {
                         new_contour = true;
+                        ui.close();
+                    }
+                    if ui
+                        .button("新建方正轮廓人物… / New character + lower-face squaring…")
+                        .clicked()
+                    {
+                        new_lower_contour = true;
                         ui.close();
                     }
                 });
@@ -868,8 +876,11 @@ fn draw_editor_ui(
                                 commit_drag = true;
                             }
                         }
-                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V3) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V3 | nvwa_core::B1AssetVersion::V4)) {
                             ui.small("双侧脸颊体积 / Both cheeks. Nearby surfaces may change.");
+                        }
+                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V4) {
+                            ui.small("方正轮廓0–1，非下颌宽度；邻近过渡可变化 / Squaring0–1; nearby transitions may change.");
                         }
                         if editor.preview.is_some() {
                             ui.label("Preview · document unchanged");
@@ -1224,8 +1235,10 @@ fn draw_editor_ui(
     state.stage = stage_ui;
     state.save_notice = save_notice;
     *playback = next_playback;
-    if new_b1 || new_contour {
-        let profile = if new_contour {
+    if new_b1 || new_contour || new_lower_contour {
+        let profile = if new_lower_contour {
+            nvwa_core::CharacterProfile::b1_character_lower_contour()
+        } else if new_contour {
             nvwa_core::CharacterProfile::b1_character_contour()
         } else {
             nvwa_core::CharacterProfile::b1_character()
@@ -1429,6 +1442,7 @@ fn shape_parameter_label(id: &str) -> String {
         "torso_length" => "躯干长度 / Torso length".into(),
         "jaw_drop" => "下颌开合 / Jaw opening".into(),
         "cheek_fullness" => "脸颊饱满度 / Cheek fullness".into(),
+        "lower_face_squareness" => "下半脸轮廓方正度 / Lower-face squaring".into(),
         "head_width" => "头部宽度 / Head width".into(),
         "nose_width" => "鼻部宽度 / Nose width".into(),
         "mouth_width" => "嘴部宽度 / Mouth width".into(),

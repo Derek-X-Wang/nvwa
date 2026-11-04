@@ -22,6 +22,11 @@ class CheekContextControls(unittest.TestCase):
         cls.old = runner.source_contexts(cls.pins)
         cls.contexts = runner.admitted_source_contexts(cls.pins)
         cls.maps = dict(cls.contexts)
+        # Keep every former live-cheek assertion on authenticated retained bytes.
+        global ROOT
+        current_root = ROOT
+        ROOT = runner.pre_lower_contour_root(cls.pins)
+        cls.addClassCleanup(lambda: globals().__setitem__('ROOT', current_root))
 
     def copied_inputs(self, directory):
         root = Path(directory) / 'source'

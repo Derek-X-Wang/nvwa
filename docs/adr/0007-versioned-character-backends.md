@@ -63,3 +63,39 @@ mouth or nose isolation is not promised. It does not resolve the prior #133,
 M2 motion, clothing, or full hair-quality holds. Visual reference usefulness,
 CPU numeric agreement, actual product UI, motion, and release acceptance remain
 separate evidence.
+
+## One-sided lower-face squaring extension
+
+Backend version5, profile `nvwa-mpfb-b1-motion-v4`, and base
+`mpfb-hm08-game-engine-female-sportsuit01-v4` add `lower_face_squareness` with
+finite inclusive range `[0,1]`, default0. Work schema4 and all previous profile,
+constructor, parameter, base and saved-Work identities remain unchanged. CLI
+`new-character-lower-contour` and Studio's explicit new-character menu choice
+create this version. Old Open never upgrades a Work.
+
+Zero contributes no new deformation;1 applies the exact original MPFB
+`chin-bones-incr` endpoint. Fractions weight that source displacement. The
+control describes lower-face contour squaring, not literal jaw-bone width,
+measured squareness, equal perceptual steps or anatomical isolation. Adjacent
+height/depth and jaw-to-neck transitions can change. Source-reference evidence
+is conditional; actual-product interpolation, fitting, appearance and independent
+review remain separate acceptance requirements.
+
+The existing fixed pair loader remains unchanged. Both original chin-bones
+leaves are retained, expanded without changing bytes, authenticated and loaded.
+The canonical new minimum is0, so the decrease leaf always has zero active
+weight; negative public input rejects before fitting. Its retention does not
+adopt the held negative source reference. No fake endpoint, sign inversion,
+source crop or endpoint repair is introduced. The29-file descriptor contains
+the27 unchanged V3 runtime payloads and these two exact leaves. Compressed source
+files and expanded hashes are retained in its provenance.
+
+Appearance schema4 adds exact V4-base bindings for both existing hairstyles.
+Their13/14 payloads stay byte-identical; runtime may reuse the authenticated V3
+embedded byte tables under the distinct new descriptors. Base selection and
+appearance keys already distinguish these versions. Shared source aliases and
+extension-handle prefixes remain safe because all shared bytes and parameter
+ordering are unchanged. Every explicit Open still authenticates its selected
+manifest and all required files; V4-only failures cannot make old Works depend
+on the new files. No Work-schema, renderer, cache-policy, rig or material-policy
+change is included. Existing contour and motion quality HOLDs remain intact.

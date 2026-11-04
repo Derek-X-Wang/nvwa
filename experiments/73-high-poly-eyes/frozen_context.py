@@ -27,6 +27,10 @@ CHEEK_CONTEXT_NAME = 'source-context-b1-cheek-fullness-v1.json'
 CHEEK_CONTEXT_SHA = '7eae6f15bd946baf7c7fdb258bd0ab8d6156012ce948e08875c6662389d151ce'
 CHEEK_BASELINES_NAME = 'fixtures/b1-cheek-fullness-baselines.json'
 CHEEK_BASELINES_SHA = '06a87ade124110f50738907c89913effc081183407dac0a67585d206bd74c74b'
+LOWER_CONTEXT_NAME = 'source-context-b1-lower-face-squareness-v1.json'
+LOWER_CONTEXT_SHA = '363f114fc1d6b2708f055c13433ef0a407d998a2813c3f283ac786f48c911b70'
+LOWER_BASELINES_NAME = 'fixtures/b1-lower-contour-baselines.json'
+LOWER_BASELINES_SHA = '8d5a168e2ec031c1d8a01129128b13a0cc7c7b5f9800204ba89d24164da0022b'
 
 
 def require(ok, message):
@@ -181,6 +185,62 @@ def admitted_source_contexts(exp, raw, original):
             'cheek context baseline/version mismatch')
     require(context['overrides'] and set(context['overrides']) <= set(original),
             'cheek context must retain the exact original source paths')
+    current = dict(original)
+    current.update(context['overrides'])
+    contexts.append((context['context'], current))
+    return contexts
+
+
+
+def pre_lower_contour_baselines(exp, contexts):
+    """Retain all54 crate inputs from the exact preceding cheek context."""
+    raw = regular_file(exp, LOWER_BASELINES_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == LOWER_BASELINES_SHA,
+            'pre-lower-contour baseline manifest identity mismatch')
+    manifest = json.loads(raw)
+    require(set(manifest) == {'schema_version', 'context', 'source_commit', 'files'}
+            and manifest['schema_version'] == 1
+            and manifest['context'] == 'b1-cheek-fullness-product-v1'
+            and manifest['source_commit'] == 'e3c02689d7f59d97141ffe70835fa3524231c28a',
+            'pre-lower-contour baseline identity mismatch')
+    expected = dict(contexts)[manifest['context']]
+    require(set(manifest['files']) == {n for n in expected if n.startswith('crates/')},
+            'pre-lower-contour complete crate set required')
+    prefix = 'fixtures/b1-lower-contour-baselines/'
+    result = {}
+    for name, item in manifest['files'].items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'} and item['fixture'] == prefix + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == expected[name],
+                'pre-lower-contour historical pin mismatch: ' + name)
+        data = regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected[name],
+                'pre-lower-contour baseline bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / prefix).rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(exp)) for p in paths if p.is_file()}
+                == {i['fixture'] for i in manifest['files'].values()},
+            'pre-lower-contour baseline fixture inventory mismatch')
+    return result
+
+
+def current_source_contexts(exp, raw, original):
+    """Append current source while old six/seven-context cohorts remain fixed."""
+    contexts = admitted_source_contexts(exp, raw, original)
+    pre_lower_contour_baselines(exp, contexts)
+    data = regular_file(exp, LOWER_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == LOWER_CONTEXT_SHA,
+            'lower contour context manifest identity mismatch')
+    context = json.loads(data)
+    require(set(context) == {'schema_version', 'baseline_manifest', 'baseline_manifest_sha256',
+                             'context', 'overrides', 'scope'}
+            and context['schema_version'] == 1
+            and context['context'] == 'b1-lower-face-squareness-product-v1'
+            and context['baseline_manifest'] == 'FROZEN-INPUTS.json'
+            and context['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
+            'lower contour context baseline/version mismatch')
+    require(context['overrides'] and set(context['overrides']) <= set(original),
+            'lower contour context must retain exact original source paths')
     current = dict(original)
     current.update(context['overrides'])
     contexts.append((context['context'], current))

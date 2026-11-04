@@ -4225,6 +4225,7 @@ mod tests {
     }
 
     include!("b1_contour_tests.rs");
+    include!("b1_lower_contour_tests.rs");
 
     #[test]
     fn bounded_reader_stops_at_one_over_limit() {

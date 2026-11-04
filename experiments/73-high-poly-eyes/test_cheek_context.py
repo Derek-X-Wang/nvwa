@@ -33,6 +33,7 @@ class CheekSourceContext(unittest.TestCase):
         cls.contexts = CONTEXT.admitted_source_contexts(EXP, cls.raw, cls.original)
         cls.maps = dict(cls.contexts)
         cls.pre_contour = CONTEXT.pre_contour_baselines(EXP, cls.old)
+        cls.pre_lower = CONTEXT.pre_lower_contour_baselines(EXP, cls.contexts)
         pool = {}
         for name in cls.original:
             raw = (ROOT / name).read_bytes()
@@ -40,6 +41,9 @@ class CheekSourceContext(unittest.TestCase):
             path = cls.root / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(raw)
+        for name, raw in cls.pre_lower.items():
+            (cls.root / name).write_bytes(raw)
+            pool[sha(raw)] = raw
         for raw in cls.pre_contour.values():
             pool[sha(raw)] = raw
         for items in CONTEXT.historical_sources(EXP, cls.old).values():
@@ -61,7 +65,7 @@ class CheekSourceContext(unittest.TestCase):
         for name in ['test_prepare.py', 'cpu_probe.py', 'frozen_context.py',
                      CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME,
                      CONTEXT.SELECTOR_CONTEXT_NAME, CONTEXT.AUTHORING_CONTEXT_NAME,
-                     CONTEXT.MULTISEGMENT_CONTEXT_NAME, CONTEXT.CHEEK_CONTEXT_NAME]:
+                     CONTEXT.MULTISEGMENT_CONTEXT_NAME, CONTEXT.CHEEK_CONTEXT_NAME, CONTEXT.LOWER_CONTEXT_NAME]:
             shutil.copyfile(EXP / name, cls.exp / name)
         shutil.copytree(EXP / 'fixtures', cls.exp / 'fixtures')
 
