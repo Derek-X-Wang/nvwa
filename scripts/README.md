@@ -357,3 +357,36 @@ two-attempt Astra escalation and boundary STOP rules. This budget correction
 has a bounded eight-file policy scope. Existing #120/M2/#80/full #79 HOLD,
 #112's original failure, #3's blocked reproduction and #4's measurement gaps
 remain unchanged.
+
+## Explicit eye/hair step allowance (2026-11-03)
+
+Derek approved one bounded **eye8→eye10** exception. Only the named
+eye/hair/character-parameter step changes from 8 to 10 minutes; the portable
+job stays at **25 minutes**. This decision supersedes the prior eye8 timeout
+STOP only for this finite allocation. Retain the eight-minute timeout in
+[41722688319](https://github.com/Derek-X-Wang/nvwa/actions/runs/41722688319)
+and release HOLD: only eleven suites completed and the twelfth was incomplete.
+Partial suite OK output and an auxiliary CLI pass do not prove portable passed.
+Ten minutes is a bounded allowance, not a speedup measurement or a guarantee
+that the step or whole portable job will finish.
+
+All four independent consumers require the unique named step at its original
+position, with exact integer10 and its original command. They reverse only
+that step's **10→historical3** before the retained assertions and frozen hashes.
+Every prior negative remains; stale8, malformed10 and ten minutes on the wrong
+step also reject. This budget correction is limited to the seven approved
+policy/docs files. Portable25, authenticated-source3, offline-motion6,
+frozen-upper-arm5, native75, B1/warm60, cache-action4, all48 run bodies, catalog
+cases/order, normal/optimized modes, source contexts/fixtures, runners, job
+dependencies, cache behavior, runtime, assets and dependencies stay unchanged.
+Historical failures and existing HOLDs remain unchanged.
+
+The new identity permits one naturally triggered complete formal PR CI attempt.
+A pass still requires the existing authorized merge and natural main CI
+verification. Renewed eye10 or portable25 exhaustion, a need to exceed seven
+files or a protected-contract change triggers immediate critical STOP. Retain
+logs and release HOLD; do not automatically retry, add time, split jobs, reduce
+cases or optimize test cost. Classify any other new failure before further
+work. A failed bounded attempt requires an explicit choice between continued
+HOLD and a separately approved test-cost design task; do not start it
+automatically.
