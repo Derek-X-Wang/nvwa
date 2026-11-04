@@ -39,6 +39,20 @@ pub const B1_V3_SHORT01_APPEARANCE_MANIFEST_BYTES: &[u8] =
 pub const B1_V3_SHORT01_APPEARANCE_MANIFEST_PATH: &str =
     "appearances/mpfb-b1-cc0-v3-short01-v1/manifest.json";
 
+pub const B1_V4_APPEARANCE_ID: &str = "mpfb-b1-cc0-appearance-v4";
+pub const B1_V4_APPEARANCE_MANIFEST_SHA256: &str =
+    "0ef3fad3ff45a005f043bfa63568fb68771702e1a9bb7fdfed93a2bf4f8d8dfd";
+pub const B1_V4_APPEARANCE_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/appearances/mpfb-b1-cc0-v4/manifest.json");
+pub const B1_V4_APPEARANCE_MANIFEST_PATH: &str = "appearances/mpfb-b1-cc0-v4/manifest.json";
+pub const B1_V4_SHORT01_APPEARANCE_ID: &str = "mpfb-b1-cc0-appearance-v4-short01-v1";
+pub const B1_V4_SHORT01_APPEARANCE_MANIFEST_SHA256: &str =
+    "52802f2b99370f6056c7c77991bfbd4e12a84bdbcfe62774c3f88a2ba28937af";
+pub const B1_V4_SHORT01_APPEARANCE_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/appearances/mpfb-b1-cc0-v4-short01-v1/manifest.json");
+pub const B1_V4_SHORT01_APPEARANCE_MANIFEST_PATH: &str =
+    "appearances/mpfb-b1-cc0-v4-short01-v1/manifest.json";
+
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum B1AppearanceSet {
     V1,
@@ -46,6 +60,8 @@ pub enum B1AppearanceSet {
     V2Short01,
     V3,
     V3Short01,
+    V4,
+    V4Short01,
 }
 impl B1AppearanceSet {
     pub const fn for_base(base: B1AssetVersion) -> Self {
@@ -53,6 +69,7 @@ impl B1AppearanceSet {
             B1AssetVersion::V1 => Self::V1,
             B1AssetVersion::V2 => Self::V2,
             B1AssetVersion::V3 => Self::V3,
+            B1AssetVersion::V4 => Self::V4,
         }
     }
     pub const fn base(self) -> B1AssetVersion {
@@ -60,6 +77,7 @@ impl B1AppearanceSet {
             Self::V1 => B1AssetVersion::V1,
             Self::V2 | Self::V2Short01 => B1AssetVersion::V2,
             Self::V3 | Self::V3Short01 => B1AssetVersion::V3,
+            Self::V4 | Self::V4Short01 => B1AssetVersion::V4,
         }
     }
     pub const fn schema_version(self) -> u32 {
@@ -67,6 +85,7 @@ impl B1AppearanceSet {
             Self::V1 => 1,
             Self::V2 | Self::V2Short01 => 2,
             Self::V3 | Self::V3Short01 => 3,
+            Self::V4 | Self::V4Short01 => 4,
         }
     }
     pub const fn asset_id(self) -> &'static str {
@@ -75,7 +94,9 @@ impl B1AppearanceSet {
             Self::V2 => B1_V2_APPEARANCE_ID,
             Self::V2Short01 => B1_V2_SHORT01_APPEARANCE_ID,
             Self::V3 => B1_V3_APPEARANCE_ID,
+            Self::V4 => B1_V4_APPEARANCE_ID,
             Self::V3Short01 => B1_V3_SHORT01_APPEARANCE_ID,
+            Self::V4Short01 => B1_V4_SHORT01_APPEARANCE_ID,
         }
     }
     pub const fn manifest_path(self) -> &'static str {
@@ -84,7 +105,9 @@ impl B1AppearanceSet {
             Self::V2 => B1_V2_APPEARANCE_MANIFEST_PATH,
             Self::V2Short01 => B1_V2_SHORT01_APPEARANCE_MANIFEST_PATH,
             Self::V3 => B1_V3_APPEARANCE_MANIFEST_PATH,
+            Self::V4 => B1_V4_APPEARANCE_MANIFEST_PATH,
             Self::V3Short01 => B1_V3_SHORT01_APPEARANCE_MANIFEST_PATH,
+            Self::V4Short01 => B1_V4_SHORT01_APPEARANCE_MANIFEST_PATH,
         }
     }
     pub const fn manifest_sha256(self) -> &'static str {
@@ -93,7 +116,9 @@ impl B1AppearanceSet {
             Self::V2 => B1_V2_APPEARANCE_MANIFEST_SHA256,
             Self::V2Short01 => B1_V2_SHORT01_APPEARANCE_MANIFEST_SHA256,
             Self::V3 => B1_V3_APPEARANCE_MANIFEST_SHA256,
+            Self::V4 => B1_V4_APPEARANCE_MANIFEST_SHA256,
             Self::V3Short01 => B1_V3_SHORT01_APPEARANCE_MANIFEST_SHA256,
+            Self::V4Short01 => B1_V4_SHORT01_APPEARANCE_MANIFEST_SHA256,
         }
     }
     pub const fn manifest_bytes(self) -> &'static [u8] {
@@ -102,7 +127,9 @@ impl B1AppearanceSet {
             Self::V2 => B1_V2_APPEARANCE_MANIFEST_BYTES,
             Self::V2Short01 => B1_V2_SHORT01_APPEARANCE_MANIFEST_BYTES,
             Self::V3 => B1_V3_APPEARANCE_MANIFEST_BYTES,
+            Self::V4 => B1_V4_APPEARANCE_MANIFEST_BYTES,
             Self::V3Short01 => B1_V3_SHORT01_APPEARANCE_MANIFEST_BYTES,
+            Self::V4Short01 => B1_V4_SHORT01_APPEARANCE_MANIFEST_BYTES,
         }
     }
 }
@@ -284,6 +311,26 @@ impl CharacterAppearance {
             {
                 Some(B1AppearanceSet::V3Short01)
             }
+            Self::B1Cc0 {
+                schema_version: 4,
+                asset_set_id,
+                asset_set_sha256,
+                ..
+            } if asset_set_id == B1_V4_APPEARANCE_ID
+                && asset_set_sha256 == B1_V4_APPEARANCE_MANIFEST_SHA256 =>
+            {
+                Some(B1AppearanceSet::V4)
+            }
+            Self::B1Cc0 {
+                schema_version: 4,
+                asset_set_id,
+                asset_set_sha256,
+                ..
+            } if asset_set_id == B1_V4_SHORT01_APPEARANCE_ID
+                && asset_set_sha256 == B1_V4_SHORT01_APPEARANCE_MANIFEST_SHA256 =>
+            {
+                Some(B1AppearanceSet::V4Short01)
+            }
             _ => None,
         }
     }
@@ -306,10 +353,10 @@ impl CharacterAppearance {
             ..
         } = self
         {
-            if !matches!(*schema_version, 1..=3) {
+            if !matches!(*schema_version, 1..=4) {
                 return Err(CoreError::new(
                     "unsupported_appearance_version",
-                    "B1 CC0 appearance requires schema version 1, 2 or 3",
+                    "B1 CC0 appearance requires schema version 1, 2, 3 or 4",
                 ));
             }
             if self.b1_set().is_none() {
@@ -407,6 +454,8 @@ impl B1AppearanceManifest {
             B1_V2_SHORT01_APPEARANCE_ID => B1AppearanceSet::V2Short01,
             B1_V3_APPEARANCE_ID => B1AppearanceSet::V3,
             B1_V3_SHORT01_APPEARANCE_ID => B1AppearanceSet::V3Short01,
+            B1_V4_APPEARANCE_ID => B1AppearanceSet::V4,
+            B1_V4_SHORT01_APPEARANCE_ID => B1AppearanceSet::V4Short01,
             _ => {
                 return Err(CoreError::new(
                     "invalid_asset",
@@ -422,7 +471,12 @@ impl B1AppearanceManifest {
             || self.base_asset_id != set.base().asset_id()
             || self.base_manifest_sha256 != set.base().manifest_sha256()
             || self.files.len()
-                != if matches!(set, B1AppearanceSet::V2Short01 | B1AppearanceSet::V3Short01) {
+                != if matches!(
+                    set,
+                    B1AppearanceSet::V2Short01
+                        | B1AppearanceSet::V3Short01
+                        | B1AppearanceSet::V4Short01
+                ) {
                     14
                 } else {
                     13

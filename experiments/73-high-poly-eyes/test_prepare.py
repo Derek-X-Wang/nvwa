@@ -1,6 +1,6 @@
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
-from frozen_context import admitted_source_contexts as source_contexts,select_context,historical_sources
+from frozen_context import current_source_contexts as source_contexts,select_context,historical_sources
 ROOT=Path(__file__).resolve().parents[2];EXP=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('cpu_probe',EXP/'cpu_probe.py');probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -78,9 +78,12 @@ class SourceContract(unittest.TestCase):
    actual[name]={'sha256':digest(ROOT/name),'bytes':(ROOT/name).stat().st_size}
   try:context,selected=select_context(actual,source_contexts(EXP,p.read_bytes(),inputs))
   except ValueError as error:self.fail(str(error))
-  if context in ('b1-multisegment-product-v1','b1-cheek-fullness-product-v1'):self.assertEqual(set(selected),set(inputs),'FROZEN-INPUTS.json exact original source paths required')
+  if context == 'b1-lower-face-squareness-product-v1':
+   self.assertEqual(set(selected),set(inputs),'FROZEN-INPUTS.json exact original source paths required')
   else:
-   self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1','hair79-selector-product-v1','b1-motion-authoring-product-v1'])
+   if context in ('b1-multisegment-product-v1','b1-cheek-fullness-product-v1'):self.assertEqual(set(selected),set(inputs),'FROZEN-INPUTS.json exact original source paths required')
+   else:
+    self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1','hair79-selector-product-v1','b1-motion-authoring-product-v1'])
   self.assertEqual(len(selected),309,'FROZEN-INPUTS.json complete source set required')
   for name,item in selected.items():
    message=f'FROZEN-INPUTS.json entry {name}'

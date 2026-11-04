@@ -1,6 +1,6 @@
 # Nvwa 路线图
 
-更新：2026-11-03。目标：让 AI 成为主要创作者，创建和修改人物、编排动作并查看试演结果；人主要审核作品、提出反馈。桌面、Web 与 CLI 共用可继续编辑、跨入口交换的作品（Work）。
+更新：2026-11-04。目标：让 AI 成为主要创作者，创建和修改人物、编排动作并查看试演结果；人主要审核作品、提出反馈。桌面、Web 与 CLI 共用可继续编辑、跨入口交换的作品（Work）。
 
 八秒编排阶段的编译与实际验收锁定 [`30aa99e`](https://github.com/Derek-X-Wang/nvwa/commit/30aa99e5bba3fef82ba4d533ce8a6ee01586a17b)，与后续文档提交分开。用户可在已编辑人物上创建／恢复八秒预制动作，修改行、撤销／重做、播放并保存交换；见[阶段证据](evidence/b1-motion-authoring/README.md)与 [#124 发布回执](https://github.com/Derek-X-Wang/nvwa/issues/124)。
 
@@ -12,9 +12,11 @@
 
 上一轮 [#133 AI 目标驱动捏人与局部修订](https://github.com/Derek-X-Wang/nvwa/issues/133) 在固定正面与侧前方视角下，根据真实画面修改人物本身。首例完成六张真实图和唯一一次修订，身份与字段审计通过，但独立图像评审仍为 **HOLD**：主要是末端下巴变尖，未建立清楚的下半脸收窄与侧前方鼻部变宽。已停止该案例的后续调参；新一轮 #134 不改写这个结论。本轮结果尚未计为产品交付。
 
-当前主线是 [#134 人物轮廓控制闭环](https://github.com/Derek-X-Wang/nvwa/issues/134)，设计依据见[下颌／脸颊调查](research/jaw-cheek-control/README.md)。六个获准的 MPFB 源 target 已核查；`chin-bones` 尚不支持直接命名为下颌宽度。双侧脸颊饱满度的[独立源参考](evidence/b1-contour-reference/README.md)已通过盲评，原始过曝失败及一次统一曝光修正保留。候选已接入显式新版本的 `cheek_fullness`，保留旧八参数人物；独立 AI 从能力发现开始创作，初稿视觉收益不足，依据画面修订一次后，匹配正面／35度近景通过独立局部视觉审查。普通 Web 编辑、撤销重做、有限八秒播放、真实 CLI 文件交换和命令逐字节重放已有实际证据，见[创作实例](evidence/b1-contour-agent/README.md)。
+上一轮 [#134 人物轮廓控制闭环](https://github.com/Derek-X-Wang/nvwa/issues/134)，设计依据见[下颌／脸颊调查](research/jaw-cheek-control/README.md)。六个获准的 MPFB 源 target 已核查；`chin-bones` 尚不支持直接命名为下颌宽度。双侧脸颊饱满度的[独立源参考](evidence/b1-contour-reference/README.md)已通过盲评，原始过曝失败及一次统一曝光修正保留。候选已接入显式新版本的 `cheek_fullness`，保留旧八参数人物；独立 AI 从能力发现开始创作，初稿视觉收益不足，依据画面修订一次后，匹配正面／35度近景通过独立局部视觉审查。普通 Web 编辑、撤销重做、有限八秒播放、真实 CLI 文件交换和命令逐字节重放已有实际证据，见[创作实例](evidence/b1-contour-agent/README.md)。
 
-当前仍未发布，等待正式 PR／main CI。新增精确比较最初失败，单次受控探针及独立复审支持只修正新增测试的准备顺序；修正后完整93项 runtime 测试、82项 Studio 测试、实际原生／Wasm 构建和16组 portable 已通过。条件等价不承诺任意独立重开的逐位重复，全部精确断言和旧失败记录保留。额外全目标 Clippy 仍因未改动旧代码的诊断失败，既有 core／CLI lint 门禁不变。近景判断不证明完整人体、所有体型或嘴鼻独立性，#133 和所有质量 HOLD 保留。
+该轮已随 [PR #135](https://github.com/Derek-X-Wang/nvwa/pull/135) 合并，main `e3c0268` 的[正常 CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/41775227968)及辅助 CLI 作业均通过，#134 已关闭；[最终发布回执](https://github.com/Derek-X-Wang/nvwa/issues/134#issuecomment-6623911297)保留第二个瘦脸案例的 HOLD 和审查分歧。新增精确比较最初失败，单次受控探针及独立复审支持只修正新增测试的准备顺序；修正后完整93项 runtime 测试、82项 Studio 测试、实际原生／Wasm 构建和16组 portable 已通过。条件等价不承诺任意独立重开的逐位重复，全部精确断言和旧失败记录保留。额外全目标 Clippy 仍因未改动旧代码的诊断失败，既有 core／CLI lint 门禁不变。近景判断不证明完整人体、所有体型或嘴鼻独立性，#133 和所有质量 HOLD 保留。
+
+本轮 [#136 新轮廓控制、AI 观察辅助与独立创作](https://github.com/Derek-X-Wang/nvwa/issues/136) 已实现显式十参数人物的 `lower_face_squareness`，范围为 `[0,1]`，默认0；它表达下半脸轮廓方正化，不表示下颌骨宽度或解剖隔离。默认体型的端点、中间值和有界动作画面，以及三个不同目标的独立 AI 创作案例已获局部视觉接受；第三例完成了一次有效的真实看图修订。普通 Web 新建、编辑、撤销重做、重置、无效打开恢复和 Web→CLI→Web 逐字节保存交换已有本地证据。一次真实运行时位移辅助对照未证明额外的事实到操作收益，结论为 **NO-ADOPT**；原型已移出产品，原始证据保留。正式发布与 main CI 的最终结果记录在 #136，不由本地通过推断。普通桌面 UI 延后，全部旧作品、断言和质量 HOLD 保留。
 
 [PR #120](https://github.com/Derek-X-Wang/nvwa/pull/120) 候选 head `51cff65c34966a76511e317e76ba8bd4d75bafba` 仍保持 **HOLD**；数值候选不计为 main 产品交付，不继续其 CI 诊断或重试。
 
@@ -34,7 +36,8 @@
 
 | 优先级 | 可交付结果 | 完成或恢复条件 |
 | --- | --- | --- |
-| 当前主线：[人物轮廓控制 #134](https://github.com/Derek-X-Wang/nvwa/issues/134) | 一个有明确语义和真实视觉收益的新控制，AI 自行发现／使用并看图修订，保留非目标设置和可编辑 Work | 版本化候选、真实 AI 看图修订、局部视觉审查和实际 Web/CLI 功能已验证；测试准备修正经过独立复审，完整 runtime／Studio 测试、构建和 portable 通过。下一步正式 PR CI、合并和 main 验证。额外 lint 失败及原始数值失败保留，不改变既有门禁，不解除其他 HOLD。 |
+| 本阶段：[新增轮廓与独立创作 #136](https://github.com/Derek-X-Wang/nvwa/issues/136) | 显式十参数人物的下半脸方正控制、三个独立局部创作案例和观察辅助 NO-ADOPT 决定 | 独立源码审查、本地测试、原生／Wasm 构建、16组 portable 及真实 Web／CLI 功能已通过；第三例有一次有效看图修订。视觉证据限已检视角、姿态和默认体型；新旧版本不自动互换。正常 PR／main CI 与发布结果以 #136 最终回执为准；预算、缓存、runner 和原有门禁不变。 |
+| 已交付：[人物轮廓控制 #134](https://github.com/Derek-X-Wang/nvwa/issues/134) | 显式九参数人物的 cheek_fullness，AI 自行发现、看图修订并保存可编辑 Work | PR #135 已合并，main e3c0268 的三个必需作业及辅助 CLI 实际通过。正向案例有局部视觉收益及真实 Web/CLI 交换；瘦脸案例 HOLD、额外 lint 失败与原始数值失败保留，不解除其他质量 HOLD。 |
 | 上一轮视觉 HOLD：[AI 目标驱动捏人 #133](https://github.com/Derek-X-Wang/nvwa/issues/133) | agent 根据自然语言外观目标修改人物，固定视角看图并作最多一次局部修订，保留其他设置和可继续编辑的作品 | 首例的命令／捕获／身份通过，但预定视觉收益未通过；唯一修订已用完，不启动第二／第三例，不继续调参、扩参数／素材／运行时或验证框架。保留原始作品与独立判断，等待新的范围决定。 |
 | 已交付：[AI 视觉反馈 #131](https://github.com/Derek-X-Wang/nvwa/issues/131) | 指定 Work／保存相机／时间的真实 Web 预览，独立 agent 看图、修改相机、另存与再次查看 | PR #132 合并且 main CI 通过；两版 Work／PNG、命令、身份回执与普通 Web／CLI 交换证据保留。第二轮需要整合会话打开同一预览 URL，不代表任意 agent 浏览器路由均可自助。 |
 | 已交付：[现有 main 可直接体验的捏人／试演入口 #121](https://github.com/Derek-X-Wang/nvwa/issues/121) | 静态 Web 入口可选择八参数 short04／short01 人物或原始九秒作品，一步进入编辑或 Player | PR #122 已合并，main CI 已通过；复用现有 Work 与路由。保留该轮实际进入、编辑／播放及保存交换证据。 |

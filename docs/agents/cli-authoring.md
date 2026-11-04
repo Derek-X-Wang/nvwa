@@ -180,3 +180,29 @@ use shared commands to author a finite sequence and select appearance.
 short01, and cheek fullness `0.35`. It is an authoring example, not motion-quality
 acceptance. This control does not generate or validate motion. Existing clothing, motion,
 and hair quality limits remain.
+
+## 下半脸轮廓方正度（显式十参数人物）
+
+用 `nvwa-cli new-character-lower-contour <asset-root> lower.nvwa.json` 创建新版本。
+它保留已有九个参数，并增加 `lower_face_squareness`，合法范围为有限的
+`[0,1]`，默认0。普通 `new-character` 仍创建八参数人物，
+`new-character-contour` 仍创建九参数脸颊人物。打开旧 Work 不会自动升级。
+
+这个参数的目标是让下半脸轮廓更方正、下颌转角更明显。0不增加此形变，1使用
+完整的原始 `chin-bones-incr` 源端点，分数值按比例混合该位移。它不是下颌骨
+横向宽度或方正度测量，也不保证相等数值间隔有相等视觉效果。邻近的高度、
+深度和下颌到颈部过渡可以变化。不能承诺嘴、鼻或其他区域完全不动。
+
+先运行 `describe-capabilities lower.nvwa.json` 查看实际版本、范围、默认值和
+外观选项，再用共享 `set_parameters` 命令编辑。负值和大于1的值会拒绝；不会
+夹到合法范围，也不会反向使用正端点。保留的 `chin-bones-decr` 数据只用于既有
+成对加载和认证，不是可用的负向创作能力，其源参考 HOLD 保留。
+
+每次创作都要查看普通画面，检查嘴、鼻、中央下巴、下脸颊、下颌转角和颈部过渡。
+源参考不代替实际产品的插值、附件、动作或质量验收。保持同一相机、姿态、时间、
+灯光和外观后比较。出现新增折痕、夹点、跳变或与目标不符的整体变化时停止，
+不要调整镜头、越界放大、改端点或自动缩小公开范围来寻找通过。
+
+此版本仍使用 Work schema4，支持既有撤销／重做、Open／Save 和 Web→CLI→Web
+交换，两个既有发型采用新的精确素材绑定。保存后用 `validate <work> <asset-root>`
+和重新加载核对身份与参数。CLI 编辑和保存元数据本身不证明实际画面或拟合通过。

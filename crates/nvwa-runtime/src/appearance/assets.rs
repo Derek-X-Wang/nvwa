@@ -381,8 +381,8 @@ pub(super) fn fixed(set: B1AppearanceSet) -> &'static [(&'static str, &'static [
         B1AppearanceSet::V1 => FIXED_V1,
         B1AppearanceSet::V2 => FIXED_V2,
         B1AppearanceSet::V2Short01 => FIXED_V2_SHORT01,
-        B1AppearanceSet::V3 => FIXED_V3,
-        B1AppearanceSet::V3Short01 => FIXED_V3_SHORT01,
+        B1AppearanceSet::V3 | B1AppearanceSet::V4 => FIXED_V3,
+        B1AppearanceSet::V3Short01 | B1AppearanceSet::V4Short01 => FIXED_V3_SHORT01,
     }
 }
 pub(super) fn payload(set: B1AppearanceSet, path: &str) -> Result<&'static [u8], String> {
