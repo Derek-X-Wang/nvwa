@@ -155,8 +155,28 @@ package (or `examples/b1-short01.nvwa.json` in the checkout) demonstrates the
 V2 selection with the existing authored timeline and stage.
 
 For use outside the source checkout, the complete standalone package provides
-an `assets/` root with both admitted B1 bases and all three appearance sets. Set an
+an `assets/` root with all three admitted B1 bases and all five appearance sets. Set an
 absolute root explicitly; do not substitute Studio's or the Web export's
 rendering asset directory, which omits filesystem appearance payloads.
 See `README.md` in the extracted standalone package for offline usage and
 distribution limits, or `docs/CLI-STANDALONE.md` in the source checkout.
+
+
+### Explicit cheek fullness character
+
+`nvwa-cli new-character-contour <asset-root> contour.nvwa.json` creates the versioned nine-parameter character. `cheek_fullness` ranges from `-1`
+(less full cheeks) to `1` (fuller cheeks), with default `0`. It changes both cheeks
+using the original left and right MPFB cheek-volume endpoints. Nearby surfaces
+can change. This control does not promise mouth or nose isolation.
+
+The new Work uses backend version4, profile `nvwa-mpfb-b1-motion-v3`, and the V3
+base. Both short04 and short01 remain explicit compatible appearance choices.
+Read discovery for their exact V3 identities. `new-character` still creates the
+previous eight-parameter Work. Opening or saving an old Work never adds the new
+control. Creation retains the four-second looping rehearsal and no appearance;
+use shared commands to author a finite sequence and select appearance.
+
+`examples/b1-contour.nvwa.json` has a finite eight-second authored sequence,
+short01, and cheek fullness `0.35`. It is an authoring example, not motion-quality
+acceptance. This control does not generate or validate motion. Existing clothing, motion,
+and hair quality limits remain.

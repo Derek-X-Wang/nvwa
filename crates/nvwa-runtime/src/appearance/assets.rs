@@ -226,11 +226,163 @@ const FIXED_V2_SHORT01: &[(&str, &[u8])] = &[
         ),
     ),
 ];
+const FIXED_V3: &[(&str, &[u8])] = &[
+    (
+        "SOURCE.json",
+        include_bytes!("../../../../assets/appearances/mpfb-b1-cc0-v3/SOURCE.json"),
+    ),
+    (
+        "eyes/low-poly/low-poly.mhclo",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3/eyes/low-poly/low-poly.mhclo"
+        ),
+    ),
+    (
+        "eyes/low-poly/low-poly.obj",
+        include_bytes!("../../../../assets/appearances/mpfb-b1-cc0-v3/eyes/low-poly/low-poly.obj"),
+    ),
+    (
+        "eyes/materials/brown.mhmat",
+        include_bytes!("../../../../assets/appearances/mpfb-b1-cc0-v3/eyes/materials/brown.mhmat"),
+    ),
+    (
+        "eyes/materials/brown_eye.png",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3/eyes/materials/brown_eye.png"
+        ),
+    ),
+    (
+        "hair/short04/short04.mhclo",
+        include_bytes!("../../../../assets/appearances/mpfb-b1-cc0-v3/hair/short04/short04.mhclo"),
+    ),
+    (
+        "hair/short04/short04.mhmat",
+        include_bytes!("../../../../assets/appearances/mpfb-b1-cc0-v3/hair/short04/short04.mhmat"),
+    ),
+    (
+        "hair/short04/short04.obj",
+        include_bytes!("../../../../assets/appearances/mpfb-b1-cc0-v3/hair/short04/short04.obj"),
+    ),
+    (
+        "hair/short04/short04_diffuse.png",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3/hair/short04/short04_diffuse.png"
+        ),
+    ),
+    (
+        "licenses/CC0-1.0.txt",
+        include_bytes!("../../../../assets/appearances/mpfb-b1-cc0-v3/licenses/CC0-1.0.txt"),
+    ),
+    (
+        "provenance/selected-items.json",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3/provenance/selected-items.json"
+        ),
+    ),
+    (
+        "skins/young_caucasian_female2/young_caucasian_female2.mhmat",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3/skins/young_caucasian_female2/young_caucasian_female2.mhmat"
+        ),
+    ),
+    (
+        "skins/young_caucasian_female2/young_lightskinned_female_diffuse2.png",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3/skins/young_caucasian_female2/young_lightskinned_female_diffuse2.png"
+        ),
+    ),
+];
+const FIXED_V3_SHORT01: &[(&str, &[u8])] = &[
+    (
+        "SOURCE.json",
+        include_bytes!("../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/SOURCE.json"),
+    ),
+    (
+        "eyes/low-poly/low-poly.mhclo",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/eyes/low-poly/low-poly.mhclo"
+        ),
+    ),
+    (
+        "eyes/low-poly/low-poly.obj",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/eyes/low-poly/low-poly.obj"
+        ),
+    ),
+    (
+        "eyes/materials/brown.mhmat",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/eyes/materials/brown.mhmat"
+        ),
+    ),
+    (
+        "eyes/materials/brown_eye.png",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/eyes/materials/brown_eye.png"
+        ),
+    ),
+    (
+        "hair/short01/short01.mhclo",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/hair/short01/short01.mhclo"
+        ),
+    ),
+    (
+        "hair/short01/short01.mhmat",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/hair/short01/short01.mhmat"
+        ),
+    ),
+    (
+        "hair/short01/short01.obj",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/hair/short01/short01.obj"
+        ),
+    ),
+    (
+        "hair/short01/short01_diffuse.png",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/hair/short01/short01_diffuse.png"
+        ),
+    ),
+    (
+        "licenses/CC0-1.0.txt",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/licenses/CC0-1.0.txt"
+        ),
+    ),
+    (
+        "provenance/makehuman_system_assets.json",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/provenance/makehuman_system_assets.json"
+        ),
+    ),
+    (
+        "provenance/selected-items.json",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/provenance/selected-items.json"
+        ),
+    ),
+    (
+        "skins/young_caucasian_female2/young_caucasian_female2.mhmat",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/skins/young_caucasian_female2/young_caucasian_female2.mhmat"
+        ),
+    ),
+    (
+        "skins/young_caucasian_female2/young_lightskinned_female_diffuse2.png",
+        include_bytes!(
+            "../../../../assets/appearances/mpfb-b1-cc0-v3-short01-v1/skins/young_caucasian_female2/young_lightskinned_female_diffuse2.png"
+        ),
+    ),
+];
 pub(super) fn fixed(set: B1AppearanceSet) -> &'static [(&'static str, &'static [u8])] {
     match set {
         B1AppearanceSet::V1 => FIXED_V1,
         B1AppearanceSet::V2 => FIXED_V2,
         B1AppearanceSet::V2Short01 => FIXED_V2_SHORT01,
+        B1AppearanceSet::V3 => FIXED_V3,
+        B1AppearanceSet::V3Short01 => FIXED_V3_SHORT01,
     }
 }
 pub(super) fn payload(set: B1AppearanceSet, path: &str) -> Result<&'static [u8], String> {
@@ -318,6 +470,27 @@ mod tests {
                 );
             }
             assert!(authenticate_file(set, "../arbitrary", b"x").is_err());
+        }
+    }
+}
+
+#[cfg(test)]
+mod contour_tests {
+    use super::*;
+    #[test]
+    fn contour_fixed_payloads_use_exact_new_bindings_and_authenticate_every_byte() {
+        for (set, old) in [
+            (B1AppearanceSet::V3, B1AppearanceSet::V2),
+            (B1AppearanceSet::V3Short01, B1AppearanceSet::V2Short01),
+        ] {
+            authenticate(set).unwrap();
+            assert_eq!(fixed(set), fixed(old));
+            for (path, bytes) in fixed(set) {
+                let mut bad = bytes.to_vec();
+                bad[0] ^= 1;
+                assert!(authenticate_file(set, path, &bad).is_err());
+                assert!(authenticate_file(set, path, &bytes[..bytes.len() - 1]).is_err());
+            }
         }
     }
 }

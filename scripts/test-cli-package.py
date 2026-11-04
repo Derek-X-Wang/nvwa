@@ -182,6 +182,112 @@ class CLIPackageTests(unittest.TestCase):
                 path.write_bytes(original)
             self.run_cli("validate", work, self.assets)
 
+    def test_contour_creator_discovery_edit_and_save_use_only_relocated_v3_assets(self):
+        original = self.cwd / "created-contour.json"
+        self.run_cli("new-character-contour", self.assets, original)
+        self.run_cli("validate", original, self.assets)
+        before = self.run_cli("inspect", original)
+        caps = self.run_cli("describe-capabilities", original)
+        self.assertEqual(before["schema_version"], 4)
+        self.assertEqual(before["profile"]["id"], "nvwa-mpfb-b1-motion-v3")
+        self.assertEqual(before["profile"]["backend"]["schema_version"], 4)
+        self.assertEqual(len(caps["parameters"]), 9)
+        self.assertEqual(before["character"]["parameters"]["cheek_fullness"], 0)
+        cheek = caps["cli_contract"]["cheek_fullness"]
+        self.assertTrue(cheek["supported"])
+        self.assertEqual(cheek["range"], [-1, 1])
+        self.assertEqual(cheek["default"], 0)
+        self.assertEqual(caps["cli_contract"]["diagnostic_poses"]["targets"]["cheek_fullness"], [
+            "cheek-volume-bilateral-decr", "cheek-volume-bilateral-incr",
+        ])
+        selections = caps["cli_contract"]["set_appearance"]["compatible_sets"]
+        self.assertEqual({s["asset_set_id"] for s in selections}, {
+            "mpfb-b1-cc0-appearance-v3", "mpfb-b1-cc0-appearance-v3-short01-v1",
+        })
+        self.assertEqual(len(selections), 2)
+        for index, selection in enumerate(selections):
+            self.assertEqual(selection["schema_version"], 3)
+            for value in (-1, 0, 0.35, 1):
+                with self.subTest(appearance=selection["asset_set_id"], cheek=value):
+                    envelope = [
+                        {"command_id": "contour-shape", "expected_revision": before["revision"],
+                         "command": {"type": "set_parameters", "character_id": before["character"]["id"],
+                                     "values": {"cheek_fullness": value, "head_width": 0.2}}},
+                        {"command_id": "contour-appearance", "expected_revision": before["revision"] + 1,
+                         "command": {"type": "set_appearance", "character_id": before["character"]["id"],
+                                     "appearance": selection}},
+                    ]
+                    stem = f"contour-{index}-{value}"
+                    command, edited, saved = [self.cwd / (stem + suffix) for suffix in ("-command.json", "-edited.json", "-saved.json")]
+                    command.write_text(json.dumps(envelope))
+                    self.run_cli("apply", original, command, edited)
+                    self.run_cli("validate", edited, self.assets)
+                    self.run_cli("save", edited, saved)
+                    self.run_cli("validate", saved, self.assets)
+                    expected = json.loads(json.dumps(before))
+                    expected["revision"] += 2
+                    expected["character"]["parameters"].update(cheek_fullness=value, head_width=0.2)
+                    expected["character"]["appearance"] = selection
+                    self.assertEqual(self.run_cli("inspect", saved), expected)
+                    self.assertEqual(edited.read_bytes(), saved.read_bytes())
+        self.assertEqual(self.run_cli("inspect", original), before)
+        # The existing constructor retains the exact old profile and eight values.
+        old = self.cwd / "created-old-character.json"
+        self.run_cli("new-character", self.assets, old)
+        self.run_cli("validate", old, self.assets)
+        document = self.run_cli("inspect", old)
+        shipped_old = self.run_cli("inspect", self.home / "works/b1-character.nvwa.json")
+        self.assertEqual(document["profile"], shipped_old["profile"])
+        self.assertEqual(len(document["character"]["parameters"]), 8)
+        self.assertNotIn("cheek_fullness", document["character"]["parameters"])
+        self.assertEqual(set(document["character"]["parameters"].values()), {0})
+
+    def test_contour_targets_and_both_appearance_payload_sets_authenticate_without_source_fallback(self):
+        document = self.run_cli("inspect", self.home / "works/b1-contour.nvwa.json")
+        caps = self.run_cli("describe-capabilities", self.home / "works/b1-contour.nvwa.json")
+        work = self.cwd / "contour-skin-only.json"
+        for selection in caps["cli_contract"]["set_appearance"]["compatible_sets"]:
+            selection.update(eyes=False, hair=False)
+            document["character"]["appearance"] = selection
+            work.write_text(json.dumps(document))
+            self.run_cli("validate", work, self.assets)
+            suffix = "-short01-v1" if selection["asset_set_id"].endswith("-short01-v1") else ""
+            directory = self.assets / ("appearances/mpfb-b1-cc0-v3" + suffix)
+            manifest = json.loads((directory / "manifest.json").read_bytes())
+            self.assertEqual(len(manifest["files"]), 14 if suffix else 13)
+            for relative in ["manifest.json", *manifest["files"]]:
+                path = directory / relative
+                original = path.read_bytes()
+                try:
+                    path.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+                    self.run_cli("validate", work, self.assets, error="asset_hash_mismatch")
+                finally:
+                    path.write_bytes(original)
+                self.run_cli("validate", work, self.assets)
+        for sign in ("decr", "incr"):
+            path = self.assets / f"characters/mpfb-b1-v3/targets/cheek-volume-bilateral-{sign}.target"
+            original = path.read_bytes()
+            try:
+                path.unlink()
+                self.run_cli("validate", work, self.assets, error="asset_missing")
+                rejected = self.cwd / f"missing-{sign}-contour.json"
+                self.run_cli("new-character-contour", self.assets, rejected, error="asset_missing")
+                self.assertFalse(rejected.exists())
+                path.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+                self.run_cli("validate", work, self.assets, error="asset_hash_mismatch")
+                self.run_cli("new-character-contour", self.assets, rejected, error="asset_hash_mismatch")
+                self.assertFalse(rejected.exists())
+                path.unlink()
+                outside = self.cwd / f"outside-{sign}-target"
+                outside.write_bytes(original)
+                path.symlink_to(outside)
+                self.run_cli("validate", work, self.assets, error="unsafe_asset_path")
+            finally:
+                if path.is_symlink():
+                    path.unlink()
+                path.write_bytes(original)
+            self.run_cli("validate", work, self.assets)
+
     def test_preexisting_base_only_distribution_layout_still_fails(self):
         old = self.cwd / "old-base-only-assets"
         old.mkdir()

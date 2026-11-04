@@ -143,3 +143,28 @@ catalog 顺序／用例及 normal／`-O` 保留。
 功能故障仍按原 Goal 进行有界修复与复审，保留同类两次转 Astra 及越界停止
 规则。本轮预算修正限定在八个 policy/docs 文件内，不改变 #120／M2／#80／
 完整 #79 HOLD、#112 的原始失败、#3 的阻塞或 #4 的测量缺口。
+
+## Contour 产品交付的 eye10 明确例外
+
+2026-11-03，Derek 明确批准一次有界 eye8→eye10 例外，portable 整个作业
+保持25分钟。仅具名 eye/hair/character-parameter 步骤从8分钟改为10分钟；
+此决定只覆盖此前 eye8 超时后的停止规则，不授权继续增加预算。保留
+[41722688319](https://github.com/Derek-X-Wang/nvwa/actions/runs/41722688319)
+的8分钟超时与 release HOLD：该次只完成11次 suite，第12次仍未完成，
+不能将局部 OK 或辅助 CLI 作业通过写为完整 portable 通过。10分钟只是有限
+分配，不是提速测量，也不保证该步骤或整个25分钟作业完成。
+
+四个独立消费者要求唯一具名步骤在原位置使用 exact integer10 和原命令，
+只将该步骤10还原为历史3，再执行保留的断言与哈希。旧负向控制全部保留，
+增加 stale8、非整数／字符串／表达式10与错误步骤10的拒绝。此预算修正仅限
+批准的七个 policy/docs 文件；portable25、auth3、offline6、upper-arm5、
+native75、B1／optional-warm60、cache action4，以及全部48个 run body、
+catalog顺序／用例、normal／`-O`、来源上下文／fixture、runner、作业依赖、
+缓存行为、运行时、素材与依赖保持原样。历史失败与既有 HOLD 不变。
+
+新身份只允许一次自然触发的完整正式 PR CI 尝试；成功后仍须按既有发布
+授权完成合并与自然 main CI 验证。若 eye10 或 portable25 再次耗尽预算，
+需要越出七文件范围或改变受保护合同，立即 critical STOP，保留日志与
+release HOLD；不自动重跑、继续加时、拆作业、删用例或优化测试成本。
+其他新失败须先单独分类；若有界尝试失败，继续 HOLD 或另行明确批准
+测试成本设计任务，不能自动启动该任务。

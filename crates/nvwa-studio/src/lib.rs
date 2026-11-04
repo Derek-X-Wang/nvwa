@@ -716,6 +716,7 @@ fn draw_editor_ui(
     let mut next_playback = playback.clone();
     let mut file_action = None;
     let mut new_b1 = false;
+    let mut new_contour = false;
     let mut command = None;
     let mut preview: Option<BTreeMap<String, f32>> = None;
     let mut commit_drag = false;
@@ -743,6 +744,17 @@ fn draw_editor_ui(
             {
                 new_b1 = true;
             }
+            ui.add_enabled_ui(!io.busy(), |ui| {
+                ui.menu_button("▾", |ui| {
+                    if ui
+                        .button("新建脸颊人物… / New character + cheek fullness…")
+                        .clicked()
+                    {
+                        new_contour = true;
+                        ui.close();
+                    }
+                });
+            });
             ui.label("作品 / Work");
             let previous_path = state.file_path.clone();
             draw_work_path(ui, &mut state.file_path, 220.0);
@@ -855,6 +867,9 @@ fn draw_editor_ui(
                             {
                                 commit_drag = true;
                             }
+                        }
+                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V3) {
+                            ui.small("双侧脸颊体积 / Both cheeks. Nearby surfaces may change.");
                         }
                         if editor.preview.is_some() {
                             ui.label("Preview · document unchanged");
@@ -1209,8 +1224,13 @@ fn draw_editor_ui(
     state.stage = stage_ui;
     state.save_notice = save_notice;
     *playback = next_playback;
-    if new_b1 {
-        let result = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character())
+    if new_b1 || new_contour {
+        let profile = if new_contour {
+            nvwa_core::CharacterProfile::b1_character_contour()
+        } else {
+            nvwa_core::CharacterProfile::b1_character()
+        };
+        let result = SceneDocument::from_profile(profile)
             .map_err(|e| e.to_string())
             .and_then(|doc| state.first_save.request_new(editor, &state.file_path, doc));
         if let Err(error) = result {
@@ -1408,6 +1428,7 @@ fn shape_parameter_label(id: &str) -> String {
     match id {
         "torso_length" => "躯干长度 / Torso length".into(),
         "jaw_drop" => "下颌开合 / Jaw opening".into(),
+        "cheek_fullness" => "脸颊饱满度 / Cheek fullness".into(),
         "head_width" => "头部宽度 / Head width".into(),
         "nose_width" => "鼻部宽度 / Nose width".into(),
         "mouth_width" => "嘴部宽度 / Mouth width".into(),

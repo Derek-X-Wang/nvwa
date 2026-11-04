@@ -23,6 +23,10 @@ MULTISEGMENT_BASELINES = {
 }
 FIXTURES_NAME = 'fixtures/source-contexts/manifest.json'
 FIXTURES_SHA = 'b70450a16e7fa59b13fc333de598864ed6e995b88522b04cf520ab75e239de3a'
+CHEEK_CONTEXT_NAME = 'source-context-b1-cheek-fullness-v1.json'
+CHEEK_CONTEXT_SHA = '7eae6f15bd946baf7c7fdb258bd0ab8d6156012ce948e08875c6662389d151ce'
+CHEEK_BASELINES_NAME = 'fixtures/b1-cheek-fullness-baselines.json'
+CHEEK_BASELINES_SHA = '06a87ade124110f50738907c89913effc081183407dac0a67585d206bd74c74b'
 
 
 def require(ok, message):
@@ -122,6 +126,64 @@ def source_contexts(exp, raw, original):
     historical_sources(exp, contexts)
     authoring_baselines(exp, original)
     multisegment_baselines(exp, contexts)
+    pre_contour_baselines(exp, contexts)
+    return contexts
+
+
+def pre_contour_baselines(exp, contexts):
+    """Retain every frozen crate input at its exact prior product identity."""
+    raw = regular_file(exp, CHEEK_BASELINES_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CHEEK_BASELINES_SHA,
+            'pre-contour baseline manifest identity mismatch')
+    manifest = json.loads(raw)
+    require(set(manifest) == {'schema_version', 'context', 'source_commit', 'files'}
+            and manifest['schema_version'] == 1
+            and manifest['context'] == 'b1-multisegment-product-v1'
+            and manifest['source_commit'] == '96cda1b6a63d7f271389b28d293f1223028f0de6',
+            'pre-contour baseline identity mismatch')
+    expected = dict(contexts)[manifest['context']]
+    items = manifest['files']
+    require(set(items) == {name for name in expected if name.startswith('crates/')},
+            'pre-contour baseline complete crate set required')
+    result = {}
+    declared = set()
+    prefix = 'fixtures/b1-cheek-fullness-baselines/'
+    for name, item in items.items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == prefix + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == expected[name],
+                'pre-contour baseline differs from historical pin: ' + name)
+        data = regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected[name],
+                'pre-contour baseline bytes mismatch: ' + name)
+        result[name] = data
+        declared.add(item['fixture'])
+    paths = list((exp / prefix).rglob('*'))
+    require(all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths)
+            and {str(path.relative_to(exp)) for path in paths if path.is_file()} == declared,
+            'pre-contour baseline fixture inventory mismatch')
+    return result
+
+
+def admitted_source_contexts(exp, raw, original):
+    """Append one exact current map; historical cohort enumeration stays fixed."""
+    contexts = source_contexts(exp, raw, original)
+    data = regular_file(exp, CHEEK_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == CHEEK_CONTEXT_SHA,
+            'cheek context manifest identity mismatch')
+    context = json.loads(data)
+    require(set(context) == {'schema_version', 'baseline_manifest', 'baseline_manifest_sha256',
+                             'context', 'overrides', 'scope'}
+            and context['schema_version'] == 1
+            and context['context'] == 'b1-cheek-fullness-product-v1'
+            and context['baseline_manifest'] == 'FROZEN-INPUTS.json'
+            and context['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
+            'cheek context baseline/version mismatch')
+    require(context['overrides'] and set(context['overrides']) <= set(original),
+            'cheek context must retain the exact original source paths')
+    current = dict(original)
+    current.update(context['overrides'])
+    contexts.append((context['context'], current))
     return contexts
 
 

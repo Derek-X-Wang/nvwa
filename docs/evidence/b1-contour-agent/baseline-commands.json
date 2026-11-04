@@ -1,0 +1,44 @@
+[
+  {
+    "command_id": "case1-appearance",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_appearance",
+      "character_id": "character-1",
+      "appearance": {
+        "asset_set_id": "mpfb-b1-cc0-appearance-v3-short01-v1",
+        "asset_set_sha256": "10b672c3cd15d1bbdbe97a3e75efe04bedb3d72bc864c0d05850bddae4c23b9e",
+        "eyes": true,
+        "hair": true,
+        "schema_version": 3,
+        "skin": true,
+        "type": "b1_cc0"
+      }
+    }
+  },
+  {
+    "command_id": "case1-finite-eight-seconds",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "case1-arms",
+          "clip_id": "b1_arm_rehearsal_v1",
+          "start_seconds": 0.0,
+          "duration_seconds": 4.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "case1-knees",
+          "clip_id": "b1_knee_flex_v1",
+          "start_seconds": 4.0,
+          "duration_seconds": 4.0,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  }
+]

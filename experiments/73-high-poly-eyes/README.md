@@ -300,3 +300,29 @@ the Work. The existing scroll area provides access to longer sequences.
 Static B1 capability, GLB's nine-second sequence, runtime, schema, CLI, assets,
 dependencies, and CI settings are unchanged. This source admission carries no
 new render, visual quality, performance, native desktop, or release claim.
+
+## Exact cheek-fullness product source context
+
+`source-context-b1-cheek-fullness-v1.json` registers one complete current
+309-input map through `admitted_source_contexts`. The historical
+`source_contexts` API retains its original six maps. All original five-context
+110592 and six-context165888 matrix methods and assertions remain unchanged.
+The current source gate uses the seven complete maps; no per-file alternatives
+or unknown source paths are admitted.
+
+`fixtures/b1-cheek-fullness-baselines.json` independently pins all 54 frozen
+crate inputs from commit `96cda1b6a63d7f271389b28d293f1223028f0de6` against the
+existing multisegment context. The new separate fixture directory retains those
+exact bytes. Historical reconstruction uses these verified bytes before applying
+the older retained fixtures. It never infers old inputs by reversing new source
+or reading displaced bytes from the live checkout. Every old fixture manifest,
+context pin and baseline remains unchanged.
+
+`test_cheek_context.py` adds exact admission at the actual called gate,
+bidirectional single-input crossovers with all six old contexts, changed-source
+missing/corrupt/symlink checks, mandatory manifest/baseline authentication,
+extra/mixed-map rejection, and byte-exact restoration. Representative forbidden
+old mixtures remain rejected under the full selector. These bounded controls are
+not an exhaustive seven-context Cartesian matrix. New asset identity/derivation
+checks run in both Python modes in the existing portable `b1-inputs` group; the
+historical309 set, CI workflow, budgets and old numeric/visual HOLDs do not change.

@@ -20,7 +20,7 @@ resources.mkdir(parents=True, exist_ok=True)
 for name in ['nvwa-humanoid.glb', 'LICENSE.txt', 'provenance-manifest.json']:
     shutil.copy2(root / 'assets/fixtures' / name, resources / name)
 shutil.copy2(root / 'assets/character.profile.json', resources.parent / 'character.profile.json')
-for name in ['mpfb-b1-v1', 'mpfb-b1-v2']:
+for name in ['mpfb-b1-v1', 'mpfb-b1-v2', 'mpfb-b1-v3']:
     shutil.copytree(root / 'assets/characters' / name, resources.parent / 'characters' / name, dirs_exist_ok=True)
 b1_notices = contents / 'Resources/licenses/b1'
 for name in ['humentity', 'bevy_obj', 'wobj']:
@@ -54,6 +54,14 @@ for name in ['SOURCE.json', 'manifest.json']:
     shutil.copy2(short01_source / name, short01_notices / name)
 for name in ['licenses', 'provenance']:
     shutil.copytree(short01_source / name, short01_notices / name, dirs_exist_ok=True)
+for version in ['v3', 'v3-short01-v1']:
+    source = root / 'assets/appearances' / ('mpfb-b1-cc0-' + version)
+    notices = appearance_notices / version
+    notices.mkdir(parents=True, exist_ok=True)
+    for name in ['SOURCE.json', 'manifest.json', 'BASE-BINDING.json']:
+        shutil.copy2(source / name, notices / name)
+    for name in ['licenses', 'provenance']:
+        shutil.copytree(source / name, notices / name, dirs_exist_ok=True)
 font_notices.mkdir(parents=True, exist_ok=True)
 for name in ['OFL.txt', 'NOTICE.md', 'PROVENANCE.json']:
     shutil.copy2(root / 'assets/fonts' / name, font_notices / name)
@@ -62,7 +70,7 @@ component_notices.mkdir(parents=True, exist_ok=True)
 shutil.copy2(root / 'licenses/craft-ui/LICENSE-MIT.txt', component_notices / 'LICENSE-MIT.txt')
 works = contents / 'Resources/works'
 works.mkdir(parents=True, exist_ok=True)
-for name in ['m1-sequence.nvwa.json', 'b1-appearance.nvwa.json', 'b1-character.nvwa.json', 'b1-short01.nvwa.json']:
+for name in ['m1-sequence.nvwa.json', 'b1-appearance.nvwa.json', 'b1-character.nvwa.json', 'b1-short01.nvwa.json', 'b1-contour.nvwa.json']:
     shutil.copy2(root / 'examples' / name, works / name)
 with (contents / 'Info.plist').open('wb') as file:
     plistlib.dump({'CFBundleExecutable': 'Nvwa', 'CFBundleIdentifier': 'dev.nvwa.studio', 'CFBundleName': 'Nvwa', 'CFBundleDisplayName': 'Nvwa', 'CFBundlePackageType': 'APPL', 'CFBundleShortVersionString': '0.1.0', 'NSHighResolutionCapable': True}, file)

@@ -1,0 +1,118 @@
+{
+  "issue": 134,
+  "release_status": "NOT-RELEASED; applicable local tests/builds complete; formalPRCI/merge/main pending; extraClippy failure preserved",
+  "control": "cheek_fullness",
+  "backend_schema_version": 4,
+  "canonical_profile": "nvwa-mpfb-b1-motion-v3",
+  "work_schema_version": 4,
+  "source_target_commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e",
+  "case": {
+    "goal": "Keep the same person, short01, stage and8-second composition; make both cheeks visibly fuller, restrained and natural.",
+    "baseline_value": 0,
+    "initial_value": 0.5,
+    "initial_independent_result": "HOLD_INSUFFICIENT; marginal visible change",
+    "image_based_revision": 1,
+    "final_value": 0.85,
+    "final_work_sha256": "16e1887c91e2b298f567ae130b91f9631c80a63dba2e4faa1ab87e5669836fb4",
+    "final_portrait_review": "PASS_LOCAL_VISUAL_CHANGE",
+    "only_changed_fields": [
+      "character.parameters.cheek_fullness",
+      "revision"
+    ],
+    "all_other_fields_exact": true,
+    "local_portrait_observations": {
+      "front": "Recognizable modest bilateral cheek rounding, clearer pairwise than standalone",
+      "angle35": "Recognizably fuller, clearest at far-cheek silhouette below eye beside nose; near cheek also rounder",
+      "naturalness": "Modestly fuller within same low-poly face; no obvious new protrusion discontinuity or anatomical break",
+      "new_obvious_adjacent_defects": false,
+      "confidence_direction": "high",
+      "confidence_visibility": "moderate-to-high",
+      "confidence_no_obvious_defect": "moderate at supplied scale"
+    },
+    "anatomical_isolation_proven": false
+  },
+  "functional": {
+    "normal_web_open_save": "actual file chooser and download; byte-identical final Work3896bytes",
+    "final_playback": "actual Play/Pause/seek knee and8s finite complete; Save preserves exact final bytes",
+    "separate_web_cli_web": "actual normal WebSave -> newCLI validates/changes head_width -> normalWebOpen/Save;3898bytes SHA5f72fe433f3aa2313e86749294f83f868e2d715d652030a5ade950ca02254b5b",
+    "old_work_failure_retention": "bad JSON and V3 missing/corrupt manifest keep oldV2 last-good frame/Work and usable history",
+    "recipe_replay": "8 actual bundled CLI calls; constructor and baseline/draft/revision1 reproduced byte-identically; all3 Work asset validations true"
+  },
+  "independent_action_review": {
+    "verdict": "PASS_LIMITED_NON_TARGET_ACTION_COMPARISON",
+    "scope": "Only original-camera1280x720 baseline/final stills at2s arm and6s knee; no fullmotion/bodyquality release",
+    "observations": [
+      "Same arm and knee poses, ground placement and full-body silhouette visible in paired frames.",
+      "Cheek change remains local at this viewing scale; no obvious new whole-body, limb or garment discontinuity relative to baseline.",
+      "Existing visible garment waist gaps and shoulder fit quality remain; no claim to fix #80.",
+      "No inference of all-frame, all-body-shape, skinning precision, native or CI success."
+    ]
+  },
+  "evidence_limits": [
+    "Actual Studio/preview Wasm uses frozen production source; subsequent current differences confined to cfg(test) file, other351inputs unchanged.",
+    "Initial opaque portrait review used symlinks exposing labels; revision1 used regular opaque copies with mapping revealed after observations, same reviewer had prior case exposure.",
+    "Initial90pass/1fail and targeted4pass/2fail retained. Controlled causal probe passed and permanent same-input/same-order setup passed complete93runtime tests. Universal independent-reopen bit-repeatability not established.",
+    "No claim of all-body-shape, all-frame, old-bitwise-repeatability or independent mouth/nose isolation.",
+    "Desktop GUI NOT-RUN by milestone policy.",
+    "#133, #120, M2, #80, full #79 holds; #112 original failure, #3 blocked, #4 gaps and #49 boundary retained."
+  ],
+  "local_portable": {
+    "status": "PASS",
+    "groups": 16,
+    "suite_seconds": 944.5088792500319,
+    "scope": "Captured187771 test-only predecessor; all production unchanged, not current native exactness or hosted CI."
+  },
+  "controlled_probe": {
+    "status": "PASS_CONDITIONAL_EQUIVALENCE",
+    "run_id": "run_c754f5fa8c9b3022aa1dbb3957c828b3",
+    "tests": 1,
+    "exact_pairs": 6,
+    "untouched_mixed_helper_divergences": 4,
+    "distinct_mixed_orders": 2,
+    "nonzero_membership_rejections": 2,
+    "changed_readback_rejections": 6,
+    "seconds": 19.11,
+    "production_changes": false,
+    "universal_reopen_repeatability_proven": false,
+    "permanent_new_test_setup_repair": "Exactc962 independently reviewed; all93runtime tests pass223.54s; other351inputs unchanged"
+  },
+  "native_local": {
+    "runtime_tests": {
+      "passed": 93,
+      "failed": 0,
+      "ignored": 0,
+      "seconds": 223.54,
+      "test_source_sha256": "c962ebfd2ff981bc80130be9e4530f0aa755efd2981b214e2f33439ea74896e5",
+      "all352prepostlive_inputs_match": true
+    },
+    "studio_tests": {
+      "passed": 82,
+      "failed": 0,
+      "ignored": 0,
+      "filtered": 0,
+      "scope": "Frozen671test predecessor; production unchanged"
+    },
+    "native_build": "PASS Mach-O arm64",
+    "native_app": {
+      "status": "PASS actual unsigned packaging",
+      "files": 143,
+      "bytes": 172060661,
+      "base_payloads": 65,
+      "appearance_notice_bindings": 2,
+      "actualCLIcreateValidatePackagedBase": true
+    },
+    "extra_all_target_clippy": {
+      "status": "FAIL",
+      "exit": 101,
+      "final_legacy_diagnostics": 10,
+      "required_lint_scope_unchanged": [
+        "nvwa-core",
+        "nvwa-cli"
+      ],
+      "new_test_map_identity_absent_in_final_execution": true,
+      "studio_all_target_lint": "NOT_ESTABLISHED"
+    },
+    "native_GUI": "NOT-RUN",
+    "signing_notarization": "UNVERIFIED"
+  }
+}

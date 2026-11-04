@@ -260,7 +260,7 @@ fn initialize_selected(
     mut bytes: VerifiedBytes,
 ) -> Result<(), String> {
     let mut extra = Vec::new();
-    if version == B1AssetVersion::V2 {
+    if version != B1AssetVersion::V1 {
         for targets in &version.parameters()[2..] {
             for name in [targets.decrease, targets.increase] {
                 let path = format!("targets/{name}.target");
@@ -275,10 +275,10 @@ fn initialize_selected(
         initialize(world, bytes)?;
         runtime.initialized = true;
     }
-    if version == B1AssetVersion::V2 && runtime.extra_targets.is_empty() {
+    if runtime.extra_targets.len() < extra.len() {
         let source = world.resource::<VerifiedSource>().clone();
         let server = world.resource::<AssetServer>().clone();
-        for (path, data) in extra {
+        for (path, data) in extra.into_iter().skip(runtime.extra_targets.len()) {
             source.0.insert_asset(Path::new(&path), data);
             runtime.extra_targets.push(server.load(asset(&path)));
         }
@@ -293,11 +293,14 @@ fn extra_targets_ready(
     if version == B1AssetVersion::V1 {
         return Ok(true);
     }
-    if runtime.extra_targets.len() != 12 {
-        return Err("invalid_asset: twelve explicit extension target handles required".into());
+    let required = (version.parameters().len() - 2) * 2;
+    if runtime.extra_targets.len() < required {
+        return Err(format!(
+            "invalid_asset: {required} explicit extension target handles required"
+        ));
     }
     let server = world.resource::<AssetServer>();
-    for handle in &runtime.extra_targets {
+    for handle in &runtime.extra_targets[..required] {
         if let Some(bevy::asset::LoadState::Failed(error)) = server.get_load_state(handle.id()) {
             return Err(format!(
                 "invalid_asset: B1 extension target load failed: {error}"
@@ -432,11 +435,11 @@ fn drive(world: &mut World) {
         let version = selected.base;
         let task = (is_open
             || !runtime.initialized
-            || (version == B1AssetVersion::V2 && runtime.extra_targets.is_empty()))
-        .then(|| {
-            let server = world.resource::<AssetServer>().clone();
-            IoTaskPool::get().spawn(verify_source(server, version))
-        });
+            || (runtime.extra_targets.len() < (version.parameters().len() - 2) * 2))
+            .then(|| {
+                let server = world.resource::<AssetServer>().clone();
+                IoTaskPool::get().spawn(verify_source(server, version))
+            });
         {
             let mut status = world.resource_mut::<RuntimeStatus>();
             if !is_open {
@@ -4220,6 +4223,8 @@ mod tests {
         assert_eq!(app.world().resource::<RuntimeStatus>().phase, specific);
         assert_eq!(app.world().resource::<RuntimeStatus>().error, runtime_error);
     }
+
+    include!("b1_contour_tests.rs");
 
     #[test]
     fn bounded_reader_stops_at_one_over_limit() {

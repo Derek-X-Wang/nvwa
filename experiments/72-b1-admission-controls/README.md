@@ -158,3 +158,25 @@ run binds their original recipe/pose coverage and numerical limits to a complete
 baseline581 production old/new comparison. It does not supply missing actual71
 cohorts, renderer/GPU pixel readback, performance, GUI, live playback or quality
 clearance. #79/#80/M2 HOLD and #3/#4 limits remain unchanged.
+
+## Explicit cheek-fullness product source context
+
+`input-context-v4.json` adds exactly one `b1-cheek-fullness-product-v1`
+complete 17-input map through `admitted_source_contexts`. The original
+`source_contexts` still enumerates its four historical maps. Their 96-map
+control, all old cases, mutations, numeric sections and baseline-only execution
+remain unchanged. The current gate selects from all five complete maps; it does
+not combine individual file alternatives.
+
+`fixtures/pre-contour/` retains the exact preceding 17 inputs from commit
+`96cda1b6a63d7f271389b28d293f1223028f0de6`. The historical tooling class checks
+these bytes against the existing short01 context before using them. Its original
+methods and assertions continue to test that historical cohort. Separate
+`test_cheek_context.py` controls check the actual current checkout, the new exact
+map, every single-input crossover with every old map, source/manifest refusal,
+byte-exact restoration, and historical-only rejection. The historical 92
+forbidden mixtures are also checked under the complete five-context selector.
+
+This is source identity and runner tooling evidence only. `--execute` still
+archives and executes baseline581 exclusively. No historical result becomes a
+current numerical, rendering or visual result.

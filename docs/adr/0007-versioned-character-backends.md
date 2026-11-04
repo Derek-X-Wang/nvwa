@@ -31,3 +31,35 @@ The alternative was to extend the existing canonical B1 profile in place. That w
 CLI `new-character` and Studio New character create this version explicitly. The existing `new-b1` and `new-b1-motion` constructors retain their previous output. The shared Core parameter catalogue bounds all eight values to `[-1, 1]`; CLI, commands, runtime and Studio use that catalogue. The runtime authenticates every selected descriptor payload before activating a candidate, including when shared inputs are already cached. It then fits the existing skeleton and applies all positive aggregate influences. No new rendering, animation, model inference or material policy is introduced.
 
 This extends character creation, not the quality acceptance of the current low-poly eyes, hair or clothing. Extreme shapes, actual motion, ordinary UI and desktop/Web file exchange require separate current evidence. It does not admit arbitrary MakeHuman files, additional skeletons, generated actions, physics or performance claims.
+
+
+## Explicit bilateral cheek fullness extension
+
+Backend version4, profile `nvwa-mpfb-b1-motion-v3`, and base
+`mpfb-hm08-game-engine-female-sportsuit01-v3` add one symmetric `cheek_fullness`
+control in `[-1, 1]`, default `0`. Work schema4 stays unchanged. The original
+constructors, eight parameter meanings, and old Work identities remain fixed.
+CLI `new-character-contour` and Studio's New character menu offer the new profile
+explicitly. Old Work Open does not migrate or add parameters.
+
+Two bilateral leaf files preserve the existing negative/positive binding. Each
+is the sorted union of the corresponding original left and right cheek-volume
+rows, whose stored vertex ID sets are disjoint. All numeric tokens and zero rows
+are retained. There is no averaging, reflection, sign inversion, or source unit
+change. The existing target loader still converts units once. The four pinned
+original CC0 gzip sources and exact derivation receipt ship with the V3 base.
+The signed runtime mapping and full positive aggregate CPU influences stay fixed.
+A generic composite binding would change the global manifest lifecycle and the
+mapping interface for one control, so this version uses the existing leaf pair.
+
+Appearance schema3 adds exact V3 bindings for both short04 and short01 with
+unchanged payload bytes. Cross-version bindings reject. Runtime cache readiness
+and typed-load failures inspect only the selected version's required targets;
+cached V3-only handles cannot make old Works depend on the cheek files. Explicit
+Open authenticates the selected descriptor and every payload even after caching.
+
+This controls cheek fullness rather than jaw width. Adjoining surfaces can change;
+mouth or nose isolation is not promised. It does not resolve the prior #133,
+M2 motion, clothing, or full hair-quality holds. Visual reference usefulness,
+CPU numeric agreement, actual product UI, motion, and release acceptance remain
+separate evidence.

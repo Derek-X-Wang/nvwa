@@ -42,10 +42,16 @@ class FrozenInputGate(unittest.TestCase):
         for name in ['test_prepare.py', 'cpu_probe.py', 'frozen_context.py',
                      'source-context-closeout-v1.json', 'source-context-hair79-short01-v1.json',
                      'source-context-hair79-selector-v1.json',
-                     CONTEXT.AUTHORING_CONTEXT_NAME, CONTEXT.MULTISEGMENT_CONTEXT_NAME]:
+                     CONTEXT.AUTHORING_CONTEXT_NAME, CONTEXT.MULTISEGMENT_CONTEXT_NAME,
+                     CONTEXT.CHEEK_CONTEXT_NAME]:
             shutil.copyfile(EXP / name, cls.exp / name)
         shutil.copytree(EXP / 'fixtures', cls.exp / 'fixtures')
         cls.full_contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
+        # Historical matrix recipes use authenticated retained bytes, never live
+        # source that the new independent product context has displaced.
+        cls.pre_contour = CONTEXT.pre_contour_baselines(EXP, cls.full_contexts)
+        for name, raw in cls.pre_contour.items():
+            (cls.root / name).write_bytes(raw)
         cls.all_contexts = [(name, files) for name, files in cls.full_contexts if name != MULTISEGMENT]
         cls.contexts = [(name, files) for name, files in cls.all_contexts if name != AUTHORING]
         cls.old_contexts = [(name, files) for name, files in cls.contexts if name != SELECTOR]

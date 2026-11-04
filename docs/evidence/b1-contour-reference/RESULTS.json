@@ -1,0 +1,52 @@
+{
+  "scope": "Independent Blender source-delta reference only; not MPFB native workflow or Nvwa product acceptance",
+  "source_commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e",
+  "blender": "5.2.2 LTS d13f752e3b9c",
+  "source_base_sha256": "8e761e6624b8f54536409135d1636da63b32486a90d4897f84e121d144f6fb4c",
+  "states": {
+    "A": 1,
+    "B": 0,
+    "C": -1
+  },
+  "reference_verdict": "PASS_REFERENCE_USEFUL",
+  "blind_order": [
+    "A",
+    "B",
+    "C"
+  ],
+  "blind_frozen_sha256": "9cc087dbcc2b29201c00013398bbb45f05f9d6e9ec6a2ccfcb905d04f57acc11",
+  "image_sha256": {
+    "A_front.png": "3b29d224305d314620c786c98b4db976d5fae01171789eadc983ad46adbcbcb2",
+    "A_angle35.png": "a1d88460a0fee2baed30b3b30e315e727062842f7baa36289ed8207550cff910",
+    "B_front.png": "a2cd7ffe24b894ebf35afd111893458c6be1dfa7f02f4ce5c5d94badb5770683",
+    "B_angle35.png": "2c44fcccef3bdc541c0a5280fc1882cbf3046f201e8e78b1b52df1a4476df253",
+    "C_front.png": "62786b5742f10db85e86a2b207c65f3284476606f12ca1661f8cc08b0741cd39",
+    "C_angle35.png": "92bd0bcb264df740afd31f3db9bc246f380a83cbc14951c36eddc4fc33d1835c"
+  },
+  "calibration": {
+    "q_neutral_linear_p99": 3.8790340423583984,
+    "stored_exposure": -2.277625560760498,
+    "selection": "neutral front fixed ROI only; common exposure for all states",
+    "original_six": "retained saturation failure, not accepted"
+  },
+  "numeric": {
+    "source_vertices": 19158,
+    "source_faces": 18486,
+    "moved_vertices_zero_negative_positive": [
+      0,
+      304,
+      420
+    ],
+    "max_float32_component_error": 2.98e-08
+  },
+  "run_ids": {
+    "original": "run_96ff77ffdf897ffdd3a1ce74e732bbda",
+    "repair": "run_9f78d1f20d72a99e9caba531dfe2790b"
+  },
+  "limits": [
+    "Mouth/nose anatomical preservation unproven",
+    "No attachment, rig, action, Nvwa, Web/CLI or release acceptance here",
+    "Baseline front uses retained-EXR Image.save_render; other five render write_still; fixed-region difference <=1/255 only, no global bound claimed",
+    "Previous133 and other quality HOLDs unchanged"
+  ]
+}
