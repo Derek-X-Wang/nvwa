@@ -76,6 +76,17 @@ accepts a B1 Work and timeline time, then captures the actual saved camera throu
 the existing renderer. It requires a WebGPU browser and the built preview adapter;
 it does not add rendering to this native data CLI or connect to a running Studio.
 
+For ordered motion inspection, `scripts/review-motion.py` wraps that unchanged
+preview with an explicit installed Chrome executable on macOS and Python 3.12+.
+It accepts one original Work, one or two saved camera-copy Works, and explicit
+times; it owns each browser process and returns actual canvas PNGs with identity
+and time receipts. The [Chinese workflow and editable examples](evidence/agent-motion-review/README.md)
+retain two first drafts and all 44 normal images, plus four separate functional
+reopen images. Both drafts received bounded visual and identity acceptance with
+zero creative revisions.
+The required effective image-grounded revision has not been demonstrated, so the
+Goal remains PARTIAL. This wrapper does not add rendering to the data CLI.
+
 ## Validation boundary
 
 On 2026-10-15, the six-operation path (`new`, `describe-capabilities`, `apply`, `validate`, `save`, `inspect`) passed locally on macOS arm64 using a private output directory and the bundled asset. Discovery supplied the parameter, character ID and authored clip used by the command batch. The final `inspect` response matched the saved Work. This was file-operation verification; it did not start Studio, a browser, a GPU or a motion model.
