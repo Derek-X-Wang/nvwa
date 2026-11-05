@@ -1,0 +1,52 @@
+[
+  {
+    "command_id": "case1-initial-appearance",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_appearance",
+      "character_id": "character-1",
+      "appearance": {
+        "asset_set_id": "mpfb-b1-cc0-appearance-v1",
+        "asset_set_sha256": "c3cf2b1040eed083fb1a328f0494b0c978cec42c71f3b7c826e14992f97cef04",
+        "eyes": true,
+        "hair": true,
+        "schema_version": 1,
+        "skin": true,
+        "type": "b1_cc0"
+      }
+    }
+  },
+  {
+    "command_id": "case1-initial-timeline",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "opening-arm",
+          "clip_id": "b1_arm_rehearsal_v1",
+          "start_seconds": 0.0,
+          "duration_seconds": 4.0,
+          "speed": 1.0,
+          "looping": false
+        },
+        {
+          "id": "central-knee",
+          "clip_id": "b1_knee_flex_v1",
+          "start_seconds": 4.0,
+          "duration_seconds": 5.0,
+          "speed": 0.8,
+          "looping": false
+        },
+        {
+          "id": "closing-arm-hold",
+          "clip_id": "b1_arm_rehearsal_v1",
+          "start_seconds": 9.0,
+          "duration_seconds": 5.0,
+          "speed": 1.0,
+          "looping": false
+        }
+      ]
+    }
+  }
+]
