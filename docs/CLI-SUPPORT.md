@@ -83,9 +83,11 @@ times; it owns each browser process and returns actual canvas PNGs with identity
 and time receipts. The [Chinese workflow and editable examples](evidence/agent-motion-review/README.md)
 retain two first drafts and all 44 normal images, plus four separate functional
 reopen images. Both drafts received bounded visual and identity acceptance with
-zero creative revisions.
-The required effective image-grounded revision has not been demonstrated, so the
-Goal remains PARTIAL. This wrapper does not add rendering to the data CLI.
+zero creative revisions. On 2026-11-04, the user explicitly accepted qualified
+initial drafts for this Goal. Local acceptance is complete under that amendment;
+actual creative revisions remain zero, with no revision benefit claimed. Release
+remains PARTIAL pending normal PR CI and natural main verification. This wrapper
+does not add rendering to the data CLI.
 
 ## Validation boundary
 
