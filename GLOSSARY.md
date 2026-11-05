@@ -1,8 +1,20 @@
 # Nvwa
 
-Nvwa is a character creation and animation sandbox. This vocabulary describes the bounded single-character prototype.
+Nvwa provides character creation and animation tools operated by external creators. This vocabulary describes the bounded single-character product and its creator-facing concepts.
 
 ## Language
+
+**External creator**:
+An AI agent chosen by the user that interprets references and feedback, plans a creation, and operates Nvwa's tools to inspect and change it.
+_Avoid_: built-in Nvwa agent, Nvwa planner
+
+**Reference photo**:
+An image used by an external creator to establish or inspect a character's intended appearance.
+_Avoid_: reconstructed character, guaranteed likeness
+
+**Observation**:
+A view or reported state of a particular Work under identified viewing and sampling conditions, available to a creator for judgment.
+_Avoid_: visual acceptance, proof of whole-animation quality
 
 **Work**:
 A saved character creation with its appearance, animation arrangement and rehearsal-stage settings.

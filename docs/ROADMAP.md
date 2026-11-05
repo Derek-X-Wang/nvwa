@@ -1,6 +1,8 @@
 # Nvwa 路线图
 
-更新：2026-11-04。目标：让 AI 成为主要创作者，创建和修改人物、编排动作并查看试演结果；人主要审核作品、提出反馈。桌面、Web 与 CLI 共用可继续编辑、跨入口交换的作品（Work）。
+更新：2026-11-04。定位：为用户选择的外部 AI Agent 提供人物与动画工具。Agent 负责理解照片和文字、规划、判断与循环；Nvwa 负责能力发现、可控操作、真实观测、明确结果及可编辑作品（Work）。人主要观看、审核和反馈，也可直接编辑。桌面、Web 与 CLI 共享作品与命令语义。职责、比较优势假设和后期游戏嵌入边界见[产品定位](PRODUCT.md)。
+
+本轮长期方向用照片参考人物、可用动作编排与局部改编验收工具，完整正文见[长期 Goal](goals/agent-operated-character-animation.md)。用户于2026-11-04明确批准提交、推送并启用该 Goal，从阶段0核对路径和缺失授权；此决定不恢复旧 HOLD 或隐含新增获取／资源授权。游戏提供世界和玩法；Nvwa 后期的人物系统嵌入需另选宿主验证，当前只保留架构边界。
 
 八秒编排阶段的编译与实际验收锁定 [`30aa99e`](https://github.com/Derek-X-Wang/nvwa/commit/30aa99e5bba3fef82ba4d533ce8a6ee01586a17b)，与后续文档提交分开。用户可在已编辑人物上创建／恢复八秒预制动作，修改行、撤销／重做、播放并保存交换；见[阶段证据](evidence/b1-motion-authoring/README.md)与 [#124 发布回执](https://github.com/Derek-X-Wang/nvwa/issues/124)。
 
@@ -18,7 +20,7 @@
 
 上一轮 [#136 新轮廓控制、AI 观察辅助与独立创作](https://github.com/Derek-X-Wang/nvwa/issues/136) 已实现显式十参数人物的 `lower_face_squareness`，范围为 `[0,1]`，默认0；它表达下半脸轮廓方正化，不表示下颌骨宽度或解剖隔离。默认体型的端点、中间值和有界动作画面，以及三个不同目标的独立 AI 创作案例已获局部视觉接受；第三例完成了一次有效的真实看图修订。普通 Web 新建、编辑、撤销重做、重置、无效打开恢复和 Web→CLI→Web 逐字节保存交换已有本地证据。一次真实运行时位移辅助对照未证明额外的事实到操作收益，结论为 **NO-ADOPT**；原型已移出产品，原始证据保留。正式发布与 main CI 的最终结果记录在 #136，不由本地通过推断。普通桌面 UI 延后，全部旧作品、断言和质量 HOLD 保留。
 
-本轮 [AI 自助审看动作试演](evidence/agent-motion-review/README.md) 已在现有 Web 渲染上增加有界命令包装，独立创作者可自行取得明确 Work、多时间与两个相机副本的真实画面。14秒／16秒两个三段初稿及44张正常原图已保存；两例的独立局部画面判断及字段／身份核查均保留初稿接受。2026-11-04，用户明确“接受合格首稿”，仅调整本 Goal 对已合格且无必要修改初稿的强制修订要求；据此本地验收完成，实际创作修订仍为0次，不声明修订收益。普通 Web／CLI 文件交换通过，标识修改只计功能验证。发布仍为 **PARTIAL**，待正常 PR 完整 CI、普通合并及自然 main 验证；新构建尚未运行。以上为 **2026-11-04 提交 PR 前本地快照**；最终 PR／main CI 及发布结果统一记录于[#138](https://github.com/Derek-X-Wang/nvwa/issues/138)。
+上一轮 [AI 自助审看动作试演](evidence/agent-motion-review/README.md) 已随 [PR #139](https://github.com/Derek-X-Wang/nvwa/pull/139) 普通 squash 合并，main `bf09e18` 的[完整 Bounded CI](https://github.com/Derek-X-Wang/nvwa/actions/runs/41959433991)与[辅助 CLI](https://github.com/Derek-X-Wang/nvwa/actions/runs/41959434119)均通过；三个必需作业实际成功，可选 warm 按原条件跳过。[#138 最终回执](https://github.com/Derek-X-Wang/nvwa/issues/138#issuecomment-6649825644)已发布，工单与该轮 Goal 已完成。独立创作者自行取得14秒／16秒两个三段初稿的44张正常原图，独立局部画面与字段审查均接受首稿；用户明确接受合格首稿，实际创作修订仍为0次。另4张修改后功能重开图、正常 Web／CLI 逐字节交换与实际 CI 编译证据分别保留，不声明修订收益或整段质量通过。证据目录的“提交 PR 前快照”保留原时点，最终发布状态以该回执为准。
 
 [PR #120](https://github.com/Derek-X-Wang/nvwa/pull/120) 候选 head `51cff65c34966a76511e317e76ba8bd4d75bafba` 仍保持 **HOLD**；数值候选不计为 main 产品交付，不继续其 CI 诊断或重试。
 
@@ -38,7 +40,8 @@
 
 | 优先级 | 可交付结果 | 完成或恢复条件 |
 | --- | --- | --- |
-| 本阶段：[AI 自助审看动作试演](evidence/agent-motion-review/README.md) | 明确 Work、多时间、两个固定相机副本的真实画面；独立创作者自行看图与继续编辑 | 本地验收完成（2026-11-04 提交 PR 前快照）：2026-11-04 用户针对本 Goal 明确接受合格首稿；14秒／16秒两个三段初稿、44张创作原图及独立局部初稿接受，实际创作修订0次。另4张功能重开图只证明身份／重开，无创作收益。发布 PARTIAL：待正常 PR 完整 CI、普通合并和自然 main 验证；新构建尚未运行，全部旧 HOLD 保留。最终 PR／main CI 及发布结果统一记录于[#138](https://github.com/Derek-X-Wang/nvwa/issues/138)。 |
+| 本轮长期方向：[外部 Agent 人物与动画工具](goals/agent-operated-character-animation.md) | 以照片参考、可用跑步／短舞蹈、完整作品与局部改编验收可操作／可观测／可修正能力；游戏嵌入只保留边界 | 用户已批准启用，从阶段0开始。分阶段持续推进，先明确路径及缺失授权；#118／#120等停放依赖需明确批准后恢复，不自动解除质量HOLD。软件不内置照片理解或Agent规划；比较优势待小规模实际对照。 |
+| 已交付：[AI 自助审看动作试演](evidence/agent-motion-review/README.md) | 明确 Work、多时间、两个固定相机副本的真实画面；独立创作者自行看图与继续编辑 | PR #139 已合并，main bf09e18 的三个必需作业与辅助 CLI 均实际通过；#138及该轮Goal已完成。两个首稿按用户决定接受，实际创作修订0次；另4张功能重开图不计收益。旧快照、失败、质量HOLD和静态样本边界保留；[最终回执](https://github.com/Derek-X-Wang/nvwa/issues/138#issuecomment-6649825644)。 |
 | 上一轮：[新增轮廓与独立创作 #136](https://github.com/Derek-X-Wang/nvwa/issues/136) | 显式十参数人物的下半脸方正控制、三个独立局部创作案例和观察辅助 NO-ADOPT 决定 | 独立源码审查、本地测试、原生／Wasm 构建、16组 portable 及真实 Web／CLI 功能已通过；第三例有一次有效看图修订。视觉证据限已检视角、姿态和默认体型；新旧版本不自动互换。正常 PR／main CI 与发布结果以 #136 最终回执为准；预算、缓存、runner 和原有门禁不变。 |
 | 已交付：[人物轮廓控制 #134](https://github.com/Derek-X-Wang/nvwa/issues/134) | 显式九参数人物的 cheek_fullness，AI 自行发现、看图修订并保存可编辑 Work | PR #135 已合并，main e3c0268 的三个必需作业及辅助 CLI 实际通过。正向案例有局部视觉收益及真实 Web/CLI 交换；瘦脸案例 HOLD、额外 lint 失败与原始数值失败保留，不解除其他质量 HOLD。 |
 | 上一轮视觉 HOLD：[AI 目标驱动捏人 #133](https://github.com/Derek-X-Wang/nvwa/issues/133) | agent 根据自然语言外观目标修改人物，固定视角看图并作最多一次局部修订，保留其他设置和可继续编辑的作品 | 首例的命令／捕获／身份通过，但预定视觉收益未通过；唯一修订已用完，不启动第二／第三例，不继续调参、扩参数／素材／运行时或验证框架。保留原始作品与独立判断，等待新的范围决定。 |
