@@ -87,6 +87,8 @@ struct Live {
 }
 #[derive(Resource, Default)]
 pub(super) struct AppearanceRuntime {
+    running_serial: Option<u64>,
+    running_buffers: Vec<(Entity, Handle<Mesh>, Vec<[f32; 3]>, Vec<[f32; 3]>)>,
     authenticated: Option<B1AppearanceSet>,
     key: Option<Key>,
     skin: Option<SkinBinding>,
@@ -169,6 +171,8 @@ fn dispose(world: &mut World, state: &mut AppearanceRuntime) -> Result<(), Strin
             .remove(live.texture.handle.id());
     }
     state.key = None;
+    state.running_buffers.clear();
+    state.running_serial = None;
     if errors.is_empty() {
         Ok(())
     } else {
@@ -670,6 +674,13 @@ fn project_runtime_status(world: &mut World, status: &AppearanceStatus) {
     }
 }
 pub(super) fn update(world: &mut World) {
+    if world
+        .resource::<EditorState>()
+        .visible_document()
+        .is_some_and(|d| d.profile.backend.is_b1_running())
+    {
+        return;
+    }
     let mut state = world
         .remove_resource::<AppearanceRuntime>()
         .unwrap_or_default();
@@ -787,6 +798,22 @@ pub fn appearance_status(world: &World) -> AppearanceStatus {
 /// Bounded actual CPU observation. It never exports whole body arrays or claims GPU readback.
 /// Errors invalidate applied evidence and dispose generated appearance resources.
 pub fn appearance_snapshot(world: &mut World) -> Result<Value, String> {
+    if world
+        .resource::<EditorState>()
+        .visible_document()
+        .is_some_and(|d| d.profile.backend.is_b1_running())
+    {
+        crate::b1_running_observation(world)?;
+        let frame = appearance_frame(world)?;
+        let requested = world
+            .resource::<EditorState>()
+            .visible_document()
+            .unwrap()
+            .character
+            .appearance
+            .clone();
+        return running_observation(world, &frame, &requested, true);
+    }
     let result = (|| {
         let status = world
             .get_resource::<AppearanceStatus>()
@@ -1356,4 +1383,385 @@ mod tests {
                 .is_none()
         );
     }
+}
+
+// Running alone stages every role before its body/placement publication.
+pub(super) struct RunningAppearancePlan {
+    key: Key,
+    requested: CharacterAppearance,
+    revision: u64,
+    serial: u64,
+    placement: Mat4,
+    replacement: Option<(
+        Option<Image>,
+        Vec<PreparedAccessory>,
+        StandardMaterial,
+        Option<VertexAttributeValues>,
+        Vec<[f32; 2]>,
+        Handle<StandardMaterial>,
+    )>,
+    updates: Vec<(Entity, Handle<Mesh>, Vec<[f32; 3]>, Vec<[f32; 3]>)>,
+}
+pub(super) fn running_needs_fit(
+    world: &World,
+    frame: &AppearanceFrame,
+    requested: &CharacterAppearance,
+) -> bool {
+    world.resource::<AppearanceRuntime>().key.as_ref()
+        != Some(&Key::new(
+            frame,
+            requested.b1_set(),
+            requested.b1_flags().unwrap_or((false, false, false)),
+        ))
+}
+pub(super) fn prepare_running(
+    world: &World,
+    frame: &AppearanceFrame,
+    fit: Option<&AppearanceFit>,
+    requested: &CharacterAppearance,
+) -> Result<RunningAppearancePlan, String> {
+    let state = world.resource::<AppearanceRuntime>();
+    if world
+        .resource::<Assets<StandardMaterial>>()
+        .get(&frame.baseline)
+        .is_none()
+    {
+        return Err("running appearance baseline material absent".into());
+    }
+    let flags = requested.b1_flags().unwrap_or((false, false, false));
+    let set = requested.b1_set();
+    if set.is_some_and(|set| set.base() != frame.base) {
+        return Err("running appearance base/set mismatch".into());
+    }
+    // Retained bindings are checked before either replacement or streaming.
+    if let Some(skin) = &state.skin {
+        observe_skin(world, skin, false)?;
+    }
+    for live in &state.live {
+        observe_live(world, live, false)?;
+        let local = world
+            .get::<Transform>(live.entity)
+            .ok_or("running accessory local destination absent")?
+            .to_matrix();
+        let global = world
+            .get::<GlobalTransform>(live.entity)
+            .ok_or("running accessory global destination absent")?
+            .to_matrix();
+        if !local.is_finite() || local != global {
+            return Err("running accessory transform destination changed".into());
+        }
+    }
+    if !state
+        .skin
+        .as_ref()
+        .is_some_and(|skin| skin.entity == frame.body)
+        && world
+            .get::<MeshMaterial3d<StandardMaterial>>(frame.body)
+            .is_none_or(|m| m.0 != frame.baseline)
+    {
+        return Err("running baseline body material changed".into());
+    }
+    let key = Key::new(frame, set, flags);
+    let mut plan = RunningAppearancePlan {
+        key: key.clone(),
+        requested: requested.clone(),
+        revision: frame.revision,
+        serial: frame.serial,
+        placement: frame.placement,
+        replacement: None,
+        updates: Vec::new(),
+    };
+    if state.key.as_ref() != Some(&key) {
+        let fit = fit.ok_or("running replacement fit absent")?;
+        let baseline = world
+            .resource::<Assets<StandardMaterial>>()
+            .get(&frame.baseline)
+            .ok_or("running appearance baseline material absent")?
+            .clone();
+        let mesh = world
+            .resource::<Assets<Mesh>>()
+            .get(&frame.mesh)
+            .ok_or("running appearance body destination absent")?;
+        if world
+            .get::<Mesh3d>(frame.body)
+            .is_none_or(|m| m.0 != frame.mesh)
+        {
+            return Err("running appearance body destination changed".into());
+        }
+        let original_uv = state
+            .skin
+            .as_ref()
+            .filter(|s| s.mesh == frame.mesh)
+            .map(|s| s.original_uv.clone())
+            .unwrap_or_else(|| mesh.attribute(Mesh::ATTRIBUTE_UV_0).cloned());
+        let (skin, accessories) = if let Some(set) = set {
+            assets::authenticate(set)?;
+            prepare(frame, fit, set, flags)?
+        } else {
+            (None, Vec::new())
+        };
+        if skin.as_ref().is_some_and(|image| image.data.is_none())
+            || accessories
+                .iter()
+                .any(|(_, _, _, _, _, _, image)| image.data.is_none())
+        {
+            return Err("running prepared CPU pixels absent".into());
+        }
+        plan.replacement = Some((
+            skin,
+            accessories,
+            baseline,
+            original_uv,
+            fit.uv.clone(),
+            frame.baseline.clone(),
+        ));
+    } else {
+        let matrices = matrices(frame)?;
+        for live in &state.live {
+            let mesh = world
+                .resource::<Assets<Mesh>>()
+                .get(&live.mesh)
+                .ok_or("running accessory destination absent")?;
+            if !matches!(mesh.attribute(Mesh::ATTRIBUTE_UV_0),Some(VertexAttributeValues::Float32x2(v)) if v==&live.obj.uv)
+                || mesh.indices().map(|i| i.iter().collect::<Vec<_>>())
+                    != Some(live.obj.indices.iter().map(|i| *i as usize).collect())
+            {
+                return Err("running accessory topology/UV changed".into());
+            }
+            let (p, n) = geometry::skin(&live.rest, &live.normals, &live.weights, &matrices)?;
+            plan.updates.push((
+                live.entity,
+                live.mesh.clone(),
+                live.obj.pairs.iter().map(|(i, _)| p[*i]).collect(),
+                live.obj.pairs.iter().map(|(i, _)| n[*i]).collect(),
+            ));
+        }
+    }
+    #[cfg(test)]
+    if world.contains_resource::<RunningAppearanceFailure>() {
+        return Err("injected running appearance preparation failure".into());
+    }
+    Ok(plan)
+}
+#[cfg(test)]
+#[derive(Resource)]
+pub(crate) struct RunningAppearanceFailure;
+/// Exclusive commit: every fallible decode/fit/skin/binding check precedes this.
+pub(super) fn commit_running(world: &mut World, plan: RunningAppearancePlan) {
+    let mut state = world
+        .remove_resource::<AppearanceRuntime>()
+        .unwrap_or_default();
+    let mut published_buffers = Vec::new();
+    if let Some((skin_image, prepared, baseline, original_uv, uv, baseline_handle)) =
+        plan.replacement
+    {
+        dispose(world, &mut state).expect("running appearance disposal was preflighted");
+        if let Some(image) = skin_image {
+            let texture = texture(world, image, 2048).expect("prepared image has pixels");
+            let mut material = baseline;
+            material.base_color = Color::WHITE;
+            material.base_color_texture = Some(texture.handle.clone());
+            let material = world
+                .resource_mut::<Assets<StandardMaterial>>()
+                .add(material);
+            world
+                .resource_mut::<Assets<Mesh>>()
+                .get_mut(&plan.key.mesh)
+                .expect("preflighted body mesh")
+                .insert_attribute(Mesh::ATTRIBUTE_UV_0, uv.clone());
+            world
+                .entity_mut(plan.key.body)
+                .insert(MeshMaterial3d(material.clone()));
+            state.skin = Some(SkinBinding {
+                entity: plan.key.body,
+                mesh: plan.key.mesh.clone(),
+                baseline: baseline_handle,
+                material,
+                texture,
+                original_uv,
+                uv,
+            });
+        }
+        for (p, rest, weights, normals, positions, posed_normals, image) in prepared {
+            let texture = texture(world, image, p.size).expect("prepared accessory pixels");
+            let material = world
+                .resource_mut::<Assets<StandardMaterial>>()
+                .add(accessory_material(texture.handle.clone(), p.hair));
+            let mut mesh = Mesh::new(
+                PrimitiveTopology::TriangleList,
+                RenderAssetUsages::default(),
+            );
+            let published_positions = p
+                .obj
+                .pairs
+                .iter()
+                .map(|(i, _)| positions[*i])
+                .collect::<Vec<_>>();
+            let published_normals = p
+                .obj
+                .pairs
+                .iter()
+                .map(|(i, _)| posed_normals[*i])
+                .collect::<Vec<_>>();
+            mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, published_positions.clone());
+            mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, published_normals.clone());
+            mesh.insert_attribute(Mesh::ATTRIBUTE_UV_0, p.obj.uv.clone());
+            mesh.insert_indices(Indices::U32(p.obj.indices.clone()));
+            let mesh = world.resource_mut::<Assets<Mesh>>().add(mesh);
+            let entity = world
+                .spawn((
+                    Name::new(format!("B1 saved {}", p.name)),
+                    Mesh3d(mesh.clone()),
+                    MeshMaterial3d(material.clone()),
+                    Transform::from_matrix(plan.placement),
+                    GlobalTransform::from(plan.placement),
+                ))
+                .id();
+            published_buffers.push((entity, mesh.clone(), published_positions, published_normals));
+            state.live.push(Live {
+                name: p.name,
+                entity,
+                mesh,
+                material,
+                texture,
+                rest,
+                normals,
+                weights,
+                obj: p.obj,
+                hair: p.hair,
+            });
+        }
+        state.key = Some(plan.key.clone());
+        state.authenticated = plan.key.set;
+    } else {
+        for (entity, handle, positions, normals) in plan.updates {
+            published_buffers.push((entity, handle.clone(), positions.clone(), normals.clone()));
+            {
+                let mut meshes = world.resource_mut::<Assets<Mesh>>();
+                let mut mesh = meshes.get_mut(&handle).expect("preflighted accessory mesh");
+                mesh.insert_attribute(Mesh::ATTRIBUTE_POSITION, positions);
+                mesh.insert_attribute(Mesh::ATTRIBUTE_NORMAL, normals);
+            }
+            world.entity_mut(entity).insert((
+                Transform::from_matrix(plan.placement),
+                GlobalTransform::from(plan.placement),
+            ));
+        }
+    }
+    state.running_buffers = published_buffers;
+    state.failed = None;
+    state.retained_error = None;
+    state.running_serial = Some(plan.serial);
+    let status = AppearanceStatus {
+        requested: plan.requested.clone(),
+        applied: Some(plan.requested),
+        generation: Some(plan.key.generation),
+        revision: Some(plan.revision),
+        character_entity: Some(format!("{:?}", plan.key.character)),
+        body_entity: Some(format!("{:?}", plan.key.body)),
+        ready: true,
+        pending: false,
+        retained: false,
+        error: None,
+    };
+    world.insert_resource(state);
+    world.insert_resource(status);
+    world.resource_mut::<RuntimeStatus>().appearance_error = None;
+}
+pub(super) fn running_observation(
+    world: &World,
+    frame: &AppearanceFrame,
+    requested: &CharacterAppearance,
+    geometry_arrays: bool,
+) -> Result<Value, String> {
+    let state = world.resource::<AppearanceRuntime>();
+    if world
+        .resource::<Assets<StandardMaterial>>()
+        .get(&frame.baseline)
+        .is_none()
+    {
+        return Err("running baseline material asset absent".into());
+    }
+
+    let status = world.resource::<AppearanceStatus>();
+    if !status.ready
+        || status.requested != *requested
+        || status.applied.as_ref() != Some(requested)
+        || status.generation != Some(frame.generation)
+        || status.revision != Some(frame.revision)
+        || state.running_serial != Some(frame.serial)
+        || state.key.as_ref()
+            != Some(&Key::new(
+                frame,
+                requested.b1_set(),
+                requested.b1_flags().unwrap_or((false, false, false)),
+            ))
+    {
+        return Err("running appearance publication identity changed".into());
+    }
+    if state.skin.is_none()
+        && world
+            .get::<MeshMaterial3d<StandardMaterial>>(frame.body)
+            .is_none_or(|m| m.0 != frame.baseline)
+    {
+        return Err("running baseline material binding changed".into());
+    }
+    if geometry_arrays {
+        validate_retained_snapshot(world, state, frame)?;
+    }
+    let skin = state
+        .skin
+        .as_ref()
+        .map(|s| observe_skin(world, s, geometry_arrays))
+        .transpose()?;
+    let mut accessories = Vec::new();
+    for live in &state.live {
+        let (_, handle, positions, normals) = state
+            .running_buffers
+            .iter()
+            .find(|(e, _, _, _)| *e == live.entity)
+            .ok_or("running accessory publication buffers absent")?;
+        let mesh = world
+            .resource::<Assets<Mesh>>()
+            .get(handle)
+            .ok_or("running accessory buffers absent")?;
+        if *handle != live.mesh
+            || !matches!(mesh.attribute(Mesh::ATTRIBUTE_POSITION),Some(VertexAttributeValues::Float32x3(v)) if v==positions)
+            || !matches!(mesh.attribute(Mesh::ATTRIBUTE_NORMAL),Some(VertexAttributeValues::Float32x3(v)) if v==normals)
+            || !matches!(mesh.attribute(Mesh::ATTRIBUTE_UV_0),Some(VertexAttributeValues::Float32x2(v)) if v==&live.obj.uv)
+            || mesh.indices().map(|i| i.iter().collect::<Vec<_>>())
+                != Some(live.obj.indices.iter().map(|i| *i as usize).collect())
+        {
+            return Err("running accessory buffers changed since publication".into());
+        }
+        let mut item = observe_live(world, live, geometry_arrays)?;
+        let transform = world
+            .get::<GlobalTransform>(live.entity)
+            .ok_or("running accessory transform absent")?
+            .to_matrix();
+        if transform != frame.placement
+            || world
+                .get::<Transform>(live.entity)
+                .is_none_or(|local| local.to_matrix() != transform)
+        {
+            return Err("running accessory placement differs from body".into());
+        }
+        item["display_transform"] = json!(transform.to_cols_array());
+        if geometry_arrays {
+            let mesh = world
+                .resource::<Assets<Mesh>>()
+                .get(&live.mesh)
+                .ok_or("running accessory mesh absent")?;
+            item["positions"] = json!(match mesh.attribute(Mesh::ATTRIBUTE_POSITION) {
+                Some(VertexAttributeValues::Float32x3(v)) => v,
+                _ => return Err("running accessory positions absent".into()),
+            });
+            item["normals"] = json!(match mesh.attribute(Mesh::ATTRIBUTE_NORMAL) {
+                Some(VertexAttributeValues::Float32x3(v)) => v,
+                _ => return Err("running accessory normals absent".into()),
+            });
+        }
+        accessories.push(item);
+    }
+    Ok(json!({"requested":requested,"serial":frame.serial,"skin":skin,"accessories":accessories}))
 }

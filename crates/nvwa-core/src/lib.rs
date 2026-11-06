@@ -3,6 +3,7 @@
 
 mod appearance;
 mod asset;
+pub mod running;
 pub use appearance::*;
 mod b1;
 pub use b1::*;
@@ -613,7 +614,7 @@ impl SceneDocument {
                 start_seconds: 0.0,
                 duration_seconds: clip.duration_seconds,
                 speed: 1.0,
-                looping: true,
+                looping: !profile.backend.is_b1_running(),
             }];
         }
         let document = Self {
@@ -733,6 +734,9 @@ impl SceneDocument {
                     format!("timeline entries {} and {} overlap", pair[0].id, pair[1].id),
                 ));
             }
+        }
+        if self.profile.backend.is_b1_running() {
+            running::validate(self)?;
         }
         Ok(())
     }

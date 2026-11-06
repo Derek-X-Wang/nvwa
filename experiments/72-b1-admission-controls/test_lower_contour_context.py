@@ -21,6 +21,17 @@ class LowerContourContext(unittest.TestCase):
         cls.old = runner.admitted_source_contexts(cls.pins)
         cls.contexts = runner.current_source_contexts(cls.pins)
         cls.maps = dict(cls.contexts)
+        global ROOT
+        live = ROOT
+        cls.temporary = tempfile.TemporaryDirectory(prefix='nvwa72-pre-running-')
+        cls.addClassCleanup(cls.temporary.cleanup)
+        ROOT = Path(cls.temporary.name)
+        cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
+        retained = runner.pre_running_sources(cls.pins)
+        for name in cls.pins['files']:
+            path = ROOT / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(retained[name] if name in retained else (live / name).read_bytes())
 
     def test_actual_current_complete17_and_preserved_five_context_fixture(self):
         self.assertEqual(len(self.old), 5)

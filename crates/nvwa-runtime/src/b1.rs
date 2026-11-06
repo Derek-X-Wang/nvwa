@@ -112,6 +112,9 @@ struct Part {
     source_mesh: Handle<Mesh>,
 }
 struct Session {
+    running: bool,
+    running_pose_backup: Option<Vec<(Entity, Transform, GlobalTransform)>>,
+    running_buffers: Vec<running::RunningBuffers>,
     character: Entity,
     template: Handle<CharacterTemplate>,
     parts: Vec<Part>,
@@ -359,6 +362,11 @@ fn discard(world: &mut World, candidate: Candidate) {
 fn fail(world: &mut World, runtime: &mut B1Runtime, error: String) {
     if let Some(candidate) = runtime.candidate.take() {
         runtime.last_failed = Some((candidate.request, Selection::from_doc(&candidate.document)));
+        if candidate.document.profile.backend.is_b1_running() {
+            let mut playback = world.resource_mut::<Playback>();
+            playback.playing = false;
+            playback.error = Some(error.clone());
+        }
         if candidate.is_open {
             let mut editor = world.resource_mut::<EditorState>();
             if editor.open_request_sequence == candidate.request {
@@ -371,6 +379,14 @@ fn fail(world: &mut World, runtime: &mut B1Runtime, error: String) {
                     "B1 candidate rejected · current Work preserved".into();
             }
         } else {
+            if candidate.document.profile.backend.is_b1_running() {
+                let mut a = world.resource_mut::<super::appearance::AppearanceStatus>();
+                a.ready = false;
+                a.applied = None;
+                a.pending = false;
+                a.retained = runtime.active.is_some();
+                a.error = Some(error.clone());
+            }
             let mut status = world.resource_mut::<RuntimeStatus>();
             status.error = Some(error);
             status.ready = false;
@@ -447,6 +463,15 @@ fn drive(world: &mut World) {
             }
             status.phase = "Preparing B1 candidate · last CPU frame retained".into();
         }
+        if doc.profile.backend.is_b1_running() && !is_open {
+            let mut appearance = world.resource_mut::<super::appearance::AppearanceStatus>();
+            appearance.requested = doc.character.appearance.clone();
+            appearance.ready = false;
+            appearance.applied = None;
+            appearance.pending = true;
+            appearance.retained = runtime.active.is_some();
+            appearance.error = None;
+        }
         runtime.candidate = Some(Candidate {
             document: doc,
             request,
@@ -521,7 +546,12 @@ fn drive(world: &mut World) {
             .resource::<EditorState>()
             .visible_document()
             .map_or(1.0, |d| d.character.scale);
-        for (entity, base) in active.displays.iter().zip(&active.display_transforms) {
+        for (entity, base) in active
+            .displays
+            .iter()
+            .zip(&active.display_transforms)
+            .filter(|_| !active.running)
+        {
             if let Some(mut transform) = world.get_mut::<Transform>(*entity) {
                 *transform = *base;
                 transform.translation *= scale;
@@ -661,6 +691,9 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             ))
             .id();
         let mut session = Session {
+            running: c.document.profile.backend.is_b1_running(),
+            running_pose_backup: None,
+            running_buffers: Vec::new(),
             character,
             template: template.clone(),
             parts: Vec::new(),
@@ -972,6 +1005,20 @@ fn publish(world: &mut World) {
                     fail(world, &mut runtime, error);
                 }
                 Ok(()) => {
+                    let running_plan = if c.document.profile.backend.is_b1_running() {
+                        match running::prepare_candidate(world, &mut c) {
+                            Ok(plan) => Some(plan),
+                            Err(error) => {
+                                runtime.candidate = Some(c);
+                                fail(world, &mut runtime, error);
+                                world.insert_resource(runtime);
+                                return;
+                            }
+                        }
+                    } else {
+                        None
+                    };
+                    let committed_doc = c.document.clone();
                     let mut session = c.session.take().unwrap();
                     if c.is_open {
                         // The committed editor and its history change only after both uploads.
@@ -988,6 +1035,14 @@ fn publish(world: &mut World) {
                     let joint_count = session.joint_count;
                     if let Some(old) = runtime.active.replace(session) {
                         cleanup(world, old);
+                    }
+                    if let Some(plan) = running_plan {
+                        running::commit_candidate(
+                            world,
+                            runtime.active.as_ref().unwrap(),
+                            &committed_doc,
+                            plan,
+                        );
                     }
                     let root = world.resource_mut::<CharacterAsset>().root.take();
                     if let Some(root) = root {
@@ -4224,6 +4279,439 @@ mod tests {
         assert_eq!(app.world().resource::<RuntimeStatus>().error, runtime_error);
     }
 
+    fn running_document() -> SceneDocument {
+        let mut d = SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_running()).unwrap();
+        d.character.appearance = nvwa_core::CharacterAppearance::b1_cc0_for_set(
+            &d.profile.backend,
+            nvwa_core::B1AppearanceSet::V4Short01,
+            true,
+            true,
+            true,
+        )
+        .unwrap();
+        d
+    }
+    fn running_app() -> App {
+        let (mut app, dir, _) = motion_app();
+        let version = B1AssetVersion::V4;
+        let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets");
+        dir.insert_asset(
+            Path::new(version.manifest_path()),
+            version.manifest_bytes().to_vec(),
+        );
+        for file in B1AssetManifest::from_bytes_for(version, version.manifest_bytes())
+            .unwrap()
+            .files
+        {
+            let relative = format!("characters/mpfb-b1-v4/{}", file.path);
+            dir.insert_asset(
+                Path::new(&relative),
+                std::fs::read(root.join(&relative)).unwrap(),
+            );
+        }
+        open_ready(&mut app, running_document());
+        app
+    }
+    fn running_physical_frame(app: &mut App) -> serde_json::Value {
+        use bevy::mesh::VertexAttributeValues;
+        let mut q = app.world_mut().query::<(
+            Entity,
+            &Mesh3d,
+            &GlobalTransform,
+            &MeshMaterial3d<StandardMaterial>,
+        )>();
+        let mut out = BTreeMap::new();
+        for (e, mesh, t, material) in q.iter(app.world()) {
+            let Some(mesh) = app.world().resource::<Assets<Mesh>>().get(&mesh.0) else {
+                continue;
+            };
+            let positions = match mesh.attribute(Mesh::ATTRIBUTE_POSITION) {
+                Some(VertexAttributeValues::Float32x3(v)) => serde_json::json!(v),
+                _ => serde_json::Value::Null,
+            };
+            let normals = match mesh.attribute(Mesh::ATTRIBUTE_NORMAL) {
+                Some(VertexAttributeValues::Float32x3(v)) => serde_json::json!(v),
+                _ => serde_json::Value::Null,
+            };
+            out.insert(format!("{e:?}"),serde_json::json!({"positions":positions,"normals":normals,"transform":t.to_matrix().to_cols_array(),"material":format!("{:?}",material.0.id())}));
+        }
+        serde_json::json!(out)
+    }
+    #[test]
+    fn running_observer_reports_nonfinite_seek_errors_and_recovers() {
+        let mut app = running_app();
+        app.world_mut().resource_mut::<Playback>().playing = false;
+        motion_seek(&mut app, 1.0);
+        let initial = b1_running_observation(app.world()).unwrap();
+        assert_eq!(initial["position_seconds"], 1.0);
+        assert_eq!(initial["playing"], false);
+        assert_eq!(initial["ready"], true);
+        assert!(initial["error"].is_null());
+        assert!(b1_frame_snapshot(app.world()).is_ok());
+
+        for (label, rejected, recovery) in [
+            ("NaN", f32::NAN, 1.5),
+            ("positive infinity", f32::INFINITY, 2.0),
+            ("negative infinity", f32::NEG_INFINITY, 2.5),
+        ] {
+            let before = b1_running_observation(app.world()).unwrap();
+            let position = app.world().resource::<Playback>().position_seconds;
+            let physical = running_physical_frame(&mut app);
+            app.world_mut().resource_mut::<Playback>().seek_request = Some(rejected);
+            motion_tick(&mut app, 0.0);
+            {
+                let playback = app.world().resource::<Playback>();
+                assert!(playback.seek_request.is_none(), "{label} must be consumed");
+                assert_eq!(playback.position_seconds, position, "{label}");
+                assert!(!playback.playing, "{label}");
+                assert_eq!(playback.error.as_deref(), Some("Seek time must be finite"));
+            }
+            assert!(app.world().resource::<RuntimeStatus>().ready);
+            assert_eq!(
+                b1_running_observation(app.world()).unwrap_err(),
+                "Seek time must be finite",
+                "{label}: the public observer must preserve the transport rejection"
+            );
+            assert_eq!(physical, running_physical_frame(&mut app), "{label}");
+            assert_eq!(
+                app.world()
+                    .resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .unwrap()
+                    .serial,
+                before["serial"].as_u64().unwrap(),
+                "{label}: rejecting a seek must retain the published frame"
+            );
+
+            motion_seek(&mut app, recovery);
+            let playback = app.world().resource::<Playback>();
+            assert!(playback.error.is_none(), "{label}: valid seek must recover");
+            assert_eq!(playback.position_seconds, recovery);
+            assert!(!playback.playing);
+            let after = b1_running_observation(app.world()).unwrap();
+            assert_eq!(
+                after["position_seconds"].as_f64(),
+                Some(f64::from(recovery))
+            );
+            assert_eq!(after["playing"], false);
+            assert_eq!(after["ready"], true);
+            assert!(after["error"].is_null());
+            assert!(after["serial"].as_u64().unwrap() > before["serial"].as_u64().unwrap());
+            let snapshot = b1_frame_snapshot(app.world()).unwrap();
+            assert_eq!(
+                snapshot["sample"]["position_seconds"].as_f64(),
+                Some(f64::from(recovery))
+            );
+            assert_eq!(snapshot["appearance"]["serial"], after["serial"]);
+            assert_ne!(physical, running_physical_frame(&mut app), "{label}");
+        }
+    }
+
+    #[test]
+    fn running_late_appearance_failure_preserves_a_successfully_translated_complete_frame() {
+        let mut app = running_app();
+        motion_seek(&mut app, 2.0);
+        let header = b1_running_observation(app.world()).unwrap();
+        assert!(
+            header["resolved"]["actor_offset_metres"][2]
+                .as_f64()
+                .unwrap()
+                > 0.5
+        );
+        let before = running_physical_frame(&mut app);
+        let serial = header["serial"].clone();
+        app.world_mut()
+            .insert_resource(crate::appearance::RunningAppearanceFailure);
+        motion_seek(&mut app, 3.0);
+        assert!(b1_frame_snapshot(app.world()).is_err());
+        assert!(b1_running_observation(app.world()).is_err());
+        assert!(crate::appearance_snapshot(app.world_mut()).is_err());
+        assert_eq!(
+            before,
+            running_physical_frame(&mut app),
+            "failed readback must not dispose retained skin/eyes/hair"
+        );
+        assert_eq!(
+            app.world()
+                .resource::<B1Runtime>()
+                .active
+                .as_ref()
+                .unwrap()
+                .serial,
+            serial.as_u64().unwrap()
+        );
+        app.world_mut()
+            .remove_resource::<crate::appearance::RunningAppearanceFailure>();
+        motion_seek(&mut app, 3.0);
+        assert!(b1_frame_snapshot(app.world()).is_ok());
+        assert!(b1_running_observation(app.world()).is_ok());
+    }
+    #[test]
+    fn running_pending_open_failure_and_supersession_keep_prior_visible_roles() {
+        let mut app = running_app();
+        motion_seek(&mut app, 2.0);
+        let before = running_physical_frame(&mut app);
+        let committed = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        app.world_mut()
+            .insert_resource(crate::appearance::RunningAppearanceFailure);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(running_document())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().open_error.is_some()
+        });
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&committed)
+        );
+        assert_eq!(before, running_physical_frame(&mut app));
+        app.world_mut()
+            .remove_resource::<crate::appearance::RunningAppearanceFailure>();
+        let mut next = running_document();
+        next.character
+            .parameters
+            .insert("torso_length".into(), 0.35);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(next)
+            .unwrap();
+        app.update();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(committed.clone())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<EditorState>().pending_open.is_none()
+                && w.resource::<RuntimeStatus>().ready
+        });
+        assert_eq!(
+            app.world().resource::<EditorState>().document(),
+            Some(&committed)
+        );
+        assert!(b1_running_observation(app.world()).is_ok());
+    }
+
+    #[test]
+    fn running_shape_failure_then_latest_seek_and_pause_publish_one_complete_generation() {
+        let mut app = running_app();
+        motion_seek(&mut app, 2.0);
+        let before = running_physical_frame(&mut app);
+        let doc = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .clone();
+        let mut values = doc.character.parameters.clone();
+        values.insert("torso_length".into(), 0.35);
+        app.world_mut()
+            .insert_resource(crate::appearance::RunningAppearanceFailure);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetParameters {
+                character_id: doc.character.id.clone(),
+                values,
+            })
+            .unwrap();
+        until(&mut app, |w| w.resource::<RuntimeStatus>().error.is_some());
+        assert!(!app.world().resource::<Playback>().playing);
+        assert_eq!(before, running_physical_frame(&mut app));
+        assert!(b1_running_observation(app.world()).is_err());
+        assert!(crate::appearance_snapshot(app.world_mut()).is_err());
+        assert_eq!(before, running_physical_frame(&mut app));
+        app.world_mut()
+            .remove_resource::<crate::appearance::RunningAppearanceFailure>();
+        // A newer shape supersedes the failed request; its latest seek/pause own publication.
+        let mut values = doc.character.parameters.clone();
+        values.insert("torso_length".into(), -0.2);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetParameters {
+                character_id: doc.character.id,
+                values,
+            })
+            .unwrap();
+        app.update();
+        {
+            let mut playback = app.world_mut().resource_mut::<Playback>();
+            playback.seek_request = Some(3.0);
+            playback.playing = false;
+        }
+        until(&mut app, |w| b1_running_observation(w).is_ok());
+        let after = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(after["sample"]["position_seconds"], 3.0);
+        assert_eq!(after["sample"]["playing"], false);
+        assert_eq!(after["parameters"]["torso_length"], -0.2_f32);
+        assert_eq!(after["appearance"]["serial"], after["sample"]["serial"]);
+        assert_eq!(
+            after["appearance"]["accessories"].as_array().unwrap().len(),
+            2
+        );
+    }
+
+    #[test]
+    fn running_paused_shape_recovery_preserves_a_later_invalid_seek() {
+        for (invalid_seek, queued_finite_seek) in [(false, false), (true, false), (true, true)] {
+            let mut app = running_app();
+            motion_seek(&mut app, 2.0);
+            let before = running_physical_frame(&mut app);
+            let doc = app
+                .world()
+                .resource::<EditorState>()
+                .document()
+                .unwrap()
+                .clone();
+            let mut values = doc.character.parameters.clone();
+            values.insert("torso_length".into(), 0.35);
+            app.world_mut()
+                .insert_resource(crate::appearance::RunningAppearanceFailure);
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetParameters {
+                    character_id: doc.character.id.clone(),
+                    values,
+                })
+                .unwrap();
+            until(&mut app, |w| w.resource::<RuntimeStatus>().error.is_some());
+            assert!(!app.world().resource::<Playback>().playing);
+            assert_eq!(before, running_physical_frame(&mut app));
+            app.world_mut()
+                .remove_resource::<crate::appearance::RunningAppearanceFailure>();
+            let mut values = doc.character.parameters.clone();
+            values.insert("torso_length".into(), -0.2);
+            app.world_mut()
+                .resource_mut::<EditorState>()
+                .apply(nvwa_core::Command::SetParameters {
+                    character_id: doc.character.id,
+                    values,
+                })
+                .unwrap();
+            if queued_finite_seek {
+                app.world_mut().resource_mut::<Playback>().seek_request = Some(f32::NAN);
+                // Run the real driver before the next skeleton/fit schedule. The fresh
+                // candidate cannot sample yet, but transport must reject and consume NaN.
+                drive(app.world_mut());
+                let playback = app.world().resource::<Playback>();
+                assert!(playback.seek_request.is_none());
+                assert_eq!(playback.error.as_deref(), Some("Seek time must be finite"));
+                let candidate = app
+                    .world()
+                    .resource::<B1Runtime>()
+                    .candidate
+                    .as_ref()
+                    .unwrap();
+                let session = candidate.session.as_ref().unwrap();
+                assert_eq!(session.phase, 0);
+                assert!(session.pending_sample.is_none());
+                assert!(!app.world().resource::<RuntimeStatus>().ready);
+                app.world_mut().resource_mut::<Playback>().seek_request = Some(1.5);
+            } else {
+                app.update();
+                assert!(app.world().resource::<B1Runtime>().candidate.is_some());
+                if invalid_seek {
+                    app.world_mut().resource_mut::<Playback>().seek_request = Some(f32::NAN);
+                }
+            }
+            // Physical publication can recover while a newer transport error remains.
+            until(&mut app, |w| running::resolved_binding(w).is_ok());
+            assert_ne!(before, running_physical_frame(&mut app));
+            let (_, published_doc, _) = running::resolved_binding(app.world()).unwrap();
+            assert_eq!(published_doc.character.parameters["torso_length"], -0.2_f32);
+            let playback = app.world().resource::<Playback>();
+            assert!(!playback.playing);
+            assert!(playback.seek_request.is_none());
+            assert_eq!(
+                playback.position_seconds,
+                if queued_finite_seek { 1.5 } else { 2.0 }
+            );
+            if invalid_seek && !queued_finite_seek {
+                assert_eq!(playback.error.as_deref(), Some("Seek time must be finite"));
+                assert_eq!(
+                    b1_running_observation(app.world()).unwrap_err(),
+                    "Seek time must be finite"
+                );
+                motion_seek(&mut app, 1.5);
+                until(&mut app, |w| b1_running_observation(w).is_ok());
+                assert_eq!(app.world().resource::<Playback>().position_seconds, 1.5);
+            } else {
+                assert!(playback.error.is_none());
+                assert!(b1_running_observation(app.world()).is_ok());
+            }
+            let after = b1_frame_snapshot(app.world()).unwrap();
+            assert_eq!(
+                after["sample"]["position_seconds"],
+                if invalid_seek { 1.5 } else { 2.0 }
+            );
+            assert_eq!(after["parameters"]["torso_length"], -0.2_f32);
+            assert_eq!(after["appearance"]["serial"], after["sample"]["serial"]);
+        }
+    }
+
+    #[test]
+    fn running_role_replacement_failure_retains_every_role_and_readback_rejects_tampering() {
+        let mut app = running_app();
+        motion_seek(&mut app, 2.0);
+        let before = running_physical_frame(&mut app);
+        let id = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .id
+            .clone();
+        app.world_mut()
+            .insert_resource(crate::appearance::RunningAppearanceFailure);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::SetAppearance {
+                character_id: id,
+                appearance: nvwa_core::CharacterAppearance::None,
+            })
+            .unwrap();
+        motion_tick(&mut app, 0.0);
+        assert!(b1_running_observation(app.world()).is_err());
+        assert!(crate::appearance_snapshot(app.world_mut()).is_err());
+        assert_eq!(before, running_physical_frame(&mut app));
+        app.world_mut()
+            .remove_resource::<crate::appearance::RunningAppearanceFailure>();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(nvwa_core::Command::Undo)
+            .unwrap();
+        motion_tick(&mut app, 0.0);
+        let snapshot = b1_frame_snapshot(app.world()).unwrap();
+        let eye_name = snapshot["appearance"]["accessories"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|role| role["name"] == "eyes")
+            .unwrap()["entity"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        let mut q = app.world_mut().query::<(Entity, &Transform)>();
+        let eye = q
+            .iter(app.world())
+            .find(|(e, _)| format!("{e:?}") == eye_name)
+            .unwrap()
+            .0;
+        app.world_mut()
+            .get_mut::<Transform>(eye)
+            .unwrap()
+            .translation
+            .z += 0.01;
+        assert!(b1_running_observation(app.world()).is_err());
+        assert!(b1_frame_snapshot(app.world()).is_err());
+    }
+
     include!("b1_contour_tests.rs");
     include!("b1_lower_contour_tests.rs");
 
@@ -4241,15 +4729,29 @@ struct FrameSample {
     timeline_id: String,
     position: f32,
     source: f32,
+    running_source: Option<f64>,
     diagnostic: String,
 }
 fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
+    if doc.profile.backend.is_b1_running() {
+        let r = nvwa_core::running::resolve(doc, position)
+            .expect("validated finite running timeline and transport");
+        return FrameSample {
+            clip_id: r.clip_id,
+            timeline_id: r.timeline_id,
+            position: r.position_seconds,
+            source: r.source_seconds as f32,
+            running_source: Some(r.source_seconds),
+            diagnostic: doc.character.diagnostic_pose.clone().unwrap_or_default(),
+        };
+    }
     if doc.timeline.is_empty() {
         FrameSample {
             clip_id: String::new(),
             timeline_id: String::new(),
             position: 0.0,
             source: 0.0,
+            running_source: None,
             diagnostic: doc.character.diagnostic_pose.clone().unwrap_or_default(),
         }
     } else if doc.is_single_loop() {
@@ -4258,6 +4760,7 @@ fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
             timeline_id: doc.timeline[0].id.clone(),
             position,
             source: position.rem_euclid(motion::DURATION_SECONDS),
+            running_source: None,
             diagnostic: String::new(),
         }
     } else {
@@ -4267,6 +4770,7 @@ fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
             timeline_id: entry.id.clone(),
             position,
             source,
+            running_source: None,
             diagnostic: String::new(),
         }
     }
@@ -4274,6 +4778,12 @@ fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
 fn sample_pose(sample: &FrameSample) -> Result<DiagnosticPose, String> {
     if sample.clip_id.is_empty() {
         diagnostic_pose(&sample.diagnostic)
+    } else if sample.clip_id == nvwa_core::B1_RUN_CLIP_ID {
+        running::pose(
+            sample
+                .running_source
+                .ok_or("running precise source time absent")?,
+        )
     } else {
         motion::sample(&sample.clip_id, sample.source)
     }
@@ -4425,8 +4935,24 @@ fn animate_active(world: &mut World, runtime: &mut B1Runtime) {
         return;
     };
     let sample = frame_sample(&doc, requested_position(&doc, world.resource::<Playback>()));
-    if active.last_sample.as_ref() == Some(&sample) && active.frame_error.is_none() {
+    if active.last_sample.as_ref() == Some(&sample)
+        && active.frame_error.is_none()
+        && (!active.running
+            || active
+                .published_binding
+                .as_ref()
+                .is_some_and(|b| b.document == doc))
+    {
         return;
+    }
+    if active.running {
+        match running::backup_pose(world, active) {
+            Ok(backup) => active.running_pose_backup = Some(backup),
+            Err(error) => {
+                frame_failure(world, active, error);
+                return;
+            }
+        }
     }
     let result =
         sample_pose(&sample).and_then(|pose| active.rig.as_ref().unwrap().apply(world, &pose));
@@ -4434,7 +4960,12 @@ fn animate_active(world: &mut World, runtime: &mut B1Runtime) {
         Ok(()) => {
             active.pending_sample = Some(sample);
         }
-        Err(error) => frame_failure(world, active, error),
+        Err(error) => {
+            if active.running {
+                running::restore_pose(world, active);
+            }
+            frame_failure(world, active, error)
+        }
     }
 }
 fn frame_failure(world: &mut World, session: &mut Session, error: String) {
@@ -4449,6 +4980,10 @@ fn frame_failure(world: &mut World, session: &mut Session, error: String) {
     status.phase = "B1 frame failed · last displayed frame preserved".into();
 }
 fn publish_active(world: &mut World, runtime: &mut B1Runtime) {
+    if runtime.active.as_ref().is_some_and(|s| s.running) {
+        running::publish(world, runtime);
+        return;
+    }
     let Some(active) = runtime
         .active
         .as_mut()
@@ -4681,8 +5216,15 @@ fn bind_published_frame(world: &World, runtime: &mut B1Runtime) {
             return;
         };
         let mut expected = *base;
-        expected.translation *= doc.character.scale;
-        expected.scale *= doc.character.scale;
+        if active.running {
+            match running::placement(*base, doc, playback.position_seconds) {
+                Ok(t) => expected = t,
+                Err(_) => return,
+            }
+        } else {
+            expected.translation *= doc.character.scale;
+            expected.scale *= doc.character.scale;
+        }
         if !global.to_matrix().abs_diff_eq(expected.to_matrix(), 1e-6) {
             return;
         }
@@ -4786,14 +5328,24 @@ pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
         }
         parts.push(serde_json::json!({"name":part.name,"display_entity":format!("{entity:?}"),"mesh_handle":format!("{:?}",handle.id()),"source_ids":active.source_ids[i],"indices":indices,"positions":positions,"normals":normals,"tangents":tangents,"rest_positions":frame.rest_positions,"rest_normals":frame.rest_normals,"full_joint_influences":frame.full_joint_influences,"model_to_world":frame.model_to_world,"display_transform":transform}));
     }
-    let (left, right) = if sample.clip_id.is_empty() {
+    let (left, right) = if active.running && sample.clip_id == nvwa_core::B1_RUN_CLIP_ID {
+        ("authored_schedule", "authored_schedule")
+    } else if sample.clip_id.is_empty() {
         ("diagnostic", "diagnostic")
     } else {
         motion::contacts(&sample.clip_id, sample.source)?
     };
-    Ok(
-        serde_json::json!({"schema_version":1,"backend":doc.profile.backend,"profile_id":doc.profile.id,"asset_id":active.selection.base.asset_id(),"generation":active.generation,"revision":doc.revision,"parameters":doc.character.parameters,"diagnostic_pose":doc.character.diagnostic_pose,"mode":if sample.clip_id.is_empty(){"diagnostic"}else{"motion"},"sample":{"serial":active.serial,"clip_id":sample.clip_id,"timeline_id":sample.timeline_id,"position_seconds":sample.position,"source_seconds":sample.source,"playing":playback.playing,"completed":playback.completed},"character_entity":format!("{:?}",active.character),"bones":bones,"parts":parts,"contacts":{"left":left,"right":right}}),
-    )
+    let mut value = serde_json::json!({"schema_version":1,"backend":doc.profile.backend,"profile_id":doc.profile.id,"asset_id":active.selection.base.asset_id(),"generation":active.generation,"revision":doc.revision,"parameters":doc.character.parameters,"diagnostic_pose":doc.character.diagnostic_pose,"mode":if sample.clip_id.is_empty(){"diagnostic"}else{"motion"},"sample":{"serial":active.serial,"clip_id":sample.clip_id,"timeline_id":sample.timeline_id,"position_seconds":sample.position,"source_seconds":sample.source,"playing":playback.playing,"completed":playback.completed},"character_entity":format!("{:?}",active.character),"bones":bones,"parts":parts,"contacts":{"left":left,"right":right}});
+    if active.running {
+        let (_, _, resolved) = running::resolved_binding(world)?;
+        let frame = appearance_frame_for_session(world, active, doc.revision)?;
+        value["schema_version"] = serde_json::json!(2);
+        value["running_publication"] = running::observation(world)?;
+        value["resolved_running"] = serde_json::to_value(resolved).map_err(|e| e.to_string())?;
+        value["appearance"] =
+            super::appearance::running_observation(world, &frame, &doc.character.appearance, true)?;
+    }
+    Ok(value)
 }
 
 /// Narrow, current production binding used by saved appearance. Bone frames come
@@ -5003,4 +5555,12 @@ fn appearance_fit_for_session(
         rest,
         uv,
     })
+}
+
+#[path = "b1_running.rs"]
+mod running;
+
+/// Cheap, validated observation of a current running publication. No full mesh serialization.
+pub fn b1_running_observation(world: &World) -> Result<serde_json::Value, String> {
+    running::observation(world)
 }

@@ -31,8 +31,20 @@ class LowerContourContext(unittest.TestCase):
         cls.old = CONTEXT.admitted_source_contexts(EXP, cls.raw, cls.original)
         cls.contexts = CONTEXT.current_source_contexts(EXP, cls.raw, cls.original)
         cls.maps = dict(cls.contexts)
+        global ROOT
+        live = ROOT
+        cls.temporary = tempfile.TemporaryDirectory(prefix='nvwa73-pre-running-')
+        cls.addClassCleanup(cls.temporary.cleanup)
+        ROOT = Path(cls.temporary.name)
+        cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
+        retained = CONTEXT.pre_running_sources(EXP, cls.contexts)
+        for name in cls.original:
+            path = ROOT / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(retained[name] if name in retained else (live / name).read_bytes())
 
-    def gate(self, root=ROOT, exp=EXP):
+    def gate(self, root=None, exp=EXP):
+        root = ROOT if root is None else root
         with patch.object(GATE, 'ROOT', root), patch.object(GATE, 'EXP', exp):
             GATE.SourceContract('test_frozen_source_inputs').test_frozen_source_inputs()
 

@@ -616,3 +616,26 @@ fn hairstyle_options_are_absent_for_v1_and_glb_and_none_keeps_default_policy() {
 include!("contour_ui_tests.rs");
 
 include!("lower_contour_ui_tests.rs");
+
+#[test]
+fn running_new_menu_stages_exact_finite_profile_without_replacing_current_work() {
+    let mut app = StudioHarness::new(egui::vec2(1280.0, 720.0));
+    let before = app.editor.document().unwrap().clone();
+    let output = app.frame(vec![]);
+    let menu = text_rect(&output, "▾");
+    output.drop_without_applying_deltas();
+    app.click(menu.center());
+    let output = app.frame(vec![]);
+    let running = text_rect(&output, "新建跑步人物… / New running character…");
+    output.drop_without_applying_deltas();
+    app.click(running.center());
+    assert_eq!(app.editor.document(), Some(&before));
+    let pending = app.editor.pending_open.as_ref().unwrap();
+    assert_eq!(pending.profile, CharacterProfile::b1_running());
+    assert!(!pending.is_single_loop());
+    assert_eq!(pending.timeline.len(), 1);
+    assert_eq!(pending.timeline[0].clip_id, nvwa_core::B1_RUN_CLIP_ID);
+    assert!(!pending.timeline[0].looping);
+    let saved = pending.to_json().unwrap();
+    assert_eq!(SceneDocument::from_json(&saved).unwrap(), *pending);
+}
