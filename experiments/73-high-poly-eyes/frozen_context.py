@@ -252,3 +252,52 @@ def select_context(actual, contexts):
         if actual == expected:
             return name, expected
     raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, reviewed selector product309, reviewed B1 authoring product309, or reviewed B1 multisegment product309 required')
+
+
+RUNNING_CONTEXT_NAME = 'source-context-b1-running-v1.json'
+RUNNING_CONTEXT_SHA = 'bfe4866e3fa733a949a5b096300b8dc88ff48bda4545f2e8c3e7c8131ce10f7e'
+RUNNING_BASELINES_NAME = 'fixtures/b1-running-predecessor-baselines.json'
+RUNNING_BASELINES_SHA = '3dccb28db161e75b780872118a5c548171e643f00d72cc6c2d3f59ad2afdae05'
+RUNNING_ADDITIONS = ('crates/nvwa-cli/tests/running.rs', 'crates/nvwa-core/src/running.rs', 'crates/nvwa-runtime/src/b1_running.rs', 'crates/nvwa-runtime/src/b1_running_controls.json', 'docs/b1-running-contract.md')
+
+
+def running_source_context(exp, raw, original):
+    """Authenticate a separate complete314 map; never alter original309."""
+    current_source_contexts(exp, raw, original)
+    data = regular_file(exp, RUNNING_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == RUNNING_CONTEXT_SHA, 'running context manifest identity mismatch')
+    value = json.loads(data)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'source_freeze_sha256', 'files'}
+            and value['schema_version'] == 1 and value['context'] == 'b1-running-product-v1'
+            and value['predecessor'] == 'b1-lower-face-squareness-product-v1'
+            and value['source_freeze_sha256'] == 'ecc815dac0c868d1f3597324c2ca10b5f021199e87007c71fbf0cd4c33647044'
+            and set(value['files']) == set(original) | set(RUNNING_ADDITIONS)
+            and len(value['files']) == 314, 'running complete source union required')
+    pre_running_sources(exp, current_source_contexts(exp, raw, original))
+    return value['context'], value['files']
+
+
+def pre_running_sources(exp, contexts):
+    """Retain only replaced lower source; old gates still use current checker."""
+    data = regular_file(exp, RUNNING_BASELINES_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == RUNNING_BASELINES_SHA, 'pre-running manifest identity mismatch')
+    value = json.loads(data)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == 'b1-lower-face-squareness-product-v1'
+            and value['source_commit'] == '9251712313a3779bf4f0a4a854755a16f1a5df16', 'pre-running identity mismatch')
+    expected = dict(contexts)[value['context']]
+    result = {}
+    for name, item in value['files'].items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/b1-running-predecessor-baselines/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == expected[name],
+                'pre-running historical pin mismatch: ' + name)
+        data = regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected[name],
+                'pre-running bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / 'fixtures/b1-running-predecessor-baselines').rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(exp)) for p in paths if p.is_file()}
+                == {i['fixture'] for i in value['files'].values()}, 'pre-running fixture inventory mismatch')
+    return result

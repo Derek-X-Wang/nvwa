@@ -3,6 +3,8 @@ use crate::{CharacterProfile, ClipSpec, CoreError, ParameterSpec, Result, parse_
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
+pub const B1_RUNNING_PROFILE_ID: &str = "nvwa-mpfb-b1-running-v1";
+pub const B1_RUN_CLIP_ID: &str = "b1_run_forward_authored_v1";
 pub const B1_PROFILE_ID: &str = "nvwa-mpfb-b1-v1";
 pub const B1_MOTION_PROFILE_ID: &str = "nvwa-mpfb-b1-motion-v1";
 pub const B1_MOTION_CLIPS: [&str; 2] = ["b1_arm_rehearsal_v1", "b1_knee_flex_v1"];
@@ -241,7 +243,10 @@ impl CharacterBackend {
                 schema_version: 2..=5,
                 ..
             }
-        )
+        ) || self.is_b1_running()
+    }
+    pub fn is_b1_running(&self) -> bool {
+        matches!(self, Self::B1Cpu { schema_version: 6, asset_id } if asset_id == B1_V4_ASSET_ID)
     }
     pub fn b1_asset_version(&self) -> Option<B1AssetVersion> {
         match self {
@@ -258,7 +263,7 @@ impl CharacterBackend {
                 asset_id,
             } if asset_id == B1_V3_ASSET_ID => Some(B1AssetVersion::V3),
             Self::B1Cpu {
-                schema_version: 5,
+                schema_version: 5 | 6,
                 asset_id,
             } if asset_id == B1_V4_ASSET_ID => Some(B1AssetVersion::V4),
             _ => None,
@@ -274,7 +279,7 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 && !(matches!(version, 2..=5) && self.is_b1()) {
+        if version != 1 && !(matches!(version, 2..=6) && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported"),
@@ -399,6 +404,25 @@ impl CharacterProfile {
         });
         profile
     }
+    /// New immutable finite running profile on the exact existing V4 asset set.
+    pub fn b1_running() -> Self {
+        let mut profile = Self::b1_character_lower_contour();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 6,
+            asset_id: B1_V4_ASSET_ID.into(),
+        };
+        profile.id = B1_RUNNING_PROFILE_ID.into();
+        // Retain the exact old ClipSpec records, including inert indices.
+        profile.clips.insert(
+            0,
+            ClipSpec {
+                id: B1_RUN_CLIP_ID.into(),
+                animation_index: 2,
+                duration_seconds: crate::running::SOURCE_SECONDS as f32,
+            },
+        );
+        profile
+    }
     pub(crate) fn validate_b1(&self) -> Result<()> {
         if (self.id == B1_PROFILE_ID && self.backend.is_b1_motion())
             || (self.id == B1_MOTION_PROFILE_ID && !self.backend.is_b1_motion())
@@ -408,7 +432,9 @@ impl CharacterProfile {
                 "B1 backend version does not match its canonical profile identity",
             ));
         }
-        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V4) {
+        let canonical = if self.backend.is_b1_running() {
+            Self::b1_running()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V4) {
             Self::b1_character_lower_contour()
         } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V3) {
             Self::b1_character_contour()

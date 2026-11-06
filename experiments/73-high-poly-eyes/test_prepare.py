@@ -1,6 +1,6 @@
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
-from frozen_context import current_source_contexts as source_contexts,select_context,historical_sources
+from frozen_context import current_source_contexts as source_contexts,select_context,historical_sources,running_source_context,RUNNING_ADDITIONS
 ROOT=Path(__file__).resolve().parents[2];EXP=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('cpu_probe',EXP/'cpu_probe.py');probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -76,15 +76,32 @@ class SourceContract(unittest.TestCase):
     path=path/part;self.assertFalse(path.is_symlink(),message+' symlink rejected')
    self.assertTrue((ROOT/name).is_file(),message+' file is required')
    actual[name]={'sha256':digest(ROOT/name),'bytes':(ROOT/name).stat().st_size}
-  try:context,selected=select_context(actual,source_contexts(EXP,p.read_bytes(),inputs))
-  except ValueError as error:self.fail(str(error))
-  if context == 'b1-lower-face-squareness-product-v1':
-   self.assertEqual(set(selected),set(inputs),'FROZEN-INPUTS.json exact original source paths required')
-  else:
-   if context in ('b1-multisegment-product-v1','b1-cheek-fullness-product-v1'):self.assertEqual(set(selected),set(inputs),'FROZEN-INPUTS.json exact original source paths required')
+  try:
+   contexts=source_contexts(EXP,p.read_bytes(),inputs)
+   if any(actual == expected for _,expected in contexts):
+    self.assertFalse(any((ROOT/name).exists() or (ROOT/name).is_symlink() for name in RUNNING_ADDITIONS),'FROZEN-INPUTS.json running additions in historical context')
+    context,selected=select_context(actual,contexts)
    else:
-    self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1','hair79-selector-product-v1','b1-motion-authoring-product-v1'])
-  self.assertEqual(len(selected),309,'FROZEN-INPUTS.json complete source set required')
+    running,expected=running_source_context(EXP,p.read_bytes(),inputs)
+    for name in RUNNING_ADDITIONS:
+     path=ROOT
+     for part in Path(name).parts:
+      path=path/part;self.assertFalse(path.is_symlink(),'FROZEN-INPUTS.json running input symlink rejected')
+     self.assertTrue(path.is_file(),'FROZEN-INPUTS.json running input required: '+name)
+     actual[name]={'bytes':path.stat().st_size,'sha256':digest(path)}
+    context,selected=select_context(actual,[(running,expected)])
+  except ValueError as error:self.fail(str(error))
+  if context == 'b1-running-product-v1':
+   self.assertEqual(set(selected),set(inputs)|set(RUNNING_ADDITIONS),'FROZEN-INPUTS.json running complete source paths required')
+   self.assertEqual(len(selected),314,'FROZEN-INPUTS.json running complete source set required')
+  else:
+   if context == 'b1-lower-face-squareness-product-v1':
+    self.assertEqual(set(selected),set(inputs),'FROZEN-INPUTS.json exact original source paths required')
+   else:
+    if context in ('b1-multisegment-product-v1','b1-cheek-fullness-product-v1'):self.assertEqual(set(selected),set(inputs),'FROZEN-INPUTS.json exact original source paths required')
+    else:
+     self.assertIn(context,['original-frozen309','character-stage-closeout-v1','hair79-short01-product-v1','hair79-selector-product-v1','b1-motion-authoring-product-v1'])
+   self.assertEqual(len(selected),309,'FROZEN-INPUTS.json complete source set required')
   for name,item in selected.items():
    message=f'FROZEN-INPUTS.json entry {name}'
    self.assertEqual(digest(ROOT/name),item['sha256'],message+' SHA256 mismatch')

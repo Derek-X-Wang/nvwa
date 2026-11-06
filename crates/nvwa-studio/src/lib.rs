@@ -718,6 +718,7 @@ fn draw_editor_ui(
     let mut new_b1 = false;
     let mut new_contour = false;
     let mut new_lower_contour = false;
+    let mut new_running = false;
     let mut command = None;
     let mut preview: Option<BTreeMap<String, f32>> = None;
     let mut commit_drag = false;
@@ -747,6 +748,14 @@ fn draw_editor_ui(
             }
             ui.add_enabled_ui(!io.busy(), |ui| {
                 ui.menu_button("▾", |ui| {
+                    if ui
+                        .button("新建跑步人物… / New running character…")
+                        .clicked()
+                    {
+                        new_running = true;
+                        ui.close();
+                    }
+
                     if ui
                         .button("新建脸颊人物… / New character + cheek fullness…")
                         .clicked()
@@ -994,8 +1003,14 @@ fn draw_editor_ui(
                         for clip in &doc.profile.clips {
                             if ui
                                 .selectable_label(
-                                    doc.is_single_loop() && doc.timeline[0].clip_id == clip.id,
-                                    if clip.id == "b1_arm_rehearsal_v1" {
+                                    (doc.is_single_loop()
+                                        || (doc.profile.backend.is_b1_running()
+                                            && doc.timeline.len() == 1
+                                            && doc.timeline[0].start_seconds == 0.0))
+                                        && doc.timeline[0].clip_id == clip.id,
+                                    if clip.id == nvwa_core::B1_RUN_CLIP_ID {
+                                        "Forward run · authored"
+                                    } else if clip.id == "b1_arm_rehearsal_v1" {
                                         "Arm rehearsal · authored"
                                     } else if clip.id == "b1_knee_flex_v1" {
                                         "Knee flex · authored"
@@ -1012,7 +1027,7 @@ fn draw_editor_ui(
                                         start_seconds: 0.0,
                                         duration_seconds: clip.duration_seconds,
                                         speed: 1.0,
-                                        looping: true,
+                                        looping: !doc.profile.backend.is_b1_running(),
                                     }],
                                 });
                             }
@@ -1235,8 +1250,10 @@ fn draw_editor_ui(
     state.stage = stage_ui;
     state.save_notice = save_notice;
     *playback = next_playback;
-    if new_b1 || new_contour || new_lower_contour {
-        let profile = if new_lower_contour {
+    if new_b1 || new_contour || new_lower_contour || new_running {
+        let profile = if new_running {
+            nvwa_core::CharacterProfile::b1_running()
+        } else if new_lower_contour {
             nvwa_core::CharacterProfile::b1_character_lower_contour()
         } else if new_contour {
             nvwa_core::CharacterProfile::b1_character_contour()
