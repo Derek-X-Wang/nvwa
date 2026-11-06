@@ -4,6 +4,7 @@ import importlib.util
 import itertools
 import math
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -615,6 +616,69 @@ class FrozenInputGate(unittest.TestCase):
                     self.gate(self.raw, rejects=True)
         finally:
             path.write_bytes(original)
+
+
+class StandaloneRunningAuthentication(unittest.TestCase):
+    def test_each_call_reauthenticates_manifests_and_fixtures_and_restores(self):
+        # Reuse the same path and original map across independent calls. A cache
+        # of previously authenticated paths/maps must not admit changed bytes.
+        raw = (EXP / 'FROZEN-INPUTS.json').read_bytes()
+        original = json.loads(raw)
+        manifests = (CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME,
+                     CONTEXT.SELECTOR_CONTEXT_NAME, CONTEXT.AUTHORING_CONTEXT_NAME,
+                     CONTEXT.MULTISEGMENT_CONTEXT_NAME, CONTEXT.FIXTURES_NAME,
+                     CONTEXT.CHEEK_BASELINES_NAME, CONTEXT.CHEEK_CONTEXT_NAME,
+                     CONTEXT.LOWER_BASELINES_NAME, CONTEXT.LOWER_CONTEXT_NAME,
+                     CONTEXT.RUNNING_CONTEXT_NAME, CONTEXT.RUNNING_BASELINES_NAME)
+        historical = json.loads((EXP / CONTEXT.FIXTURES_NAME).read_bytes())
+        fixtures = [next(iter(next(iter(historical['contexts'].values())).values()))['fixture'],
+                    *CONTEXT.AUTHORING_BASELINES.values(),
+                    *CONTEXT.MULTISEGMENT_BASELINES.values()]
+        for name in (CONTEXT.CHEEK_BASELINES_NAME, CONTEXT.LOWER_BASELINES_NAME,
+                     CONTEXT.RUNNING_BASELINES_NAME):
+            fixtures.append(next(iter(json.loads((EXP / name).read_bytes())['files'].values()))['fixture'])
+        with tempfile.TemporaryDirectory(prefix='nvwa73-standalone-auth-') as directory:
+            exp = Path(directory) / 'experiment'
+            exp.mkdir()
+            for name in manifests:
+                if not name.startswith('fixtures/'):
+                    shutil.copyfile(EXP / name, exp / name)
+            shutil.copytree(EXP / 'fixtures', exp / 'fixtures')
+
+            def accepts():
+                name, files = CONTEXT.running_source_context(exp, raw, original)
+                self.assertEqual(name, 'b1-running-product-v1')
+                self.assertEqual(len(files), 314)
+                self.assertEqual(set(files), set(original) | set(CONTEXT.RUNNING_ADDITIONS))
+
+            accepts()
+            for relative in (*manifests, *fixtures):
+                path = exp / relative
+                saved = path.read_bytes()
+                stamp = path.stat()
+                target = Path(directory) / 'preserved-input'
+                target.write_bytes(saved)
+                os.utime(target, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
+                for fault in ('same-size', 'symlink'):
+                    with self.subTest(path=relative, fault=fault):
+                        try:
+                            if fault == 'same-size':
+                                path.write_bytes(bytes([saved[0] ^ 1]) + saved[1:])
+                                os.utime(path, ns=(stamp.st_atime_ns, stamp.st_mtime_ns))
+                                self.assertEqual(path.stat().st_size, len(saved))
+                                self.assertEqual(path.stat().st_mtime_ns, stamp.st_mtime_ns)
+                            else:
+                                path.unlink()
+                                path.symlink_to(target)
+                            with self.assertRaisesRegex(ValueError, 'source context'):
+                                CONTEXT.running_source_context(exp, raw, original)
+                        finally:
+                            if path.exists() or path.is_symlink():
+                                path.unlink()
+                            path.write_bytes(saved)
+                        self.assertFalse(path.is_symlink())
+                        self.assertEqual(path.read_bytes(), saved)
+                        accepts()
 
 
 if __name__ == '__main__':

@@ -50,6 +50,17 @@ class RunningContext(unittest.TestCase):
         with patch.object(ENTRY, 'ROOT', root), patch.object(ENTRY, 'EXP', exp):
             ENTRY.SourceContract('test_frozen_source_inputs').test_frozen_source_inputs()
 
+    def test_each_running_gate_authenticates_the_context_chain_once(self):
+        # Instrument both the entry alias and the public helper's module global.
+        # Real reject/restore controls below remain independent of this count.
+        module = sys.modules[ENTRY.source_contexts.__module__]
+        authenticate = module.current_source_contexts
+        with patch.object(module, 'current_source_contexts', wraps=authenticate) as calls:
+            with patch.object(ENTRY, 'source_contexts', calls):
+                for invocation in (1, 2):
+                    self.gate()
+                    self.assertEqual(calls.call_count, invocation)
+
     def test_current_union_and_preserved_historical_cohorts(self):
         self.gate()
         self.assertEqual(len(self.original), 309)

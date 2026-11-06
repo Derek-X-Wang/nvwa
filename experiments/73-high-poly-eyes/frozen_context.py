@@ -263,7 +263,12 @@ RUNNING_ADDITIONS = ('crates/nvwa-cli/tests/running.rs', 'crates/nvwa-core/src/r
 
 def running_source_context(exp, raw, original):
     """Authenticate a separate complete314 map; never alter original309."""
-    current_source_contexts(exp, raw, original)
+    contexts = current_source_contexts(exp, raw, original)
+    return _running_source_context(exp, original, contexts)
+
+
+def _running_source_context(exp, original, contexts):
+    """Continue only with the context chain authenticated by this invocation."""
     data = regular_file(exp, RUNNING_CONTEXT_NAME).read_bytes()
     require(hashlib.sha256(data).hexdigest() == RUNNING_CONTEXT_SHA, 'running context manifest identity mismatch')
     value = json.loads(data)
@@ -273,7 +278,7 @@ def running_source_context(exp, raw, original):
             and value['source_freeze_sha256'] == 'ecc815dac0c868d1f3597324c2ca10b5f021199e87007c71fbf0cd4c33647044'
             and set(value['files']) == set(original) | set(RUNNING_ADDITIONS)
             and len(value['files']) == 314, 'running complete source union required')
-    pre_running_sources(exp, current_source_contexts(exp, raw, original))
+    pre_running_sources(exp, contexts)
     return value['context'], value['files']
 
 
