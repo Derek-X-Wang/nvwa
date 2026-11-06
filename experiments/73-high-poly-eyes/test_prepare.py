@@ -1,6 +1,6 @@
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
-from frozen_context import current_source_contexts as source_contexts,select_context,historical_sources,running_source_context,RUNNING_ADDITIONS
+from frozen_context import current_source_contexts as source_contexts,select_context,historical_sources,_running_source_context,RUNNING_ADDITIONS
 ROOT=Path(__file__).resolve().parents[2];EXP=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('cpu_probe',EXP/'cpu_probe.py');probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -82,7 +82,7 @@ class SourceContract(unittest.TestCase):
     self.assertFalse(any((ROOT/name).exists() or (ROOT/name).is_symlink() for name in RUNNING_ADDITIONS),'FROZEN-INPUTS.json running additions in historical context')
     context,selected=select_context(actual,contexts)
    else:
-    running,expected=running_source_context(EXP,p.read_bytes(),inputs)
+    running,expected=_running_source_context(EXP,inputs,contexts)
     for name in RUNNING_ADDITIONS:
      path=ROOT
      for part in Path(name).parts:
