@@ -396,3 +396,13 @@ cases or optimize test cost. Classify any other new failure before further
 work. A failed bounded attempt requires an explicit choice between continued
 HOLD and a separately approved test-cost design task; do not start it
 automatically.
+
+### Motion query release budget
+
+Derek approved a 20-minute limit for the named eye, hair, and character
+parameter step in this release. The portable job has a 25-minute limit.
+[PR #144's original run](https://github.com/Derek-X-Wang/nvwa/actions/runs/42499833790)
+timed out in optimized mode at the previous limit. The four policy controls
+continue to require the exact named step and to restore its historical
+three-minute value for retained checks. A repeat timeout pauses publication
+for a new decision.
