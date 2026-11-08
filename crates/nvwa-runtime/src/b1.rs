@@ -35,6 +35,9 @@ use std::{
     path::Path,
 };
 
+#[cfg(feature = "cpu-render")]
+pub mod cpu_render;
+
 const SOURCE: &str = "nvwa-b1-verified";
 const TARGETS: [&str; 4] = [
     "torso-scale-vert-decr",
@@ -5280,12 +5283,27 @@ fn published_motion_frame(
     Ok((active, doc, sample, binding))
 }
 
-/// Read successful production bones and actual uploaded mesh buffers. Explicit QA only.
-/// Matrices are column-major; fitted/model arrays use metres, transforms map to stage/world.
-pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
+// One validated view of the published production geometry. QA and CPU export
+// share these checks; neither path resamples or reconstructs the character.
+struct PublishedCpuPart {
+    name: &'static str,
+    entity: Entity,
+    mesh: Handle<Mesh>,
+    source_ids: Vec<u16>,
+    indices: Vec<usize>,
+    frame: nvwa_b1_adapter::SkinFrame,
+    transform: [f32; 16],
+}
+struct PublishedCpuFrame<'a> {
+    active: &'a Session,
+    doc: &'a SceneDocument,
+    sample: &'a FrameSample,
+    bones: Vec<BoneFrame>,
+    parts: Vec<PublishedCpuPart>,
+}
+fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
     use bevy::mesh::VertexAttributeValues;
     let (active, doc, sample, binding) = published_motion_frame(world)?;
-    let playback = world.resource::<Playback>();
     let bones = active
         .rig
         .as_ref()
@@ -5337,8 +5355,40 @@ pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
         if binding.display_transforms.get(i) != Some(&transform) {
             return Err("B1 presentation changed since frame publication".into());
         }
-        parts.push(serde_json::json!({"name":part.name,"display_entity":format!("{entity:?}"),"mesh_handle":format!("{:?}",handle.id()),"source_ids":active.source_ids[i],"indices":indices,"positions":positions,"normals":normals,"tangents":tangents,"rest_positions":frame.rest_positions,"rest_normals":frame.rest_normals,"full_joint_influences":frame.full_joint_influences,"model_to_world":frame.model_to_world,"display_transform":transform}));
+        parts.push(PublishedCpuPart {
+            name: part.name,
+            entity,
+            mesh: handle.clone(),
+            source_ids: active.source_ids[i].clone(),
+            indices,
+            frame,
+            transform,
+        });
     }
+    Ok(PublishedCpuFrame {
+        active,
+        doc,
+        sample,
+        bones,
+        parts,
+    })
+}
+
+/// Read successful production bones and actual uploaded mesh buffers. Explicit QA only.
+/// Matrices are column-major; fitted/model arrays use metres, transforms map to stage/world.
+pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
+    let PublishedCpuFrame {
+        active,
+        doc,
+        sample,
+        bones,
+        parts,
+    } = published_cpu_frame(world)?;
+    let playback = world.resource::<Playback>();
+    let parts: Vec<_> = parts.into_iter().map(|part| {
+        let frame = part.frame;
+        serde_json::json!({"name":part.name,"display_entity":format!("{:?}",part.entity),"mesh_handle":format!("{:?}",part.mesh.id()),"source_ids":part.source_ids,"indices":part.indices,"positions":frame.positions,"normals":frame.normals,"tangents":frame.tangents,"rest_positions":frame.rest_positions,"rest_normals":frame.rest_normals,"full_joint_influences":frame.full_joint_influences,"model_to_world":frame.model_to_world,"display_transform":part.transform})
+    }).collect();
     let (left, right) = if active.running && sample.clip_id == nvwa_core::B1_RUN_CLIP_ID {
         ("authored_schedule", "authored_schedule")
     } else if sample.clip_id.is_empty() {

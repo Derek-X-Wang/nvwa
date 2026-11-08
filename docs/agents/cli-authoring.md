@@ -210,3 +210,11 @@ and hair quality limits remain.
 此版本仍使用 Work schema4，支持既有撤销／重做、Open／Save 和 Web→CLI→Web
 交换，两个既有发型采用新的精确素材绑定。保存后用 `validate <work> <asset-root>`
 和重新加载核对身份与参数。CLI 编辑和保存元数据本身不证明实际画面或拟合通过。
+
+
+## Optional CPU silhouette export
+
+The opt-in `cpu-render` CLI feature exports a static eight-parameter Work using
+the production CPU body/garment meshes and saved perspective camera, without a
+browser or GPU adapter. Read [the supported scope, command and output contract](cpu-render.md).
+This is a silhouette reference mode, not appearance/PBR or motion acceptance.

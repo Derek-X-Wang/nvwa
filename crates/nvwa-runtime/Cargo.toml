@@ -4,6 +4,12 @@ version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 
+[features]
+default = []
+# Winit is in the existing shared dependency graph. Its Linux backend is linked
+# but never initialized by the windowless CPU runner.
+cpu-render = ["bevy/x11"]
+
 [dependencies]
 bevy.workspace = true
 nvwa-core.workspace = true

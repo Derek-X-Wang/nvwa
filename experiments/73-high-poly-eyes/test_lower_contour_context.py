@@ -37,7 +37,8 @@ class LowerContourContext(unittest.TestCase):
         cls.addClassCleanup(cls.temporary.cleanup)
         ROOT = Path(cls.temporary.name)
         cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
-        retained = (CONTEXT.pre_motion_query_sources(EXP, cls.raw, cls.original)
+        retained = (CONTEXT.pre_cpu_sources(EXP, cls.raw, cls.original)
+                    | CONTEXT.pre_motion_query_sources(EXP, cls.raw, cls.original)
                     | CONTEXT.pre_running_sources(EXP, cls.contexts))
         for name in cls.original:
             path = ROOT / name

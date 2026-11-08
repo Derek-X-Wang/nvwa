@@ -58,6 +58,30 @@ fn camera_transform(camera: &StageCamera, scale: f32) -> Transform {
     )
     .looking_at(target, Vec3::Y)
 }
+pub(super) fn camera_geometry(
+    camera: &StageCamera,
+    scale: f32,
+) -> Result<(Transform, f32, f32), String> {
+    if !(0.001..=100.0).contains(&scale) {
+        return Err(format!(
+            "Stage camera cannot represent character scale {scale}; supported presentation scale is 0.001..=100. Work is unchanged."
+        ));
+    }
+    let transform = camera_transform(camera, scale);
+    let near = 0.05 * scale;
+    let far = 250.0 * scale;
+    if !transform.translation.is_finite()
+        || !transform.rotation.is_finite()
+        || !near.is_finite()
+        || !far.is_finite()
+        || near <= 0.0
+        || far <= near
+    {
+        return Err("Stage camera conversion is nonfinite; Work is unchanged.".into());
+    }
+    Ok((transform, near, far))
+}
+
 fn light_transform(light: &StageLight) -> Transform {
     Transform::from_translation(orbit(light.azimuth_degrees, light.elevation_degrees))
         .looking_at(Vec3::ZERO, Vec3::Y)
@@ -180,29 +204,14 @@ pub(super) fn apply_stage(
         status.stage_error = None;
         return;
     }
-    // Restrict only runtime conversion precision, never the portable scale contract.
-    // This fixed stage is not an arbitrary-coordinate-world renderer.
     let scale = document.character.scale;
-    if !(0.001..=100.0).contains(&scale) {
-        status.stage_error = Some(format!(
-            "Stage camera cannot represent character scale {scale}; supported presentation scale is 0.001..=100. Work is unchanged."
-        ));
-        return;
-    }
-    let camera = camera_transform(&stage.camera, scale);
-    let near = 0.05 * scale;
-    let far = 250.0 * scale;
-    if !camera.translation.is_finite()
-        || !camera.rotation.is_finite()
-        || !near.is_finite()
-        || !far.is_finite()
-        || near <= 0.0
-        || far <= near
-    {
-        status.stage_error =
-            Some("Stage camera conversion is nonfinite; Work is unchanged.".into());
-        return;
-    }
+    let (camera, near, far) = match camera_geometry(&stage.camera, scale) {
+        Ok(camera) => camera,
+        Err(error) => {
+            status.stage_error = Some(error);
+            return;
+        }
+    };
     status.stage_error = None;
     clear.0 = color(stage.background_color_srgb);
     ambient.color = color(stage.ambient.color_srgb);

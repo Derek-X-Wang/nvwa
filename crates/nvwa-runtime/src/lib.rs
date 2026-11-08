@@ -3,6 +3,8 @@ mod appearance;
 mod b1;
 pub use appearance::{AppearanceStatus, appearance_snapshot, appearance_status};
 mod stage;
+#[cfg(feature = "cpu-render")]
+pub use b1::cpu_render::{CpuImage, render_silhouette, validate_export_work};
 pub use b1::{
     b1_foot_clearance, b1_frame_snapshot, b1_running_observation, register_b1_asset_source,
 };
