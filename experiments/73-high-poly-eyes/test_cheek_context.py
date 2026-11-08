@@ -34,9 +34,10 @@ class CheekSourceContext(unittest.TestCase):
         cls.maps = dict(cls.contexts)
         cls.pre_contour = CONTEXT.pre_contour_baselines(EXP, cls.old)
         cls.pre_lower = CONTEXT.pre_lower_contour_baselines(EXP, cls.contexts)
+        retained_lock = CONTEXT.pre_motion_query_sources(EXP, cls.raw, cls.original)['Cargo.lock']
         pool = {}
         for name in cls.original:
-            raw = (ROOT / name).read_bytes()
+            raw = retained_lock if name == 'Cargo.lock' else (ROOT / name).read_bytes()
             pool[sha(raw)] = raw
             path = cls.root / name
             path.parent.mkdir(parents=True, exist_ok=True)

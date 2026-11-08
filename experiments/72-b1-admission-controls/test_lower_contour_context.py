@@ -27,7 +27,7 @@ class LowerContourContext(unittest.TestCase):
         cls.addClassCleanup(cls.temporary.cleanup)
         ROOT = Path(cls.temporary.name)
         cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
-        retained = runner.pre_running_sources(cls.pins)
+        retained = runner.pre_motion_query_sources(cls.pins) | runner.pre_running_sources(cls.pins)
         for name in cls.pins['files']:
             path = ROOT / name
             path.parent.mkdir(parents=True, exist_ok=True)
