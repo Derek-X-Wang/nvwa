@@ -49,10 +49,10 @@ BASELINE = {
 }
 
 
-PORTABLE25_HEADER = """  portable:
+PORTABLE30_HEADER = """  portable:
     name: Core, CLI, and diagnostic controls
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 30
 """
 
 
@@ -65,7 +65,7 @@ EYE20_STEP = """      - name: Check eye, hair, and character parameter controls
 
 def historical_eye_budget_workflow(workflow, checks):
     jobs = {}
-    for name, cap in [('portable', '25'), ('native-and-wasm', '75'),
+    for name, cap in [('portable', '30'), ('native-and-wasm', '75'),
                       ('b1-source-regression', '60'), ('native-cache-warm', '60')]:
         blocks = re.findall(r'(?ms)^  '+name+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
         checks.assertEqual(len(blocks), 1, 'required one '+name+' job')
@@ -73,7 +73,7 @@ def historical_eye_budget_workflow(workflow, checks):
                            ['    timeout-minutes: '+cap], 'required unchanged '+name+' cap')
         jobs[name] = blocks[0]
     portable = jobs['portable']
-    checks.assertTrue(portable.startswith(PORTABLE25_HEADER), 'required exact portable job header')
+    checks.assertTrue(portable.startswith(PORTABLE30_HEADER), 'required exact portable job header')
     checks.assertEqual(workflow.count(EYE20_STEP.splitlines(keepends=True)[0]), 1,
                        'required one named eye/hair step')
     checks.assertEqual(portable.count(EYE20_STEP), 1, 'required exact eye/hair 20-minute step')
@@ -128,6 +128,29 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
     def records(self):
         return [line.split("|") for line in self.log.read_text().splitlines()] if self.log.exists() else []
 
+    def test_portable30_exact_budget_rejects_stale_types_and_other_jobs(self):
+        original = (ROOT / '.github/workflows/ci.yml').read_text()
+        historical_eye_budget_workflow(original, self)
+        for cap in ['25', '29', '31', '30.0', '"30"', "'30'", '${{ 30 }}', 'true']:
+            mutant = original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace(
+                '    timeout-minutes: 30\n', '    timeout-minutes: '+cap+'\n'))
+            self.assertNotEqual(mutant, original)
+            with self.subTest(portable_cap=cap), self.assertRaises(AssertionError):
+                historical_eye_budget_workflow(mutant, self)
+        for name, cap in [('native-and-wasm', '75'), ('b1-source-regression', '60'),
+                          ('native-cache-warm', '60')]:
+            block = re.search(r'(?ms)^  '+name+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', original).group()
+            mutant = original.replace(block, block.replace(
+                '    timeout-minutes: '+cap+'\n', '    timeout-minutes: 30\n', 1), 1)
+            self.assertNotEqual(mutant, original)
+            with self.subTest(wrong_job=name), self.assertRaises(AssertionError):
+                historical_eye_budget_workflow(mutant, self)
+        mutant = original.replace(EYE20_STEP, EYE20_STEP.replace(
+            '        timeout-minutes: 20\n', '        timeout-minutes: 30\n'))
+        self.assertNotEqual(mutant, original)
+        with self.assertRaises(AssertionError):
+            historical_eye_budget_workflow(mutant, self)
+
     def test_cheek_asset_checks_are_additive_and_run_in_both_modes(self):
         result = self.call('b1-inputs')
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -178,6 +201,10 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         workflow = (ROOT / ".github/workflows/ci.yml").read_text()
         original = workflow
         workflow = historical_eye_budget_workflow(workflow, self)
+        # The current cap was checked above. Restore only that job header before
+        # retained prefix-count assertions, where "3" would otherwise include30.
+        workflow = workflow.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace(
+            '    timeout-minutes: 30\n', '    timeout-minutes: 25\n'), 1)
         portable = workflow.split("  portable:\n", 1)[1].split("  native-and-wasm:\n", 1)[0]
         calls = [line.strip().removeprefix("run: ") for line in portable.splitlines()
                  if "python3 -B scripts/check-portable.py " in line]
@@ -205,14 +232,14 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
             ('changed-eye-run-mode', original.replace(EYE20_STEP, EYE20_STEP.replace('python3 -B ', 'python3 -B -O '))),
             ('changed-step-order', original.replace(EYE20_STEP, '').replace('      - name: Check bounded appearance diagnostic controls\n', EYE20_STEP+'      - name: Check bounded appearance diagnostic controls\n')),
             ('eye-moved-to-native', original.replace(EYE20_STEP, '').replace('  native-and-wasm:\n', '  native-and-wasm:\n'+EYE20_STEP)),
-            ('duplicate-portable-job', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER*2)),
-            ('portable-cap', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('timeout-minutes: 25', 'timeout-minutes: 20'))),
+            ('duplicate-portable-job', original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER*2)),
+            ('portable-cap', original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace('timeout-minutes: 30', 'timeout-minutes: 20'))),
         ])
         for cap in ['15', '19', '21', '0', '-1', '20.0', '"20"',
                     '24', '26', '25.0', '"25"', "'25'", '${{ 25 }}']:
             eye_mutations.append(('portable-cap-'+cap, original.replace(
-                PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
-                    'timeout-minutes: 25', 'timeout-minutes: '+cap))))
+                PORTABLE30_HEADER, PORTABLE30_HEADER.replace(
+                    'timeout-minutes: 30', 'timeout-minutes: '+cap))))
         for name, old, new in [
                 ('authenticated-source', '        timeout-minutes: 3\n        run: python3 -B scripts/check-portable.py authenticated-source\n', '5'),
                 ('offline-motion', '        timeout-minutes: 6\n        run: python3 -B scripts/check-portable.py offline-motion\n', '5'),

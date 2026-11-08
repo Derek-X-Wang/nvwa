@@ -31,10 +31,10 @@ WORKFLOW_ADDITIONS = (
 
 
 # Admit only the reviewed portable job cap before historical comparison.
-PORTABLE25_HEADER = """  portable:
+PORTABLE30_HEADER = """  portable:
     name: Core, CLI, and diagnostic controls
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 30
 """
 
 
@@ -47,7 +47,7 @@ EYE20_STEP = """      - name: Check eye, hair, and character parameter controls
 
 def historical_eye_budget_workflow(workflow, checks):
     jobs = {}
-    for name, cap in [('portable', '25'), ('native-and-wasm', '75'),
+    for name, cap in [('portable', '30'), ('native-and-wasm', '75'),
                       ('b1-source-regression', '60'), ('native-cache-warm', '60')]:
         blocks = re.findall(r'(?ms)^  '+name+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
         checks.assertEqual(len(blocks), 1, 'required one '+name+' job')
@@ -55,7 +55,7 @@ def historical_eye_budget_workflow(workflow, checks):
                            ['    timeout-minutes: '+cap], 'required unchanged '+name+' cap')
         jobs[name] = blocks[0]
     portable = jobs['portable']
-    checks.assertTrue(portable.startswith(PORTABLE25_HEADER), 'required exact portable job header')
+    checks.assertTrue(portable.startswith(PORTABLE30_HEADER), 'required exact portable job header')
     checks.assertEqual(workflow.count(EYE20_STEP.splitlines(keepends=True)[0]), 1,
                        'required one named eye/hair step')
     checks.assertEqual(portable.count(EYE20_STEP), 1, 'required exact eye/hair 20-minute step')
@@ -128,10 +128,10 @@ def historical_macos_workflow(workflow, checks):
     workflow = historical_eye_budget_workflow(workflow, checks)
     workflow = historical_native_budget_workflow(workflow, checks)
     checks.assertEqual(workflow.count('  portable:\n'), 1, 'required one portable job')
-    checks.assertEqual(workflow.count(PORTABLE25_HEADER), 1,
-                       'required exact portable job with 25-minute cap')
-    workflow = workflow.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
-        '    timeout-minutes: 25\n', '    timeout-minutes: 15\n'), 1)
+    checks.assertEqual(workflow.count(PORTABLE30_HEADER), 1,
+                       'required exact portable job with 30-minute cap')
+    workflow = workflow.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace(
+        '    timeout-minutes: 30\n', '    timeout-minutes: 15\n'), 1)
     checks.assertEqual(workflow.count('    runs-on: macos-15\n'), 2,
                        'required paired standard ARM64 macos-15 migration')
     for header in MACOS15_HEADERS:
@@ -325,6 +325,7 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
             path.mkdir(exist_ok=True)
             (path / 'summary.json').write_text(json.dumps(value))
         return mutation, matrix
+
 
     def test_real_cli_same_source_pair_integrity_and_source_mtimes(self):
         before = (self.root / 'source.rs').stat().st_mtime_ns
@@ -676,8 +677,8 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
         mutations = []
         for cap in ['15', '19', '21', '20', '0', '-1', '20.0', '"20"',
                     '24', '26', '25.0', '"25"', "'25'", '${{ 25 }}']:
-            mutations.append(original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
-                'timeout-minutes: 25', 'timeout-minutes: '+cap)))
+            mutations.append(original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace(
+                'timeout-minutes: 30', 'timeout-minutes: '+cap)))
         native_matrix = (
             '      - name: Execute the actual B1 continuous motion matrix\n'
             '        # Independent full-weight Python checks stream594frames; retain a finite\n'
@@ -685,17 +686,17 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
             '        timeout-minutes: 20\n')
         self.assertEqual(original.count(native_matrix), 1)
         mutations.extend([
-            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('    timeout-minutes: 25\n', '')),
-            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER+'    timeout-minutes: 25\n'),
-            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER*2),
-            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('  portable:', '  other:')),
+            original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace('    timeout-minutes: 30\n', '')),
+            original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER+'    timeout-minutes: 30\n'),
+            original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER*2),
+            original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace('  portable:', '  other:')),
             original.replace('    timeout-minutes: 60\n', '    timeout-minutes: 20\n', 1),
             original.replace('        timeout-minutes: 3\n', '        timeout-minutes: 4\n', 1),
-            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
-                'timeout-minutes: 25', 'timeout-minutes: 15')).replace(
+            original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace(
+                'timeout-minutes: 30', 'timeout-minutes: 15')).replace(
                     '    timeout-minutes: 60\n', '    timeout-minutes: 20\n', 1),
-            original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
-                'timeout-minutes: 25', 'timeout-minutes: 15')).replace(
+            original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace(
+                'timeout-minutes: 30', 'timeout-minutes: 15')).replace(
                     native_matrix, native_matrix.replace('timeout-minutes: 20', 'timeout-minutes: 25'), 1),
         ])
         for header in MACOS15_HEADERS:
@@ -730,7 +731,7 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
             ('stale-native-comment', original.replace(native, native.replace(NATIVE75_MATRIX_COMMENT, NATIVE75_MATRIX_COMMENT.replace('75', '60')))),
             ('matrix-cap', original.replace(native, native.replace('        timeout-minutes: 20\n', '        timeout-minutes: 21\n', 1))),
             ('mutation-cap', original.replace(native, native.replace('        timeout-minutes: 12\n', '        timeout-minutes: 13\n', 1))),
-            ('portable-cap', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('timeout-minutes: 25', 'timeout-minutes: 21'))),
+            ('portable-cap', original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace('timeout-minutes: 30', 'timeout-minutes: 21'))),
             ('b1-cap', original.replace(b1, b1.replace('    timeout-minutes: 60\n', '    timeout-minutes: 61\n', 1))),
             ('warm-cap', original.replace(warm, warm.replace('    timeout-minutes: 60\n', '    timeout-minutes: 61\n', 1))),
             ('cache-action-cap', original.replace(native, native.replace('        timeout-minutes: 4\n', '        timeout-minutes: 5\n', 1))),
@@ -760,8 +761,8 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
             ('changed-eye-run-mode', original.replace(EYE20_STEP, EYE20_STEP.replace('python3 -B ', 'python3 -B -O '))),
             ('changed-step-order', original.replace(EYE20_STEP, '').replace('      - name: Check bounded appearance diagnostic controls\n', EYE20_STEP+'      - name: Check bounded appearance diagnostic controls\n')),
             ('eye-moved-to-native', original.replace(EYE20_STEP, '').replace('  native-and-wasm:\n', '  native-and-wasm:\n'+EYE20_STEP)),
-            ('duplicate-portable-job', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER*2)),
-            ('portable-cap', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('timeout-minutes: 25', 'timeout-minutes: 20'))),
+            ('duplicate-portable-job', original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER*2)),
+            ('portable-cap', original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace('timeout-minutes: 30', 'timeout-minutes: 20'))),
         ])
         for name, old, new in [
                 ('authenticated-source', '        timeout-minutes: 3\n        run: python3 -B scripts/check-portable.py authenticated-source\n', '5'),
@@ -833,6 +834,29 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
         self.assertLess(native.index('Report existing command timing'), native.index('compression and save'))
         self.assertLess(native.index('compression and save'), native.index('Verify remote exact-key persistence'))
         self.assertLess(warm.index('verify restored target bytes'), warm.index('Run workspace CPU tests'))
+
+        # portable30 rejection cases extend the existing contract; retain13 tests.
+        original = (ROOT / '.github/workflows/ci.yml').read_text()
+        historical_eye_budget_workflow(original, self)
+        for cap in ['25', '29', '31', '30.0', '"30"', "'30'", '${{ 30 }}', 'true']:
+            mutant = original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace(
+                '    timeout-minutes: 30\n', '    timeout-minutes: '+cap+'\n'))
+            self.assertNotEqual(mutant, original)
+            with self.subTest(portable_cap=cap), self.assertRaises(AssertionError):
+                historical_eye_budget_workflow(mutant, self)
+        for name, cap in [('native-and-wasm', '75'), ('b1-source-regression', '60'),
+                          ('native-cache-warm', '60')]:
+            block = re.search(r'(?ms)^  '+name+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', original).group()
+            mutant = original.replace(block, block.replace(
+                '    timeout-minutes: '+cap+'\n', '    timeout-minutes: 30\n', 1), 1)
+            self.assertNotEqual(mutant, original)
+            with self.subTest(wrong_job=name), self.assertRaises(AssertionError):
+                historical_eye_budget_workflow(mutant, self)
+        mutant = original.replace(EYE20_STEP, EYE20_STEP.replace(
+            '        timeout-minutes: 20\n', '        timeout-minutes: 30\n'))
+        self.assertNotEqual(mutant, original)
+        with self.assertRaises(AssertionError):
+            historical_eye_budget_workflow(mutant, self)
 
 
 if __name__ == '__main__':
