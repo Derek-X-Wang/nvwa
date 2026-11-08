@@ -306,3 +306,75 @@ def pre_running_sources(exp, contexts):
             and {str(p.relative_to(exp)) for p in paths if p.is_file()}
                 == {i['fixture'] for i in value['files'].values()}, 'pre-running fixture inventory mismatch')
     return result
+
+
+MOTION_QUERY_CONTEXT = 'b1-motion-query-product-v1'
+MOTION_QUERY_CONTEXT_NAME = 'source-context-b1-motion-query-v1.json'
+MOTION_QUERY_CONTEXT_SHA = '12f03cc2d1cd9db12c9d5d112b52a0174d0253054a58531185ee71a4bf7dfc03'
+MOTION_QUERY_NEW = ('crates/nvwa-cli/src/motion_query.rs', 'crates/nvwa-cli/tests/motion_query.rs',
+                    'crates/nvwa-runtime/src/b1/foot_clearance.rs')
+MOTION_QUERY_OUTSIDE = {
+    'crates/nvwa-studio/examples/nvwa-preview.rs': {'bytes': 22049, 'sha256': 'c32c5bb4f71989af875ae1d24af40d6d7810ff97d4e4582d94c12311964e2452'},
+}
+MOTION_QUERY_ADDITIONS = (*MOTION_QUERY_NEW, *MOTION_QUERY_OUTSIDE)
+MOTION_QUERY_CHANGED = ('Cargo.lock', 'crates/nvwa-cli/Cargo.toml', 'crates/nvwa-cli/src/main.rs',
+                        'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/lib.rs')
+MOTION_QUERY_FIXTURES = 'fixtures/pre-motion-query'
+
+
+def _motion_query_source_context(exp, running):
+    """Continue only with the running chain authenticated by this invocation."""
+    data = regular_file(exp, MOTION_QUERY_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == MOTION_QUERY_CONTEXT_SHA,
+            'motion-query context manifest identity mismatch')
+    value = json.loads(data)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_manifest_sha256',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == MOTION_QUERY_CONTEXT
+            and value['predecessor'] == running[0]
+            and value['predecessor_manifest_sha256'] == RUNNING_CONTEXT_SHA
+            and value['predecessor_commit'] == 'd272e16fa6f5faa55337c4ae5f6ac18043f8ab01',
+            'motion-query context predecessor mismatch')
+    files = value['files']
+    require(set(files) == set(running[1]) | set(MOTION_QUERY_ADDITIONS)
+            and len(files) == 318
+            and {name for name, item in running[1].items() if files[name] != item} == set(MOTION_QUERY_CHANGED),
+            'motion-query complete source union required')
+    _pre_motion_query_sources(exp, running)
+    return value['context'], files
+
+
+def _pre_motion_query_sources(exp, running):
+    expected = {name: running[1][name] for name in MOTION_QUERY_CHANGED} | MOTION_QUERY_OUTSIDE
+    result = {}
+    declared = set()
+    for name, item in expected.items():
+        if name == 'crates/nvwa-cli/Cargo.toml':
+            relative = 'fixtures/b1-lower-contour-baselines/' + name
+        else:
+            relative = MOTION_QUERY_FIXTURES + '/' + name
+            declared.add(relative)
+        raw = regular_file(exp, relative).read_bytes()
+        require({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == item,
+                'pre-motion-query fixture bytes mismatch: ' + name)
+        result[name] = raw
+    paths = list((exp / MOTION_QUERY_FIXTURES).rglob('*'))
+    require(all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths)
+            and {str(path.relative_to(exp)) for path in paths if path.is_file()} == declared,
+            'pre-motion-query fixture inventory mismatch')
+    return result
+
+
+def pre_motion_query_sources(exp, raw, original):
+    """Return the exact displaced running inputs and pre-existing outside bytes."""
+    return _pre_motion_query_sources(exp, running_source_context(exp, raw, original))
+
+
+def check_no_motion_query_additions(root):
+    require(not any((root / name).exists() or (root / name).is_symlink() for name in MOTION_QUERY_NEW),
+            'motion-query additions in historical source')
+    for name, item in MOTION_QUERY_OUTSIDE.items():
+        if (root / name).exists() or (root / name).is_symlink():
+            raw = regular_file(root, name).read_bytes()
+            require({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == item,
+                    'motion-query outside source: ' + name)

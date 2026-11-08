@@ -1,4 +1,4 @@
-"""Exact running union at the actual formal gate; no motion-quality claim."""
+"""Exact running and motion-query unions at the actual formal gate."""
 import hashlib
 import importlib.util
 import json
@@ -30,12 +30,21 @@ class RunningContext(unittest.TestCase):
         cls.retention_name = 'fixtures/pre-running/manifest.json'
         cls.retention_prefix = 'fixtures/pre-running'
         cls.product = PRODUCT
-        cls.context_files = ENTRY.PACKAGE + (cls.context_name,)
+        cls.context_files = ENTRY.PACKAGE + (cls.context_name, ENTRY.MOTION_QUERY_CONTEXT_NAME)
         cls.retention = json.loads((HERE / cls.retention_name).read_bytes())
         cls.files = json.loads((HERE / cls.context_name).read_bytes())['files']
         cls.pins = json.loads((HERE / 'pins.json').read_bytes())
+        temporary = tempfile.TemporaryDirectory(prefix='nvwa72-retained-running-')
+        cls.addClassCleanup(temporary.cleanup)
+        cls.running_root = Path(temporary.name)
+        retained = ENTRY.pre_motion_query_sources(cls.pins)
+        for name in cls.files.keys() | retained.keys():
+            path = cls.running_root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(retained[name] if name in retained else (ROOT / name).read_bytes())
 
-    def gate(self, root=ROOT, exp=HERE):
+    def gate(self, root=None, exp=HERE):
+        root = self.running_root if root is None else root
         with patch.object(ENTRY, 'HERE', exp):
             result = ENTRY.check_inputs(root)['checked_input_context']
         self.assertEqual(result['id'], CURRENT)
@@ -100,7 +109,7 @@ class RunningContext(unittest.TestCase):
             for name in self.pins['files']:
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_bytes(retained[name] if name in retained else (ROOT / name).read_bytes())
+                path.write_bytes(retained[name] if name in retained else (self.running_root / name).read_bytes())
             for name in ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-runtime/src/lib.rs',
                          'crates/nvwa-studio/src/appearance_ui_tests.rs', 'crates/nvwa-studio/src/lib.rs'):
                 path = root / name
@@ -117,7 +126,7 @@ class RunningContext(unittest.TestCase):
                     with self.subTest(historical_path=name, fault=fault):
                         path.unlink()
                         try:
-                            if fault == 'current': path.write_bytes((ROOT / name).read_bytes())
+                            if fault == 'current': path.write_bytes((self.running_root / name).read_bytes())
                             elif fault == 'corrupt': path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
                             else: path.symlink_to(target)
                             with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
@@ -134,7 +143,7 @@ class RunningContext(unittest.TestCase):
             for name in self.files:
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, path)
+                shutil.copyfile(self.running_root / name, path)
             exp = root / 'experiments' / HERE.name
             exp.mkdir(parents=True, exist_ok=True)
             for name in self.context_files:
@@ -217,6 +226,101 @@ class RunningContext(unittest.TestCase):
             finally:
                 extra.unlink()
             self.gate(root, exp)
+
+    def test_motion_query_and_running_authenticate_the_chain_once(self):
+        files = json.loads((HERE / ENTRY.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
+        plan = json.loads((HERE / 'cases.json').read_bytes())
+        frozen_witnesses = [plan[key]['path'] for key in ('frozen_reference_manifest', 'frozen_poses')]
+        self.assertEqual(len(files), 31)
+        self.assertEqual(set(files), self.files.keys() | set(ENTRY.MOTION_QUERY_ADDITIONS))
+        with patch.object(ENTRY, 'current_source_contexts', wraps=ENTRY.current_source_contexts) as chain, \
+                patch.object(ENTRY, '_pre_running_sources', wraps=ENTRY._pre_running_sources) as historical, \
+                patch.object(ENTRY, 'file_sha', wraps=ENTRY.file_sha) as digest:
+            for invocation, root in enumerate((ROOT, self.running_root, ROOT), 1):
+                result = ENTRY.check_inputs(root)['checked_input_context']
+                name, expected = (CURRENT, self.files) if root == self.running_root else (ENTRY.MOTION_QUERY_CONTEXT, files)
+                self.assertEqual(result['id'], name)
+                self.assertEqual(result['files'], {n: item['sha256'] for n, item in expected.items()})
+                self.assertEqual(result['current_rust_execution'], 'NOT-RUN')
+                self.assertEqual(chain.call_count, invocation)
+                self.assertEqual(historical.call_count, invocation)
+                hashed = [call.args[0].relative_to(root).as_posix() for call in digest.call_args_list
+                          if call.args[0].is_relative_to(root) and call.args[0].relative_to(root).as_posix() in expected]
+                self.assertCountEqual(hashed, list(expected) + list(self.pins['files']) + frozen_witnesses)
+                digest.reset_mock()
+
+    def test_motion_query_inputs_and_predecessor_mix_reject_and_restore(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa72-motion-query-') as directory:
+            root = Path(directory) / 'source'
+            exp = root / 'experiments' / HERE.name
+            exp.mkdir(parents=True)
+            for name in self.context_files:
+                shutil.copyfile(HERE / name, exp / name)
+            shutil.copytree(HERE / 'fixtures', exp / 'fixtures')
+            files = json.loads((HERE / ENTRY.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
+            for name in files:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / name, path)
+
+            def gate(expected):
+                self.assertEqual(ENTRY.check_inputs(root)['checked_input_context']['id'], expected)
+
+            with patch.object(ENTRY, 'HERE', exp):
+                gate(ENTRY.MOTION_QUERY_CONTEXT)
+                sources = (*ENTRY.MOTION_QUERY_CHANGED, *ENTRY.MOTION_QUERY_ADDITIONS)
+                paths = [root / name for name in sources]
+                paths.append(exp / ENTRY.MOTION_QUERY_CONTEXT_NAME)
+                paths.extend(path for path in (exp / ENTRY.MOTION_QUERY_FIXTURES).rglob('*') if path.is_file())
+                for path in paths:
+                    raw = path.read_bytes()
+                    target = Path(directory) / 'preserved-input'
+                    target.write_bytes(raw)
+                    for fault in ('missing', 'same-size', 'symlink'):
+                        with self.subTest(path=path.relative_to(root), fault=fault):
+                            path.unlink()
+                            try:
+                                if fault == 'same-size':
+                                    path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+                                elif fault == 'symlink':
+                                    path.symlink_to(target)
+                                with self.assertRaises(ValueError):
+                                    ENTRY.check_inputs(root)
+                            finally:
+                                path.unlink(missing_ok=True)
+                                path.write_bytes(raw)
+                            self.assertEqual(path.read_bytes(), raw)
+                            gate(ENTRY.MOTION_QUERY_CONTEXT)
+
+                for name in (*ENTRY.MOTION_QUERY_CHANGED, *ENTRY.MOTION_QUERY_OUTSIDE):
+                    path = root / name
+                    raw = path.read_bytes()
+                    with self.subTest(stale=name):
+                        try:
+                            shutil.copyfile(self.running_root / name, path)
+                            with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                                ENTRY.check_inputs(root)
+                        finally:
+                            path.write_bytes(raw)
+                        self.assertEqual(path.read_bytes(), raw)
+                        gate(ENTRY.MOTION_QUERY_CONTEXT)
+
+                for name in sources:
+                    path = self.running_root / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    previous = path.read_bytes() if path.exists() else None
+                    with self.subTest(new=name):
+                        try:
+                            shutil.copyfile(ROOT / name, path)
+                            with self.assertRaisesRegex(ValueError, 'source input context mismatch'):
+                                ENTRY.check_inputs(self.running_root)
+                        finally:
+                            if previous is None:
+                                path.unlink()
+                            else:
+                                path.write_bytes(previous)
+                                self.assertEqual(path.read_bytes(), previous)
+                        self.gate(self.running_root, exp)
 
 if __name__ == '__main__':
     unittest.main()
