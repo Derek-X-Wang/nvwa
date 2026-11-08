@@ -1,4 +1,6 @@
 #![forbid(unsafe_code)]
+#[cfg(feature = "motion-query")]
+mod motion_query;
 use nvwa_core::{
     B1_APPEARANCE_MAX_ASSET_BYTES, B1_APPEARANCE_MAX_MANIFEST_BYTES,
     B1_APPEARANCE_MAX_TOTAL_ASSET_BYTES, B1_DIAGNOSTIC_POSES, B1_MAX_ASSET_BYTES,
@@ -215,6 +217,16 @@ fn save(document: &SceneDocument, path: &Path) -> Result<(), CoreError> {
     Ok(())
 }
 
+const MOTION_QUERY_USAGE: &str =
+    "motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples]";
+
+fn supports_motion_query(work: &SceneDocument) -> bool {
+    work.profile.backend.is_b1_motion()
+        && !work.profile.backend.is_b1_running()
+        && !work.timeline.is_empty()
+        && !work.is_single_loop()
+}
+
 fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError> {
     // Examples use the production command serializer and this work's actual IDs.
     // Each is a standalone example at the loaded revision, not a ready-made batch.
@@ -305,6 +317,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "inspect": ["input.json"],
             "describe-capabilities": ["input.json"],
             "validate": ["input.json", "optional_asset_root"],
+            "motion-query": ["input.json", "asset_root", "start_s", "end_s", "step_s", "optional_--samples"],
             "apply": ["input.json", "command_or_array.json", "output.json"],
             "save": ["input.json", "output.json"]
         },
@@ -422,6 +435,13 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "other_errors": "read_code_and_message_input_command_validation_and_persistence_failures_before_save_do_not_commit_output"
         },
         "asset_validation": "b1_validate_requires_explicit_asset_root_and_authenticates_exact_selected_base_and_appearance_manifests_and_all_their_bounded_payloads_glb_asset_root_optional",
+        "motion_query": {
+            "available": cfg!(feature = "motion-query"),
+            "work_supported": supports_motion_query(document),
+            "usage": MOTION_QUERY_USAGE,
+            "default_output": "summary",
+            "renderer_required": false
+        },
         "studio_control": false
     }))
 }
@@ -531,6 +551,19 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                 serde_json::json!({"valid":true,"revision":document.revision,"asset_checked":args.len()>2}),
             )?;
         }
+        "motion-query" => {
+            if matches!(&args[1..], [flag] if flag == "--help" || flag == "-h") {
+                respond(MOTION_QUERY_USAGE)?;
+                return Ok(());
+            }
+            #[cfg(feature = "motion-query")]
+            respond(motion_query::run(&args[1..])?)?;
+            #[cfg(not(feature = "motion-query"))]
+            return Err(CoreError::new(
+                "motion_query_unavailable",
+                "Build nvwa-cli with --features motion-query to query motion",
+            ));
+        }
         "apply" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
             let commands_json = read(&arg(2)?)?;
@@ -558,7 +591,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             )?;
         }
         "help" | "--help" | "-h" => respond(
-            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
+            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
         )?,
         _ => {
             return Err(CoreError::new(

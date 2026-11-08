@@ -85,6 +85,12 @@ group. `scripts/check-b1-work.sh` remains the separate scoped native/Web package
 helper. Native CPU, source runtime, Wasm compilation and actual Web/native visual
 acceptance remain separate gates; portable success does not prove them.
 
+The native entrypoint checks the workspace before building its tests. It
+enables `nvwa-cli/motion-query` for both native commands so the real
+no-render query test runs in the existing macOS job. The portable entrypoint
+continues to exercise the lightweight CLI build and its unavailable-feature
+response.
+
 ## Retained Mac runner migration (#114)
 
 The retained `native-and-wasm` and conditional `native-cache-warm` jobs use

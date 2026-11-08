@@ -1,6 +1,9 @@
 //! Production bridge for the admitted, bounded B1 CPU character.
 //! Raw bytes are authenticated once per explicit Open and typed loaders consume
 //! an immutable in-memory copy, never a second read of the original source.
+mod foot_clearance;
+pub use foot_clearance::b1_foot_clearance;
+
 use super::{CharacterAsset, EditorState, Playback, RuntimeStatus};
 use bevy::{
     asset::{
@@ -5240,10 +5243,9 @@ fn bind_published_frame(world: &World, runtime: &mut B1Runtime) {
     });
 }
 
-/// Read successful production bones and actual uploaded mesh buffers. Explicit QA only.
-/// Matrices are column-major; fitted/model arrays use metres, transforms map to stage/world.
-pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
-    use bevy::mesh::VertexAttributeValues;
+fn published_motion_frame(
+    world: &World,
+) -> Result<(&Session, &SceneDocument, &FrameSample, &PublishedBinding), String> {
     let runtime = world
         .get_resource::<B1Runtime>()
         .ok_or("B1 runtime absent")?;
@@ -5275,6 +5277,15 @@ pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
         .last_sample
         .as_ref()
         .ok_or("published motion sample absent")?;
+    Ok((active, doc, sample, binding))
+}
+
+/// Read successful production bones and actual uploaded mesh buffers. Explicit QA only.
+/// Matrices are column-major; fitted/model arrays use metres, transforms map to stage/world.
+pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
+    use bevy::mesh::VertexAttributeValues;
+    let (active, doc, sample, binding) = published_motion_frame(world)?;
+    let playback = world.resource::<Playback>();
     let bones = active
         .rig
         .as_ref()

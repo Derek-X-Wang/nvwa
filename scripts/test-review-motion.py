@@ -2,6 +2,7 @@
 import contextlib
 import copy
 import errno
+import hashlib
 import importlib.util
 import io
 import json
@@ -54,8 +55,13 @@ class Handler(BaseHTTPRequestHandler):
                        'document_revision':doc['revision'],'camera':doc['stage']['camera'],
                        'seconds':float(a.seconds),'effective_seconds':float(a.seconds)}
             if mode == 'wrong-identity': request['work_sha256'] = 'old-work'
+            seconds = float(a.seconds)
+            runtime = {'seconds':seconds}
+            if mode == 'range-clearance':
+                left = {0:.1, .3:.6, .6:.4, .9:.00004, 1:.00004}[seconds]
+                runtime['foot_clearance'] = {'unit':'cm','left_cm':left,'right_cm':2.0}
             result.update(status='rendered', request=request,
-                          runtime={'seconds':float(a.seconds)},
+                          runtime=runtime,
                           image=str(out/'actual.png'),work=str(out/'work.nvwa.json'),
                           png_sha256=hashlib.sha256(image).hexdigest())
             if mode == 'stale-image': result['image'] = str(out.parent.parent/'previous-actual.png')
@@ -110,6 +116,14 @@ class ReviewControls(unittest.TestCase):
         self.assets = self.root/'assets'
         self.site = self.root/'site'
         self.assets.mkdir(); self.site.mkdir()
+        build_hashes = {}
+        for name in ('preview.html', 'nvwa_preview.js', 'nvwa_preview_bg.wasm'):
+            data = ('synthetic preflight fixture ' + name).encode()
+            (self.site/name).write_bytes(data)
+            build_hashes[name] = hashlib.sha256(data).hexdigest()
+        (self.site/'build-receipt.json').write_text(json.dumps({
+            'source_sha256': {}, 'output_sha256': build_hashes,
+        }))
         example = Path(__file__).resolve().parent.parent/'examples/agent-visual-preview/full-body.nvwa.json'
         self.base = self.root/'base.nvwa.json'
         self.base.write_bytes(example.read_bytes())
@@ -165,6 +179,34 @@ class ReviewControls(unittest.TestCase):
                 self.assertTrue(owned['process_group_absent'],self.diagnostics(result))
                 with self.assertRaises(ProcessLookupError,msg=self.diagnostics(result)): os.killpg(owned['pid'],0)
 
+    def test_build_mismatch_fails_before_any_child_starts(self):
+        receipt_path = self.site/'build-receipt.json'
+        receipt = json.loads(receipt_path.read_bytes())
+        receipt['source_sha256'] = {'web/preview.html': '0' * 64}
+        receipt_path.write_text(json.dumps(receipt))
+        with patch.object(review.subprocess, 'Popen', side_effect=AssertionError('child started')):
+            code, result = self.run_review()
+        self.assertEqual(code, 1)
+        self.assertEqual(result['frames'], [])
+        self.assertIn('Preview build source changed: web/preview.html', result['error'])
+        self.assertIn('scripts/build-preview-web.sh <new-preview-root>', result['error'])
+        self.assertFalse((self.output/'base-validation.json').exists())
+
+    def test_presets_render_ordered_camera_only_copies_without_editing_input(self):
+        original = self.base.read_bytes()
+        args = self.command(seconds=(0,), views=())
+        args += ['--camera', 'side', '--camera', 'front', '--elevation', '5', '--distance', '7.45']
+        code, result = self.run_review(args=args)
+        self.assertEqual(code, 0, self.diagnostics(result))
+        self.assertEqual(self.base.read_bytes(), original)
+        self.assertEqual([frame['view'] for frame in result['frames']], ['side', 'front'])
+        for frame, angle in zip(result['frames'], (90, 0), strict=True):
+            rendered = json.loads(Path(frame['capture']['work']).read_bytes())
+            expected = json.loads(original)
+            expected['stage']['camera'].update(azimuth_degrees=angle, elevation_degrees=5, distance=7.45)
+            self.assertEqual(rendered, expected)
+        self.assert_cleanup(result)
+
     def test_serial_order_distinct_frames_exact_inputs_and_clean_owned_processes(self):
         before = {path:path.read_bytes() for path in [self.base,*self.views.values()]}
         code, result = self.run_review()
@@ -193,6 +235,39 @@ class ReviewControls(unittest.TestCase):
         self.assertTrue(Path(result['frames'][0]['capture']['image']).is_file())
         self.assertEqual(result['expected_frame_count'],4)
         self.assert_cleanup(result)
+
+    def test_range_writes_curves_and_brackets_after_temporary_near_floor_visit(self):
+        args = self.command(seconds=(), views=('side',))
+        args += ['--start', '0', '--end', '1', '--step', '0.3']
+        code, result = self.run_review('range-clearance', args)
+        self.assertEqual(code, 0, self.diagnostics(result))
+        self.assertEqual(result['requested_seconds'], [0, .3, .6, .9, 1])
+        paths = result['foot_clearance']
+        side = json.loads(Path(paths['summary']).read_bytes())['views']['side']
+        left = side['feet']['left']
+        self.assertEqual(left['near_floor']['previous_sample']['requested_seconds'], .3)
+        self.assertEqual(left['near_floor']['first_sample']['requested_seconds'], .6)
+        self.assertEqual(left['stable_near_floor']['previous_sample']['requested_seconds'], .6)
+        self.assertEqual(left['stable_near_floor']['first_sample']['requested_seconds'], .9)
+        self.assertIsNone(side['feet']['right']['near_floor'])
+        self.assertIsNone(side['feet']['right']['stable_near_floor'])
+        self.assertTrue(Path(side['curve']).is_file())
+        self.assertEqual(len(Path(paths['csv']).read_text().splitlines()), 6)
+        self.assert_cleanup(result)
+
+    def test_range_rejects_oversampling_and_duplicate_preview_times_before_children(self):
+        for name, bounds, message in (
+            ('cap', ('0','1','.05'), '24 total frames'),
+            ('duplicate', ('1','1.1','.000000001'), 'duplicate'),
+        ):
+            with self.subTest(name=name):
+                self.output = self.root / name
+                args = self.command(seconds=())
+                args += [flag for pair in zip(('--start','--end','--step'), bounds) for flag in pair]
+                code, result = self.run_review(args=args)
+                self.assertEqual(code, 1, self.diagnostics(result))
+                self.assertIn(message, result['error'])
+                self.assertFalse((self.output/'base-validation.json').exists())
 
     def test_mismatched_child_work_is_rejected(self):
         code, result = self.run_review('wrong-identity',self.command(seconds=(0,),views=('front',)))
@@ -387,6 +462,7 @@ class ReviewControls(unittest.TestCase):
         bootstrap = '''
 import importlib.util,sys
 from pathlib import Path
+sys.path.insert(0, str(Path(sys.argv[1]).parent))
 spec=importlib.util.spec_from_file_location('review_motion',sys.argv[1])
 module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 module.PREVIEW=Path(sys.argv[2]);module.TERM_GRACE=.15;module.KILL_GRACE=.5
@@ -396,7 +472,7 @@ raise SystemExit(module.main(sys.argv[3:]))
             with self.subTest(signal=signum):
                 self.output = self.root/('interrupt-'+str(signum))
                 environment = dict(os.environ,NVWA_REVIEW_TEST_MODE='hang')
-                process = subprocess.Popen([sys.executable,'-c',bootstrap,str(Path(review.__file__)),
+                process = subprocess.Popen([sys.executable,'-B','-c',bootstrap,str(Path(review.__file__)),
                                             str(self.preview),*self.command(seconds=(0,),views=('front',))],
                                            stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=environment,
                                            start_new_session=True)

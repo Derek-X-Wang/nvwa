@@ -25,8 +25,8 @@ case "${1:-}" in
     [[ "$(uname -s)" == Darwin && "$(uname -m)" == arm64 ]] || {
       echo 'This candidate native lane requires macOS arm64.' >&2; exit 2;
     }
-    cargo test --workspace --locked
-    cargo check --workspace --locked
+    cargo check --workspace --locked --features nvwa-cli/motion-query
+    cargo test --workspace --locked --features nvwa-cli/motion-query
     ;;
   wasm)
     cargo check -p nvwa-studio --lib --target wasm32-unknown-unknown --locked

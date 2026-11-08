@@ -104,6 +104,17 @@ def accept_result(payload, request):
     if (not isinstance(seconds, (float, int)) or isinstance(seconds, bool)
             or not math.isfinite(seconds) or seconds != request['effective_seconds']):
         raise ValueError('Rendered time differs from request')
+    clearance = runtime.get('foot_clearance')
+    if request['foot_clearance_required']:
+        if (not isinstance(clearance, dict) or clearance.get('unit') != 'cm'
+                or clearance.get('method') != 'b1_visible_body_foot_min_stage_y'
+                or type(clearance.get('floor_stage_y_m')) not in (int, float)
+                or clearance['floor_stage_y_m'] != 0
+                or any(type(value) not in (int, float) or not -math.inf < value < math.inf
+                       for value in (clearance.get('left_cm'), clearance.get('right_cm')))):
+            raise ValueError('Expected finite signed B1 foot clearance in centimetres')
+    elif 'foot_clearance' not in runtime or clearance is not None:
+        raise ValueError('Static B1 preview must report unavailable foot clearance')
     prefix = 'data:image/png;base64,'
     encoded = payload.get('png_data_url', '')
     if not isinstance(encoded, str) or not encoded.startswith(prefix):
@@ -158,6 +169,7 @@ def serve(args):
     camera = work['stage']['camera']
     request = {'schema_version':1, 'seconds':args.seconds, 'effective_seconds':effective_seconds,
                'work_sha256':sha(work_raw), 'document_revision':work['revision'], 'camera':camera,
+               'foot_clearance_required':work['profile']['backend']['schema_version'] != 1,
                'effective_camera':{key:f32(value) for key,value in camera.items()}}
     (output / 'request.json').write_text(json.dumps(request, indent=2)+'\n')
     token = secrets.token_urlsafe(24)

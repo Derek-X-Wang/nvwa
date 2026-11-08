@@ -5,6 +5,11 @@ time. It uses the saved Work camera and the existing Web renderer. Change a
 camera through ordinary CLI `set_stage` when the creative task calls for another
 view. The preview adapter does not edit the Work or generate motion.
 
+For B1 foot clearance and clip-boundary checks, start with the
+[headless motion query](../CLI-SUPPORT.md#headless-motion-observation).
+Repeat the same query after editing the Work, then use normal playback to
+review rhythm and how the movement looks.
+
 ## Prepare once
 
 Build the adapter from the repository root with the existing pinned toolchain
@@ -14,7 +19,8 @@ and locked dependencies:
 bash scripts/build-preview-web.sh dist/preview
 ```
 
-This is an offline build. If dependencies or wasm-bindgen 0.2.129 are missing,
+This is an offline build. It type-checks the same Wasm example and features
+before compiling and linking it. If dependencies or wasm-bindgen 0.2.129 are missing,
 stop and report the prerequisite. `NVWA_WASM_BINDGEN` can select an existing
 executable. The output directory must be new. Compilation is separate from
 actual rendering; the build receipt identifies sources and generated files.
@@ -77,8 +83,32 @@ for each frame. It uses Chrome's normal GPU configuration; it does not install a
 browser, select a software renderer, or use an existing browser session. This is
 one supported path, not a promise about every browser or host.
 
-Prepare one or two review-camera Work copies with ordinary CLI `apply` and
-`set_stage`. Discover current fields with `describe-capabilities`. Each command
+The batch verifies the preview build receipt before starting CLI validation
+or Chrome. A stale source or output reports its path and the rebuild command.
+Each frame still checks the bundle again before serving it.
+
+Request a frame with the saved camera or one or two temporary camera presets.
+
+```sh
+python3.12 -B scripts/review-motion.py \
+  --work /absolute/path/rehearsal.nvwa.json --seconds 1.25 --camera side \
+  --output /absolute/path/task/side-125 \
+  --chrome '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' \
+  --preview-root dist/preview --assets assets --cli /absolute/path/nvwa-cli
+```
+
+The default is `--camera saved`. The `front` and `side` presets set the
+azimuth to 0° and 90°. Use `--azimuth` with the saved camera for a custom
+angle. Use `--elevation` or `--distance` to override those camera fields.
+The renderer receives a Work snapshot in the output directory. The input Work
+stays byte-for-byte intact. Open the PNG path in `frames[].capture.image`
+and use `frames[].receipt` for the frame identity and effective camera/time.
+The output directory must be new. Use `--port 0` to let the OS pick a free
+loopback port.
+
+For a camera saved as part of a creative edit, prepare review-camera Work
+copies with ordinary CLI `apply` and `set_stage`. Discover current fields
+with `describe-capabilities`. Each command
 must use the source Work's current `expected_revision`. Copy its entire stage,
 then change only `stage.camera`, because `set_stage` replaces the entire stage.
 Save each result to a separate file. Keep the original Work. The wrapper validates
@@ -142,3 +172,68 @@ Keep both result sets and compare the normal images. Local receipts and process
 logs contain absolute paths; select and redact the intended Works, commands and
 images before publishing evidence. Multiple still frames support observations at
 those times. They do not establish smooth playback across the whole timeline.
+
+## Measure a distance in the image
+
+Open the original PNG and choose two pixel coordinates. Measure a vertical
+extent, horizontal extent or diagonal with the same command:
+
+```sh
+python3.12 -B scripts/measure-frame.py /absolute/path/task/side-125/frames/00-side/capture/receipt.json \
+  --segment height=640,168:640,516
+```
+
+Coordinates use the original PNG size and a top-left origin. The result
+contains the PNG hash, endpoints, horizontal and vertical extents, and
+Euclidean distance in pixels. It measures the points you chose.
+
+## Read foot clearance from the same frame
+
+In a B1 motion capture, open the PNG and its `capture/receipt.json`. Read
+`runtime.foot_clearance.left_cm` and `right_cm` for the character's left and
+right feet. Each value is the lowest rendered body vertex in that foot's
+region, transformed to the stage, relative to the floor at Y = 0. The
+region uses body vertices below the ankle in the shared B1 rest mesh.
+The measurement uses the deformed, displayed vertices and includes the
+Work's scale. Positive values indicate clearance, and negative values
+indicate penetration. The receipt uses the same held pose, time and
+camera as the PNG. Rebuild the preview adapter to use this capture format.
+
+Use clearance alongside the image to tell apart a visibly lifted foot,
+a foot close to the floor, and a foot below the floor. A low value measures
+one point on the foot surface. Read the image and neighboring times to
+judge the whole sole or a landing. Static B1 captures report this field
+as `null`.
+
+## Sample foot clearance over a time range
+
+```sh
+python3.12 -B scripts/review-motion.py \
+  --work /absolute/path/rehearsal.nvwa.json --camera side \
+  --start 5.650 --end 6.100 --step 0.025 --port 0 \
+  --output /absolute/path/task/handoff-review \
+  --chrome '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' \
+  --preview-root dist/preview --assets assets --cli /absolute/path/nvwa-cli
+```
+
+The range starts at `--start` and includes `--end`. When the step does not
+divide the range evenly, the final interval is shorter. The 24-frame cap
+counts all requested views. Use a B1 motion Work with clearance measurements.
+
+The batch receipt links to `foot-clearance.json` and `foot-clearance.csv`.
+Both contain signed left and right readings in centimetres, requested and
+effective times, and paths to the matching PNG and receipt. The JSON also
+links to an SVG with both curves for each view and reports two intervals
+per foot:
+
+- **Near floor** starts at the first sample in the final uninterrupted run
+  within ±0.5 cm of the floor.
+- **Stable near floor** starts at the first sample in the final run of at
+  least two samples. All must be near the floor and within 0.001 cm of the
+  final clearance.
+
+Each interval gives the preceding sample and the first qualifying sample.
+A missing preceding sample means the condition already held at the start.
+A null interval means the window did not establish the condition. These
+thresholds describe the sampled geometry through the end of the window.
+Use the adjacent PNGs to assess the visible transition.

@@ -67,6 +67,17 @@ are rendering resources. They do not provide this complete standalone CLI
 root: their embedded appearance data does not supply filesystem payloads.
 Use this package's `assets/` for CLI validation of appearance Works.
 
+When the supplied binary was built with `--features motion-query`, it can
+also sample a finite B1 rehearsal Work headlessly. Discover support through
+`describe-capabilities` and start with a compact report:
+
+```sh
+"$CLI" motion-query "$WORK_DIR/dance.nvwa.json" "$ASSETS" 3.25 6.075 0.025
+```
+
+Use an existing finite rehearsal Work for this example. The command reads
+body geometry and writes JSON to stdout. It needs no renderer.
+
 The bundle retains original CC0 license texts, source notices and provenance
 beside the B1 base and appearance payloads, plus the original GLB fixture's
 license and provenance. These asset notices do not license the CLI itself.

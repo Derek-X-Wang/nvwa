@@ -15,8 +15,11 @@ if [[ "$("$tool" --version)" != 'wasm-bindgen 0.2.129' ]]; then
   echo 'Preview requires wasm-bindgen 0.2.129.' >&2
   exit 1
 fi
-CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-2}" cargo build --offline --locked -p nvwa-studio \
-  --example nvwa-preview --features manual-start --target wasm32-unknown-unknown
+export CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-2}"
+cargo_args=(--offline --locked -p nvwa-studio --example nvwa-preview
+  --features manual-start --target wasm32-unknown-unknown)
+cargo check "${cargo_args[@]}"
+cargo build "${cargo_args[@]}"
 mkdir -p "$destination"
 "$tool" --target web --out-name nvwa_preview --out-dir "$destination" \
   "${CARGO_TARGET_DIR:-target}/wasm32-unknown-unknown/debug/examples/nvwa-preview.wasm"

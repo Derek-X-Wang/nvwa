@@ -45,11 +45,15 @@ full. After shortening the span to four seconds, speed `1.0` preserves a full
 playthrough; retaining `0.8` advances only 3.2 source seconds. Read the actual
 source duration from discovery instead of assuming every clip is four seconds.
 
-After editing, inspect starts, durations, speeds and the final end time. Validate
-the saved Work with its assets. These checks establish the file's meaning;
-inspect an actual rendered preview separately to judge framing and visible poses.
-Use the [agent visual-preview workflow](visual-preview.md) when you need an
-actual B1 image before deciding on the next edit.
+For finite B1 rehearsal motion, start with the
+[headless motion query](../CLI-SUPPORT.md#headless-motion-observation).
+Build the CLI with `--features motion-query`. Choose the relevant time window,
+read the summary first, and use `--samples` if an interval or boundary needs
+more detail. Use `apply` to save a local edit into a new Work, then repeat the
+same query. Compare results and check starts, durations, speeds and the final
+end time. Validate the saved Work with its assets. After the numbers meet the
+motion objective, use [normal playback and visual preview](visual-preview.md)
+to judge rhythm, poses and framing.
 
 Save an envelope or array in a JSON file. Run
 `nvwa-cli apply input.nvwa.json commands.json output.nvwa.json`.
