@@ -678,6 +678,12 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
                     '24', '26', '25.0', '"25"', "'25'", '${{ 25 }}']:
             mutations.append(original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
                 'timeout-minutes: 25', 'timeout-minutes: '+cap)))
+        native_matrix = (
+            '      - name: Execute the actual B1 continuous motion matrix\n'
+            '        # Independent full-weight Python checks stream594frames; retain a finite\n'
+            '        #20minute step within the existing75minute job, including probe linking.\n'
+            '        timeout-minutes: 20\n')
+        self.assertEqual(original.count(native_matrix), 1)
         mutations.extend([
             original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('    timeout-minutes: 25\n', '')),
             original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER+'    timeout-minutes: 25\n'),
@@ -690,7 +696,7 @@ except (OSError,ValueError,KeyError,subprocess.CalledProcessError) as error:
                     '    timeout-minutes: 60\n', '    timeout-minutes: 20\n', 1),
             original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
                 'timeout-minutes: 25', 'timeout-minutes: 15')).replace(
-                    '        timeout-minutes: 20\n', '        timeout-minutes: 25\n', 1),
+                    native_matrix, native_matrix.replace('timeout-minutes: 20', 'timeout-minutes: 25'), 1),
         ])
         for header in MACOS15_HEADERS:
             for label in ['macos-14', 'macos-latest', 'macos-26', 'macos-15-intel',
