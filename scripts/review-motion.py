@@ -6,6 +6,7 @@ profile. This wrapper does not install software or implement a renderer.
 """
 import argparse
 from contextlib import contextmanager
+from decimal import Decimal, InvalidOperation
 import hashlib
 import json
 import math
@@ -20,7 +21,12 @@ import sys
 import time
 from urllib.parse import urlsplit
 
+from motion_clearance import write_clearance
+from preview import f32, verify_build
+
 PREVIEW = Path(__file__).with_name('preview.py')
+CAMERA_AZIMUTH = {'front': 0.0, 'side': 90.0}
+MAX_FRAMES = 24
 TERM_GRACE = 2.0
 KILL_GRACE = 2.0
 
@@ -108,6 +114,68 @@ def read_work(path):
         raise ValueError('Expected a Work with a stage camera and integer revision: ' + str(path))
     camera_independent_work(document)
     return raw, document
+
+
+def requested_views(args, base_path, raw, base):
+    if args.view:
+        names = set()
+        for supplied in args.view:
+            name, separator, path = supplied.partition('=')
+            if (not separator or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,47}', name)
+                    or name in names):
+                raise ValueError('Each view requires a unique safe NAME=WORK')
+            names.add(name)
+            source = Path(path).resolve(strict=True)
+            view_raw, document = read_work(source)
+            if camera_independent_work(document) != camera_independent_work(base):
+                raise ValueError('Review view differs from base Work outside camera/revision: ' + name)
+            yield name, source, view_raw, document
+        return
+
+    for name in args.camera or ['saved']:
+        if name == 'saved' and all(value is None for value in (args.azimuth, args.elevation, args.distance)):
+            yield name, base_path, raw, base
+            continue
+        camera = dict(base['stage']['camera'])
+        if name in CAMERA_AZIMUTH:
+            camera['azimuth_degrees'] = CAMERA_AZIMUTH[name]
+        for key, value in (('azimuth_degrees', args.azimuth), ('elevation_degrees', args.elevation),
+                           ('distance', args.distance)):
+            if value is not None:
+                camera[key] = value
+        document = dict(base, stage=dict(base['stage'], camera=camera))
+        yield name, base_path, (json.dumps(document, allow_nan=False) + '\n').encode(), document
+
+
+def range_times(args, view_count):
+    if args.end is None or args.step is None:
+        raise ValueError('A range requires --start, --end and --step')
+    try:
+        start, end, step = map(Decimal, (args.start, args.end, args.step))
+    except InvalidOperation as error:
+        raise ValueError('Range times must be decimal seconds') from error
+    if (not all(value.is_finite() for value in (start, end, step))
+            or not 0 <= start < end or not step > 0):
+        raise ValueError('Range requires finite seconds with 0 <= start < end and step > 0')
+    if f32(float(start)) >= f32(float(end)):
+        raise ValueError('Range endpoints have duplicate effective preview times')
+    if not math.isfinite(float(step)) or float(step) == 0:
+        raise ValueError('Range step must be a representable positive number of seconds')
+
+    times = []
+    effective = -1.0
+    for index in range(MAX_FRAMES // view_count):
+        # Decimal inputs keep values like 5.975 and 6.000 on the intended grid.
+        value = min(start + index * step, end)
+        seconds = float(value)
+        next_effective = f32(seconds)
+        if next_effective <= effective:
+            raise ValueError('Range produces duplicate or unordered effective preview times')
+        times.append(seconds)
+        effective = next_effective
+        if value == end:
+            return times
+    raise ValueError('Review requires one or two views and at most 24 total frames')
 
 
 def open_url(event):
@@ -254,10 +322,20 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--chrome', type=Path, required=True, help='Exact installed Chrome executable')
     parser.add_argument('--work', type=Path, required=True, help='Original Work; retained unchanged')
-    parser.add_argument('--view', action='append', required=True, metavar='NAME=WORK',
-                        help='One or two saved camera-copy Works; repeat in desired view order')
-    parser.add_argument('--seconds', type=float, action='append', required=True,
+    cameras = parser.add_mutually_exclusive_group()
+    cameras.add_argument('--camera', action='append', choices=['saved', *CAMERA_AZIMUTH],
+                         help='Use saved camera (default), front (0°), or side (90°); repeat for two views')
+    cameras.add_argument('--view', action='append', metavar='NAME=WORK',
+                         help='One or two saved camera-copy Works; repeat in desired view order')
+    parser.add_argument('--azimuth', type=float, help='Temporary orbit angle in degrees, with the saved camera')
+    parser.add_argument('--elevation', type=float, help='Temporary camera elevation in degrees')
+    parser.add_argument('--distance', type=float, help='Temporary camera distance in character-relative units')
+    timing = parser.add_mutually_exclusive_group(required=True)
+    timing.add_argument('--seconds', type=float, action='append',
                         help='Explicit time; repeat in desired order for each view')
+    timing.add_argument('--start', help='First sample in seconds; use with --end and --step')
+    parser.add_argument('--end', help='Last sample in seconds, always included in range mode')
+    parser.add_argument('--step', help='Sample spacing in seconds for range mode')
     parser.add_argument('--output', type=Path, required=True, help='New result directory; never overwrites')
     parser.add_argument('--preview-root', type=Path, required=True)
     parser.add_argument('--assets', type=Path, required=True)
@@ -288,8 +366,28 @@ def main(argv=None):
             raise ValueError('total-timeout must be finite, greater than 0 and at most 600 seconds')
         if not 0 <= args.port <= 65535:
             raise ValueError('port must be between 0 and 65535')
-        if not 1 <= len(args.view) <= 2 or len(args.view) * len(args.seconds) > 24:
+        view_count = len(args.view or args.camera or ['saved'])
+        if not 1 <= view_count <= 2:
             raise ValueError('Review requires one or two views and at most 24 total frames')
+        if args.start is not None:
+            args.seconds = range_times(args, view_count)
+            receipt['sampling'] = {
+                'start_seconds': args.seconds[0], 'end_seconds': args.seconds[-1],
+                'step_seconds': float(args.step),
+            }
+        elif args.end is not None or args.step is not None:
+            raise ValueError('--end and --step require range mode (--start)')
+        if view_count * len(args.seconds) > MAX_FRAMES:
+            raise ValueError('Review requires one or two views and at most 24 total frames')
+        if args.camera and len(set(args.camera)) != view_count:
+            raise ValueError('Each camera preset may be requested once')
+        overrides = (args.azimuth, args.elevation, args.distance)
+        if any(value is not None for value in overrides) and args.view:
+            raise ValueError('Camera overrides cannot be combined with camera-copy Works')
+        if any(value is not None and not math.isfinite(value) for value in overrides):
+            raise ValueError('Camera overrides must be finite')
+        if args.azimuth is not None and args.camera not in (None, ['saved']):
+            raise ValueError('An explicit azimuth requires the saved camera')
         if any(not math.isfinite(seconds) or seconds < 0 for seconds in args.seconds):
             raise ValueError('seconds must be finite and nonnegative; renderer also checks the timeline endpoint')
         for name in ('chrome', 'cli'):
@@ -302,6 +400,13 @@ def main(argv=None):
             if not path.is_dir():
                 raise ValueError(name + ' must name an existing directory')
             setattr(args, name, path)
+        try:
+            verify_build(args.preview_root)
+        except (OSError, KeyError, TypeError, ValueError) as error:
+            raise ValueError(
+                f'Preview build preflight failed: {error}. '
+                'Rebuild with bash scripts/build-preview-web.sh <new-preview-root>.'
+            ) from error
         base_path = args.work.resolve(strict=True)
         raw, base = read_work(base_path)
         (output / 'base.nvwa.json').write_bytes(raw)
@@ -340,15 +445,7 @@ def main(argv=None):
             raise ValueError('Original base Work CLI validation failed; see base-validation.json')
         views = []
         (output / 'views').mkdir()
-        for supplied in args.view:
-            name, separator, path = supplied.partition('=')
-            if (not separator or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,47}', name)
-                    or any(view['name'] == name for view in views)):
-                raise ValueError('Each view requires a unique safe NAME=WORK')
-            source = Path(path).resolve(strict=True)
-            view_raw, document = read_work(source)
-            if camera_independent_work(document) != camera_independent_work(base):
-                raise ValueError('Review view differs from base Work outside camera/revision: ' + name)
+        for name, source, view_raw, document in requested_views(args, base_path, raw, base):
             snapshot = output / 'views' / (name + '.nvwa.json')
             snapshot.write_bytes(view_raw)
             views.append({'name': name, 'input': str(source), 'snapshot': str(snapshot),
@@ -368,6 +465,8 @@ def main(argv=None):
                 write_json(output / 'receipt.json', receipt)
                 if result['status'] != 'rendered':
                     raise RuntimeError('Frame ' + str(frame['index']) + ' failed: ' + result['error'])
+        if args.start is not None:
+            receipt['foot_clearance'] = write_clearance(output, receipt['frames'], receipt['sampling'])
         receipt['status'] = 'rendered'
     except (OSError, ValueError, KeyError, TypeError, RuntimeError, subprocess.SubprocessError) as error:
         receipt.update(status='failed', error=str(error))

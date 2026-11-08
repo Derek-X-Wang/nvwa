@@ -214,6 +214,10 @@ RUNNING_PREEXISTING = ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-runtime/src/l
 
 def running_source_context(pins):
     """One fixed union; original17 and all historical cohort APIs stay fixed."""
+    return _running_source_context(pins, current_source_contexts(pins))
+
+
+def _running_source_context(pins, contexts):
     path = HERE / 'input-context-v6.json'
     require(path.is_file() and not path.is_symlink() and file_sha(path) == RUNNING_CONTEXT_SHA,
             'running source input context manifest identity mismatch')
@@ -224,18 +228,22 @@ def running_source_context(pins):
             and value['source_freeze_sha256'] == 'ecc815dac0c868d1f3597324c2ca10b5f021199e87007c71fbf0cd4c33647044'
             and set(value['files']) == set(pins['files']) | set(RUNNING_ADDITIONS)
             and len(value['files']) == 26, 'running source input complete union required')
-    pre_running_sources(pins)
+    _pre_running_sources(pins, contexts)
     return value['context'], value['files']
 
 
 def pre_running_sources(pins):
     """Only displaced lower source; no duplicated assets or old checker."""
+    return _pre_running_sources(pins, current_source_contexts(pins))
+
+
+def _pre_running_sources(pins, contexts):
     root = HERE / 'fixtures/pre-running'
     manifest = root / 'manifest.json'
     require(manifest.is_file() and not manifest.is_symlink() and file_sha(manifest) == RUNNING_BASELINES_SHA,
             'pre-running fixture manifest identity mismatch')
     value = json.loads(manifest.read_bytes())
-    expected = dict(current_source_contexts(pins))[value['context']]
+    expected = dict(contexts)[value['context']]
     require(set(value) == {'schema_version', 'context', 'source_commit', 'files', 'historical_outside', 'historical_original'}
             and value['schema_version'] == 1
             and value['context'] == 'b1-lower-face-squareness-product-v1'
@@ -252,7 +260,7 @@ def pre_running_sources(pins):
                 'pre-running fixture bytes mismatch: ' + name)
         result[name] = path.read_bytes()
     declared = {'fixtures/pre-running/manifest.json'} | {i['fixture'] for i in value['files'].values()}
-    require(set(value['historical_outside']) == {name for name, _ in current_source_contexts(pins)},
+    require(set(value['historical_outside']) == {name for name, _ in contexts},
             'pre-running historical cohort inventory mismatch')
     retained = list(value['historical_original'].items())
     for name, item in value['historical_original'].items():
@@ -277,6 +285,86 @@ def pre_running_sources(pins):
     return result
 
 
+MOTION_QUERY_CONTEXT = 'b1-motion-query-product-v1'
+MOTION_QUERY_CONTEXT_NAME = 'input-context-v7.json'
+MOTION_QUERY_CONTEXT_SHA = 'c4701231f75f94f00c6df90cf5d9562ae0421f4cbcf75a34a81f09b98c1bffa7'
+MOTION_QUERY_NEW = ('crates/nvwa-cli/src/motion_query.rs', 'crates/nvwa-cli/tests/motion_query.rs',
+                    'crates/nvwa-runtime/src/b1/foot_clearance.rs')
+MOTION_QUERY_OUTSIDE = {
+    'crates/nvwa-cli/Cargo.toml': {'bytes': 236, 'sha256': '8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508'},
+    'crates/nvwa-studio/examples/nvwa-preview.rs': {'bytes': 22049, 'sha256': 'c32c5bb4f71989af875ae1d24af40d6d7810ff97d4e4582d94c12311964e2452'},
+}
+MOTION_QUERY_ADDITIONS = (*MOTION_QUERY_NEW, *MOTION_QUERY_OUTSIDE)
+MOTION_QUERY_CHANGED = ('Cargo.lock', 'crates/nvwa-cli/src/main.rs', RUNTIME, 'crates/nvwa-runtime/src/lib.rs')
+MOTION_QUERY_FIXTURES = 'fixtures/pre-motion-query'
+
+
+def _motion_query_source_context(running):
+    path = source_file(HERE, MOTION_QUERY_CONTEXT_NAME)
+    raw = path.read_bytes()
+    require(sha(raw) == MOTION_QUERY_CONTEXT_SHA, 'motion-query source input context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_manifest_sha256',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == MOTION_QUERY_CONTEXT
+            and value['predecessor'] == running[0]
+            and value['predecessor_manifest_sha256'] == RUNNING_CONTEXT_SHA
+            and value['predecessor_commit'] == 'd272e16fa6f5faa55337c4ae5f6ac18043f8ab01',
+            'motion-query source input context predecessor mismatch')
+    files = value['files']
+    require(set(files) == set(running[1]) | set(MOTION_QUERY_ADDITIONS)
+            and len(files) == 31
+            and {name for name, item in running[1].items() if files[name] != item} == set(MOTION_QUERY_CHANGED),
+            'motion-query source input context complete union required')
+    _pre_motion_query_sources(running)
+    return value['context'], files
+
+
+def _pre_motion_query_sources(running):
+    expected = {name: running[1][name] for name in MOTION_QUERY_CHANGED} | MOTION_QUERY_OUTSIDE
+    result = {}
+    declared = set()
+    for name, item in expected.items():
+        if name == 'Cargo.lock':
+            relative = 'fixtures/pre-lower-contour/Cargo.lock'
+        else:
+            relative = MOTION_QUERY_FIXTURES + '/' + name
+            declared.add(relative)
+        raw = source_file(HERE, relative).read_bytes()
+        require({'bytes': len(raw), 'sha256': sha(raw)} == item,
+                'pre-motion-query fixture bytes mismatch: ' + name)
+        result[name] = raw
+    paths = list((HERE / MOTION_QUERY_FIXTURES).rglob('*'))
+    require(all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths)
+            and {str(path.relative_to(HERE)) for path in paths if path.is_file()} == declared,
+            'pre-motion-query fixture inventory mismatch')
+    return result
+
+
+def pre_motion_query_sources(pins):
+    """Return the exact displaced running inputs and pre-existing outside bytes."""
+    return _pre_motion_query_sources(running_source_context(pins))
+
+
+def source_file(root, relative):
+    path = root
+    for part in Path(relative).parts:
+        path = path / part
+        require(not path.is_symlink(), 'source input context mismatch: symlink: ' + relative)
+    require(path.is_file(), 'source input context mismatch: missing: ' + relative)
+    return path
+
+
+def check_no_motion_query_additions(root):
+    require(not any((root / name).exists() or (root / name).is_symlink() for name in MOTION_QUERY_NEW),
+            'source input context mismatch: motion-query additions in historical source')
+    for name, item in MOTION_QUERY_OUTSIDE.items():
+        if (root / name).exists() or (root / name).is_symlink():
+            path = source_file(root, name)
+            require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                    'source input context mismatch: motion-query outside source: ' + name)
+
+
 def check_source_context(root, pins, historical_only=False):
     """Authenticate one complete source context; never mix baseline/current files."""
     contexts = current_source_contexts(pins)
@@ -289,18 +377,20 @@ def check_source_context(root, pins, historical_only=False):
         require(path.is_file(), 'source input missing: ' + relative)
         actual[relative] = file_sha(path)
     if not historical_only and not any(actual == expected for _, expected in contexts):
-        context, expected = running_source_context(pins)
+        running = _running_source_context(pins, contexts)
+        if all(running[1][name]['sha256'] == digest for name, digest in actual.items()):
+            check_no_motion_query_additions(root)
+            context, expected = running
+        else:
+            context, expected = _motion_query_source_context(running)
         for relative, item in expected.items():
-            path = root
-            for part in Path(relative).parts:
-                path = path / part
-                require(not path.is_symlink(), 'source input context mismatch: symlink: ' + relative)
-            require(path.is_file(), 'source input context mismatch: missing: ' + relative)
+            path = source_file(root, relative)
             require(path.stat().st_size == item['bytes'], 'source input context mismatch: byte count: ' + relative)
             actual[relative] = file_sha(path)
         context = select_source_context(actual, [(context, {n: i['sha256'] for n, i in expected.items()})])
     else:
         context = select_source_context(actual, contexts, historical_only)
+        check_no_motion_query_additions(root)
         # Five paths are new source. Four additions to this admission set already
         # existed historically and must match one authenticated predecessor.
         require(not any((root / n).exists() or (root / n).is_symlink()
@@ -308,7 +398,7 @@ def check_source_context(root, pins, historical_only=False):
                 'source input context mismatch: running additions in historical source')
         present = [n for n in RUNNING_PREEXISTING if (root / n).exists() or (root / n).is_symlink()]
         if present:
-            pre_running_sources(pins)
+            _pre_running_sources(pins, contexts)
             variants = json.loads((HERE / 'fixtures/pre-running/manifest.json').read_bytes())['historical_outside'][context]
             outside = {}
             for relative in present:

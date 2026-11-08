@@ -1,4 +1,4 @@
-"""Exact running union at the actual formal gate; no motion-quality claim."""
+"""Exact running and motion-query unions at the actual formal gate."""
 import hashlib
 import importlib.util
 import json
@@ -40,13 +40,22 @@ class RunningContext(unittest.TestCase):
         cls.context_files = ('FROZEN-INPUTS.json', CONTEXT.CONTEXT_NAME, CONTEXT.SHORT01_CONTEXT_NAME,
                              CONTEXT.SELECTOR_CONTEXT_NAME, CONTEXT.AUTHORING_CONTEXT_NAME,
                              CONTEXT.MULTISEGMENT_CONTEXT_NAME, CONTEXT.CHEEK_CONTEXT_NAME,
-                             CONTEXT.LOWER_CONTEXT_NAME, cls.context_name)
+                             CONTEXT.LOWER_CONTEXT_NAME, cls.context_name, CONTEXT.MOTION_QUERY_CONTEXT_NAME)
         cls.retention = json.loads((HERE / cls.retention_name).read_bytes())
         cls.files = json.loads((HERE / cls.context_name).read_bytes())['files']
         cls.raw = (HERE / 'FROZEN-INPUTS.json').read_bytes()
         cls.original = json.loads(cls.raw)
+        temporary = tempfile.TemporaryDirectory(prefix='nvwa73-retained-running-')
+        cls.addClassCleanup(temporary.cleanup)
+        cls.running_root = Path(temporary.name)
+        retained = CONTEXT.pre_motion_query_sources(HERE, cls.raw, cls.original)
+        for name in cls.files.keys() | retained.keys():
+            path = cls.running_root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(retained[name] if name in retained else (ROOT / name).read_bytes())
 
-    def gate(self, root=ROOT, exp=HERE):
+    def gate(self, root=None, exp=HERE):
+        root = self.running_root if root is None else root
         with patch.object(ENTRY, 'ROOT', root), patch.object(ENTRY, 'EXP', exp):
             ENTRY.SourceContract('test_frozen_source_inputs').test_frozen_source_inputs()
 
@@ -72,8 +81,8 @@ class RunningContext(unittest.TestCase):
         self.assertEqual(name, CURRENT)
         self.assertEqual(len(files), 314)
         self.assertEqual(set(files), set(self.original) | set(CONTEXT.RUNNING_ADDITIONS))
-        actual = {n: {'bytes': (ROOT / n).stat().st_size,
-                      'sha256': hashlib.sha256((ROOT / n).read_bytes()).hexdigest()} for n in files}
+        actual = {n: {'bytes': (self.running_root / n).stat().st_size,
+                      'sha256': hashlib.sha256((self.running_root / n).read_bytes()).hexdigest()} for n in files}
         self.assertEqual(CONTEXT.select_context(actual, [(name, files)])[0], CURRENT)
         for historical, expected in old:
             with self.assertRaisesRegex(ValueError, 'source context'):
@@ -93,7 +102,7 @@ class RunningContext(unittest.TestCase):
             for name in self.files:
                 path = root / name
                 path.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, path)
+                shutil.copyfile(self.running_root / name, path)
             exp = root / 'experiments' / HERE.name
             exp.mkdir(parents=True, exist_ok=True)
             for name in self.context_files:
@@ -173,6 +182,93 @@ class RunningContext(unittest.TestCase):
             finally:
                 extra.unlink()
             self.gate(root, exp)
+
+    def test_motion_query_gate_authenticates_once_and_double_hashes_all_318_inputs(self):
+        files = json.loads((HERE / CONTEXT.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
+        self.assertEqual(len(files), 318)
+        self.assertEqual(set(files), self.files.keys() | set(CONTEXT.MOTION_QUERY_ADDITIONS))
+        module = sys.modules[ENTRY.source_contexts.__module__]
+        authenticate = module.current_source_contexts
+        with patch.object(module, 'current_source_contexts', wraps=authenticate) as chain, \
+                patch.object(module, 'pre_running_sources', wraps=module.pre_running_sources) as historical, \
+                patch.object(ENTRY, 'source_contexts', chain), \
+                patch.object(ENTRY, 'digest', wraps=ENTRY.digest) as digest:
+            for invocation in (1, 2):
+                self.gate(ROOT)
+                self.assertEqual(chain.call_count, invocation)
+                self.assertEqual(historical.call_count, invocation)
+                hashed = [call.args[0].relative_to(ROOT).as_posix() for call in digest.call_args_list]
+                self.assertCountEqual(hashed, list(files) * 2)
+                digest.reset_mock()
+
+    def test_motion_query_inputs_and_predecessor_mix_reject_and_restore(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa73-motion-query-') as directory:
+            root = Path(directory) / 'source'
+            exp = root / 'experiments' / HERE.name
+            exp.mkdir(parents=True)
+            for name in self.context_files:
+                shutil.copyfile(HERE / name, exp / name)
+            shutil.copytree(HERE / 'fixtures', exp / 'fixtures')
+            files = json.loads((HERE / CONTEXT.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
+            for name in files:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / name, path)
+
+            self.gate(root, exp)
+            sources = (*CONTEXT.MOTION_QUERY_CHANGED, *CONTEXT.MOTION_QUERY_ADDITIONS)
+            paths = [root / name for name in sources]
+            paths.append(exp / CONTEXT.MOTION_QUERY_CONTEXT_NAME)
+            paths.extend(path for path in (exp / CONTEXT.MOTION_QUERY_FIXTURES).rglob('*') if path.is_file())
+            for path in paths:
+                raw = path.read_bytes()
+                target = Path(directory) / 'preserved-input'
+                target.write_bytes(raw)
+                for fault in ('missing', 'same-size', 'symlink'):
+                    with self.subTest(path=path.relative_to(root), fault=fault):
+                        path.unlink()
+                        try:
+                            if fault == 'same-size':
+                                path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+                            elif fault == 'symlink':
+                                path.symlink_to(target)
+                            with self.assertRaisesRegex(AssertionError, 'FROZEN-INPUTS.json'):
+                                self.gate(root, exp)
+                        finally:
+                            path.unlink(missing_ok=True)
+                            path.write_bytes(raw)
+                        self.assertEqual(path.read_bytes(), raw)
+                        self.gate(root, exp)
+
+            for name in (*CONTEXT.MOTION_QUERY_CHANGED, *CONTEXT.MOTION_QUERY_OUTSIDE):
+                path = root / name
+                raw = path.read_bytes()
+                with self.subTest(stale=name):
+                    try:
+                        shutil.copyfile(self.running_root / name, path)
+                        with self.assertRaisesRegex(AssertionError, 'FROZEN-INPUTS.json'):
+                            self.gate(root, exp)
+                    finally:
+                        path.write_bytes(raw)
+                    self.assertEqual(path.read_bytes(), raw)
+                    self.gate(root, exp)
+
+            for name in sources:
+                path = self.running_root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                previous = path.read_bytes() if path.exists() else None
+                with self.subTest(new=name):
+                    try:
+                        shutil.copyfile(ROOT / name, path)
+                        with self.assertRaisesRegex(AssertionError, 'FROZEN-INPUTS.json'):
+                            self.gate(self.running_root, exp)
+                    finally:
+                        if previous is None:
+                            path.unlink()
+                        else:
+                            path.write_bytes(previous)
+                            self.assertEqual(path.read_bytes(), previous)
+                    self.gate(self.running_root, exp)
 
 if __name__ == '__main__':
     unittest.main()

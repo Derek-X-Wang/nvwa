@@ -44,9 +44,9 @@ PORTABLE25_HEADER = """  portable:
 """
 
 
-# eye10: reverse only the exact named portable step before retained assertions.
-EYE10_STEP = """      - name: Check eye, hair, and character parameter controls
-        timeout-minutes: 10
+# eye20: reverse only the exact named portable step before retained assertions.
+EYE20_STEP = """      - name: Check eye, hair, and character parameter controls
+        timeout-minutes: 20
         run: python3 -B scripts/check-portable.py eye-hair-parameters
 """
 
@@ -62,15 +62,15 @@ def historical_eye_budget_workflow(workflow, checks):
         jobs[name] = blocks[0]
     portable = jobs['portable']
     checks.assertTrue(portable.startswith(PORTABLE25_HEADER), 'required exact portable job header')
-    checks.assertEqual(workflow.count(EYE10_STEP.splitlines(keepends=True)[0]), 1,
+    checks.assertEqual(workflow.count(EYE20_STEP.splitlines(keepends=True)[0]), 1,
                        'required one named eye/hair step')
-    checks.assertEqual(portable.count(EYE10_STEP), 1, 'required exact eye/hair 10-minute step')
+    checks.assertEqual(portable.count(EYE20_STEP), 1, 'required exact eye/hair 20-minute step')
     preceding = ('      - name: Check bounded appearance diagnostic controls\n'
                  '        run: python3 -B scripts/check-portable.py appearance\n')
     following = ('      - name: Check authenticated B1 source bundle and rejection controls\n'
                  '        timeout-minutes: 3\n'
                  '        run: python3 -B scripts/check-portable.py authenticated-source\n')
-    checks.assertIn(preceding+EYE10_STEP+following, portable, 'required eye/hair step position')
+    checks.assertIn(preceding+EYE20_STEP+following, portable, 'required eye/hair step position')
     for name, cap, group in [
             ('Check authenticated B1 source bundle and rejection controls', '3', 'authenticated-source'),
             ('Prepare locked importer dependencies and check offline motion controls', '6', 'offline-motion'),
@@ -78,7 +78,7 @@ def historical_eye_budget_workflow(workflow, checks):
         step = '      - name: '+name+'\n        timeout-minutes: '+cap+'\n'
         step += '        run: python3 -B scripts/check-portable.py '+group+'\n'
         checks.assertEqual(portable.count(step), 1, 'required unchanged '+group+' step')
-    restored = portable.replace(EYE10_STEP, EYE10_STEP.replace('timeout-minutes: 10', 'timeout-minutes: 3'), 1)
+    restored = portable.replace(EYE20_STEP, EYE20_STEP.replace('timeout-minutes: 20', 'timeout-minutes: 3'), 1)
     return workflow.replace(portable, restored, 1)
 
 
@@ -809,6 +809,12 @@ class Policy(unittest.TestCase):
                     '24', '26', '25.0', '"25"', "'25'", '${{ 25 }}']:
             mutations.append(original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
                 'timeout-minutes: 25', 'timeout-minutes: '+cap)))
+        native_matrix = (
+            '      - name: Execute the actual B1 continuous motion matrix\n'
+            '        # Independent full-weight Python checks stream594frames; retain a finite\n'
+            '        #20minute step within the existing75minute job, including probe linking.\n'
+            '        timeout-minutes: 20\n')
+        self.assertEqual(original.count(native_matrix), 1)
         mutations.extend([
             original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('    timeout-minutes: 25\n', '')),
             original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER+'    timeout-minutes: 25\n'),
@@ -821,7 +827,7 @@ class Policy(unittest.TestCase):
                     '    timeout-minutes: 60\n', '    timeout-minutes: 20\n', 1),
             original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace(
                 'timeout-minutes: 25', 'timeout-minutes: 15')).replace(
-                    '        timeout-minutes: 20\n', '        timeout-minutes: 25\n', 1),
+                    native_matrix, native_matrix.replace('timeout-minutes: 20', 'timeout-minutes: 25'), 1),
         ])
         for header in MACOS15_HEADERS:
             for label in ['macos-14', 'macos-latest', 'macos-26', 'macos-15-intel',
@@ -870,20 +876,21 @@ class Policy(unittest.TestCase):
         eye_mutations = []
         for cap in ['3', '4', '6', '0', '-1', '5.0', '"5"', "'5'", '${{ 5 }}',
                     '5', '8.0', '"8"', "'8'", '${{ 8 }}',
-                    '8', '10.0', '"10"', "'10'", '${{ 10 }}']:
-            eye_mutations.append(('eye-cap-'+cap, original.replace(EYE10_STEP, EYE10_STEP.replace(
-                '        timeout-minutes: 10\n', '        timeout-minutes: '+cap+'\n'))))
+                    '8', '10.0', '"10"', "'10'", '${{ 10 }}',
+                    '10', '20.0', '"20"', "'20'", '${{ 20 }}']:
+            eye_mutations.append(('eye-cap-'+cap, original.replace(EYE20_STEP, EYE20_STEP.replace(
+                '        timeout-minutes: 20\n', '        timeout-minutes: '+cap+'\n'))))
         eye_mutations.extend([
-            ('missing-eye-step', original.replace(EYE10_STEP, '')),
-            ('duplicate-eye-step', original.replace(EYE10_STEP, EYE10_STEP*2)),
-            ('renamed-eye-step', original.replace(EYE10_STEP, EYE10_STEP.replace('Check eye, hair, and character parameter controls', 'Other controls'))),
-            ('missing-eye-cap', original.replace(EYE10_STEP, EYE10_STEP.replace('        timeout-minutes: 10\n', ''))),
-            ('duplicate-eye-cap', original.replace(EYE10_STEP, EYE10_STEP.replace('        timeout-minutes: 10\n', '        timeout-minutes: 10\n'*2))),
-            ('misplaced-eye-cap', original.replace(EYE10_STEP, EYE10_STEP.replace('        timeout-minutes: 10\n', '    timeout-minutes: 10\n'))),
-            ('wrong-eye-run', original.replace(EYE10_STEP, EYE10_STEP.replace('eye-hair-parameters\n', 'appearance\n'))),
-            ('changed-eye-run-mode', original.replace(EYE10_STEP, EYE10_STEP.replace('python3 -B ', 'python3 -B -O '))),
-            ('changed-step-order', original.replace(EYE10_STEP, '').replace('      - name: Check bounded appearance diagnostic controls\n', EYE10_STEP+'      - name: Check bounded appearance diagnostic controls\n')),
-            ('eye-moved-to-native', original.replace(EYE10_STEP, '').replace('  native-and-wasm:\n', '  native-and-wasm:\n'+EYE10_STEP)),
+            ('missing-eye-step', original.replace(EYE20_STEP, '')),
+            ('duplicate-eye-step', original.replace(EYE20_STEP, EYE20_STEP*2)),
+            ('renamed-eye-step', original.replace(EYE20_STEP, EYE20_STEP.replace('Check eye, hair, and character parameter controls', 'Other controls'))),
+            ('missing-eye-cap', original.replace(EYE20_STEP, EYE20_STEP.replace('        timeout-minutes: 20\n', ''))),
+            ('duplicate-eye-cap', original.replace(EYE20_STEP, EYE20_STEP.replace('        timeout-minutes: 20\n', '        timeout-minutes: 20\n'*2))),
+            ('misplaced-eye-cap', original.replace(EYE20_STEP, EYE20_STEP.replace('        timeout-minutes: 20\n', '    timeout-minutes: 20\n'))),
+            ('wrong-eye-run', original.replace(EYE20_STEP, EYE20_STEP.replace('eye-hair-parameters\n', 'appearance\n'))),
+            ('changed-eye-run-mode', original.replace(EYE20_STEP, EYE20_STEP.replace('python3 -B ', 'python3 -B -O '))),
+            ('changed-step-order', original.replace(EYE20_STEP, '').replace('      - name: Check bounded appearance diagnostic controls\n', EYE20_STEP+'      - name: Check bounded appearance diagnostic controls\n')),
+            ('eye-moved-to-native', original.replace(EYE20_STEP, '').replace('  native-and-wasm:\n', '  native-and-wasm:\n'+EYE20_STEP)),
             ('duplicate-portable-job', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER*2)),
             ('portable-cap', original.replace(PORTABLE25_HEADER, PORTABLE25_HEADER.replace('timeout-minutes: 25', 'timeout-minutes: 20'))),
         ])
@@ -894,17 +901,21 @@ class Policy(unittest.TestCase):
             changed = old.replace(old.splitlines()[0], '        timeout-minutes: '+new, 1)
             eye_mutations.append(('other-step-'+name, original.replace(old, changed)))
         eye_mutations.append(('five-moved-to-authenticated-source', original.replace(
-            EYE10_STEP, EYE10_STEP.replace('timeout-minutes: 10', 'timeout-minutes: 3')).replace(
+            EYE20_STEP, EYE20_STEP.replace('timeout-minutes: 20', 'timeout-minutes: 3')).replace(
                 'timeout-minutes: 3\n        run: python3 -B scripts/check-portable.py authenticated-source',
                 'timeout-minutes: 5\n        run: python3 -B scripts/check-portable.py authenticated-source')))
         eye_mutations.append(('eight-moved-to-authenticated-source', original.replace(
-            EYE10_STEP, EYE10_STEP.replace('timeout-minutes: 10', 'timeout-minutes: 3')).replace(
+            EYE20_STEP, EYE20_STEP.replace('timeout-minutes: 20', 'timeout-minutes: 3')).replace(
                 'timeout-minutes: 3\n        run: python3 -B scripts/check-portable.py authenticated-source',
                 'timeout-minutes: 8\n        run: python3 -B scripts/check-portable.py authenticated-source')))
         eye_mutations.append(('ten-moved-to-authenticated-source', original.replace(
-            EYE10_STEP, EYE10_STEP.replace('timeout-minutes: 10', 'timeout-minutes: 3')).replace(
+            EYE20_STEP, EYE20_STEP.replace('timeout-minutes: 20', 'timeout-minutes: 3')).replace(
                 'timeout-minutes: 3\n        run: python3 -B scripts/check-portable.py authenticated-source',
                 'timeout-minutes: 10\n        run: python3 -B scripts/check-portable.py authenticated-source')))
+        eye_mutations.append(('twenty-moved-to-authenticated-source', original.replace(
+            EYE20_STEP, EYE20_STEP.replace('timeout-minutes: 20', 'timeout-minutes: 3')).replace(
+                'timeout-minutes: 3\n        run: python3 -B scripts/check-portable.py authenticated-source',
+                'timeout-minutes: 20\n        run: python3 -B scripts/check-portable.py authenticated-source')))
         for name, old, new in [('native-and-wasm', '75', '76'), ('b1-source-regression', '60', '61'), ('native-cache-warm', '60', '61')]:
             job = re.search(r'(?ms)^  '+name+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', original).group()
             eye_mutations.append(('other-job-'+name, original.replace(job, job.replace(

@@ -178,10 +178,11 @@ JSON
 
 ### Standalone offline CLI distribution
 
-Package a locally built CLI with a complete filesystem asset root:
+Package a locally built CLI with a complete filesystem asset root. Enable the
+headless motion query for the Agent workflow:
 
 ```sh
-cargo build -p nvwa-cli --release --locked --offline
+cargo build -p nvwa-cli --features motion-query --release --locked --offline
 python3 -B scripts/package-cli.py
 python3 -B scripts/test-cli-package.py --binary target/release/nvwa-cli
 ```

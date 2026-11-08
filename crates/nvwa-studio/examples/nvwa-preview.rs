@@ -84,7 +84,7 @@ mod web {
     use nvwa_core::{SceneDocument, appearance_sha256};
     use nvwa_runtime::{
         AppearanceStatus, EditorState, Playback, RuntimeStatus, SceneCamera, StageViewOverride,
-        StartupDocumentPolicy,
+        StartupDocumentPolicy, b1_foot_clearance, b1_frame_snapshot,
     };
     use serde_json::{Value, json};
     use wasm_bindgen::prelude::*;
@@ -140,7 +140,12 @@ mod web {
         }
     }
 
-    fn receipt(preview: &Preview, status: &str, error: Option<&str>) -> Value {
+    fn receipt(
+        preview: &Preview,
+        status: &str,
+        error: Option<&str>,
+        foot_clearance: Value,
+    ) -> Value {
         json!({
             "schema_version": 1,
             "status": status,
@@ -153,13 +158,14 @@ mod web {
             "physical_width": WIDTH,
             "physical_height": HEIGHT,
             "scale_factor": 1.0,
+            "foot_clearance": foot_clearance,
             "error": error,
         })
     }
 
     fn fail(preview: &mut Preview, error: &str) {
         preview.phase = Phase::Failed;
-        write_status(receipt(preview, "failed", Some(error)));
+        write_status(receipt(preview, "failed", Some(error), Value::Null));
     }
 
     fn launch_query() -> Result<(), JsValue> {
@@ -400,7 +406,18 @@ mod web {
                     return;
                 }
                 if preview.phase == Phase::Rendered && !preview.published {
-                    write_status(receipt(preview, "rendered", None));
+                    let clearance = if preview.expected.profile.backend.is_b1_motion() {
+                        match b1_frame_snapshot(world).and_then(|_| b1_foot_clearance(world)) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                fail(preview, &format!("Foot clearance: {error}"));
+                                return;
+                            }
+                        }
+                    } else {
+                        Value::Null
+                    };
+                    write_status(receipt(preview, "rendered", None, clearance));
                     preview.published = true;
                 }
             }

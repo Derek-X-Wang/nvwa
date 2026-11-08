@@ -85,6 +85,12 @@ group. `scripts/check-b1-work.sh` remains the separate scoped native/Web package
 helper. Native CPU, source runtime, Wasm compilation and actual Web/native visual
 acceptance remain separate gates; portable success does not prove them.
 
+The native entrypoint checks the workspace before building its tests. It
+enables `nvwa-cli/motion-query` for both native commands so the real
+no-render query test runs in the existing macOS job. The portable entrypoint
+continues to exercise the lightweight CLI build and its unavailable-feature
+response.
+
 ## Retained Mac runner migration (#114)
 
 The retained `native-and-wasm` and conditional `native-cache-warm` jobs use
@@ -390,3 +396,13 @@ cases or optimize test cost. Classify any other new failure before further
 work. A failed bounded attempt requires an explicit choice between continued
 HOLD and a separately approved test-cost design task; do not start it
 automatically.
+
+### Motion query release budget
+
+Derek approved a 20-minute limit for the named eye, hair, and character
+parameter step in this release. The portable job has a 25-minute limit.
+[PR #144's original run](https://github.com/Derek-X-Wang/nvwa/actions/runs/42499833790)
+timed out in optimized mode at the previous limit. The four policy controls
+continue to require the exact named step and to restore its historical
+three-minute value for retained checks. A repeat timeout pauses publication
+for a new decision.

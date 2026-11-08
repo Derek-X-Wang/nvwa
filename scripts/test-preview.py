@@ -27,15 +27,38 @@ class TransferControls(unittest.TestCase):
     def setUp(self):
         self.request = {'seconds':2.0,'effective_seconds':2.0,'work_sha256':'request-sha',
                         'document_revision':7,'camera':{'distance':4.4},
+                        'foot_clearance_required':True,
                         'effective_camera':{'distance':preview.f32(4.4)}}
         self.payload = {'status':'rendered','runtime':{
             'schema_version':1,'status':'rendered',**self.request,'camera':self.request['effective_camera'],
+            'foot_clearance':{'unit':'cm','method':'b1_visible_body_foot_min_stage_y',
+                              'floor_stage_y_m':0,'left_cm':-0.5,'right_cm':4.0},
             'playing':False,'capture_callback':True},
             'png_data_url':'data:image/png;base64,'+base64.b64encode(png()).decode()}
 
     def test_complete_transfer(self):
-        raw, _ = preview.accept_result(self.payload,self.request)
+        raw, runtime = preview.accept_result(self.payload,self.request)
         self.assertEqual(preview.png_dimensions(raw),(1280,720))
+        self.assertEqual(runtime['foot_clearance']['left_cm'],-0.5)
+
+    def test_motion_rejects_missing_or_invalid_clearance(self):
+        runtime = self.payload['runtime']
+        original = runtime['foot_clearance']
+        for invalid in (None, dict(original, unit='m'), dict(original, left_cm=True),
+                        dict(original, right_cm=float('nan')), dict(original, floor_stage_y_m=1)):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError,'clearance'):
+                runtime['foot_clearance'] = invalid
+                preview.accept_result(self.payload,self.request)
+        del runtime['foot_clearance']
+        with self.assertRaisesRegex(ValueError,'clearance'):
+            preview.accept_result(self.payload,self.request)
+
+    def test_static_clearance_is_explicitly_unavailable(self):
+        self.request['foot_clearance_required'] = False
+        with self.assertRaisesRegex(ValueError,'Static'):
+            preview.accept_result(self.payload,self.request)
+        self.payload['runtime']['foot_clearance'] = None
+        preview.accept_result(self.payload,self.request)
 
     def test_missing_or_truncated_pixels_are_rejected(self):
         for raw in (b'',png()[:-1],preview.PNG_SIGNATURE,png()+b'extra'):

@@ -1,6 +1,7 @@
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
 from frozen_context import current_source_contexts as source_contexts,select_context,historical_sources,_running_source_context,RUNNING_ADDITIONS
+from frozen_context import _motion_query_source_context,check_no_motion_query_additions,MOTION_QUERY_ADDITIONS,MOTION_QUERY_CONTEXT
 ROOT=Path(__file__).resolve().parents[2];EXP=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('cpu_probe',EXP/'cpu_probe.py');probe=importlib.util.module_from_spec(spec);spec.loader.exec_module(probe)
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -80,18 +81,33 @@ class SourceContract(unittest.TestCase):
    contexts=source_contexts(EXP,p.read_bytes(),inputs)
    if any(actual == expected for _,expected in contexts):
     self.assertFalse(any((ROOT/name).exists() or (ROOT/name).is_symlink() for name in RUNNING_ADDITIONS),'FROZEN-INPUTS.json running additions in historical context')
+    check_no_motion_query_additions(ROOT)
     context,selected=select_context(actual,contexts)
    else:
-    running,expected=_running_source_context(EXP,inputs,contexts)
+    running=_running_source_context(EXP,inputs,contexts)
     for name in RUNNING_ADDITIONS:
      path=ROOT
      for part in Path(name).parts:
       path=path/part;self.assertFalse(path.is_symlink(),'FROZEN-INPUTS.json running input symlink rejected')
      self.assertTrue(path.is_file(),'FROZEN-INPUTS.json running input required: '+name)
      actual[name]={'bytes':path.stat().st_size,'sha256':digest(path)}
-    context,selected=select_context(actual,[(running,expected)])
+    if actual == running[1]:
+     check_no_motion_query_additions(ROOT)
+     context,selected=select_context(actual,[running])
+    else:
+     motion_query=_motion_query_source_context(EXP,running)
+     for name in MOTION_QUERY_ADDITIONS:
+      path=ROOT
+      for part in Path(name).parts:
+       path=path/part;self.assertFalse(path.is_symlink(),'FROZEN-INPUTS.json motion-query input symlink rejected: '+name)
+      self.assertTrue(path.is_file(),'FROZEN-INPUTS.json motion-query input required: '+name)
+      actual[name]={'bytes':path.stat().st_size,'sha256':digest(path)}
+     context,selected=select_context(actual,[motion_query])
   except ValueError as error:self.fail(str(error))
-  if context == 'b1-running-product-v1':
+  if context == MOTION_QUERY_CONTEXT:
+   self.assertEqual(set(selected),set(inputs)|set(RUNNING_ADDITIONS)|set(MOTION_QUERY_ADDITIONS),'FROZEN-INPUTS.json motion-query complete source paths required')
+   self.assertEqual(len(selected),318,'FROZEN-INPUTS.json motion-query complete source set required')
+  elif context == 'b1-running-product-v1':
    self.assertEqual(set(selected),set(inputs)|set(RUNNING_ADDITIONS),'FROZEN-INPUTS.json running complete source paths required')
    self.assertEqual(len(selected),314,'FROZEN-INPUTS.json running complete source set required')
   else:
