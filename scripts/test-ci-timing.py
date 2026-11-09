@@ -61,6 +61,27 @@ TIER_JOB_SHA256 = {'classify': 'b545979be6d56537b3f73eb75774c94c86c9c9d2ad0b0951
 TIER_INPUT_SHA256 = {'scripts/ci-tiering/policy.py': '8fe23dc381aca8eac8bf87aa7062aaa3c37199ff94f55e4016eadabd630360f7', 'scripts/ci-tiering/mac_smoke.py': '5ade91fa94ea313aebbfef793c4c2809c015a32da791efbfd40144062a6f3235', 'scripts/ci-tiering/linux-shared.sh': '94fd448e8e2018f4f9e70f1a9d8d5a759a771cd1ecd6c9cb7bf781ffc442ec88', 'scripts/ci-tiering/linux_mutations.py': 'bc4d945fa8c33e983fa5c2d3898651aebd9c8809871c97604fb119001cf4b19c', 'scripts/ci-tiering/test_policy.py': '085a6664172deb05efaef19eab912504e067b21fe59ff08ba72af4e76669a92f', '.github/workflows/ci-mac-report.yml': '5d35fadac433d125bbd8942d422dcb84d30ca37aab38429f2b7e5c1ff5257b7a'}
 
 
+# linux-garment-v2: authenticate the exact upgrade before projecting v1 bytes.
+LINUX_GARMENT_V2_SHA256 = {'scripts/ci-tiering/linux-shared.sh': '1450941e42b88c8c502da07759820e08baebf360b95230703d0757f099b6dc8a', 'scripts/ci-tiering/test_policy.py': '9a8d854d5ba7c2c223eac15b7a14ebe38b65e4ce7b08d5128de94bd195bcbc19', 'scripts/ci-tiering/linux_garment_controls.py': '14483090281c488d7fa6efc0fbf4823c873745c970b043957cc90a56761941e1'}
+LINUX_GARMENT_NORMALIZE = b"        linux_entry = 'scripts/ci-tiering/linux_garment_controls.py'\n        self.assertEqual(linux.count(linux_entry), 2)\n        linux = linux.replace(linux_entry, 'experiments/70-b1-garment-defect/test_controls.py')\n"
+
+
+def historical_tiering_input(name, checks, data=None):
+    data = (ROOT/name).read_bytes() if data is None else data
+    if name in LINUX_GARMENT_V2_SHA256:
+        checks.assertEqual(hashlib.sha256(data).hexdigest(), LINUX_GARMENT_V2_SHA256[name], name)
+    if name == 'scripts/ci-tiering/linux-shared.sh':
+        entry = b'scripts/ci-tiering/linux_garment_controls.py'
+        checks.assertEqual(data.count(entry), 2)
+        data = data.replace(entry, b'experiments/70-b1-garment-defect/test_controls.py')
+    if name == 'scripts/ci-tiering/test_policy.py':
+        blocks = re.findall(rb'(?ms)^# linux-garment-v2 begin\n.*?^# linux-garment-v2 end\n\n', data)
+        checks.assertEqual(len(blocks), 1)
+        checks.assertEqual(data.count(LINUX_GARMENT_NORMALIZE), 1)
+        data = data.replace(blocks[0], b'', 1).replace(LINUX_GARMENT_NORMALIZE, b'', 1)
+    return data
+
+
 def historical_tiering_workflow(workflow, checks):
     def block(name):
         matches = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
@@ -809,7 +830,21 @@ class TieringContract(unittest.TestCase):
         self.assertEqual(len(re.findall(r'^        run: ', predecessor.decode(), re.M)), 48)
         self.assertEqual(hashlib.sha256((ROOT/'scripts/portable-checks.json').read_bytes()).hexdigest(), '1a2719b28dad9a288f28e0ff5ba793120e6108217c564099d662fc1b104d7f14')
         for name, digest in TIER_INPUT_SHA256.items():
-            self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(), digest, name)
+            self.assertEqual(hashlib.sha256(historical_tiering_input(name, self)).hexdigest(), digest, name)
+        for name in LINUX_GARMENT_V2_SHA256:
+            historical_tiering_input(name, self)
+        # Exact v2 validation must reject altered or removed controls before projection.
+        for name, old, new in [
+                ('scripts/ci-tiering/linux-shared.sh', b'python3 -B -O ', b'python3 -B '),
+                ('scripts/ci-tiering/linux_garment_controls.py', b'places=6', b'places=5'),
+                ('scripts/ci-tiering/linux_garment_controls.py', b'22.005667838827247', b'22.0056'),
+                ('scripts/ci-tiering/linux_garment_controls.py', b"platform.machine() != 'x86_64'", b'False'),
+                ('scripts/ci-tiering/test_policy.py', b'self.assertEqual(retained(linux), original)', b'pass')]:
+            original_input = (ROOT/name).read_bytes()
+            mutant = original_input.replace(old, new, 1)
+            self.assertNotEqual(mutant, original_input)
+            with self.subTest(input=name, mutation=old), self.assertRaises(AssertionError):
+                historical_tiering_input(name, self, mutant)
 
     def test_new_jobs_and_selectors_reject_changes(self):
         original = (ROOT/'.github/workflows/ci.yml').read_text()

@@ -236,6 +236,9 @@ class WorkflowContract(unittest.TestCase):
     def test_linux_preserves_all_shared_commands_with_explicit_backend(self):
         old = job((HERE / 'predecessor-ci.yml').read_text(), 'native-and-wasm')
         linux = (HERE / 'linux-shared.sh').read_text()
+        linux_entry = 'scripts/ci-tiering/linux_garment_controls.py'
+        self.assertEqual(linux.count(linux_entry), 2)
+        linux = linux.replace(linux_entry, 'experiments/70-b1-garment-defect/test_controls.py')
         # Every old Cargo command from workspace-probe/appearance/matrix blocks
         # remains, except the Mac native wrapper replaced by explicit same tests.
         start = old.index('      - name: Run workspace CPU tests')
@@ -279,6 +282,57 @@ class WorkflowContract(unittest.TestCase):
         self.assertNotIn('cache/', workflow)
         self.assertNotIn('continue-on-error', workflow)
 
+
+# linux-garment-v2 begin
+LINUX_GARMENT_HOST = "# Linux x86_64 has its own measured SSE2 witness; retain the native file unchanged.\n# See docs/agents/ci-tiering.md. This is not a tolerance or runtime math change.\nimport platform\n\n\ndef require_linux_host():\n    if platform.system() != 'Linux' or platform.machine() != 'x86_64':\n        raise SystemExit('Linux garment controls require actual Linux x86_64')\n\n\nrequire_linux_host()\nsys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'experiments/70-b1-garment-defect'))\n"
+
+
+class LinuxGarmentContract(unittest.TestCase):
+    def test_same_eighteen_controls_and_precision_with_explicit_platform_witness(self):
+        original = (ROOT/'experiments/70-b1-garment-defect/test_controls.py').read_text()
+        self.assertEqual(hashlib.sha256(original.encode()).hexdigest(),
+                         '8cd854388f6f5d4411355217e21d97f38303693db2289cf6782e23e8040c728a')
+        linux = (HERE/'linux_garment_controls.py').read_text()
+        def retained(text):
+            self.assertEqual(text.count(LINUX_GARMENT_HOST), 1)
+            self.assertEqual(text.count('22.005667838827247'), 2)
+            self.assertEqual(text.count('places=6'), 2)
+            return text.replace(LINUX_GARMENT_HOST, '', 1).replace('22.005667838827247', '22.0056357384')
+        self.assertEqual(retained(linux), original)
+        self.assertEqual(len(re.findall(r'^    def test', linux, re.M)), 18)
+        for old, replacement in [('places=6', 'places=5'), ('22.005667838827247', '22.0056'),
+                                 ('p[0] += 0.01', 'p[0] += 0.00001'),
+                                 ('with self.assertRaisesRegex', 'if False'),
+                                 (LINUX_GARMENT_HOST, '')]:
+            mutant = linux.replace(old, replacement, 1)
+            self.assertNotEqual(mutant, linux)
+            with self.subTest(mutation=old), self.assertRaises(AssertionError):
+                self.assertEqual(retained(mutant), original)
+        workflow = (ROOT/'.github/workflows/ci.yml').read_text()
+        for name in ['native-and-wasm', 'mac-full-background']:
+            body = job(workflow, name)
+            self.assertEqual(body.count('experiments/70-b1-garment-defect/test_controls.py'), 2)
+            self.assertNotIn('linux_garment_controls', body)
+
+    def test_linux_guard_refuses_other_hosts_before_reading_any_frame(self):
+        import ast
+        import platform
+        source = (HERE/'linux_garment_controls.py').read_text()
+        tree = ast.parse(source)
+        fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'require_linux_host')
+        namespace = {'platform': platform}
+        exec(compile(ast.Module(body=[fn], type_ignores=[]), '<host guard>', 'exec'), namespace)
+        for system, machine, accepted in [('Linux', 'x86_64', True), ('Linux', 'aarch64', False),
+                                         ('Darwin', 'arm64', False), ('Darwin', 'x86_64', False),
+                                         ('Windows', 'AMD64', False)]:
+            with self.subTest(system=system, machine=machine), patch.object(platform, 'system', return_value=system), patch.object(platform, 'machine', return_value=machine):
+                if accepted:
+                    namespace['require_linux_host']()
+                else:
+                    with self.assertRaisesRegex(SystemExit, 'actual Linux x86_64'):
+                        namespace['require_linux_host']()
+        self.assertLess(source.index('require_linux_host()\nsys.path'), source.index('parser = argparse.ArgumentParser()'))
+# linux-garment-v2 end
 
 if __name__ == '__main__':
     unittest.main()
