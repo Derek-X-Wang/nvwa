@@ -50,6 +50,8 @@ def selected(root, env):
     require(phase in [{'phase': mode} for mode in ['off', 'trial', 'adopted']], 'invalid phase selector')
     if phase != {'phase': 'adopted'} or env.get('GITHUB_EVENT_NAME') != 'push' or env.get('GITHUB_REPOSITORY') != REPO or env.get('GITHUB_REF') != REF:
         return False
+    if env.get('GITHUB_JOB') != 'native-and-wasm':
+        return False
     path = Path(env['GITHUB_EVENT_PATH'])
     require(path.stat().st_size <= 1024**2, 'event payload exceeds bound')
     event = json.loads(path.read_text())
@@ -88,7 +90,9 @@ def input_paths(root):
             continue
         path = Path(name)
         special = path.name in ['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml', 'rust-toolchain', 'build.rs'] or '/.cargo/' in '/'+name
-        gate = name.startswith('scripts/') or name in ['.github/workflows/ci.yml', 'experiments/27-ci-baseline/check.sh', GATE_RS,
+        # Include the CI topology, classifier, short lane and Linux entrypoints.
+        # A short run cannot inherit an identity from the complete native lane.
+        gate = name.startswith(('scripts/', '.github/workflows/')) or name in ['experiments/27-ci-baseline/check.sh', GATE_RS,
                                                        'experiments/83-native-cache-trial/phase.json']
         gate = gate or (name.startswith(('experiments/60-b1-continuous-motion/', 'experiments/70-b1-garment-defect/',
                                         'experiments/83-native-cache-trial/')) and path.suffix == '.py')

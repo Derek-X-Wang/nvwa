@@ -200,3 +200,22 @@ upper-arm5、native75、B1／optional-warm60 和 cache action4 全部不变。
 四个预算合同消费者及本文件和 scripts/README.md。新身份需通过完整正式 CI；
 若 portable30 或任何既有步骤预算再次耗尽，保留证据及 release HOLD，停止继续
 加时、拆作业、删用例和无变化重跑，等待新决定。此次批准不包含自动合并。
+
+
+## CI 分层明确授权（2026-11-09）
+
+Derek 同意日常 PR 保留 Linux／核心／Web 必需检查和尽量短的 macOS 编译、
+真实 CLI 冒烟，完整 Mac 重矩阵仍自动执行并报告，但普通 PR 不等待它。
+Mac 专属或无法可靠分类的改动、main、发布与手动检查要求完整 Mac 通过。
+这是新的运行拓扑授权，不提高 portable30、eye20、native75 或任何原步骤预算，
+不删除用例、原 native 主机 guard、旧失败或 release HOLD。
+
+实现与边界见 [CI 分层](ci-tiering.md)。聚合检查只是仓库代码提供的状态，
+不代表分支保护已强制它。短 Mac 不证明窗口、Metal、画面或 CPU 渲染。
+完整 Mac 失败／取消保留真实红色；独立只读完成报告记录后续处理与发布 HOLD。
+发布前仍需目标 SHA 的完整通过证据，published 事件只是发布后审计。
+
+自然 main 运行 [42585301578](https://github.com/Derek-X-Wang/nvwa/actions/runs/42585301578)
+在 portable 作业约30分钟时取消，current19 控制未完成，frozen-upper-arm、Mac
+及 Linux B1 未运行；CLI 辅助运行通过不能替代它。本任务保留此缺口，不加时，
+不对原 source 盲目重跑，也不将取消归因为本候选或 Mac 排队。

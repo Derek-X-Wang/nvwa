@@ -351,7 +351,11 @@ def timestamp(value):
 
 
 def queue_report(metadata, records=None):
-    """Use completed GH REST run/jobs metadata, not inferred scheduler reasons."""
+    """Historical three-lane observer only (macos-b1-v1 / linux-b1-v2).
+
+    Tiered CI has conditional and independent dependency edges; do not apply
+    this old portable-gate model to it. Per-job shell/report still works.
+    """
     run = metadata["run"]
     jobs = metadata["jobs"]
     created = timestamp(run["created_at"])
@@ -371,7 +375,7 @@ def queue_report(metadata, records=None):
                for version, b1 in policies.items()
                if len(jobs) == 3 and {j["name"] for j in jobs} == set(common) | {b1}]
     if len(matches) != 1:
-        raise ValueError("unexpected job inventory")
+        raise ValueError("unexpected job inventory: queue_report supports historical three-lane topology only; tiered CI requires a separate metadata model")
     policy_version, job_keys = matches[0]
     if (type(run.get("id")) is not int or run["id"] <= 0
             or type(run.get("run_attempt")) is not int or run["run_attempt"] <= 0

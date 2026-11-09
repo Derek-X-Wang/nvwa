@@ -1,11 +1,15 @@
 name: Bounded CI
 on:
+  workflow_dispatch:
+  release:
+    types: [published]
   pull_request:
   push:
     branches: [main]
+    tags: ['*']
 permissions:
   contents: read
-# No cache restore/save steps; no cache token overrides.
+# Existing complete-Mac main-only cache policy is retained; PRs stay cold.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -22,6 +26,24 @@ defaults:
     # Original run bodies execute through Bash -e; scoped observers add no Cargo flags.
     shell: python3 -B scripts/ci-timing.py shell {0}
 jobs:
+  classify:
+    name: Classify required CI scope
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      full_required: ${{ steps.scope.outputs.full_required }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Verify tier policy controls
+        run: |
+          python3 -B scripts/ci-tiering/test_policy.py
+          python3 -B -O scripts/ci-tiering/test_policy.py
+      - id: scope
+        name: Classify complete base/head diff (unknown requires full Mac)
+        run: python3 -B scripts/ci-tiering/policy.py classify
   portable:
     name: Core, CLI, and diagnostic controls
     runs-on: ubuntu-24.04
@@ -81,7 +103,173 @@ jobs:
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     # Reject cheap portable failures before spending a cold graphical compile.
-    needs: portable
+    needs: [classify, portable]
+    if: ${{ needs.classify.outputs.full_required == 'true' }}
+    runs-on: macos-15
+    # The measured original lane already takes about 30 minutes cold. Keep a
+    # finite bound for native tests, mutation witnesses and continuous motion.
+    timeout-minutes: 75
+    # native-cache-trial begin
+    outputs:
+      trial_enabled: ${{ steps.trial-prepare.outputs.enabled }}
+      trial_key: ${{ steps.trial-prepare.outputs.key }}
+    # native-cache-trial end
+    env:
+      CARGO_BUILD_JOBS: '1'
+      # Reuse this run's root outputs for the isolated probe; no remote cache.
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+      # native-cache-trial begin
+      TRIAL_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+      TRIAL_HEAD_REF: ${{ github.head_ref }}
+      # native-cache-trial end
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      # native-main-cache begin
+      - name: Prepare main-only native seed
+        id: main-prepare
+        run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py prepare
+      - name: Restore exact main native seed
+        if: ${{ steps.main-prepare.outputs.enabled == 'true' && steps.main-prepare.outputs.restore == 'true' }}
+        id: main-restore
+        continue-on-error: true
+        timeout-minutes: 4
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/target
+          key: ${{ steps.main-prepare.outputs.key }}
+      - name: Verify main restore or safely prepare complete cold fallback
+        if: ${{ steps.main-prepare.outputs.enabled == 'true' }}
+        env:
+          MAIN_RESTORE_OUTCOME: ${{ steps.main-restore.outcome }}
+          MAIN_RESTORE_HIT: ${{ steps.main-restore.outputs.cache-hit }}
+          MAIN_RESTORE_PRIMARY: ${{ steps.main-restore.outputs.cache-primary-key }}
+          MAIN_RESTORE_MATCHED: ${{ steps.main-restore.outputs.cache-matched-key }}
+        run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py restore
+      # native-main-cache end
+      # native-cache-trial begin
+      - name: Prepare bounded native cache trial
+        id: trial-prepare
+        run: python3 -B experiments/83-native-cache-trial/cache_trial.py prepare --lane cold
+      - name: Measure cold exact-key miss
+        if: ${{ steps.trial-prepare.outputs.enabled == 'true' }}
+        timeout-minutes: 4
+        run: python3 -B experiments/83-native-cache-trial/cache_trial.py cold-miss --lane cold
+      # native-cache-trial end
+      - name: Run workspace CPU tests
+        run: |
+          bash experiments/27-ci-baseline/check.sh native
+          # Product packages are formatted in portable. --all here also visits
+          # admitted vendor path dependencies whose exact bytes must be retained.
+          cargo fmt --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
+          cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
+          cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --locked --offline
+          cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --locked --offline
+      - name: Check appearance quality and production acceptance bridges
+        run: |
+          cargo fmt --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --package b1-appearance-quality-preview --check
+          cargo fmt --manifest-path experiments/66-b1-appearance-work/Cargo.toml --package b1-appearance-work --check
+          cargo test --manifest-path experiments/65-b1-appearance-quality/preview/Cargo.toml --lib --locked --offline
+          cargo test --manifest-path experiments/66-b1-appearance-work/Cargo.toml --lib --locked --offline
+          cargo fmt --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --package b1-eye-render-diagnosis --check
+          cargo fmt --manifest-path experiments/71-b1-character-parameters/Cargo.toml --package b1-character-parameters --check
+          cargo test --manifest-path experiments/68-b1-eye-render-diagnosis/Cargo.toml --lib --locked --offline
+          cargo test --manifest-path experiments/71-b1-character-parameters/Cargo.toml --lib --locked --offline
+          cargo fmt --manifest-path experiments/73-high-poly-eyes/Cargo.toml --package b1-high-poly-eyes --check
+          cargo test --manifest-path experiments/73-high-poly-eyes/Cargo.toml --lib --locked --offline
+          cargo fmt --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --package b1-shoulder-source-corrective --check
+          cargo test --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --locked --offline
+      - name: Check B1 production-source mutation witnesses
+        timeout-minutes: 12
+        run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+      - name: Execute the actual B1 continuous motion matrix
+        # Independent full-weight Python checks stream594frames; retain a finite
+        #20minute step within the existing75minute job, including probe linking.
+        timeout-minutes: 20
+        run: |
+          cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
+          cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline
+          python3 -B experiments/60-b1-continuous-motion/run_matrix.py --binary "$CARGO_TARGET_DIR/debug/matrix" --asset-root "$GITHUB_WORKSPACE/assets" --out "$RUNNER_TEMP/nvwa-b1-motion-matrix"
+          # Use this job's actual retained source2 frame. The garment controls
+          # require real source/upload data, not an invented portable fixture.
+          python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
+          python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
+      # native-cache-trial begin
+      - name: Verify restored sources, all gates and target cap
+        if: ${{ steps.trial-prepare.outputs.enabled == 'true' }}
+        run: python3 -B experiments/83-native-cache-trial/cache_trial.py finish --lane cold
+      - name: Measure native target compression and save
+        if: ${{ steps.trial-prepare.outputs.enabled == 'true' }}
+        timeout-minutes: 4
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/target
+          key: ${{ steps.trial-prepare.outputs.key }}
+      - name: Verify remote exact-key persistence after save
+        if: ${{ steps.trial-prepare.outputs.enabled == 'true' }}
+        id: trial-persisted
+        timeout-minutes: 4
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/target
+          key: ${{ steps.trial-prepare.outputs.key }}
+          lookup-only: true
+          fail-on-cache-miss: true
+      - name: Assert real persisted exact hit
+        if: ${{ steps.trial-prepare.outputs.enabled == 'true' }}
+        env:
+          TRIAL_HIT: ${{ steps.trial-persisted.outputs.cache-hit }}
+          TRIAL_PRIMARY: ${{ steps.trial-persisted.outputs.cache-primary-key }}
+          TRIAL_MATCHED: ${{ steps.trial-persisted.outputs.cache-matched-key }}
+        run: python3 -B experiments/83-native-cache-trial/cache_trial.py receipt --lane persisted
+      # native-cache-trial end
+      # native-main-cache begin
+      - name: Verify main seed gates and complete logical size
+        if: ${{ steps.main-prepare.outputs.enabled == 'true' }}
+        id: main-finish
+        run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py finish
+      - name: Save only independently absent main seed
+        if: ${{ steps.main-finish.outputs.save == 'true' }}
+        id: main-save
+        continue-on-error: true
+        timeout-minutes: 4
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/target
+          key: ${{ steps.main-prepare.outputs.key }}
+      - name: Look up exact main seed persistence
+        if: ${{ steps.main-finish.outputs.save == 'true' }}
+        id: main-persist
+        continue-on-error: true
+        timeout-minutes: 4
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ github.workspace }}/target
+          key: ${{ steps.main-prepare.outputs.key }}
+          lookup-only: true
+          fail-on-cache-miss: true
+      - name: Record verified persistence or explicit cache service failure
+        if: ${{ steps.main-finish.outputs.save == 'true' }}
+        env:
+          MAIN_SAVE_OUTCOME: ${{ steps.main-save.outcome }}
+          MAIN_PERSIST_OUTCOME: ${{ steps.main-persist.outcome }}
+          MAIN_PERSIST_HIT: ${{ steps.main-persist.outputs.cache-hit }}
+          MAIN_PERSIST_PRIMARY: ${{ steps.main-persist.outputs.cache-primary-key }}
+          MAIN_PERSIST_MATCHED: ${{ steps.main-persist.outputs.cache-matched-key }}
+        run: python3 -B experiments/83-native-cache-trial/main_policy/policy.py persist
+      # native-main-cache end
+  mac-full-background:
+    name: Complete Mac background evidence
+    # Reject cheap portable failures before spending a cold graphical compile.
+    needs: [classify, portable]
+    if: ${{ needs.classify.outputs.full_required == 'false' }}
     runs-on: macos-15
     # The measured original lane already takes about 30 minutes cold. Keep a
     # finite bound for native tests, mutation witnesses and continuous motion.
@@ -400,3 +588,82 @@ jobs:
         run: python3 -B experiments/83-native-cache-trial/cache_trial.py finish --lane warm
       # native-cache-trial end
   # native-cache-trial end
+
+  mac-smoke:
+    name: Mac native compile and real CLI smoke
+    needs: classify
+    runs-on: macos-15
+    timeout-minutes: 30
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Compile native Studio and build ordinary CLI
+        run: |
+          cargo check -p nvwa-studio --locked
+          cargo build -p nvwa-cli --locked
+      - name: Actual Mac CLI Work and asset smoke
+        run: python3 -B scripts/ci-tiering/mac_smoke.py --binary "$CARGO_TARGET_DIR/debug/nvwa-cli" --assets "$GITHUB_WORKSPACE/assets"
+  linux-shared:
+    name: Linux shared runtime and full motion evidence
+    needs: classify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Fetch all exact shared graphs
+        run: bash scripts/ci-tiering/linux-shared.sh fetch
+      - name: Shared workspace tests and real CPU export
+        run: bash scripts/ci-tiering/linux-shared.sh workspace
+      - name: Shared appearance acceptance bridges
+        run: bash scripts/ci-tiering/linux-shared.sh bridges
+      - name: Shared production mutation red and restored green
+        timeout-minutes: 12
+        run: python3 -B scripts/ci-tiering/linux_mutations.py --linux-backend --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+      - name: Complete 594-frame matrix and real garment controls
+        timeout-minutes: 20
+        run: bash scripts/ci-tiering/linux-shared.sh matrix
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
+  required-gate:
+    name: Required CI gate
+    if: ${{ always() }}
+    needs: [classify, portable, linux-shared, mac-smoke, b1-source-regression, native-and-wasm]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Require every applicable result, reject missing/cancelled/skipped
+        env:
+          TIER_NEEDS: ${{ toJSON(needs) }}
+        run: python3 -B scripts/ci-tiering/policy.py gate
+  full-mac-report:
+    name: Complete Mac result report
+    if: ${{ always() }}
+    needs: [native-and-wasm, mac-full-background]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Publish actual full-Mac result (failure remains red)
+        env:
+          TIER_NEEDS: ${{ toJSON(needs) }}
+        run: python3 -B scripts/ci-tiering/policy.py report

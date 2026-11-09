@@ -430,3 +430,20 @@ the two policy documents. It is a finite budget allocation, not a performance cl
 or completion guarantee. If portable30 or an existing step limit is exhausted again,
 preserve evidence and release HOLD; do not increase time, split jobs, remove cases or
 retry unchanged without another decision. The approval does not authorize auto-merge.
+
+
+## CI tiering v1 (2026-11-09)
+
+The [tiering policy](../docs/agents/ci-tiering.md) keeps the historical portable
+catalog and complete Mac command bodies. New Linux shared evidence and an actual
+Mac CLI smoke feed `Required CI gate`; ordinary PRs run complete Mac evidence in
+a separate nonblocking branch. Platform-sensitive, unknown and release scopes
+require that complete branch. No old budget or source gate is relaxed.
+
+`ci-timing.py shell` and `report` still record each new job. Its `queue` subcommand
+is explicitly historical: it accepts only the exact three-producer
+`macos-b1-v1` / `linux-b1-v2` inventories. Do not filter the tiered workflow down to
+three jobs to obtain a misleading queue estimate. Tiered elapsed times must come
+from complete attempt-specific job metadata; queue/provisioning causes remain
+unknown. The independent completion report does not run code from PRs and keeps
+failed, cancelled and unknown full-Mac results visible.
