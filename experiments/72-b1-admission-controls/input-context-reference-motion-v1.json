@@ -1,0 +1,176 @@
+{
+  "context": "b1-reference-motion-product-v1",
+  "files": {
+    "Cargo.lock": {
+      "bytes": 145846,
+      "sha256": "a031f2304f3698e4050bcda4943ed32d4463316cdd4fbc146ab0c4cc9f02afac"
+    },
+    "Cargo.toml": {
+      "bytes": 1490,
+      "sha256": "4200872e84947e204da73563a1a681deb04496755320a22c00c63011b791ab37"
+    },
+    "crates/nvwa-b1-adapter/src/lib.rs": {
+      "bytes": 22798,
+      "sha256": "9c7683612e637b66ecb976d961dfda817ed480fcb8692718768266249b033c3b"
+    },
+    "crates/nvwa-b1-adapter/src/poses.json": {
+      "bytes": 739,
+      "sha256": "8e51c044841eb1c6cb96d583ca927cceb51ddf7d0729f4526f61777c8b7adab2"
+    },
+    "crates/nvwa-b1-adapter/src/poses.rs": {
+      "bytes": 944,
+      "sha256": "71685876699888f4fbbc97a31e4ef6db3625539ed81e7671ee8bfa758c5d14c2"
+    },
+    "crates/nvwa-cli/Cargo.toml": {
+      "bytes": 583,
+      "sha256": "a287570d54d67c98acae1278c2c8685972dba1c2935bf625ca4a4f362aa4f5b9"
+    },
+    "crates/nvwa-cli/src/cpu_render.rs": {
+      "bytes": 9364,
+      "sha256": "dfc5629050e76397d8171821790b07a5a1a7b61630a5726d7417336c3370e311"
+    },
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 35876,
+      "sha256": "5c6d376b1d68eeca07e6413a58c98efe1845122f25a9ca1ec2da44cc8630b68f"
+    },
+    "crates/nvwa-cli/src/motion_query.rs": {
+      "bytes": 10081,
+      "sha256": "eeaf37792c993bcdc98eb11107a5076e2a26e0ce7cbfc051ef6bd6d138da9e13"
+    },
+    "crates/nvwa-cli/tests/cpu_render.rs": {
+      "bytes": 6269,
+      "sha256": "2f94f4750fa9fe1e78060108e6d0f330cef8e3872f9f3721526b03c55cb7d6bf"
+    },
+    "crates/nvwa-cli/tests/motion_query.rs": {
+      "bytes": 3137,
+      "sha256": "2a80da69793c9089884b7750e66b2af7446617da80affd08ba90f731b18b3c45"
+    },
+    "crates/nvwa-cli/tests/reference_motion.rs": {
+      "bytes": 5012,
+      "sha256": "bbcae96ecf44421d0e59c40fdd683886d75a6f39edae99913bc0f19b8afd736d"
+    },
+    "crates/nvwa-cli/tests/running.rs": {
+      "bytes": 3281,
+      "sha256": "ef64b4d40b5e23e850b166bc807452dc1f7974714e4e3d3d1b6f2e50e155ba32"
+    },
+    "crates/nvwa-core/src/appearance.rs": {
+      "bytes": 20409,
+      "sha256": "088ebe7c7711145400dc3a51a55cf6a6bb4272ced425a4cb0b07e1591bf8c43e"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 22936,
+      "sha256": "4846c5675de23d764d30f4989ade67d28a3e3d4a808c1135a0ebc1d99a31a731"
+    },
+    "crates/nvwa-core/src/lib.rs": {
+      "bytes": 45676,
+      "sha256": "79cd869331998267ceaa3359f4064fe13e17215866c58166e480079cdaa65bc5"
+    },
+    "crates/nvwa-core/src/reference_motion.rs": {
+      "bytes": 6421,
+      "sha256": "042ad6112adcb58e4ed3aa3693a4d2e4aebe2422d8b80c5debd55f6778d679e6"
+    },
+    "crates/nvwa-core/src/running.rs": {
+      "bytes": 12240,
+      "sha256": "7a36d1f632efdbaf1282f5d9d1232a28b0b822fc93253308f3707d2a41bce82f"
+    },
+    "crates/nvwa-runtime/Cargo.toml": {
+      "bytes": 1034,
+      "sha256": "1c26481cb2bbb5acb0ea1eb014febd013e058b13b26233abe18dc4e4a71ffa06"
+    },
+    "crates/nvwa-runtime/src/appearance/geometry.rs": {
+      "bytes": 18682,
+      "sha256": "91263726c0c7ac121bd74eb44e29380712abed5ba2fb6cb3a139021099b13ec6"
+    },
+    "crates/nvwa-runtime/src/appearance/mod.rs": {
+      "bytes": 68441,
+      "sha256": "b9b57bcaaf55b926e8b7318d0664d5a415dbd52ef71df6e899270760b232bdba"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 219572,
+      "sha256": "936685fb94cea7f235568c24d81241e7f50ce544f9bd3d54917e35e55b85674b"
+    },
+    "crates/nvwa-runtime/src/b1/cpu_render.rs": {
+      "bytes": 12123,
+      "sha256": "dd8f74bda6d57bc2559557e19471ba9fe43c68320c0744cf421385abd074134c"
+    },
+    "crates/nvwa-runtime/src/b1/foot_clearance.rs": {
+      "bytes": 3867,
+      "sha256": "cbfebf4ffce3596d1df0a22db0947c2842b26bd55441e94af69434d5a421c55e"
+    },
+    "crates/nvwa-runtime/src/b1_running.rs": {
+      "bytes": 27143,
+      "sha256": "49bff0cfbc84e86c9e239907d8bb825871e0a580e9904a6272bf8883c9fbce37"
+    },
+    "crates/nvwa-runtime/src/b1_running_controls.json": {
+      "bytes": 1982790,
+      "sha256": "f3421d4d1d11c4a5f38cab6d068b9f2159194f506b0a4dfa2c72198afa156de8"
+    },
+    "crates/nvwa-runtime/src/lib.rs": {
+      "bytes": 86174,
+      "sha256": "52e061750558370beb01fb9ac0cc0a1d4ccd57f60778b030a9fcbe4f63334d8f"
+    },
+    "crates/nvwa-runtime/src/stage.rs": {
+      "bytes": 22065,
+      "sha256": "e661eb0f71c2626e736fd5b3bc2126aff7500c5f42cb574e5e03b722ed77edbb"
+    },
+    "crates/nvwa-studio/examples/nvwa-preview.rs": {
+      "bytes": 22764,
+      "sha256": "dede30ad5e6155b8c045a5e3ac4b37d9b16d635dfc454717251afedd801b989d"
+    },
+    "crates/nvwa-studio/src/appearance_ui_tests.rs": {
+      "bytes": 26046,
+      "sha256": "e9cf9402c8af3ff6b21df78a9b2df6d8de3b90db152267af003f5df998bca165"
+    },
+    "crates/nvwa-studio/src/lib.rs": {
+      "bytes": 86431,
+      "sha256": "3c874c0cc4a43d840c5a7603653cdd16872a1b06ffc734f0faa74e73d9ff2669"
+    },
+    "docs/agents/cli-authoring.md": {
+      "bytes": 13753,
+      "sha256": "8bddd0827f103f3e70209b8bed26816f7169586ae7c7e832fe24ff7f4e818523"
+    },
+    "docs/agents/cpu-render.md": {
+      "bytes": 4485,
+      "sha256": "850dd333e9c4798158fc3cdc97227ffd5b0c6ea0126e5e134bb14dd8a948df1b"
+    },
+    "docs/agents/reference-motion.md": {
+      "bytes": 3184,
+      "sha256": "e4e8aff7c2121656d946738a4fcc3ba7083b358ee5f4fadb08ccab118ccd0b28"
+    },
+    "docs/b1-running-contract.md": {
+      "bytes": 6161,
+      "sha256": "357873237407b9f7a1bc1f609a0d659f0d36f6dc448314e1320500be025b414d"
+    },
+    "experiments/27-ci-baseline/check.sh": {
+      "bytes": 2175,
+      "sha256": "4d1ed052925409ac542f9ecc532b864c8a41c0111d396cbb32fab10fa67ac8ea"
+    },
+    "experiments/56-b1-pose-reference/poses.json": {
+      "bytes": 739,
+      "sha256": "8e51c044841eb1c6cb96d583ca927cceb51ddf7d0729f4526f61777c8b7adab2"
+    },
+    "experiments/56-b1-pose-reference/reference/frozen/manifest.json": {
+      "bytes": 97871,
+      "sha256": "98ffb4b7947101bdd2107055beed866d7f040b33f699fb859c090c4c03242636"
+    },
+    "experiments/57-b1-pose-runtime/compare.py": {
+      "bytes": 10506,
+      "sha256": "0fcbeda79d029fbb67d1f8962834a9ec03fe6c094a0fcf2817487ad5f678b9ae"
+    },
+    "experiments/57-b1-pose-runtime/evidence/final-current40.json": {
+      "bytes": 364455,
+      "sha256": "2708cb30cf92dce9c7a07bd4c1496c55c2584b8c49ac50c2fe719d4f7ec344e5"
+    },
+    "experiments/57-b1-pose-runtime/validation.py": {
+      "bytes": 3880,
+      "sha256": "20e5e1090f03c06cf1f103645247d89408d911063dfdb7060ad3706492ee6c0a"
+    },
+    "scripts/check-b1-motion-mutations.py": {
+      "bytes": 4866,
+      "sha256": "0ce06d27b941aac799537376378ffd214d1384a571fcf8b1fe657e82846c9a31"
+    }
+  },
+  "predecessor": "b1-cpu-export-product-v1",
+  "predecessor_commit": "875213616aa68d81dbfcd6378f4e2292f5b24004",
+  "schema_version": 1
+}

@@ -1,0 +1,456 @@
+{
+  "schema_version": 1,
+  "context": "b1-waist-reference-motion-product-v1",
+  "predecessor": "b1-waist-circumference-product-v1",
+  "predecessor_commit": "9031ce7f82167621e8b7fed2b7a0af5a899b8a17",
+  "files": {
+    "Cargo.lock": {
+      "bytes": 145846,
+      "sha256": "a031f2304f3698e4050bcda4943ed32d4463316cdd4fbc146ab0c4cc9f02afac"
+    },
+    "Cargo.toml": {
+      "bytes": 1490,
+      "sha256": "4200872e84947e204da73563a1a681deb04496755320a22c00c63011b791ab37"
+    },
+    "assets/characters/mpfb-b1-v5/base.obj": {
+      "bytes": 1798283,
+      "sha256": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2"
+    },
+    "assets/characters/mpfb-b1-v5/body.mhclo": {
+      "bytes": 103864,
+      "sha256": "152e68fcc03cdbd08566b42d53dcb253546d7a71e3dabd62a95f8c72763aa5aa"
+    },
+    "assets/characters/mpfb-b1-v5/composite.json": {
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    "assets/characters/mpfb-b1-v5/empty.macro": {
+      "bytes": 20,
+      "sha256": "e0ca0537a591ee9d362fb69c381d793f0e4a64f6ce62d21c0d607edfdd8bf37c"
+    },
+    "assets/characters/mpfb-b1-v5/garment/female_sportsuit01.mhclo": {
+      "bytes": 127990,
+      "sha256": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7"
+    },
+    "assets/characters/mpfb-b1-v5/garment/female_sportsuit01.obj": {
+      "bytes": 146887,
+      "sha256": "f9f91788c1dd2918fceedd4dd4ada520f56fb8dfd68cbbeb9a4f6bfbd8e101a9"
+    },
+    "assets/characters/mpfb-b1-v5/licenses/CC0-1.0.txt": {
+      "bytes": 6962,
+      "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c"
+    },
+    "assets/characters/mpfb-b1-v5/licenses/CHEEK-VOLUME-DERIVATION-NOTICE.md": {
+      "bytes": 906,
+      "sha256": "65e205a56fc5a60ba19d68ddb4691e3c288559ca76e24391407dfec3eb28a97c"
+    },
+    "assets/characters/mpfb-b1-v5/licenses/LOWER-FACE-SQUARING-NOTICE.md": {
+      "bytes": 1170,
+      "sha256": "6a5e4afbc8e1ac25770495cf39f665892f6bebef8cba33a37757f46efb92f513"
+    },
+    "assets/characters/mpfb-b1-v5/licenses/MPFB-LICENSE.md": {
+      "bytes": 3188,
+      "sha256": "5cefb60680cb9efd4550a2e65d719021cfbec9dad3658481d11d48ae863ce04d"
+    },
+    "assets/characters/mpfb-b1-v5/licenses/PARAMETER-SOURCE-NOTICE.md": {
+      "bytes": 628,
+      "sha256": "d194d7afd8def0c9c4d785270bcb95a8a823ef89683090b8cece9e14714e8d8e"
+    },
+    "assets/characters/mpfb-b1-v5/licenses/SOURCE-NOTICE.md": {
+      "bytes": 1732,
+      "sha256": "7a42c3784a6ec75afb7dece43f63675b411dfa6916f9605bcfc3abdb6dc0c38c"
+    },
+    "assets/characters/mpfb-b1-v5/licenses/provenance.json": {
+      "bytes": 4371,
+      "sha256": "67a7946369dad5a2f5cf17fe99bfc9f3991503284f848c0a64e4f1162b783c29"
+    },
+    "assets/characters/mpfb-b1-v5/manifest.json": {
+      "bytes": 6348,
+      "sha256": "9513686fe1a2d24bf64cd067ce1a83d615e7fff30225804ee215991967ff95a2"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/README.md": {
+      "bytes": 1218,
+      "sha256": "d0aa808f442142ee2d376e9cfbe194cae60de89d2f555e8eb2dbbe8655c500e9"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/cheek-volume-derivation.json": {
+      "bytes": 4671,
+      "sha256": "32c1da31d403b714dfea2162892efdc4b91e22497c0ad0abf232c17dcc5cfb3e"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/chin-bones-source.json": {
+      "bytes": 1872,
+      "sha256": "5224b73aed180cfe756817ecfe20b42e1d043ffdc35262f544fcc320de08c6a2"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/legacy-v2-manifest.json": {
+      "bytes": 5145,
+      "sha256": "15834b6bea9bc7daff2d7189e15a66e044130c3b6b4cc75f4b3e508a4e97f3f4"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/legacy-v2-runtime-payloads.json": {
+      "bytes": 4963,
+      "sha256": "c6dbc043263231a51d4e0ca2f4d8063399f6f59d6399f8d7591f6a0c9234832e"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/legacy-v3-manifest.json": {
+      "bytes": 5555,
+      "sha256": "e4bd47f3f3cf3ef38fd3400bfd5127b7ade52b630cef823f00bba939262796c3"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/legacy-v3-runtime-payloads.json": {
+      "bytes": 5373,
+      "sha256": "1d5c480bc488742877f6aa4281b4c388d95f62eb631d458b1686a391d0b1197a"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/legacy-v4-manifest.json": {
+      "bytes": 5944,
+      "sha256": "6b11cb9fc53158bf5673d0c5e1636d30d6e2347f4f51ce34f5fea8650baec090"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/legacy-v4-runtime-payloads.json": {
+      "bytes": 5762,
+      "sha256": "76f0e5709079b2effccbed535d694791ee2a1358777dac42350fae10dc02c125"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/parameter-source-receipt.json": {
+      "bytes": 7929,
+      "sha256": "6192d1fd1552d3ecb9cefd99184057fd4d5ec452bc033a652333cb22d8baa5a8"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/runtime-payloads.json": {
+      "bytes": 6166,
+      "sha256": "f9a3091c1d7d6f6ed8c16daa6d3fca5d4d8cbb7f4f51e52e83e3d70ccb9c3b28"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-decr.target.gz": {
+      "bytes": 787,
+      "sha256": "202ff036e39abea154e0896ad34641184c5e8b77610dca9e1e8e4ce4a5db1bc4"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-incr.target.gz": {
+      "bytes": 1274,
+      "sha256": "75bf330b96d0036c46f779ed003782c7380c77dd06c14fd80f1fa20a5093fee1"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-decr.target.gz": {
+      "bytes": 765,
+      "sha256": "ea12455c7a85e7b3b5e6e4882b4b68823a00bcaef4ea048cc49be452a139c1bc"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-incr.target.gz": {
+      "bytes": 1288,
+      "sha256": "4df3e61e843c2d3381ef534e90d347b6b8ea763428d69eba8ef2ed5ab0affb8c"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-decr.target.gz": {
+      "bytes": 32837,
+      "sha256": "88613903c211706f31de1868318bfb88d51bd23791a11e1a4488266a88083396"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-incr.target.gz": {
+      "bytes": 3341,
+      "sha256": "72c76aeb7956fb083aaf0d5efa00b2cdfa0f328eefc01d5e28f4610719de50c3"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-decr.target.gz": {
+      "bytes": 8182,
+      "sha256": "be10c1d44a229f1faf302f7d51f45a0146e70a1912d3f9022c0ce5a3761ebb88"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-incr.target.gz": {
+      "bytes": 8032,
+      "sha256": "dcbca91a872f64c9015ecc3473a6769e2ccbb2ad551dce1a7692d277a88d39a1"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/waist-circumference-source.json": {
+      "bytes": 2559,
+      "sha256": "c0774f8f1c672e749f2dfaee9ab703d4c1eacf72a3074aebfb654763e04f0268"
+    },
+    "assets/characters/mpfb-b1-v5/provenance/waist-source-validation.json": {
+      "bytes": 833,
+      "sha256": "1a753a9df33277a6b3b9c8866f8d7bfce3d93d3d0c27ac1153ada5e85ee9bfd3"
+    },
+    "assets/characters/mpfb-b1-v5/rig.game_engine.json": {
+      "bytes": 40936,
+      "sha256": "b324ddb4b707721c19630bfadb87c3e3b38eed3b6e4590bb3cead43ea918f799"
+    },
+    "assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-decr.target": {
+      "bytes": 5685,
+      "sha256": "aeab40d480502a05d4be4a9d9b9589212bbddf4a2da7f2418bc4ffc4fed2a487"
+    },
+    "assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-incr.target": {
+      "bytes": 8236,
+      "sha256": "3eba8dad1ee2d2bf01cb49f1cd50a50cae7a947b37f556405bf173fa26053a84"
+    },
+    "assets/characters/mpfb-b1-v5/targets/chin-bones-decr.target": {
+      "bytes": 150149,
+      "sha256": "5d1ead7e75d7a17315dee460188676fb7e3c640c172c887309f7b655ff808c52"
+    },
+    "assets/characters/mpfb-b1-v5/targets/chin-bones-incr.target": {
+      "bytes": 13844,
+      "sha256": "4b1558340919c6a1241165129a318d838bf6eb1d39559e0ca0f0aa8b5ba6ba4e"
+    },
+    "assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-decr.target": {
+      "bytes": 1072,
+      "sha256": "6bf2cab4e65e5dd7456405ad3d0b68f4ec80b6130ff78349a02f650f33f7f443"
+    },
+    "assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-incr.target": {
+      "bytes": 857,
+      "sha256": "789b8d79f920786244d8e7de1d87ce4fff7e2650d7bf171a35ad22b9011d5238"
+    },
+    "assets/characters/mpfb-b1-v5/targets/chin-width-decr.target": {
+      "bytes": 2649,
+      "sha256": "b99f878229b6cc8a52bca1ec3b1d746faeca9049acd6ae59170ae2d0a776911c"
+    },
+    "assets/characters/mpfb-b1-v5/targets/chin-width-incr.target": {
+      "bytes": 3833,
+      "sha256": "39449581db893fa4a2561b0d05ff11344deccf5d0cb85411fdf702b4c4738dc8"
+    },
+    "assets/characters/mpfb-b1-v5/targets/head-scale-horiz-decr.target": {
+      "bytes": 81086,
+      "sha256": "6e4390a2dffe69e6c09ad6a6e1b0c905439ef128ff2401301daf1c1b39c958ac"
+    },
+    "assets/characters/mpfb-b1-v5/targets/head-scale-horiz-incr.target": {
+      "bytes": 82552,
+      "sha256": "12ad083682f5319882923d775074677569c3612706c0d785a4b287821abfe400"
+    },
+    "assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-decr.target": {
+      "bytes": 32310,
+      "sha256": "356c5dfc694c738c9780105c9c2c554e0906f903720a6f092601fd6f586ba559"
+    },
+    "assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-incr.target": {
+      "bytes": 32310,
+      "sha256": "2fcaf2239862bec5d285ac4620ba1b1f7713dbb105f495c8f16836a7b2a4f474"
+    },
+    "assets/characters/mpfb-b1-v5/targets/measure-waist-circ-decr.target": {
+      "bytes": 27059,
+      "sha256": "e0c8bd8894e44a704627650a5023faa8a8b78e9ab365b20143ec7a9aee31985a"
+    },
+    "assets/characters/mpfb-b1-v5/targets/measure-waist-circ-incr.target": {
+      "bytes": 27078,
+      "sha256": "fc622241d5a985bdec45afae004c23828fda0ea493c4ab377f356a1ebfe3298b"
+    },
+    "assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-decr.target": {
+      "bytes": 12040,
+      "sha256": "2eecf3b71ce834fdf8c00817c4de28913d0abcbde9bb1a05df860946d31581a1"
+    },
+    "assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-incr.target": {
+      "bytes": 15053,
+      "sha256": "1561577f3f2b061fd42290ac3adc469a2c796090ca9668a9e131e65ed047ec43"
+    },
+    "assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-decr.target": {
+      "bytes": 7849,
+      "sha256": "da92e9cadad16b0652177935d6febd5a53d3263fcfe7421de01075ddc52bdc81"
+    },
+    "assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-incr.target": {
+      "bytes": 10107,
+      "sha256": "42e5ae83aa3897fcd0ad045d8628dd0044b63817a13797129fe712cd4a710360"
+    },
+    "assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-decr.target": {
+      "bytes": 4470,
+      "sha256": "41480edfeec76d2595edec3e714fc077e93d265e12c7b5c94eb7aa42288f71df"
+    },
+    "assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-incr.target": {
+      "bytes": 6964,
+      "sha256": "a2130755fb06b021ac4ab1269715835588f76276201bc15369ffa2f13889573b"
+    },
+    "assets/characters/mpfb-b1-v5/targets/torso-scale-vert-decr.target": {
+      "bytes": 201357,
+      "sha256": "a7deb8343fb3ecfef46c6118662b1a40f0cfc33d79ff959c641dd796a17bed9f"
+    },
+    "assets/characters/mpfb-b1-v5/targets/torso-scale-vert-incr.target": {
+      "bytes": 195076,
+      "sha256": "caa5e04cebd43ba40c9a98717fc7f177b14b43c1f01c37e15fef7a4cb4e6660c"
+    },
+    "assets/characters/mpfb-b1-v5/vertex_groups.json": {
+      "bytes": 81984,
+      "sha256": "8cb1417bc55ae5ec8aa99f90734e81ed5fbb556511ff6a2c00e0534b70911444"
+    },
+    "assets/characters/mpfb-b1-v5/weights.game_engine.json": {
+      "bytes": 3026778,
+      "sha256": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473"
+    },
+    "crates/nvwa-b1-adapter/src/lib.rs": {
+      "bytes": 22798,
+      "sha256": "9c7683612e637b66ecb976d961dfda817ed480fcb8692718768266249b033c3b"
+    },
+    "crates/nvwa-b1-adapter/src/poses.json": {
+      "bytes": 739,
+      "sha256": "8e51c044841eb1c6cb96d583ca927cceb51ddf7d0729f4526f61777c8b7adab2"
+    },
+    "crates/nvwa-b1-adapter/src/poses.rs": {
+      "bytes": 944,
+      "sha256": "71685876699888f4fbbc97a31e4ef6db3625539ed81e7671ee8bfa758c5d14c2"
+    },
+    "crates/nvwa-cli/Cargo.toml": {
+      "bytes": 583,
+      "sha256": "a287570d54d67c98acae1278c2c8685972dba1c2935bf625ca4a4f362aa4f5b9"
+    },
+    "crates/nvwa-cli/src/cpu_render.rs": {
+      "bytes": 9450,
+      "sha256": "b9b5f8c406b3a543af97b5bc5b8672c8a0411e40d865592f324943c91ad1878a"
+    },
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 36834,
+      "sha256": "c65605a01f4e133cb7802547c0425d77db74292bb6b844762fa37469f534a4b3"
+    },
+    "crates/nvwa-cli/src/motion_query.rs": {
+      "bytes": 10081,
+      "sha256": "eeaf37792c993bcdc98eb11107a5076e2a26e0ce7cbfc051ef6bd6d138da9e13"
+    },
+    "crates/nvwa-cli/tests/appearance.rs": {
+      "bytes": 19195,
+      "sha256": "ddf2a305f1ba09c998f27920b7a1a428d8cd6e1a23a76bb0742afcb6ce806526"
+    },
+    "crates/nvwa-cli/tests/cpu_render.rs": {
+      "bytes": 9019,
+      "sha256": "60c140798d981c3b1884b22c92bcd2b8e429e241c8a7ce5b785244cc27997e05"
+    },
+    "crates/nvwa-cli/tests/motion_query.rs": {
+      "bytes": 3137,
+      "sha256": "2a80da69793c9089884b7750e66b2af7446617da80affd08ba90f731b18b3c45"
+    },
+    "crates/nvwa-cli/tests/reference_motion.rs": {
+      "bytes": 5012,
+      "sha256": "bbcae96ecf44421d0e59c40fdd683886d75a6f39edae99913bc0f19b8afd736d"
+    },
+    "crates/nvwa-cli/tests/running.rs": {
+      "bytes": 3281,
+      "sha256": "ef64b4d40b5e23e850b166bc807452dc1f7974714e4e3d3d1b6f2e50e155ba32"
+    },
+    "crates/nvwa-cli/tests/waist.rs": {
+      "bytes": 4734,
+      "sha256": "24fc992d434c52779baf8a9f859f68ed2ad42449746794e6c4add2cbffa62293"
+    },
+    "crates/nvwa-core/src/appearance.rs": {
+      "bytes": 20865,
+      "sha256": "ba828032b9340927b197df469f15d9b67462339dbad9b9a778c2ebd79be290e6"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 25498,
+      "sha256": "822138ffb9aef0f7a32e9c9a5fc3ba24ec6bd8674fe36f1bb97163107d854d3b"
+    },
+    "crates/nvwa-core/src/lib.rs": {
+      "bytes": 45676,
+      "sha256": "79cd869331998267ceaa3359f4064fe13e17215866c58166e480079cdaa65bc5"
+    },
+    "crates/nvwa-core/src/reference_motion.rs": {
+      "bytes": 6421,
+      "sha256": "042ad6112adcb58e4ed3aa3693a4d2e4aebe2422d8b80c5debd55f6778d679e6"
+    },
+    "crates/nvwa-core/src/running.rs": {
+      "bytes": 12240,
+      "sha256": "7a36d1f632efdbaf1282f5d9d1232a28b0b822fc93253308f3707d2a41bce82f"
+    },
+    "crates/nvwa-core/tests/appearance.rs": {
+      "bytes": 25791,
+      "sha256": "9a7dc59d36da932db212039f3f0181571d87d435bf9e447e22efca9bdb1fa5c7"
+    },
+    "crates/nvwa-core/tests/waist.rs": {
+      "bytes": 5576,
+      "sha256": "caa8d482f34458708cf16aefac320101346f8b3eb161927bdd8bbca6406a8170"
+    },
+    "crates/nvwa-runtime/Cargo.toml": {
+      "bytes": 1034,
+      "sha256": "1c26481cb2bbb5acb0ea1eb014febd013e058b13b26233abe18dc4e4a71ffa06"
+    },
+    "crates/nvwa-runtime/src/appearance/geometry.rs": {
+      "bytes": 18682,
+      "sha256": "91263726c0c7ac121bd74eb44e29380712abed5ba2fb6cb3a139021099b13ec6"
+    },
+    "crates/nvwa-runtime/src/appearance/mod.rs": {
+      "bytes": 68441,
+      "sha256": "b9b57bcaaf55b926e8b7318d0664d5a415dbd52ef71df6e899270760b232bdba"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 219904,
+      "sha256": "42e5114eb4983dbd8cee60d90b432b60c84c35afdb12642081420301d67bfabb"
+    },
+    "crates/nvwa-runtime/src/b1/cpu_render.rs": {
+      "bytes": 12215,
+      "sha256": "526cdd12ede44a62db62fcb1a5036308c9b70d4ae48c1d733a6290695037d15d"
+    },
+    "crates/nvwa-runtime/src/b1/foot_clearance.rs": {
+      "bytes": 3867,
+      "sha256": "cbfebf4ffce3596d1df0a22db0947c2842b26bd55441e94af69434d5a421c55e"
+    },
+    "crates/nvwa-runtime/src/b1_running.rs": {
+      "bytes": 27143,
+      "sha256": "49bff0cfbc84e86c9e239907d8bb825871e0a580e9904a6272bf8883c9fbce37"
+    },
+    "crates/nvwa-runtime/src/b1_running_controls.json": {
+      "bytes": 1982790,
+      "sha256": "f3421d4d1d11c4a5f38cab6d068b9f2159194f506b0a4dfa2c72198afa156de8"
+    },
+    "crates/nvwa-runtime/src/lib.rs": {
+      "bytes": 86174,
+      "sha256": "52e061750558370beb01fb9ac0cc0a1d4ccd57f60778b030a9fcbe4f63334d8f"
+    },
+    "crates/nvwa-runtime/src/stage.rs": {
+      "bytes": 22065,
+      "sha256": "e661eb0f71c2626e736fd5b3bc2126aff7500c5f42cb574e5e03b722ed77edbb"
+    },
+    "crates/nvwa-studio/examples/nvwa-preview.rs": {
+      "bytes": 22764,
+      "sha256": "dede30ad5e6155b8c045a5e3ac4b37d9b16d635dfc454717251afedd801b989d"
+    },
+    "crates/nvwa-studio/src/appearance_ui.rs": {
+      "bytes": 2958,
+      "sha256": "47d401d1bc8931b9d4ad572e526719a243d66e1a3941f4bdef3cc0106b1cc125"
+    },
+    "crates/nvwa-studio/src/appearance_ui_tests.rs": {
+      "bytes": 26046,
+      "sha256": "e9cf9402c8af3ff6b21df78a9b2df6d8de3b90db152267af003f5df998bca165"
+    },
+    "crates/nvwa-studio/src/lib.rs": {
+      "bytes": 87228,
+      "sha256": "7fe9ec46af518bc4cd43fe2bb8155e5ad3e03111131f8d1c88b706a7253cca96"
+    },
+    "crates/nvwa-studio/src/lower_contour_ui_tests.rs": {
+      "bytes": 5538,
+      "sha256": "65ba6639197bc261e44bffdfb166ede1ff14c3d9fc13f73acd4bb54bddc0994c"
+    },
+    "docs/agents/cli-authoring.md": {
+      "bytes": 13753,
+      "sha256": "8bddd0827f103f3e70209b8bed26816f7169586ae7c7e832fe24ff7f4e818523"
+    },
+    "docs/agents/cpu-render.md": {
+      "bytes": 4622,
+      "sha256": "c2d77904f1a8893ce0c899d139378ef680cb14ae20154140748b86a665639ebe"
+    },
+    "docs/agents/reference-motion.md": {
+      "bytes": 3184,
+      "sha256": "e4e8aff7c2121656d946738a4fcc3ba7083b358ee5f4fadb08ccab118ccd0b28"
+    },
+    "docs/b1-running-contract.md": {
+      "bytes": 6161,
+      "sha256": "357873237407b9f7a1bc1f609a0d659f0d36f6dc448314e1320500be025b414d"
+    },
+    "experiments/27-ci-baseline/check.sh": {
+      "bytes": 2175,
+      "sha256": "4d1ed052925409ac542f9ecc532b864c8a41c0111d396cbb32fab10fa67ac8ea"
+    },
+    "experiments/56-b1-pose-reference/poses.json": {
+      "bytes": 739,
+      "sha256": "8e51c044841eb1c6cb96d583ca927cceb51ddf7d0729f4526f61777c8b7adab2"
+    },
+    "experiments/56-b1-pose-reference/reference/frozen/manifest.json": {
+      "bytes": 97871,
+      "sha256": "98ffb4b7947101bdd2107055beed866d7f040b33f699fb859c090c4c03242636"
+    },
+    "experiments/57-b1-pose-runtime/compare.py": {
+      "bytes": 10506,
+      "sha256": "0fcbeda79d029fbb67d1f8962834a9ec03fe6c094a0fcf2817487ad5f678b9ae"
+    },
+    "experiments/57-b1-pose-runtime/evidence/final-current40.json": {
+      "bytes": 364455,
+      "sha256": "2708cb30cf92dce9c7a07bd4c1496c55c2584b8c49ac50c2fe719d4f7ec344e5"
+    },
+    "experiments/57-b1-pose-runtime/validation.py": {
+      "bytes": 3880,
+      "sha256": "20e5e1090f03c06cf1f103645247d89408d911063dfdb7060ad3706492ee6c0a"
+    },
+    "scripts/build-web.sh": {
+      "bytes": 4738,
+      "sha256": "b7e6f0f4b69c885879e113af380042d02517ede0440687081454753733c15db6"
+    },
+    "scripts/check-b1-motion-mutations.py": {
+      "bytes": 4866,
+      "sha256": "0ce06d27b941aac799537376378ffd214d1384a571fcf8b1fe657e82846c9a31"
+    },
+    "scripts/package-cli.py": {
+      "bytes": 8741,
+      "sha256": "771640209312d1e6a4c4ae9f0e41af488b6d40143cc46603e51595a2d278d22e"
+    },
+    "scripts/package-native.py": {
+      "bytes": 4546,
+      "sha256": "bcf0e90069a0ef1163f7ab5de01adeff91dadba13cf6e79e157c977a396f0477"
+    },
+    "scripts/test-cli-package.py": {
+      "bytes": 30148,
+      "sha256": "1c79d51f4bf972827045245ff61147bb9cca925161ec0cc3f51d297bbe40a492"
+    }
+  }
+}

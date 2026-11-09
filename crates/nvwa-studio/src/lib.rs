@@ -959,6 +959,11 @@ fn draw_editor_ui(
             ui.heading(
                 if document
                     .as_ref()
+                    .is_some_and(|doc| doc.reference_motion.is_some())
+                {
+                    "Reference motion"
+                } else if document
+                    .as_ref()
                     .is_some_and(|doc| doc.profile.backend.is_b1_motion())
                 {
                     "B1 authored rehearsal"
@@ -1001,49 +1006,53 @@ fn draw_editor_ui(
                         clips: nine_second_sequence(),
                     });
                 }
-                if doc.profile.backend.is_b1_motion() && ui.button("Create 8s rehearsal").clicked()
+                if doc.reference_motion.is_none()
+                    && doc.profile.backend.is_b1_motion()
+                    && ui.button("Create 8s rehearsal").clicked()
                 {
                     let clips = b1_eight_second_rehearsal();
                     if doc.timeline != clips {
                         command = Some(Command::SetTimeline { clips });
                     }
                 }
-                egui::ComboBox::from_id_salt("single_clip")
-                    .selected_text("Single action…")
-                    .show_ui(ui, |ui| {
-                        for clip in &doc.profile.clips {
-                            if ui
-                                .selectable_label(
-                                    (doc.is_single_loop()
-                                        || (doc.profile.backend.is_b1_running()
-                                            && doc.timeline.len() == 1
-                                            && doc.timeline[0].start_seconds == 0.0))
-                                        && doc.timeline[0].clip_id == clip.id,
-                                    if clip.id == nvwa_core::B1_RUN_CLIP_ID {
-                                        "Forward run · authored"
-                                    } else if clip.id == "b1_arm_rehearsal_v1" {
-                                        "Arm rehearsal · authored"
-                                    } else if clip.id == "b1_knee_flex_v1" {
-                                        "Knee flex · authored"
-                                    } else {
-                                        &clip.id
-                                    },
-                                )
-                                .clicked()
-                            {
-                                command = Some(Command::SetTimeline {
-                                    clips: vec![TimelineClip {
-                                        id: "timeline-1".into(),
-                                        clip_id: clip.id.clone(),
-                                        start_seconds: 0.0,
-                                        duration_seconds: clip.duration_seconds,
-                                        speed: 1.0,
-                                        looping: !doc.profile.backend.is_b1_running(),
-                                    }],
-                                });
+                if doc.reference_motion.is_none() {
+                    egui::ComboBox::from_id_salt("single_clip")
+                        .selected_text("Single action…")
+                        .show_ui(ui, |ui| {
+                            for clip in &doc.profile.clips {
+                                if ui
+                                    .selectable_label(
+                                        (doc.is_single_loop()
+                                            || (doc.profile.backend.is_b1_running()
+                                                && doc.timeline.len() == 1
+                                                && doc.timeline[0].start_seconds == 0.0))
+                                            && doc.timeline[0].clip_id == clip.id,
+                                        if clip.id == nvwa_core::B1_RUN_CLIP_ID {
+                                            "Forward run · authored"
+                                        } else if clip.id == "b1_arm_rehearsal_v1" {
+                                            "Arm rehearsal · authored"
+                                        } else if clip.id == "b1_knee_flex_v1" {
+                                            "Knee flex · authored"
+                                        } else {
+                                            &clip.id
+                                        },
+                                    )
+                                    .clicked()
+                                {
+                                    command = Some(Command::SetTimeline {
+                                        clips: vec![TimelineClip {
+                                            id: "timeline-1".into(),
+                                            clip_id: clip.id.clone(),
+                                            start_seconds: 0.0,
+                                            duration_seconds: clip.duration_seconds,
+                                            speed: 1.0,
+                                            looping: !doc.profile.backend.is_b1_running(),
+                                        }],
+                                    });
+                                }
                             }
-                        }
-                    });
+                        });
+                }
                 draw_transport_seek(ui, doc, &mut next_playback);
                 ui.label(format!(
                     "Active: {} · {}{}",
@@ -1059,7 +1068,7 @@ fn draw_editor_ui(
         });
         if let Some(doc) = document
             .as_ref()
-            .filter(|doc| doc.profile.backend.supports_timeline())
+            .filter(|doc| doc.profile.backend.supports_timeline() && doc.reference_motion.is_none())
         {
             if doc.profile.backend.is_b1_motion() {
                 egui::ComboBox::from_id_salt("append_clip")

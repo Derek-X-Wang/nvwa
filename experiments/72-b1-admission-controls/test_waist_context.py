@@ -21,24 +21,43 @@ PRODUCT = ('assets/characters/mpfb-b1-v5/base.obj', 'assets/characters/mpfb-b1-v
 class WaistSourceContext(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.files = json.loads((HERE / CONTEXT.WAIST_CONTEXT_NAME).read_bytes())['files']
+        pins = json.loads((HERE / 'pins.json').read_bytes())
+        cpu = CONTEXT.cpu_source_context(pins)
+        waist = CONTEXT._waist_context(HERE, cpu[1])
+        reference = CONTEXT._reference_motion_context(HERE, cpu)
+        retained = CONTEXT._combined_predecessors(HERE, waist, reference)
+        cls.files = waist[1]
+        cls.combined = CONTEXT._combined_context(HERE, cpu)
+        cls.predecessors = retained
+        temporary = tempfile.TemporaryDirectory(prefix='nvwa-waist-parent-')
+        cls.addClassCleanup(temporary.cleanup)
+        cls.waist_root = Path(temporary.name)
+        for name in cls.files:
+            dest = cls.waist_root / name
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            old = retained['waist']
+            dest.write_bytes(old[name] if name in old else (ROOT / name).read_bytes())
         cls.retained = json.loads((HERE / 'fixtures/pre-waist/manifest.json').read_bytes())['files']
 
-    def invoke_gate(self, root=ROOT, exp=HERE):
+    def invoke_gate(self, root=None, exp=HERE):
+        root = self.waist_root if root is None else root
         with patch.object(CONTEXT, 'HERE', exp):
             result = CONTEXT.check_inputs(root)['checked_input_context']
         return result
 
-    def gate(self, root=ROOT, exp=HERE, waist=True):
+    def gate(self, root=None, exp=HERE, waist=True):
+        root = self.waist_root if root is None else root
         result = self.invoke_gate(root, exp)
         self.assertEqual(result['id'], CONTEXT.WAIST_CONTEXT_ID if waist else 'b1-cpu-export-product-v1')
         self.assertEqual(len(result['files']), 109 if waist else 39)
 
-    def copied(self, root):
-        for name in self.files:
+    def copied(self, root, combined=False):
+        files = self.combined[1] if combined else self.files
+        source = ROOT if combined else self.waist_root
+        for name in files:
             dest = root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(ROOT / name, dest)
+            shutil.copyfile(source / name, dest)
         exp = root / 'experiments' / HERE.name
         exp.mkdir(parents=True, exist_ok=True)
         for path in HERE.iterdir():
@@ -58,7 +77,7 @@ class WaistSourceContext(unittest.TestCase):
         _, previous = CONTEXT.cpu_source_context(pins)
         self.assertEqual(len(previous), 39)
         with self.assertRaises(ValueError):
-            CONTEXT.check_source_context(ROOT, pins, historical_only=True)
+            CONTEXT.check_source_context(self.waist_root, pins, historical_only=True)
         self.assertEqual(set(CONTEXT.WAIST_NEW_FILES), set(PRODUCT) - set(self.retained))
         self.assertEqual(set(self.files), set(previous) | set(CONTEXT.WAIST_ADDITIONS))
         for name in set(previous) - set(PRODUCT):
@@ -144,6 +163,59 @@ class WaistSourceContext(unittest.TestCase):
                     if name in retained: path.write_bytes(retained[name])
                     else: path.unlink()
                 self.gate(root, exp, waist=False)
+
+
+    def test_combined_exact_union_and_refuses_mixture_and_drift(self):
+        context, files = self.combined
+        self.assertEqual(context, CONTEXT.COMBINED_CONTEXT_ID)
+        self.assertEqual(set(files), set(self.files) | set(CONTEXT.REFERENCE_MOTION_ADDITIONS))
+        self.assertEqual(len(files), 112)
+        self.assertEqual(self.invoke_gate(ROOT)['id'], context)
+        with tempfile.TemporaryDirectory(prefix='nvwa-combined-context-') as directory:
+            root = Path(directory)
+            exp = self.copied(root, combined=True)
+            self.invoke_gate(root, exp)
+            for predecessor in self.predecessors.values():
+                for name, historical in predecessor.items():
+                    path = root / name
+                    current = path.read_bytes()
+                    self.assertNotEqual(historical, current)
+                    try:
+                        path.write_bytes(historical)
+                        with self.assertRaises((ValueError, AssertionError)):
+                            self.invoke_gate(root, exp)
+                    finally:
+                        path.write_bytes(current)
+                    self.invoke_gate(root, exp)
+
+            # The manifest and exact fixture inventory also reject extra inputs.
+            manifest = exp / CONTEXT.COMBINED_CONTEXT_NAME
+            extra = exp / CONTEXT.COMBINED_FIXTURES / 'unreviewed'
+            try:
+                extra.write_bytes(b'unreviewed')
+                with self.assertRaises((ValueError, AssertionError)):
+                    self.invoke_gate(root, exp)
+            finally:
+                extra.unlink()
+            self.invoke_gate(root, exp)
+
+            added = [root / name for name in CONTEXT.REFERENCE_MOTION_ADDITIONS]
+            retained = [exp / CONTEXT.COMBINED_FIXTURES / variant / name
+                        for variant, paths in self.predecessors.items() for name in paths]
+            for path in [*added, *retained, manifest]:
+                current = path.read_bytes()
+                for fault in ('missing', 'one-byte'):
+                    with self.subTest(path=path.relative_to(root), fault=fault):
+                        try:
+                            if fault == 'missing':
+                                path.unlink()
+                            else:
+                                path.write_bytes(bytes([current[0] ^ 1]) + current[1:])
+                            with self.assertRaises((ValueError, AssertionError)):
+                                self.invoke_gate(root, exp)
+                        finally:
+                            path.write_bytes(current)
+                        self.invoke_gate(root, exp)
 
 
 if __name__ == '__main__':
