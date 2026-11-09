@@ -406,3 +406,27 @@ timed out in optimized mode at the previous limit. The four policy controls
 continue to require the exact named step and to restore its historical
 three-minute value for retained checks. A repeat timeout pauses publication
 for a new decision.
+
+
+### CPU silhouette export: explicit portable30 exception
+
+On2026-11-08 Derek approved only the portable job cap25→30 minutes, retaining
+all tests, assertions and other limits, followed by CI for the new identity.
+[PR145 run42531225684](https://github.com/Derek-X-Wang/nvwa/actions/runs/42531225684)
+exceeded the25-minute job limit during native cache trial controls. Earlier
+parameter/source and offline motion groups passed; the remaining shoulder/upper-arm,
+Mac native/Wasm and Linux B1 checks did not run. This failure stays on record.
+
+Four independent consumers require exact integer30 on the unique portable job;
+retained whole-workflow comparisons restore only that cap to historical15 before
+the original assertions/hashes. Keep every previous rejection case and add stale25,
+malformed/quoted/expression30 and wrong-job/step30 controls. All48 run bodies,
+catalog order/cases, normal/-O, source contexts/fixtures, runtime, assets, dependencies,
+runners, cache policy and frequency remain unchanged. Keep eye20, auth3, offline6,
+upper-arm5, native75, B1/optional-warm60 and cache-action4.
+
+This seven-file exception changes one workflow cap, four policy test consumers and
+the two policy documents. It is a finite budget allocation, not a performance claim
+or completion guarantee. If portable30 or an existing step limit is exhausted again,
+preserve evidence and release HOLD; do not increase time, split jobs, remove cases or
+retry unchanged without another decision. The approval does not authorize auto-merge.

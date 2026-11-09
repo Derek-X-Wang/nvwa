@@ -365,6 +365,89 @@ def check_no_motion_query_additions(root):
                     'source input context mismatch: motion-query outside source: ' + name)
 
 
+# A separate exact product context; all historical cohort APIs and pins stay fixed.
+CPU_CONTEXT_NAME = 'input-context-cpu-export-v1.json'
+CPU_CONTEXT_SHA = '333acadd76ef9a8141cbb27625bb93b3eb8a7e40b3aee4f7fbd914b8cd005293'
+CPU_BASELINES_SHA = '6d0a08f17b5ea871316e59670df4d4d8229f49958352e5badeb8282f5a55bf59'
+CPU_CONTEXT_ID = 'b1-cpu-export-product-v1'
+CPU_PREDECESSOR_COMMIT = '54384aeaaa70a7883978e3e33d4bf163c0c1f273'
+CPU_ADDITIONS = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/tests/cpu_render.rs', 'crates/nvwa-runtime/Cargo.toml', 'crates/nvwa-runtime/src/b1/cpu_render.rs', 'crates/nvwa-runtime/src/stage.rs', 'docs/agents/cli-authoring.md', 'docs/agents/cpu-render.md', 'experiments/27-ci-baseline/check.sh')
+CPU_NEW_FILES = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/tests/cpu_render.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs', 'docs/agents/cpu-render.md')
+CPU_PREEXISTING = ('crates/nvwa-runtime/Cargo.toml', 'crates/nvwa-runtime/src/stage.rs', 'docs/agents/cli-authoring.md', 'experiments/27-ci-baseline/check.sh')
+CPU_RETAINED = ('Cargo.lock', 'crates/nvwa-cli/Cargo.toml', 'crates/nvwa-cli/src/main.rs', 'crates/nvwa-runtime/Cargo.toml', 'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/lib.rs', 'crates/nvwa-runtime/src/stage.rs', 'docs/agents/cli-authoring.md', 'experiments/27-ci-baseline/check.sh')
+
+def cpu_regular_file(exp, relative):
+    path = exp
+    for part in Path(relative).parts:
+        path = path / part
+        require(not path.is_symlink(), 'CPU source context symlink: ' + relative)
+    require(path.is_file(), 'CPU source context missing: ' + relative)
+    return path
+
+
+def has_cpu_inputs(root):
+    return any((root / n).exists() or (root / n).is_symlink() for n in CPU_NEW_FILES)
+
+
+def _pre_cpu_sources(exp, previous):
+    path = cpu_regular_file(exp, 'fixtures/pre-cpu-export/manifest.json')
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CPU_BASELINES_SHA,
+            'CPU predecessor manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == 'b1-motion-query-product-v1'
+            and value['source_commit'] == CPU_PREDECESSOR_COMMIT
+            and set(value['files']) == set(CPU_RETAINED), 'CPU predecessor complete inventory required')
+    result = {}
+    for name, item in value['files'].items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-cpu-export/' + name,
+                'CPU predecessor fixture path mismatch')
+        expected = {k: item[k] for k in ('bytes', 'sha256')}
+        if name in previous:
+            require(expected == previous[name], 'CPU predecessor historical pin mismatch: ' + name)
+        data = cpu_regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected,
+                'CPU predecessor bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / 'fixtures/pre-cpu-export').rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(exp)) for p in paths if p.is_file()}
+                == {'fixtures/pre-cpu-export/manifest.json'} | {i['fixture'] for i in value['files'].values()},
+            'CPU predecessor fixture inventory mismatch')
+    return result
+
+
+def _cpu_context(exp, previous):
+    _pre_cpu_sources(exp, previous)
+    raw = cpu_regular_file(exp, CPU_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CPU_CONTEXT_SHA, 'CPU source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == CPU_CONTEXT_ID
+            and value['predecessor'] == 'b1-motion-query-product-v1'
+            and value['predecessor_commit'] == CPU_PREDECESSOR_COMMIT
+            and set(value['files']) == set(previous) | set(CPU_ADDITIONS),
+            'CPU source context complete union required')
+    return value['context'], value['files']
+
+
+def pre_cpu_sources(pins):
+    return _pre_cpu_sources(HERE, _motion_query_source_context(running_source_context(pins))[1])
+
+
+def cpu_source_context(pins):
+    return _cpu_context(HERE, _motion_query_source_context(running_source_context(pins))[1])
+
+
+def check_cpu_preexisting(root, retained):
+    for name in CPU_PREEXISTING:
+        if (root / name).exists() or (root / name).is_symlink():
+            require(cpu_regular_file(root, name).read_bytes() == retained[name],
+                    'CPU source context mismatch: historical outside source: ' + name)
+
+
 def check_source_context(root, pins, historical_only=False):
     """Authenticate one complete source context; never mix baseline/current files."""
     contexts = current_source_contexts(pins)
@@ -376,13 +459,23 @@ def check_source_context(root, pins, historical_only=False):
             require(not path.is_symlink(), 'source input symlink: ' + relative)
         require(path.is_file(), 'source input missing: ' + relative)
         actual[relative] = file_sha(path)
-    if not historical_only and not any(actual == expected for _, expected in contexts):
+    if has_cpu_inputs(root):
+        require(not historical_only, 'source input context mismatch: CPU source is not historical')
+        context, expected = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
+        actual = {}
+        for relative, item in expected.items():
+            path = cpu_regular_file(root, relative)
+            require(path.stat().st_size == item['bytes'], 'CPU source context byte count mismatch: ' + relative)
+            actual[relative] = file_sha(path)
+        context = select_source_context(actual, [(context, {n: i['sha256'] for n, i in expected.items()})])
+    elif not historical_only and not any(actual == expected for _, expected in contexts):
         running = _running_source_context(pins, contexts)
         if all(running[1][name]['sha256'] == digest for name, digest in actual.items()):
             check_no_motion_query_additions(root)
             context, expected = running
         else:
             context, expected = _motion_query_source_context(running)
+            check_cpu_preexisting(root, _pre_cpu_sources(HERE, expected))
         for relative, item in expected.items():
             path = source_file(root, relative)
             require(path.stat().st_size == item['bytes'], 'source input context mismatch: byte count: ' + relative)

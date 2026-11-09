@@ -33,6 +33,22 @@ finally:
 class RunningContext(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        global ROOT
+        live = ROOT
+        previous = tempfile.TemporaryDirectory(prefix='nvwa73-pre-cpu-')
+        cls.addClassCleanup(previous.cleanup)
+        ROOT = Path(previous.name)
+        cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
+        source_raw = (HERE / 'FROZEN-INPUTS.json').read_bytes()
+        retained_cpu = CONTEXT.pre_cpu_sources(HERE, source_raw, json.loads(source_raw))
+        previous_files = json.loads((HERE / CONTEXT.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
+        for name in previous_files.keys() | retained_cpu.keys():
+            path = ROOT / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(retained_cpu[name] if name in retained_cpu else (live / name).read_bytes())
+        # Historical full-context controls also inspect the retained fixture pool.
+        for folder in ('72-b1-admission-controls', '73-high-poly-eyes'):
+            shutil.copytree(live / 'experiments' / folder / 'fixtures', ROOT / 'experiments' / folder / 'fixtures')
         cls.context_name = CONTEXT.RUNNING_CONTEXT_NAME
         cls.retention_name = CONTEXT.RUNNING_BASELINES_NAME
         cls.retention_prefix = 'fixtures/b1-running-predecessor-baselines'

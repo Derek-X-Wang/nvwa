@@ -177,3 +177,26 @@ Derek 批准本次发布将眼睛、头发与角色参数检查从 10 分钟调�
 具名步骤位置与命令准确，并在历史验证时只将这一步还原到 3 分钟。
 旧的拒绝用例保留，同时拒绝过期的 10 分钟值、格式错误或放错步骤的 20 分钟值。
 如遇再次超时，保留日志并暂停发布，等候新的决定。
+
+
+## CPU 轮廓导出的 portable30 明确例外
+
+2026-11-08，Derek 明确同意“只把 portable 总时限从25分钟提高到30分钟，
+保留所有测试、断言及其他时限，然后重新跑 CI”。本次仅提高 portable 作业
+总上限，覆盖这一次 portable25 失败后的停止规则；不授权继续加时或无变化重跑。
+保留 [PR #145 的失败运行](https://github.com/Derek-X-Wang/nvwa/actions/runs/42531225684)：
+GitHub 明确标注超过25分钟上限，在 native cache trial controls 中取消。
+参数／来源及 offline motion 组已经通过；后续肩部／上臂、Mac native／Wasm
+和 Linux B1 未运行，不能将局部成功改写为完整 CI 通过。
+
+四个独立消费者要求唯一 portable 作业使用 exact integer30；历史完整 workflow
+比较只将该作业30还原到历史15，再执行原有断言及哈希。原有负向控制全部保留，
+新增旧25、格式错误／字符串／表达式30及错误作业／步骤30的拒绝。
+全部48个 run body、catalog 顺序／用例、normal／`-O`、来源上下文与 fixture、
+运行时、素材、依赖、runner、cache 行为和作业频率不变。eye20、auth3、offline6、
+upper-arm5、native75、B1／optional-warm60 和 cache action4 全部不变。
+
+这是有限的资源预算分配，不是提速结果或完成保证。七文件范围仅含 workflow、
+四个预算合同消费者及本文件和 scripts/README.md。新身份需通过完整正式 CI；
+若 portable30 或任何既有步骤预算再次耗尽，保留证据及 release HOLD，停止继续
+加时、拆作业、删用例和无变化重跑，等待新决定。此次批准不包含自动合并。

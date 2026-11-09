@@ -9,6 +9,8 @@ use nvwa_core::{
     CommandEnvelope, CoreError, Editor, SceneDocument,
 };
 use std::path::{Path, PathBuf};
+#[cfg(feature = "cpu-render")]
+mod cpu_render;
 
 fn respond(response: impl std::fmt::Display) -> Result<(), CoreError> {
     use std::io::Write;
@@ -454,6 +456,15 @@ fn run(args: &[String]) -> Result<(), CoreError> {
             .ok_or_else(|| CoreError::new("usage", "Missing argument; run nvwa-cli help"))
     };
     match command {
+        "render" => {
+            #[cfg(feature = "cpu-render")]
+            return cpu_render::run(args);
+            #[cfg(not(feature = "cpu-render"))]
+            return Err(CoreError::new(
+                "feature_unavailable",
+                "Rebuild nvwa-cli with --features cpu-render to enable windowless silhouette export",
+            ));
+        }
         "new-b1"
         | "new-b1-motion"
         | "new-character"
@@ -513,6 +524,10 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                 )
                 .map_err(|e| CoreError::new("serialize", e.to_string()))?;
                 capabilities["cli_contract"] = cli_contract(&document)?;
+                #[cfg(feature = "cpu-render")]
+                {
+                    capabilities["cpu_render"] = cpu_render::capabilities(&document);
+                }
                 capabilities["editor_retention"] = serde_json::json!({
                     "limits": nvwa_core::EDITOR_RETENTION_LIMITS,
                     "session_local": true,
@@ -590,9 +605,13 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                 serde_json::json!({"revision":document.revision,"saved":args[2],"asset_checked":false}),
             )?;
         }
-        "help" | "--help" | "-h" => respond(
-            "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
-        )?,
+        "help" | "--help" | "-h" => {
+            respond(
+                "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
+            )?;
+            #[cfg(feature = "cpu-render")]
+            respond(cpu_render::USAGE)?;
+        }
         _ => {
             return Err(CoreError::new(
                 "unknown_command",

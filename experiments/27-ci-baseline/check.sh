@@ -27,6 +27,8 @@ case "${1:-}" in
     }
     cargo check --workspace --locked --features nvwa-cli/motion-query
     cargo test --workspace --locked --features nvwa-cli/motion-query
+    # Exercise the optional CPU exporter with its actual executable and authenticated assets.
+    cargo test -p nvwa-cli --features cpu-render,motion-query --test cpu_render --locked --offline -- --test-threads=1
     ;;
   wasm)
     cargo check -p nvwa-studio --lib --target wasm32-unknown-unknown --locked
