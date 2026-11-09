@@ -109,12 +109,12 @@ def classify(root, event_name, event):
         return {'full_required': True, 'reasons': ['classification incomplete: ' + type(error).__name__], 'head': ''}
 
 
-MAC_PARTS = ('workspace', 'bridges', 'matrix')
+MAC_PARTS = ('workspace', 'bridges')
 
 def mac_results(needs, full):
     required = [needs.get(f'mac-{part}-required', {}).get('result', 'missing') for part in MAC_PARTS]
     background = [needs.get(f'mac-{part}-background', {}).get('result', 'missing') for part in MAC_PARTS]
-    expected = (['success'] * 3, ['skipped'] * 3) if full == 'true' else (['skipped'] * 3, ['success'] * 3)
+    expected = (['success'] * 2, ['skipped'] * 2) if full == 'true' else (['skipped'] * 2, ['success'] * 2)
     return required, background, required == expected[0] and background == expected[1]
 
 

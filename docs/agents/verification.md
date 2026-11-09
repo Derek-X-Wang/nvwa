@@ -254,3 +254,28 @@ Derek随后明确同意保留全部Mac测试与失败信号，把完整Mac拆成
 实测，不单纯加时或删除检查。具体分组、缓存种子边界和失败传播见
 [CI分层](ci-tiering.md)。新分组必须以精确head的hosted结果证明；
 本地合同通过不能把先前取消写成成功，也不能把并行当成总计算成本下降。
+
+
+## 动作矩阵的主机范围（2026-11-09 后续决定）
+
+Derek 在 [#148 的完整重跑](https://github.com/Derek-X-Wang/nvwa/actions/runs/42672359165)
+显示 Mac 独立矩阵作业的20分钟步骤全部耗于冷编译后，明确质疑是否需要在慢速
+Mac runner 上重复平台无关的动作矩阵；若无必要，则不在 Mac 执行。该运行的
+Linux shared 已完整通过594帧/30关键帧及衣物normal/`-O`，而 Mac矩阵尚未
+开始执行即超时；Mac workspace/CPU、appearance/mutation、短冒烟、portable、
+B1/Web通过，Required CI gate与完整Mac报告正确为红色。旧失败不改写。
+
+实验60矩阵是无窗口、无GPU的生产runtime CPU路径，只有native/Wasm条件代码，
+未发现Mac专属矩阵分支。因此后续候选只在Linux必需作业运行完整594帧矩阵，
+仍要求真实source2帧和Linux衣物normal/`-O`；Linux失败继续阻塞所有场景。
+Linux数值不能证明Mac数值：两平台原衣物固定值不同。Mac必需与后台workspace
+作业保留原Darwin/arm64 guard、workspace/实际CPU测试，并从同一生产probe
+只采一帧真实source2见证，执行未修改的原Mac衣物18项normal/`-O`。
+appearance与三类mutation仍在Mac原生作业执行；短Mac编译和真实CLI冒烟仍必需。
+两个Mac完整作业中的任何失败／取消／缺失仍使适用门禁与报告变红。
+
+此新决定调整上节三作业矩阵约定，不扩大原native75、matrix20、mutation12或
+其他预算，不降低断言精度，不删除旧历史合同或发布HOLD。单帧见证仍需精确head
+的Mac hosted通过与耗时实测；本地Linux见证不构成Mac验收。原单体完整作业仅作
+历史投影，不能再作为部分完成的cache seed。分支保护required status仍需所有者
+核实；不在本任务修改安全设置。

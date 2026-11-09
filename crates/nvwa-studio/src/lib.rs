@@ -718,6 +718,7 @@ fn draw_editor_ui(
     let mut new_b1 = false;
     let mut new_contour = false;
     let mut new_waist = false;
+    let mut new_legs = false;
     let mut new_lower_contour = false;
     let mut new_running = false;
     let mut command = None;
@@ -754,6 +755,13 @@ fn draw_editor_ui(
                         .clicked()
                     {
                         new_waist = true;
+                        ui.close();
+                    }
+                    if ui
+                        .button("新建静态腿部人物… / New static leg character…")
+                        .clicked()
+                    {
+                        new_legs = true;
                         ui.close();
                     }
                     if ui
@@ -901,6 +909,9 @@ fn draw_editor_ui(
                         }
                         if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V5) {
                             ui.small("腰围造型 -1–1，非厘米；邻近躯干和衣物可变化。静态试用 / Waist shape, not centimetres; static only.");
+                        }
+                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V6) {
+                            ui.small("腿部四项是 -1–1 相对形变权重，非厘米；邻近关节与衣物可变化。静态试用 / Four relative leg controls, not centimetres; static only.");
                         }
                         if editor.preview.is_some() {
                             ui.label("Preview · document unchanged");
@@ -1270,8 +1281,10 @@ fn draw_editor_ui(
     state.stage = stage_ui;
     state.save_notice = save_notice;
     *playback = next_playback;
-    if new_b1 || new_contour || new_lower_contour || new_running || new_waist {
-        let profile = if new_waist {
+    if new_b1 || new_contour || new_lower_contour || new_running || new_waist || new_legs {
+        let profile = if new_legs {
+            nvwa_core::CharacterProfile::b1_character_legs()
+        } else if new_waist {
             nvwa_core::CharacterProfile::b1_character_waist()
         } else if new_running {
             nvwa_core::CharacterProfile::b1_running()
@@ -1482,6 +1495,10 @@ fn shape_parameter_label(id: &str) -> String {
         "jaw_drop" => "下颌开合 / Jaw opening".into(),
         "cheek_fullness" => "脸颊饱满度 / Cheek fullness".into(),
         "waist_circumference" => "腰围造型 / Waist circumference shape".into(),
+        "thigh_length" => "大腿长度造型 / Thigh length shape".into(),
+        "lower_leg_length" => "小腿长度造型 / Lower-leg length shape".into(),
+        "thigh_girth" => "大腿围度造型 / Thigh girth shape".into(),
+        "calf_girth" => "小腿围度造型 / Calf girth shape".into(),
         "lower_face_squareness" => "下半脸轮廓方正度 / Lower-face squaring".into(),
         "head_width" => "头部宽度 / Head width".into(),
         "nose_width" => "鼻部宽度 / Nose width".into(),

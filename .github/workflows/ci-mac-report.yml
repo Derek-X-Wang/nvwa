@@ -27,7 +27,7 @@ jobs:
 
           REPO = 'Derek-X-Wang/nvwa'
           NAMES = tuple(f'Complete Mac {part} {kind}' for kind in ('required', 'background')
-                        for part in ('Workspace and CPU', 'Appearance and mutation', 'Continuous matrix and garment'))
+                        for part in ('Workspace and CPU', 'Appearance and mutation'))
 
           def identity(event):
               run = event['workflow_run']
@@ -74,9 +74,9 @@ jobs:
                   else:
                       state = matches[0]['conclusion']
                       states.append(state if state in ('success', 'skipped', 'failure', 'cancelled', 'timed_out', 'action_required', 'neutral', 'stale') else 'unknown')
-              required, background = states[:3], states[3:]
-              return states, ((required == ['success'] * 3 and background == ['skipped'] * 3)
-                              or (required == ['skipped'] * 3 and background == ['success'] * 3))
+              required, background = states[:2], states[2:]
+              return states, ((required == ['success'] * 2 and background == ['skipped'] * 2)
+                              or (required == ['skipped'] * 2 and background == ['success'] * 2))
 
           def main():
               run = identity(json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text()))

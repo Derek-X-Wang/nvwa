@@ -307,6 +307,16 @@ jobs:
           cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --locked --offline
+      - name: Fetch locked one-frame Mac witness graph
+        run: cargo fetch --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --locked
+      - name: Check actual Mac garment numerical witness
+        timeout-minutes: 20
+        run: |
+          cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
+          cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bin matrix --locked --offline
+          python3 -B scripts/ci-tiering/mac_garment_witness.py --binary "$CARGO_TARGET_DIR/debug/matrix" --asset-root "$GITHUB_WORKSPACE/assets" --frame "$RUNNER_TEMP/nvwa-b1-garment-witness.json.gz"
+          python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-garment-witness.json.gz"
+          python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-garment-witness.json.gz"
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash
@@ -355,42 +365,6 @@ jobs:
         shell: bash
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
-  mac-matrix-required:
-    name: Complete Mac Continuous matrix and garment required
-    needs: [classify, portable, portable-eye]
-    if: ${{ needs.classify.outputs.full_required == 'true' }}
-    runs-on: macos-15
-    timeout-minutes: 75
-    env:
-      CARGO_BUILD_JOBS: '1'
-      CARGO_TARGET_DIR: ${{ github.workspace }}/target
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - name: Install repository Rust version
-        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
-      - name: Fetch locked Mac graph dependencies
-        run: |
-          cargo fetch --locked
-          cargo fetch --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --locked
-      - name: Execute the actual B1 continuous motion matrix
-        # Independent full-weight Python checks stream594frames; retain a finite
-        #20minute step within the existing75minute job, including probe linking.
-        timeout-minutes: 20
-        run: |
-          cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
-          cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline
-          python3 -B experiments/60-b1-continuous-motion/run_matrix.py --binary "$CARGO_TARGET_DIR/debug/matrix" --asset-root "$GITHUB_WORKSPACE/assets" --out "$RUNNER_TEMP/nvwa-b1-motion-matrix"
-          # Use this job's actual retained source2 frame. The garment controls
-          # require real source/upload data, not an invented portable fixture.
-          python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
-          python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
-      - name: Report existing command timing
-        if: ${{ always() }}
-        shell: bash
-        run: python3 -B scripts/ci-timing.py report
-      # native-cache-trial begin
   mac-workspace-background:
     name: Complete Mac Workspace and CPU background
     needs: [classify, portable, portable-eye]
@@ -415,6 +389,16 @@ jobs:
           cargo fmt --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --package nvwa-runtime-pose-probe --check
           cargo check --manifest-path experiments/49-runtime-pose-parity/probe/Cargo.toml --lib --locked --offline
           cargo check --manifest-path experiments/50-upper-arm-neutral-ab/probe/Cargo.toml --lib --locked --offline
+      - name: Fetch locked one-frame Mac witness graph
+        run: cargo fetch --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --locked
+      - name: Check actual Mac garment numerical witness
+        timeout-minutes: 20
+        run: |
+          cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
+          cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bin matrix --locked --offline
+          python3 -B scripts/ci-tiering/mac_garment_witness.py --binary "$CARGO_TARGET_DIR/debug/matrix" --asset-root "$GITHUB_WORKSPACE/assets" --frame "$RUNNER_TEMP/nvwa-b1-garment-witness.json.gz"
+          python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-garment-witness.json.gz"
+          python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-garment-witness.json.gz"
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash
@@ -458,42 +442,6 @@ jobs:
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
-      - name: Report existing command timing
-        if: ${{ always() }}
-        shell: bash
-        run: python3 -B scripts/ci-timing.py report
-      # native-cache-trial begin
-  mac-matrix-background:
-    name: Complete Mac Continuous matrix and garment background
-    needs: [classify, portable, portable-eye]
-    if: ${{ needs.classify.outputs.full_required == 'false' }}
-    runs-on: macos-15
-    timeout-minutes: 75
-    env:
-      CARGO_BUILD_JOBS: '1'
-      CARGO_TARGET_DIR: ${{ github.workspace }}/target
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - name: Install repository Rust version
-        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
-      - name: Fetch locked Mac graph dependencies
-        run: |
-          cargo fetch --locked
-          cargo fetch --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --locked
-      - name: Execute the actual B1 continuous motion matrix
-        # Independent full-weight Python checks stream594frames; retain a finite
-        #20minute step within the existing75minute job, including probe linking.
-        timeout-minutes: 20
-        run: |
-          cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --package b1-continuous-probe --check
-          cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline
-          python3 -B experiments/60-b1-continuous-motion/run_matrix.py --binary "$CARGO_TARGET_DIR/debug/matrix" --asset-root "$GITHUB_WORKSPACE/assets" --out "$RUNNER_TEMP/nvwa-b1-motion-matrix"
-          # Use this job's actual retained source2 frame. The garment controls
-          # require real source/upload data, not an invented portable fixture.
-          python3 -B experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
-          python3 -B -O experiments/70-b1-garment-defect/test_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash
@@ -876,7 +824,7 @@ jobs:
   required-gate:
     name: Required CI gate
     if: ${{ always() }}
-    needs: [classify, portable, portable-eye, linux-shared, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required, mac-matrix-required]
+    needs: [classify, portable, portable-eye, linux-shared, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -890,7 +838,7 @@ jobs:
   full-mac-report:
     name: Complete Mac result report
     if: ${{ always() }}
-    needs: [classify, mac-workspace-required, mac-bridges-required, mac-matrix-required, mac-workspace-background, mac-bridges-background, mac-matrix-background]
+    needs: [classify, mac-workspace-required, mac-bridges-required, mac-workspace-background, mac-bridges-background]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

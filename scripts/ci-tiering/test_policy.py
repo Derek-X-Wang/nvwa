@@ -8,6 +8,8 @@ import sys
 from unittest.mock import patch
 from pathlib import Path
 import re
+import gzip
+import shlex
 import subprocess
 import tempfile
 import unittest
@@ -188,6 +190,43 @@ class Aggregate(unittest.TestCase):
             self.assertTrue(policy.check_gate(needs))
 
 
+class NativeGarmentWitness(unittest.TestCase):
+    def test_exact_single_frame_and_failure_propagation(self):
+        spec = importlib.util.spec_from_file_location('mac_witness', HERE/'mac_garment_witness.py')
+        witness = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(witness)
+        record = {'kind': 'matrix', 'request': witness.EXPECTED, 'snapshot': {}}
+        marker = {'kind': 'witness-complete', 'samples': 1}
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            assets = root/'assets'
+            assets.mkdir()
+            binary = root/'producer'
+            frame = root/'frame.json.gz'
+            def producer(records, exit_code=0):
+                lines = ['#!/bin/sh']
+                lines += ['printf "%s\\n" '+shlex.quote('B1_60 '+json.dumps(item)) for item in records]
+                lines.append('exit '+str(exit_code))
+                binary.write_text('\n'.join(lines)+'\n')
+                binary.chmod(0o755)
+            with patch.object(witness.platform, 'system', return_value='Darwin'), \
+                 patch.object(witness.platform, 'machine', return_value='arm64'):
+                producer([record, marker])
+                witness.capture(binary, assets, frame)
+                with gzip.open(frame, 'rt') as source:
+                    self.assertEqual(json.load(source), record)
+                frame.unlink()
+                for records, code in [([record], 0), ([record, marker, marker], 0),
+                                      ([record, marker], 2),
+                                      ([{**record, 'request': {**witness.EXPECTED, 'k': 8}}, marker], 0)]:
+                    producer(records, code)
+                    with self.assertRaises(ValueError):
+                        witness.capture(binary, assets, frame)
+                    self.assertFalse(frame.exists())
+            with self.assertRaisesRegex(ValueError, 'Darwin arm64'):
+                witness.capture(binary, assets, frame)
+
+
 class CompletionReport(unittest.TestCase):
     def setUp(self):
         workflow = (ROOT/'.github/workflows/ci-mac-report.yml').read_text()
@@ -198,9 +237,9 @@ class CompletionReport(unittest.TestCase):
                     'path': '.github/workflows/ci.yml', 'status': 'completed'}
         self.jobs = [{'id': i+1, 'run_id': 123, 'head_sha': 'a'*40, 'name': name,
                       'status': 'completed', 'conclusion': state}
-                     for i, (name, state) in enumerate(zip(self.namespace['NAMES'], ['skipped']*3+['success']*3))]
+                     for i, (name, state) in enumerate(zip(self.namespace['NAMES'], ['skipped']*2+['success']*2))]
         for kind in ('required', 'background'):
-            for part in ('workspace', 'bridges', 'matrix'):
+            for part in policy.MAC_PARTS:
                 lane = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-{part}-{kind}')
                 title = lane.split('    name: ', 1)[1].split('\n', 1)[0]
                 self.assertIn(title, self.namespace['NAMES'])
@@ -214,12 +253,12 @@ class CompletionReport(unittest.TestCase):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 self.namespace['identity']({**event, 'workflow_run': {**self.run, key: value}})
         filler = [{**self.jobs[0], 'id': i+10, 'name': 'Other'} for i in range(100)]
-        pages = [{'total_count': 106, 'jobs': filler}, {'total_count': 106, 'jobs': self.jobs}]
+        pages = [{'total_count': 104, 'jobs': filler}, {'total_count': 104, 'jobs': self.jobs}]
         urls = []
         def fetch(url):
             urls.append(url)
             return pages.pop(0)
-        self.assertEqual(len(self.namespace['collect'](self.run, fetch)), 106)
+        self.assertEqual(len(self.namespace['collect'](self.run, fetch)), 104)
         self.assertIn('/attempts/2/jobs?per_page=100&page=2', urls[1])
         for jobs in [self.jobs*2, [{**self.jobs[0], 'run_id': 7}], [{**self.jobs[0], 'head_sha': 'b'*40}]]:
             with self.assertRaises(ValueError):
@@ -229,15 +268,15 @@ class CompletionReport(unittest.TestCase):
 
     def test_failures_cancellation_missing_and_double_success_remain_red(self):
         self.assertTrue(self.namespace['result'](self.jobs)[1])
-        for index in range(3, 6):
+        for index in range(2, 4):
             for state in ['cancelled', 'failure', 'timed_out', 'skipped', None]:
                 altered = [{**j} for j in self.jobs]
                 altered[index]['conclusion'] = state
                 self.assertFalse(self.namespace['result'](altered)[1])
-        required_selected = [{**j, 'conclusion': 'success' if i < 3 else 'skipped'}
+        required_selected = [{**j, 'conclusion': 'success' if i < 2 else 'skipped'}
                              for i, j in enumerate(self.jobs)]
         self.assertTrue(self.namespace['result'](required_selected)[1])
-        for index in range(3):
+        for index in range(2):
             for state in ['cancelled', 'failure', 'timed_out', 'skipped', None]:
                 altered = [{**j} for j in required_selected]
                 altered[index]['conclusion'] = state
@@ -274,7 +313,7 @@ class WorkflowContract(unittest.TestCase):
         self.assertIn('  workflow_dispatch:', new)
         self.assertIn('  release:', new)
 
-    def test_mac_split_exact_coverage_and_no_partial_seed(self):
+    def test_mac_platform_coverage_linux_matrix_and_no_partial_seed(self):
         workflow = (ROOT/'.github/workflows/ci.yml').read_text()
         old = job((HERE/'portable-split-v3-ci.yml').read_text(), 'native-and-wasm')
         def section(start, end):
@@ -282,8 +321,8 @@ class WorkflowContract(unittest.TestCase):
         expected = {
             'workspace': section('Run workspace CPU tests', 'Check appearance quality and production acceptance bridges'),
             'bridges': section('Check appearance quality and production acceptance bridges', 'Execute the actual B1 continuous motion matrix'),
-            'matrix': section('Execute the actual B1 continuous motion matrix', 'Report existing command timing'),
         }
+        matrix = section('Execute the actual B1 continuous motion matrix', 'Report existing command timing')
         for kind in ['required', 'background']:
             for part, body in expected.items():
                 lane = job(workflow, f'mac-{part}-{kind}')
@@ -296,18 +335,32 @@ class WorkflowContract(unittest.TestCase):
                 for other, otherbody in expected.items():
                     if other != part:
                         self.assertNotIn(otherbody, lane)
+                self.assertNotIn(matrix, lane)
+                if part == 'workspace':
+                    self.assertIn('Check actual Mac garment numerical witness', lane)
+                    self.assertIn('mac_garment_witness.py', lane)
+                    self.assertIn('test_controls.py', lane)
+                    self.assertIn('python3 -B -O experiments/70-b1-garment-defect/test_controls.py', lane)
+                    self.assertIn('timeout-minutes: 20', lane)
+                else:
+                    self.assertNotIn('mac_garment_witness.py', lane)
         self.assertIn('bash experiments/27-ci-baseline/check.sh native', expected['workspace'])
         self.assertIn('timeout-minutes: 12', expected['bridges'])
-        self.assertIn('timeout-minutes: 20', expected['matrix'])
-        self.assertIn('python3 -B experiments/70-b1-garment-defect/test_controls.py', expected['matrix'])
-        self.assertIn('python3 -B -O experiments/70-b1-garment-defect/test_controls.py', expected['matrix'])
+        self.assertIn('timeout-minutes: 20', matrix)
+        for name in ('mac-matrix-required', 'mac-matrix-background'):
+            self.assertNotIn('  '+name+':\n', workflow)
+        linux = (HERE/'linux-shared.sh').read_text()
+        self.assertIn('run_matrix.py', linux)
+        self.assertIn('linux_garment_controls.py', linux)
         gate = job(workflow, 'required-gate')
-        self.assertIn('mac-workspace-required, mac-bridges-required, mac-matrix-required]', gate)
+        self.assertIn('mac-workspace-required, mac-bridges-required]', gate)
+        self.assertNotIn('mac-matrix', gate)
         self.assertNotIn('mac-workspace-background', gate)
         report = job(workflow, 'full-mac-report')
         for kind in ['required', 'background']:
             for part in expected:
                 self.assertIn('mac-'+part+'-'+kind, report)
+        self.assertNotIn('mac-matrix', report)
 
     def test_linux_preserves_all_shared_commands_with_explicit_backend(self):
         old = job((HERE / 'predecessor-ci.yml').read_text(), 'native-and-wasm')

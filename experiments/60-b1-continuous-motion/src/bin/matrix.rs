@@ -66,6 +66,11 @@ fn emit(kind: &str, request: Value, snapshot: Value) {
     );
 }
 fn run() -> Result<(), String> {
+    let witness_only = match std::env::args().skip(1).collect::<Vec<_>>().as_slice() {
+        [] => false,
+        [flag] if flag == "--garment-witness-only" => true,
+        _ => return Err("usage: matrix [--garment-witness-only]".into()),
+    };
     let assets = std::env::var("B1_60_ASSET_ROOT")
         .map_err(|_| "B1_60_ASSET_ROOT must be the actual absolute asset root")?;
     if !std::path::Path::new(&assets).is_absolute() {
@@ -107,6 +112,38 @@ fn run() -> Result<(), String> {
         0.0,
         None,
     )?;
+    if witness_only {
+        let parameters = json!({"torso_length":1.0,"jaw_drop":0.0});
+        let character_id = app
+            .world()
+            .resource::<EditorState>()
+            .document()
+            .unwrap()
+            .character
+            .id
+            .clone();
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(Command::SetParameters {
+                character_id,
+                values: [("torso_length".into(), 1.0), ("jaw_drop".into(), 0.0)]
+                    .into_iter()
+                    .collect(),
+            })?;
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .apply(timeline(clips[0], false, 1.0))?;
+        app.world_mut().resource_mut::<Playback>().playing = false;
+        app.world_mut().resource_mut::<Playback>().seek_request = Some(2.0);
+        let frame = wait(&mut app, &parameters, clips[0], 2.0, Some("probe-entry"))?;
+        emit(
+            "matrix",
+            json!({"torso_length":1.0,"jaw_drop":0.0,"clip_id":clips[0],"seconds":2.0,"k":16}),
+            frame,
+        );
+        println!("B1_60 {}", json!({"kind":"witness-complete","samples":1}));
+        return Ok(());
+    }
     for torso in [-1.0_f32, 0.0, 1.0] {
         for jaw in [-1.0_f32, 0.0, 1.0] {
             let parameters = json!({"torso_length":torso,"jaw_drop":jaw});

@@ -273,3 +273,39 @@ portable catalog仍为历史基线，不改写旧失败。
 普通PR后台失败仍为真实失败和后续跟进；相关Mac工作和发布需要目标SHA的
 完整三项成功，不能只看短Mac。分支保护的实际required status设置未变更，
 默认分支独立报告和普通PR后台分支仍需上线现场验收。
+
+
+## Mac 矩阵主机范围调整（#148 后续候选）
+
+[ba772184 的完整重跑](https://github.com/Derek-X-Wang/nvwa/actions/runs/42672359165/attempts/2)
+在19:25 UTC开始，最终failure：Linux shared完整594帧／30关键帧和衣物
+normal／`-O`通过；Mac workspace/CPU、appearance/mutation、短冒烟和
+portable、B1/Web通过。独立Mac matrix作业在20分钟步骤上限时仍编译Bevy，
+没有执行完整矩阵或原Mac衣物控制；运行内报告和Required gate均失败。
+此记录不视作Mac矩阵通过。随后#149腿部形态已合入main `d5bc346`，候选
+已在本地整合该基线，正式CI需对新组合SHA重新验证。
+
+用户明确质疑慢速Mac runner重复完整矩阵的必要性。实验60的matrix二进制
+只使用生产runtime CPU快照，无窗口／GPU，源中只有native／Wasm条件分支，
+没有Mac专属矩阵代码。现将完整594帧矩阵仅作为Linux shared的必需检查；
+此作业仍运行原矩阵checker、source2真实帧、Linux固定数值衣物18项的normal
+和`-O`，不变更步骤20分钟上限。Linux失败使所有PR、main和发布门禁失败。
+
+原Mac衣物数值有独立于Linux的固定值，因此不能用Linux结果声称Mac平台
+精度已验收。Mac workspace的必需／后台两个分支在原native workspace与CPU
+检查后，用同一生产probe的`--garment-witness-only`模式只生成精确
+torso+1/jaw0/arm2/source2帧；严格拒绝缺帧、重复、错绑定及非Darwin arm64，
+再用未修改的原Mac衣物文件运行18项normal和`-O`。Mac不再逐帧检查其余593帧、
+第二动作及seek/pause；这些完整语义由Linux必需矩阵承担，不能描述为Mac平台
+逐帧通过。本地实际Linux probe
+生成一帧及完成标记用时3.392秒，**不是Mac编译或运行耗时**。该Mac步骤沿用
+20分钟限额，整个作业75分钟，仍可能因额外冷编译失败；需hosted实测。
+
+完整Mac现在为workspace/CPU/单帧数值见证与appearance/三类mutation两个
+互斥分支作业；必需场景两个都成功才通过，普通PR两个后台作业自动报告，
+失败／取消／缺失不转绿。历史六作业完整工作流保留为精确snapshot，四个
+历史消费者先投影当前两作业拓扑，再继续先前v4/v3/原9031ce7完整哈希、
+命令顺序、预算和负向控制。旧单体Mac作业仍停用，部分新作业不能产生完整
+main-only缓存种子。完整Mac报告的默认分支触发、普通PR后台现场行为与实际
+required-status规则仍待上线验收。发布和Mac相关工作仍需目标SHA全部适用
+检查通过；衣物质量、动作画面与性能HOLD不因主机调整解除。

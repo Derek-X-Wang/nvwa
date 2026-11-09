@@ -1,0 +1,115 @@
+name: Complete Mac follow-up
+on:
+  workflow_run:
+    workflows: [Bounded CI]
+    types: [completed]
+permissions:
+  actions: read
+# Independent of the cancelled run's concurrency group. No PR checkout, artifact,
+# cache, code download, write token or message publication is used here.
+jobs:
+  report:
+    name: Record complete Mac result after run completion
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Report the exact run attempt, including cancellation
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import urllib.request
+
+          REPO = 'Derek-X-Wang/nvwa'
+          NAMES = tuple(f'Complete Mac {part} {kind}' for kind in ('required', 'background')
+                        for part in ('Workspace and CPU', 'Appearance and mutation', 'Continuous matrix and garment'))
+
+          def identity(event):
+              run = event['workflow_run']
+              if (event['repository']['full_name'] != REPO or run['name'] != 'Bounded CI'
+                      or run['path'] != '.github/workflows/ci.yml' or run['status'] != 'completed'
+                      or type(run['id']) is not int or run['id'] <= 0
+                      or type(run['run_attempt']) is not int or run['run_attempt'] <= 0
+                      or not re.fullmatch('[0-9a-f]{40}', run['head_sha'])):
+                  raise ValueError('unexpected source workflow identity')
+              return run
+
+          def collect(run, fetch):
+              jobs = []
+              expected = None
+              for page in range(1, 11):
+                  url = (f'https://api.github.com/repos/{REPO}/actions/runs/{run["id"]}'
+                         f'/attempts/{run["run_attempt"]}/jobs?per_page=100&page={page}')
+                  data = fetch(url)
+                  if (type(data.get('total_count')) is not int or not 0 <= data['total_count'] <= 1000
+                          or type(data.get('jobs')) is not list or len(data['jobs']) > 100):
+                      raise ValueError('invalid job inventory')
+                  if expected is None:
+                      expected = data['total_count']
+                  if data['total_count'] != expected:
+                      raise ValueError('job inventory changed during observation')
+                  jobs.extend(data['jobs'])
+                  if len(jobs) == expected:
+                      break
+                  if not data['jobs'] or len(jobs) > expected:
+                      raise ValueError('incomplete job inventory')
+              if len(jobs) != expected or len({j['id'] for j in jobs}) != len(jobs):
+                  raise ValueError('incomplete or duplicate jobs')
+              if any(j['run_id'] != run['id'] or j['head_sha'] != run['head_sha']
+                     for j in jobs):
+                  raise ValueError('foreign job identity')
+              return jobs
+
+          def result(jobs):
+              states = []
+              for name in NAMES:
+                  matches = [j for j in jobs if j['name'] == name]
+                  if len(matches) != 1 or matches[0]['status'] != 'completed':
+                      states.append('missing-or-ambiguous')
+                  else:
+                      state = matches[0]['conclusion']
+                      states.append(state if state in ('success', 'skipped', 'failure', 'cancelled', 'timed_out', 'action_required', 'neutral', 'stale') else 'unknown')
+              required, background = states[:3], states[3:]
+              return states, ((required == ['success'] * 3 and background == ['skipped'] * 3)
+                              or (required == ['skipped'] * 3 and background == ['success'] * 3))
+
+          def main():
+              run = identity(json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text()))
+              url = f'https://github.com/{REPO}/actions/runs/{run["id"]}/attempts/{run["run_attempt"]}'
+              summary = ['## Complete Mac follow-up', '', f'[Source run attempt]({url})', f'Head: `{run["head_sha"]}`', '']
+              class NoRedirect(urllib.request.HTTPRedirectHandler):
+                  def redirect_request(self, request, fp, code, msg, headers, newurl):
+                      raise ValueError('unexpected redirect')
+              opener = urllib.request.build_opener(NoRedirect)
+              def fetch(url):
+                  request = urllib.request.Request(url, headers={
+                      'Authorization': 'Bearer '+os.environ['GH_TOKEN'],
+                      'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'})
+                  with opener.open(request, timeout=20) as response:
+                      if response.geturl() != url:
+                          raise ValueError('unexpected redirect')
+                      raw = response.read(2**20+1)
+                  if len(raw) > 2**20:
+                      raise ValueError('oversize response')
+                  return json.loads(raw)
+              try:
+                  states, passed = result(collect(run, fetch))
+                  summary += [f'- {name}: **{state}**' for name, state in zip(NAMES, states)]
+              except Exception:
+                  summary += ['Mac evidence: **UNKNOWN — metadata retrieval failed**.']
+                  passed = False
+              if not passed:
+                  summary += ['', 'Follow-up required. Full Mac evidence is incomplete; release and affected Mac work remain on HOLD. Inspect the source run logs.']
+              Path(os.environ['GITHUB_STEP_SUMMARY']).write_text('\n'.join(summary)+'\n')
+              if not passed:
+                  print('::error::Complete Mac failed, cancelled or remains unknown; follow up on the linked source run.')
+                  raise SystemExit(1)
+
+          if __name__ == '__main__':
+              main()
+          PY

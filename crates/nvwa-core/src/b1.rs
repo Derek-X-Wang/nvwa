@@ -47,6 +47,14 @@ pub const B1_V5_ASSET_MANIFEST_SHA256: &str =
 pub const B1_V5_ASSET_MANIFEST_BYTES: &[u8] =
     include_bytes!("../../../assets/characters/mpfb-b1-v5/manifest.json");
 
+pub const B1_LEG_PROFILE_ID: &str = "nvwa-mpfb-b1-legs-v1";
+pub const B1_V6_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v6";
+pub const B1_V6_ASSET_PATH: &str = "characters/mpfb-b1-v6/manifest.json";
+pub const B1_V6_ASSET_MANIFEST_SHA256: &str =
+    "240e72755d1f80f738d1979bf5edd1f655918196726bf4797a2689209cf4624c";
+pub const B1_V6_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v6/manifest.json");
+
 /// Finite shipped base catalogue. This is not a caller-defined asset registry.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum B1AssetVersion {
@@ -55,6 +63,7 @@ pub enum B1AssetVersion {
     V3,
     V4,
     V5,
+    V6,
 }
 impl B1AssetVersion {
     pub const fn asset_id(self) -> &'static str {
@@ -64,6 +73,7 @@ impl B1AssetVersion {
             Self::V3 => B1_V3_ASSET_ID,
             Self::V4 => B1_V4_ASSET_ID,
             Self::V5 => B1_V5_ASSET_ID,
+            Self::V6 => B1_V6_ASSET_ID,
         }
     }
     pub const fn manifest_path(self) -> &'static str {
@@ -73,6 +83,7 @@ impl B1AssetVersion {
             Self::V3 => B1_V3_ASSET_PATH,
             Self::V4 => B1_V4_ASSET_PATH,
             Self::V5 => B1_V5_ASSET_PATH,
+            Self::V6 => B1_V6_ASSET_PATH,
         }
     }
     pub const fn manifest_sha256(self) -> &'static str {
@@ -82,6 +93,7 @@ impl B1AssetVersion {
             Self::V3 => B1_V3_ASSET_MANIFEST_SHA256,
             Self::V4 => B1_V4_ASSET_MANIFEST_SHA256,
             Self::V5 => B1_V5_ASSET_MANIFEST_SHA256,
+            Self::V6 => B1_V6_ASSET_MANIFEST_SHA256,
         }
     }
     pub const fn manifest_bytes(self) -> &'static [u8] {
@@ -91,6 +103,7 @@ impl B1AssetVersion {
             Self::V3 => B1_V3_ASSET_MANIFEST_BYTES,
             Self::V4 => B1_V4_ASSET_MANIFEST_BYTES,
             Self::V5 => B1_V5_ASSET_MANIFEST_BYTES,
+            Self::V6 => B1_V6_ASSET_MANIFEST_BYTES,
         }
     }
     pub fn parameters(self) -> &'static [B1ParameterTargets] {
@@ -100,6 +113,7 @@ impl B1AssetVersion {
             Self::V3 => &B1_CONTOUR_PARAMETER_TARGETS,
             Self::V4 => &B1_LOWER_CONTOUR_PARAMETER_TARGETS,
             Self::V5 => &B1_WAIST_PARAMETER_TARGETS,
+            Self::V6 => &B1_LEG_PARAMETER_TARGETS,
         }
     }
 }
@@ -202,6 +216,39 @@ pub const B1_WAIST_PARAMETER_TARGETS: [B1ParameterTargets; 11] = [
         increase: "measure-waist-circ-incr",
     },
 ];
+pub const B1_LEG_PARAMETER_TARGETS: [B1ParameterTargets; 15] = [
+    B1_WAIST_PARAMETER_TARGETS[0],
+    B1_WAIST_PARAMETER_TARGETS[1],
+    B1_WAIST_PARAMETER_TARGETS[2],
+    B1_WAIST_PARAMETER_TARGETS[3],
+    B1_WAIST_PARAMETER_TARGETS[4],
+    B1_WAIST_PARAMETER_TARGETS[5],
+    B1_WAIST_PARAMETER_TARGETS[6],
+    B1_WAIST_PARAMETER_TARGETS[7],
+    B1_WAIST_PARAMETER_TARGETS[8],
+    B1_WAIST_PARAMETER_TARGETS[9],
+    B1_WAIST_PARAMETER_TARGETS[10],
+    B1ParameterTargets {
+        id: "thigh_length",
+        decrease: "measure-upperleg-height-decr",
+        increase: "measure-upperleg-height-incr",
+    },
+    B1ParameterTargets {
+        id: "lower_leg_length",
+        decrease: "measure-lowerleg-height-decr",
+        increase: "measure-lowerleg-height-incr",
+    },
+    B1ParameterTargets {
+        id: "thigh_girth",
+        decrease: "measure-thigh-circ-decr",
+        increase: "measure-thigh-circ-incr",
+    },
+    B1ParameterTargets {
+        id: "calf_girth",
+        decrease: "measure-calf-circ-decr",
+        increase: "measure-calf-circ-incr",
+    },
+];
 pub const B1_DIAGNOSTIC_POSES: [&str; 5] = ["neutral", "shoulder", "elbow", "knee", "combined"];
 pub const B1_MAX_MANIFEST_BYTES: usize = 32 * 1024;
 pub const B1_MAX_ASSET_BYTES: usize = 4 * 1024 * 1024;
@@ -301,6 +348,10 @@ impl CharacterBackend {
                 schema_version: 7,
                 asset_id,
             } if asset_id == B1_V5_ASSET_ID => Some(B1AssetVersion::V5),
+            Self::B1Cpu {
+                schema_version: 8,
+                asset_id,
+            } if asset_id == B1_V6_ASSET_ID => Some(B1AssetVersion::V6),
             _ => None,
         }
     }
@@ -314,7 +365,7 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 && !(matches!(version, 2..=7) && self.is_b1()) {
+        if version != 1 && !(matches!(version, 2..=8) && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported"),
@@ -460,6 +511,33 @@ impl CharacterProfile {
         });
         profile
     }
+    /// Static bilateral leg extension. Values are authored target weights, not centimetres.
+    /// Old Works keep their exact prior profile and asset set.
+    pub fn b1_character_legs() -> Self {
+        let mut profile = Self::b1_character_waist();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 8,
+            asset_id: B1_V6_ASSET_ID.into(),
+        };
+        profile.id = B1_LEG_PROFILE_ID.into();
+        profile.asset_path = B1_V6_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V6_ASSET_MANIFEST_SHA256.into();
+        profile
+            .parameters
+            .extend(
+                B1_LEG_PARAMETER_TARGETS[11..]
+                    .iter()
+                    .enumerate()
+                    .map(|(offset, target)| ParameterSpec {
+                        id: target.id.into(),
+                        morph_index: 11 + offset,
+                        min: -1.0,
+                        max: 1.0,
+                        default: 0.0,
+                    }),
+            );
+        profile
+    }
     /// New immutable finite running profile on the exact existing V4 asset set.
     pub fn b1_running() -> Self {
         let mut profile = Self::b1_character_lower_contour();
@@ -488,7 +566,9 @@ impl CharacterProfile {
                 "B1 backend version does not match its canonical profile identity",
             ));
         }
-        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V5) {
+        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V6) {
+            Self::b1_character_legs()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V5) {
             Self::b1_character_waist()
         } else if self.backend.is_b1_running() {
             Self::b1_running()
@@ -590,6 +670,7 @@ impl B1AssetManifest {
             B1_V3_ASSET_ID => B1AssetVersion::V3,
             B1_V4_ASSET_ID => B1AssetVersion::V4,
             B1_V5_ASSET_ID => B1AssetVersion::V5,
+            B1_V6_ASSET_ID => B1AssetVersion::V6,
             _ => return Err(CoreError::new("invalid_asset", "unknown B1 asset identity")),
         };
         let canonical = Self::decode(version.manifest_bytes())?;
@@ -604,6 +685,7 @@ impl B1AssetManifest {
                     B1AssetVersion::V3 => 27,
                     B1AssetVersion::V4 => 29,
                     B1AssetVersion::V5 => 31,
+                    B1AssetVersion::V6 => 39,
                 }
         {
             return Err(CoreError::new(
