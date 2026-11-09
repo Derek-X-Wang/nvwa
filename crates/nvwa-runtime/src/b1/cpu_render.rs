@@ -21,7 +21,8 @@ pub fn validate_export_work(doc: &SceneDocument) -> Result<(), String> {
     doc.validate().map_err(|e| e.to_string())?;
     if (doc.profile != nvwa_core::CharacterProfile::b1_character()
         && doc.profile != nvwa_core::CharacterProfile::b1_character_waist()
-        && doc.profile != nvwa_core::CharacterProfile::b1_character_legs())
+        && doc.profile != nvwa_core::CharacterProfile::b1_character_legs()
+        && doc.profile != nvwa_core::CharacterProfile::b1_character_upper_body())
         || !doc.timeline.is_empty()
         || doc.character.appearance != nvwa_core::CharacterAppearance::None
     {

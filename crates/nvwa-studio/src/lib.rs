@@ -719,6 +719,7 @@ fn draw_editor_ui(
     let mut new_contour = false;
     let mut new_waist = false;
     let mut new_legs = false;
+    let mut new_upper_body = false;
     let mut new_lower_contour = false;
     let mut new_running = false;
     let mut command = None;
@@ -762,6 +763,13 @@ fn draw_editor_ui(
                         .clicked()
                     {
                         new_legs = true;
+                        ui.close();
+                    }
+                    if ui
+                        .button("新建静态上身人物… / New static upper-body character…")
+                        .clicked()
+                    {
+                        new_upper_body = true;
                         ui.close();
                     }
                     if ui
@@ -912,6 +920,9 @@ fn draw_editor_ui(
                         }
                         if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V6) {
                             ui.small("腿部四项是 -1–1 相对形变权重，非厘米；邻近关节与衣物可变化。静态试用 / Four relative leg controls, not centimetres; static only.");
+                        }
+                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V7) {
+                            ui.small("胸围、肩距和上臂围度是 -1–1 相对形变权重，非厘米；衣物和动作需单独验收。 / Relative upper-body shape weights, not centimetres; static trial only.");
                         }
                         if editor.preview.is_some() {
                             ui.label("Preview · document unchanged");
@@ -1281,8 +1292,17 @@ fn draw_editor_ui(
     state.stage = stage_ui;
     state.save_notice = save_notice;
     *playback = next_playback;
-    if new_b1 || new_contour || new_lower_contour || new_running || new_waist || new_legs {
-        let profile = if new_legs {
+    if new_b1
+        || new_contour
+        || new_lower_contour
+        || new_running
+        || new_waist
+        || new_legs
+        || new_upper_body
+    {
+        let profile = if new_upper_body {
+            nvwa_core::CharacterProfile::b1_character_upper_body()
+        } else if new_legs {
             nvwa_core::CharacterProfile::b1_character_legs()
         } else if new_waist {
             nvwa_core::CharacterProfile::b1_character_waist()

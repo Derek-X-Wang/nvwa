@@ -71,7 +71,7 @@ impl B1AppearanceSet {
             B1AssetVersion::V2 => Some(Self::V2),
             B1AssetVersion::V3 => Some(Self::V3),
             B1AssetVersion::V4 => Some(Self::V4),
-            B1AssetVersion::V5 | B1AssetVersion::V6 => None,
+            B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7 => None,
         }
     }
     pub const fn base(self) -> B1AssetVersion {

@@ -299,3 +299,79 @@ fn static_leg_controls_change_actual_front_and_side_silhouettes_and_knee_pose_re
     assert_ne!(mixed["geometry_sha256"], bent["geometry_sha256"]);
     assert_ne!(mixed["png_sha256"], bent["png_sha256"]);
 }
+
+#[test]
+fn static_upper_body_controls_change_actual_mesh_and_shoulder_elbow_pose_render() {
+    let t = Trial::new();
+    let mut visible = std::collections::BTreeMap::new();
+    let mut old = SceneDocument::from_profile(CharacterProfile::b1_character_legs()).unwrap();
+    old.stage.camera.elevation_degrees = 0.0;
+    let mut doc = SceneDocument::from_profile(CharacterProfile::b1_character_upper_body()).unwrap();
+    doc.stage = old.stage.clone();
+    for (view, azimuth) in [("front", 0.0), ("side", 90.0)] {
+        old.stage.camera.azimuth_degrees = azimuth;
+        doc.stage.camera.azimuth_degrees = azimuth;
+        let predecessor = success(render(
+            &t.work(&format!("v6-{view}"), &old),
+            &assets(),
+            &t.0.join(format!("v6-{view}")),
+        ));
+        let zero = success(render(
+            &t.work(&format!("v7-{view}-zero"), &doc),
+            &assets(),
+            &t.0.join(format!("v7-{view}-zero")),
+        ));
+        assert_eq!(
+            predecessor["geometry_sha256"], zero["geometry_sha256"],
+            "v7 zero geometry must retain v6 in {view}"
+        );
+        assert_eq!(
+            predecessor["png_sha256"], zero["png_sha256"],
+            "v7 zero image must retain v6 in {view}"
+        );
+        for key in ["bust_circumference", "shoulder_span", "upper_arm_girth"] {
+            for (sign, value) in [("decr", -1.0), ("incr", 1.0)] {
+                doc.character.parameters.insert(key.into(), value);
+                let name = format!("{view}-{key}-{sign}");
+                let changed = success(render(&t.work(&name, &doc), &assets(), &t.0.join(&name)));
+                assert_ne!(
+                    zero["geometry_sha256"], changed["geometry_sha256"],
+                    "{name} must change mesh"
+                );
+                if zero["png_sha256"] != changed["png_sha256"] {
+                    visible.insert(key, true);
+                }
+                assert!(changed["covered_pixels"].as_u64().unwrap() > 100);
+                doc.character.parameters.insert(key.into(), 0.0);
+            }
+        }
+    }
+    for key in ["bust_circumference", "shoulder_span", "upper_arm_girth"] {
+        assert_eq!(
+            visible.get(key),
+            Some(&true),
+            "{key} must be visible in front or side view"
+        );
+    }
+    doc.character
+        .parameters
+        .insert("bust_circumference".into(), 0.5);
+    doc.character.parameters.insert("shoulder_span".into(), 0.5);
+    doc.character
+        .parameters
+        .insert("upper_arm_girth".into(), 0.5);
+    let neutral = success(render(
+        &t.work("upper-mixed", &doc),
+        &assets(),
+        &t.0.join("upper-mixed"),
+    ));
+    for pose in ["shoulder", "elbow"] {
+        doc.character.diagnostic_pose = Some(pose.into());
+        let changed = success(render(
+            &t.work(&format!("upper-mixed-{pose}"), &doc),
+            &assets(),
+            &t.0.join(format!("upper-mixed-{pose}")),
+        ));
+        assert_ne!(neutral["geometry_sha256"], changed["geometry_sha256"]);
+    }
+}

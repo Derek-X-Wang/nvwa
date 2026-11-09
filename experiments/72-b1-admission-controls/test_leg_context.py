@@ -22,13 +22,24 @@ class LegSourceContext(unittest.TestCase):
         cpu = CONTEXT.cpu_source_context(cls.pins)
         cls.predecessor = CONTEXT._combined_context(HERE, cpu)
         cls.current = CONTEXT._leg_context(HERE, cls.predecessor)
+        cls.legacy_dir = tempfile.TemporaryDirectory(prefix='nvwa-leg-historical-')
+        cls.legacy_root = Path(cls.legacy_dir.name)
+        for name in cls.current[1]:
+            source = HERE / CONTEXT.UPPER_FIXTURES / name if name in CONTEXT.UPPER_CHANGED else ROOT / name
+            destination = cls.legacy_root / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, destination)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.legacy_dir.cleanup()
 
     def test_exact_new_union_keeps_immutable_predecessor(self):
         self.assertEqual(self.predecessor[0], CONTEXT.COMBINED_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 112)
         self.assertEqual(self.current[0], CONTEXT.LEG_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 194)
-        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'],
+        self.assertEqual(CONTEXT.check_inputs(self.legacy_root)['checked_input_context']['id'],
                          CONTEXT.LEG_CONTEXT_ID)
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},
@@ -42,7 +53,7 @@ class LegSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 destination = root / name
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, destination)
+                shutil.copyfile(self.legacy_root / name, destination)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'],
                              CONTEXT.LEG_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',
@@ -79,10 +90,10 @@ class LegSourceContext(unittest.TestCase):
                     path.write_bytes(original + b' ')
                     with patch.object(CONTEXT, 'HERE', exp):
                         with self.assertRaisesRegex(ValueError, error):
-                            CONTEXT.check_source_context(ROOT, self.pins)
+                            CONTEXT.check_source_context(self.legacy_root, self.pins)
                     path.write_bytes(original)
                     with patch.object(CONTEXT, 'HERE', exp):
-                        self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
+                        self.assertEqual(CONTEXT.check_source_context(self.legacy_root, self.pins)['id'],
                                          CONTEXT.LEG_CONTEXT_ID)
 
 

@@ -99,7 +99,7 @@ fn uses_prepared_rig(doc: &SceneDocument) -> bool {
     doc.profile.backend.is_b1_motion()
         || matches!(
             doc.profile.backend.b1_asset_version(),
-            Some(B1AssetVersion::V5 | B1AssetVersion::V6)
+            Some(B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7)
         )
 }
 
@@ -3371,6 +3371,19 @@ mod tests {
             dir.insert_asset(Path::new(&path), std::fs::read(root.join(&path)).unwrap());
         }
     }
+    fn fill_version(dir: &Dir, version: B1AssetVersion) {
+        let root = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets");
+        dir.insert_asset(
+            Path::new(version.manifest_path()),
+            version.manifest_bytes().to_vec(),
+        );
+        let manifest = B1AssetManifest::from_bytes_for(version, version.manifest_bytes()).unwrap();
+        let parent = Path::new(version.manifest_path()).parent().unwrap();
+        for file in manifest.files {
+            let path = parent.join(file.path);
+            dir.insert_asset(&path, std::fs::read(root.join(&path)).unwrap());
+        }
+    }
     fn open_ready(app: &mut App, doc: SceneDocument) {
         app.world_mut()
             .resource_mut::<EditorState>()
@@ -3382,6 +3395,62 @@ mod tests {
                 && w.resource::<RuntimeStatus>().ready
         });
         app.update();
+    }
+    #[test]
+    fn upper_body_zero_preserves_v6_uploaded_mesh_and_bones_and_signed_edits_publish() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V6);
+        fill_version(&dir, B1AssetVersion::V7);
+        open_ready(
+            &mut app,
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_legs()).unwrap(),
+        );
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc =
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_upper_body())
+                .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (old_part, new_part) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(old_part["positions"], new_part["positions"]);
+            assert_eq!(old_part["rest_positions"], new_part["rest_positions"]);
+        }
+        for key in ["bust_circumference", "shoulder_span", "upper_arm_girth"] {
+            for value in [-1.0, 1.0] {
+                let mut doc = zero_doc.clone();
+                doc.character.parameters.insert(key.into(), value);
+                open_ready(&mut app, doc);
+                let frame = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                    "{key} {value} must deform uploaded body"
+                );
+                let bones = frame["bones"].as_array().unwrap();
+                assert_eq!(bones.len(), 53);
+                for bone in bones {
+                    assert!(
+                        bone["rest"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                    assert!(
+                        bone["posed"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                }
+            }
+        }
     }
     #[test]
     fn new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry() {
