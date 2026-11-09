@@ -3,6 +3,7 @@ use serde_json::{Value, json};
 use std::{
     path::{Path, PathBuf},
     process::Command,
+    sync::atomic::{AtomicUsize, Ordering},
 };
 fn cli(args: &[&Path]) -> std::process::Output {
     Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
@@ -23,13 +24,16 @@ fn root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets")
 }
 fn dir() -> PathBuf {
+    // Parallel tests can receive the same system clock reading.
+    static NEXT_DIR: AtomicUsize = AtomicUsize::new(0);
     let dir = std::env::temp_dir().join(format!(
-        "nvwa-contour-{}-{}",
+        "nvwa-contour-{}-{}-{}",
         std::process::id(),
         std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
-            .as_nanos()
+            .as_nanos(),
+        NEXT_DIR.fetch_add(1, Ordering::Relaxed)
     ));
     std::fs::create_dir(&dir).unwrap();
     dir

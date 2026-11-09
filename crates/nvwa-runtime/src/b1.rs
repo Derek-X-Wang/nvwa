@@ -815,7 +815,7 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             };
             let sample = frame_sample(&doc, position);
             let rig = PreparedRig::new(world, session.character)?;
-            rig.apply(world, &sample_pose(&sample)?)?;
+            apply_sample(world, session.character, &rig, &sample)?;
             session.rig = Some(rig);
             session.pending_sample = Some(sample);
         } else {
@@ -4745,8 +4745,25 @@ struct FrameSample {
     source: f32,
     running_source: Option<f64>,
     diagnostic: String,
+    reference_pose: Option<nvwa_core::reference_motion::ReferencePose>,
 }
 fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
+    if doc.reference_motion.is_some() {
+        let entry = &doc.timeline[0];
+        let position = position.clamp(0.0, entry.duration_seconds);
+        return FrameSample {
+            clip_id: entry.clip_id.clone(),
+            timeline_id: entry.id.clone(),
+            position,
+            source: position,
+            running_source: None,
+            diagnostic: String::new(),
+            reference_pose: Some(
+                doc.reference_pose_at(position)
+                    .expect("validated reference Work and time"),
+            ),
+        };
+    }
     if doc.profile.backend.is_b1_running() {
         let r = nvwa_core::running::resolve(doc, position)
             .expect("validated finite running timeline and transport");
@@ -4757,6 +4774,7 @@ fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
             source: r.source_seconds as f32,
             running_source: Some(r.source_seconds),
             diagnostic: doc.character.diagnostic_pose.clone().unwrap_or_default(),
+            reference_pose: None,
         };
     }
     if doc.timeline.is_empty() {
@@ -4767,6 +4785,7 @@ fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
             source: 0.0,
             running_source: None,
             diagnostic: doc.character.diagnostic_pose.clone().unwrap_or_default(),
+            reference_pose: None,
         }
     } else if doc.is_single_loop() {
         FrameSample {
@@ -4776,6 +4795,7 @@ fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
             source: position.rem_euclid(motion::DURATION_SECONDS),
             running_source: None,
             diagnostic: String::new(),
+            reference_pose: None,
         }
     } else {
         let (entry, source) = super::sequence_sample(doc, position);
@@ -4786,8 +4806,44 @@ fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
             source,
             running_source: None,
             diagnostic: String::new(),
+            reference_pose: None,
         }
     }
+}
+fn apply_sample(
+    world: &mut World,
+    character: Entity,
+    rig: &PreparedRig,
+    sample: &FrameSample,
+) -> Result<(), String> {
+    let Some(reference) = &sample.reference_pose else {
+        return rig.apply(world, &sample_pose(sample)?);
+    };
+    let pelvis = world
+        .get::<CharacterSkeleton>(character)
+        .and_then(|skeleton| skeleton.bone_map.get("pelvis"))
+        .copied()
+        .filter(|entity| world.get::<Transform>(*entity).is_some())
+        .ok_or("B1 reference pelvis transform absent")?;
+    let pose = DiagnosticPose {
+        pose_id: sample.clip_id.clone(),
+        rotations: reference
+            .rotations
+            .iter()
+            .map(|rotation| nvwa_b1_adapter::BoneRotation {
+                bone: rotation.bone.clone(),
+                axis: rotation.axis,
+                degrees: rotation.degrees,
+            })
+            .collect(),
+    };
+    rig.apply(world, &pose)?;
+    // PreparedRig restores the fitted local rest translation on every sample.
+    world
+        .get_mut::<Transform>(pelvis)
+        .expect("validated pelvis")
+        .translation += Vec3::from_array(reference.pelvis_offset_metres);
+    Ok(())
 }
 fn sample_pose(sample: &FrameSample) -> Result<DiagnosticPose, String> {
     if sample.clip_id.is_empty() {
@@ -4968,8 +5024,12 @@ fn animate_active(world: &mut World, runtime: &mut B1Runtime) {
             }
         }
     }
-    let result =
-        sample_pose(&sample).and_then(|pose| active.rig.as_ref().unwrap().apply(world, &pose));
+    let result = apply_sample(
+        world,
+        active.character,
+        active.rig.as_ref().unwrap(),
+        &sample,
+    );
     match result {
         Ok(()) => {
             active.pending_sample = Some(sample);

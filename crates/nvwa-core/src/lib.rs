@@ -3,6 +3,7 @@
 
 mod appearance;
 mod asset;
+pub mod reference_motion;
 pub mod running;
 pub use appearance::*;
 mod b1;
@@ -12,6 +13,7 @@ pub use stage::{StageAmbient, StageCamera, StageFloor, StageLight, StageQuality,
 #[cfg(test)]
 mod bounded_history_tests;
 
+use reference_motion::{ReferenceMotion, ReferencePose};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
@@ -71,6 +73,8 @@ pub struct SceneDocument {
     pub profile: CharacterProfile,
     pub character: CharacterRecipe,
     pub timeline: Vec<TimelineClip>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub reference_motion: Option<ReferenceMotion>,
     pub stage: StageSettings,
 }
 
@@ -95,10 +99,17 @@ impl<'de> Deserialize<'de> for SceneDocument {
             profile: ProfileWire,
             character: RecipeWire,
             timeline: Vec<TimelineClip>,
+            #[serde(default, deserialize_with = "present_reference_motion")]
+            reference_motion: Option<ReferenceMotion>,
             #[serde(default)]
             stage: StageField,
         }
         let wire = Wire::deserialize(deserializer)?;
+        if wire.schema_version < SCHEMA_VERSION && wire.reference_motion.is_some() {
+            return Err(serde::de::Error::custom(
+                "reference motion requires Work schema 4",
+            ));
+        }
         let legacy = match wire.schema_version {
             1 | 2 => true,
             3 | SCHEMA_VERSION => false,
@@ -128,9 +139,16 @@ impl<'de> Deserialize<'de> for SceneDocument {
             profile,
             character,
             timeline: wire.timeline,
+            reference_motion: wire.reference_motion,
             stage,
         })
     }
+}
+
+fn present_reference_motion<'de, D: serde::Deserializer<'de>>(
+    deserializer: D,
+) -> std::result::Result<Option<ReferenceMotion>, D::Error> {
+    ReferenceMotion::deserialize(deserializer).map(Some)
 }
 
 // Presence wrappers preserve strict legacy/current shapes, including explicit null.
@@ -326,6 +344,14 @@ pub enum Command {
     SetTimeline {
         clips: Vec<TimelineClip>,
     },
+    SetReferenceMotion {
+        motion: ReferenceMotion,
+    },
+    SetReferenceRotationKey {
+        bone: String,
+        seconds: f32,
+        degrees: f32,
+    },
     SetStage {
         stage: StageSettings,
     },
@@ -361,6 +387,14 @@ impl<'de> Deserialize<'de> for Command {
             },
             SetTimeline {
                 clips: Vec<TimelineClip>,
+            },
+            SetReferenceMotion {
+                motion: ReferenceMotion,
+            },
+            SetReferenceRotationKey {
+                bone: String,
+                seconds: f32,
+                degrees: f32,
             },
             SetStage {
                 stage: StageSettings,
@@ -398,6 +432,16 @@ impl<'de> Deserialize<'de> for Command {
                 appearance,
             },
             StrictCommand::SetTimeline { clips } => Self::SetTimeline { clips },
+            StrictCommand::SetReferenceMotion { motion } => Self::SetReferenceMotion { motion },
+            StrictCommand::SetReferenceRotationKey {
+                bone,
+                seconds,
+                degrees,
+            } => Self::SetReferenceRotationKey {
+                bone,
+                seconds,
+                degrees,
+            },
             StrictCommand::SetStage { stage } => Self::SetStage { stage },
             StrictCommand::Undo {} => Self::Undo,
             StrictCommand::Redo {} => Self::Redo,
@@ -630,6 +674,7 @@ impl SceneDocument {
             },
             profile,
             timeline,
+            reference_motion: None,
             stage: StageSettings::default(),
         };
         document.validate()?;
@@ -695,6 +740,15 @@ impl SceneDocument {
                 ));
             }
         }
+        if let Some(motion) = &self.reference_motion {
+            if !self.supports_reference_motion() || self.timeline != [motion.clip()] {
+                return Err(CoreError::new(
+                    "invalid_reference_motion",
+                    "Reference motion requires one finite B1 rehearsal clip matching its duration",
+                ));
+            }
+            return motion.validate();
+        }
         unique(self.timeline.iter().map(|c| c.id.as_str()), "timeline id")?;
         for clip in &self.timeline {
             if !self
@@ -747,6 +801,20 @@ impl SceneDocument {
             .iter()
             .map(|clip| clip.start_seconds + clip.duration_seconds)
             .fold(0.0, f32::max)
+    }
+
+    pub fn supports_reference_motion(&self) -> bool {
+        self.profile.backend.is_b1_motion() && !self.profile.backend.is_b1_running()
+    }
+
+    /// Sample a reference motion from a validated Work.
+    pub fn reference_pose_at(&self, seconds: f32) -> Result<ReferencePose> {
+        self.reference_motion
+            .as_ref()
+            .ok_or_else(|| {
+                CoreError::new("invalid_reference_motion", "Work has no reference motion")
+            })?
+            .sample(seconds)
     }
 
     /// Preserve the M0 start-zero single-action loop as an indefinite preview.
@@ -829,6 +897,13 @@ impl CommandEnvelope {
                     finite(clip.duration_seconds, "duration")?;
                     finite(clip.speed, "speed")?;
                 }
+            }
+            Command::SetReferenceMotion { motion } => motion.validate()?,
+            Command::SetReferenceRotationKey {
+                seconds, degrees, ..
+            } => {
+                finite(*seconds, "reference key seconds")?;
+                finite(*degrees, "reference key degrees")?;
             }
             Command::SetDiagnosticPose { .. } | Command::Undo | Command::Redo => {}
         }
@@ -1104,6 +1179,7 @@ fn apply_edit(document: &mut SceneDocument, command: &Command) -> Result<()> {
             document.character.diagnostic_pose = Some(pose_id.clone());
             if document.profile.backend.is_b1_motion() {
                 document.timeline.clear();
+                document.reference_motion = None;
             }
         }
         Command::SetAppearance {
@@ -1114,7 +1190,27 @@ fn apply_edit(document: &mut SceneDocument, command: &Command) -> Result<()> {
             appearance.validate_for(&document.profile.backend)?;
             document.character.appearance = appearance.clone();
         }
-        Command::SetTimeline { clips } => document.timeline = clips.clone(),
+        Command::SetTimeline { clips } => {
+            document.timeline = clips.clone();
+            document.reference_motion = None;
+        }
+        Command::SetReferenceMotion { motion } => {
+            document.timeline = vec![motion.clip()];
+            document.reference_motion = Some(motion.clone());
+        }
+        Command::SetReferenceRotationKey {
+            bone,
+            seconds,
+            degrees,
+        } => {
+            document
+                .reference_motion
+                .as_mut()
+                .ok_or_else(|| {
+                    CoreError::new("invalid_reference_motion", "Work has no reference motion")
+                })?
+                .set_rotation_key(bone, *seconds, *degrees)?;
+        }
         Command::SetStage { stage } => {
             stage.validate()?;
             document.stage = stage.clone();
@@ -1146,6 +1242,10 @@ fn command_summary(command: &Command) -> String {
         Command::SetDiagnosticPose { pose_id, .. } => format!("Set diagnostic pose to {pose_id}"),
         Command::SetAppearance { .. } => "Set character appearance".into(),
         Command::SetTimeline { clips } => format!("Set {} timeline clip(s)", clips.len()),
+        Command::SetReferenceMotion { .. } => "Set reference motion".into(),
+        Command::SetReferenceRotationKey { bone, seconds, .. } => {
+            format!("Set {bone} rotation key at {seconds}s")
+        }
         Command::SetStage { .. } => "Set rehearsal stage".into(),
         Command::Undo => "Undo".into(),
         Command::Redo => "Redo".into(),

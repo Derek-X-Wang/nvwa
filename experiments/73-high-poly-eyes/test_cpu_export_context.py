@@ -33,20 +33,29 @@ PRODUCT = ('Cargo.lock', 'crates/nvwa-cli/Cargo.toml', 'crates/nvwa-cli/src/cpu_
 class CpuSourceContext(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        global ROOT
-        live = ROOT
-        temporary = tempfile.TemporaryDirectory(prefix='nvwa73-pre-waist-')
-        cls.addClassCleanup(temporary.cleanup)
-        ROOT = Path(temporary.name)
-        cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
-        retained_waist = CONTEXT.pre_waist_sources(HERE, (HERE / 'FROZEN-INPUTS.json').read_bytes(), json.loads((HERE / 'FROZEN-INPUTS.json').read_bytes()))
-        previous_files = json.loads((HERE / CONTEXT.CPU_CONTEXT_NAME).read_bytes())['files']
-        for name in previous_files.keys() | retained_waist.keys():
-            path = ROOT / name
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(retained_waist[name] if name in retained_waist else (live / name).read_bytes())
-        cls.files = json.loads((HERE / CONTEXT.CPU_CONTEXT_NAME).read_bytes())['files']
+        raw = (HERE / 'FROZEN-INPUTS.json').read_bytes()
+        original = json.loads(raw)
+        cpu = CONTEXT.cpu_source_context(HERE, raw, original)
+        waist = CONTEXT._waist_context(HERE, cpu[1])
+        reference = CONTEXT._reference_motion_context(HERE, cpu)
+        retained = CONTEXT._combined_predecessors(HERE, waist, reference)
+        pre_waist = CONTEXT.pre_waist_sources(HERE, raw, original)
+        pre_reference = CONTEXT.pre_reference_motion_sources(HERE, raw, original)
+        cls.files = cpu[1]
+        cls.reference_files = reference[1]
         cls.retained = json.loads((HERE / 'fixtures/pre-cpu-export/manifest.json').read_bytes())['files']
+        temporary = tempfile.TemporaryDirectory(prefix='nvwa-before-combined-')
+        cls.addClassCleanup(temporary.cleanup)
+        cls.cpu_root = Path(temporary.name) / 'cpu'
+        cls.reference_root = Path(temporary.name) / 'reference'
+        for target, files, old in (
+            (cls.cpu_root, cls.files, pre_waist | pre_reference),
+            (cls.reference_root, cls.reference_files, pre_waist | retained['reference-motion']),
+        ):
+            for name in files:
+                dest = target / name
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                dest.write_bytes(old[name] if name in old else (ROOT / name).read_bytes())
 
     def invoke_gate(self, root=None, exp=HERE):
         root = ROOT if root is None else root
@@ -54,15 +63,17 @@ class CpuSourceContext(unittest.TestCase):
             ENTRY.SourceContract('test_frozen_source_inputs').test_frozen_source_inputs()
 
     def gate(self, root=None, exp=HERE, cpu=True):
-        root = ROOT if root is None else root
+        root = self.cpu_root if root is None else root
         self.invoke_gate(root, exp)
         self.assertEqual(CONTEXT.has_cpu_inputs(root), cpu)
 
-    def copied(self, root):
-        for name in self.files:
+    def copied(self, root, reference_motion=False):
+        files = self.reference_files if reference_motion else self.files
+        source = self.reference_root if reference_motion else self.cpu_root
+        for name in files:
             dest = root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(ROOT / name, dest)
+            shutil.copyfile(source / name, dest)
         exp = root / 'experiments' / HERE.name
         exp.mkdir(parents=True, exist_ok=True)
         for path in HERE.iterdir():
@@ -87,7 +98,7 @@ class CpuSourceContext(unittest.TestCase):
         for name in set(previous) - set(PRODUCT):
             self.assertEqual(self.files[name], previous[name], name)
         # Real CI wiring: the opt-in integration target must run on the native path.
-        script = (ROOT / 'experiments/27-ci-baseline/check.sh').read_text()
+        script = (self.cpu_root / 'experiments/27-ci-baseline/check.sh').read_text()
         command = 'cargo test -p nvwa-cli --features cpu-render,motion-query --test cpu_render --locked --offline -- --test-threads=1'
         self.assertEqual(script.count(command), 1)
         self.assertIn(command, script.split('  native)\n', 1)[1].split('    ;;', 1)[0])
@@ -161,6 +172,107 @@ class CpuSourceContext(unittest.TestCase):
                     if name in retained: path.write_bytes(retained[name])
                     else: path.unlink()
                 self.gate(root, exp, cpu=False)
+
+
+    def reference_gate(self, root=None, exp=HERE):
+        root = self.reference_root if root is None else root
+        self.invoke_gate(root, exp)
+        self.assertTrue(CONTEXT.has_reference_motion_inputs(root))
+
+    def test_reference_motion_exact_current_union_and_cpu_predecessor(self):
+        self.reference_gate()
+        self.gate()
+        self.assertEqual(len(self.reference_files), 327)
+        self.assertEqual(set(self.reference_files), set(self.files) | set(CONTEXT.REFERENCE_MOTION_ADDITIONS))
+        self.assertEqual({name for name in self.files if self.reference_files[name] != self.files[name]},
+                         set(CONTEXT.REFERENCE_MOTION_CHANGED))
+
+    def test_reference_motion_bidirectional_mixtures_and_whole_extension_removal_reject(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa-reference-motion-mix-') as directory:
+            current = Path(directory) / 'current'
+            previous = Path(directory) / 'previous'
+            exp = self.copied(current, reference_motion=True)
+            cpu_exp = self.copied(previous)
+            self.reference_gate(current, exp)
+            self.gate(previous, cpu_exp)
+            for root, source, material, green in ((current, previous, exp, self.reference_gate),
+                                                  (previous, current, cpu_exp, self.gate)):
+                for name in CONTEXT.REFERENCE_MOTION_CHANGED:
+                    path = root / name
+                    original = path.read_bytes()
+                    with self.subTest(root=root.name, crossover=name):
+                        try:
+                            shutil.copyfile(source / name, path)
+                            with self.assertRaises((ValueError, AssertionError)):
+                                self.invoke_gate(root, material)
+                        finally:
+                            path.write_bytes(original)
+                        self.assertEqual(path.read_bytes(), original)
+                        green(root, material)
+            additions = {n: (current / n).read_bytes() for n in CONTEXT.REFERENCE_MOTION_ADDITIONS}
+            for name, raw in additions.items():
+                path = previous / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(raw)
+                try:
+                    with self.assertRaises((ValueError, AssertionError)):
+                        self.invoke_gate(previous, cpu_exp)
+                finally:
+                    path.unlink()
+                self.gate(previous, cpu_exp)
+            try:
+                for name in additions:
+                    (current / name).unlink()
+                with self.assertRaises((ValueError, AssertionError)):
+                    self.invoke_gate(current, exp)
+            finally:
+                for name, raw in additions.items():
+                    (current / name).write_bytes(raw)
+            self.reference_gate(current, exp)
+
+    def test_reference_motion_file_and_inventory_faults_reject_and_restore(self):
+        with tempfile.TemporaryDirectory(prefix='nvwa-reference-motion-files-') as directory:
+            root = Path(directory) / 'source'
+            exp = self.copied(root, reference_motion=True)
+            manifest = exp / CONTEXT.REFERENCE_MOTION_CONTEXT_NAME
+            fixtures = exp / CONTEXT.REFERENCE_MOTION_FIXTURES
+            paths = [root / n for n in (*CONTEXT.REFERENCE_MOTION_CHANGED, *CONTEXT.REFERENCE_MOTION_ADDITIONS)]
+            paths += [manifest, *(fixtures / n for n in CONTEXT.REFERENCE_MOTION_CHANGED)]
+            target = Path(directory) / 'original'
+            for path in paths:
+                original = path.read_bytes()
+                target.write_bytes(original)
+                for fault in ('missing', 'same-size', 'symlink'):
+                    with self.subTest(path=path.relative_to(root), fault=fault):
+                        path.unlink()
+                        try:
+                            if fault == 'same-size':
+                                path.write_bytes(bytes([original[0] ^ 1]) + original[1:])
+                            elif fault == 'symlink':
+                                path.symlink_to(target)
+                            with self.assertRaises((ValueError, AssertionError)):
+                                self.invoke_gate(root, exp)
+                        finally:
+                            path.unlink(missing_ok=True)
+                            path.write_bytes(original)
+                        self.assertEqual(path.read_bytes(), original)
+                        self.reference_gate(root, exp)
+            extra = fixtures / 'unreviewed'
+            original = manifest.read_bytes()
+            value = json.loads(original)
+            value['files']['unreviewed'] = {'bytes': 0, 'sha256': '0' * 64}
+            for path, raw in ((extra, b'unreviewed'), (manifest, json.dumps(value).encode())):
+                with self.subTest(extra=path.name):
+                    try:
+                        path.write_bytes(raw)
+                        with self.assertRaises((ValueError, AssertionError)):
+                            self.invoke_gate(root, exp)
+                    finally:
+                        if path == manifest:
+                            path.write_bytes(original)
+                        else:
+                            path.unlink()
+                    self.reference_gate(root, exp)
 
 
 if __name__ == '__main__':

@@ -40,7 +40,9 @@ class RunningContext(unittest.TestCase):
         ROOT = Path(previous.name)
         cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
         source_raw = (HERE / 'FROZEN-INPUTS.json').read_bytes()
-        retained_cpu = (CONTEXT.pre_waist_sources(HERE, source_raw, json.loads(source_raw)) | CONTEXT.pre_cpu_sources(HERE, source_raw, json.loads(source_raw)))
+        original = json.loads(source_raw)
+        retained_cpu = (CONTEXT.pre_waist_sources(HERE, source_raw, original) | CONTEXT.pre_reference_motion_sources(HERE, source_raw, original)
+                        | CONTEXT.pre_cpu_sources(HERE, source_raw, original))
         # CPU-only leaves must not leak into a reconstructed motion-query tree.
         retained_cpu = {name: data for name, data in retained_cpu.items() if name not in CONTEXT.CPU_NEW_FILES}
         previous_files = json.loads((HERE / CONTEXT.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
