@@ -9,11 +9,14 @@ use std::{
 struct Trial(PathBuf);
 impl Trial {
     fn new() -> Self {
+        static NEXT_DIR: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+        let sequence = NEXT_DIR.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
         let n = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_nanos();
-        let path = std::env::temp_dir().join(format!("nvwa-cpu-{}-{n}", std::process::id()));
+        let path =
+            std::env::temp_dir().join(format!("nvwa-cpu-{}-{n}-{sequence}", std::process::id()));
         std::fs::create_dir(&path).unwrap();
         Self(path)
     }
@@ -159,4 +162,67 @@ fn unsupported_work_and_corrupt_assets_never_publish_output() {
             || error["message"].as_str().unwrap().contains("SHA"),
         "{error}"
     );
+}
+
+#[test]
+fn static_waist_real_front_side_extremes_repeat_and_mixed_recipe() {
+    let t = Trial::new();
+    let mut doc = SceneDocument::from_profile(CharacterProfile::b1_character_waist()).unwrap();
+    doc.stage.camera.elevation_degrees = 0.0;
+    let mut zero_geometry = None;
+    for (label, azimuth) in [("front", 0.0), ("side", 90.0)] {
+        doc.stage.camera.azimuth_degrees = azimuth;
+        let mut images = std::collections::BTreeSet::new();
+        for (tier, value) in [("small", -1.0), ("zero", 0.0), ("large", 1.0)] {
+            doc.character
+                .parameters
+                .insert("waist_circumference".into(), value);
+            let name = format!("{label}-{tier}");
+            let work = t.work(&name, &doc);
+            let result = success(render(&work, &assets(), &t.0.join(&name)));
+            assert!(result["covered_pixels"].as_u64().unwrap() > 100);
+            assert_eq!(result["parts"].as_array().unwrap().len(), 2);
+            assert!(images.insert(result["png_sha256"].as_str().unwrap().to_string()));
+            if tier == "zero" {
+                if let Some(ref previous) = zero_geometry {
+                    assert_eq!(&result["geometry_sha256"], previous);
+                }
+                zero_geometry = Some(result["geometry_sha256"].clone());
+                let repeated = success(render(
+                    &work,
+                    &assets(),
+                    &t.0.join(format!("{name}-repeat")),
+                ));
+                assert_eq!(result["png_sha256"], repeated["png_sha256"]);
+            }
+        }
+    }
+    doc.character.parameters.insert("hip_width".into(), -0.5);
+    doc.character.parameters.insert("torso_length".into(), 0.5);
+    let mixed = success(render(
+        &t.work("mixed", &doc),
+        &assets(),
+        &t.0.join("mixed"),
+    ));
+    assert_ne!(Some(mixed["geometry_sha256"].clone()), zero_geometry);
+}
+
+#[test]
+fn static_waist_zero_preserves_legacy_zero_silhouette() {
+    let t = Trial::new();
+    let old = neutral();
+    let mut new = SceneDocument::from_profile(CharacterProfile::b1_character_waist()).unwrap();
+    new.stage = old.stage.clone();
+    let legacy = success(render(
+        &t.work("legacy-zero", &old),
+        &assets(),
+        &t.0.join("legacy-zero"),
+    ));
+    let waist = success(render(
+        &t.work("waist-zero", &new),
+        &assets(),
+        &t.0.join("waist-zero"),
+    ));
+    assert_eq!(legacy["png_sha256"], waist["png_sha256"]);
+    assert_eq!(legacy["covered_pixels"], waist["covered_pixels"]);
 }

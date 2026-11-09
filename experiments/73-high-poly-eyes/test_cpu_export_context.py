@@ -33,14 +33,28 @@ PRODUCT = ('Cargo.lock', 'crates/nvwa-cli/Cargo.toml', 'crates/nvwa-cli/src/cpu_
 class CpuSourceContext(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        global ROOT
+        live = ROOT
+        temporary = tempfile.TemporaryDirectory(prefix='nvwa73-pre-waist-')
+        cls.addClassCleanup(temporary.cleanup)
+        ROOT = Path(temporary.name)
+        cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
+        retained_waist = CONTEXT.pre_waist_sources(HERE, (HERE / 'FROZEN-INPUTS.json').read_bytes(), json.loads((HERE / 'FROZEN-INPUTS.json').read_bytes()))
+        previous_files = json.loads((HERE / CONTEXT.CPU_CONTEXT_NAME).read_bytes())['files']
+        for name in previous_files.keys() | retained_waist.keys():
+            path = ROOT / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(retained_waist[name] if name in retained_waist else (live / name).read_bytes())
         cls.files = json.loads((HERE / CONTEXT.CPU_CONTEXT_NAME).read_bytes())['files']
         cls.retained = json.loads((HERE / 'fixtures/pre-cpu-export/manifest.json').read_bytes())['files']
 
-    def invoke_gate(self, root=ROOT, exp=HERE):
+    def invoke_gate(self, root=None, exp=HERE):
+        root = ROOT if root is None else root
         with patch.object(ENTRY, 'ROOT', root), patch.object(ENTRY, 'EXP', exp):
             ENTRY.SourceContract('test_frozen_source_inputs').test_frozen_source_inputs()
 
-    def gate(self, root=ROOT, exp=HERE, cpu=True):
+    def gate(self, root=None, exp=HERE, cpu=True):
+        root = ROOT if root is None else root
         self.invoke_gate(root, exp)
         self.assertEqual(CONTEXT.has_cpu_inputs(root), cpu)
 

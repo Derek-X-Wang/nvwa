@@ -92,6 +92,14 @@ struct Selection {
     parameters: BTreeMap<String, f32>,
     pose: String,
 }
+// Frame publication uses the same validated prepared rig for both timeline
+// profiles and the explicitly static waist profile. This is an internal render
+// capability, not public permission to add clips/timelines to the latter.
+fn uses_prepared_rig(doc: &SceneDocument) -> bool {
+    doc.profile.backend.is_b1_motion()
+        || doc.profile.backend.b1_asset_version() == Some(B1AssetVersion::V5)
+}
+
 impl Selection {
     fn from_doc(doc: &SceneDocument) -> Self {
         Self {
@@ -101,7 +109,7 @@ impl Selection {
                 .b1_asset_version()
                 .expect("validated B1 profile"),
             parameters: doc.character.parameters.clone(),
-            pose: if doc.profile.backend.is_b1_motion() {
+            pose: if uses_prepared_rig(doc) {
                 String::new()
             } else {
                 doc.character.diagnostic_pose.clone().unwrap_or_default()
@@ -790,7 +798,7 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             };
             part.mesh = mesh;
         }
-        if c.document.profile.backend.is_b1_motion() {
+        if uses_prepared_rig(&c.document) {
             let doc = if !c.is_open {
                 world
                     .resource::<EditorState>()
@@ -4900,7 +4908,7 @@ fn update_motion_transport(world: &mut World, runtime: &mut B1Runtime) {
     let editor = world.resource::<EditorState>();
     let Some(doc) = editor
         .visible_document()
-        .filter(|d| d.profile.backend.is_b1_motion())
+        .filter(|d| uses_prepared_rig(d))
         .cloned()
     else {
         return;
@@ -4929,7 +4937,7 @@ fn animate_active(world: &mut World, runtime: &mut B1Runtime) {
     let editor = world.resource::<EditorState>();
     let Some(doc) = editor
         .visible_document()
-        .filter(|d| d.profile.backend.is_b1_motion())
+        .filter(|d| uses_prepared_rig(d))
         .cloned()
     else {
         return;
@@ -5210,7 +5218,7 @@ fn bind_published_frame(world: &World, runtime: &mut B1Runtime) {
         || active.phase != 2
         || active.generation != editor.document_generation
         || active.selection != Selection::from_doc(doc)
-        || !doc.profile.backend.is_b1_motion()
+        || !uses_prepared_rig(doc)
         || playback.seek_request.is_some()
         || active.last_sample.as_ref() != Some(&frame_sample(doc, playback.position_seconds))
     {
@@ -5259,7 +5267,7 @@ fn published_motion_frame(
     validate_structure(world, active)?;
     let editor = world.resource::<EditorState>();
     let doc = editor.visible_document().ok_or("Work absent")?;
-    if !doc.profile.backend.is_b1_motion()
+    if !uses_prepared_rig(doc)
         || active.generation != editor.document_generation
         || active.selection != Selection::from_doc(doc)
     {

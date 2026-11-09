@@ -64,12 +64,14 @@ pub enum B1AppearanceSet {
     V4Short01,
 }
 impl B1AppearanceSet {
-    pub const fn for_base(base: B1AssetVersion) -> Self {
+    /// None means that no appearance payload set has been admitted for this base.
+    pub const fn for_base(base: B1AssetVersion) -> Option<Self> {
         match base {
-            B1AssetVersion::V1 => Self::V1,
-            B1AssetVersion::V2 => Self::V2,
-            B1AssetVersion::V3 => Self::V3,
-            B1AssetVersion::V4 => Self::V4,
+            B1AssetVersion::V1 => Some(Self::V1),
+            B1AssetVersion::V2 => Some(Self::V2),
+            B1AssetVersion::V3 => Some(Self::V3),
+            B1AssetVersion::V4 => Some(Self::V4),
+            B1AssetVersion::V5 => None,
         }
     }
     pub const fn base(self) -> B1AssetVersion {
@@ -228,7 +230,16 @@ impl CharacterAppearance {
                 "B1 CC0 appearance requires the B1 character backend",
             )
         })?;
-        Self::b1_cc0_for_set(backend, B1AppearanceSet::for_base(base), skin, eyes, hair)
+        if !skin && !eyes && !hair {
+            return Ok(Self::None);
+        }
+        let set = B1AppearanceSet::for_base(base).ok_or_else(|| {
+            CoreError::new(
+                "unsupported_character_operation",
+                "No appearance set admitted for this static body profile",
+            )
+        })?;
+        Self::b1_cc0_for_set(backend, set, skin, eyes, hair)
     }
 
     /// Select an admitted set for its exact base; empty selections remain None.

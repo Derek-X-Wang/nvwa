@@ -717,6 +717,7 @@ fn draw_editor_ui(
     let mut file_action = None;
     let mut new_b1 = false;
     let mut new_contour = false;
+    let mut new_waist = false;
     let mut new_lower_contour = false;
     let mut new_running = false;
     let mut command = None;
@@ -748,6 +749,13 @@ fn draw_editor_ui(
             }
             ui.add_enabled_ui(!io.busy(), |ui| {
                 ui.menu_button("▾", |ui| {
+                    if ui
+                        .button("新建静态腰部人物… / New static waist character…")
+                        .clicked()
+                    {
+                        new_waist = true;
+                        ui.close();
+                    }
                     if ui
                         .button("新建跑步人物… / New running character…")
                         .clicked()
@@ -890,6 +898,9 @@ fn draw_editor_ui(
                         }
                         if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V4) {
                             ui.small("方正轮廓0–1，非下颌宽度；邻近过渡可变化 / Squaring0–1; nearby transitions may change.");
+                        }
+                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V5) {
+                            ui.small("腰围造型 -1–1，非厘米；邻近躯干和衣物可变化。静态试用 / Waist shape, not centimetres; static only.");
                         }
                         if editor.preview.is_some() {
                             ui.label("Preview · document unchanged");
@@ -1250,8 +1261,10 @@ fn draw_editor_ui(
     state.stage = stage_ui;
     state.save_notice = save_notice;
     *playback = next_playback;
-    if new_b1 || new_contour || new_lower_contour || new_running {
-        let profile = if new_running {
+    if new_b1 || new_contour || new_lower_contour || new_running || new_waist {
+        let profile = if new_waist {
+            nvwa_core::CharacterProfile::b1_character_waist()
+        } else if new_running {
             nvwa_core::CharacterProfile::b1_running()
         } else if new_lower_contour {
             nvwa_core::CharacterProfile::b1_character_lower_contour()
@@ -1459,6 +1472,7 @@ fn shape_parameter_label(id: &str) -> String {
         "torso_length" => "躯干长度 / Torso length".into(),
         "jaw_drop" => "下颌开合 / Jaw opening".into(),
         "cheek_fullness" => "脸颊饱满度 / Cheek fullness".into(),
+        "waist_circumference" => "腰围造型 / Waist circumference shape".into(),
         "lower_face_squareness" => "下半脸轮廓方正度 / Lower-face squaring".into(),
         "head_width" => "头部宽度 / Head width".into(),
         "nose_width" => "鼻部宽度 / Nose width".into(),
