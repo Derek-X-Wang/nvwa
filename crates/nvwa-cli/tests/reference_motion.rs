@@ -64,6 +64,16 @@ fn a_saved_reference_edit_changes_one_key_and_only_adjacent_intervals() {
     fs::write(command, reference.to_string()).unwrap();
     ok(&["apply", start, command, original]);
     let original_bytes = fs::read(original).unwrap();
+    let capabilities = ok(&["describe-capabilities", original]);
+    let contract = &capabilities["cli_contract"];
+    assert_eq!(contract["reference_motion"]["present"], true);
+    assert!(
+        contract["command_examples"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|example| example["command"]["type"] != "set_timeline")
+    );
     let pose = |work, time| ok(&["reference-pose", work, time])["pose"].clone();
     assert_eq!(pose(original, "0.75")["rotations"][0]["degrees"], 21.0);
     assert_eq!(pose(original, "2")["rotations"][1]["degrees"], 180.0);

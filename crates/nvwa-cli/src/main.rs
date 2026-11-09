@@ -255,7 +255,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         Command::Redo,
     ];
     if document.profile.backend.is_b1() {
-        if !document.profile.backend.supports_timeline() {
+        if !document.profile.backend.supports_timeline() || document.reference_motion.is_some() {
             commands.retain(|command| !matches!(command, Command::SetTimeline { .. }));
         }
         commands.insert(

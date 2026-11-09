@@ -465,7 +465,7 @@ def check_cpu_preexisting(root, retained):
 
 # The exact reference motion source is an additive successor to CPU export.
 REFERENCE_MOTION_CONTEXT_NAME = 'source-context-reference-motion-v1.json'
-REFERENCE_MOTION_CONTEXT_SHA = '4dc7198491d26777fc12f209656fe6b59beaab08dc1b020f7073fa83171542a7'
+REFERENCE_MOTION_CONTEXT_SHA = '8731414a1fe9c3b402ecda348472aba2f78326e0e47af838ed4f710de27cd397'
 REFERENCE_MOTION_CONTEXT_ID = 'b1-reference-motion-product-v1'
 REFERENCE_MOTION_PREDECESSOR_COMMIT = '875213616aa68d81dbfcd6378f4e2292f5b24004'
 REFERENCE_MOTION_CHANGED = ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-core/src/lib.rs',
