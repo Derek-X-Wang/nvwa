@@ -53,7 +53,140 @@ EYE20_STEP = """      - name: Check eye, hair, and character parameter controls
 """
 
 
+# ci-tiering-v1: this consumer independently verifies every additive lane before
+# reversing only the approved topology edits. Original assertions below remain.
+TIER_JOB_SHA256 = {'classify': 'b545979be6d56537b3f73eb75774c94c86c9c9d2ad0b09519762fdc66c968d34', 'mac-smoke': '29ffe1a4249b96d7ba7f143f6def594acb14fa4726c0bd984b9939d37b1b6989', 'linux-shared': '034f1b2fce7288f3b30aad9f8984a71c82dd35ed17e0bcdb49881512cc475f3a', 'required-gate': '50ed96092cabb707aaa06a72eb623cc2ba1b34d4b11e3ac98544a3ebb9958633', 'full-mac-report': '4e95b6ea70c091b988def140bb16dc36b8174d9b2ebc6155336812f50f313d23'}
+
+
+TIER_INPUT_SHA256 = {'scripts/ci-tiering/policy.py': '8fe23dc381aca8eac8bf87aa7062aaa3c37199ff94f55e4016eadabd630360f7', 'scripts/ci-tiering/mac_smoke.py': '5ade91fa94ea313aebbfef793c4c2809c015a32da791efbfd40144062a6f3235', 'scripts/ci-tiering/linux-shared.sh': '94fd448e8e2018f4f9e70f1a9d8d5a759a771cd1ecd6c9cb7bf781ffc442ec88', 'scripts/ci-tiering/linux_mutations.py': 'bc4d945fa8c33e983fa5c2d3898651aebd9c8809871c97604fb119001cf4b19c', 'scripts/ci-tiering/test_policy.py': '085a6664172deb05efaef19eab912504e067b21fe59ff08ba72af4e76669a92f', '.github/workflows/ci-mac-report.yml': '5d35fadac433d125bbd8942d422dcb84d30ca37aab38429f2b7e5c1ff5257b7a'}
+
+
+# linux-garment-v2: authenticate the exact upgrade before projecting v1 bytes.
+LINUX_GARMENT_V2_SHA256 = {'scripts/ci-tiering/linux-shared.sh': '1450941e42b88c8c502da07759820e08baebf360b95230703d0757f099b6dc8a', 'scripts/ci-tiering/test_policy.py': '9a8d854d5ba7c2c223eac15b7a14ebe38b65e4ce7b08d5128de94bd195bcbc19', 'scripts/ci-tiering/linux_garment_controls.py': '14483090281c488d7fa6efc0fbf4823c873745c970b043957cc90a56761941e1'}
+LINUX_GARMENT_NORMALIZE = b"        linux_entry = 'scripts/ci-tiering/linux_garment_controls.py'\n        self.assertEqual(linux.count(linux_entry), 2)\n        linux = linux.replace(linux_entry, 'experiments/70-b1-garment-defect/test_controls.py')\n"
+
+
+# portable-split-v3: verify the new topology, then retain all older contracts.
+PORTABLE_SPLIT_JOB_SHA256 = {'portable-eye': '0965819815391bac3e0911ecc5e0d85e5e200b2b1151bf9159356b1eb6734cfb', 'classify': '7c7209ae7649e37dcf7cfa28415978c60fe726d12a4f549729fce6419835dc0f'}
+PORTABLE_SPLIT_INPUT_SHA256 = {'scripts/ci-tiering/policy.py': 'd9e3d8faaf48a45d2758e9de3159171f6c55f02434db1f27967515549ef4ae85', 'scripts/ci-tiering/test_policy.py': '464bb421984cbef27d76263a1a4e4b5d6b01c7c031f7ab99200f329189d124f2', 'scripts/ci-tiering/test_portable_split.py': '134e510608c6afe932aa085187102656b46911733abf75e2c478e16a6b51ed44'}
+PORTABLE_SPLIT_NORMALIZE = b"        self.assertEqual(new.count('    needs: [classify, portable, portable-eye]\\n'), 2)\n        new = new.replace('    needs: [classify, portable, portable-eye]\\n', '    needs: [classify, portable]\\n')\n"
+
+
+def portable_split_dependency_header(header):
+    return header.replace('    needs: portable\n', '    needs: [portable, portable-eye]\n').replace(
+        '    needs: [classify, portable]\n', '    needs: [classify, portable, portable-eye]\n')
+
+
+def historical_portable_split_input(name, checks, data):
+    split_spec = importlib.util.spec_from_file_location('mac_split_contract', ROOT/'scripts/ci-tiering/mac_split_contract.py')
+    split_module = importlib.util.module_from_spec(split_spec)
+    split_spec.loader.exec_module(split_module)
+    data = split_module.project_input(name, checks, data)
+    if name in PORTABLE_SPLIT_INPUT_SHA256:
+        checks.assertEqual(hashlib.sha256(data).hexdigest(), PORTABLE_SPLIT_INPUT_SHA256[name], name)
+    if name == 'scripts/ci-tiering/policy.py':
+        current = b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'mac-smoke', 'b1-source-regression')"
+        checks.assertEqual(data.count(current), 1)
+        data = data.replace(current, current.replace(b"'portable', 'portable-eye',", b"'portable',"), 1)
+    if name == 'scripts/ci-tiering/test_policy.py':
+        checks.assertEqual(data.count(PORTABLE_SPLIT_NORMALIZE), 1)
+        data = data.replace(PORTABLE_SPLIT_NORMALIZE, b'', 1)
+    return data
+
+
+def historical_portable_split_workflow(workflow, checks):
+    split_spec = importlib.util.spec_from_file_location('mac_split_contract', ROOT/'scripts/ci-tiering/mac_split_contract.py')
+    split_module = importlib.util.module_from_spec(split_spec)
+    split_spec.loader.exec_module(split_module)
+    workflow = split_module.project(workflow, checks)
+    def block(name):
+        matches = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
+        checks.assertEqual(len(matches), 1, 'required exactly one portable split job: '+name)
+        return matches[0]
+    for name, digest in PORTABLE_SPLIT_JOB_SHA256.items():
+        checks.assertEqual(hashlib.sha256(block(name).encode()).hexdigest(), digest, name)
+    # These are authenticated additions, not new values for historical hashes.
+    for name in PORTABLE_SPLIT_INPUT_SHA256:
+        historical_portable_split_input(name, checks, (ROOT/name).read_bytes())
+    eye = block('portable-eye')
+    checks.assertEqual(eye.count(EYE20_STEP), 1)
+    core = block('portable')
+    checks.assertTrue(core.startswith(PORTABLE30_HEADER), 'required original portable header')
+    checks.assertNotIn('continue-on-error', core)
+    checks.assertNotIn('eye-hair-parameters', core)
+    following = '      - name: Check authenticated B1 source bundle and rejection controls\n'
+    checks.assertEqual(core.count(following), 1)
+    workflow = workflow.replace(core, core.replace(following, EYE20_STEP+following, 1), 1)
+    workflow = workflow.replace(eye, '', 1)
+    addition = ('          python3 -B scripts/ci-tiering/test_portable_split.py\n'
+                '          python3 -B -O scripts/ci-tiering/test_portable_split.py\n')
+    checks.assertEqual(workflow.count(addition), 1)
+    workflow = workflow.replace(addition, '', 1)
+    for name, current, previous in [
+        ('native-and-wasm', '    needs: [classify, portable, portable-eye]\n', '    needs: [classify, portable]\n'),
+        ('mac-full-background', '    needs: [classify, portable, portable-eye]\n', '    needs: [classify, portable]\n'),
+        ('b1-source-regression', '    needs: [portable, portable-eye]\n', '    needs: portable\n'),
+        ('required-gate', '    needs: [classify, portable, portable-eye, linux-shared, mac-smoke, b1-source-regression, native-and-wasm]\n',
+         '    needs: [classify, portable, linux-shared, mac-smoke, b1-source-regression, native-and-wasm]\n')]:
+        body = block(name)
+        checks.assertEqual(body.count(current), 1, name+' must await both portable groups')
+        workflow = workflow.replace(body, body.replace(current, previous, 1), 1)
+    return workflow
+
+
+def historical_tiering_input(name, checks, data=None):
+    data = (ROOT/name).read_bytes() if data is None else data
+    data = historical_portable_split_input(name, checks, data)
+    if name in LINUX_GARMENT_V2_SHA256:
+        checks.assertEqual(hashlib.sha256(data).hexdigest(), LINUX_GARMENT_V2_SHA256[name], name)
+    if name == 'scripts/ci-tiering/linux-shared.sh':
+        entry = b'scripts/ci-tiering/linux_garment_controls.py'
+        checks.assertEqual(data.count(entry), 2)
+        data = data.replace(entry, b'experiments/70-b1-garment-defect/test_controls.py')
+    if name == 'scripts/ci-tiering/test_policy.py':
+        blocks = re.findall(rb'(?ms)^# linux-garment-v2 begin\n.*?^# linux-garment-v2 end\n\n', data)
+        checks.assertEqual(len(blocks), 1)
+        checks.assertEqual(data.count(LINUX_GARMENT_NORMALIZE), 1)
+        data = data.replace(blocks[0], b'', 1).replace(LINUX_GARMENT_NORMALIZE, b'', 1)
+    return data
+
+
+def historical_tiering_workflow(workflow, checks):
+    workflow = historical_portable_split_workflow(workflow, checks)
+    def block(name):
+        matches = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
+        checks.assertEqual(len(matches), 1, 'required exactly one tier job: '+name)
+        return matches[0]
+    for name, digest in TIER_JOB_SHA256.items():
+        checks.assertEqual(hashlib.sha256(block(name).encode()).hexdigest(), digest,
+                           'exact tier job contract: '+name)
+    native = block('native-and-wasm')
+    condition = "    needs: [classify, portable]\n    if: ${{ needs.classify.outputs.full_required == 'true' }}\n"
+    checks.assertEqual(native.count(condition), 1, 'exact required Mac selector')
+    background = block('mac-full-background')
+    restored_background = background.replace('  mac-full-background:\n', '  native-and-wasm:\n', 1).replace(
+        '    name: Complete Mac background evidence\n', '    name: macOS CPU tests and Wasm compile check\n', 1).replace(
+        "    needs: [classify, portable]\n    if: ${{ needs.classify.outputs.full_required == 'false' }}\n", condition, 1)
+    checks.assertEqual(restored_background, native, 'complete background must retain exact full native job')
+    # Remove verified additions, preserving all original run bodies and order.
+    for name in TIER_JOB_SHA256:
+        workflow = workflow.replace(block(name), '', 1)
+    workflow = workflow.replace(background, '', 1)
+    workflow = workflow.replace(native, native.replace(condition, '    needs: portable\n', 1), 1)
+    additions = [
+        ('  workflow_dispatch:\n  release:\n    types: [published]\n', ''),
+        ("    tags: ['*']\n", ''),
+        ('# Existing complete-Mac main-only cache policy is retained; PRs stay cold.\n', '# No cache restore/save steps; no cache token overrides.\n'),
+    ]
+    for current, previous in additions:
+        checks.assertEqual(workflow.count(current), 1, 'exact tier trigger/comment addition')
+        workflow = workflow.replace(current, previous, 1)
+    checks.assertTrue(workflow.endswith('  # native-cache-trial end\n\n'), 'exact tier tail separator')
+    return workflow[:-1]
+
+
 def historical_eye_budget_workflow(workflow, checks):
+    workflow = historical_tiering_workflow(workflow, checks)
     jobs = {}
     for name, cap in [('portable', '30'), ('native-and-wasm', '75'),
                       ('b1-source-regression', '60'), ('native-cache-warm', '60')]:
@@ -249,19 +382,24 @@ class Timing(unittest.TestCase):
         workflow_path = ROOT / '.github/workflows/ci.yml'
         original = workflow_path.read_text()
         read_text = Path.read_text
+        # Keep every historical header mutation; translate both source and
+        # replacement dependencies to this exact topology before applying it.
+        def replace_header(old, new):
+            return original.replace(portable_split_dependency_header(old),
+                                    portable_split_dependency_header(new))
         commands = B1_FETCH_STEP.splitlines(keepends=True)[2:]
-        mutations = [original.replace(B1_LINUX_HEADER, B1_MACOS_HEADER),
+        mutations = [replace_header(B1_LINUX_HEADER, B1_MACOS_HEADER),
                      original.replace('name: Linux B1 source', 'name: Other B1 source'),
-                     original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('ubuntu-24.04', 'ubuntu-latest')),
-                     original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('needs: portable', 'needs: native-and-wasm')),
+                     replace_header(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('ubuntu-24.04', 'ubuntu-latest')),
+                     replace_header(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('needs: portable', 'needs: native-and-wasm')),
                      original.replace(B1_FETCH_STEP, ''),
                      original.replace(B1_FETCH_STEP, B1_FETCH_STEP*2),
                      original.replace(B1_FETCH_STEP+B1_PREPARE_STEP, B1_PREPARE_STEP+B1_FETCH_STEP),
                      original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        shell: bash\n        run: |'))]
         mutations.extend([
-            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('Linux B1', 'macOS B1')),
-            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('ubuntu-24.04', 'macos-14')),
-            original.replace(B1_LINUX_HEADER, B1_LINUX_HEADER*2),
+            replace_header(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('Linux B1', 'macOS B1')),
+            replace_header(B1_LINUX_HEADER, B1_LINUX_HEADER.replace('ubuntu-24.04', 'macos-14')),
+            replace_header(B1_LINUX_HEADER, B1_LINUX_HEADER*2),
             original.replace(B1_FETCH_STEP, B1_FETCH_STEP+'          true\n'),
             original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        if: true\n        run: |')),
             original.replace(B1_FETCH_STEP, B1_FETCH_STEP.replace('        run: |', '        continue-on-error: true\n        run: |')),
@@ -304,7 +442,7 @@ class Timing(unittest.TestCase):
             '        # Independent full-weight Python checks stream594frames; retain a finite\n'
             '        #20minute step within the existing75minute job, including probe linking.\n'
             '        timeout-minutes: 20\n')
-        self.assertEqual(original.count(native_matrix), 1)
+        self.assertEqual(historical_tiering_workflow(original, self).count(native_matrix), 1)
         mutations.extend([
             original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER.replace('    timeout-minutes: 30\n', '')),
             original.replace(PORTABLE30_HEADER, PORTABLE30_HEADER+'    timeout-minutes: 30\n'),
@@ -319,7 +457,12 @@ class Timing(unittest.TestCase):
                 'timeout-minutes: 30', 'timeout-minutes: 15')).replace(
                     native_matrix, native_matrix.replace('timeout-minutes: 20', 'timeout-minutes: 25'), 1),
         ])
-        for header in MACOS15_HEADERS:
+        for header in (MACOS15_HEADERS[0].replace('    needs: portable\n',
+                "    needs: [classify, portable]\n    if: ${{ needs.classify.outputs.full_required == 'true' }}\n"), MACOS15_HEADERS[1]):
+            header = portable_split_dependency_header(header)
+            for selected in ('true', 'false'):
+                header = header.replace("    if: ${{ needs.classify.outputs.full_required == '"+selected+"' }}\n",
+                                        "    if: ${{ false }} # retired complete lane; split jobs own every check\n")
             for label in ['macos-14', 'macos-latest', 'macos-26', 'macos-15-intel',
                           'macos-15-large', 'macos-15-xlarge', 'unknown']:
                 mutations.append(original.replace(header, header.replace('macos-15', label)))
@@ -755,6 +898,57 @@ echo must-not-run
 
 
 ORIGINAL_RUN_SHA256 = ['2633535201ac85bcd48438d308efb8428304d1057586dad9a7f9fbbd358136d9', 'f768e45ccae4351531879991b96334d596198345e0cf895aa686160fdf97a333', 'e5855e8901a2d4a3895e2514bd8a0a8b0dc567510ab155a8436066dac7b8a3b5', '41b996d55dfefee65f945fd49cd1b06ec1dfbcd341430b414a2ca92e8d80494a', '2db8f9d36d7743978f990744869cb845e3c94c18ed6b0eb109ca663f8da61bbf', '0f5f49e2e13f0b23bbc5eca9f2a312e7f6c58fec2753d472756eed46a9c58f92', 'cfa41f09c43e82eafd4a1d65d9f2abe902fa906c8b3210fbd669715c4e5dc2a4', '50cd014ced45830a06ee19771c10ea1574f2c45f9d86aab2a11028c2548a4aa3', '65afc9eaa4b2a3d25c0397d3d8d2d9b8f601eb0c8f6b22b548c7f6b96ff2adfc', '64c2bd552d20cdee49ed761702c4f1d44752ca4e0fdf7c4fec783d5663b60b2f', '6604f190b1082829e17740678d7fdd79f889e57386af4f483c644d46522e8fc1', 'cc6684cfd471f8d5e1b43b215ef695297e77c2a95ad6cb8392bc2662adf74c8a', '2633535201ac85bcd48438d308efb8428304d1057586dad9a7f9fbbd358136d9', '04397b68162f4940de63e839b2a2fa43babcc760adf2156fc09168f0383085bc', 'ccd97d09c5bfd2a196ea3641b266aa452e4775926743a33723aadd5e2c190cbc', 'dc5d8e964ccbb6ffdc9bc1ad430b0b207624e4f43c79d0802b809a41464f214a', '69a46e3289cabf55b80263620a59e1615d721d18590c4d580e92c43266f21766', '2633535201ac85bcd48438d308efb8428304d1057586dad9a7f9fbbd358136d9', '6cdaa5b64e167420b8fdcd2f18d32b29fc6caa4ed039c5dd46e6ad1ce7ba8a13', '5a5831187c185e215376ce647c1d1695cdc8ad368923b954d53bc346946f638c', '8525fb5875a8685926f62522e6e527b5467c17ae110fa5116e28558620109c38', '3f4fc200cf25a55d7faa1d4943c54a75d277971ae095b7a6943f3e20db647411']
+
+
+class TieringContract(unittest.TestCase):
+    def test_exact_predecessor_and_new_entrypoints(self):
+        split_source = (ROOT/'.github/workflows/ci.yml').read_text()
+        self.assertEqual(hashlib.sha256(historical_portable_split_workflow(split_source, self).encode()).hexdigest(),
+                         'cc3fb61238de685a84562122914dee10ec854112a2f810fa92339dff531d0196',
+                         'exact a7773e9 workflow after portable split projection')
+        predecessor = (ROOT/'scripts/ci-tiering/predecessor-ci.yml').read_bytes()
+        self.assertEqual(hashlib.sha256(predecessor).hexdigest(), '4f9213643d24c3e67e3f059fbb28f8563531d37999834982f9b3e5c549c2fb4f')
+        current = (ROOT/'.github/workflows/ci.yml').read_text()
+        self.assertEqual(historical_tiering_workflow(current, self), predecessor.decode())
+        self.assertEqual(len(re.findall(r'^        run: ', predecessor.decode(), re.M)), 48)
+        self.assertEqual(hashlib.sha256((ROOT/'scripts/portable-checks.json').read_bytes()).hexdigest(), '1a2719b28dad9a288f28e0ff5ba793120e6108217c564099d662fc1b104d7f14')
+        for name, digest in TIER_INPUT_SHA256.items():
+            self.assertEqual(hashlib.sha256(historical_tiering_input(name, self)).hexdigest(), digest, name)
+        for name in LINUX_GARMENT_V2_SHA256:
+            historical_tiering_input(name, self)
+        # Exact v2 validation must reject altered or removed controls before projection.
+        for name, old, new in [
+                ('scripts/ci-tiering/linux-shared.sh', b'python3 -B -O ', b'python3 -B '),
+                ('scripts/ci-tiering/linux_garment_controls.py', b'places=6', b'places=5'),
+                ('scripts/ci-tiering/linux_garment_controls.py', b'22.005667838827247', b'22.0056'),
+                ('scripts/ci-tiering/linux_garment_controls.py', b"platform.machine() != 'x86_64'", b'False'),
+                ('scripts/ci-tiering/test_policy.py', b'self.assertEqual(retained(linux), original)', b'pass')]:
+            original_input = (ROOT/name).read_bytes()
+            mutant = original_input.replace(old, new, 1)
+            self.assertNotEqual(mutant, original_input)
+            with self.subTest(input=name, mutation=old), self.assertRaises(AssertionError):
+                historical_tiering_input(name, self, mutant)
+
+    def test_new_jobs_and_selectors_reject_changes(self):
+        original = (ROOT/'.github/workflows/ci.yml').read_text()
+        for name in [*TIER_JOB_SHA256, 'mac-full-background', 'portable-eye', 'portable']:
+            block = re.search(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', original)[0]
+            for replacement in ['', block*2, block.replace('    timeout-minutes:', '    timeout-minutes: 1 #'),
+                                block.replace('    runs-on:', '    continue-on-error: true\n    runs-on:')]:
+                mutant = original.replace(block, replacement, 1)
+                self.assertNotEqual(mutant, original)
+                with self.subTest(job=name), self.assertRaises(AssertionError):
+                    historical_tiering_workflow(mutant, self)
+        for old, new in [
+            ("needs.classify.outputs.full_required == 'true'", "needs.classify.outputs.full_required == 'false'"),
+            ("needs.classify.outputs.full_required == 'false'", "true"),
+            ("    tags: ['*']\n", ''),
+            ('  workflow_dispatch:\n', ''),
+            ('    types: [published]\n', '    types: [created]\n')]:
+            mutant = original.replace(old, new, 1)
+            self.assertNotEqual(mutant, original)
+            with self.subTest(selector=old), self.assertRaises(AssertionError):
+                historical_tiering_workflow(mutant, self)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

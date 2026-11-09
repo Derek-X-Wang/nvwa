@@ -12,7 +12,7 @@
 
 ## 完整 portable 检查
 
-本地完整 portable 入口与 CI 的 portable job 共用同一命令目录：
+本地完整 portable 入口与 CI 的两个 portable 作业共用同一命令目录：
 
 ```sh
 python3 -B scripts/check-portable.py all
@@ -200,3 +200,82 @@ upper-arm5、native75、B1／optional-warm60 和 cache action4 全部不变。
 四个预算合同消费者及本文件和 scripts/README.md。新身份需通过完整正式 CI；
 若 portable30 或任何既有步骤预算再次耗尽，保留证据及 release HOLD，停止继续
 加时、拆作业、删用例和无变化重跑，等待新决定。此次批准不包含自动合并。
+
+
+## CI 分层明确授权（2026-11-09）
+
+Derek 同意日常 PR 保留 Linux／核心／Web 必需检查和尽量短的 macOS 编译、
+真实 CLI 冒烟，完整 Mac 重矩阵仍自动执行并报告，但普通 PR 不等待它。
+Mac 专属或无法可靠分类的改动、main、发布与手动检查要求完整 Mac 通过。
+这是新的运行拓扑授权，不提高 portable30、eye20、native75 或任何原步骤预算，
+不删除用例、原 native 主机 guard、旧失败或 release HOLD。
+
+实现与边界见 [CI 分层](ci-tiering.md)。聚合检查只是仓库代码提供的状态，
+不代表分支保护已强制它。短 Mac 不证明窗口、Metal、画面或 CPU 渲染。
+完整 Mac 失败／取消保留真实红色；独立只读完成报告记录后续处理与发布 HOLD。
+发布前仍需目标 SHA 的完整通过证据，published 事件只是发布后审计。
+
+自然 main 运行 [42585301578](https://github.com/Derek-X-Wang/nvwa/actions/runs/42585301578)
+在 portable 作业约30分钟时取消，current19 控制未完成，frozen-upper-arm、Mac
+及 Linux B1 未运行；CLI 辅助运行通过不能替代它。本任务保留此缺口，不加时，
+不对原 source 盲目重跑，也不将取消归因为本候选或 Mac 排队。
+
+
+## Portable 分组成本设计的明确授权（2026-11-09）
+
+portable30 在 [a7773e9 / 42611367912](https://github.com/Derek-X-Wang/nvwa/actions/runs/42611367912)
+再次耗尽后，Derek 明确同意“保留所有测试和失败信号，重新设计测试分组或减少重复
+工作，再实测耗时，而不是简单加时或删用例”。这只覆盖本次分组／成本设计的停止
+限制；旧取消结果、HOLD 和禁止无变化重跑的规则全部保留，不授权提高预算。
+
+将完整 `eye-hair-parameters` 原组移至独立 `portable-eye` 作业。原 portable 的
+其余15组顺序不变；16组 catalog、组内命令与 normal／`-O`、20次眼睛／头发
+suite、Node 缺失失败控制均原样保留。两个作业使用相同 Ubuntu、固定 checkout、
+工具链设置及30分钟作业上限，eye20、auth3、offline6、upper-arm5 不变。
+分组增加一个独立 runner 的启动与并发资源，意图缩短关键路径，不声称减少总计算量。
+
+完整 Mac 两分支及 B1/Web 均等待两个 portable 作业成功；最终 Required CI gate
+直接读取两项结果，任何失败、取消、skipped、缺失或非终态都失败，不吞错误。
+本地 `all` 仍按旧顺序串行执行全部16组。四个独立历史消费者先认证新拓扑和输入，
+精确还原 a7773e9，再继续所有旧整文件／命令哈希、断言和负向控制。
+
+须实测完整两组与新 head 的正式 CI；本地缓存测量不替代 hosted 冷运行。若任一
+现有上限再次耗尽，保留具体日志与 release HOLD，停止自动加时、进一步拆组或
+无变化重跑，报告新的证据供决定。本授权不包含自动合并或安全设置更改。
+
+
+## 完整 Mac 分组的新决定（2026-11-09）
+
+[36e9136 / 42653697946](https://github.com/Derek-X-Wang/nvwa/actions/runs/42653697946)
+的portable两组、Linux、B1/Web和Mac短检查通过；完整Mac的workspace/CPU、
+appearance、三类mutation通过后，594帧矩阵在原75分钟作业上限取消，
+衣物normal/`-O`未运行。Required gate与运行内报告均红色，保持release HOLD。
+Derek随后明确同意保留全部Mac测试与失败信号，把完整Mac拆成独立作业分别
+实测，不单纯加时或删除检查。具体分组、缓存种子边界和失败传播见
+[CI分层](ci-tiering.md)。新分组必须以精确head的hosted结果证明；
+本地合同通过不能把先前取消写成成功，也不能把并行当成总计算成本下降。
+
+
+## 动作矩阵的主机范围（2026-11-09 后续决定）
+
+Derek 在 [#148 的完整重跑](https://github.com/Derek-X-Wang/nvwa/actions/runs/42672359165)
+显示 Mac 独立矩阵作业的20分钟步骤全部耗于冷编译后，明确质疑是否需要在慢速
+Mac runner 上重复平台无关的动作矩阵；若无必要，则不在 Mac 执行。该运行的
+Linux shared 已完整通过594帧/30关键帧及衣物normal/`-O`，而 Mac矩阵尚未
+开始执行即超时；Mac workspace/CPU、appearance/mutation、短冒烟、portable、
+B1/Web通过，Required CI gate与完整Mac报告正确为红色。旧失败不改写。
+
+实验60矩阵是无窗口、无GPU的生产runtime CPU路径，只有native/Wasm条件代码，
+未发现Mac专属矩阵分支。因此后续候选只在Linux必需作业运行完整594帧矩阵，
+仍要求真实source2帧和Linux衣物normal/`-O`；Linux失败继续阻塞所有场景。
+Linux数值不能证明Mac数值：两平台原衣物固定值不同。Mac必需与后台workspace
+作业保留原Darwin/arm64 guard、workspace/实际CPU测试，并从同一生产probe
+只采一帧真实source2见证，执行未修改的原Mac衣物18项normal/`-O`。
+appearance与三类mutation仍在Mac原生作业执行；短Mac编译和真实CLI冒烟仍必需。
+两个Mac完整作业中的任何失败／取消／缺失仍使适用门禁与报告变红。
+
+此新决定调整上节三作业矩阵约定，不扩大原native75、matrix20、mutation12或
+其他预算，不降低断言精度，不删除旧历史合同或发布HOLD。单帧见证仍需精确head
+的Mac hosted通过与耗时实测；本地Linux见证不构成Mac验收。原单体完整作业仅作
+历史投影，不能再作为部分完成的cache seed。分支保护required status仍需所有者
+核实；不在本任务修改安全设置。

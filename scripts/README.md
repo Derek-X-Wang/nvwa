@@ -6,8 +6,8 @@ Run the complete hosted portable command catalog locally:
 python3 -B scripts/check-portable.py all
 ```
 
-The runner uses [portable-checks.json](portable-checks.json). Each portable CI
-step selects one group from that same file. `all` runs these groups in this order:
+The runner uses [portable-checks.json](portable-checks.json). Each step in the two portable CI jobs
+selects one group from that same file. `all` runs these groups in this order:
 
 | Group | Checks and prerequisites |
 | --- | --- |
@@ -43,7 +43,7 @@ Install prerequisites separately. The runner does not install
 tools. Existing Cargo commands retain their network behavior: `source-cli` may
 resolve/fetch locked dependencies and `offline-motion` explicitly runs
 `cargo fetch --locked`. Offline commands still require a prepared dependency cache.
-`all` is the hosted portable lane; it can compile the core/CLI and isolated CPU
+`all` is the complete hosted portable catalog, run serially locally; it can compile the core/CLI and isolated CPU
 probes and write their existing `.work` outputs. It is not an instant script-only
 check. Follow the repository's compute/resource policy before a full run.
 
@@ -430,3 +430,49 @@ the two policy documents. It is a finite budget allocation, not a performance cl
 or completion guarantee. If portable30 or an existing step limit is exhausted again,
 preserve evidence and release HOLD; do not increase time, split jobs, remove cases or
 retry unchanged without another decision. The approval does not authorize auto-merge.
+
+
+## CI tiering v1 (2026-11-09)
+
+The [tiering policy](../docs/agents/ci-tiering.md) keeps the historical portable
+catalog and complete Mac command bodies. New Linux shared evidence and an actual
+Mac CLI smoke feed `Required CI gate`; ordinary PRs run complete Mac evidence in
+a separate nonblocking branch. Platform-sensitive, unknown and release scopes
+require that complete branch. No old budget or source gate is relaxed.
+
+`ci-timing.py shell` and `report` still record each new job. Its `queue` subcommand
+is explicitly historical: it accepts only the exact three-producer
+`macos-b1-v1` / `linux-b1-v2` inventories. Do not filter the tiered workflow down to
+three jobs to obtain a misleading queue estimate. Tiered elapsed times must come
+from complete attempt-specific job metadata; queue/provisioning causes remain
+unknown. The independent completion report does not run code from PRs and keeps
+failed, cancelled and unknown full-Mac results visible.
+
+
+### Portable group parallelism (2026-11-09)
+
+After the retained a7773e9 portable30 cancellation, Derek explicitly authorized
+regrouping or reducing duplicate work while preserving all tests and failures.
+CI now runs the unchanged `eye-hair-parameters` group in `portable-eye`; the
+original `portable` job runs the remaining15 groups in their original order.
+The catalog and local `all` remain byte-identical, including every normal/`-O`
+command and Node's missing-interpreter failure. Both Ubuntu jobs retain a
+30-minute cap; eye20/auth3/offline6/upper-arm5 and every other existing cap stay.
+This adds runner startup/concurrency, not a claim of lower total compute.
+
+Both complete Mac branches and B1/Web wait for both groups. `Required CI gate`
+checks both results and fails on failure, cancellation, skipping, missing or
+unfinished results. Four independent source consumers authenticate the exact
+new topology before reconstructing a7773e9 and running every historical
+assertion/hash/negative control. No source-map inputs or runtime files change.
+New controls run in both modes during classification:
+
+```sh
+python3 -B scripts/ci-tiering/test_portable_split.py
+python3 -B -O scripts/ci-tiering/test_portable_split.py
+```
+
+Actual local and hosted timings belong to their exact checkouts/runs and are
+reported in PR148; local cached execution cannot establish a hosted speedup.
+Another timeout preserves HOLD and stops automatic further splitting, budget
+increases or unchanged reruns pending a new decision.
