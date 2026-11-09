@@ -41,9 +41,30 @@ jobs:
         run: |
           python3 -B scripts/ci-tiering/test_policy.py
           python3 -B -O scripts/ci-tiering/test_policy.py
+          python3 -B scripts/ci-tiering/test_portable_split.py
+          python3 -B -O scripts/ci-tiering/test_portable_split.py
       - id: scope
         name: Classify complete base/head diff (unknown requires full Mac)
         run: python3 -B scripts/ci-tiering/policy.py classify
+  portable-eye:
+    name: Eye, hair, and character parameter controls
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CARGO_BUILD_JOBS: '2'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, official ref verified 2026-10-12
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Check eye, hair, and character parameter controls
+        timeout-minutes: 20
+        run: python3 -B scripts/check-portable.py eye-hair-parameters
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
   portable:
     name: Core, CLI, and diagnostic controls
     runs-on: ubuntu-24.04
@@ -72,9 +93,6 @@ jobs:
         run: python3 -B scripts/check-portable.py diagnostics
       - name: Check bounded appearance diagnostic controls
         run: python3 -B scripts/check-portable.py appearance
-      - name: Check eye, hair, and character parameter controls
-        timeout-minutes: 20
-        run: python3 -B scripts/check-portable.py eye-hair-parameters
       - name: Check authenticated B1 source bundle and rejection controls
         timeout-minutes: 3
         run: python3 -B scripts/check-portable.py authenticated-source
@@ -103,7 +121,7 @@ jobs:
   native-and-wasm:
     name: macOS CPU tests and Wasm compile check
     # Reject cheap portable failures before spending a cold graphical compile.
-    needs: [classify, portable]
+    needs: [classify, portable, portable-eye]
     if: ${{ needs.classify.outputs.full_required == 'true' }}
     runs-on: macos-15
     # The measured original lane already takes about 30 minutes cold. Keep a
@@ -268,7 +286,7 @@ jobs:
   mac-full-background:
     name: Complete Mac background evidence
     # Reject cheap portable failures before spending a cold graphical compile.
-    needs: [classify, portable]
+    needs: [classify, portable, portable-eye]
     if: ${{ needs.classify.outputs.full_required == 'false' }}
     runs-on: macos-15
     # The measured original lane already takes about 30 minutes cold. Keep a
@@ -433,7 +451,7 @@ jobs:
   b1-source-regression:
     name: Linux B1 source regression and viewer checks
     # Keep the independent cold B1 build and Web checks inside a finite budget.
-    needs: portable
+    needs: [portable, portable-eye]
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     env:
@@ -642,7 +660,7 @@ jobs:
   required-gate:
     name: Required CI gate
     if: ${{ always() }}
-    needs: [classify, portable, linux-shared, mac-smoke, b1-source-regression, native-and-wasm]
+    needs: [classify, portable, portable-eye, linux-shared, mac-smoke, b1-source-regression, native-and-wasm]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

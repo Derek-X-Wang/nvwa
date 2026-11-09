@@ -6,8 +6,8 @@ Run the complete hosted portable command catalog locally:
 python3 -B scripts/check-portable.py all
 ```
 
-The runner uses [portable-checks.json](portable-checks.json). Each portable CI
-step selects one group from that same file. `all` runs these groups in this order:
+The runner uses [portable-checks.json](portable-checks.json). Each step in the two portable CI jobs
+selects one group from that same file. `all` runs these groups in this order:
 
 | Group | Checks and prerequisites |
 | --- | --- |
@@ -43,7 +43,7 @@ Install prerequisites separately. The runner does not install
 tools. Existing Cargo commands retain their network behavior: `source-cli` may
 resolve/fetch locked dependencies and `offline-motion` explicitly runs
 `cargo fetch --locked`. Offline commands still require a prepared dependency cache.
-`all` is the hosted portable lane; it can compile the core/CLI and isolated CPU
+`all` is the complete hosted portable catalog, run serially locally; it can compile the core/CLI and isolated CPU
 probes and write their existing `.work` outputs. It is not an instant script-only
 check. Follow the repository's compute/resource policy before a full run.
 
@@ -447,3 +447,32 @@ three jobs to obtain a misleading queue estimate. Tiered elapsed times must come
 from complete attempt-specific job metadata; queue/provisioning causes remain
 unknown. The independent completion report does not run code from PRs and keeps
 failed, cancelled and unknown full-Mac results visible.
+
+
+### Portable group parallelism (2026-11-09)
+
+After the retained a7773e9 portable30 cancellation, Derek explicitly authorized
+regrouping or reducing duplicate work while preserving all tests and failures.
+CI now runs the unchanged `eye-hair-parameters` group in `portable-eye`; the
+original `portable` job runs the remaining15 groups in their original order.
+The catalog and local `all` remain byte-identical, including every normal/`-O`
+command and Node's missing-interpreter failure. Both Ubuntu jobs retain a
+30-minute cap; eye20/auth3/offline6/upper-arm5 and every other existing cap stay.
+This adds runner startup/concurrency, not a claim of lower total compute.
+
+Both complete Mac branches and B1/Web wait for both groups. `Required CI gate`
+checks both results and fails on failure, cancellation, skipping, missing or
+unfinished results. Four independent source consumers authenticate the exact
+new topology before reconstructing a7773e9 and running every historical
+assertion/hash/negative control. No source-map inputs or runtime files change.
+New controls run in both modes during classification:
+
+```sh
+python3 -B scripts/ci-tiering/test_portable_split.py
+python3 -B -O scripts/ci-tiering/test_portable_split.py
+```
+
+Actual local and hosted timings belong to their exact checkouts/runs and are
+reported in PR148; local cached execution cannot establish a hosted speedup.
+Another timeout preserves HOLD and stops automatic further splitting, budget
+increases or unchanged reruns pending a new decision.

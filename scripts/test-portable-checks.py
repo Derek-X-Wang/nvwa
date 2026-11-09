@@ -76,8 +76,64 @@ LINUX_GARMENT_V2_SHA256 = {'scripts/ci-tiering/linux-shared.sh': '1450941e42b88c
 LINUX_GARMENT_NORMALIZE = b"        linux_entry = 'scripts/ci-tiering/linux_garment_controls.py'\n        self.assertEqual(linux.count(linux_entry), 2)\n        linux = linux.replace(linux_entry, 'experiments/70-b1-garment-defect/test_controls.py')\n"
 
 
+# portable-split-v3: verify the new topology, then retain all older contracts.
+PORTABLE_SPLIT_JOB_SHA256 = {'portable-eye': '0965819815391bac3e0911ecc5e0d85e5e200b2b1151bf9159356b1eb6734cfb', 'classify': '7c7209ae7649e37dcf7cfa28415978c60fe726d12a4f549729fce6419835dc0f'}
+PORTABLE_SPLIT_INPUT_SHA256 = {'scripts/ci-tiering/policy.py': 'd9e3d8faaf48a45d2758e9de3159171f6c55f02434db1f27967515549ef4ae85', 'scripts/ci-tiering/test_policy.py': '464bb421984cbef27d76263a1a4e4b5d6b01c7c031f7ab99200f329189d124f2', 'scripts/ci-tiering/test_portable_split.py': '134e510608c6afe932aa085187102656b46911733abf75e2c478e16a6b51ed44'}
+PORTABLE_SPLIT_NORMALIZE = b"        self.assertEqual(new.count('    needs: [classify, portable, portable-eye]\\n'), 2)\n        new = new.replace('    needs: [classify, portable, portable-eye]\\n', '    needs: [classify, portable]\\n')\n"
+
+
+def historical_portable_split_input(name, checks, data):
+    if name in PORTABLE_SPLIT_INPUT_SHA256:
+        checks.assertEqual(hashlib.sha256(data).hexdigest(), PORTABLE_SPLIT_INPUT_SHA256[name], name)
+    if name == 'scripts/ci-tiering/policy.py':
+        current = b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'mac-smoke', 'b1-source-regression')"
+        checks.assertEqual(data.count(current), 1)
+        data = data.replace(current, current.replace(b"'portable', 'portable-eye',", b"'portable',"), 1)
+    if name == 'scripts/ci-tiering/test_policy.py':
+        checks.assertEqual(data.count(PORTABLE_SPLIT_NORMALIZE), 1)
+        data = data.replace(PORTABLE_SPLIT_NORMALIZE, b'', 1)
+    return data
+
+
+def historical_portable_split_workflow(workflow, checks):
+    def block(name):
+        matches = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
+        checks.assertEqual(len(matches), 1, 'required exactly one portable split job: '+name)
+        return matches[0]
+    for name, digest in PORTABLE_SPLIT_JOB_SHA256.items():
+        checks.assertEqual(hashlib.sha256(block(name).encode()).hexdigest(), digest, name)
+    # These are authenticated additions, not new values for historical hashes.
+    for name in PORTABLE_SPLIT_INPUT_SHA256:
+        historical_portable_split_input(name, checks, (ROOT/name).read_bytes())
+    eye = block('portable-eye')
+    checks.assertEqual(eye.count(EYE20_STEP), 1)
+    core = block('portable')
+    checks.assertTrue(core.startswith(PORTABLE30_HEADER), 'required original portable header')
+    checks.assertNotIn('continue-on-error', core)
+    checks.assertNotIn('eye-hair-parameters', core)
+    following = '      - name: Check authenticated B1 source bundle and rejection controls\n'
+    checks.assertEqual(core.count(following), 1)
+    workflow = workflow.replace(core, core.replace(following, EYE20_STEP+following, 1), 1)
+    workflow = workflow.replace(eye, '', 1)
+    addition = ('          python3 -B scripts/ci-tiering/test_portable_split.py\n'
+                '          python3 -B -O scripts/ci-tiering/test_portable_split.py\n')
+    checks.assertEqual(workflow.count(addition), 1)
+    workflow = workflow.replace(addition, '', 1)
+    for name, current, previous in [
+        ('native-and-wasm', '    needs: [classify, portable, portable-eye]\n', '    needs: [classify, portable]\n'),
+        ('mac-full-background', '    needs: [classify, portable, portable-eye]\n', '    needs: [classify, portable]\n'),
+        ('b1-source-regression', '    needs: [portable, portable-eye]\n', '    needs: portable\n'),
+        ('required-gate', '    needs: [classify, portable, portable-eye, linux-shared, mac-smoke, b1-source-regression, native-and-wasm]\n',
+         '    needs: [classify, portable, linux-shared, mac-smoke, b1-source-regression, native-and-wasm]\n')]:
+        body = block(name)
+        checks.assertEqual(body.count(current), 1, name+' must await both portable groups')
+        workflow = workflow.replace(body, body.replace(current, previous, 1), 1)
+    return workflow
+
+
 def historical_tiering_input(name, checks, data=None):
     data = (ROOT/name).read_bytes() if data is None else data
+    data = historical_portable_split_input(name, checks, data)
     if name in LINUX_GARMENT_V2_SHA256:
         checks.assertEqual(hashlib.sha256(data).hexdigest(), LINUX_GARMENT_V2_SHA256[name], name)
     if name == 'scripts/ci-tiering/linux-shared.sh':
@@ -93,6 +149,7 @@ def historical_tiering_input(name, checks, data=None):
 
 
 def historical_tiering_workflow(workflow, checks):
+    workflow = historical_portable_split_workflow(workflow, checks)
     def block(name):
         matches = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
         checks.assertEqual(len(matches), 1, 'required exactly one tier job: '+name)
@@ -498,6 +555,10 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
 
 class TieringContract(unittest.TestCase):
     def test_exact_predecessor_and_new_entrypoints(self):
+        split_source = (ROOT/'.github/workflows/ci.yml').read_text()
+        self.assertEqual(hashlib.sha256(historical_portable_split_workflow(split_source, self).encode()).hexdigest(),
+                         'cc3fb61238de685a84562122914dee10ec854112a2f810fa92339dff531d0196',
+                         'exact a7773e9 workflow after portable split projection')
         predecessor = (ROOT/'scripts/ci-tiering/predecessor-ci.yml').read_bytes()
         self.assertEqual(hashlib.sha256(predecessor).hexdigest(), '4f9213643d24c3e67e3f059fbb28f8563531d37999834982f9b3e5c549c2fb4f')
         current = (ROOT/'.github/workflows/ci.yml').read_text()
@@ -523,7 +584,7 @@ class TieringContract(unittest.TestCase):
 
     def test_new_jobs_and_selectors_reject_changes(self):
         original = (ROOT/'.github/workflows/ci.yml').read_text()
-        for name in [*TIER_JOB_SHA256, 'mac-full-background']:
+        for name in [*TIER_JOB_SHA256, 'mac-full-background', 'portable-eye', 'portable']:
             block = re.search(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', original)[0]
             for replacement in ['', block*2, block.replace('    timeout-minutes:', '    timeout-minutes: 1 #'),
                                 block.replace('    runs-on:', '    continue-on-error: true\n    runs-on:')]:

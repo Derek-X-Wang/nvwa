@@ -12,7 +12,7 @@
 
 ## 完整 portable 检查
 
-本地完整 portable 入口与 CI 的 portable job 共用同一命令目录：
+本地完整 portable 入口与 CI 的两个 portable 作业共用同一命令目录：
 
 ```sh
 python3 -B scripts/check-portable.py all
@@ -219,3 +219,26 @@ Mac 专属或无法可靠分类的改动、main、发布与手动检查要求完
 在 portable 作业约30分钟时取消，current19 控制未完成，frozen-upper-arm、Mac
 及 Linux B1 未运行；CLI 辅助运行通过不能替代它。本任务保留此缺口，不加时，
 不对原 source 盲目重跑，也不将取消归因为本候选或 Mac 排队。
+
+
+## Portable 分组成本设计的明确授权（2026-11-09）
+
+portable30 在 [a7773e9 / 42611367912](https://github.com/Derek-X-Wang/nvwa/actions/runs/42611367912)
+再次耗尽后，Derek 明确同意“保留所有测试和失败信号，重新设计测试分组或减少重复
+工作，再实测耗时，而不是简单加时或删用例”。这只覆盖本次分组／成本设计的停止
+限制；旧取消结果、HOLD 和禁止无变化重跑的规则全部保留，不授权提高预算。
+
+将完整 `eye-hair-parameters` 原组移至独立 `portable-eye` 作业。原 portable 的
+其余15组顺序不变；16组 catalog、组内命令与 normal／`-O`、20次眼睛／头发
+suite、Node 缺失失败控制均原样保留。两个作业使用相同 Ubuntu、固定 checkout、
+工具链设置及30分钟作业上限，eye20、auth3、offline6、upper-arm5 不变。
+分组增加一个独立 runner 的启动与并发资源，意图缩短关键路径，不声称减少总计算量。
+
+完整 Mac 两分支及 B1/Web 均等待两个 portable 作业成功；最终 Required CI gate
+直接读取两项结果，任何失败、取消、skipped、缺失或非终态都失败，不吞错误。
+本地 `all` 仍按旧顺序串行执行全部16组。四个独立历史消费者先认证新拓扑和输入，
+精确还原 a7773e9，再继续所有旧整文件／命令哈希、断言和负向控制。
+
+须实测完整两组与新 head 的正式 CI；本地缓存测量不替代 hosted 冷运行。若任一
+现有上限再次耗尽，保留具体日志与 release HOLD，停止自动加时、进一步拆组或
+无变化重跑，报告新的证据供决定。本授权不包含自动合并或安全设置更改。

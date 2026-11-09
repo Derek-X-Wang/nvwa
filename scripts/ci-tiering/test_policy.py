@@ -217,6 +217,8 @@ class WorkflowContract(unittest.TestCase):
     def test_original_full_mac_commands_and_budget_remain_exact(self):
         old = (HERE / 'predecessor-ci.yml').read_text()
         new = (ROOT / '.github/workflows/ci.yml').read_text()
+        self.assertEqual(new.count('    needs: [classify, portable, portable-eye]\n'), 2)
+        new = new.replace('    needs: [classify, portable, portable-eye]\n', '    needs: [classify, portable]\n')
         original = job(old, 'native-and-wasm')
         required = job(new, 'native-and-wasm').replace("    needs: [classify, portable]\n    if: ${{ needs.classify.outputs.full_required == 'true' }}\n", '    needs: portable\n', 1)
         self.assertEqual(required, original)

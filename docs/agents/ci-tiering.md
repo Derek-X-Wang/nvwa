@@ -11,13 +11,13 @@ Mac 专属变更及发布仍要求完整 Mac 通过。此决定不删除任何�
 若当前 rules 仍要求全部旧检查或整个 workflow 通过，普通 PR 仍可能等待
 后台 Mac，需要仓库所有者核对配置，不能把“代码提供了聚合检查”说成已生效。
 
-聚合检查必须看到 classify、portable、Linux shared、Mac smoke、现有
-Linux B1/Web 五项成功。需要完整 Mac 时，还必须看到原
+聚合检查必须看到 classify、portable、portable-eye、Linux shared、Mac smoke、
+现有 Linux B1/Web 六项成功。需要完整 Mac 时，还必须看到原
 `macOS CPU tests and Wasm compile check` 成功；普通 PR 则必须看到该分支
 按分类明确 skipped。失败、取消、缺失、未知分类和意外 skipped 均拒绝。
 
 新 Linux shared 与 Mac smoke 在分类控制通过后即可开始，和 portable 并行。
-原完整 Mac 及 B1/Web 的 portable 依赖保留。这样短 Mac 可以尽早进入队列，
+原完整 Mac 及 B1/Web 同时依赖 portable 与 portable-eye。这样短 Mac 可以尽早进入队列，
 且普通 portable 失败仍可留下独立的短检查证据；这会增加失败PR的计算成本。
 
 完整 Mac 有两条互斥分支，运行相同的原完整命令和75分钟预算：
@@ -54,7 +54,8 @@ main push、任意 tag push、手动运行、release event 及未知事件一律
 
 ## 各层实际证明
 
-- portable 与现有 Linux B1/Web 原命令、预算不变。
+- portable 的完整眼睛／头发组独立并行，其余15组顺序保留；全部原命令和步骤
+  预算不变。两个 portable 作业各30分钟，现有 Linux B1/Web 仍60分钟。
 - Linux shared 使用独立明确 Linux 入口：完整 workspace tests、实际 CPU
   导出、原独立 probe/appearance bridges、三个 mutation 语义红→恢复绿、
   完整594帧 motion matrix 和实际 source2 garment normal/`-O`控制。
@@ -217,3 +218,26 @@ main-cache、shoulder、current19及frozen-upper-arm未执行，完整Mac与B1/W
 保留；本数值修复不增加预算、删用例、优化测试成本或重跑旧identity。
 新的实质性数值合同仍须其精确head的正常CI。若要改进portable测试成本或
 另调预算，按verification.md中的portable30停止规则单独决定。
+
+
+## Portable 分组候选（明确授权后的成本设计）
+
+[a7773e9 的运行](https://github.com/Derek-X-Wang/nvwa/actions/runs/42611367912)
+保留为 cancelled：eye/hair 用时17分10秒，native-cache normal 的17项已通过，
+optimized 集成尚未完成时触及 portable30；其余组、完整 Mac、B1/Web 未运行。
+同次 Linux shared 完整通过但用了73分36秒，仅剩84秒预算；Mac smoke8分29秒。
+这些结果不能证明完整 CI 通过，也不是普遍提速证据。
+
+本次只把独立的 `eye-hair-parameters` 整组移到并行作业。它读取仓库正式素材和
+精确来源上下文，运行 Python／Node 控制，不依赖前面 source-cli 的编译输出。
+catalog 和运行器不改；原 portable 保留其余15组顺序，完整 Mac 与 B1/Web 等待
+两项均成功。最终 gate 对任一组失败／取消／skipped／缺失继续返回非零。
+
+新增分组控制验证16组恰好各一次、依赖关系、真实 gate 进程的失败出口、独立组
+缺失 Node 的真实失败。四个历史消费者精确认证新作业／输入和依赖，再还原完整
+旧 workflow，所有历史哈希和断言继续执行。缓存身份原本已包含所有 scripts 与
+workflow，因此新拓扑进入新身份；短检查仍不产生完整 native seed。
+
+验收：本地独立完整眼睛／头发组与剩余15组、各历史合同 normal／`-O`、正式新
+head CI 的结果随 PR 记录。此处不把未完成项标为通过。并行会增加 runner 启动
+成本，缩短关键路径的幅度以实测为准；未改变各步骤上限或总计算量的承诺。
