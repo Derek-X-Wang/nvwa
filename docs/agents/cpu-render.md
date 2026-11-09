@@ -15,6 +15,8 @@ from actual CPU export acceptance. It is not a PBR software renderer.
 
 The first supported scope is the **eight-parameter `new-character` profile**, an
 empty timeline, any saved supported diagnostic pose, and `appearance: none`.
+The explicit static `new-character-waist` profile is also supported; see
+[its limits](waist-profile.md). Other profiles remain rejected.
 Select a static pose with normal CLI `apply` / `set_diagnostic_pose`; that command
 clears the timeline. Use `describe-capabilities` to read the loaded Work's IDs,
 revision, parameters and `cpu_render.current_work_supported`. Nonempty timelines,

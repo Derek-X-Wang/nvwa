@@ -6,6 +6,12 @@ pub(super) fn draw(ui: &mut egui::Ui, document: &SceneDocument) -> Option<Comman
     if !document.profile.backend.is_b1() {
         return None;
     }
+    if document.profile.backend.b1_asset_version() == Some(B1AssetVersion::V5) {
+        ui.small(
+            "静态腰部轮廓：尚未接入皮肤、眼睛或头发 / Static waist: no appearance set admitted.",
+        );
+        return None;
+    }
     ui.separator();
     ui.label("外观 / Appearance");
     let (mut skin, mut eyes, mut hair) =
@@ -18,7 +24,8 @@ pub(super) fn draw(ui: &mut egui::Ui, document: &SceneDocument) -> Option<Comman
         if let Some(base @ (B1AssetVersion::V2 | B1AssetVersion::V3 | B1AssetVersion::V4)) =
             document.profile.backend.b1_asset_version()
         {
-            let short04_set = B1AppearanceSet::for_base(base);
+            let short04_set = B1AppearanceSet::for_base(base)
+                .expect("listed legacy base has an admitted appearance set");
             let short01_set = match base {
                 B1AssetVersion::V4 => B1AppearanceSet::V4Short01,
                 B1AssetVersion::V3 => B1AppearanceSet::V3Short01,

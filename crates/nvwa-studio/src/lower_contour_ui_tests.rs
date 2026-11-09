@@ -79,3 +79,45 @@ fn explicit_lower_contour_creation_range_and_hairstyles_use_existing_history() {
         }
     }
 }
+
+#[test]
+fn explicit_static_waist_creation_preserves_old_work_and_edits_history() {
+    use nvwa_core::Command;
+    let size = egui::vec2(1280.0, 720.0);
+    let mut app = StudioHarness::new(size);
+    let old = app.editor.document().unwrap().clone();
+    for label in ["▾", "新建静态腰部人物… / New static waist character…"] {
+        let output = app.frame(vec![]);
+        let rect = text_rect(&output, label);
+        output.drop_without_applying_deltas();
+        app.click(rect.center());
+    }
+    assert_eq!(app.editor.document(), Some(&old));
+    let pending = app.editor.pending_open.as_ref().unwrap().clone();
+    assert_eq!(pending.profile, CharacterProfile::b1_character_waist());
+    assert!(pending.timeline.is_empty());
+    app.editor.replace(pending).unwrap();
+    let mut values = app.editor.document().unwrap().character.parameters.clone();
+    values.insert("waist_circumference".into(), -0.75);
+    app.editor.preview_parameters(values).unwrap();
+    assert_eq!(
+        app.editor.document().unwrap().character.parameters["waist_circumference"],
+        0.0
+    );
+    app.editor.commit_preview().unwrap();
+    assert_eq!(
+        app.editor.document().unwrap().character.parameters["waist_circumference"],
+        -0.75
+    );
+    app.editor.apply(Command::Undo).unwrap();
+    assert_eq!(
+        app.editor.document().unwrap().character.parameters["waist_circumference"],
+        0.0
+    );
+    app.editor.apply(Command::Redo).unwrap();
+    assert_eq!(
+        app.editor.document().unwrap().character.parameters["waist_circumference"],
+        -0.75
+    );
+    click_visible_appearance_control(&mut app, size, "腰围造型 / Waist circumference shape");
+}

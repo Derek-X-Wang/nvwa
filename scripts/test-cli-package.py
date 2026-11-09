@@ -490,6 +490,29 @@ class CLIPackageTests(unittest.TestCase):
                 path.write_bytes(raw)
             self.run_cli("validate", work, self.assets)
 
+    def test_static_waist_relocated_profile_and_pair_authentication(self):
+        work = self.cwd / "waist.json"
+        self.run_cli("new-character-waist", self.assets, work)
+        before = self.run_cli("inspect", work)
+        self.assertEqual(before["profile"]["backend"]["schema_version"], 7)
+        self.assertEqual(before["profile"]["id"], "nvwa-mpfb-b1-waist-v1")
+        self.assertEqual(before["timeline"], [])
+        caps = self.run_cli("describe-capabilities", work)
+        self.assertEqual(caps["cli_contract"]["waist_circumference"]["range"], [-1, 1])
+        self.assertFalse(caps["cli_contract"]["set_appearance"]["b1_cc0_supported"])
+        for suffix in ["decr", "incr"]:
+            path = self.assets / f"characters/mpfb-b1-v5/targets/measure-waist-circ-{suffix}.target"
+            raw = path.read_bytes()
+            try:
+                path.unlink()
+                self.run_cli("validate", work, self.assets, error="asset_missing")
+                self.run_cli("new-character", self.assets, self.cwd / "waist-old-still-works.json")
+                path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+                self.run_cli("validate", work, self.assets, error="asset_hash_mismatch")
+            finally:
+                path.write_bytes(raw)
+            self.run_cli("validate", work, self.assets)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
