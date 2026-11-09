@@ -375,3 +375,31 @@ fn static_upper_body_controls_change_actual_mesh_and_shoulder_elbow_pose_render(
         assert_ne!(neutral["geometry_sha256"], changed["geometry_sha256"]);
     }
 }
+
+#[test]
+fn upper_body_export_is_discoverable_as_supported() {
+    let trial = Trial::new();
+    let doc = SceneDocument::from_profile(CharacterProfile::b1_character_upper_body()).unwrap();
+    let work = trial.work("v7-discovery", &doc);
+    let output = Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
+        .args(["describe-capabilities".as_ref(), work.as_path()])
+        .output()
+        .unwrap();
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let capabilities: Value = serde_json::from_slice(&output.stdout).unwrap();
+    let exporter = &capabilities["cpu_render"];
+    assert_eq!(exporter["compiled"], true);
+    assert_eq!(exporter["current_work_supported"], true);
+    assert!(
+        exporter["profiles"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|id| id.as_str() == Some(doc.profile.id.as_str()))
+    );
+    assert!(exporter["usage"].as_str().unwrap().contains("upper-body"));
+}

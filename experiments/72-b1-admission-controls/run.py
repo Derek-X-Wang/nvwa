@@ -666,12 +666,13 @@ def has_leg_inputs(root):
 
 
 UPPER_CONTEXT_NAME = 'input-context-upper-body-v1.json'
-UPPER_CONTEXT_SHA = '385f189fa099ac7a481fbd41850cfd23d322c5d1f33e56613ae036faa2d521f1'
-UPPER_BASELINES_SHA = '2a8badd8156ce199b2e2fe58ca397086a7897582aa46fedde1f0896232bfff86'
+UPPER_CONTEXT_SHA = 'a11c03173769831c45f9cda63506634adea0e92718910f521d6b4e947c44fbd2'
+UPPER_BASELINES_SHA = '70aaa662cb57f289ca4f8299d1e7aba0652b65d2ecf82413da5bbe35d24242f5'
 UPPER_CONTEXT_ID = 'b1-upper-body-morphology-product-v1'
 UPPER_PREDECESSOR_COMMIT = 'd5bc346ff96213a0337a167bc60e5d1834b81bf0'
 UPPER_FIXTURES = 'fixtures/pre-upper-body'
-UPPER_CHANGED = ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-cli/tests/cpu_render.rs',
+UPPER_CHANGED = ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-cli/src/cpu_render.rs',
+                 'crates/nvwa-cli/tests/cpu_render.rs',
                  'crates/nvwa-core/src/appearance.rs', 'crates/nvwa-core/src/b1.rs',
                  'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs',
                  'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs',
