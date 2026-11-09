@@ -32,7 +32,8 @@ class RunningContext(unittest.TestCase):
         cls.addClassCleanup(previous.cleanup)
         ROOT = Path(previous.name)
         cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
-        retained_cpu = ENTRY.pre_cpu_sources(json.loads((HERE / 'pins.json').read_bytes()))
+        pins = json.loads((HERE / 'pins.json').read_bytes())
+        retained_cpu = ENTRY.pre_reference_motion_sources(pins) | ENTRY.pre_cpu_sources(pins)
         previous_files = json.loads((HERE / ENTRY.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
         for name in previous_files.keys() | retained_cpu.keys():
             path = ROOT / name

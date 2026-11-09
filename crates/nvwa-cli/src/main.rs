@@ -320,6 +320,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "describe-capabilities": ["input.json"],
             "validate": ["input.json", "optional_asset_root"],
             "motion-query": ["input.json", "asset_root", "start_s", "end_s", "step_s", "optional_--samples"],
+            "reference-pose": ["input.json", "seconds"],
             "apply": ["input.json", "command_or_array.json", "output.json"],
             "save": ["input.json", "output.json"]
         },
@@ -336,6 +337,18 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             }
         },
         "command_examples": examples,
+        "reference_motion": {
+            "supported": document.supports_reference_motion(),
+            "present": document.reference_motion.is_some(),
+            "duration_seconds": [3, 5],
+            "bones": nvwa_core::reference_motion::REFERENCE_BONES,
+            "write": {"type": "set_reference_motion", "motion_fields": ["duration_seconds", "rotations", "pelvis_offsets"]},
+            "edit": {"type": "set_reference_rotation_key", "fields": ["bone", "seconds", "degrees"]},
+            "rotation": "fixed canonical bone-local axis, shortest arc, degrees",
+            "pelvis_offset": "linear, pelvis parent local axes, metres",
+            "read_keys": "inspect",
+            "sample": "reference-pose"
+        },
         "examples_are": "independent_shapes_at_loaded_revision_not_a_batch",
         "set_parameters": "updates_only_named_parameters_within_profile_min_max_inclusive",
         "set_scale": "finite_greater_than_zero",
@@ -552,6 +565,26 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                 )?;
             }
         }
+        "reference-pose" => {
+            let [_, path, seconds] = args else {
+                return Err(CoreError::new(
+                    "usage",
+                    "reference-pose <work.json> <seconds>",
+                ));
+            };
+            let seconds = seconds.parse::<f32>().map_err(|_| {
+                CoreError::new("invalid_reference_motion", "Expected seconds as a number")
+            })?;
+            let raw = read(Path::new(path))?;
+            let work = SceneDocument::from_json(&raw)?;
+            let pose = work.reference_pose_at(seconds)?;
+            respond(serde_json::json!({
+                "revision": work.revision,
+                "work_sha256": nvwa_core::appearance_sha256(raw.as_bytes()),
+                "seconds": seconds,
+                "pose": pose
+            }))?;
+        }
         "validate" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
             if let Some(root) = args.get(2) {
@@ -608,6 +641,9 @@ fn run(args: &[String]) -> Result<(), CoreError> {
         "help" | "--help" | "-h" => {
             respond(
                 "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
+            )?;
+            respond(
+                "Reference motion: apply set_reference_motion or set_reference_rotation_key; reference-pose <work.json> <seconds> samples the saved motion.",
             )?;
             #[cfg(feature = "cpu-render")]
             respond(cpu_render::USAGE)?;

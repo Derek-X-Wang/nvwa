@@ -40,7 +40,9 @@ class RunningContext(unittest.TestCase):
         ROOT = Path(previous.name)
         cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
         source_raw = (HERE / 'FROZEN-INPUTS.json').read_bytes()
-        retained_cpu = CONTEXT.pre_cpu_sources(HERE, source_raw, json.loads(source_raw))
+        original = json.loads(source_raw)
+        retained_cpu = (CONTEXT.pre_reference_motion_sources(HERE, source_raw, original)
+                        | CONTEXT.pre_cpu_sources(HERE, source_raw, original))
         previous_files = json.loads((HERE / CONTEXT.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
         for name in previous_files.keys() | retained_cpu.keys():
             path = ROOT / name

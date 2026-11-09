@@ -1,3 +1,4 @@
+from frozen_context import has_reference_motion_inputs,_reference_motion_context,REFERENCE_MOTION_CONTEXT_ID,REFERENCE_MOTION_ADDITIONS,regular_file
 from frozen_context import has_cpu_inputs,_cpu_context,cpu_regular_file,CPU_CONTEXT_ID,CPU_ADDITIONS,check_cpu_preexisting,_pre_cpu_sources
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
@@ -80,14 +81,20 @@ class SourceContract(unittest.TestCase):
    actual[name]={'sha256':digest(ROOT/name),'bytes':(ROOT/name).stat().st_size}
   try:
    contexts=source_contexts(EXP,p.read_bytes(),inputs)
-   if has_cpu_inputs(ROOT):
+   reference_motion=has_reference_motion_inputs(ROOT)
+   if reference_motion or has_cpu_inputs(ROOT):
     previous=_motion_query_source_context(EXP,_running_source_context(EXP,inputs,contexts))
     cpu=_cpu_context(EXP,previous[1])
+    product=_reference_motion_context(EXP,cpu) if reference_motion else cpu
     actual={}
-    for name in cpu[1]:
-     path=cpu_regular_file(ROOT,name)
+    for name in product[1]:
+     path=regular_file(ROOT,name) if reference_motion else cpu_regular_file(ROOT,name)
      actual[name]={'bytes':path.stat().st_size,'sha256':digest(path)}
-    context,selected=select_context(actual,[cpu])
+    if reference_motion:
+     context,selected=product
+     self.assertTrue(actual == selected,'FROZEN-INPUTS.json exact reference motion source required')
+    else:
+     context,selected=select_context(actual,[product])
    elif any(actual == expected for _,expected in contexts):
     self.assertFalse(any((ROOT/name).exists() or (ROOT/name).is_symlink() for name in RUNNING_ADDITIONS),'FROZEN-INPUTS.json running additions in historical context')
     check_no_motion_query_additions(ROOT)
@@ -114,7 +121,10 @@ class SourceContract(unittest.TestCase):
      context,selected=select_context(actual,[motion_query])
      check_cpu_preexisting(ROOT,_pre_cpu_sources(EXP,motion_query[1]))
   except ValueError as error:self.fail(str(error))
-  if context == CPU_CONTEXT_ID:
+  if context == REFERENCE_MOTION_CONTEXT_ID:
+   self.assertEqual(set(selected),set(inputs)|set(RUNNING_ADDITIONS)|set(MOTION_QUERY_ADDITIONS)|set(CPU_ADDITIONS)|set(REFERENCE_MOTION_ADDITIONS),'FROZEN-INPUTS.json reference motion complete source paths required')
+   self.assertEqual(len(selected),327,'FROZEN-INPUTS.json reference motion complete source set required')
+  elif context == CPU_CONTEXT_ID:
    self.assertEqual(set(selected),set(inputs)|set(RUNNING_ADDITIONS)|set(MOTION_QUERY_ADDITIONS)|set(CPU_ADDITIONS),'FROZEN-INPUTS.json CPU complete source paths required')
    self.assertEqual(len(selected),324,'FROZEN-INPUTS.json CPU complete source set required')
   elif context == MOTION_QUERY_CONTEXT:
