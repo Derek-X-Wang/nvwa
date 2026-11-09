@@ -1,0 +1,215 @@
+{
+  "format": "nvwa-b1-parameter-source-receipt",
+  "schema_version": 1,
+  "license": "CC0-1.0",
+  "source": {
+    "project": "MakeHuman MPFB",
+    "version": "2.0.18",
+    "commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e",
+    "archive_sha256": "c075b3e9b94b8e5556a5f03f4653602d02ea306de08126e8f55ed6dee28a2dad",
+    "extraction_receipt": "experiments/53-character-comparison/delivery/mpfb-extraction-receipt.json"
+  },
+  "inventory_sha256": "a2d4f1988d9dc14b75297748e8b645cb12a7a4ed4861b436e9662cbafff2b156",
+  "legacy_payloads": {
+    "manifest_sha256": "abcdbc26e03431c740c5fce98de22902089f985823a3c655db2416d042d62b18",
+    "count": 13,
+    "byte_identical": true
+  },
+  "new_targets": [
+    {
+      "parameter": "head_width",
+      "source_relative": "data/targets/head/head-scale-horiz-decr.target.gz",
+      "sign": "decr",
+      "compressed_bytes": 21427,
+      "compressed_sha256": "ddec139b27d1f9b7a90f6474450c56897a4e417334af083e87e988fdf94ca343",
+      "expanded_bytes": 81086,
+      "expanded_sha256": "6e4390a2dffe69e6c09ad6a6e1b0c905439ef128ff2401301daf1c1b39c958ac",
+      "affected_vertices": 5210,
+      "max_delta_m": 0.017,
+      "id_range": [
+        0,
+        19128
+      ],
+      "runtime_path": "targets/head-scale-horiz-decr.target"
+    },
+    {
+      "parameter": "head_width",
+      "source_relative": "data/targets/head/head-scale-horiz-incr.target.gz",
+      "sign": "incr",
+      "compressed_bytes": 21695,
+      "compressed_sha256": "671542640aec14d1740c1263deb0e274f3044edec761e6d4171329f0419be084",
+      "expanded_bytes": 82552,
+      "expanded_sha256": "12ad083682f5319882923d775074677569c3612706c0d785a4b287821abfe400",
+      "affected_vertices": 5240,
+      "max_delta_m": 0.02212735863134143,
+      "id_range": [
+        0,
+        19128
+      ],
+      "runtime_path": "targets/head-scale-horiz-incr.target"
+    },
+    {
+      "parameter": "nose_width",
+      "source_relative": "data/targets/nose/nose-scale-horiz-decr.target.gz",
+      "sign": "decr",
+      "compressed_bytes": 1234,
+      "compressed_sha256": "95d8dc4a3589bbb6105191abc6e3cae47c3c424ce189b5f0a611dc098806060d",
+      "expanded_bytes": 4470,
+      "expanded_sha256": "41480edfeec76d2595edec3e714fc077e93d265e12c7b5c94eb7aa42288f71df",
+      "affected_vertices": 312,
+      "max_delta_m": 0.0046,
+      "id_range": [
+        116,
+        11865
+      ],
+      "runtime_path": "targets/nose-scale-horiz-decr.target"
+    },
+    {
+      "parameter": "nose_width",
+      "source_relative": "data/targets/nose/nose-scale-horiz-incr.target.gz",
+      "sign": "incr",
+      "compressed_bytes": 1802,
+      "compressed_sha256": "ba550cc15c894a4412bb368acc92bd6ad94bbb63d0135c561fe30230ef6344bd",
+      "expanded_bytes": 6964,
+      "expanded_sha256": "a2130755fb06b021ac4ab1269715835588f76276201bc15369ffa2f13889573b",
+      "affected_vertices": 494,
+      "max_delta_m": 0.0034000000000000002,
+      "id_range": [
+        48,
+        11965
+      ],
+      "runtime_path": "targets/nose-scale-horiz-incr.target"
+    },
+    {
+      "parameter": "mouth_width",
+      "source_relative": "data/targets/mouth/mouth-scale-horiz-decr.target.gz",
+      "sign": "decr",
+      "compressed_bytes": 3038,
+      "compressed_sha256": "aed1a3c27224d12828de1ffc3fe9c2895f4389417d016016dd4f1fefccdbc6c9",
+      "expanded_bytes": 12040,
+      "expanded_sha256": "2eecf3b71ce834fdf8c00817c4de28913d0abcbde9bb1a05df860946d31581a1",
+      "affected_vertices": 838,
+      "max_delta_m": 0.006200000000000001,
+      "id_range": [
+        285,
+        15127
+      ],
+      "runtime_path": "targets/mouth-scale-horiz-decr.target"
+    },
+    {
+      "parameter": "mouth_width",
+      "source_relative": "data/targets/mouth/mouth-scale-horiz-incr.target.gz",
+      "sign": "incr",
+      "compressed_bytes": 3925,
+      "compressed_sha256": "3bd6ff8195f77f0bcb586f3efec0eea1ae615eecba516e4d121025e40ed0ead2",
+      "expanded_bytes": 15053,
+      "expanded_sha256": "1561577f3f2b061fd42290ac3adc469a2c796090ca9668a9e131e65ed047ec43",
+      "affected_vertices": 1004,
+      "max_delta_m": 0.006200000000000001,
+      "id_range": [
+        203,
+        15127
+      ],
+      "runtime_path": "targets/mouth-scale-horiz-incr.target"
+    },
+    {
+      "parameter": "chin_width",
+      "source_relative": "data/targets/chin/chin-width-decr.target.gz",
+      "sign": "decr",
+      "compressed_bytes": 768,
+      "compressed_sha256": "6c3aaca074630e89951184130a4a158b6f62c9d0cf57cf8eb828c445ff40c21a",
+      "expanded_bytes": 2649,
+      "expanded_sha256": "b99f878229b6cc8a52bca1ec3b1d746faeca9049acd6ae59170ae2d0a776911c",
+      "affected_vertices": 179,
+      "max_delta_m": 0.00510881590977792,
+      "id_range": [
+        370,
+        11939
+      ],
+      "runtime_path": "targets/chin-width-decr.target"
+    },
+    {
+      "parameter": "chin_width",
+      "source_relative": "data/targets/chin/chin-width-incr.target.gz",
+      "sign": "incr",
+      "compressed_bytes": 1110,
+      "compressed_sha256": "68764b6ec7c923597beaaf643f71c41f00c93639d9bb522c169c279db2ad299e",
+      "expanded_bytes": 3833,
+      "expanded_sha256": "39449581db893fa4a2561b0d05ff11344deccf5d0cb85411fdf702b4c4738dc8",
+      "affected_vertices": 266,
+      "max_delta_m": 0.011903780911962383,
+      "id_range": [
+        361,
+        11941
+      ],
+      "runtime_path": "targets/chin-width-incr.target"
+    },
+    {
+      "parameter": "neck_width",
+      "source_relative": "data/targets/neck/neck-scale-horiz-decr.target.gz",
+      "sign": "decr",
+      "compressed_bytes": 2195,
+      "compressed_sha256": "64a6cff62244705a3ea3f005889dfb56641e8ed43389e2e1cb0b8bed0660dc53",
+      "expanded_bytes": 7849,
+      "expanded_sha256": "da92e9cadad16b0652177935d6febd5a53d3263fcfe7421de01075ddc52bdc81",
+      "affected_vertices": 544,
+      "max_delta_m": 0.0119,
+      "id_range": [
+        738,
+        17951
+      ],
+      "runtime_path": "targets/neck-scale-horiz-decr.target"
+    },
+    {
+      "parameter": "neck_width",
+      "source_relative": "data/targets/neck/neck-scale-horiz-incr.target.gz",
+      "sign": "incr",
+      "compressed_bytes": 2830,
+      "compressed_sha256": "8428be2a7c0e1554dbf6bb516e6ffbdfa564a8cc94d6a9ff08580c0127e44aeb",
+      "expanded_bytes": 10107,
+      "expanded_sha256": "42e5ae83aa3897fcd0ad045d8628dd0044b63817a13797129fe712cd4a710360",
+      "affected_vertices": 702,
+      "max_delta_m": 0.013800000000000002,
+      "id_range": [
+        726,
+        17951
+      ],
+      "runtime_path": "targets/neck-scale-horiz-incr.target"
+    },
+    {
+      "parameter": "hip_width",
+      "source_relative": "data/targets/hip/hip-scale-horiz-decr.target.gz",
+      "sign": "decr",
+      "compressed_bytes": 8987,
+      "compressed_sha256": "f000ad7589bb05813dd6296192a70e647b9c4866db22ebd642a0f889d37b2c99",
+      "expanded_bytes": 32310,
+      "expanded_sha256": "356c5dfc694c738c9780105c9c2c554e0906f903720a6f092601fd6f586ba559",
+      "affected_vertices": 2140,
+      "max_delta_m": 0.0396,
+      "id_range": [
+        1834,
+        18361
+      ],
+      "runtime_path": "targets/hip-scale-horiz-decr.target"
+    },
+    {
+      "parameter": "hip_width",
+      "source_relative": "data/targets/hip/hip-scale-horiz-incr.target.gz",
+      "sign": "incr",
+      "compressed_bytes": 8982,
+      "compressed_sha256": "12eab540daee8f1aa7fa06b9ca18224c987b057da369a2f4870228470b8d933a",
+      "expanded_bytes": 32310,
+      "expanded_sha256": "2fcaf2239862bec5d285ac4620ba1b1f7713dbb105f495c8f16836a7b2a4f474",
+      "affected_vertices": 2140,
+      "max_delta_m": 0.0396,
+      "id_range": [
+        1834,
+        18361
+      ],
+      "runtime_path": "targets/hip-scale-horiz-incr.target"
+    }
+  ],
+  "runtime_payloads_sha256": "c6dbc043263231a51d4e0ca2f4d8063399f6f59d6399f8d7591f6a0c9234832e",
+  "units": "Unmodified decompressed source units; runtime loader converts once by 0.1",
+  "quality": "HOLD: source identity is not visual or runtime admission"
+}

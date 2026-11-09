@@ -93,11 +93,14 @@ struct Selection {
     pose: String,
 }
 // Frame publication uses the same validated prepared rig for both timeline
-// profiles and the explicitly static waist profile. This is an internal render
+// profiles and the explicitly static waist/leg profiles. This is an internal render
 // capability, not public permission to add clips/timelines to the latter.
 fn uses_prepared_rig(doc: &SceneDocument) -> bool {
     doc.profile.backend.is_b1_motion()
-        || doc.profile.backend.b1_asset_version() == Some(B1AssetVersion::V5)
+        || matches!(
+            doc.profile.backend.b1_asset_version(),
+            Some(B1AssetVersion::V5 | B1AssetVersion::V6)
+        )
 }
 
 impl Selection {

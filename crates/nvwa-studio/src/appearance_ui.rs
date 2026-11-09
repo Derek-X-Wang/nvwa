@@ -6,9 +6,12 @@ pub(super) fn draw(ui: &mut egui::Ui, document: &SceneDocument) -> Option<Comman
     if !document.profile.backend.is_b1() {
         return None;
     }
-    if document.profile.backend.b1_asset_version() == Some(B1AssetVersion::V5) {
+    if matches!(
+        document.profile.backend.b1_asset_version(),
+        Some(B1AssetVersion::V5 | B1AssetVersion::V6)
+    ) {
         ui.small(
-            "静态腰部轮廓：尚未接入皮肤、眼睛或头发 / Static waist: no appearance set admitted.",
+            "静态体型轮廓：尚未接入皮肤、眼睛或头发 / Static shape: no appearance set admitted.",
         );
         return None;
     }
