@@ -29,7 +29,9 @@ def job(text, name):
 def complete_gate(full=False):
     needs = {name: {'result': 'success'} for name in policy.REQUIRED}
     needs['classify']['outputs'] = {'full_required': str(full).lower()}
-    needs['native-and-wasm'] = {'result': 'success' if full else 'skipped'}
+    for part in policy.MAC_PARTS:
+        needs[f'mac-{part}-required'] = {'result': 'success' if full else 'skipped'}
+        needs[f'mac-{part}-background'] = {'result': 'skipped' if full else 'success'}
     return needs
 
 
@@ -130,24 +132,36 @@ class Classification(unittest.TestCase):
 
 
 class Aggregate(unittest.TestCase):
+    def test_required_gate_reads_only_its_declared_mac_dependencies(self):
+        for full in [False, True]:
+            needs = complete_gate(full)
+            for part in policy.MAC_PARTS:
+                del needs[f'mac-{part}-background']
+            self.assertEqual(policy.check_gate(needs), [])
+
     def test_valid_ordinary_does_not_depend_on_background(self):
         needs = complete_gate()
         for status in ['failure', 'cancelled', 'in_progress', 'missing']:
-            needs['mac-full-background'] = {'result': status}
+            needs['mac-workspace-background'] = {'result': status}
             self.assertEqual(policy.check_gate(needs), [])
 
     def test_report_rejects_missing_cancelled_and_double_execution(self):
-        for results in [('success', 'skipped'), ('skipped', 'success'), ('success', 'success'),
-                        ('skipped', 'skipped'), ('skipped', 'failure'), ('cancelled', 'skipped'),
-                        ('missing', 'skipped')]:
-            with self.subTest(results=results), tempfile.TemporaryDirectory() as d:
-                needs = dict(zip(('native-and-wasm', 'mac-full-background'),
-                                 ({'result': value} for value in results)))
+        for full in [False, True]:
+            for part in policy.MAC_PARTS:
+                for status in ['failure', 'cancelled', 'skipped', 'in_progress', 'missing']:
+                    needs = complete_gate(full)
+                    lane = f'mac-{part}-required' if full else f'mac-{part}-background'
+                    needs[lane] = {'result': status}
+                    with self.subTest(full=full, lane=lane, status=status), tempfile.TemporaryDirectory() as d:
+                        env = {**os.environ, 'TIER_NEEDS': json.dumps(needs), 'GITHUB_STEP_SUMMARY': d+'/summary'}
+                        r = subprocess.run([sys.executable, '-B', str(HERE/'policy.py'), 'report'], env=env, capture_output=True)
+                        self.assertNotEqual(r.returncode, 0)
+                        self.assertIn(status, Path(d+'/summary').read_text())
+            with tempfile.TemporaryDirectory() as d:
+                needs = complete_gate(full)
                 env = {**os.environ, 'TIER_NEEDS': json.dumps(needs), 'GITHUB_STEP_SUMMARY': d+'/summary'}
                 r = subprocess.run([sys.executable, '-B', str(HERE/'policy.py'), 'report'], env=env, capture_output=True)
-                self.assertEqual(r.returncode == 0, sorted(results) == ['skipped', 'success'])
-                for value in results:
-                    self.assertIn(value, Path(d+'/summary').read_text())
+                self.assertEqual(r.returncode, 0)
 
     def test_all_required_results_fail_closed(self):
         for full in [False, True]:
@@ -160,9 +174,13 @@ class Aggregate(unittest.TestCase):
                 needs = complete_gate(full)
                 del needs[name]
                 self.assertTrue(policy.check_gate(needs))
-        for result in ['failure', 'cancelled', 'skipped', '', 'in_progress']:
+        for part in policy.MAC_PARTS:
+            for result in ['failure', 'cancelled', 'skipped', '', 'in_progress']:
+                needs = complete_gate(True)
+                needs[f'mac-{part}-required']['result'] = result
+                self.assertTrue(policy.check_gate(needs))
             needs = complete_gate(True)
-            needs['native-and-wasm']['result'] = result
+            del needs[f'mac-{part}-required']
             self.assertTrue(policy.check_gate(needs))
         for value in [None, 'TRUE', '', 'yes']:
             needs = complete_gate()
@@ -180,7 +198,12 @@ class CompletionReport(unittest.TestCase):
                     'path': '.github/workflows/ci.yml', 'status': 'completed'}
         self.jobs = [{'id': i+1, 'run_id': 123, 'head_sha': 'a'*40, 'name': name,
                       'status': 'completed', 'conclusion': state}
-                     for i, (name, state) in enumerate(zip(self.namespace['NAMES'], ['skipped', 'success']))]
+                     for i, (name, state) in enumerate(zip(self.namespace['NAMES'], ['skipped']*3+['success']*3))]
+        for kind in ('required', 'background'):
+            for part in ('workspace', 'bridges', 'matrix'):
+                lane = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-{part}-{kind}')
+                title = lane.split('    name: ', 1)[1].split('\n', 1)[0]
+                self.assertIn(title, self.namespace['NAMES'])
         self.assertNotIn('checkout', '\n'.join(line for line in workflow.splitlines() if not line.startswith('#')))
         self.assertNotIn('write', '\n'.join(line for line in workflow.splitlines() if line.strip().startswith(('actions:', 'contents:', 'pull-requests:', 'issues:'))))
 
@@ -191,12 +214,12 @@ class CompletionReport(unittest.TestCase):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 self.namespace['identity']({**event, 'workflow_run': {**self.run, key: value}})
         filler = [{**self.jobs[0], 'id': i+10, 'name': 'Other'} for i in range(100)]
-        pages = [{'total_count': 102, 'jobs': filler}, {'total_count': 102, 'jobs': self.jobs}]
+        pages = [{'total_count': 106, 'jobs': filler}, {'total_count': 106, 'jobs': self.jobs}]
         urls = []
         def fetch(url):
             urls.append(url)
             return pages.pop(0)
-        self.assertEqual(len(self.namespace['collect'](self.run, fetch)), 102)
+        self.assertEqual(len(self.namespace['collect'](self.run, fetch)), 106)
         self.assertIn('/attempts/2/jobs?per_page=100&page=2', urls[1])
         for jobs in [self.jobs*2, [{**self.jobs[0], 'run_id': 7}], [{**self.jobs[0], 'head_sha': 'b'*40}]]:
             with self.assertRaises(ValueError):
@@ -206,8 +229,19 @@ class CompletionReport(unittest.TestCase):
 
     def test_failures_cancellation_missing_and_double_success_remain_red(self):
         self.assertTrue(self.namespace['result'](self.jobs)[1])
-        for state in ['cancelled', 'failure', 'timed_out', 'skipped', None]:
-            self.assertFalse(self.namespace['result']([self.jobs[0], {**self.jobs[1], 'conclusion': state}])[1])
+        for index in range(3, 6):
+            for state in ['cancelled', 'failure', 'timed_out', 'skipped', None]:
+                altered = [{**j} for j in self.jobs]
+                altered[index]['conclusion'] = state
+                self.assertFalse(self.namespace['result'](altered)[1])
+        required_selected = [{**j, 'conclusion': 'success' if i < 3 else 'skipped'}
+                             for i, j in enumerate(self.jobs)]
+        self.assertTrue(self.namespace['result'](required_selected)[1])
+        for index in range(3):
+            for state in ['cancelled', 'failure', 'timed_out', 'skipped', None]:
+                altered = [{**j} for j in required_selected]
+                altered[index]['conclusion'] = state
+                self.assertFalse(self.namespace['result'](altered)[1])
         self.assertFalse(self.namespace['result'](self.jobs[:1])[1])
         self.assertFalse(self.namespace['result'](self.jobs*2)[1])
         self.assertFalse(self.namespace['result']([{**j, 'conclusion': 'success'} for j in self.jobs])[1])
@@ -217,6 +251,11 @@ class WorkflowContract(unittest.TestCase):
     def test_original_full_mac_commands_and_budget_remain_exact(self):
         old = (HERE / 'predecessor-ci.yml').read_text()
         new = (ROOT / '.github/workflows/ci.yml').read_text()
+        import importlib.util
+        split_spec = importlib.util.spec_from_file_location('mac_split_contract', HERE/'mac_split_contract.py')
+        split_module = importlib.util.module_from_spec(split_spec)
+        split_spec.loader.exec_module(split_module)
+        new = split_module.project(new, self)
         self.assertEqual(new.count('    needs: [classify, portable, portable-eye]\n'), 2)
         new = new.replace('    needs: [classify, portable, portable-eye]\n', '    needs: [classify, portable]\n')
         original = job(old, 'native-and-wasm')
@@ -234,6 +273,41 @@ class WorkflowContract(unittest.TestCase):
         self.assertIn("tags: ['*']", new)
         self.assertIn('  workflow_dispatch:', new)
         self.assertIn('  release:', new)
+
+    def test_mac_split_exact_coverage_and_no_partial_seed(self):
+        workflow = (ROOT/'.github/workflows/ci.yml').read_text()
+        old = job((HERE/'portable-split-v3-ci.yml').read_text(), 'native-and-wasm')
+        def section(start, end):
+            return old[old.index('      - name: '+start+'\n'):old.index('      - name: '+end+'\n')]
+        expected = {
+            'workspace': section('Run workspace CPU tests', 'Check appearance quality and production acceptance bridges'),
+            'bridges': section('Check appearance quality and production acceptance bridges', 'Execute the actual B1 continuous motion matrix'),
+            'matrix': section('Execute the actual B1 continuous motion matrix', 'Report existing command timing'),
+        }
+        for kind in ['required', 'background']:
+            for part, body in expected.items():
+                lane = job(workflow, f'mac-{part}-{kind}')
+                self.assertEqual(lane.count(body), 1)
+                self.assertIn('    runs-on: macos-15\n    timeout-minutes: 75\n', lane)
+                self.assertIn("    if: ${{ needs.classify.outputs.full_required == '"+('true' if kind=='required' else 'false')+"' }}\n", lane)
+                self.assertNotIn('continue-on-error', lane)
+                self.assertNotIn('policy.py finish', lane)
+                self.assertNotIn('actions/cache/', lane)
+                for other, otherbody in expected.items():
+                    if other != part:
+                        self.assertNotIn(otherbody, lane)
+        self.assertIn('bash experiments/27-ci-baseline/check.sh native', expected['workspace'])
+        self.assertIn('timeout-minutes: 12', expected['bridges'])
+        self.assertIn('timeout-minutes: 20', expected['matrix'])
+        self.assertIn('python3 -B experiments/70-b1-garment-defect/test_controls.py', expected['matrix'])
+        self.assertIn('python3 -B -O experiments/70-b1-garment-defect/test_controls.py', expected['matrix'])
+        gate = job(workflow, 'required-gate')
+        self.assertIn('mac-workspace-required, mac-bridges-required, mac-matrix-required]', gate)
+        self.assertNotIn('mac-workspace-background', gate)
+        report = job(workflow, 'full-mac-report')
+        for kind in ['required', 'background']:
+            for part in expected:
+                self.assertIn('mac-'+part+'-'+kind, report)
 
     def test_linux_preserves_all_shared_commands_with_explicit_backend(self):
         old = job((HERE / 'predecessor-ci.yml').read_text(), 'native-and-wasm')

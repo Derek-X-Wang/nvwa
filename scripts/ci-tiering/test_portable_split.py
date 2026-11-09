@@ -55,7 +55,7 @@ class PortableSplitControls(unittest.TestCase):
         required = ('classify', 'portable', 'portable-eye', 'linux-shared', 'mac-smoke', 'b1-source-regression')
         self.assertEqual(policy.REQUIRED, required)
         gate = job(workflow, 'required-gate')
-        self.assertIn('    needs: ['+', '.join(required)+', native-and-wasm]\n', gate)
+        self.assertIn('    needs: ['+', '.join(required)+', mac-workspace-required, mac-bridges-required, mac-matrix-required]\n', gate)
         self.assertIn('    if: ${{ always() }}\n', gate)
         self.assertNotIn('continue-on-error', gate)
 
@@ -65,7 +65,9 @@ class PortableSplitControls(unittest.TestCase):
                 for result in ['success', 'failure', 'cancelled', 'skipped', 'in_progress', '', None]:
                     needs = {name: {'result': 'success'} for name in policy.REQUIRED}
                     needs['classify']['outputs'] = {'full_required': full}
-                    needs['native-and-wasm'] = {'result': 'success' if full == 'true' else 'skipped'}
+                    for part in policy.MAC_PARTS:
+                        needs[f'mac-{part}-required'] = {'result': 'success' if full == 'true' else 'skipped'}
+                        needs[f'mac-{part}-background'] = {'result': 'skipped' if full == 'true' else 'success'}
                     if result is None:
                         del needs[lane]
                     else:

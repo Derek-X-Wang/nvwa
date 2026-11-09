@@ -242,3 +242,15 @@ suite、Node 缺失失败控制均原样保留。两个作业使用相同 Ubuntu
 须实测完整两组与新 head 的正式 CI；本地缓存测量不替代 hosted 冷运行。若任一
 现有上限再次耗尽，保留具体日志与 release HOLD，停止自动加时、进一步拆组或
 无变化重跑，报告新的证据供决定。本授权不包含自动合并或安全设置更改。
+
+
+## 完整 Mac 分组的新决定（2026-11-09）
+
+[36e9136 / 42653697946](https://github.com/Derek-X-Wang/nvwa/actions/runs/42653697946)
+的portable两组、Linux、B1/Web和Mac短检查通过；完整Mac的workspace/CPU、
+appearance、三类mutation通过后，594帧矩阵在原75分钟作业上限取消，
+衣物normal/`-O`未运行。Required gate与运行内报告均红色，保持release HOLD。
+Derek随后明确同意保留全部Mac测试与失败信号，把完整Mac拆成独立作业分别
+实测，不单纯加时或删除检查。具体分组、缓存种子边界和失败传播见
+[CI分层](ci-tiering.md)。新分组必须以精确head的hosted结果证明；
+本地合同通过不能把先前取消写成成功，也不能把并行当成总计算成本下降。

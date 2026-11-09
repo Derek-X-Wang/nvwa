@@ -109,14 +109,30 @@ def classify(root, event_name, event):
         return {'full_required': True, 'reasons': ['classification incomplete: ' + type(error).__name__], 'head': ''}
 
 
+MAC_PARTS = ('workspace', 'bridges', 'matrix')
+
+def mac_results(needs, full):
+    required = [needs.get(f'mac-{part}-required', {}).get('result', 'missing') for part in MAC_PARTS]
+    background = [needs.get(f'mac-{part}-background', {}).get('result', 'missing') for part in MAC_PARTS]
+    expected = (['success'] * 3, ['skipped'] * 3) if full == 'true' else (['skipped'] * 3, ['success'] * 3)
+    return required, background, required == expected[0] and background == expected[1]
+
+
 def check_gate(needs):
     failures = [name for name in REQUIRED if needs.get(name, {}).get('result') != 'success']
     full = needs.get('classify', {}).get('outputs', {}).get('full_required')
     if full not in ('true', 'false'):
         failures.append('invalid classification output')
-    actual = needs.get('native-and-wasm', {}).get('result')
-    if (full == 'true' and actual != 'success') or (full == 'false' and actual != 'skipped'):
-        failures.append('complete Mac required result mismatch')
+        return failures
+    required, background, _ = mac_results(needs, full)
+    if full == 'true':
+        for part, state in zip(MAC_PARTS, required):
+            if state != 'success':
+                failures.append('complete Mac '+part+' required result: '+state)
+    else:
+        for part, state in zip(MAC_PARTS, required):
+            if state != 'skipped':
+                failures.append('unexpected complete Mac '+part+' required result: '+state)
     return failures
 
 
@@ -143,12 +159,12 @@ def main():
             print('Required checks passed for this exact workflow identity.')
         else:
             lines = ['## Complete Mac evidence', '', 'This report never converts a failure/timeout into a pass.']
-            results = [needs.get(name, {}).get('result', 'missing') for name in ('native-and-wasm', 'mac-full-background')]
-            bad = sorted(results) != ['skipped', 'success']
-            for name in ('native-and-wasm', 'mac-full-background'):
-                status = needs.get(name, {}).get('result', 'missing')
-                lines.append(f'- {name}: **{status}**')
-                bad |= status not in ('success', 'skipped')
+            full = needs.get('classify', {}).get('outputs', {}).get('full_required')
+            required, background, valid = mac_results(needs, full)
+            bad = not valid or full not in ('true', 'false')
+            for kind, states in [('required', required), ('background', background)]:
+                for part, state in zip(MAC_PARTS, states):
+                    lines.append(f'- mac-{part}-{kind}: **{state}**')
             with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as out:
                 out.write('\n'.join(lines) + '\n')
             if bad:

@@ -241,3 +241,35 @@ workflow，因此新拓扑进入新身份；短检查仍不产生完整 native s
 验收：本地独立完整眼睛／头发组与剩余15组、各历史合同 normal／`-O`、正式新
 head CI 的结果随 PR 记录。此处不把未完成项标为通过。并行会增加 runner 启动
 成本，缩短关键路径的幅度以实测为准；未改变各步骤上限或总计算量的承诺。
+
+
+## 完整 Mac 独立作业候选（2026-11-09 新授权）
+
+Derek 在 [36e9136 的自然运行](https://github.com/Derek-X-Wang/nvwa/actions/runs/42653697946)
+完整 Mac 达到原75分钟上限之后，明确同意保留全部 Mac 测试与失败信号，将
+完整 Mac 拆为独立作业并分别实测；不以单纯加时或删除检查换绿色。
+本节覆盖上文对完整 Mac 单作业拓扑的描述，旧结果仍保留。
+
+必需分支和普通 PR 后台分支各有三个互斥的 macOS 15 作业：
+workspace/实际CPU导出、appearance/三类生产 mutation、594帧矩阵/原衣物
+normal及 `-O`。这三段从完整旧作业按步骤原字节复制，normal/`-O`、
+Darwin/arm64 native guard、mutation12分钟、matrix20分钟、单Cargo worker
+及每个作业75分钟上限保留。每段都在新runner冷编译；appearance和matrix作业先对各自独立graph执行精确
+locked Cargo fetch，随后运行原有offline命令。分别耗时与总计算成本必须
+通过hosted数据记录，不能从并行推断节省。
+
+原 `native-and-wasm` 和 `mac-full-background` 作业仅保留作历史合同基线，
+条件为false，不执行旧整任务。此前仅完整 producer 可使用的main-only
+native seed和optional warm trial因此不产出或复用；任何只完成部分检查的
+新作业都没有cache save/restore步骤，也不能声称生成完整种子。四个独立
+历史消费者验证六个新作业的精确身份、投影回旧整工作流，然后继续原有
+整文件、命令、预算、失败和negative controls。旧48个run bodies与16组
+portable catalog仍为历史基线，不改写旧失败。
+
+完整必需场景中，`Required CI gate`直读三个Mac作业并要求全部success；
+普通PR要求必需分支三个明确skipped，不等待后台三项。
+`Complete Mac result report`和默认分支独立只读报告要求同一分支三个success、
+另一分支三个skipped；任一失败、取消、缺失、混合或未知均为红色。
+普通PR后台失败仍为真实失败和后续跟进；相关Mac工作和发布需要目标SHA的
+完整三项成功，不能只看短Mac。分支保护的实际required status设置未变更，
+默认分支独立报告和普通PR后台分支仍需上线现场验收。

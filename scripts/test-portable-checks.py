@@ -1,5 +1,6 @@
 """Frozen extraction inventory and subprocess controls for the production runner."""
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -83,6 +84,10 @@ PORTABLE_SPLIT_NORMALIZE = b"        self.assertEqual(new.count('    needs: [cla
 
 
 def historical_portable_split_input(name, checks, data):
+    split_spec = importlib.util.spec_from_file_location('mac_split_contract', ROOT/'scripts/ci-tiering/mac_split_contract.py')
+    split_module = importlib.util.module_from_spec(split_spec)
+    split_spec.loader.exec_module(split_module)
+    data = split_module.project_input(name, checks, data)
     if name in PORTABLE_SPLIT_INPUT_SHA256:
         checks.assertEqual(hashlib.sha256(data).hexdigest(), PORTABLE_SPLIT_INPUT_SHA256[name], name)
     if name == 'scripts/ci-tiering/policy.py':
@@ -96,6 +101,10 @@ def historical_portable_split_input(name, checks, data):
 
 
 def historical_portable_split_workflow(workflow, checks):
+    split_spec = importlib.util.spec_from_file_location('mac_split_contract', ROOT/'scripts/ci-tiering/mac_split_contract.py')
+    split_module = importlib.util.module_from_spec(split_spec)
+    split_spec.loader.exec_module(split_module)
+    workflow = split_module.project(workflow, checks)
     def block(name):
         matches = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
         checks.assertEqual(len(matches), 1, 'required exactly one portable split job: '+name)

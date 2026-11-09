@@ -78,6 +78,10 @@ def portable_split_dependency_header(header):
 
 
 def historical_portable_split_input(name, checks, data):
+    split_spec = importlib.util.spec_from_file_location('mac_split_contract', ROOT/'scripts/ci-tiering/mac_split_contract.py')
+    split_module = importlib.util.module_from_spec(split_spec)
+    split_spec.loader.exec_module(split_module)
+    data = split_module.project_input(name, checks, data)
     if name in PORTABLE_SPLIT_INPUT_SHA256:
         checks.assertEqual(hashlib.sha256(data).hexdigest(), PORTABLE_SPLIT_INPUT_SHA256[name], name)
     if name == 'scripts/ci-tiering/policy.py':
@@ -91,6 +95,10 @@ def historical_portable_split_input(name, checks, data):
 
 
 def historical_portable_split_workflow(workflow, checks):
+    split_spec = importlib.util.spec_from_file_location('mac_split_contract', ROOT/'scripts/ci-tiering/mac_split_contract.py')
+    split_module = importlib.util.module_from_spec(split_spec)
+    split_spec.loader.exec_module(split_module)
+    workflow = split_module.project(workflow, checks)
     def block(name):
         matches = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', workflow)
         checks.assertEqual(len(matches), 1, 'required exactly one portable split job: '+name)
@@ -452,6 +460,9 @@ class Timing(unittest.TestCase):
         for header in (MACOS15_HEADERS[0].replace('    needs: portable\n',
                 "    needs: [classify, portable]\n    if: ${{ needs.classify.outputs.full_required == 'true' }}\n"), MACOS15_HEADERS[1]):
             header = portable_split_dependency_header(header)
+            for selected in ('true', 'false'):
+                header = header.replace("    if: ${{ needs.classify.outputs.full_required == '"+selected+"' }}\n",
+                                        "    if: ${{ false }} # retired complete lane; split jobs own every check\n")
             for label in ['macos-14', 'macos-latest', 'macos-26', 'macos-15-intel',
                           'macos-15-large', 'macos-15-xlarge', 'unknown']:
                 mutations.append(original.replace(header, header.replace('macos-15', label)))
