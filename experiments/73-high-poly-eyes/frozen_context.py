@@ -649,3 +649,33 @@ def _combined_context(exp, cpu):
     require({name for name in previous if value['files'][name] != previous[name]}
             == set(REFERENCE_MOTION_CHANGED), 'combined source context exact changes required')
     return value['context'], value['files']
+
+
+LEG_CONTEXT_NAME = '../72-b1-admission-controls/input-context-legs-v1.json'
+LEG_CONTEXT_SHA = '955d7a1c5ff4481ccf14d3fe7b393a482c71a325d770067b8e52d1b96d0a4665'
+LEG_CONTEXT_ID = 'b1-leg-morphology-product-v1'
+
+
+def has_leg_inputs(root):
+    return (root / 'assets/characters/mpfb-b1-v6').exists()
+
+
+def leg_source_context(exp, cpu):
+    """Admit only the exact v6 successor, retaining the combined predecessor gate."""
+    combined = _combined_context(exp, cpu)
+    raw = regular_file(exp, LEG_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == LEG_CONTEXT_SHA,
+            'leg source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == LEG_CONTEXT_ID
+            and value['predecessor'] == combined[0]
+            and value['predecessor_commit'] == 'e21322c95b3b9ca40334206de135a19b1ad6cb0f',
+            'leg source context predecessor/version mismatch')
+    files = dict(combined[1])
+    files.update(value['files'])
+    require(len(files) == 482 and len(value['files']) == 194,
+            'leg source context complete union required')
+    return LEG_CONTEXT_ID, files

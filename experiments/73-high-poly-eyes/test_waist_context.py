@@ -37,6 +37,7 @@ class WaistSourceContext(unittest.TestCase):
         cls.files = waist[1]
         cls.combined = CONTEXT._combined_context(HERE, cpu)
         cls.predecessors = retained
+        cls.pre_leg = ROOT / 'experiments/72-b1-admission-controls/fixtures/pre-leg'
         temporary = tempfile.TemporaryDirectory(prefix='nvwa-waist-parent-')
         cls.addClassCleanup(temporary.cleanup)
         cls.waist_root = Path(temporary.name)
@@ -44,7 +45,10 @@ class WaistSourceContext(unittest.TestCase):
             dest = cls.waist_root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
             old = retained['waist']
-            dest.write_bytes(old[name] if name in old else (ROOT / name).read_bytes())
+            historical = cls.pre_leg / name
+            dest.write_bytes(old[name] if name in old else
+                             historical.read_bytes() if historical.is_file() else
+                             (ROOT / name).read_bytes())
         cls.retained = json.loads((HERE / 'fixtures/pre-waist/manifest.json').read_bytes())['files']
 
     def invoke_gate(self, root=None, exp=HERE):
@@ -63,7 +67,9 @@ class WaistSourceContext(unittest.TestCase):
         for name in files:
             dest = root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(source / name, dest)
+            historical = self.pre_leg / name
+            shutil.copyfile(historical if combined and historical.is_file()
+                            else source / name, dest)
         exp = root / 'experiments' / HERE.name
         exp.mkdir(parents=True, exist_ok=True)
         for path in HERE.iterdir():
