@@ -654,6 +654,35 @@ def _combined_context(exp, cpu):
 LEG_CONTEXT_NAME = '../72-b1-admission-controls/input-context-legs-v1.json'
 LEG_CONTEXT_SHA = '955d7a1c5ff4481ccf14d3fe7b393a482c71a325d770067b8e52d1b96d0a4665'
 LEG_CONTEXT_ID = 'b1-leg-morphology-product-v1'
+UPPER_CONTEXT_NAME = '../72-b1-admission-controls/input-context-upper-body-v1.json'
+UPPER_CONTEXT_SHA = 'a11c03173769831c45f9cda63506634adea0e92718910f521d6b4e947c44fbd2'
+UPPER_CONTEXT_ID = 'b1-upper-body-morphology-product-v1'
+
+
+def has_upper_inputs(root):
+    return (root / 'assets/characters/mpfb-b1-v7').exists()
+
+
+def upper_source_context(exp, cpu):
+    """Admit only the exact v7 successor after the immutable v6 context."""
+    leg = leg_source_context(exp, cpu)
+    raw = regular_file(exp, UPPER_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == UPPER_CONTEXT_SHA,
+            'upper source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == UPPER_CONTEXT_ID
+            and value['predecessor'] == LEG_CONTEXT_ID
+            and value['predecessor_commit'] == 'd5bc346ff96213a0337a167bc60e5d1834b81bf0',
+            'upper source context predecessor/version mismatch')
+    files = dict(leg[1]); files.update(value['files'])
+    require(len(value['files']) == 292 and len(files) == 580
+            and len(set(leg[1]) & set(value['files'])) == 194
+            and set(files) == set(leg[1]) | set(value['files']),
+            'upper source context complete union required')
+    return UPPER_CONTEXT_ID, files
 
 
 def has_leg_inputs(root):

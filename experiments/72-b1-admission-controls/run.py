@@ -26,6 +26,7 @@ HERE = Path(__file__).resolve().parent
 PACKAGE = ('run.py', 'test_controls.py', 'compatibility.rs', 'cases.json', 'pins.json', 'README.md', 'REVIEW.md', 'input-context-v1.json', 'input-context-v2.json', 'input-context-v3.json')
 PACKAGE += ('input-context-v4.json', 'input-context-v5.json')
 PACKAGE += ('input-context-legs-v1.json', 'test_leg_context.py')
+PACKAGE += ('input-context-upper-body-v1.json', 'test_upper_body_context.py')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -664,6 +665,78 @@ def has_leg_inputs(root):
     return path.exists() or path.is_symlink()
 
 
+UPPER_CONTEXT_NAME = 'input-context-upper-body-v1.json'
+UPPER_CONTEXT_SHA = 'a11c03173769831c45f9cda63506634adea0e92718910f521d6b4e947c44fbd2'
+UPPER_BASELINES_SHA = '70aaa662cb57f289ca4f8299d1e7aba0652b65d2ecf82413da5bbe35d24242f5'
+UPPER_CONTEXT_ID = 'b1-upper-body-morphology-product-v1'
+UPPER_PREDECESSOR_COMMIT = 'd5bc346ff96213a0337a167bc60e5d1834b81bf0'
+UPPER_FIXTURES = 'fixtures/pre-upper-body'
+UPPER_CHANGED = ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-cli/src/cpu_render.rs',
+                 'crates/nvwa-cli/tests/cpu_render.rs',
+                 'crates/nvwa-core/src/appearance.rs', 'crates/nvwa-core/src/b1.rs',
+                 'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs',
+                 'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs',
+                 'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py',
+                 'scripts/test-cli-package.py')
+UPPER_NEW_CODE = ('crates/nvwa-cli/tests/upper_body.rs', 'crates/nvwa-core/tests/upper_body.rs',
+                  'docs/research/character-foundation/upper-body-control-plan.md',
+                  'scripts/build-upper-body-v7.py')
+UPPER_ASSET_PREFIX = 'assets/characters/mpfb-b1-v7/'
+
+
+def has_upper_inputs(root):
+    path = root / UPPER_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def _pre_upper_sources(exp, previous):
+    manifest = source_file(exp, f'{UPPER_FIXTURES}/manifest.json')
+    raw = manifest.read_bytes()
+    require(sha(raw) == UPPER_BASELINES_SHA, 'upper predecessor manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == previous[0]
+            and value['source_commit'] == UPPER_PREDECESSOR_COMMIT
+            and set(value['files']) == set(UPPER_CHANGED),
+            'upper predecessor complete inventory required')
+    for name in UPPER_CHANGED:
+        item = value['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{UPPER_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'upper predecessor historical pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'upper predecessor bytes mismatch: ' + name)
+    fixture_root = exp / UPPER_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(UPPER_CHANGED),
+            'upper predecessor fixture inventory mismatch')
+
+
+def _upper_context(exp, previous):
+    _pre_upper_sources(exp, previous)
+    path = source_file(exp, UPPER_CONTEXT_NAME)
+    raw = path.read_bytes()
+    require(sha(raw) == UPPER_CONTEXT_SHA, 'upper source context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == UPPER_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == UPPER_PREDECESSOR_COMMIT
+            and set(previous[1]) <= set(files)
+            and len(files) == 292 and len(additions) == 98
+            and additions == {p for p in additions if p.startswith(UPPER_ASSET_PREFIX)} | set(UPPER_NEW_CODE)
+            and {p for p in previous[1] if files[p] != previous[1][p]} == set(UPPER_CHANGED),
+            'upper source context exact union required')
+    return value['context'], files
+
+
 def _pre_leg_sources(exp, previous):
     manifest = source_file(exp, f'{LEG_FIXTURES}/manifest.json')
     raw = manifest.read_bytes()
@@ -726,7 +799,27 @@ def check_source_context(root, pins, historical_only=False):
         actual[relative] = file_sha(path)
     reference_motion = has_reference_motion_inputs(root)
     waist = has_waist_inputs(root)
-    if has_leg_inputs(root):
+    if has_upper_inputs(root):
+        require(not historical_only, 'source input context mismatch: upper source is not historical')
+        cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
+        leg = _leg_context(HERE, _combined_context(HERE, cpu))
+        context, expected = _upper_context(HERE, leg)
+        asset_root = root / UPPER_ASSET_PREFIX
+        paths = list(asset_root.rglob('*'))
+        require(not asset_root.is_symlink()
+                and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                    == {p for p in expected if p.startswith(UPPER_ASSET_PREFIX)},
+                'upper source asset inventory mismatch')
+        actual = {}
+        for relative, item in expected.items():
+            path = source_file(root, relative)
+            require(path.stat().st_size == item['bytes'],
+                    'upper source context byte count mismatch: ' + relative)
+            actual[relative] = file_sha(path)
+        require(actual == {name: item['sha256'] for name, item in expected.items()},
+                'source input context mismatch: exact upper source required')
+    elif has_leg_inputs(root):
         require(not historical_only, 'source input context mismatch: leg source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
         context, expected = _leg_context(HERE, _combined_context(HERE, cpu))

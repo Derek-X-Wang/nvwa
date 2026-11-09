@@ -20,7 +20,7 @@ resources.mkdir(parents=True, exist_ok=True)
 for name in ['nvwa-humanoid.glb', 'LICENSE.txt', 'provenance-manifest.json']:
     shutil.copy2(root / 'assets/fixtures' / name, resources / name)
 shutil.copy2(root / 'assets/character.profile.json', resources.parent / 'character.profile.json')
-for name in ['mpfb-b1-v1', 'mpfb-b1-v2', 'mpfb-b1-v3', 'mpfb-b1-v4', 'mpfb-b1-v5', 'mpfb-b1-v6']:
+for name in ['mpfb-b1-v1', 'mpfb-b1-v2', 'mpfb-b1-v3', 'mpfb-b1-v4', 'mpfb-b1-v5', 'mpfb-b1-v6', 'mpfb-b1-v7']:
     shutil.copytree(root / 'assets/characters' / name, resources.parent / 'characters' / name, dirs_exist_ok=True)
 b1_notices = contents / 'Resources/licenses/b1'
 for name in ['humentity', 'bevy_obj', 'wobj']:
