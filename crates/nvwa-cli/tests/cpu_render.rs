@@ -226,3 +226,76 @@ fn static_waist_zero_preserves_legacy_zero_silhouette() {
     assert_eq!(legacy["png_sha256"], waist["png_sha256"]);
     assert_eq!(legacy["covered_pixels"], waist["covered_pixels"]);
 }
+
+#[test]
+fn static_leg_controls_change_actual_front_and_side_silhouettes_and_knee_pose_renders() {
+    let t = Trial::new();
+    let mut old = SceneDocument::from_profile(CharacterProfile::b1_character_waist()).unwrap();
+    old.stage.camera.elevation_degrees = 0.0;
+    let mut doc = SceneDocument::from_profile(CharacterProfile::b1_character_legs()).unwrap();
+    doc.stage = old.stage.clone();
+    for (view, azimuth) in [("front", 0.0), ("side", 90.0)] {
+        old.stage.camera.azimuth_degrees = azimuth;
+        doc.stage.camera.azimuth_degrees = azimuth;
+        let predecessor = success(render(
+            &t.work(&format!("v5-{view}"), &old),
+            &assets(),
+            &t.0.join(format!("v5-{view}")),
+        ));
+        let zero = success(render(
+            &t.work(&format!("v6-{view}-zero"), &doc),
+            &assets(),
+            &t.0.join(format!("v6-{view}-zero")),
+        ));
+        assert_eq!(
+            predecessor["geometry_sha256"], zero["geometry_sha256"],
+            "zero must retain v5 geometry in {view}"
+        );
+        assert_eq!(
+            predecessor["png_sha256"], zero["png_sha256"],
+            "zero must retain v5 silhouette in {view}"
+        );
+        for key in [
+            "thigh_length",
+            "lower_leg_length",
+            "thigh_girth",
+            "calf_girth",
+        ] {
+            for (sign, value) in [("decr", -1.0), ("incr", 1.0)] {
+                doc.character.parameters.insert(key.into(), value);
+                let name = format!("{view}-{key}-{sign}");
+                let changed = success(render(&t.work(&name, &doc), &assets(), &t.0.join(&name)));
+                assert_ne!(
+                    zero["geometry_sha256"], changed["geometry_sha256"],
+                    "{name} must deform actual mesh"
+                );
+                assert_ne!(
+                    zero["png_sha256"], changed["png_sha256"],
+                    "{name} must change visible silhouette"
+                );
+                assert_eq!(changed["parts"].as_array().unwrap().len(), 2);
+                assert!(changed["covered_pixels"].as_u64().unwrap() > 100);
+                doc.character.parameters.insert(key.into(), 0.0);
+            }
+        }
+    }
+    doc.character.parameters.insert("thigh_length".into(), 0.5);
+    doc.character
+        .parameters
+        .insert("lower_leg_length".into(), -0.5);
+    doc.character.parameters.insert("thigh_girth".into(), 0.5);
+    doc.character.parameters.insert("calf_girth".into(), -0.5);
+    let mixed = success(render(
+        &t.work("leg-mixed", &doc),
+        &assets(),
+        &t.0.join("leg-mixed"),
+    ));
+    doc.character.diagnostic_pose = Some("knee".into());
+    let bent = success(render(
+        &t.work("leg-mixed-knee", &doc),
+        &assets(),
+        &t.0.join("leg-mixed-knee"),
+    ));
+    assert_ne!(mixed["geometry_sha256"], bent["geometry_sha256"]);
+    assert_ne!(mixed["png_sha256"], bent["png_sha256"]);
+}
