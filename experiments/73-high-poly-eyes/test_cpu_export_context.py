@@ -33,24 +33,32 @@ PRODUCT = ('Cargo.lock', 'crates/nvwa-cli/Cargo.toml', 'crates/nvwa-cli/src/cpu_
 class CpuSourceContext(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.files = json.loads((HERE / CONTEXT.CPU_CONTEXT_NAME).read_bytes())['files']
-        cls.retained = json.loads((HERE / 'fixtures/pre-cpu-export/manifest.json').read_bytes())['files']
-        cls.reference_files = json.loads((HERE / CONTEXT.REFERENCE_MOTION_CONTEXT_NAME).read_bytes())['files']
         raw = (HERE / 'FROZEN-INPUTS.json').read_bytes()
-        retained = CONTEXT.pre_reference_motion_sources(HERE, raw, json.loads(raw))
-        # Replay every original CPU control against its exact predecessor.
-        temporary = tempfile.TemporaryDirectory(prefix='nvwa-pre-reference-motion-')
+        original = json.loads(raw)
+        cpu = CONTEXT.cpu_source_context(HERE, raw, original)
+        waist = CONTEXT._waist_context(HERE, cpu[1])
+        reference = CONTEXT._reference_motion_context(HERE, cpu)
+        retained = CONTEXT._combined_predecessors(HERE, waist, reference)
+        pre_waist = CONTEXT.pre_waist_sources(HERE, raw, original)
+        pre_reference = CONTEXT.pre_reference_motion_sources(HERE, raw, original)
+        cls.files = cpu[1]
+        cls.reference_files = reference[1]
+        cls.retained = json.loads((HERE / 'fixtures/pre-cpu-export/manifest.json').read_bytes())['files']
+        temporary = tempfile.TemporaryDirectory(prefix='nvwa-before-combined-')
         cls.addClassCleanup(temporary.cleanup)
-        cls.cpu_root = Path(temporary.name)
-        for name in cls.files:
-            dest = cls.cpu_root / name
-            dest.parent.mkdir(parents=True, exist_ok=True)
-            if name in retained:
-                dest.write_bytes(retained[name])
-            else:
-                shutil.copyfile(ROOT / name, dest)
+        cls.cpu_root = Path(temporary.name) / 'cpu'
+        cls.reference_root = Path(temporary.name) / 'reference'
+        for target, files, old in (
+            (cls.cpu_root, cls.files, pre_waist | pre_reference),
+            (cls.reference_root, cls.reference_files, pre_waist | retained['reference-motion']),
+        ):
+            for name in files:
+                dest = target / name
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                dest.write_bytes(old[name] if name in old else (ROOT / name).read_bytes())
 
-    def invoke_gate(self, root=ROOT, exp=HERE):
+    def invoke_gate(self, root=None, exp=HERE):
+        root = ROOT if root is None else root
         with patch.object(ENTRY, 'ROOT', root), patch.object(ENTRY, 'EXP', exp):
             ENTRY.SourceContract('test_frozen_source_inputs').test_frozen_source_inputs()
 
@@ -61,7 +69,7 @@ class CpuSourceContext(unittest.TestCase):
 
     def copied(self, root, reference_motion=False):
         files = self.reference_files if reference_motion else self.files
-        source = ROOT if reference_motion else self.cpu_root
+        source = self.reference_root if reference_motion else self.cpu_root
         for name in files:
             dest = root / name
             dest.parent.mkdir(parents=True, exist_ok=True)
@@ -166,7 +174,8 @@ class CpuSourceContext(unittest.TestCase):
                 self.gate(root, exp, cpu=False)
 
 
-    def reference_gate(self, root=ROOT, exp=HERE):
+    def reference_gate(self, root=None, exp=HERE):
+        root = self.reference_root if root is None else root
         self.invoke_gate(root, exp)
         self.assertTrue(CONTEXT.has_reference_motion_inputs(root))
 

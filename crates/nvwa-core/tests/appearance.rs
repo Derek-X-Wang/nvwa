@@ -418,11 +418,11 @@ fn descriptor_and_all_payloads_are_authenticated_before_use_and_public_fields_ca
 fn short01_all_roles_keep_exact_wire_shape_and_legacy_defaults() {
     let backend = CharacterProfile::b1_character().backend;
     assert_eq!(
-        B1AppearanceSet::for_base(B1AssetVersion::V2),
+        B1AppearanceSet::for_base(B1AssetVersion::V2).unwrap(),
         B1AppearanceSet::V2
     );
     assert_eq!(
-        B1AppearanceSet::for_base(B1AssetVersion::V1),
+        B1AppearanceSet::for_base(B1AssetVersion::V1).unwrap(),
         B1AppearanceSet::V1
     );
     for bits in 0..8 {

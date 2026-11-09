@@ -1,4 +1,6 @@
 from frozen_context import has_reference_motion_inputs,_reference_motion_context,REFERENCE_MOTION_CONTEXT_ID,REFERENCE_MOTION_ADDITIONS,regular_file
+from frozen_context import has_waist_inputs,_waist_context,waist_regular_file,WAIST_CONTEXT_ID,WAIST_ADDITIONS,check_waist_preexisting,_pre_waist_sources
+from frozen_context import _combined_context,COMBINED_CONTEXT_ID
 from frozen_context import has_cpu_inputs,_cpu_context,cpu_regular_file,CPU_CONTEXT_ID,CPU_ADDITIONS,check_cpu_preexisting,_pre_cpu_sources
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
@@ -82,15 +84,23 @@ class SourceContract(unittest.TestCase):
   try:
    contexts=source_contexts(EXP,p.read_bytes(),inputs)
    reference_motion=has_reference_motion_inputs(ROOT)
-   if reference_motion or has_cpu_inputs(ROOT):
+   waist=has_waist_inputs(ROOT)
+   if reference_motion or waist or has_cpu_inputs(ROOT):
     previous=_motion_query_source_context(EXP,_running_source_context(EXP,inputs,contexts))
     cpu=_cpu_context(EXP,previous[1])
-    product=_reference_motion_context(EXP,cpu) if reference_motion else cpu
+    if waist and reference_motion:
+     product=_combined_context(EXP,cpu)
+    elif waist:
+     product=_waist_context(EXP,cpu[1])
+    else:
+     product=_reference_motion_context(EXP,cpu) if reference_motion else cpu
+     check_waist_preexisting(ROOT,_pre_waist_sources(EXP,cpu[1]))
     actual={}
+    reader=waist_regular_file if waist else regular_file if reference_motion else cpu_regular_file
     for name in product[1]:
-     path=regular_file(ROOT,name) if reference_motion else cpu_regular_file(ROOT,name)
+     path=reader(ROOT,name)
      actual[name]={'bytes':path.stat().st_size,'sha256':digest(path)}
-    if reference_motion:
+    if reference_motion and not waist:
      context,selected=product
      self.assertTrue(actual == selected,'FROZEN-INPUTS.json exact reference motion source required')
     else:
@@ -121,7 +131,12 @@ class SourceContract(unittest.TestCase):
      context,selected=select_context(actual,[motion_query])
      check_cpu_preexisting(ROOT,_pre_cpu_sources(EXP,motion_query[1]))
   except ValueError as error:self.fail(str(error))
-  if context == REFERENCE_MOTION_CONTEXT_ID:
+  if context == COMBINED_CONTEXT_ID:
+   self.assertEqual(set(selected),set(inputs)|set(RUNNING_ADDITIONS)|set(MOTION_QUERY_ADDITIONS)|set(CPU_ADDITIONS)|set(WAIST_ADDITIONS)|set(REFERENCE_MOTION_ADDITIONS),'FROZEN-INPUTS.json combined complete source paths required')
+   self.assertEqual(len(selected),394,'FROZEN-INPUTS.json combined complete source set required')
+  elif context == WAIST_CONTEXT_ID:
+   self.assertEqual(set(selected),set(inputs)|set(RUNNING_ADDITIONS)|set(MOTION_QUERY_ADDITIONS)|set(CPU_ADDITIONS)|set(WAIST_ADDITIONS),'FROZEN-INPUTS.json WAIST complete source paths required')
+  elif context == REFERENCE_MOTION_CONTEXT_ID:
    self.assertEqual(set(selected),set(inputs)|set(RUNNING_ADDITIONS)|set(MOTION_QUERY_ADDITIONS)|set(CPU_ADDITIONS)|set(REFERENCE_MOTION_ADDITIONS),'FROZEN-INPUTS.json reference motion complete source paths required')
    self.assertEqual(len(selected),327,'FROZEN-INPUTS.json reference motion complete source set required')
   elif context == CPU_CONTEXT_ID:

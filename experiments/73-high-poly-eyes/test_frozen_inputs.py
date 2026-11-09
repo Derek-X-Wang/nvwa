@@ -50,7 +50,7 @@ class FrozenInputGate(unittest.TestCase):
         cls.full_contexts = CONTEXT.source_contexts(EXP, cls.raw, cls.inputs)
         # Historical matrix recipes use authenticated retained bytes, never live
         # source that the new independent product context has displaced.
-        for name, raw in CONTEXT.pre_cpu_sources(EXP, cls.raw, cls.inputs).items():
+        for name, raw in (CONTEXT.pre_waist_sources(EXP, cls.raw, cls.inputs) | CONTEXT.pre_cpu_sources(EXP, cls.raw, cls.inputs)).items():
             if name in cls.inputs:
                 (cls.root / name).write_bytes(raw)
         retained = CONTEXT.pre_motion_query_sources(EXP, cls.raw, cls.inputs)

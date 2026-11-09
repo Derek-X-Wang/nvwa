@@ -33,7 +33,10 @@ class RunningContext(unittest.TestCase):
         ROOT = Path(previous.name)
         cls.addClassCleanup(lambda: globals().__setitem__('ROOT', live))
         pins = json.loads((HERE / 'pins.json').read_bytes())
-        retained_cpu = ENTRY.pre_reference_motion_sources(pins) | ENTRY.pre_cpu_sources(pins)
+        retained_cpu = (ENTRY.pre_waist_sources(pins) | ENTRY.pre_reference_motion_sources(pins)
+                        | ENTRY.pre_cpu_sources(pins))
+        # CPU-only leaves must not leak into a reconstructed motion-query tree.
+        retained_cpu = {name: data for name, data in retained_cpu.items() if name not in ENTRY.CPU_NEW_FILES}
         previous_files = json.loads((HERE / ENTRY.MOTION_QUERY_CONTEXT_NAME).read_bytes())['files']
         for name in previous_files.keys() | retained_cpu.keys():
             path = ROOT / name

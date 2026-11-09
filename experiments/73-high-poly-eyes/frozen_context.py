@@ -518,3 +518,134 @@ def _reference_motion_context(exp, cpu):
 
 def pre_reference_motion_sources(exp, raw, original):
     return _pre_reference_motion_sources(exp, cpu_source_context(exp, raw, original)[1])
+
+# A separate exact product context; all historical cohort APIs and pins stay fixed.
+WAIST_CONTEXT_NAME = 'source-context-waist-v1.json'
+WAIST_CONTEXT_SHA = '43493146880230b5ee1246658b97eef88afbcfd39d227cccc86c9fe56899627b'
+WAIST_BASELINES_SHA = 'e42a0ec7fbb47fc3c52edd2948cf8f92ed1d52d20b77959f7da3f5a0add2a891'
+WAIST_CONTEXT_ID = 'b1-waist-circumference-product-v1'
+WAIST_PREDECESSOR_COMMIT = '875213616aa68d81dbfcd6378f4e2292f5b24004'
+WAIST_ADDITIONS = ('assets/characters/mpfb-b1-v5/base.obj', 'assets/characters/mpfb-b1-v5/body.mhclo', 'assets/characters/mpfb-b1-v5/composite.json', 'assets/characters/mpfb-b1-v5/empty.macro', 'assets/characters/mpfb-b1-v5/garment/female_sportsuit01.mhclo', 'assets/characters/mpfb-b1-v5/garment/female_sportsuit01.obj', 'assets/characters/mpfb-b1-v5/licenses/CC0-1.0.txt', 'assets/characters/mpfb-b1-v5/licenses/CHEEK-VOLUME-DERIVATION-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/LOWER-FACE-SQUARING-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/MPFB-LICENSE.md', 'assets/characters/mpfb-b1-v5/licenses/PARAMETER-SOURCE-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/SOURCE-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/provenance.json', 'assets/characters/mpfb-b1-v5/manifest.json', 'assets/characters/mpfb-b1-v5/provenance/README.md', 'assets/characters/mpfb-b1-v5/provenance/cheek-volume-derivation.json', 'assets/characters/mpfb-b1-v5/provenance/chin-bones-source.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v2-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v2-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v3-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v3-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v4-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v4-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/parameter-source-receipt.json', 'assets/characters/mpfb-b1-v5/provenance/runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/waist-circumference-source.json', 'assets/characters/mpfb-b1-v5/provenance/waist-source-validation.json', 'assets/characters/mpfb-b1-v5/rig.game_engine.json', 'assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-decr.target', 'assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-bones-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-bones-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-width-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-width-incr.target', 'assets/characters/mpfb-b1-v5/targets/head-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/head-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/measure-waist-circ-decr.target', 'assets/characters/mpfb-b1-v5/targets/measure-waist-circ-incr.target', 'assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/torso-scale-vert-decr.target', 'assets/characters/mpfb-b1-v5/targets/torso-scale-vert-incr.target', 'assets/characters/mpfb-b1-v5/vertex_groups.json', 'assets/characters/mpfb-b1-v5/weights.game_engine.json', 'crates/nvwa-cli/tests/waist.rs', 'crates/nvwa-core/tests/waist.rs', 'crates/nvwa-studio/src/lower_contour_ui_tests.rs', 'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py', 'scripts/test-cli-package.py')
+WAIST_NEW_FILES = ('assets/characters/mpfb-b1-v5/base.obj', 'assets/characters/mpfb-b1-v5/body.mhclo', 'assets/characters/mpfb-b1-v5/composite.json', 'assets/characters/mpfb-b1-v5/empty.macro', 'assets/characters/mpfb-b1-v5/garment/female_sportsuit01.mhclo', 'assets/characters/mpfb-b1-v5/garment/female_sportsuit01.obj', 'assets/characters/mpfb-b1-v5/licenses/CC0-1.0.txt', 'assets/characters/mpfb-b1-v5/licenses/CHEEK-VOLUME-DERIVATION-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/LOWER-FACE-SQUARING-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/MPFB-LICENSE.md', 'assets/characters/mpfb-b1-v5/licenses/PARAMETER-SOURCE-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/SOURCE-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/provenance.json', 'assets/characters/mpfb-b1-v5/manifest.json', 'assets/characters/mpfb-b1-v5/provenance/README.md', 'assets/characters/mpfb-b1-v5/provenance/cheek-volume-derivation.json', 'assets/characters/mpfb-b1-v5/provenance/chin-bones-source.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v2-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v2-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v3-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v3-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v4-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v4-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/parameter-source-receipt.json', 'assets/characters/mpfb-b1-v5/provenance/runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/waist-circumference-source.json', 'assets/characters/mpfb-b1-v5/provenance/waist-source-validation.json', 'assets/characters/mpfb-b1-v5/rig.game_engine.json', 'assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-decr.target', 'assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-bones-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-bones-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-width-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-width-incr.target', 'assets/characters/mpfb-b1-v5/targets/head-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/head-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/measure-waist-circ-decr.target', 'assets/characters/mpfb-b1-v5/targets/measure-waist-circ-incr.target', 'assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/torso-scale-vert-decr.target', 'assets/characters/mpfb-b1-v5/targets/torso-scale-vert-incr.target', 'assets/characters/mpfb-b1-v5/vertex_groups.json', 'assets/characters/mpfb-b1-v5/weights.game_engine.json', 'crates/nvwa-cli/tests/waist.rs', 'crates/nvwa-core/tests/waist.rs')
+WAIST_PREEXISTING = ('crates/nvwa-studio/src/lower_contour_ui_tests.rs', 'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py', 'scripts/test-cli-package.py')
+WAIST_RETAINED = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/src/main.rs', 'crates/nvwa-cli/tests/appearance.rs', 'crates/nvwa-cli/tests/cpu_render.rs', 'crates/nvwa-core/src/appearance.rs', 'crates/nvwa-core/src/b1.rs', 'crates/nvwa-core/tests/appearance.rs', 'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs', 'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs', 'crates/nvwa-studio/src/lower_contour_ui_tests.rs', 'docs/agents/cpu-render.md', 'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py', 'scripts/test-cli-package.py')
+
+def waist_regular_file(exp, relative):
+    path = exp
+    for part in Path(relative).parts:
+        path = path / part
+        require(not path.is_symlink(), 'WAIST source context symlink: ' + relative)
+    require(path.is_file(), 'WAIST source context missing: ' + relative)
+    return path
+
+
+def has_waist_inputs(root):
+    return any((root / n).exists() or (root / n).is_symlink() for n in WAIST_NEW_FILES)
+
+
+def _pre_waist_sources(exp, previous):
+    path = waist_regular_file(exp, 'fixtures/pre-waist/manifest.json')
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == WAIST_BASELINES_SHA,
+            'WAIST predecessor manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == 'b1-cpu-export-product-v1'
+            and value['source_commit'] == WAIST_PREDECESSOR_COMMIT
+            and set(value['files']) == set(WAIST_RETAINED), 'WAIST predecessor complete inventory required')
+    result = {}
+    for name, item in value['files'].items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-waist/' + name,
+                'WAIST predecessor fixture path mismatch')
+        expected = {k: item[k] for k in ('bytes', 'sha256')}
+        if name in previous:
+            require(expected == previous[name], 'WAIST predecessor historical pin mismatch: ' + name)
+        data = waist_regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected,
+                'WAIST predecessor bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / 'fixtures/pre-waist').rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(exp)) for p in paths if p.is_file()}
+                == {'fixtures/pre-waist/manifest.json'} | {i['fixture'] for i in value['files'].values()},
+            'WAIST predecessor fixture inventory mismatch')
+    return result
+
+
+def _waist_context(exp, previous):
+    _pre_waist_sources(exp, previous)
+    raw = waist_regular_file(exp, WAIST_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == WAIST_CONTEXT_SHA, 'WAIST source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == WAIST_CONTEXT_ID
+            and value['predecessor'] == 'b1-cpu-export-product-v1'
+            and value['predecessor_commit'] == WAIST_PREDECESSOR_COMMIT
+            and set(value['files']) == set(previous) | set(WAIST_ADDITIONS),
+            'WAIST source context complete union required')
+    return value['context'], value['files']
+
+
+def pre_waist_sources(exp, raw, original):
+    return _pre_waist_sources(exp, cpu_source_context(exp, raw, original)[1])
+
+
+def waist_source_context(exp, raw, original):
+    return _waist_context(exp, cpu_source_context(exp, raw, original)[1])
+
+
+def check_waist_preexisting(root, retained):
+    for name in WAIST_PREEXISTING:
+        if (root / name).exists() or (root / name).is_symlink():
+            require(waist_regular_file(root, name).read_bytes() == retained[name],
+                    'WAIST source context mismatch: historical outside source: ' + name)
+
+COMBINED_CONTEXT_NAME = 'source-context-waist-reference-motion-v1.json'
+COMBINED_CONTEXT_SHA = '355e1a19843d23284e5cddb85e39b279ef7ef0361682ba853528aaefaaabe738'
+COMBINED_CONTEXT_ID = 'b1-waist-reference-motion-product-v1'
+COMBINED_PREDECESSOR_COMMIT = '9031ce7f82167621e8b7fed2b7a0af5a899b8a17'
+COMBINED_FIXTURES = 'fixtures/pre-waist-reference-motion'
+COMBINED_REFERENCE_RETAINED = ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-studio/src/lib.rs')
+
+
+def _combined_predecessors(exp, waist, reference):
+    variants = (('waist', REFERENCE_MOTION_CHANGED, waist[1]),
+                ('reference-motion', COMBINED_REFERENCE_RETAINED, reference[1]))
+    expected_paths = {f'{label}/{name}' for label, names, _ in variants for name in names}
+    fixture_root = exp / COMBINED_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths)
+            and {path.relative_to(fixture_root).as_posix() for path in paths if path.is_file()}
+            == expected_paths, 'combined source predecessor fixture inventory mismatch')
+    result = {}
+    for label, names, pins in variants:
+        retained = {}
+        for name in names:
+            data = regular_file(exp, f'{COMBINED_FIXTURES}/{label}/{name}').read_bytes()
+            require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == pins[name],
+                    'combined source predecessor bytes mismatch: ' + name)
+            retained[name] = data
+        result[label] = retained
+    return result
+
+
+def _combined_context(exp, cpu):
+    waist = _waist_context(exp, cpu[1])
+    reference = _reference_motion_context(exp, cpu)
+    _combined_predecessors(exp, waist, reference)
+    raw = regular_file(exp, COMBINED_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == COMBINED_CONTEXT_SHA,
+            'combined source context manifest identity mismatch')
+    value = json.loads(raw)
+    previous = waist[1]
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == COMBINED_CONTEXT_ID
+            and value['predecessor'] == waist[0]
+            and value['predecessor_commit'] == COMBINED_PREDECESSOR_COMMIT
+            and set(value['files']) == set(previous) | set(REFERENCE_MOTION_ADDITIONS),
+            'combined source context complete union required')
+    require({name for name in previous if value['files'][name] != previous[name]}
+            == set(REFERENCE_MOTION_CHANGED), 'combined source context exact changes required')
+    return value['context'], value['files']

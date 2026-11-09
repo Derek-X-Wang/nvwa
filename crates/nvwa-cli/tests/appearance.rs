@@ -307,6 +307,7 @@ fn compatible_sets_are_typed_copyable_examples_and_preserve_base_defaults_and_cu
                 .b1_asset_version()
                 .unwrap_or(B1AssetVersion::V1),
         );
+        let default = default.unwrap();
         assert_eq!(contract["asset_set_id"], default.asset_id());
         assert_eq!(contract["asset_set_sha256"], default.manifest_sha256());
         assert_eq!(contract["schema_version"], default.schema_version());
