@@ -31,6 +31,26 @@ def project(workflow, checks):
         checks.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(), digest, name)
     v4 = (ROOT/'scripts/ci-tiering/mac-matrix-v4-ci.yml').read_text()
     checks.assertEqual(hashlib.sha256(v4.encode()).hexdigest(), V4_SHA256)
+    # V7: a separate required cargo-check job leaves workspace tests, mutation
+    # and matrix on the same warmed target. Reconstruct the exact v4 topology.
+    old_linux = job(v4, 'linux-shared')
+    workspace_start = old_linux.index('      - name: Shared workspace tests and real CPU export\n')
+    timing_start = old_linux.index('      - name: Report existing command timing\n')
+    setup = old_linux[:workspace_start]
+    timing = old_linux[timing_start:]
+    split_check = (setup.replace('  linux-shared:\n', '  linux-check:\n', 1)
+                   .replace('    name: Linux shared runtime and full motion evidence\n',
+                            '    name: Linux shared workspace check\n', 1)
+                   + '      - name: Check shared workspace graph\n'
+                     '        run: bash scripts/ci-tiering/linux-shared.sh check\n'
+                   + timing)
+    checks.assertEqual(job(workflow, 'linux-shared'), old_linux)
+    checks.assertEqual(job(workflow, 'linux-check'), split_check)
+    workflow = workflow.replace(split_check, '', 1)
+    gate = job(workflow, 'required-gate')
+    new_needs = 'linux-shared, linux-check, mac-smoke'
+    checks.assertEqual(gate.count(new_needs), 1)
+    workflow = workflow.replace(gate, gate.replace(new_needs, 'linux-shared, mac-smoke', 1), 1)
     for name, digest in V5_JOB_DIGESTS.items():
         current = job(workflow, name)
         checks.assertEqual(hashlib.sha256(current.encode()).hexdigest(), digest, name)
@@ -80,7 +100,26 @@ V6_INPUTS = {
         'e85ebea2d0fa8cba5207ae5c50159334d4f9884395893c20fd3da76f8dd6e7ba'),
 }
 
+V7_REPLACEMENTS = {
+    "scripts/ci-tiering/policy.py": [
+        (b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-check', 'mac-smoke', 'b1-source-regression')", b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'mac-smoke', 'b1-source-regression')"),
+    ],
+    "scripts/ci-tiering/test_portable_split.py": [
+        (b"required = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-check', 'mac-smoke', 'b1-source-regression')", b"required = ('classify', 'portable', 'portable-eye', 'linux-shared', 'mac-smoke', 'b1-source-regression')"),
+    ],
+    "scripts/ci-tiering/test_policy.py": [
+        (b"        check = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-check')\n        self.assertIn('    needs: classify\\n', check)\n        self.assertIn('    runs-on: ubuntu-24.04\\n    timeout-minutes: 75\\n', check)\n        self.assertIn(\"      CARGO_BUILD_JOBS: '1'\\n\", check)\n        self.assertIn('run: bash scripts/ci-tiering/linux-shared.sh check\\n', check)\n        self.assertNotIn('continue-on-error', check)\n        self.assertNotIn('actions/cache/', check)\n        self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh check\\n'), 1)\n        self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh workspace\\n'), 1)\n        self.assertIn('linux-shared, linux-check, mac-smoke',\n                      job((ROOT / '.github/workflows/ci.yml').read_text(), 'required-gate'))\n        check_mode = linux[linux.index('  check)\\n'):linux.index('  workspace)\\n')]\n        workspace_mode = linux[linux.index('  workspace)\\n'):linux.index('  bridges)\\n')]\n        self.assertIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', check_mode)\n        self.assertNotIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)\n        self.assertIn('cargo test --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)\n\n", b""),
+    ],
+    "scripts/ci-tiering/linux-shared.sh": [
+        (b"  check)\n    cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11\n    ;;\n  workspace)\n    cargo test --workspace --locked --features nvwa-cli/motion-query,bevy/x11\n", b"  workspace)\n    cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11\n    cargo test --workspace --locked --features nvwa-cli/motion-query,bevy/x11\n"),
+        (b"Usage: linux-shared.sh fetch|check|workspace|bridges|matrix", b"Usage: linux-shared.sh fetch|workspace|bridges|matrix"),
+    ],
+}
+
 def project_input(name, checks, data):
+    for current, previous in V7_REPLACEMENTS.get(name, []):
+        checks.assertEqual(data.count(current), 1, name)
+        data = data.replace(current, previous, 1)
     if name in V6_INPUTS:
         snapshot, current_sha, previous_sha = V6_INPUTS[name]
         checks.assertEqual(hashlib.sha256(data).hexdigest(), current_sha, name)

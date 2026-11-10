@@ -24,8 +24,10 @@ case "${1:-}" in
     cargo fetch --locked --manifest-path experiments/73-high-poly-eyes/Cargo.toml
     cargo fetch --locked --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml
     ;;
-  workspace)
+  check)
     cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11
+    ;;
+  workspace)
     cargo test --workspace --locked --features nvwa-cli/motion-query,bevy/x11
     cargo test -p nvwa-cli --features cpu-render,motion-query --test cpu_render --locked --offline -- --test-threads=1
     # Product packages are formatted in portable. --all here also visits
@@ -58,5 +60,5 @@ case "${1:-}" in
     python3 -B scripts/ci-tiering/linux_garment_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
     python3 -B -O scripts/ci-tiering/linux_garment_controls.py --asset-root assets/characters/mpfb-b1-v1 --frame "$RUNNER_TEMP/nvwa-b1-motion-matrix/keyframes/t+1__b1_arm_rehearsal_v1__k16.json.gz"
     ;;
-  *) echo 'Usage: linux-shared.sh fetch|workspace|bridges|matrix' >&2; exit 2;;
+  *) echo 'Usage: linux-shared.sh fetch|check|workspace|bridges|matrix' >&2; exit 2;;
 esac
