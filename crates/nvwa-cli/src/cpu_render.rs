@@ -4,7 +4,7 @@ use super::*;
 use sha2::{Digest, Sha256};
 use std::{collections::BTreeMap, io::Write};
 
-pub(super) const USAGE: &str = "  render <work.json> --assets <root> --output <new-directory> [--width 1280 --height 720] [--mode silhouette]\nCPU export: B1 motion or static waist/leg/upper-body/hip-contour/arm-proportions/chest-placement profile, saved static diagnostic pose, appearance none; body + garment, saved perspective camera. No floor, lighting, textures, hair, motion or PBR.";
+pub(super) const USAGE: &str = "  render <work.json> --assets <root> --output <new-directory> [--width 1280 --height 720] [--mode silhouette] [--diagnostic-candidate neutral|point-100|point-upper-100|cup-35|cup-55|cup-firm-55 --diagnostic-part body|garment|combined --diagnostic-style silhouette|ownership|shaded]\nCPU export: B1 motion or static waist/leg/upper-body/hip-contour/arm-proportions/chest-placement profile, saved static diagnostic pose, appearance none; default body + garment silhouette and receipt unchanged. Chest candidate mode is experimental and requires v10 Work; no garment-clearance or animation certification.";
 fn sha(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
@@ -60,6 +60,9 @@ struct Options {
     output: PathBuf,
     width: u32,
     height: u32,
+    diagnostic_candidate: Option<String>,
+    diagnostic_part: String,
+    diagnostic_style: String,
 }
 fn options(args: &[String]) -> Result<Options, CoreError> {
     let usage = || error("usage", USAGE);
@@ -67,8 +70,17 @@ fn options(args: &[String]) -> Result<Options, CoreError> {
     let mut opts = BTreeMap::new();
     for pair in args[2..].chunks(2) {
         if pair.len() != 2
-            || !["--assets", "--output", "--width", "--height", "--mode"]
-                .contains(&pair[0].as_str())
+            || ![
+                "--assets",
+                "--output",
+                "--width",
+                "--height",
+                "--mode",
+                "--diagnostic-candidate",
+                "--diagnostic-part",
+                "--diagnostic-style",
+            ]
+            .contains(&pair[0].as_str())
             || opts.insert(pair[0].as_str(), pair[1].as_str()).is_some()
         {
             return Err(usage());
@@ -78,6 +90,14 @@ fn options(args: &[String]) -> Result<Options, CoreError> {
         return Err(error(
             "unsupported_render",
             "Only silhouette mode is supported",
+        ));
+    }
+    if !opts.contains_key("--diagnostic-candidate")
+        && (opts.contains_key("--diagnostic-part") || opts.contains_key("--diagnostic-style"))
+    {
+        return Err(error(
+            "usage",
+            "Diagnostic part/style requires --diagnostic-candidate",
         ));
     }
     let dimensions = |key, default| -> Result<u32, CoreError> {
@@ -98,6 +118,17 @@ fn options(args: &[String]) -> Result<Options, CoreError> {
         output: (*opts.get("--output").ok_or_else(usage)?).into(),
         width: dimensions("--width", 1280)?,
         height: dimensions("--height", 720)?,
+        diagnostic_candidate: opts.get("--diagnostic-candidate").map(|s| (*s).to_owned()),
+        diagnostic_part: opts
+            .get("--diagnostic-part")
+            .copied()
+            .unwrap_or("combined")
+            .into(),
+        diagnostic_style: opts
+            .get("--diagnostic-style")
+            .copied()
+            .unwrap_or("ownership")
+            .into(),
     })
 }
 fn write_new(path: &Path, bytes: &[u8]) -> Result<(), CoreError> {
@@ -127,8 +158,20 @@ pub(super) fn run(args: &[String]) -> Result<(), CoreError> {
         .map(|(path, bytes)| (path.clone(), sha(bytes)))
         .collect();
     let started = std::time::Instant::now();
-    let image = nvwa_runtime::render_silhouette(&doc, bytes, opts.width, opts.height)
-        .map_err(|e| error("render_failed", e))?;
+    let image = if let Some(candidate) = &opts.diagnostic_candidate {
+        nvwa_runtime::render_chest_diagnostic(
+            &doc,
+            bytes,
+            opts.width,
+            opts.height,
+            candidate,
+            &opts.diagnostic_part,
+            &opts.diagnostic_style,
+        )
+    } else {
+        nvwa_runtime::render_silhouette(&doc, bytes, opts.width, opts.height)
+    }
+    .map_err(|e| error("render_failed", e))?;
     let render_seconds = started.elapsed().as_secs_f64();
     let mut png = Vec::new();
     {
@@ -144,7 +187,7 @@ pub(super) fn run(args: &[String]) -> Result<(), CoreError> {
     let executable = std::env::current_exe().map_err(|e| error("executable_identity", e))?;
     let executable_sha =
         sha(&std::fs::read(executable).map_err(|e| error("executable_identity", e))?);
-    let receipt = serde_json::json!({
+    let mut receipt = serde_json::json!({
         "schema_version":1,"status":"rendered","renderer":"nvwa-cpu-silhouette-v1","mode":"silhouette",
         "work_sha256":sha(raw.as_bytes()),"document_revision":doc.revision,"profile":doc.profile.id,"backend":doc.profile.backend,
         "asset_sha256":asset_hashes,"executable_sha256":executable_sha,"package_version":env!("CARGO_PKG_VERSION"),
@@ -157,6 +200,12 @@ pub(super) fn run(args: &[String]) -> Result<(), CoreError> {
         "not_rendered":["floor","lighting","materials","textures","hair","eyes","motion"],
         "scope":"Actual production body and garment CPU geometry; silhouette only, not Web/PBR parity or clothing quality acceptance"
     });
+    if let Some(diagnostic) = image.diagnostic {
+        receipt["renderer"] = "nvwa-cpu-chest-diagnostic-v1".into();
+        receipt["mode"] = "chest_diagnostic".into();
+        receipt["diagnostic"] = diagnostic;
+        receipt["scope"] = "Experimental authenticated target on actual published body/garment CPU frame; part-separated ownership or flat shading; does not certify clothing intersection, PBR or animation".into();
+    }
     let receipt_bytes = serde_json::to_vec_pretty(&receipt).map_err(|e| error("serialize", e))?;
     // Everything is prepared before claiming a new directory. A persistence
     // failure can leave partial files but never a successful receipt; no retry

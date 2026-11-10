@@ -36,7 +36,11 @@ use std::{
 };
 
 #[cfg(feature = "cpu-render")]
+mod chest_diagnostic;
+#[cfg(feature = "cpu-render")]
 pub mod cpu_render;
+#[cfg(feature = "cpu-render")]
+use chest_diagnostic::DiagnosticChest;
 
 const SOURCE: &str = "nvwa-b1-verified";
 const TARGETS: [&str; 4] = [
@@ -261,6 +265,22 @@ fn initialize(world: &mut World, bytes: VerifiedBytes) -> Result<(), String> {
     for (path, bytes) in bytes {
         source.0.insert_asset(Path::new(&path), bytes);
     }
+    #[cfg(feature = "cpu-render")]
+    let diagnostic = world.get_resource::<DiagnosticChest>().cloned();
+    let mut target_paths: Vec<_> = TARGETS
+        .iter()
+        .map(|name| asset(&format!("targets/{name}.target")))
+        .collect();
+    #[cfg(feature = "cpu-render")]
+    if let Some(diagnostic) = diagnostic {
+        for target in diagnostic.targets {
+            let path = format!("targets/{}.target", target.name);
+            source
+                .0
+                .insert_asset(Path::new(&path), target.bytes.to_vec());
+            target_paths.push(asset(&path));
+        }
+    }
     let server = world.resource::<AssetServer>().clone();
     let mut commands = world.commands();
     humentity::load_and_insert_humentity_assets_explicit(
@@ -270,10 +290,7 @@ fn initialize(world: &mut World, bytes: VerifiedBytes) -> Result<(), String> {
         asset("vertex_groups.json"),
         asset("composite.json"),
         asset("empty.macro"),
-        TARGETS
-            .iter()
-            .map(|name| asset(&format!("targets/{name}.target")))
-            .collect(),
+        target_paths,
         asset("rig.game_engine.json"),
         asset("weights.game_engine.json"),
     );
@@ -687,6 +704,15 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
                 {
                     requested.insert(humentity::NAME_INTERNER.intern(name).leak(), weight);
                 }
+            }
+        }
+        #[cfg(feature = "cpu-render")]
+        if let Some(diagnostic) = world.get_resource::<DiagnosticChest>() {
+            for target in &diagnostic.targets {
+                requested.insert(
+                    humentity::NAME_INTERNER.intern(target.name).leak(),
+                    target.weight,
+                );
             }
         }
         let resolved = morphs
@@ -5671,6 +5697,8 @@ struct PublishedCpuPart {
     mesh: Handle<Mesh>,
     source_ids: Vec<u16>,
     indices: Vec<usize>,
+    #[cfg(feature = "cpu-render")]
+    diagnostic_full_body_indices: Option<Vec<usize>>,
     frame: nvwa_b1_adapter::SkinFrame,
     transform: [f32; 16],
 }
@@ -5727,6 +5755,21 @@ fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
         if indices != active.display_indices[i] {
             return Err("B1 uploaded triangle binding changed".into());
         }
+        #[cfg(feature = "cpu-render")]
+        let diagnostic_full_body_indices = if part.name == "body" {
+            let fitted_mesh = world
+                .resource::<Assets<Mesh>>()
+                .get(&part.mesh)
+                .ok_or("fitted body mesh absent")?;
+            let full = visible_body_indices(
+                fitted_mesh.indices().ok_or("fitted body indices absent")?,
+                &active.source_ids[i],
+                &[],
+            )?;
+            Some(full.iter().collect())
+        } else {
+            None
+        };
         let transform = world
             .get::<GlobalTransform>(entity)
             .ok_or("display transform absent")?
@@ -5741,6 +5784,8 @@ fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
             mesh: handle.clone(),
             source_ids: active.source_ids[i].clone(),
             indices,
+            #[cfg(feature = "cpu-render")]
+            diagnostic_full_body_indices,
             frame,
             transform,
         });

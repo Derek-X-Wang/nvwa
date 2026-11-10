@@ -8,7 +8,7 @@ rust-version.workspace = true
 default = []
 # Winit is in the existing shared dependency graph. Its Linux backend is linked
 # but never initialized by the windowless CPU runner.
-cpu-render = ["bevy/x11"]
+cpu-render = ["bevy/x11", "dep:sha2"]
 
 [dependencies]
 bevy.workspace = true
@@ -16,6 +16,7 @@ nvwa-core.workspace = true
 serde_json.workspace = true
 humentity.workspace = true
 nvwa-b1-adapter.workspace = true
+sha2 = { workspace = true, optional = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 # Humentity's cached ahash entropy path; match the admitted native/Web adapter.
