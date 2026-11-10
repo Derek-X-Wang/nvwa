@@ -677,11 +677,31 @@ BODY_REFERENCE_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs',
 BODY_REFERENCE_ADDED = 'scripts/render-body-reference.py'
 BODY_REFERENCE_FIXTURES = '../72-b1-admission-controls/fixtures/pre-body-reference'
 BODY_REFERENCE_BASELINES_SHA = 'ce83e2433a77d41b591af765d5feb22aa626267f51d71a5c893ac4c912f73bf5'
+HAND_CONTEXT_NAME = '../72-b1-admission-controls/input-context-hand-size-v1.json'
+HAND_CONTEXT_SHA = '60d3de6d24ff6acdb502c9aae3bc56703eb2eeb2ba5c8eed45ec8b1a9ca2f0e3'
+HAND_CONTEXT_ID = 'b1-hand-size-v11-product-v1'
+HAND_PREDECESSOR_COMMIT = '91f4187a8fc66ac1baa41a771045ef9ca2b4384b'
+HAND_FIXTURES = '../72-b1-admission-controls/fixtures/pre-hand-size'
+HAND_BASELINES_SHA = '84265be2e081758a0fa1e7156e9fc1bfd79039cae92aac7e191d4b3cd6d73c41'
+HAND_ASSET_PREFIX = 'assets/characters/mpfb-b1-v11/'
+HAND_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/src/main.rs',
+                'crates/nvwa-core/src/appearance.rs', 'crates/nvwa-core/src/b1.rs',
+                'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs',
+                'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs',
+                'docs/agents/cpu-render.md',
+                'docs/research/character-foundation/body-control-coverage.md',
+                'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py')
+HAND_NEW_CODE = ('crates/nvwa-cli/tests/hand_size.rs', 'crates/nvwa-core/tests/hand_size.rs',
+                 'scripts/build-hand-size-v11.py', 'scripts/render-hand-size-review.py',
+                 'scripts/test-hand-size-v11.py')
 
 
 def pre_body_reference_file(name):
     historical = Path(__file__).resolve().parent / BODY_REFERENCE_FIXTURES / name
-    return historical if historical.is_file() else Path(__file__).resolve().parents[2] / name
+    if historical.is_file():
+        return historical
+    before_hand = Path(__file__).resolve().parent / HAND_FIXTURES / name
+    return before_hand if before_hand.is_file() else Path(__file__).resolve().parents[2] / name
 
 
 def has_body_reference_inputs(root):
@@ -729,6 +749,63 @@ def body_reference_source_context(exp, cpu):
 
 def has_arm_inputs(root):
     return (root / 'assets/characters/mpfb-b1-v9').exists()
+
+
+def has_hand_inputs(root):
+    path = root / HAND_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def hand_source_context(exp, cpu):
+    previous = body_reference_source_context(exp, cpu)
+    require(previous[0] == BODY_REFERENCE_CONTEXT_ID and len(previous[1]) == 813,
+            'hand predecessor must be exact body reference')
+    baseline_raw = regular_file(exp, HAND_FIXTURES + '/manifest.json').read_bytes()
+    require(hashlib.sha256(baseline_raw).hexdigest() == HAND_BASELINES_SHA,
+            'hand predecessor manifest identity mismatch')
+    baseline = json.loads(baseline_raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == HAND_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(HAND_CHANGED),
+            'hand predecessor changed-file inventory mismatch')
+    for name in HAND_CHANGED:
+        item = baseline['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-hand-size/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'hand predecessor pin mismatch: ' + name)
+        path = regular_file(exp, '../72-b1-admission-controls/' + item['fixture'])
+        require(path.stat().st_size == item['bytes']
+                and hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'],
+                'hand predecessor bytes mismatch: ' + name)
+    fixture_root = exp / HAND_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(HAND_CHANGED),
+            'hand predecessor fixture inventory mismatch')
+    raw = regular_file(exp, HAND_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == HAND_CONTEXT_SHA,
+            'hand context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == HAND_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == HAND_PREDECESSOR_COMMIT
+            and len(files) == 149 and len(additions) == 136
+            and sum(p.startswith(HAND_ASSET_PREFIX) for p in additions) == 131
+            and additions == {p for p in additions if p.startswith(HAND_ASSET_PREFIX)} | set(HAND_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(HAND_CHANGED)
+            and all(files[p] != previous[1][p] for p in HAND_CHANGED),
+            'hand exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 949, 'hand complete source union required')
+    return value['context'], result
 
 
 def arm_source_context(exp, cpu):

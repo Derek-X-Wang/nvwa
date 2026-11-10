@@ -1,0 +1,604 @@
+{
+  "schema_version": 1,
+  "context": "b1-hand-size-v11-product-v1",
+  "predecessor": "b1-body-reference-product-v1",
+  "predecessor_commit": "91f4187a8fc66ac1baa41a771045ef9ca2b4384b",
+  "files": {
+    "assets/characters/mpfb-b1-v11/base.obj": {
+      "bytes": 1798283,
+      "sha256": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2"
+    },
+    "assets/characters/mpfb-b1-v11/body.mhclo": {
+      "bytes": 103864,
+      "sha256": "152e68fcc03cdbd08566b42d53dcb253546d7a71e3dabd62a95f8c72763aa5aa"
+    },
+    "assets/characters/mpfb-b1-v11/composite.json": {
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    "assets/characters/mpfb-b1-v11/empty.macro": {
+      "bytes": 20,
+      "sha256": "e0ca0537a591ee9d362fb69c381d793f0e4a64f6ce62d21c0d607edfdd8bf37c"
+    },
+    "assets/characters/mpfb-b1-v11/garment/female_sportsuit01.mhclo": {
+      "bytes": 127990,
+      "sha256": "700e8cb224a2c27a30220efa2ed7077e6a6901f5fcd74a1ee610f3e0370776e7"
+    },
+    "assets/characters/mpfb-b1-v11/garment/female_sportsuit01.obj": {
+      "bytes": 146887,
+      "sha256": "f9f91788c1dd2918fceedd4dd4ada520f56fb8dfd68cbbeb9a4f6bfbd8e101a9"
+    },
+    "assets/characters/mpfb-b1-v11/licenses/CC0-1.0.txt": {
+      "bytes": 6962,
+      "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c"
+    },
+    "assets/characters/mpfb-b1-v11/licenses/CHEEK-VOLUME-DERIVATION-NOTICE.md": {
+      "bytes": 906,
+      "sha256": "65e205a56fc5a60ba19d68ddb4691e3c288559ca76e24391407dfec3eb28a97c"
+    },
+    "assets/characters/mpfb-b1-v11/licenses/LOWER-FACE-SQUARING-NOTICE.md": {
+      "bytes": 1170,
+      "sha256": "6a5e4afbc8e1ac25770495cf39f665892f6bebef8cba33a37757f46efb92f513"
+    },
+    "assets/characters/mpfb-b1-v11/licenses/MPFB-LICENSE.md": {
+      "bytes": 3188,
+      "sha256": "5cefb60680cb9efd4550a2e65d719021cfbec9dad3658481d11d48ae863ce04d"
+    },
+    "assets/characters/mpfb-b1-v11/licenses/PARAMETER-SOURCE-NOTICE.md": {
+      "bytes": 628,
+      "sha256": "d194d7afd8def0c9c4d785270bcb95a8a823ef89683090b8cece9e14714e8d8e"
+    },
+    "assets/characters/mpfb-b1-v11/licenses/SOURCE-NOTICE.md": {
+      "bytes": 1732,
+      "sha256": "7a42c3784a6ec75afb7dece43f63675b411dfa6916f9605bcfc3abdb6dc0c38c"
+    },
+    "assets/characters/mpfb-b1-v11/licenses/provenance.json": {
+      "bytes": 4371,
+      "sha256": "67a7946369dad5a2f5cf17fe99bfc9f3991503284f848c0a64e4f1162b783c29"
+    },
+    "assets/characters/mpfb-b1-v11/manifest.json": {
+      "bytes": 12017,
+      "sha256": "27e4810fed7241ea26e90e28d69da8d1c553ba8ca2e68eee6843301968bb090d"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/README.md": {
+      "bytes": 912,
+      "sha256": "5810de8ef10bcdefa1fd8328bf6ef85dd9e365b254d82cb2cdb3b36b88d3ca1d"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/arm-proportion-target-source.json": {
+      "bytes": 3974,
+      "sha256": "5ea0492c238a5acebbe3db58ac68b828433240952ed65eb866349e7cee7f2111"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/cheek-volume-derivation.json": {
+      "bytes": 4671,
+      "sha256": "32c1da31d403b714dfea2162892efdc4b91e22497c0ad0abf232c17dcc5cfb3e"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/chin-bones-source.json": {
+      "bytes": 1872,
+      "sha256": "5224b73aed180cfe756817ecfe20b42e1d043ffdc35262f544fcc320de08c6a2"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/hand-size-target-source.json": {
+      "bytes": 2634,
+      "sha256": "0895fad4cdb2fbe8fee033680cf6adf8471ff3dddc711d4f0b226e0c71fac1b8"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/hip-contour-target-source.json": {
+      "bytes": 2646,
+      "sha256": "f5346d3817990df2d77d67ae267c8cc5b2db123e7432deea7f571579892f5929"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/leg-target-source.json": {
+      "bytes": 5361,
+      "sha256": "b414047dda6adb9451da90a86f75012f84fd25317e5ee7444fdb39fe49c69596"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v2-manifest.json": {
+      "bytes": 5145,
+      "sha256": "15834b6bea9bc7daff2d7189e15a66e044130c3b6b4cc75f4b3e508a4e97f3f4"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v2-runtime-payloads.json": {
+      "bytes": 4963,
+      "sha256": "c6dbc043263231a51d4e0ca2f4d8063399f6f59d6399f8d7591f6a0c9234832e"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v3-manifest.json": {
+      "bytes": 5555,
+      "sha256": "e4bd47f3f3cf3ef38fd3400bfd5127b7ade52b630cef823f00bba939262796c3"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v3-runtime-payloads.json": {
+      "bytes": 5373,
+      "sha256": "1d5c480bc488742877f6aa4281b4c388d95f62eb631d458b1686a391d0b1197a"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v4-manifest.json": {
+      "bytes": 5944,
+      "sha256": "6b11cb9fc53158bf5673d0c5e1636d30d6e2347f4f51ce34f5fea8650baec090"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v4-runtime-payloads.json": {
+      "bytes": 5762,
+      "sha256": "76f0e5709079b2effccbed535d694791ee2a1358777dac42350fae10dc02c125"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v5-manifest.json": {
+      "bytes": 6348,
+      "sha256": "9513686fe1a2d24bf64cd067ce1a83d615e7fff30225804ee215991967ff95a2"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v5-runtime-payloads.json": {
+      "bytes": 6166,
+      "sha256": "f9a3091c1d7d6f6ed8c16daa6d3fca5d4d8cbb7f4f51e52e83e3d70ccb9c3b28"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v6-manifest.json": {
+      "bytes": 7983,
+      "sha256": "240e72755d1f80f738d1979bf5edd1f655918196726bf4797a2689209cf4624c"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v6-runtime-payloads.json": {
+      "bytes": 7738,
+      "sha256": "3f17733dbc37615dacc6c1712c6c4a597b3176b49e87a941cc2d3a3e9c4769a4"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v7-manifest.json": {
+      "bytes": 9205,
+      "sha256": "18c8a5a085df11093f2c3218c0c51f3ad882c4653331fb777afb8610a2bae0c3"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v7-runtime-payloads.json": {
+      "bytes": 8960,
+      "sha256": "0447466896cd9c0b57aa7a67f01e1a54ff332e7ef5b1be5b8eb055ea2aae779d"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v8-manifest.json": {
+      "bytes": 10000,
+      "sha256": "a74911c1e66bd257fbdf149dc30467560c70b6eb6c2cae38e01f9313b53ef4be"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v8-runtime-payloads.json": {
+      "bytes": 9755,
+      "sha256": "bb0b23e6f45235b78ed648d0890dc6e6a95a2952a5ebfafafb2c4df7853eb2ce"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v9-manifest.json": {
+      "bytes": 11232,
+      "sha256": "8613722c3924d729ab2f8fbc7f25f3225ee740afaf290bc97b46e03f174d6f48"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/legacy-v9-runtime-payloads.json": {
+      "bytes": 10987,
+      "sha256": "8c948594b73718e1cca5cd1e63afe333567784eeb0f15f7887303aca86e13e47"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/parameter-source-receipt.json": {
+      "bytes": 7929,
+      "sha256": "6192d1fd1552d3ecb9cefd99184057fd4d5ec452bc033a652333cb22d8baa5a8"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/runtime-payloads.json": {
+      "bytes": 11772,
+      "sha256": "b68134e4f6ec62b015bdaf9b6e068c777a2a527c85389f6113315ef9a404a731"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/arms/measure-lowerarm-length-decr.target.gz": {
+      "bytes": 13026,
+      "sha256": "c2ebdaf38b9fedc6db399039d95303adc6bc7614f007416f4ace0b573ecfd4c2"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/arms/measure-lowerarm-length-incr.target.gz": {
+      "bytes": 12450,
+      "sha256": "d725e5b7a35dad30a2a68fae52ea0efad72ed8ac77b186409a2cdc59d3e2368d"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/arms/measure-upperarm-circ-decr.target.gz": {
+      "bytes": 4930,
+      "sha256": "0f915952a09af9e7fc534c753dc5d57076425d459bf3771afcf56d8f64fb78b1"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/arms/measure-upperarm-circ-incr.target.gz": {
+      "bytes": 4951,
+      "sha256": "fb7eafc4c8887700b7091a1bbdf402e47c768f4589e1cf50bc2976e6379f406f"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/arms/measure-upperarm-length-decr.target.gz": {
+      "bytes": 14199,
+      "sha256": "8f9b7a3494ce54b7560c10cf2ae5b350752a56c6918e28230b9035d43b139afc"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/arms/measure-upperarm-length-incr.target.gz": {
+      "bytes": 14066,
+      "sha256": "72890d3448778f6d25e3c9abd540582ad36598a832c28fd0b1e16073b1b3f962"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/buttocks/buttocks-volume-decr.target.gz": {
+      "bytes": 2081,
+      "sha256": "e7752ede368fb2b16c2a61fb1a2c57d70493e8cd5689574e3dc2dc22bd74ca1f"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/buttocks/buttocks-volume-incr.target.gz": {
+      "bytes": 6126,
+      "sha256": "44d10afed96b0c29df25d7abe8c2e2f9eb50ad6c1906e2de7ab91612b39177e9"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/cheek/l-cheek-volume-decr.target.gz": {
+      "bytes": 787,
+      "sha256": "202ff036e39abea154e0896ad34641184c5e8b77610dca9e1e8e4ce4a5db1bc4"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/cheek/l-cheek-volume-incr.target.gz": {
+      "bytes": 1274,
+      "sha256": "75bf330b96d0036c46f779ed003782c7380c77dd06c14fd80f1fa20a5093fee1"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/cheek/r-cheek-volume-decr.target.gz": {
+      "bytes": 765,
+      "sha256": "ea12455c7a85e7b3b5e6e4882b4b68823a00bcaef4ea048cc49be452a139c1bc"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/cheek/r-cheek-volume-incr.target.gz": {
+      "bytes": 1288,
+      "sha256": "4df3e61e843c2d3381ef534e90d347b6b8ea763428d69eba8ef2ed5ab0affb8c"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/chin/chin-bones-decr.target.gz": {
+      "bytes": 32837,
+      "sha256": "88613903c211706f31de1868318bfb88d51bd23791a11e1a4488266a88083396"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/chin/chin-bones-incr.target.gz": {
+      "bytes": 3341,
+      "sha256": "72c76aeb7956fb083aaf0d5efa00b2cdfa0f328eefc01d5e28f4610719de50c3"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/hands/l-hand-scale-decr.target.gz": {
+      "bytes": 13490,
+      "sha256": "731f85efa15d887902d5cc65528a41439370f87f5d78cf4a454344dab5c1beaf"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/hands/l-hand-scale-incr.target.gz": {
+      "bytes": 13462,
+      "sha256": "6b274978f762b5ed3ae9101615194c139e260b506f0ca24c47c1a6589b7715f5"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/hands/measure-wrist-circ-decr.target.gz": {
+      "bytes": 3165,
+      "sha256": "3b6cbb6d8e4854c3d09fccc527174b02be1f32e8400cd7c7157361038d3cce21"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/hands/measure-wrist-circ-incr.target.gz": {
+      "bytes": 3480,
+      "sha256": "a765624157b4e061a62fc2e02b44b0021c38246fce5cb54bff4b3cfb2e67d42d"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/hands/r-hand-scale-decr.target.gz": {
+      "bytes": 13390,
+      "sha256": "8a0a3e246efb9e3640fabd02c75085e3bc2bf57d20b736e0a98819302a72c83c"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/hands/r-hand-scale-incr.target.gz": {
+      "bytes": 13576,
+      "sha256": "33d4f09b9c7cf1559503dde7b4e40f882a2bb81ec9bc71324c9edbe3655cda34"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/hip/hip-scale-depth-decr.target.gz": {
+      "bytes": 10555,
+      "sha256": "20bb79ee3c2dbbba40448219cf1b4627825c9f67e662021e1e78abecdf4948d3"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/hip/hip-scale-depth-incr.target.gz": {
+      "bytes": 10541,
+      "sha256": "6d655dc583249178a53f729254b704fab4f3a83f4b5a666a7c49d5f7904148dd"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/legs/measure-calf-circ-decr.target.gz": {
+      "bytes": 4422,
+      "sha256": "1781b4f0b61f1b92cd5b666aef189dc2ec42dcba43d57c23d707bda2b0c77edf"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/legs/measure-calf-circ-incr.target.gz": {
+      "bytes": 4404,
+      "sha256": "f8501849f3d41a66d80dced86c6a50f30064e657fb86cac203f2584450fd5eda"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/legs/measure-lowerleg-height-decr.target.gz": {
+      "bytes": 11846,
+      "sha256": "f9dfdad1d34966804da611eeccad4aace5e03fec3006eef58ba40148a1a93054"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/legs/measure-lowerleg-height-incr.target.gz": {
+      "bytes": 12296,
+      "sha256": "82a085a996d2c5a7fd9e44e0333801127992edee9aae7fdac5f17e1f6522a635"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/legs/measure-thigh-circ-decr.target.gz": {
+      "bytes": 5284,
+      "sha256": "c2d3443faab27d443dc7396e118837ea1da587bb81875fa8cdc20dc7721d62bd"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/legs/measure-thigh-circ-incr.target.gz": {
+      "bytes": 6677,
+      "sha256": "4647cb6dae7ed984712e81c5b394cfa545ca6a27d938903ba6cca1b410450cc1"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/legs/measure-upperleg-height-decr.target.gz": {
+      "bytes": 16700,
+      "sha256": "a0a5390594d3f33fc9f3688af6323e50fbe358bcb46ca5363f24b3fcdea23d07"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/legs/measure-upperleg-height-incr.target.gz": {
+      "bytes": 18312,
+      "sha256": "97b2de6960da43cdcce12d5139db868d96764faba6c8ba454635789b423d8180"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/torso/measure-bust-circ-decr.target.gz": {
+      "bytes": 11014,
+      "sha256": "459c9bf4e043669490be8e7d37ea4679397d7b72662f85c2678881552dc2c320"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/torso/measure-bust-circ-incr.target.gz": {
+      "bytes": 12404,
+      "sha256": "d80557578cb087287e299025e1c4aa60d9b119fb8ab003d42e34bba0d01c92ff"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/torso/measure-shoulder-dist-decr.target.gz": {
+      "bytes": 16887,
+      "sha256": "6eef8cfafd4021579645565040f14113b5156d6c1d9069d39c76b732527a1709"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/data/targets/torso/measure-shoulder-dist-incr.target.gz": {
+      "bytes": 15015,
+      "sha256": "d9508362063fee6f697bee2d7204cb6a799d9711fb2436f93f781242a104494f"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/torso/measure-waist-circ-decr.target.gz": {
+      "bytes": 8182,
+      "sha256": "be10c1d44a229f1faf302f7d51f45a0146e70a1912d3f9022c0ce5a3761ebb88"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/source/torso/measure-waist-circ-incr.target.gz": {
+      "bytes": 8032,
+      "sha256": "dcbca91a872f64c9015ecc3473a6769e2ccbb2ad551dce1a7692d277a88d39a1"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/upper-body-target-source.json": {
+      "bytes": 3947,
+      "sha256": "f05d6313cf769c954a9fdf4af45a180e050cb54abc3b1353e23e436021224579"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/waist-circumference-source.json": {
+      "bytes": 2559,
+      "sha256": "c0774f8f1c672e749f2dfaee9ab703d4c1eacf72a3074aebfb654763e04f0268"
+    },
+    "assets/characters/mpfb-b1-v11/provenance/waist-source-validation.json": {
+      "bytes": 833,
+      "sha256": "1a753a9df33277a6b3b9c8866f8d7bfce3d93d3d0c27ac1153ada5e85ee9bfd3"
+    },
+    "assets/characters/mpfb-b1-v11/rig.game_engine.json": {
+      "bytes": 40936,
+      "sha256": "b324ddb4b707721c19630bfadb87c3e3b38eed3b6e4590bb3cead43ea918f799"
+    },
+    "assets/characters/mpfb-b1-v11/targets/buttocks-volume-decr.target": {
+      "bytes": 6995,
+      "sha256": "2a33f4f5a592533f052e0a5942ade60de9a782461c08831ba11d18dcb2732d4b"
+    },
+    "assets/characters/mpfb-b1-v11/targets/buttocks-volume-incr.target": {
+      "bytes": 21747,
+      "sha256": "cefe7371b39fdd423bf5d2cf23026f5563ef3890121dc0234d78a24986eff1b3"
+    },
+    "assets/characters/mpfb-b1-v11/targets/cheek-volume-bilateral-decr.target": {
+      "bytes": 5685,
+      "sha256": "aeab40d480502a05d4be4a9d9b9589212bbddf4a2da7f2418bc4ffc4fed2a487"
+    },
+    "assets/characters/mpfb-b1-v11/targets/cheek-volume-bilateral-incr.target": {
+      "bytes": 8236,
+      "sha256": "3eba8dad1ee2d2bf01cb49f1cd50a50cae7a947b37f556405bf173fa26053a84"
+    },
+    "assets/characters/mpfb-b1-v11/targets/chin-bones-decr.target": {
+      "bytes": 150149,
+      "sha256": "5d1ead7e75d7a17315dee460188676fb7e3c640c172c887309f7b655ff808c52"
+    },
+    "assets/characters/mpfb-b1-v11/targets/chin-bones-incr.target": {
+      "bytes": 13844,
+      "sha256": "4b1558340919c6a1241165129a318d838bf6eb1d39559e0ca0f0aa8b5ba6ba4e"
+    },
+    "assets/characters/mpfb-b1-v11/targets/chin-jaw-drop-decr.target": {
+      "bytes": 1072,
+      "sha256": "6bf2cab4e65e5dd7456405ad3d0b68f4ec80b6130ff78349a02f650f33f7f443"
+    },
+    "assets/characters/mpfb-b1-v11/targets/chin-jaw-drop-incr.target": {
+      "bytes": 857,
+      "sha256": "789b8d79f920786244d8e7de1d87ce4fff7e2650d7bf171a35ad22b9011d5238"
+    },
+    "assets/characters/mpfb-b1-v11/targets/chin-width-decr.target": {
+      "bytes": 2649,
+      "sha256": "b99f878229b6cc8a52bca1ec3b1d746faeca9049acd6ae59170ae2d0a776911c"
+    },
+    "assets/characters/mpfb-b1-v11/targets/chin-width-incr.target": {
+      "bytes": 3833,
+      "sha256": "39449581db893fa4a2561b0d05ff11344deccf5d0cb85411fdf702b4c4738dc8"
+    },
+    "assets/characters/mpfb-b1-v11/targets/head-scale-horiz-decr.target": {
+      "bytes": 81086,
+      "sha256": "6e4390a2dffe69e6c09ad6a6e1b0c905439ef128ff2401301daf1c1b39c958ac"
+    },
+    "assets/characters/mpfb-b1-v11/targets/head-scale-horiz-incr.target": {
+      "bytes": 82552,
+      "sha256": "12ad083682f5319882923d775074677569c3612706c0d785a4b287821abfe400"
+    },
+    "assets/characters/mpfb-b1-v11/targets/hip-scale-depth-decr.target": {
+      "bytes": 39465,
+      "sha256": "d6aa3415434c97c50eeb09057f68e245eb584c50ddec06ba25326c366063ccc7"
+    },
+    "assets/characters/mpfb-b1-v11/targets/hip-scale-depth-incr.target": {
+      "bytes": 39104,
+      "sha256": "3196b4e5d07cc250d029803e578c9b22539984fdef19189f14c8f5489d5c571c"
+    },
+    "assets/characters/mpfb-b1-v11/targets/hip-scale-horiz-decr.target": {
+      "bytes": 32310,
+      "sha256": "356c5dfc694c738c9780105c9c2c554e0906f903720a6f092601fd6f586ba559"
+    },
+    "assets/characters/mpfb-b1-v11/targets/hip-scale-horiz-incr.target": {
+      "bytes": 32310,
+      "sha256": "2fcaf2239862bec5d285ac4620ba1b1f7713dbb105f495c8f16836a7b2a4f474"
+    },
+    "assets/characters/mpfb-b1-v11/targets/l-hand-scale-decr.target": {
+      "bytes": 41212,
+      "sha256": "fb2e90b1a2f79d9ca07f84cee8d7af256251f0d7437feb2b635696af1af5c3ef"
+    },
+    "assets/characters/mpfb-b1-v11/targets/l-hand-scale-incr.target": {
+      "bytes": 39934,
+      "sha256": "9df54b82b9b9dfe0a765c0be163d930fdd6ff8759b182b991cb058f39a42ac8a"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-bust-circ-decr.target": {
+      "bytes": 34039,
+      "sha256": "21de0ff456445de9844ed3aa97fb6a08c38d0d73c7104ada4f26b12c018c6e0d"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-bust-circ-incr.target": {
+      "bytes": 39952,
+      "sha256": "96dfb56dbecc2b76d8dae0053a3c0642ada20de828e16a99d8985be19121ec0b"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-calf-circ-decr.target": {
+      "bytes": 14364,
+      "sha256": "02fbf0ec14250766b7146eaef52fab692f77fe197c34e57fbfbfbc5bd9d5ec5d"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-calf-circ-incr.target": {
+      "bytes": 14242,
+      "sha256": "757aeea2c78392c30cb1888dddd1e2a591350395f667581a4139179c970ad648"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-lowerarm-length-decr.target": {
+      "bytes": 92164,
+      "sha256": "c857fd28b3d828de76519d7c137556a3c8bfbf4b3f526f437dd569d8da651176"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-lowerarm-length-incr.target": {
+      "bytes": 88891,
+      "sha256": "e39820682d2eb34ffa7b550ad28a26d46b9540ae1c1e3890c85da5836c00cd2a"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-lowerleg-height-decr.target": {
+      "bytes": 59056,
+      "sha256": "0fca6eb456e7d96f9d6334d7d2351ef3a411777c509d55a7b6385f964e118660"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-lowerleg-height-incr.target": {
+      "bytes": 74936,
+      "sha256": "2f4610d165285578afb60382e4788094655c9bafddf1fb50fc533f19fcb75475"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-shoulder-dist-decr.target": {
+      "bytes": 87442,
+      "sha256": "3b59a8618438b374b6f86e677ea9ff0d59def5781537e1201c5950cc94817dba"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-shoulder-dist-incr.target": {
+      "bytes": 82232,
+      "sha256": "a38c8e5380a2d6e6ccb4ef535406598a0c140576cfca871b33344cc1ea347a96"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-thigh-circ-decr.target": {
+      "bytes": 17960,
+      "sha256": "741d0d267786ac564d618f8978b9f611af401bf23042453f2164be9be7df8aee"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-thigh-circ-incr.target": {
+      "bytes": 22699,
+      "sha256": "fd26c65fed778940f65ea525b1f412bae3b846c1b9735cbb7e1643061b1c385f"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-upperarm-circ-decr.target": {
+      "bytes": 16049,
+      "sha256": "8f6ba849442be194721f1dbaa3c8f61d5d384958dbd65790722d095425230b98"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-upperarm-circ-incr.target": {
+      "bytes": 16193,
+      "sha256": "1f746c4b10f59d1fcfb3805e8567bcd485f9c0e8778e0f19e2bf0c2f436c403d"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-upperarm-length-decr.target": {
+      "bytes": 87960,
+      "sha256": "ae6b85b15ff05b4cb8160a7926e1d39d7f7898780a57f9afca32ee14a9bca85b"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-upperarm-length-incr.target": {
+      "bytes": 92935,
+      "sha256": "59cb73996d27fdd7d23e50386ea6a1b2b8b4589b03e8df11dbfc9fd9f19b1484"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-upperleg-height-decr.target": {
+      "bytes": 92661,
+      "sha256": "c51c810ae2aa8cc448816f4b59624686c13e2fbde52644e26e6d07661094cd85"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-upperleg-height-incr.target": {
+      "bytes": 107035,
+      "sha256": "5659cc5dbf3a26b986ef137611373798e5dbe952c7c1459db37ae42f2845d8da"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-waist-circ-decr.target": {
+      "bytes": 27059,
+      "sha256": "e0c8bd8894e44a704627650a5023faa8a8b78e9ab365b20143ec7a9aee31985a"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-waist-circ-incr.target": {
+      "bytes": 27078,
+      "sha256": "fc622241d5a985bdec45afae004c23828fda0ea493c4ab377f356a1ebfe3298b"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-wrist-circ-decr.target": {
+      "bytes": 11379,
+      "sha256": "f5f3f8e9ebe03227c1ac25542464a2ae9d6be9e952fb323f0ba344b74d35dc12"
+    },
+    "assets/characters/mpfb-b1-v11/targets/measure-wrist-circ-incr.target": {
+      "bytes": 11678,
+      "sha256": "79484f20c91b838d7c2bb46341139c2364240cc0362dcaae0c3b287f88d523ab"
+    },
+    "assets/characters/mpfb-b1-v11/targets/mouth-scale-horiz-decr.target": {
+      "bytes": 12040,
+      "sha256": "2eecf3b71ce834fdf8c00817c4de28913d0abcbde9bb1a05df860946d31581a1"
+    },
+    "assets/characters/mpfb-b1-v11/targets/mouth-scale-horiz-incr.target": {
+      "bytes": 15053,
+      "sha256": "1561577f3f2b061fd42290ac3adc469a2c796090ca9668a9e131e65ed047ec43"
+    },
+    "assets/characters/mpfb-b1-v11/targets/neck-scale-horiz-decr.target": {
+      "bytes": 7849,
+      "sha256": "da92e9cadad16b0652177935d6febd5a53d3263fcfe7421de01075ddc52bdc81"
+    },
+    "assets/characters/mpfb-b1-v11/targets/neck-scale-horiz-incr.target": {
+      "bytes": 10107,
+      "sha256": "42e5ae83aa3897fcd0ad045d8628dd0044b63817a13797129fe712cd4a710360"
+    },
+    "assets/characters/mpfb-b1-v11/targets/nose-scale-horiz-decr.target": {
+      "bytes": 4470,
+      "sha256": "41480edfeec76d2595edec3e714fc077e93d265e12c7b5c94eb7aa42288f71df"
+    },
+    "assets/characters/mpfb-b1-v11/targets/nose-scale-horiz-incr.target": {
+      "bytes": 6964,
+      "sha256": "a2130755fb06b021ac4ab1269715835588f76276201bc15369ffa2f13889573b"
+    },
+    "assets/characters/mpfb-b1-v11/targets/r-hand-scale-decr.target": {
+      "bytes": 39634,
+      "sha256": "694c316e3286f80f57a0dad3c0832274fc70f7869cb01c6ddb57f4097545101e"
+    },
+    "assets/characters/mpfb-b1-v11/targets/r-hand-scale-incr.target": {
+      "bytes": 40952,
+      "sha256": "50b46e5cb44a42c1dfbc5dafa2fe7a6ce514f2f85dca299a224ec160e02bbeb2"
+    },
+    "assets/characters/mpfb-b1-v11/targets/torso-scale-vert-decr.target": {
+      "bytes": 201357,
+      "sha256": "a7deb8343fb3ecfef46c6118662b1a40f0cfc33d79ff959c641dd796a17bed9f"
+    },
+    "assets/characters/mpfb-b1-v11/targets/torso-scale-vert-incr.target": {
+      "bytes": 195076,
+      "sha256": "caa5e04cebd43ba40c9a98717fc7f177b14b43c1f01c37e15fef7a4cb4e6660c"
+    },
+    "assets/characters/mpfb-b1-v11/vertex_groups.json": {
+      "bytes": 81984,
+      "sha256": "8cb1417bc55ae5ec8aa99f90734e81ed5fbb556511ff6a2c00e0534b70911444"
+    },
+    "assets/characters/mpfb-b1-v11/weights.game_engine.json": {
+      "bytes": 3026778,
+      "sha256": "9f4a773e74ce5ba08415b4f30070338e9f75bae5971b5075b10cd6b9caa58473"
+    },
+    "crates/nvwa-cli/src/cpu_render.rs": {
+      "bytes": 10909,
+      "sha256": "4419d38bad1b6ca1b5b51a2aecda50c61589d4f7171cd53e669eee49acc1249c"
+    },
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 42748,
+      "sha256": "b8702f4e6d4094dbbd2e2dabed22860af6060d89dc95755c248a4c8b70291d62"
+    },
+    "crates/nvwa-cli/tests/hand_size.rs": {
+      "bytes": 4125,
+      "sha256": "9cfdf97457bedf91a486998ee11719caa00daa2f3075e8b228b9eb1de84d91ff"
+    },
+    "crates/nvwa-core/src/appearance.rs": {
+      "bytes": 21031,
+      "sha256": "30e6a8e5bc615bd2eb3370d7364941312830eebf97348b1a88a3bdd19ee41a65"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 42285,
+      "sha256": "5c6cdad8650c201d38458c09817fb8805112f78f91d50fe800f2e2da26c084a5"
+    },
+    "crates/nvwa-core/tests/hand_size.rs": {
+      "bytes": 3776,
+      "sha256": "8b3664f055bc113de3032bcebd35abc0b1c589794133b62a932471abf6ad3b93"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 234030,
+      "sha256": "17faf2a243cb6c5402c8f89c0c9d96fb6d1023e371e66ebc32394acfcbf33d5c"
+    },
+    "crates/nvwa-runtime/src/b1/cpu_render.rs": {
+      "bytes": 14778,
+      "sha256": "515579cb914d3e13a80c5a26161718074bb61f8e32c33bba83098cd3d4e97e8b"
+    },
+    "crates/nvwa-studio/src/appearance_ui.rs": {
+      "bytes": 3196,
+      "sha256": "8ef64dbdccdedeb3f9508eae03605d97f371f6d330343fb68dca31e3712c826d"
+    },
+    "crates/nvwa-studio/src/lib.rs": {
+      "bytes": 91938,
+      "sha256": "8928a5e6bf684af121a60babad50ddcdae271369173a5b84a32309f115a8508c"
+    },
+    "docs/agents/cpu-render.md": {
+      "bytes": 6373,
+      "sha256": "3a97ea94c92818ec2a9f0c892ce58c9b763dac5d1ac33c48aef15013c77b5c26"
+    },
+    "docs/research/character-foundation/body-control-coverage.md": {
+      "bytes": 3701,
+      "sha256": "f68b72b029dad54d0461db62a1310d46087b30d7c018958678fe4a0088544039"
+    },
+    "scripts/build-hand-size-v11.py": {
+      "bytes": 5343,
+      "sha256": "5d040fc01a6b1df1aaa53c25cb4aee80f146562ab246d61d972e207c801b54d2"
+    },
+    "scripts/build-web.sh": {
+      "bytes": 4884,
+      "sha256": "aad4cda8d779ff0f2197e9e676cb48c4e9b955b1c8b33540ce102c77cd19f11e"
+    },
+    "scripts/package-cli.py": {
+      "bytes": 8887,
+      "sha256": "a3fd0aebe7496240f95eb76aa2f618bd256f41c5c49cdce0e059bbbabd4a80de"
+    },
+    "scripts/package-native.py": {
+      "bytes": 4617,
+      "sha256": "fcf81ed255934ee04bc395ba88bcafd3e47c13548f255109248a356f2c1b0e1d"
+    },
+    "scripts/render-hand-size-review.py": {
+      "bytes": 4947,
+      "sha256": "bd897f187c1135968a8c344732c5f393ac3b8d8731930c2bd225eb099cf624e7"
+    },
+    "scripts/test-hand-size-v11.py": {
+      "bytes": 2073,
+      "sha256": "4e9aa00332653b0c9ae538c907b45841efb361f3dd816b345996e75a7cd0cf3c"
+    }
+  }
+}
