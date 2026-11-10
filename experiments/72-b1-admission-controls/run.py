@@ -27,6 +27,7 @@ PACKAGE = ('run.py', 'test_controls.py', 'compatibility.rs', 'cases.json', 'pins
 PACKAGE += ('input-context-v4.json', 'input-context-v5.json')
 PACKAGE += ('input-context-legs-v1.json', 'test_leg_context.py')
 PACKAGE += ('input-context-upper-body-v1.json', 'test_upper_body_context.py')
+PACKAGE += ('input-context-hip-contour-v1.json', 'test_hip_contour_context.py')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -683,6 +684,70 @@ UPPER_NEW_CODE = ('crates/nvwa-cli/tests/upper_body.rs', 'crates/nvwa-core/tests
                   'scripts/build-upper-body-v7.py')
 UPPER_ASSET_PREFIX = 'assets/characters/mpfb-b1-v7/'
 
+HIP_CONTEXT_NAME = 'input-context-hip-contour-v1.json'
+HIP_CONTEXT_SHA = '441d9b64b08fc138a67ae13a88831f037082a60cdccb19eafa6876fc351baa38'
+HIP_BASELINES_SHA = 'f4269275a93c30e566de7a814e10b2f0d488cda060e4e0444a38a48991bdfeaa'
+HIP_CONTEXT_ID = 'b1-hip-contour-product-v1'
+HIP_PREDECESSOR_COMMIT = 'e433bd3a430f457d120187823d549daf30b41e64'
+HIP_FIXTURES = 'fixtures/pre-hip-contour'
+HIP_CHANGED = UPPER_CHANGED
+HIP_NEW_CODE = ('crates/nvwa-cli/tests/hip_contour.rs', 'crates/nvwa-core/tests/hip_contour.rs',
+                'docs/research/character-foundation/body-control-coverage.md',
+                'scripts/build-hip-contour-v8.py')
+HIP_ASSET_PREFIX = 'assets/characters/mpfb-b1-v8/'
+
+
+def has_hip_inputs(root):
+    path = root / HIP_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def _pre_hip_sources(exp, previous):
+    manifest = source_file(exp, f'{HIP_FIXTURES}/manifest.json')
+    raw = manifest.read_bytes()
+    require(sha(raw) == HIP_BASELINES_SHA, 'hip predecessor manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == previous[0]
+            and value['source_commit'] == HIP_PREDECESSOR_COMMIT
+            and set(value['files']) == set(HIP_CHANGED),
+            'hip predecessor complete inventory required')
+    for name in HIP_CHANGED:
+        item = value['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{HIP_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'hip predecessor historical pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'hip predecessor bytes mismatch: ' + name)
+    fixture_root = exp / HIP_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(HIP_CHANGED),
+            'hip predecessor fixture inventory mismatch')
+
+
+def _hip_context(exp, previous):
+    _pre_hip_sources(exp, previous)
+    raw = source_file(exp, HIP_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == HIP_CONTEXT_SHA, 'hip source context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == HIP_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == HIP_PREDECESSOR_COMMIT
+            and set(previous[1]) <= set(files)
+            and len(files) == 401 and len(additions) == 109
+            and additions == {p for p in additions if p.startswith(HIP_ASSET_PREFIX)} | set(HIP_NEW_CODE)
+            and {p for p in previous[1] if files[p] != previous[1][p]} == set(HIP_CHANGED),
+            'hip source context exact union required')
+    return value['context'], files
+
 
 def has_upper_inputs(root):
     path = root / UPPER_ASSET_PREFIX
@@ -799,7 +864,28 @@ def check_source_context(root, pins, historical_only=False):
         actual[relative] = file_sha(path)
     reference_motion = has_reference_motion_inputs(root)
     waist = has_waist_inputs(root)
-    if has_upper_inputs(root):
+    if has_hip_inputs(root):
+        require(not historical_only, 'source input context mismatch: hip source is not historical')
+        cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
+        leg = _leg_context(HERE, _combined_context(HERE, cpu))
+        upper = _upper_context(HERE, leg)
+        context, expected = _hip_context(HERE, upper)
+        asset_root = root / HIP_ASSET_PREFIX
+        paths = list(asset_root.rglob('*'))
+        require(not asset_root.is_symlink()
+                and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                    == {p for p in expected if p.startswith(HIP_ASSET_PREFIX)},
+                'hip source asset inventory mismatch')
+        actual = {}
+        for relative, item in expected.items():
+            path = source_file(root, relative)
+            require(path.stat().st_size == item['bytes'],
+                    'hip source context byte count mismatch: ' + relative)
+            actual[relative] = file_sha(path)
+        require(actual == {name: item['sha256'] for name, item in expected.items()},
+                'source input context mismatch: exact hip source required')
+    elif has_upper_inputs(root):
         require(not historical_only, 'source input context mismatch: upper source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
         leg = _leg_context(HERE, _combined_context(HERE, cpu))
