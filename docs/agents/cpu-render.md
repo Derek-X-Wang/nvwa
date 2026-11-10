@@ -14,7 +14,7 @@ RenderPlugin, wgpu adapter, browser, or display server. Compilation is separate
 from actual CPU export acceptance. It is not a PBR software renderer.
 
 The supported scope is a B1 motion or static waist, legs, upper-body,
-hip-contour, or arm-proportions profile, with an empty timeline, any saved
+hip-contour, arm-proportions, or local hand-size candidate profile, with an empty timeline, any saved
 supported diagnostic pose, and `appearance: none`. See the current
 `describe-capabilities.cpu_render.profiles` list for the exact profile IDs.
 Other profiles remain rejected.

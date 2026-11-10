@@ -29,6 +29,7 @@ PACKAGE += ('input-context-legs-v1.json', 'test_leg_context.py')
 PACKAGE += ('input-context-upper-body-v1.json', 'test_upper_body_context.py')
 PACKAGE += ('input-context-hip-contour-v1.json', 'test_hip_contour_context.py')
 PACKAGE += ('input-context-arm-proportions-v1.json', 'test_arm_proportions_context.py')
+PACKAGE += ('input-context-hand-size-v1.json', 'test_hand_size_context.py')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -721,11 +722,31 @@ BODY_REFERENCE_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs',
 BODY_REFERENCE_ADDED = 'scripts/render-body-reference.py'
 BODY_REFERENCE_FIXTURES = 'fixtures/pre-body-reference'
 BODY_REFERENCE_BASELINES_SHA = 'ce83e2433a77d41b591af765d5feb22aa626267f51d71a5c893ac4c912f73bf5'
+HAND_CONTEXT_NAME = 'input-context-hand-size-v1.json'
+HAND_CONTEXT_SHA = '9922760204d771cbdbaa742944f81dd6d023df55e1ca5748aeba80834ec94016'
+HAND_CONTEXT_ID = 'b1-hand-size-v11-product-v1'
+HAND_PREDECESSOR_COMMIT = '91f4187a8fc66ac1baa41a771045ef9ca2b4384b'
+HAND_FIXTURES = 'fixtures/pre-hand-size'
+HAND_BASELINES_SHA = '84265be2e081758a0fa1e7156e9fc1bfd79039cae92aac7e191d4b3cd6d73c41'
+HAND_ASSET_PREFIX = 'assets/characters/mpfb-b1-v11/'
+HAND_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/src/main.rs',
+                'crates/nvwa-core/src/appearance.rs', 'crates/nvwa-core/src/b1.rs',
+                'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs',
+                'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs',
+                'docs/agents/cpu-render.md',
+                'docs/research/character-foundation/body-control-coverage.md',
+                'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py')
+HAND_NEW_CODE = ('crates/nvwa-cli/tests/hand_size.rs', 'crates/nvwa-core/tests/hand_size.rs',
+                 'scripts/build-hand-size-v11.py', 'scripts/render-hand-size-review.py',
+                 'scripts/test-hand-size-v11.py')
 
 
 def pre_body_reference_file(name):
     historical = HERE / BODY_REFERENCE_FIXTURES / name
-    return historical if historical.is_file() else HERE.parents[1] / name
+    if historical.is_file():
+        return historical
+    before_hand = HERE / HAND_FIXTURES / name
+    return before_hand if before_hand.is_file() else HERE.parents[1] / name
 
 
 def has_body_reference_inputs(root):
@@ -780,6 +801,60 @@ def _body_reference_context(exp, previous):
 def has_arm_inputs(root):
     path = root / ARM_ASSET_PREFIX
     return path.exists() or path.is_symlink()
+
+
+def has_hand_inputs(root):
+    path = root / HAND_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def _hand_context(exp, previous):
+    """Admit one exact hand successor while preserving body-reference history."""
+    require(previous[0] == BODY_REFERENCE_CONTEXT_ID and len(previous[1]) == 525,
+            'hand predecessor must be exact body reference')
+    raw = source_file(exp, f'{HAND_FIXTURES}/manifest.json').read_bytes()
+    require(sha(raw) == HAND_BASELINES_SHA, 'hand predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == HAND_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(HAND_CHANGED),
+            'hand predecessor complete changed-file inventory required')
+    for name in HAND_CHANGED:
+        item = baseline['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{HAND_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'hand predecessor pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'hand predecessor bytes mismatch: ' + name)
+    fixture_root = exp / HAND_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(HAND_CHANGED),
+            'hand predecessor fixture inventory mismatch')
+    raw = source_file(exp, HAND_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == HAND_CONTEXT_SHA, 'hand context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == HAND_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == HAND_PREDECESSOR_COMMIT
+            and len(files) == 149 and len(additions) == 136
+            and sum(p.startswith(HAND_ASSET_PREFIX) for p in additions) == 131
+            and additions == {p for p in additions if p.startswith(HAND_ASSET_PREFIX)} | set(HAND_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(HAND_CHANGED)
+            and all(files[p] != previous[1][p] for p in HAND_CHANGED),
+            'hand exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 661, 'hand complete source union required')
+    return value['context'], result
 
 
 def _pre_arm_sources(exp, previous):
@@ -1004,8 +1079,9 @@ def check_source_context(root, pins, historical_only=False):
         hip = _hip_context(HERE, upper)
         arm = _arm_context(HERE, hip)
         body_reference = has_body_reference_inputs(root)
-        context, expected = (_body_reference_context(HERE, arm)
-                             if body_reference else arm)
+        body = _body_reference_context(HERE, arm) if body_reference else arm
+        hand = has_hand_inputs(root)
+        context, expected = _hand_context(HERE, body) if hand else body
         asset_root = root / ARM_ASSET_PREFIX
         paths = list(asset_root.rglob('*'))
         require(not asset_root.is_symlink()
@@ -1013,16 +1089,24 @@ def check_source_context(root, pins, historical_only=False):
                 and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
                     == {p for p in expected if p.startswith(ARM_ASSET_PREFIX)},
                 'arm source asset inventory mismatch')
+        if hand:
+            asset_root = root / HAND_ASSET_PREFIX
+            paths = list(asset_root.rglob('*'))
+            require(not asset_root.is_symlink()
+                    and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                    and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                        == {p for p in expected if p.startswith(HAND_ASSET_PREFIX)},
+                    'hand source asset inventory mismatch')
         actual = {}
         for relative, item in expected.items():
             path = source_file(root, relative)
             require(path.stat().st_size == item['bytes'],
-                    ('body reference' if body_reference else 'arm')
+                    ('hand' if hand else 'body reference' if body_reference else 'arm')
                     + ' source context byte count mismatch: ' + relative)
             actual[relative] = file_sha(path)
         require(actual == {name: item['sha256'] for name, item in expected.items()},
                 'source input context mismatch: exact '
-                + ('body reference' if body_reference else 'arm') + ' source required')
+                + ('hand' if hand else 'body reference' if body_reference else 'arm') + ' source required')
     elif has_hip_inputs(root):
         require(not historical_only, 'source input context mismatch: hip source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])

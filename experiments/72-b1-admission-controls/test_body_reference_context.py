@@ -20,15 +20,24 @@ SPEC.loader.exec_module(CONTEXT)
 class BodyReferenceSourceContext(unittest.TestCase):
     def test_exact_successor_and_changed_file_rejection(self):
         pins = json.loads((HERE / 'pins.json').read_bytes())
-        current = CONTEXT.check_source_context(ROOT, pins)
-        self.assertEqual(current['id'], CONTEXT.BODY_REFERENCE_CONTEXT_ID)
-        self.assertEqual(len(current['files']), 525)
+        live = CONTEXT.check_source_context(ROOT, pins)
+        self.assertEqual(live['id'], CONTEXT.HAND_CONTEXT_ID)
+        cpu = CONTEXT.cpu_source_context(pins)
+        combined = CONTEXT._combined_context(HERE, cpu)
+        leg = CONTEXT._leg_context(HERE, combined)
+        upper = CONTEXT._upper_context(HERE, leg)
+        hip = CONTEXT._hip_context(HERE, upper)
+        arm = CONTEXT._arm_context(HERE, hip)
+        current = CONTEXT._body_reference_context(HERE, arm)
+        self.assertEqual(current[0], CONTEXT.BODY_REFERENCE_CONTEXT_ID)
+        self.assertEqual(len(current[1]), 525)
         with tempfile.TemporaryDirectory(prefix='nvwa-body-reference-context-') as directory:
             root = Path(directory)
-            for name in current['files']:
+            for name in current[1]:
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, target)
+                before_hand = HERE / CONTEXT.HAND_FIXTURES / name
+                shutil.copyfile(before_hand if before_hand.is_file() else ROOT / name, target)
             self.assertEqual(CONTEXT.check_source_context(root, pins)['id'],
                              CONTEXT.BODY_REFERENCE_CONTEXT_ID)
             for name in (CONTEXT.BODY_REFERENCE_CHANGED[0],

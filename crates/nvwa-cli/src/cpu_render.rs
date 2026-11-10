@@ -4,7 +4,7 @@ use super::*;
 use sha2::{Digest, Sha256};
 use std::{collections::BTreeMap, io::Write};
 
-pub(super) const USAGE: &str = "  render <work.json> --assets <root> --output <new-directory> [--width 1280 --height 720] [--mode silhouette|body-reference]\nCPU export: B1 motion or static waist/leg/upper-body/hip-contour/arm-proportions profile, saved static diagnostic pose, appearance none. Default silhouette retains body + garment. Body-reference restores clothing-hidden body triangles and renders only the fitted, posed body with fixed neutral shading; it is a PNG, not a 3D/animation export.";
+pub(super) const USAGE: &str = "  render <work.json> --assets <root> --output <new-directory> [--width 1280 --height 720] [--mode silhouette|body-reference]\nCPU export: B1 motion or static waist/leg/upper-body/hip-contour/arm-proportions/hand-size profile, saved static diagnostic pose, appearance none. Default silhouette retains body + garment. Body-reference restores clothing-hidden body triangles and renders only the fitted, posed body with fixed neutral shading; it is a PNG, not a 3D/animation export.";
 fn sha(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
@@ -13,7 +13,7 @@ fn error(code: &str, e: impl std::fmt::Display) -> CoreError {
 }
 
 pub(super) fn capabilities(doc: &SceneDocument) -> serde_json::Value {
-    serde_json::json!({"schema_version":1,"compiled":true,"mode":"silhouette","modes":["silhouette","body-reference"],"current_work_supported":nvwa_runtime::validate_export_work(doc).is_ok(),"profile":"nvwa-mpfb-b1-motion-v2","profiles":["nvwa-mpfb-b1-motion-v2","nvwa-mpfb-b1-waist-v1","nvwa-mpfb-b1-legs-v1","nvwa-mpfb-b1-upper-body-v1","nvwa-mpfb-b1-hip-contour-v1","nvwa-mpfb-b1-arm-proportions-v1"],"timeline":"empty_only","pose":"saved_diagnostic_pose","appearance":"none_only","camera":"saved_perspective","parts":["body","garment"],"dimensions_each":[64,2048],"output":"new_directory_work_png_receipt","not_rendered":["floor","lighting","materials","textures","hair","eyes","motion"],"usage":USAGE})
+    serde_json::json!({"schema_version":1,"compiled":true,"mode":"silhouette","modes":["silhouette","body-reference"],"current_work_supported":nvwa_runtime::validate_export_work(doc).is_ok(),"profile":"nvwa-mpfb-b1-motion-v2","profiles":["nvwa-mpfb-b1-motion-v2","nvwa-mpfb-b1-waist-v1","nvwa-mpfb-b1-legs-v1","nvwa-mpfb-b1-upper-body-v1","nvwa-mpfb-b1-hip-contour-v1","nvwa-mpfb-b1-arm-proportions-v1","nvwa-mpfb-b1-hand-size-v1"],"timeline":"empty_only","pose":"saved_diagnostic_pose","appearance":"none_only","camera":"saved_perspective","parts":["body","garment"],"dimensions_each":[64,2048],"output":"new_directory_work_png_receipt","not_rendered":["floor","lighting","materials","textures","hair","eyes","motion"],"usage":USAGE})
 }
 
 fn assets(doc: &SceneDocument, root: &Path) -> Result<BTreeMap<String, Vec<u8>>, CoreError> {
