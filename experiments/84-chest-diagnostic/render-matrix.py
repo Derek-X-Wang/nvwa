@@ -36,7 +36,7 @@ def main() -> None:
     assets = str(args.assets.resolve(strict=True))
     candidates = args.candidates.split(",")
     poses = args.poses.split(",")
-    if not candidates or not set(candidates) <= {"neutral", "point-100", "point-upper-100", "cup-35", "cup-55", "cup-firm-55"}:
+    if not candidates or not set(candidates) <= {"neutral", "point-100", "point-upper-100", "cup-35", "cup-55", "cup-firm-55", "firm-lift-soft", "firm-lift-strong", "cup35-lift-soft"}:
         raise ValueError("unknown candidate")
     if not poses or not set(poses) <= {"neutral", "shoulder"}:
         raise ValueError("unsupported pose")

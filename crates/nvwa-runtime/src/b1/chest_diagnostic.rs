@@ -9,6 +9,7 @@ pub(super) struct DiagnosticTarget {
     pub bytes: &'static [u8],
     pub sha256: &'static str,
     pub weight: f32,
+    pub origin: &'static str,
 }
 
 #[derive(Clone, Resource)]
@@ -28,6 +29,10 @@ const MAX_AVG: &[u8] = include_bytes!(
 const MAX_FIRM: &[u8] = include_bytes!(
     "../../../../experiments/84-chest-diagnostic/targets/female-young-averagemuscle-averageweight-maxcup-maxfirmness.target"
 );
+const LIFT_SOFT: &[u8] =
+    include_bytes!("../../../../experiments/84-chest-diagnostic/targets/custom-lift-soft.target");
+const LIFT_STRONG: &[u8] =
+    include_bytes!("../../../../experiments/84-chest-diagnostic/targets/custom-lift-strong.target");
 
 fn target(
     name: &'static str,
@@ -40,6 +45,21 @@ fn target(
         bytes,
         sha256,
         weight,
+        origin: "official_mpfb_cc0_fixed_commit",
+    }
+}
+
+fn derived_target(
+    name: &'static str,
+    bytes: &'static [u8],
+    sha256: &'static str,
+) -> DiagnosticTarget {
+    DiagnosticTarget {
+        name,
+        bytes,
+        sha256,
+        weight: 1.0,
+        origin: "local_derived_experiment_not_official_mpfb",
     }
 }
 
@@ -100,6 +120,54 @@ impl DiagnosticChest {
                     0.55,
                 )],
             ),
+            "firm-lift-soft" => (
+                "firm-lift-soft",
+                vec![
+                    target(
+                        "female-young-averagemuscle-averageweight-maxcup-maxfirmness",
+                        MAX_FIRM,
+                        "43aab561e082d2416188aafa41f5ec4945e65c614f2afc4a96712e76f3bea141",
+                        0.55,
+                    ),
+                    derived_target(
+                        "custom-lift-soft",
+                        LIFT_SOFT,
+                        "2faceb6f862006bf9831473bf5edde2be64781f87cc4065f2c833fb77a19bf1a",
+                    ),
+                ],
+            ),
+            "firm-lift-strong" => (
+                "firm-lift-strong",
+                vec![
+                    target(
+                        "female-young-averagemuscle-averageweight-maxcup-maxfirmness",
+                        MAX_FIRM,
+                        "43aab561e082d2416188aafa41f5ec4945e65c614f2afc4a96712e76f3bea141",
+                        0.55,
+                    ),
+                    derived_target(
+                        "custom-lift-strong",
+                        LIFT_STRONG,
+                        "dace0504339d69cb9728a6b4a48352f66f884ddb0fb2e36c225666a171fecbd7",
+                    ),
+                ],
+            ),
+            "cup35-lift-soft" => (
+                "cup35-lift-soft",
+                vec![
+                    target(
+                        "female-young-averagemuscle-averageweight-maxcup-averagefirmness",
+                        MAX_AVG,
+                        "cc1f76359a7e9224b3d7e2ea159c9b64da5a55998711babe0789d3b6fc1208df",
+                        0.35,
+                    ),
+                    derived_target(
+                        "custom-lift-soft",
+                        LIFT_SOFT,
+                        "2faceb6f862006bf9831473bf5edde2be64781f87cc4065f2c833fb77a19bf1a",
+                    ),
+                ],
+            ),
             _ => return Err(format!("unsupported chest diagnostic candidate: {id}")),
         };
         for item in &targets {
@@ -120,9 +188,11 @@ impl DiagnosticChest {
         serde_json::json!({
             "candidate": self.id,
             "status": "experimental_not_a_published_slider",
-            "source_commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e",
+            "official_source_commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e",
+            "derived_recipe": "experiments/84-chest-diagnostic/generate-lift-target.py",
             "targets": self.targets.iter().map(|item| serde_json::json!({
                 "name": item.name, "expanded_sha256": item.sha256, "weight": item.weight,
+                "origin": item.origin,
             })).collect::<Vec<_>>(),
         })
     }
@@ -141,6 +211,9 @@ mod tests {
             "cup-35",
             "cup-55",
             "cup-firm-55",
+            "firm-lift-soft",
+            "firm-lift-strong",
+            "cup35-lift-soft",
         ] {
             DiagnosticChest::named(id).unwrap();
         }

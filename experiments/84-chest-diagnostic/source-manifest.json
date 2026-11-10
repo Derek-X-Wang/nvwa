@@ -36,5 +36,15 @@
       "bytes": 14977,
       "rows": 704
     }
-  ]
+  ],
+  "derived_diagnostic_targets": {
+    "status": "local_experiment_only_not_official_mpfb_or_published_parameter",
+    "base_obj_sha256": "ee8a4b4061eb481551a8e69ae5b8a088e13e746fb3b272f6d27fa97cd99164d2",
+    "generator": "experiments/84-chest-diagnostic/generate-lift-target.py",
+    "design": "mirror-symmetric smooth anterior chest envelope; lower contour retracts, upper contour fills, mild vertical lift",
+    "files": [
+      {"name": "custom-lift-soft", "expanded_sha256": "2faceb6f862006bf9831473bf5edde2be64781f87cc4065f2c833fb77a19bf1a", "rows": 534, "max_source_body_delta_m": 0.02282542442102665},
+      {"name": "custom-lift-strong", "expanded_sha256": "dace0504339d69cb9728a6b4a48352f66f884ddb0fb2e36c225666a171fecbd7", "rows": 534, "max_source_body_delta_m": 0.034238136631539975}
+    ]
+  }
 }

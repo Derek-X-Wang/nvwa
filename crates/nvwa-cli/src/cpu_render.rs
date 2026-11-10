@@ -4,7 +4,7 @@ use super::*;
 use sha2::{Digest, Sha256};
 use std::{collections::BTreeMap, io::Write};
 
-pub(super) const USAGE: &str = "  render <work.json> --assets <root> --output <new-directory> [--width 1280 --height 720] [--mode silhouette] [--diagnostic-candidate neutral|point-100|point-upper-100|cup-35|cup-55|cup-firm-55 --diagnostic-part body|garment|combined --diagnostic-style silhouette|ownership|shaded]\nCPU export: B1 motion or static waist/leg/upper-body/hip-contour/arm-proportions/chest-placement profile, saved static diagnostic pose, appearance none; default body + garment silhouette and receipt unchanged. Chest candidate mode is experimental and requires v10 Work; no garment-clearance or animation certification.";
+pub(super) const USAGE: &str = "  render <work.json> --assets <root> --output <new-directory> [--width 1280 --height 720] [--mode silhouette] [--diagnostic-candidate neutral|point-100|point-upper-100|cup-35|cup-55|cup-firm-55|firm-lift-soft|firm-lift-strong|cup35-lift-soft --diagnostic-part body|garment|combined --diagnostic-style silhouette|ownership|shaded]\nCPU export: B1 motion or static waist/leg/upper-body/hip-contour/arm-proportions/chest-placement profile, saved static diagnostic pose, appearance none; default body + garment silhouette and receipt unchanged. Chest candidate mode is experimental and requires v10 Work; no garment-clearance or animation certification.";
 fn sha(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
