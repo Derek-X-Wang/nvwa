@@ -30,6 +30,7 @@ PACKAGE += ('input-context-upper-body-v1.json', 'test_upper_body_context.py')
 PACKAGE += ('input-context-hip-contour-v1.json', 'test_hip_contour_context.py')
 PACKAGE += ('input-context-arm-proportions-v1.json', 'test_arm_proportions_context.py')
 PACKAGE += ('input-context-hand-size-v1.json', 'test_hand_size_context.py')
+PACKAGE += ('input-context-shoulder-form-v1.json', 'test_shoulder_form_context.py')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -739,6 +740,19 @@ HAND_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/src/main.r
 HAND_NEW_CODE = ('crates/nvwa-cli/tests/hand_size.rs', 'crates/nvwa-core/tests/hand_size.rs',
                  'scripts/build-hand-size-v11.py', 'scripts/render-hand-size-review.py',
                  'scripts/test-hand-size-v11.py')
+SHOULDER_CONTEXT_NAME = 'input-context-shoulder-form-v1.json'
+SHOULDER_CONTEXT_SHA = '49c7504006c1bfa624dda9bb8843fdfd73c12a15f10a3d1cc0e158e308d2edf2'
+SHOULDER_CONTEXT_ID = 'b1-shoulder-form-v12-product-v1'
+SHOULDER_PREDECESSOR_COMMIT = 'a0e484f717012bb1b5ab436cd94a50be7006698c'
+SHOULDER_FIXTURES = 'fixtures/pre-shoulder-form'
+SHOULDER_BASELINES_SHA = '7b15d7a59cd9972d992b2de4ea2a316bd3b6bf6f3f10df743f3a6fadd9a64d97'
+SHOULDER_ASSET_PREFIX = 'assets/characters/mpfb-b1-v12/'
+SHOULDER_CHANGED = HAND_CHANGED
+SHOULDER_NEW_CODE = ('crates/nvwa-cli/tests/shoulder_form.rs',
+                     'crates/nvwa-core/tests/shoulder_form.rs',
+                     'scripts/build-shoulder-form-v12.py',
+                     'scripts/render-shoulder-form-review.py',
+                     'scripts/test-shoulder-form-v12.py')
 
 
 def pre_body_reference_file(name):
@@ -806,6 +820,61 @@ def has_arm_inputs(root):
 def has_hand_inputs(root):
     path = root / HAND_ASSET_PREFIX
     return path.exists() or path.is_symlink()
+
+
+def has_shoulder_inputs(root):
+    path = root / SHOULDER_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def _shoulder_context(exp, previous):
+    """Admit one exact v12 successor while keeping all v11 historical bytes pinned."""
+    require(previous[0] == HAND_CONTEXT_ID and len(previous[1]) == 661,
+            'shoulder predecessor must be exact hand context')
+    raw = source_file(exp, f'{SHOULDER_FIXTURES}/manifest.json').read_bytes()
+    require(sha(raw) == SHOULDER_BASELINES_SHA, 'shoulder predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == SHOULDER_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(SHOULDER_CHANGED),
+            'shoulder predecessor changed-file inventory mismatch')
+    for name in SHOULDER_CHANGED:
+        item = baseline['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{SHOULDER_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'shoulder predecessor pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'shoulder predecessor bytes mismatch: ' + name)
+    fixture_root = exp / SHOULDER_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(SHOULDER_CHANGED),
+            'shoulder predecessor fixture inventory mismatch')
+    raw = source_file(exp, SHOULDER_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == SHOULDER_CONTEXT_SHA, 'shoulder context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == SHOULDER_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == SHOULDER_PREDECESSOR_COMMIT
+            and len(files) == 158 and len(additions) == 145
+            and sum(p.startswith(SHOULDER_ASSET_PREFIX) for p in additions) == 140
+            and additions == {p for p in additions if p.startswith(SHOULDER_ASSET_PREFIX)}
+                             | set(SHOULDER_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(SHOULDER_CHANGED)
+            and all(files[p] != previous[1][p] for p in SHOULDER_CHANGED),
+            'shoulder exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 806, 'shoulder complete source union required')
+    return value['context'], result
 
 
 def _hand_context(exp, previous):
@@ -1081,7 +1150,8 @@ def check_source_context(root, pins, historical_only=False):
         body_reference = has_body_reference_inputs(root)
         body = _body_reference_context(HERE, arm) if body_reference else arm
         hand = has_hand_inputs(root)
-        context, expected = _hand_context(HERE, body) if hand else body
+        shoulder = has_shoulder_inputs(root)
+        context, expected = _shoulder_context(HERE, _hand_context(HERE, body)) if shoulder else _hand_context(HERE, body) if hand else body
         asset_root = root / ARM_ASSET_PREFIX
         paths = list(asset_root.rglob('*'))
         require(not asset_root.is_symlink()
@@ -1097,16 +1167,24 @@ def check_source_context(root, pins, historical_only=False):
                     and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
                         == {p for p in expected if p.startswith(HAND_ASSET_PREFIX)},
                     'hand source asset inventory mismatch')
+        if shoulder:
+            asset_root = root / SHOULDER_ASSET_PREFIX
+            paths = list(asset_root.rglob('*'))
+            require(not asset_root.is_symlink()
+                    and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                    and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                        == {p for p in expected if p.startswith(SHOULDER_ASSET_PREFIX)},
+                    'shoulder source asset inventory mismatch')
         actual = {}
         for relative, item in expected.items():
             path = source_file(root, relative)
             require(path.stat().st_size == item['bytes'],
-                    ('hand' if hand else 'body reference' if body_reference else 'arm')
+                    ('shoulder' if shoulder else 'hand' if hand else 'body reference' if body_reference else 'arm')
                     + ' source context byte count mismatch: ' + relative)
             actual[relative] = file_sha(path)
         require(actual == {name: item['sha256'] for name, item in expected.items()},
                 'source input context mismatch: exact '
-                + ('hand' if hand else 'body reference' if body_reference else 'arm') + ' source required')
+                + ('shoulder' if shoulder else 'hand' if hand else 'body reference' if body_reference else 'arm') + ' source required')
     elif has_hip_inputs(root):
         require(not historical_only, 'source input context mismatch: hip source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])

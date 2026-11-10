@@ -33,7 +33,7 @@ class HandSizeSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.HAND_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 661)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.HAND_CONTEXT_ID)
+                         CONTEXT.SHOULDER_CONTEXT_ID)
         with self.assertRaisesRegex(ValueError, 'not historical'):
             CONTEXT.check_source_context(ROOT, self.pins, historical_only=True)
         self.assertEqual({p for p in self.previous[1]
@@ -46,7 +46,9 @@ class HandSizeSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, target)
+                source = (HERE / CONTEXT.SHOULDER_FIXTURES / name
+                          if name in CONTEXT.SHOULDER_CHANGED else ROOT / name)
+                shutil.copyfile(source, target)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'],
                              CONTEXT.HAND_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',

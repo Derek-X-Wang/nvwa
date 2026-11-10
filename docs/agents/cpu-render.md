@@ -89,6 +89,10 @@ or continuous motion. Clothing fit and outfit style are a separate later
 review; neither the sportsuit nor its masking enters this body's image pixels.
 Keep generated character-body references private unless their owner chooses to
 publish them.
+The v12 shoulder-form profile can be created with `new-character-shoulder-form`.
+Its `shoulder_muscle_fullness` control is a signed, relative, bilateral MPFB
+target weight. Use fixed camera and pose comparisons for shape review; the
+body-only image does not validate clothing, props or continuous animation.
 A camera containing no character pixels fails rather than returning a blank
 success. Clipped framing is otherwise preserved and requires visual inspection.
 
