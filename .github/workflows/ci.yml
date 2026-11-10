@@ -796,6 +796,8 @@ jobs:
     needs: classify
     runs-on: ubuntu-24.04
     timeout-minutes: 75
+    outputs:
+      matrix_sha256: ${{ steps.motion-probe.outputs.matrix_sha256 }}
     env:
       CARGO_BUILD_JOBS: '1'
       CARGO_TARGET_DIR: ${{ github.workspace }}/target
@@ -814,9 +816,47 @@ jobs:
       - name: Shared production mutation red and restored green
         timeout-minutes: 12
         run: python3 -B scripts/ci-tiering/linux_mutations.py --linux-backend --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+      - name: Compile exact Linux motion probe for matrix job
+        id: motion-probe
+        run: |
+          set -euo pipefail
+          bash scripts/ci-tiering/linux-shared.sh matrix-build
+          digest=$(sha256sum "$CARGO_TARGET_DIR/debug/matrix" | cut -d' ' -f1)
+          [[ "$digest" =~ ^[0-9a-f]{64}$ ]] || { echo 'invalid matrix digest' >&2; exit 1; }
+          echo "matrix_sha256=$digest" >> "$GITHUB_OUTPUT"
+      - name: Transfer exact Linux motion probe
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nvwa-linux-matrix-${{ github.run_attempt }}
+          path: ${{ github.workspace }}/target/debug/matrix
+          if-no-files-found: error
+          retention-days: 1
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
+  linux-matrix:
+    name: Linux full motion matrix and real garment controls
+    needs: [classify, linux-shared]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Download exact Linux motion probe
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: nvwa-linux-matrix-${{ github.run_attempt }}
+          path: ${{ github.workspace }}/target/debug
       - name: Complete 594-frame matrix and real garment controls
         timeout-minutes: 20
-        run: bash scripts/ci-tiering/linux-shared.sh matrix
+        env:
+          EXPECTED_MATRIX_SHA256: ${{ needs.linux-shared.outputs.matrix_sha256 }}
+        run: bash scripts/ci-tiering/linux-matrix-run.sh
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash
@@ -846,7 +886,7 @@ jobs:
   required-gate:
     name: Required CI gate
     if: ${{ always() }}
-    needs: [classify, portable, portable-eye, linux-shared, linux-check, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required]
+    needs: [classify, portable, portable-eye, linux-shared, linux-matrix, linux-check, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
