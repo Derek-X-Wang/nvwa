@@ -322,8 +322,8 @@ jobs:
         shell: bash
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
-  mac-bridges-required:
-    name: Complete Mac Appearance and mutation required
+  mac-appearance-required:
+    name: Complete Mac Appearance bridges required
     needs: [classify, portable, portable-eye]
     if: ${{ needs.classify.outputs.full_required == 'true' }}
     runs-on: macos-15
@@ -357,6 +357,32 @@ jobs:
           cargo test --manifest-path experiments/73-high-poly-eyes/Cargo.toml --lib --locked --offline
           cargo fmt --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --package b1-shoulder-source-corrective --check
           cargo test --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --locked --offline
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
+      # native-cache-trial begin
+  mac-mutation-required:
+    name: Complete Mac production mutation required
+    needs: [classify, portable, portable-eye]
+    if: ${{ needs.classify.outputs.full_required == 'true' }}
+    runs-on: macos-15
+    timeout-minutes: 75
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Confirm native Mac host
+        run: test "$(uname -s)" = Darwin && test "$(uname -m)" = arm64
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Fetch locked production mutation graph
+        run: cargo fetch --locked
+      - name: Precompile exact production mutation graph
+        run: cargo test --workspace --lib --locked --offline --no-run
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
@@ -364,7 +390,22 @@ jobs:
         if: ${{ always() }}
         shell: bash
         run: python3 -B scripts/ci-timing.py report
-      # native-cache-trial begin
+  mac-bridges-required:
+    name: Complete Mac Appearance and mutation required
+    needs: [classify, mac-appearance-required, mac-mutation-required]
+    if: ${{ always() && needs.classify.outputs.full_required == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require appearance and mutation evidence
+        shell: bash
+        env:
+          APPEARANCE_RESULT: ${{ needs.mac-appearance-required.result }}
+          MUTATION_RESULT: ${{ needs.mac-mutation-required.result }}
+        run: |
+          printf "appearance=%s mutation=%s\n" "$APPEARANCE_RESULT" "$MUTATION_RESULT"
+          test "$APPEARANCE_RESULT" = success
+          test "$MUTATION_RESULT" = success
   mac-workspace-background:
     name: Complete Mac Workspace and CPU background
     needs: [classify, portable, portable-eye]
@@ -404,8 +445,8 @@ jobs:
         shell: bash
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
-  mac-bridges-background:
-    name: Complete Mac Appearance and mutation background
+  mac-appearance-background:
+    name: Complete Mac Appearance bridges background
     needs: [classify, portable, portable-eye]
     if: ${{ needs.classify.outputs.full_required == 'false' }}
     runs-on: macos-15
@@ -439,6 +480,32 @@ jobs:
           cargo test --manifest-path experiments/73-high-poly-eyes/Cargo.toml --lib --locked --offline
           cargo fmt --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --package b1-shoulder-source-corrective --check
           cargo test --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --locked --offline
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
+      # native-cache-trial begin
+  mac-mutation-background:
+    name: Complete Mac production mutation background
+    needs: [classify, portable, portable-eye]
+    if: ${{ needs.classify.outputs.full_required == 'false' }}
+    runs-on: macos-15
+    timeout-minutes: 75
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Confirm native Mac host
+        run: test "$(uname -s)" = Darwin && test "$(uname -m)" = arm64
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Fetch locked production mutation graph
+        run: cargo fetch --locked
+      - name: Precompile exact production mutation graph
+        run: cargo test --workspace --lib --locked --offline --no-run
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
         run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
@@ -446,7 +513,22 @@ jobs:
         if: ${{ always() }}
         shell: bash
         run: python3 -B scripts/ci-timing.py report
-      # native-cache-trial begin
+  mac-bridges-background:
+    name: Complete Mac Appearance and mutation background
+    needs: [classify, mac-appearance-background, mac-mutation-background]
+    if: ${{ always() && needs.classify.outputs.full_required == 'false' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require appearance and mutation evidence
+        shell: bash
+        env:
+          APPEARANCE_RESULT: ${{ needs.mac-appearance-background.result }}
+          MUTATION_RESULT: ${{ needs.mac-mutation-background.result }}
+        run: |
+          printf "appearance=%s mutation=%s\n" "$APPEARANCE_RESULT" "$MUTATION_RESULT"
+          test "$APPEARANCE_RESULT" = success
+          test "$MUTATION_RESULT" = success
   mac-full-background:
     name: Complete Mac background evidence
     # Reject cheap portable failures before spending a cold graphical compile.
@@ -886,7 +968,7 @@ jobs:
   required-gate:
     name: Required CI gate
     if: ${{ always() }}
-    needs: [classify, portable, portable-eye, linux-shared, linux-matrix, linux-check, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required]
+    needs: [classify, portable, portable-eye, linux-shared, linux-matrix, linux-check, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required, mac-mutation-required]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -900,7 +982,7 @@ jobs:
   full-mac-report:
     name: Complete Mac result report
     if: ${{ always() }}
-    needs: [classify, mac-workspace-required, mac-bridges-required, mac-workspace-background, mac-bridges-background]
+    needs: [classify, mac-workspace-required, mac-bridges-required, mac-workspace-background, mac-bridges-background, mac-mutation-required, mac-mutation-background]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

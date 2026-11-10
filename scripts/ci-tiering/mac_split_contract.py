@@ -20,6 +20,19 @@ V5_SOURCE_DIGESTS = {
     'experiments/60-b1-continuous-motion/src/bin/matrix.rs': '2922ef91088120e8ecbc102264db4127ae76544dd633a5cc75baf43c0b0a1482',
 }
 
+V9_JOB_DIGESTS = {
+    'mac-mutation-required': 'a411fb978e42d1ff228e6cb824ca37192ee9f8317144de25882b4383e90042c0',
+    'mac-mutation-background': 'ac16fb28cc25cd00234a00eaf03980ecb6119a9f35b4edde9f3a295526489cd7',
+    'mac-appearance-required': 'b685be457e5a731cd36669ea1181620fdf373be2c9d7e640cb69a4e901fa540b',
+    'mac-appearance-background': 'f274bd0ed7596200c1c9997d2706f42cd8066703ff7891ea041357a840fa7af0',
+    'mac-bridges-required': '94798d239a737186cfc3276af3ff1b39d2dbc54cbd023a271a7e404e53d76d21',
+    'mac-bridges-background': '4d7e2060483e5834caa41195a010d652624d6f7425d2b7dd73c7fd82f84a7c62',
+}
+V9_MUTATION_STEP = '''      - name: Check B1 production-source mutation witnesses
+        timeout-minutes: 12
+        run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+'''
+
 def job(text, name):
     found = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', text)
     if len(found) != 1:
@@ -27,6 +40,32 @@ def job(text, name):
     return found[0]
 
 def project(workflow, checks):
+    # V9: appearance and original mutation evidence run in parallel.
+    # A cheap bridge aggregate retains the old reporter status, but succeeds
+    # only if both real Mac lanes succeeded.
+    for name, digest in V9_JOB_DIGESTS.items():
+        checks.assertEqual(hashlib.sha256(job(workflow, name).encode()).hexdigest(), digest, name)
+    for kind in ('required', 'background'):
+        appearance = job(workflow, 'mac-appearance-' + kind)
+        mutation = job(workflow, 'mac-mutation-' + kind)
+        aggregate = job(workflow, 'mac-bridges-' + kind)
+        restored = appearance.replace('  mac-appearance-' + kind + ':\n',
+                                      '  mac-bridges-' + kind + ':\n', 1)
+        restored = restored.replace('    name: Complete Mac Appearance bridges ' + kind + '\n',
+                                    '    name: Complete Mac Appearance and mutation ' + kind + '\n', 1)
+        marker = '      - name: Report existing command timing\n'
+        checks.assertEqual(restored.count(marker), 1)
+        restored = restored.replace(marker, V9_MUTATION_STEP + marker, 1)
+        workflow = workflow.replace(appearance, restored, 1)
+        workflow = workflow.replace(mutation, '', 1).replace(aggregate, '', 1)
+    gate = job(workflow, 'required-gate')
+    new_gate = 'mac-workspace-required, mac-bridges-required, mac-mutation-required]'
+    checks.assertEqual(gate.count(new_gate), 1)
+    workflow = workflow.replace(gate, gate.replace(new_gate, 'mac-workspace-required, mac-bridges-required]', 1), 1)
+    report = job(workflow, 'full-mac-report')
+    new_report = 'mac-workspace-background, mac-bridges-background, mac-mutation-required, mac-mutation-background]'
+    checks.assertEqual(report.count(new_report), 1)
+    workflow = workflow.replace(report, report.replace(new_report, 'mac-workspace-background, mac-bridges-background]', 1), 1)
     for name, digest in V5_SOURCE_DIGESTS.items():
         checks.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(), digest, name)
     v4 = (ROOT/'scripts/ci-tiering/mac-matrix-v4-ci.yml').read_text()
@@ -121,6 +160,26 @@ V6_INPUTS = {
         'e85ebea2d0fa8cba5207ae5c50159334d4f9884395893c20fd3da76f8dd6e7ba'),
 }
 
+V9_REPLACEMENTS = {
+    "scripts/ci-tiering/policy.py": [
+        (b"MAC_PARTS = ('workspace', 'bridges', 'mutation')\n", b"MAC_PARTS = ('workspace', 'bridges')\n"),
+        (b"    expected = (['success'] * len(MAC_PARTS), ['skipped'] * len(MAC_PARTS)) if full == 'true' else (['skipped'] * len(MAC_PARTS), ['success'] * len(MAC_PARTS))\n", b"    expected = (['success'] * 2, ['skipped'] * 2) if full == 'true' else (['skipped'] * 2, ['success'] * 2)\n"),
+    ],
+    "scripts/ci-tiering/test_portable_split.py": [
+        (b"        self.assertIn('    needs: ['+', '.join(required)+', mac-workspace-required, mac-bridges-required, mac-mutation-required]\\n', gate)\n", b"        self.assertIn('    needs: ['+', '.join(required)+', mac-workspace-required, mac-bridges-required]\\n', gate)\n"),
+    ],
+    "scripts/ci-tiering/test_policy.py": [
+        (b"            for part in ('workspace', 'bridges'):\n", b"            for part in policy.MAC_PARTS:\n"),
+        (b"            bridge = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-bridges-{kind}')\n            self.assertIn(f'mac-mutation-{kind}', bridge)\n            self.assertIn(f'mac-appearance-{kind}', bridge)\n            self.assertIn('always()', bridge)\n", b""),
+        (b"            'appearance': section('Check appearance quality and production acceptance bridges', 'Check B1 production-source mutation witnesses'),\n", b"            'bridges': section('Check appearance quality and production acceptance bridges', 'Execute the actual B1 continuous motion matrix'),\n"),
+        (b"        mutation = section('Check B1 production-source mutation witnesses', 'Execute the actual B1 continuous motion matrix')\n", b""),
+        (b"        self.assertIn('timeout-minutes: 12', mutation)\n        for kind in ('required', 'background'):\n            lane = job(workflow, f'mac-mutation-{kind}')\n            self.assertIn('    runs-on: macos-15\\n    timeout-minutes: 75\\n', lane)\n            self.assertIn('run: cargo test --workspace --lib --locked --offline --no-run', lane)\n            self.assertIn('timeout-minutes: 12', lane)\n            self.assertEqual(lane.count(mutation), 1)\n            self.assertNotIn('continue-on-error', lane)\n            self.assertNotIn('actions/cache/', lane)\n            bridge = job(workflow, f'mac-bridges-{kind}')\n            self.assertIn(f'needs: [classify, mac-appearance-{kind}, mac-mutation-{kind}]', bridge)\n            self.assertIn('      - name: Require appearance and mutation evidence\\n        shell: bash\\n', bridge)\n            self.assertIn('APPEARANCE_RESULT:', bridge)\n            self.assertIn('MUTATION_RESULT:', bridge)\n            self.assertIn('test \"$APPEARANCE_RESULT\" = success', bridge)\n            self.assertIn('test \"$MUTATION_RESULT\" = success', bridge)\n            self.assertNotIn('continue-on-error', bridge)\n", b"        self.assertIn('timeout-minutes: 12', expected['bridges'])\n"),
+        (b"        self.assertIn('mac-workspace-required, mac-bridges-required, mac-mutation-required]', gate)\n", b"        self.assertIn('mac-workspace-required, mac-bridges-required]', gate)\n"),
+        (b"            for part in ('workspace', 'bridges', 'mutation'):\n", b"            for part in expected:\n"),
+        (b"    def test_mac_bridge_aggregate_propagates_each_missing_or_failed_half(self):\n        workflow = (ROOT/'.github/workflows/ci.yml').read_text()\n        for kind in ('required', 'background'):\n            aggregate = job(workflow, f'mac-bridges-{kind}')\n            command = ''.join(line[10:] + '\\n' for line in\n                              aggregate.split('        run: |\\n', 1)[1].splitlines())\n            for appearance in ('success', 'failure', 'cancelled', 'skipped', ''):\n                for mutation in ('success', 'failure', 'cancelled', 'skipped', ''):\n                    env = dict(os.environ, APPEARANCE_RESULT=appearance, MUTATION_RESULT=mutation)\n                    result = subprocess.run(['bash', '-e', '-o', 'pipefail', '-c', command],\n                                            env=env, capture_output=True, text=True)\n                    self.assertEqual(result.returncode == 0,\n                                     appearance == mutation == 'success',\n                                     (kind, appearance, mutation, result.stdout, result.stderr))\n\n", b""),
+    ],
+}
+
 V8_REPLACEMENTS = {
     "scripts/ci-tiering/policy.py": [
         (b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-matrix', 'linux-check', 'mac-smoke', 'b1-source-regression')", b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-check', 'mac-smoke', 'b1-source-regression')"),
@@ -156,6 +215,9 @@ V7_REPLACEMENTS = {
 }
 
 def project_input(name, checks, data):
+    for current, previous in V9_REPLACEMENTS.get(name, []):
+        checks.assertEqual(data.count(current), 1, name)
+        data = data.replace(current, previous, 1)
     for current, previous in V8_REPLACEMENTS.get(name, []):
         checks.assertEqual(data.count(current), 1, name)
         data = data.replace(current, previous, 1)
