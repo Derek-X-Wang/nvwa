@@ -33,6 +33,7 @@ jobs:
                           'macOS CPU tests and Wasm compile check',
                           'macOS native target cache warm trial')
           LEGACY_COMPLETE = 'macOS CPU tests and Wasm compile check'
+          RETIRED_NAMES = (LEGACY_COMPLETE, 'Complete Mac background evidence')
           ROLLOUT_UTC = '2026-11-09T22:52:38Z'
 
           def identity(event):
@@ -85,6 +86,13 @@ jobs:
                   required, background = states[:2], states[2:]
                   passed = ((required == ['success'] * 2 and background == ['skipped'] * 2)
                             or (required == ['skipped'] * 2 and background == ['success'] * 2))
+                  # Both retired complete-Mac lanes remain parked in this topology.
+                  # An executed, missing or duplicate old lane is never a green split.
+                  for retired_name in RETIRED_NAMES:
+                      matches = [j for j in jobs if j['name'] == retired_name]
+                      if (len(matches) != 1 or matches[0]['status'] != 'completed'
+                              or matches[0]['conclusion'] != 'skipped'):
+                          passed = False
                   return states, passed, NAMES
               # Only runs started before the split reached main may use the exact old
               # four-job topology. A later missing split is UNKNOWN, never legacy green.

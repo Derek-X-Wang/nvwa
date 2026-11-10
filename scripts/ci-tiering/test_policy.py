@@ -238,6 +238,9 @@ class CompletionReport(unittest.TestCase):
         self.jobs = [{'id': i+1, 'run_id': 123, 'head_sha': 'a'*40, 'name': name,
                       'status': 'completed', 'conclusion': state}
                      for i, (name, state) in enumerate(zip(self.namespace['NAMES'], ['skipped']*2+['success']*2))]
+        self.jobs += [{'id': i+5, 'run_id': 123, 'head_sha': 'a'*40,
+                       'name': name, 'status': 'completed', 'conclusion': 'skipped'}
+                      for i, name in enumerate(self.namespace['RETIRED_NAMES'])]
         for kind in ('required', 'background'):
             for part in policy.MAC_PARTS:
                 lane = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-{part}-{kind}')
@@ -253,12 +256,12 @@ class CompletionReport(unittest.TestCase):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 self.namespace['identity']({**event, 'workflow_run': {**self.run, key: value}})
         filler = [{**self.jobs[0], 'id': i+10, 'name': 'Other'} for i in range(100)]
-        pages = [{'total_count': 104, 'jobs': filler}, {'total_count': 104, 'jobs': self.jobs}]
+        pages = [{'total_count': 106, 'jobs': filler}, {'total_count': 106, 'jobs': self.jobs}]
         urls = []
         def fetch(url):
             urls.append(url)
             return pages.pop(0)
-        self.assertEqual(len(self.namespace['collect'](self.run, fetch)), 104)
+        self.assertEqual(len(self.namespace['collect'](self.run, fetch)), 106)
         self.assertIn('/attempts/2/jobs?per_page=100&page=2', urls[1])
         for jobs in [self.jobs*2, [{**self.jobs[0], 'run_id': 7}], [{**self.jobs[0], 'head_sha': 'b'*40}]]:
             with self.assertRaises(ValueError):
@@ -305,6 +308,12 @@ class CompletionReport(unittest.TestCase):
         self.assertFalse(result(old_jobs)[1])
         # A split run begun before rollout still uses the four current results.
         self.assertTrue(result(self.jobs, old_run)[1])
+        for index in (4, 5):
+            for state in ('success', 'failure', 'cancelled', None):
+                altered = [{**j} for j in self.jobs]
+                altered[index]['conclusion'] = state
+                self.assertFalse(result(altered, old_run)[1], (index, state))
+            self.assertFalse(result(self.jobs + [self.jobs[index]], old_run)[1])
 
 
 class WorkflowContract(unittest.TestCase):

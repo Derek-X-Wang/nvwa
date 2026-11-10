@@ -73,10 +73,10 @@ V5_INPUTS = {
 
 V6_INPUTS = {
     '.github/workflows/ci-mac-report.yml': ('mac-followup-v5-report.yml',
-        '963ec81ec70f43518bc5176d6848aa636aac30fca0575aa61838a22a14bfebb1',
+        'd8e5772acd0203f551af77f18d18b7a21279d65becea0ec4f93b9d625d630c3e',
         'fb2c079e8852d73ea0f4121d4b67c75bc96f05f531d590dc93ad0cdc31675be6'),
     'scripts/ci-tiering/test_policy.py': ('mac-followup-v5-test_policy.py',
-        '72fb1c86ea4019735e334ab4ccffeca6e55bafe671202f6371c0253a1b438c37',
+        '4ba901b8aec6dda9672e8dcc751a4e12798ee69e516943d7baa3e7f7aa8017d0',
         'e85ebea2d0fa8cba5207ae5c50159334d4f9884395893c20fd3da76f8dd6e7ba'),
 }
 
