@@ -99,7 +99,13 @@ fn uses_prepared_rig(doc: &SceneDocument) -> bool {
     doc.profile.backend.is_b1_motion()
         || matches!(
             doc.profile.backend.b1_asset_version(),
-            Some(B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8)
+            Some(
+                B1AssetVersion::V5
+                    | B1AssetVersion::V6
+                    | B1AssetVersion::V7
+                    | B1AssetVersion::V8
+                    | B1AssetVersion::V9
+            )
         )
 }
 
@@ -3524,6 +3530,105 @@ mod tests {
                         "{key} {value} {stem} bilateral Z"
                     );
                 }
+            }
+        }
+    }
+    #[test]
+    fn arm_proportions_zero_preserves_v8_and_lengths_refit_bilateral_joints() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V8);
+        fill_version(&dir, B1AssetVersion::V9);
+        open_ready(
+            &mut app,
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_hip_contour())
+                .unwrap(),
+        );
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc = SceneDocument::from_profile(
+            nvwa_core::CharacterProfile::b1_character_arm_proportions(),
+        )
+        .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (before, after) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(before["positions"], after["positions"]);
+            assert_eq!(before["rest_positions"], after["rest_positions"]);
+        }
+        let joint = |frame: &serde_json::Value, name: &str| -> [f64; 3] {
+            let rest = frame["bones"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|b| b["name"] == name)
+                .unwrap()["rest"]
+                .as_array()
+                .unwrap();
+            [
+                rest[12].as_f64().unwrap(),
+                rest[13].as_f64().unwrap(),
+                rest[14].as_f64().unwrap(),
+            ]
+        };
+        for (key, joint_name) in [
+            ("upper_arm_length", "lowerarm"),
+            ("forearm_length", "hand"),
+            ("wrist_circumference", "hand"),
+        ] {
+            for value in [-1.0, 1.0] {
+                let mut doc = zero_doc.clone();
+                doc.character.parameters.insert(key.into(), value);
+                open_ready(&mut app, doc.clone());
+                let frame = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                    "{key} {value} must deform body"
+                );
+                assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
+                for bone in frame["bones"].as_array().unwrap() {
+                    for matrix in [&bone["rest"], &bone["posed"]] {
+                        assert!(
+                            matrix
+                                .as_array()
+                                .unwrap()
+                                .iter()
+                                .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                        );
+                    }
+                }
+                let l = joint(&frame, &format!("{joint_name}_l"));
+                let r = joint(&frame, &format!("{joint_name}_r"));
+                assert!(
+                    (l[0] + r[0]).abs() < 0.02
+                        && (l[1] - r[1]).abs() < 0.02
+                        && (l[2] - r[2]).abs() < 0.02,
+                    "{key} {value} joint bilateral symmetry"
+                );
+                if key != "wrist_circumference" {
+                    let before = joint(&zero, &format!("{joint_name}_l"));
+                    let distance = l
+                        .iter()
+                        .zip(before)
+                        .map(|(a, b)| (a - b).powi(2))
+                        .sum::<f64>()
+                        .sqrt();
+                    assert!(
+                        distance > 0.001,
+                        "{key} {value} should move {joint_name} rest joint"
+                    );
+                }
+                doc.character.diagnostic_pose = Some("elbow".into());
+                open_ready(&mut app, doc);
+                let posed = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"], posed["parts"][0]["positions"],
+                    "{key} {value} elbow pose must publish"
+                );
             }
         }
     }

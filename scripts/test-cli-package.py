@@ -579,6 +579,28 @@ class CLIPackageTests(unittest.TestCase):
             path.write_bytes(raw)
         self.run_cli("validate", work, self.assets)
 
+    def test_static_arm_profile_and_new_target_survive_relocation(self):
+        work = self.cwd / "arm-proportions.json"
+        self.run_cli("new-character-arm-proportions", self.assets, work)
+        before = self.run_cli("inspect", work)
+        self.assertEqual(before["profile"]["backend"]["schema_version"], 11)
+        self.assertEqual(before["profile"]["id"], "nvwa-mpfb-b1-arm-proportions-v1")
+        self.assertEqual(before["timeline"], [])
+        caps = self.run_cli("describe-capabilities", work)
+        self.assertTrue(caps["cli_contract"]["arm_proportions_shape"]["supported"])
+        self.assertEqual(len(caps["parameters"]), 23)
+        path = self.assets / "characters/mpfb-b1-v9/targets/measure-wrist-circ-incr.target"
+        raw = path.read_bytes()
+        try:
+            path.unlink()
+            self.run_cli("validate", work, self.assets, error="asset_missing")
+            self.run_cli("new-character-hip-contour", self.assets, self.cwd / "prior-hip-still-works.json")
+            path.write_bytes(bytes([raw[0] ^ 1]) + raw[1:])
+            self.run_cli("validate", work, self.assets, error="asset_hash_mismatch")
+        finally:
+            path.write_bytes(raw)
+        self.run_cli("validate", work, self.assets)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
