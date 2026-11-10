@@ -55,7 +55,7 @@ class CpuSourceContext(unittest.TestCase):
             for name in files:
                 dest = target / name
                 dest.parent.mkdir(parents=True, exist_ok=True)
-                dest.write_bytes(old[name] if name in old else (ROOT / name).read_bytes())
+                dest.write_bytes(old[name] if name in old else CONTEXT.pre_body_reference_file(name).read_bytes())
 
     def invoke_gate(self, root=None, exp=HERE):
         root = ROOT if root is None else root

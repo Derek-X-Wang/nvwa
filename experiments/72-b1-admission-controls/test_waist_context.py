@@ -20,7 +20,10 @@ PRODUCT = ('assets/characters/mpfb-b1-v5/base.obj', 'assets/characters/mpfb-b1-v
 
 def pre_leg_bytes(name):
     path = HERE / CONTEXT.LEG_FIXTURES / name
-    return path.read_bytes() if path.is_file() else (ROOT / name).read_bytes()
+    if path.is_file():
+        return path.read_bytes()
+    before_body = HERE / CONTEXT.BODY_REFERENCE_FIXTURES / name
+    return before_body.read_bytes() if before_body.is_file() else (ROOT / name).read_bytes()
 
 
 class WaistSourceContext(unittest.TestCase):

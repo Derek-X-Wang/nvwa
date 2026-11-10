@@ -709,6 +709,73 @@ ARM_NEW_CODE = ('crates/nvwa-cli/tests/arm_proportions.rs',
                 'scripts/build-arm-proportions-v9.py')
 ARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v9/'
 
+BODY_REFERENCE_CONTEXT_NAME = 'input-context-body-reference-v1.json'
+BODY_REFERENCE_CONTEXT_SHA = 'f63e04a4d2b3bf485f2602ad72b775c28e5a71cb88f667b68e6ed3b82a467b4e'
+BODY_REFERENCE_CONTEXT_ID = 'b1-body-reference-product-v1'
+BODY_REFERENCE_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs',
+                          'crates/nvwa-cli/tests/cpu_render.rs',
+                          'crates/nvwa-runtime/src/b1.rs',
+                          'crates/nvwa-runtime/src/b1/cpu_render.rs',
+                          'crates/nvwa-runtime/src/lib.rs',
+                          'docs/agents/cpu-render.md')
+BODY_REFERENCE_ADDED = 'scripts/render-body-reference.py'
+BODY_REFERENCE_FIXTURES = 'fixtures/pre-body-reference'
+BODY_REFERENCE_BASELINES_SHA = 'ce83e2433a77d41b591af765d5feb22aa626267f51d71a5c893ac4c912f73bf5'
+
+
+def pre_body_reference_file(name):
+    historical = HERE / BODY_REFERENCE_FIXTURES / name
+    return historical if historical.is_file() else HERE.parents[1] / name
+
+
+def has_body_reference_inputs(root):
+    path = root / BODY_REFERENCE_ADDED
+    return path.exists() or path.is_symlink()
+
+
+def _body_reference_context(exp, previous):
+    manifest_path = source_file(exp, f'{BODY_REFERENCE_FIXTURES}/manifest.json')
+    baseline_raw = manifest_path.read_bytes()
+    require(sha(baseline_raw) == BODY_REFERENCE_BASELINES_SHA,
+            'body reference predecessor manifest identity mismatch')
+    baseline = json.loads(baseline_raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1
+            and baseline['context'] == previous[0]
+            and baseline['source_commit'] == 'ba9883ed4e510ec612569a0796732e25d888a6d4'
+            and set(baseline['files']) == set(BODY_REFERENCE_CHANGED),
+            'body reference predecessor identity mismatch')
+    for name, item in baseline['files'].items():
+        path = source_file(exp, item['fixture'])
+        require({'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name]
+                and item['fixture'] == f'{BODY_REFERENCE_FIXTURES}/{name}'
+                and path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'body reference predecessor bytes mismatch: ' + name)
+    fixture_root = exp / BODY_REFERENCE_FIXTURES
+    fixture_paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in fixture_paths)
+            and {p.relative_to(fixture_root).as_posix() for p in fixture_paths if p.is_file()}
+                == {'manifest.json'} | set(BODY_REFERENCE_CHANGED),
+            'body reference predecessor fixture inventory mismatch')
+    raw = source_file(exp, BODY_REFERENCE_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == BODY_REFERENCE_CONTEXT_SHA,
+            'body reference source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == BODY_REFERENCE_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and set(value['files']) == set(BODY_REFERENCE_CHANGED) | {BODY_REFERENCE_ADDED},
+            'body reference source context exact delta required')
+    require(all(name in previous[1] and value['files'][name] != previous[1][name]
+                for name in BODY_REFERENCE_CHANGED)
+            and BODY_REFERENCE_ADDED not in previous[1],
+            'body reference source context predecessor mismatch')
+    files = dict(previous[1]); files.update(value['files'])
+    require(len(files) == 525, 'body reference complete source union required')
+    return value['context'], files
+
 
 def has_arm_inputs(root):
     path = root / ARM_ASSET_PREFIX
@@ -935,7 +1002,10 @@ def check_source_context(root, pins, historical_only=False):
         leg = _leg_context(HERE, _combined_context(HERE, cpu))
         upper = _upper_context(HERE, leg)
         hip = _hip_context(HERE, upper)
-        context, expected = _arm_context(HERE, hip)
+        arm = _arm_context(HERE, hip)
+        body_reference = has_body_reference_inputs(root)
+        context, expected = (_body_reference_context(HERE, arm)
+                             if body_reference else arm)
         asset_root = root / ARM_ASSET_PREFIX
         paths = list(asset_root.rglob('*'))
         require(not asset_root.is_symlink()
@@ -947,10 +1017,12 @@ def check_source_context(root, pins, historical_only=False):
         for relative, item in expected.items():
             path = source_file(root, relative)
             require(path.stat().st_size == item['bytes'],
-                    'arm source context byte count mismatch: ' + relative)
+                    ('body reference' if body_reference else 'arm')
+                    + ' source context byte count mismatch: ' + relative)
             actual[relative] = file_sha(path)
         require(actual == {name: item['sha256'] for name, item in expected.items()},
-                'source input context mismatch: exact arm source required')
+                'source input context mismatch: exact '
+                + ('body reference' if body_reference else 'arm') + ' source required')
     elif has_hip_inputs(root):
         require(not historical_only, 'source input context mismatch: hip source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])

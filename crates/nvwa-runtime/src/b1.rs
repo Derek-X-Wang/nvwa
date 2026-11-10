@@ -5611,6 +5611,8 @@ struct PublishedCpuPart {
     mesh: Handle<Mesh>,
     source_ids: Vec<u16>,
     indices: Vec<usize>,
+    #[cfg(feature = "cpu-render")]
+    full_body_indices: Option<Vec<usize>>,
     frame: nvwa_b1_adapter::SkinFrame,
     transform: [f32; 16],
 }
@@ -5622,6 +5624,12 @@ struct PublishedCpuFrame<'a> {
     parts: Vec<PublishedCpuPart>,
 }
 fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
+    published_cpu_frame_with_body_topology(world, false)
+}
+fn published_cpu_frame_with_body_topology(
+    world: &World,
+    full_body: bool,
+) -> Result<PublishedCpuFrame<'_>, String> {
     use bevy::mesh::VertexAttributeValues;
     let (active, doc, sample, binding) = published_motion_frame(world)?;
     let bones = active
@@ -5667,6 +5675,27 @@ fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
         if indices != active.display_indices[i] {
             return Err("B1 uploaded triangle binding changed".into());
         }
+        #[cfg(feature = "cpu-render")]
+        let full_body_indices = if full_body && part.name == "body" {
+            let fitted_mesh = world
+                .resource::<Assets<Mesh>>()
+                .get(&part.mesh)
+                .ok_or("fitted body mesh absent")?;
+            let full = visible_body_indices(
+                fitted_mesh.indices().ok_or("fitted body indices absent")?,
+                &active.source_ids[i],
+                &[],
+            )?;
+            let complete: Vec<_> = full.iter().collect();
+            if complete.len() <= indices.len() {
+                return Err("body reference did not restore clothing-hidden triangles".into());
+            }
+            Some(complete)
+        } else {
+            None
+        };
+        #[cfg(not(feature = "cpu-render"))]
+        let _ = full_body;
         let transform = world
             .get::<GlobalTransform>(entity)
             .ok_or("display transform absent")?
@@ -5681,6 +5710,8 @@ fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
             mesh: handle.clone(),
             source_ids: active.source_ids[i].clone(),
             indices,
+            #[cfg(feature = "cpu-render")]
+            full_body_indices,
             frame,
             transform,
         });
