@@ -313,17 +313,28 @@ required-status规则仍待上线验收。发布和Mac相关工作仍需目标SH
 ## Linux 完整动作矩阵独立必需作业（2026-11-10）
 
 [#156 的精确 head 运行](https://github.com/Derek-X-Wang/nvwa/actions/runs/42811101279)
-在完整 Linux shared 作业约 75 分钟上限取消，发生于 594 帧矩阵步骤；不能把
-此前 workspace／CPU、appearance 与生产 mutation 通过推断为完整矩阵及衣物通过。
-Required CI gate 正确失败，完整 Mac 两项已通过。旧取消记录和发布 HOLD 保留。
+在完整 Linux shared 作业约75分钟上限取消，发生于594帧矩阵步骤；此前
+workspace／CPU、appearance 与三类生产 mutation 通过不能推断矩阵及衣物完成。
+Required CI gate 正确失败，完整Mac两项通过。旧取消与发布HOLD保留。
 
-在既有分组授权下，完整矩阵步骤原封不动移到独立的 Ubuntu 24.04 必需作业：
-锁定依赖 fetch 后，仍由 Linux guard、单 Cargo worker、原 `matrix` 模式
-执行真实 594 帧／30 深度关键帧、source2 实帧和衣物 normal／`-O`。
-新作业与 Linux shared 同时在 classify 后启动；两者以及独立 workspace check
-都必须 success，失败、取消、跳过或缺失均使 Required CI gate 失败。
-Linux shared 保留原 workspace／CPU、appearance 和三类生产 mutation 的顺序
-与共享 target。原 matrix 步骤20分钟、mutation12分钟、作业75分钟上限不变；
-不使用缓存、`continue-on-error` 或新增权限。新 runner 的冷编译可能使
-matrix20 超时，必须以新精确 head 的 hosted 结果实测；并行不等于减少总计算量。
-历史合同先认证新作业和完整命令，再投影回旧拓扑；不刷新原哈希或改写失败。
+首次独立冷runner候选 [51c5a67 / 42824045098](https://github.com/Derek-X-Wang/nvwa/actions/runs/42824045098)
+被新合同测试的历史字符串误用挡在分类作业，未测矩阵；修正后
+[68902a0 / 42824494336](https://github.com/Derek-X-Wang/nvwa/actions/runs/42824494336)
+的独立矩阵步骤确实在20分钟上限失败：Cargo冷编译19分56秒才完成，
+594帧和衣物控制都未开始。这两条失败不改写为通过，也不靠加时掩盖。
+
+后续候选让 Linux shared 在原 workspace／CPU、appearance、生产 mutation
+之后，使用同一已预热target、原Linux guard和锁定离线依赖编译完整矩阵二进制。
+同次运行的不可变 artifact 只传递该二进制；必需 matrix 作业必须等待 shared
+成功，校验来自其输出的 SHA256 后才运行原完整594帧／30关键帧、真实source2
+衣物normal／`-O`，不接受未知或缺失二进制。artifact 按run attempt命名，
+下载失败或摘要不符保持红色。原矩阵本地入口保留；新runner只执行由它拆出的
+原运行与断言命令。源码、素材和探针均来自同次精确checkout，不使用跨运行
+cache或部分native seed，不增加GitHub token权限。
+
+两个Linux作业、独立workspace check以及原有portable／Mac等仍被Required
+CI gate直接要求success。mutation12分钟、矩阵执行步骤20分钟及各作业75分钟
+上限不变；没有`continue-on-error`。共享作业增加已预热编译及artifact
+上传，可能挤压它自己的75分钟余量；新runner和串行交接也增加总耗时／成本。
+必须以新精确head正式CI验证，不能将静态合同或先前局部成功当成验收。
+历史消费者先认证交接拓扑与原命令，再还原旧整工作流及原哈希。
