@@ -29,7 +29,8 @@ class ArmProportionsSourceContext(unittest.TestCase):
     def test_exact_union_preserves_v8(self):
         self.assertEqual(self.predecessor[0], CONTEXT.HIP_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 401)
-        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], CONTEXT.ARM_CONTEXT_ID)
+        expected = CONTEXT.CHEST_CONTEXT_ID if CONTEXT.has_chest_inputs(ROOT) else CONTEXT.ARM_CONTEXT_ID
+        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], expected)
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},
                          set(CONTEXT.ARM_CHANGED))
@@ -42,7 +43,9 @@ class ArmProportionsSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 destination = root / name
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, destination)
+                historical = HERE / CONTEXT.CHEST_FIXTURES / name
+                shutil.copyfile(historical if name in CONTEXT.CHEST_CHANGED and historical.is_file()
+                                else ROOT / name, destination)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'], CONTEXT.ARM_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',
                          'assets/characters/mpfb-b1-v9/manifest.json',

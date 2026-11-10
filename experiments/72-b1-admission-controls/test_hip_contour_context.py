@@ -30,7 +30,8 @@ class HipContourSourceContext(unittest.TestCase):
     def test_exact_union_preserves_v7(self):
         self.assertEqual(self.predecessor[0], CONTEXT.UPPER_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 292)
-        expected = CONTEXT.ARM_CONTEXT_ID if CONTEXT.has_arm_inputs(ROOT) else CONTEXT.HIP_CONTEXT_ID
+        expected = (CONTEXT.CHEST_CONTEXT_ID if CONTEXT.has_chest_inputs(ROOT) else
+                    CONTEXT.ARM_CONTEXT_ID if CONTEXT.has_arm_inputs(ROOT) else CONTEXT.HIP_CONTEXT_ID)
         self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], expected)
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},

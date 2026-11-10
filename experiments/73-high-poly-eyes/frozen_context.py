@@ -692,6 +692,37 @@ def arm_source_context(exp, cpu):
     return ARM_CONTEXT_ID, files
 
 
+CHEST_CONTEXT_NAME = '../72-b1-admission-controls/input-context-chest-placement-v1.json'
+CHEST_CONTEXT_SHA = 'd63c4405d6407205a0f626727e81466a449d629cef68e3b9c96436db28e7899c'
+CHEST_CONTEXT_ID = 'b1-chest-placement-product-v1'
+
+
+def has_chest_inputs(root):
+    return (root / 'assets/characters/mpfb-b1-v10').exists()
+
+
+def chest_source_context(exp, cpu):
+    """Admit only the exact v10 successor after the immutable v9 context."""
+    arm = arm_source_context(exp, cpu)
+    raw = regular_file(exp, CHEST_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CHEST_CONTEXT_SHA,
+            'chest source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == CHEST_CONTEXT_ID
+            and value['predecessor'] == ARM_CONTEXT_ID
+            and value['predecessor_commit'] == 'b41e8d02806a409d262daee233e190d53598cb21',
+            'chest source context predecessor/version mismatch')
+    files = dict(arm[1]); files.update(value['files'])
+    require(len(value['files']) == 658 and len(files) == 946
+            and len(set(arm[1]) & set(value['files'])) == 524
+            and set(files) == set(arm[1]) | set(value['files']),
+            'chest source context complete union required')
+    return CHEST_CONTEXT_ID, files
+
+
 def has_hip_inputs(root):
     return (root / 'assets/characters/mpfb-b1-v8').exists()
 
