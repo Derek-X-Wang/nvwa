@@ -4,7 +4,7 @@ use super::*;
 use sha2::{Digest, Sha256};
 use std::{collections::BTreeMap, io::Write};
 
-pub(super) const USAGE: &str = "  render <work.json> --assets <root> --output <new-directory> [--width 1280 --height 720] [--mode silhouette]\nCPU export: B1 motion or static waist/leg/upper-body/hip-contour/arm-proportions profile, saved static diagnostic pose, appearance none; body + garment, saved perspective camera. No floor, lighting, textures, hair, motion or PBR.";
+pub(super) const USAGE: &str = "  render <work.json> --assets <root> --output <new-directory> [--width 1280 --height 720] [--mode silhouette|body-reference]\nCPU export: B1 motion or static waist/leg/upper-body/hip-contour/arm-proportions profile, saved static diagnostic pose, appearance none. Default silhouette retains body + garment. Body-reference restores clothing-hidden body triangles and renders only the fitted, posed body with fixed neutral shading; it is a PNG, not a 3D/animation export.";
 fn sha(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
@@ -13,7 +13,7 @@ fn error(code: &str, e: impl std::fmt::Display) -> CoreError {
 }
 
 pub(super) fn capabilities(doc: &SceneDocument) -> serde_json::Value {
-    serde_json::json!({"schema_version":1,"compiled":true,"mode":"silhouette","current_work_supported":nvwa_runtime::validate_export_work(doc).is_ok(),"profile":"nvwa-mpfb-b1-motion-v2","profiles":["nvwa-mpfb-b1-motion-v2","nvwa-mpfb-b1-waist-v1","nvwa-mpfb-b1-legs-v1","nvwa-mpfb-b1-upper-body-v1","nvwa-mpfb-b1-hip-contour-v1","nvwa-mpfb-b1-arm-proportions-v1"],"timeline":"empty_only","pose":"saved_diagnostic_pose","appearance":"none_only","camera":"saved_perspective","parts":["body","garment"],"dimensions_each":[64,2048],"output":"new_directory_work_png_receipt","not_rendered":["floor","lighting","materials","textures","hair","eyes","motion"],"usage":USAGE})
+    serde_json::json!({"schema_version":1,"compiled":true,"mode":"silhouette","modes":["silhouette","body-reference"],"current_work_supported":nvwa_runtime::validate_export_work(doc).is_ok(),"profile":"nvwa-mpfb-b1-motion-v2","profiles":["nvwa-mpfb-b1-motion-v2","nvwa-mpfb-b1-waist-v1","nvwa-mpfb-b1-legs-v1","nvwa-mpfb-b1-upper-body-v1","nvwa-mpfb-b1-hip-contour-v1","nvwa-mpfb-b1-arm-proportions-v1"],"timeline":"empty_only","pose":"saved_diagnostic_pose","appearance":"none_only","camera":"saved_perspective","parts":["body","garment"],"dimensions_each":[64,2048],"output":"new_directory_work_png_receipt","not_rendered":["floor","lighting","materials","textures","hair","eyes","motion"],"usage":USAGE})
 }
 
 fn assets(doc: &SceneDocument, root: &Path) -> Result<BTreeMap<String, Vec<u8>>, CoreError> {
@@ -60,6 +60,7 @@ struct Options {
     output: PathBuf,
     width: u32,
     height: u32,
+    body_reference: bool,
 }
 fn options(args: &[String]) -> Result<Options, CoreError> {
     let usage = || error("usage", USAGE);
@@ -74,10 +75,13 @@ fn options(args: &[String]) -> Result<Options, CoreError> {
             return Err(usage());
         }
     }
-    if opts.get("--mode").is_some_and(|m| *m != "silhouette") {
+    if opts
+        .get("--mode")
+        .is_some_and(|m| !matches!(*m, "silhouette" | "body-reference"))
+    {
         return Err(error(
             "unsupported_render",
-            "Only silhouette mode is supported",
+            "Only silhouette and body-reference modes are supported",
         ));
     }
     let dimensions = |key, default| -> Result<u32, CoreError> {
@@ -98,6 +102,7 @@ fn options(args: &[String]) -> Result<Options, CoreError> {
         output: (*opts.get("--output").ok_or_else(usage)?).into(),
         width: dimensions("--width", 1280)?,
         height: dimensions("--height", 720)?,
+        body_reference: opts.get("--mode") == Some(&"body-reference"),
     })
 }
 fn write_new(path: &Path, bytes: &[u8]) -> Result<(), CoreError> {
@@ -127,8 +132,12 @@ pub(super) fn run(args: &[String]) -> Result<(), CoreError> {
         .map(|(path, bytes)| (path.clone(), sha(bytes)))
         .collect();
     let started = std::time::Instant::now();
-    let image = nvwa_runtime::render_silhouette(&doc, bytes, opts.width, opts.height)
-        .map_err(|e| error("render_failed", e))?;
+    let image = if opts.body_reference {
+        nvwa_runtime::render_body_reference(&doc, bytes, opts.width, opts.height)
+    } else {
+        nvwa_runtime::render_silhouette(&doc, bytes, opts.width, opts.height)
+    }
+    .map_err(|e| error("render_failed", e))?;
     let render_seconds = started.elapsed().as_secs_f64();
     let mut png = Vec::new();
     {
@@ -144,7 +153,7 @@ pub(super) fn run(args: &[String]) -> Result<(), CoreError> {
     let executable = std::env::current_exe().map_err(|e| error("executable_identity", e))?;
     let executable_sha =
         sha(&std::fs::read(executable).map_err(|e| error("executable_identity", e))?);
-    let receipt = serde_json::json!({
+    let mut receipt = serde_json::json!({
         "schema_version":1,"status":"rendered","renderer":"nvwa-cpu-silhouette-v1","mode":"silhouette",
         "work_sha256":sha(raw.as_bytes()),"document_revision":doc.revision,"profile":doc.profile.id,"backend":doc.profile.backend,
         "asset_sha256":asset_hashes,"executable_sha256":executable_sha,"package_version":env!("CARGO_PKG_VERSION"),
@@ -157,6 +166,15 @@ pub(super) fn run(args: &[String]) -> Result<(), CoreError> {
         "not_rendered":["floor","lighting","materials","textures","hair","eyes","motion"],
         "scope":"Actual production body and garment CPU geometry; silhouette only, not Web/PBR parity or clothing quality acceptance"
     });
+    if image.body_reference {
+        receipt["renderer"] = "nvwa-cpu-body-reference-v1".into();
+        receipt["mode"] = "body_reference".into();
+        receipt["foreground_rgb"] = serde_json::Value::Null;
+        receipt["shading"] = "fixed_neutral_flat_not_scene_lighting".into();
+        receipt["body_topology"] =
+            "full_fitted_body_restored_clothing_hidden_triangles_same_skinned_frame".into();
+        receipt["scope"] = "Static full-body image reference from actual fitted and posed B1 body; no garment, no 3D mesh export, no continuous-animation or artistic-quality certification".into();
+    }
     let receipt_bytes = serde_json::to_vec_pretty(&receipt).map_err(|e| error("serialize", e))?;
     // Everything is prepared before claiming a new directory. A persistence
     // failure can leave partial files but never a successful receipt; no retry
@@ -177,6 +195,13 @@ mod tests {
             s.split_whitespace().map(str::to_owned).collect()
         }
         assert!(options(&args("render a --assets b --output c")).is_ok());
+        assert!(
+            options(&args(
+                "render a --assets b --output c --mode body-reference"
+            ))
+            .unwrap()
+            .body_reference
+        );
         for s in [
             "render a --assets b --output c --width 0",
             "render a --assets b --output c --height 2049",

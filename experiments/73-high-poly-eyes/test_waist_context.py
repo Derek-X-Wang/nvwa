@@ -48,7 +48,7 @@ class WaistSourceContext(unittest.TestCase):
             historical = cls.pre_leg / name
             dest.write_bytes(old[name] if name in old else
                              historical.read_bytes() if historical.is_file() else
-                             (ROOT / name).read_bytes())
+                             CONTEXT.pre_body_reference_file(name).read_bytes())
         cls.retained = json.loads((HERE / 'fixtures/pre-waist/manifest.json').read_bytes())['files']
 
     def invoke_gate(self, root=None, exp=HERE):
@@ -69,6 +69,7 @@ class WaistSourceContext(unittest.TestCase):
             dest.parent.mkdir(parents=True, exist_ok=True)
             historical = self.pre_leg / name
             shutil.copyfile(historical if combined and historical.is_file()
+                            else CONTEXT.pre_body_reference_file(name) if combined
                             else source / name, dest)
         exp = root / 'experiments' / HERE.name
         exp.mkdir(parents=True, exist_ok=True)

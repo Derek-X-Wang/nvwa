@@ -13,10 +13,11 @@ shared dependency graph), but the exporter never initializes a window,
 RenderPlugin, wgpu adapter, browser, or display server. Compilation is separate
 from actual CPU export acceptance. It is not a PBR software renderer.
 
-The first supported scope is the **eight-parameter `new-character` profile**, an
-empty timeline, any saved supported diagnostic pose, and `appearance: none`.
-The explicit static `new-character-waist` profile is also supported; see
-[its limits](waist-profile.md). Other profiles remain rejected.
+The supported scope is a B1 motion or static waist, legs, upper-body,
+hip-contour, or arm-proportions profile, with an empty timeline, any saved
+supported diagnostic pose, and `appearance: none`. See the current
+`describe-capabilities.cpu_render.profiles` list for the exact profile IDs.
+Other profiles remain rejected.
 Select a static pose with normal CLI `apply` / `set_diagnostic_pose`; that command
 clears the timeline. Use `describe-capabilities` to read the loaded Work's IDs,
 revision, parameters and `cpu_render.current_work_supported`. Nonempty timelines,
@@ -32,8 +33,8 @@ Width and height each range from 64 to 2048; defaults are 1280×720. Output must
 be a **new directory with an existing parent**. It contains:
 
 - `actual.png`: actual CPU triangle rasterization of the production visible
-  body **and sportsuit**, with dark foreground on white, pixel-center sampling
-  and no antialiasing.
+  body **and sportsuit** by default, with dark foreground on white, pixel-center
+  sampling and no antialiasing.
 - `work.nvwa.json`: exact input bytes, never a rewritten or modified Work.
 - `receipt.json`: the completion marker, including Work and asset hashes,
   executable identity, saved camera and effective matrices, geometry and image
@@ -49,9 +50,45 @@ copies with ordinary `set_stage`, copying the whole stage and changing only its
 camera. Orthographic projection is not supported by this command.
 
 Lighting, floor, materials, textures, hair, eyes and animation are not rendered.
-This mode deliberately produces a reference silhouette, not an image of all
-saved stage settings. Omitting the garment alone would expose holes in the
-production visible-body topology; a complete body-only mode is not provided.
+The default mode deliberately produces a reference silhouette, not an image of
+all saved stage settings.
+
+For full-body proportion and shape review before illustration, request the
+complete fitted body without upper or lower clothing:
+
+```sh
+nvwa-cli render /absolute/front.nvwa.json \
+  --assets /absolute/assets --output /absolute/new-body-front \
+  --width 1280 --height 720 --mode body-reference
+```
+
+This mode uses the same authenticated Work, source assets, fitted mesh, 53-bone
+pose and published CPU frame as the default render. It restores body triangles
+hidden by the sportsuit, omits the garment, and applies fixed neutral flat
+shading so surface form is visible. Its receipt identifies `body_reference`,
+the complete fitted-body topology, the exact Work, assets, executable and
+saved camera. Reuse a fixed full-body camera for front, 45°, side and back
+comparisons, and save separate Works for neutral, shoulder, elbow, knee and
+combined diagnostic poses. A useful full-body starting camera is distance 4.2,
+target height 0.95, elevation 0 and FOV 36; inspect framing rather than treating
+those values as a universal fit.
+
+The companion script creates those fixed-camera Works and an `index.html`
+contact sheet, with each render's receipt and source Work retained:
+
+```sh
+python3 scripts/render-body-reference.py \
+  --cli /absolute/nvwa-cli --work /absolute/character.nvwa.json \
+  --assets /absolute/assets --output /absolute/new-body-matrix \
+  --poses neutral,shoulder,elbow,knee,combined
+```
+
+`body-reference` produces a PNG, **not** an OBJ/GLB model. Its simple shading is
+not scene lighting or PBR. It does not certify fine anatomy, self-intersection
+or continuous motion. Clothing fit and outfit style are a separate later
+review; neither the sportsuit nor its masking enters this body's image pixels.
+Keep generated character-body references private unless their owner chooses to
+publish them.
 A camera containing no character pixels fails rather than returning a blank
 success. Clipped framing is otherwise preserved and requires visual inspection.
 

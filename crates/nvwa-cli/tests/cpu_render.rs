@@ -53,6 +53,27 @@ fn render(work: &Path, root: &Path, out: &Path) -> Output {
         .output()
         .unwrap()
 }
+fn render_body(work: &Path, root: &Path, out: &Path) -> Output {
+    Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
+        .args([
+            "render".as_ref(),
+            work,
+            "--assets".as_ref(),
+            root,
+            "--output".as_ref(),
+            out,
+            "--width".as_ref(),
+            "320".as_ref(),
+            "--height".as_ref(),
+            "320".as_ref(),
+            "--mode".as_ref(),
+            "body-reference".as_ref(),
+        ])
+        .env_remove("DISPLAY")
+        .env_remove("WAYLAND_DISPLAY")
+        .output()
+        .unwrap()
+}
 fn success(output: Output) -> Value {
     assert!(
         output.status.success(),
@@ -115,6 +136,115 @@ fn real_cpu_export_repeats_preserves_work_and_obeys_saved_camera_shape_and_pose(
     let knee = success(render(&t.work("knee", &doc), &assets(), &t.0.join("knee")));
     assert_ne!(wide["geometry_sha256"], knee["geometry_sha256"]);
     assert_ne!(wide["png_sha256"], knee["png_sha256"]);
+}
+
+#[test]
+fn body_reference_restores_clothing_hidden_body_across_views_and_pose() {
+    let t = Trial::new();
+    let mut doc = neutral();
+    doc.stage.camera.distance = 4.2;
+    doc.stage.camera.target_height = 0.95;
+    let front_work = t.work("body-front", &doc);
+    let combined = success(render(&front_work, &assets(), &t.0.join("combined-front")));
+    let front = success(render_body(&front_work, &assets(), &t.0.join("body-front")));
+    assert_eq!(combined["mode"], "silhouette");
+    assert_eq!(combined["parts"].as_array().unwrap().len(), 2);
+    assert_eq!(front["mode"], "body_reference");
+    assert_eq!(front["parts"].as_array().unwrap().len(), 1);
+    assert_eq!(front["parts"][0][0], "body");
+    assert_eq!(front["parts"][0][1], combined["parts"][0][1]);
+    assert_eq!(front["parts"][0][2], 26_756);
+    assert!(front["parts"][0][2].as_u64().unwrap() > combined["parts"][0][2].as_u64().unwrap());
+    assert!(front["covered_pixels"].as_u64().unwrap() > 100);
+    assert_ne!(front["png_sha256"], combined["png_sha256"]);
+    assert_eq!(
+        front["body_topology"],
+        "full_fitted_body_restored_clothing_hidden_triangles_same_skinned_frame"
+    );
+    assert_eq!(
+        std::fs::read(&front_work).unwrap(),
+        std::fs::read(t.0.join("body-front/work.nvwa.json")).unwrap()
+    );
+    reject(
+        render_body(&front_work, &assets(), &t.0.join("body-front")),
+        "output_exists",
+    );
+
+    let mut views = std::collections::BTreeSet::new();
+    views.insert(front["png_sha256"].as_str().unwrap().to_owned());
+    let mut side_png = None;
+    for (name, azimuth) in [("quarter", 45.0), ("side", 90.0), ("back", 180.0)] {
+        doc.stage.camera.azimuth_degrees = azimuth;
+        let work = t.work(&format!("body-{name}"), &doc);
+        let image = success(render_body(
+            &work,
+            &assets(),
+            &t.0.join(format!("body-{name}")),
+        ));
+        assert_eq!(image["parts"].as_array().unwrap().len(), 1);
+        assert_eq!(image["parts"][0][2], front["parts"][0][2]);
+        assert_eq!(image["camera"]["azimuth_degrees"], azimuth);
+        assert!(image["covered_pixels"].as_u64().unwrap() > 100);
+        if name == "side" {
+            side_png = Some(image["png_sha256"].clone());
+        }
+        views.insert(image["png_sha256"].as_str().unwrap().to_owned());
+    }
+    assert!(
+        views.len() >= 3,
+        "body reference views should retain distinct perspectives"
+    );
+    doc.stage.camera.azimuth_degrees = 90.0;
+    doc.character.diagnostic_pose = Some("knee".into());
+    let knee = success(render_body(
+        &t.work("body-knee", &doc),
+        &assets(),
+        &t.0.join("body-knee"),
+    ));
+    assert_eq!(knee["parts"].as_array().unwrap().len(), 1);
+    assert_ne!(Some(knee["png_sha256"].clone()), side_png);
+}
+
+#[test]
+fn body_reference_shows_waist_hip_and_leg_recipe_without_garment() {
+    let t = Trial::new();
+    let mut doc =
+        SceneDocument::from_profile(CharacterProfile::b1_character_hip_contour()).unwrap();
+    doc.stage.camera.distance = 4.2;
+    doc.stage.camera.target_height = 0.95;
+    doc.stage.camera.elevation_degrees = 0.0;
+    let zero_parameters = doc.character.parameters.clone();
+    for (view, azimuth) in [("front", 0.0), ("side", 90.0), ("back", 180.0)] {
+        doc.stage.camera.azimuth_degrees = azimuth;
+        let zero = success(render_body(
+            &t.work(&format!("{view}-zero"), &doc),
+            &assets(),
+            &t.0.join(format!("{view}-zero")),
+        ));
+        for (key, value) in [
+            ("waist_circumference", -1.0),
+            ("hip_depth", 1.0),
+            ("buttocks_volume", 1.0),
+            ("thigh_girth", 1.0),
+            ("calf_girth", 1.0),
+        ] {
+            doc.character.parameters.insert(key.into(), value);
+        }
+        let shaped = success(render_body(
+            &t.work(&format!("{view}-shaped"), &doc),
+            &assets(),
+            &t.0.join(format!("{view}-shaped")),
+        ));
+        assert_eq!(zero["parts"].as_array().unwrap().len(), 1);
+        assert_eq!(shaped["parts"].as_array().unwrap().len(), 1);
+        assert_eq!(zero["parts"][0][2], 26_756);
+        assert_eq!(zero["parts"][0][2], shaped["parts"][0][2]);
+        assert_ne!(
+            zero["png_sha256"], shaped["png_sha256"],
+            "{view} body proportions must be visible"
+        );
+        doc.character.parameters = zero_parameters.clone();
+    }
 }
 #[test]
 fn unsupported_work_and_corrupt_assets_never_publish_output() {
