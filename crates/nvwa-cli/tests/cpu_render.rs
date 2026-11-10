@@ -403,3 +403,104 @@ fn upper_body_export_is_discoverable_as_supported() {
     );
     assert!(exporter["usage"].as_str().unwrap().contains("upper-body"));
 }
+
+#[test]
+fn hip_contour_controls_change_actual_front_side_and_back_render() {
+    let trial = Trial::new();
+    let mut previous =
+        SceneDocument::from_profile(CharacterProfile::b1_character_upper_body()).unwrap();
+    let mut doc =
+        SceneDocument::from_profile(CharacterProfile::b1_character_hip_contour()).unwrap();
+    previous.stage.camera.elevation_degrees = 0.0;
+    doc.stage = previous.stage.clone();
+    let mut visible = std::collections::BTreeMap::new();
+    for (view, azimuth) in [("front", 0.0), ("side", 90.0), ("back", 180.0)] {
+        previous.stage.camera.azimuth_degrees = azimuth;
+        doc.stage.camera.azimuth_degrees = azimuth;
+        let old = success(render(
+            &trial.work(&format!("v7-{view}"), &previous),
+            &assets(),
+            &trial.0.join(format!("v7-{view}")),
+        ));
+        let zero = success(render(
+            &trial.work(&format!("v8-{view}-zero"), &doc),
+            &assets(),
+            &trial.0.join(format!("v8-{view}-zero")),
+        ));
+        assert_eq!(
+            old["geometry_sha256"], zero["geometry_sha256"],
+            "{view} zero geometry"
+        );
+        assert_eq!(old["png_sha256"], zero["png_sha256"], "{view} zero image");
+        for key in ["hip_depth", "buttocks_volume"] {
+            for (sign, value) in [("decr", -1.0), ("incr", 1.0)] {
+                doc.character.parameters.insert(key.into(), value);
+                let name = format!("v8-{view}-{key}-{sign}");
+                let changed = success(render(
+                    &trial.work(&name, &doc),
+                    &assets(),
+                    &trial.0.join(&name),
+                ));
+                assert_ne!(
+                    zero["geometry_sha256"], changed["geometry_sha256"],
+                    "{name} must deform mesh"
+                );
+                if zero["png_sha256"] != changed["png_sha256"] {
+                    visible.insert(key, true);
+                }
+                assert!(changed["covered_pixels"].as_u64().unwrap() > 100);
+                doc.character.parameters.insert(key.into(), 0.0);
+            }
+        }
+    }
+    for key in ["hip_depth", "buttocks_volume"] {
+        assert_eq!(
+            visible.get(key),
+            Some(&true),
+            "{key} must change a visible silhouette"
+        );
+    }
+    doc.character.parameters.insert("hip_depth".into(), 0.5);
+    doc.character
+        .parameters
+        .insert("buttocks_volume".into(), 0.5);
+    let neutral = success(render(
+        &trial.work("v8-mixed", &doc),
+        &assets(),
+        &trial.0.join("v8-mixed"),
+    ));
+    doc.character.diagnostic_pose = Some("knee".into());
+    let knee = success(render(
+        &trial.work("v8-mixed-knee", &doc),
+        &assets(),
+        &trial.0.join("v8-mixed-knee"),
+    ));
+    assert_ne!(neutral["geometry_sha256"], knee["geometry_sha256"]);
+}
+
+#[test]
+fn hip_contour_export_is_discoverable_as_supported() {
+    let trial = Trial::new();
+    let doc = SceneDocument::from_profile(CharacterProfile::b1_character_hip_contour()).unwrap();
+    let work = trial.work("v8-discovery", &doc);
+    let output = Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
+        .args(["describe-capabilities".as_ref(), work.as_path()])
+        .output()
+        .unwrap();
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let capabilities: Value = serde_json::from_slice(&output.stdout).unwrap();
+    let exporter = &capabilities["cpu_render"];
+    assert_eq!(exporter["current_work_supported"], true);
+    assert!(
+        exporter["profiles"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|id| id.as_str() == Some(doc.profile.id.as_str()))
+    );
+    assert!(exporter["usage"].as_str().unwrap().contains("hip-contour"));
+}

@@ -8,7 +8,7 @@ pub(super) fn draw(ui: &mut egui::Ui, document: &SceneDocument) -> Option<Comman
     }
     if matches!(
         document.profile.backend.b1_asset_version(),
-        Some(B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7)
+        Some(B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8)
     ) {
         ui.small(
             "静态体型轮廓：尚未接入皮肤、眼睛或头发 / Static shape: no appearance set admitted.",

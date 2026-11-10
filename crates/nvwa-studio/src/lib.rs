@@ -720,6 +720,7 @@ fn draw_editor_ui(
     let mut new_waist = false;
     let mut new_legs = false;
     let mut new_upper_body = false;
+    let mut new_hip_contour = false;
     let mut new_lower_contour = false;
     let mut new_running = false;
     let mut command = None;
@@ -770,6 +771,13 @@ fn draw_editor_ui(
                         .clicked()
                     {
                         new_upper_body = true;
+                        ui.close();
+                    }
+                    if ui
+                        .button("新建静态髋臀人物… / New static hip and buttocks character…")
+                        .clicked()
+                    {
+                        new_hip_contour = true;
                         ui.close();
                     }
                     if ui
@@ -921,8 +929,11 @@ fn draw_editor_ui(
                         if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V6) {
                             ui.small("腿部四项是 -1–1 相对形变权重，非厘米；邻近关节与衣物可变化。静态试用 / Four relative leg controls, not centimetres; static only.");
                         }
-                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V7) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V7 | nvwa_core::B1AssetVersion::V8)) {
                             ui.small("胸围、肩距和上臂围度是 -1–1 相对形变权重，非厘米；衣物和动作需单独验收。 / Relative upper-body shape weights, not centimetres; static trial only.");
+                        }
+                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V8) {
+                            ui.small("髋部厚度和臀部体积是 -1–1 相对形变权重，非厘米；衣物和动作需单独验收。 / Relative hip and buttocks shape weights, not centimetres; static trial only.");
                         }
                         if editor.preview.is_some() {
                             ui.label("Preview · document unchanged");
@@ -1299,8 +1310,11 @@ fn draw_editor_ui(
         || new_waist
         || new_legs
         || new_upper_body
+        || new_hip_contour
     {
-        let profile = if new_upper_body {
+        let profile = if new_hip_contour {
+            nvwa_core::CharacterProfile::b1_character_hip_contour()
+        } else if new_upper_body {
             nvwa_core::CharacterProfile::b1_character_upper_body()
         } else if new_legs {
             nvwa_core::CharacterProfile::b1_character_legs()
