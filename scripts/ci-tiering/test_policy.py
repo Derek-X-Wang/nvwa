@@ -242,10 +242,13 @@ class CompletionReport(unittest.TestCase):
                        'name': name, 'status': 'completed', 'conclusion': 'skipped'}
                       for i, name in enumerate(self.namespace['RETIRED_NAMES'])]
         for kind in ('required', 'background'):
-            for part in policy.MAC_PARTS:
+            for part in ('workspace', 'bridges'):
                 lane = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-{part}-{kind}')
                 title = lane.split('    name: ', 1)[1].split('\n', 1)[0]
                 self.assertIn(title, self.namespace['NAMES'])
+            bridge = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-bridges-{kind}')
+            self.assertIn(f'mac-mutation-{kind}', bridge)
+            self.assertIn('success() &&', bridge)
         self.assertNotIn('checkout', '\n'.join(line for line in workflow.splitlines() if not line.startswith('#')))
         self.assertNotIn('write', '\n'.join(line for line in workflow.splitlines() if line.strip().startswith(('actions:', 'contents:', 'pull-requests:', 'issues:'))))
 
@@ -487,7 +490,12 @@ class WorkflowContract(unittest.TestCase):
 
 
     def test_linux_mutation_copy_preserves_original_source_gate_bytes(self):
-        original = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()
+        source = (ROOT/'scripts/check-b1-motion-mutations.py').read_bytes()
+        import importlib.util
+        split_spec = importlib.util.spec_from_file_location('mac_split_contract', HERE/'mac_split_contract.py')
+        split_module = importlib.util.module_from_spec(split_spec)
+        split_spec.loader.exec_module(split_module)
+        original = split_module.project_input('scripts/check-b1-motion-mutations.py', self, source).decode()
         self.assertEqual(hashlib.sha256(original.encode()).hexdigest(),
                          '0ce06d27b941aac799537376378ffd214d1384a571fcf8b1fe657e82846c9a31')
         linux = (HERE/'linux_mutations.py').read_text()
