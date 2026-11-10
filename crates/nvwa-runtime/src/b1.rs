@@ -3641,13 +3641,18 @@ mod tests {
         open_ready(&mut app, SceneDocument::from_profile(
             nvwa_core::CharacterProfile::b1_character_arm_proportions()).unwrap());
         let old = b1_frame_snapshot(app.world()).unwrap();
-        let zero_doc = SceneDocument::from_profile(
-            nvwa_core::CharacterProfile::b1_character_hand_size()).unwrap();
+        let zero_doc =
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_hand_size())
+                .unwrap();
         open_ready(&mut app, zero_doc.clone());
         let zero = b1_frame_snapshot(app.world()).unwrap();
         assert_eq!(old["bones"], zero["bones"]);
-        for (before, after) in old["parts"].as_array().unwrap().iter()
-            .zip(zero["parts"].as_array().unwrap()) {
+        for (before, after) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
             assert_eq!(before["positions"], after["positions"]);
             assert_eq!(before["rest_positions"], after["rest_positions"]);
         }
@@ -3657,19 +3662,29 @@ mod tests {
                 doc.character.parameters.insert(key.into(), value);
                 open_ready(&mut app, doc.clone());
                 let frame = b1_frame_snapshot(app.world()).unwrap();
-                assert_ne!(frame["parts"][0]["positions"], zero["parts"][0]["positions"],
-                    "{key} {value} must alter actual body vertices");
+                assert_ne!(
+                    frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                    "{key} {value} must alter actual body vertices"
+                );
                 assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
                 for bone in frame["bones"].as_array().unwrap() {
                     for matrix in [&bone["rest"], &bone["posed"]] {
-                        assert!(matrix.as_array().unwrap().iter()
-                            .all(|v| v.as_f64().is_some_and(f64::is_finite)));
+                        assert!(
+                            matrix
+                                .as_array()
+                                .unwrap()
+                                .iter()
+                                .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                        );
                     }
                 }
                 doc.character.diagnostic_pose = Some("elbow".into());
                 open_ready(&mut app, doc);
                 let posed = b1_frame_snapshot(app.world()).unwrap();
-                assert_ne!(frame["parts"][0]["positions"], posed["parts"][0]["positions"]);
+                assert_ne!(
+                    frame["parts"][0]["positions"],
+                    posed["parts"][0]["positions"]
+                );
             }
         }
     }

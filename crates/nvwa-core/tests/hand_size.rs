@@ -37,7 +37,10 @@ fn hand_size_profile_preserves_v9_and_rejects_forged_identity() {
         );
     }
     let work = SceneDocument::from_profile(new).unwrap();
-    assert_eq!(work.profile.asset_path, "characters/mpfb-b1-v11/manifest.json");
+    assert_eq!(
+        work.profile.asset_path,
+        "characters/mpfb-b1-v11/manifest.json"
+    );
     assert_eq!(
         SceneDocument::from_json(&work.to_json().unwrap()).unwrap(),
         work

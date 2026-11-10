@@ -832,18 +832,17 @@ impl CharacterProfile {
         profile.id = B1_HAND_SIZE_PROFILE_ID.into();
         profile.asset_path = B1_V11_ASSET_PATH.into();
         profile.asset_sha256 = B1_V11_ASSET_MANIFEST_SHA256.into();
-        profile.parameters.extend(
-            B1_HAND_SIZE_PARAMETER_TARGETS[23..]
-                .iter()
-                .enumerate()
-                .map(|(offset, target)| ParameterSpec {
+        profile
+            .parameters
+            .extend(B1_HAND_SIZE_PARAMETER_TARGETS[23..].iter().enumerate().map(
+                |(offset, target)| ParameterSpec {
                     id: target.id.into(),
                     morph_index: 23 + offset,
                     min: -1.0,
                     max: 1.0,
                     default: 0.0,
-                }),
-        );
+                },
+            ));
         profile
     }
     /// New immutable finite running profile on the exact existing V4 asset set.
