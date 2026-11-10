@@ -391,6 +391,7 @@ class WorkflowContract(unittest.TestCase):
             self.assertNotIn('actions/cache/', lane)
             bridge = job(workflow, f'mac-bridges-{kind}')
             self.assertIn(f'needs: [classify, mac-appearance-{kind}, mac-mutation-{kind}]', bridge)
+            self.assertIn('      - name: Require appearance and mutation evidence\n        shell: bash\n', bridge)
             self.assertIn('APPEARANCE_RESULT:', bridge)
             self.assertIn('MUTATION_RESULT:', bridge)
             self.assertIn('test "$APPEARANCE_RESULT" = success', bridge)

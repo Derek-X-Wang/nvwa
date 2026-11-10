@@ -398,6 +398,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Require appearance and mutation evidence
+        shell: bash
         env:
           APPEARANCE_RESULT: ${{ needs.mac-appearance-required.result }}
           MUTATION_RESULT: ${{ needs.mac-mutation-required.result }}
@@ -520,6 +521,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Require appearance and mutation evidence
+        shell: bash
         env:
           APPEARANCE_RESULT: ${{ needs.mac-appearance-background.result }}
           MUTATION_RESULT: ${{ needs.mac-mutation-background.result }}
