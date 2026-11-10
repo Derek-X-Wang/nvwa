@@ -28,6 +28,12 @@ jobs:
           REPO = 'Derek-X-Wang/nvwa'
           NAMES = tuple(f'Complete Mac {part} {kind}' for kind in ('required', 'background')
                         for part in ('Workspace and CPU', 'Appearance and mutation'))
+          LEGACY_NAMES = ('Core, CLI, and diagnostic controls',
+                          'Linux B1 source regression and viewer checks',
+                          'macOS CPU tests and Wasm compile check',
+                          'macOS native target cache warm trial')
+          LEGACY_COMPLETE = 'macOS CPU tests and Wasm compile check'
+          ROLLOUT_UTC = '2026-11-09T22:52:38Z'
 
           def identity(event):
               run = event['workflow_run']
@@ -65,18 +71,34 @@ jobs:
                   raise ValueError('foreign job identity')
               return jobs
 
-          def result(jobs):
-              states = []
-              for name in NAMES:
-                  matches = [j for j in jobs if j['name'] == name]
-                  if len(matches) != 1 or matches[0]['status'] != 'completed':
-                      states.append('missing-or-ambiguous')
-                  else:
-                      state = matches[0]['conclusion']
-                      states.append(state if state in ('success', 'skipped', 'failure', 'cancelled', 'timed_out', 'action_required', 'neutral', 'stale') else 'unknown')
-              required, background = states[:2], states[2:]
-              return states, ((required == ['success'] * 2 and background == ['skipped'] * 2)
-                              or (required == ['skipped'] * 2 and background == ['success'] * 2))
+          def result(jobs, run=None):
+              names = [j.get('name') for j in jobs]
+              if any(name in NAMES for name in names):
+                  states = []
+                  for name in NAMES:
+                      matches = [j for j in jobs if j['name'] == name]
+                      if len(matches) != 1 or matches[0]['status'] != 'completed':
+                          states.append('missing-or-ambiguous')
+                      else:
+                          state = matches[0]['conclusion']
+                          states.append(state if state in ('success', 'skipped', 'failure', 'cancelled', 'timed_out', 'action_required', 'neutral', 'stale') else 'unknown')
+                  required, background = states[:2], states[2:]
+                  passed = ((required == ['success'] * 2 and background == ['skipped'] * 2)
+                            or (required == ['skipped'] * 2 and background == ['success'] * 2))
+                  return states, passed, NAMES
+              # Only runs started before the split reached main may use the exact old
+              # four-job topology. A later missing split is UNKNOWN, never legacy green.
+              created = run.get('created_at') if isinstance(run, dict) else None
+              historical = (isinstance(created, str)
+                            and re.fullmatch(r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z', created)
+                            and created < ROLLOUT_UTC)
+              if not historical or sorted(names) != sorted(LEGACY_NAMES):
+                  return ['unknown'], False, ('Mac topology',)
+              legacy = next(j for j in jobs if j['name'] == LEGACY_COMPLETE)
+              state = (legacy['conclusion'] if legacy['status'] == 'completed'
+                       and legacy['conclusion'] in ('success', 'skipped', 'failure', 'cancelled', 'timed_out', 'action_required', 'neutral', 'stale')
+                       else 'unknown')
+              return [state], state == 'success', (LEGACY_COMPLETE,)
 
           def main():
               run = identity(json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text()))
@@ -98,8 +120,8 @@ jobs:
                       raise ValueError('oversize response')
                   return json.loads(raw)
               try:
-                  states, passed = result(collect(run, fetch))
-                  summary += [f'- {name}: **{state}**' for name, state in zip(NAMES, states)]
+                  states, passed, labels = result(collect(run, fetch), run)
+                  summary += [f'- {name}: **{state}**' for name, state in zip(labels, states)]
               except Exception:
                   summary += ['Mac evidence: **UNKNOWN — metadata retrieval failed**.']
                   passed = False

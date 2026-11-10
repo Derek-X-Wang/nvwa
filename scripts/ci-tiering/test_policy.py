@@ -285,6 +285,27 @@ class CompletionReport(unittest.TestCase):
         self.assertFalse(self.namespace['result'](self.jobs*2)[1])
         self.assertFalse(self.namespace['result']([{**j, 'conclusion': 'success'} for j in self.jobs])[1])
 
+    def test_pre_rollout_legacy_requires_exact_inventory_and_success(self):
+        names = self.namespace['LEGACY_NAMES']
+        old_run = {**self.run, 'created_at': '2026-11-09T22:16:37Z'}
+        old_jobs = [{'id': i+1, 'run_id': 123, 'head_sha': 'a'*40, 'name': name,
+                     'status': 'completed', 'conclusion': 'success' if name == names[2] else 'skipped'}
+                    for i, name in enumerate(names)]
+        result = self.namespace['result']
+        self.assertTrue(result(old_jobs, old_run)[1])
+        for state in ('failure', 'cancelled', 'timed_out', 'skipped', None):
+            altered = [{**j} for j in old_jobs]
+            altered[2]['conclusion'] = state
+            self.assertFalse(result(altered, old_run)[1], state)
+        for altered in (old_jobs[:2], old_jobs + [old_jobs[2]],
+                        old_jobs + [{**old_jobs[0], 'id': 99, 'name': 'unexpected'}]):
+            self.assertFalse(result(altered, old_run)[1])
+        for created in ('2026-11-09T22:52:38Z', '2026-11-10T00:00:00Z', 'bad', None):
+            self.assertFalse(result(old_jobs, {**old_run, 'created_at': created})[1])
+        self.assertFalse(result(old_jobs)[1])
+        # A split run begun before rollout still uses the four current results.
+        self.assertTrue(result(self.jobs, old_run)[1])
+
 
 class WorkflowContract(unittest.TestCase):
     def test_original_full_mac_commands_and_budget_remain_exact(self):

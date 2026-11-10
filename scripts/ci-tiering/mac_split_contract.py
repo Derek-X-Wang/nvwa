@@ -71,7 +71,22 @@ V5_INPUTS = {
     '.github/workflows/ci-mac-report.yml': ('mac-matrix-v4-report.yml', 'fb2c079e8852d73ea0f4121d4b67c75bc96f05f531d590dc93ad0cdc31675be6'),
 }
 
+V6_INPUTS = {
+    '.github/workflows/ci-mac-report.yml': ('mac-followup-v5-report.yml',
+        '963ec81ec70f43518bc5176d6848aa636aac30fca0575aa61838a22a14bfebb1',
+        'fb2c079e8852d73ea0f4121d4b67c75bc96f05f531d590dc93ad0cdc31675be6'),
+    'scripts/ci-tiering/test_policy.py': ('mac-followup-v5-test_policy.py',
+        '72fb1c86ea4019735e334ab4ccffeca6e55bafe671202f6371c0253a1b438c37',
+        'e85ebea2d0fa8cba5207ae5c50159334d4f9884395893c20fd3da76f8dd6e7ba'),
+}
+
 def project_input(name, checks, data):
+    if name in V6_INPUTS:
+        snapshot, current_sha, previous_sha = V6_INPUTS[name]
+        checks.assertEqual(hashlib.sha256(data).hexdigest(), current_sha, name)
+        previous = (ROOT/'scripts/ci-tiering'/snapshot).read_bytes()
+        checks.assertEqual(hashlib.sha256(previous).hexdigest(), previous_sha, snapshot)
+        data = previous
     if name in V5_INPUTS:
         snapshot, current_sha = V5_INPUTS[name]
         checks.assertEqual(hashlib.sha256(data).hexdigest(), current_sha, name)
