@@ -338,3 +338,28 @@ CI gate直接要求success。mutation12分钟、矩阵执行步骤20分钟及各
 上传，可能挤压它自己的75分钟余量；新runner和串行交接也增加总耗时／成本。
 必须以新精确head正式CI验证，不能将静态合同或先前局部成功当成验收。
 历史消费者先认证交接拓扑与原命令，再还原旧整工作流及原哈希。
+
+
+## Mac 生产 mutation 分组（2026-11-10）
+
+[#158 合并后 main 自然运行 42842699353](https://github.com/Derek-X-Wang/nvwa/actions/runs/42842699353)
+的完整 Mac appearance 作业先通过六个原有桥接图，随后三类生产源码
+mutation 在原 12 分钟步骤上限取消。日志显示 Cargo/rustc 尚在执行，
+没有完整的红测／恢复绿测摘要；timing report 因命令记录不完整也正确失败。
+Required gate、Mac 结果报告和后续发布证据保持红色。此前同一步骤在
+[#158 PR 运行 42829525866](https://github.com/Derek-X-Wang/nvwa/actions/runs/42829525866)
+耗时 10 分 25 秒通过，故仅靠偶然快一次不足以保证稳定。
+
+候选把原三类红绿见证分为两组：arm-pose 加 garment-upload，以及
+foot-counterrotation。两组在独立 macOS 15 runner 并行运行；脚本未指定组时
+仍执行原全部三类。每组保留原源码 seam、预期失败断言、原字节恢复、
+真实恢复绿测和日志；Cargo workspace lib locked/offline 命令不变。
+每个 mutation 步骤仍限 12 分钟，独立作业仍限 75 分钟，关闭矩阵提前
+取消以让一组失败时另一组继续记录结果。appearance 桥接在对应 mutation 矩阵成功后运行，workspace／CPU／
+单帧 Mac 衣物见证仍独立运行。桥接作业保留原显示名称并明确依赖 mutation，
+因此旧的默认分支完成报告也不会在 mutation 失败时误报成功；运行内报告会
+逐项列出新分组。必需场景的矩阵总结果必须成功，
+普通 PR 的后台矩阵必须自动报告真实结果；缺失、失败、取消与混合分支均
+不得转绿。此分组增加 runner 及冷编译成本，关键路径缩短与实际余量仍须
+精确 head 的 hosted CI 实测。历史合同先认证新增分组并还原原工作流，再
+核对原命令、预算与负向控制；不修改安全设置或原失败记录。

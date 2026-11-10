@@ -19,6 +19,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', required=True, type=Path)
     parser.add_argument('--disposable-checkout', action='store_true', required=True)
+    parser.add_argument('--case-group', choices=('all', 'arm-and-garment', 'foot'), default='all')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     out = args.out.resolve()
@@ -44,6 +45,14 @@ def main():
         ], 'b1::tests::authored_knee_counterrotation_keeps_actual_early_and_full_cycle_feet_above_floor',
          'actual moving foot dips below floor:'),
     ]
+    selected = {
+        'arm-and-garment': {'omit-authored-arm-pose', 'stale-garment-upload'},
+        'foot': {'omit-authored-foot-counterrotation'},
+    }.get(args.case_group)
+    if selected is not None:
+        cases = [case for case in cases if case[0] in selected]
+        if len(cases) != len(selected):
+            raise ValueError('mutation case group must cover its exact named cases')
     results = []
     for name, relative, replacements, test_name, intended_assertion in cases:
         command = command_prefix + [test_name, '--', '--exact', '--test-threads=1', '--nocapture']

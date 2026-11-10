@@ -350,15 +350,17 @@ class WorkflowContract(unittest.TestCase):
             return old[old.index('      - name: '+start+'\n'):old.index('      - name: '+end+'\n')]
         expected = {
             'workspace': section('Run workspace CPU tests', 'Check appearance quality and production acceptance bridges'),
-            'bridges': section('Check appearance quality and production acceptance bridges', 'Execute the actual B1 continuous motion matrix'),
+            'bridges': section('Check appearance quality and production acceptance bridges', 'Check B1 production-source mutation witnesses'),
         }
+        mutation = section('Check B1 production-source mutation witnesses', 'Execute the actual B1 continuous motion matrix')
         matrix = section('Execute the actual B1 continuous motion matrix', 'Report existing command timing')
         for kind in ['required', 'background']:
             for part, body in expected.items():
                 lane = job(workflow, f'mac-{part}-{kind}')
                 self.assertEqual(lane.count(body), 1)
                 self.assertIn('    runs-on: macos-15\n    timeout-minutes: 75\n', lane)
-                self.assertIn("    if: ${{ needs.classify.outputs.full_required == '"+('true' if kind=='required' else 'false')+"' }}\n", lane)
+                condition = "needs.classify.outputs.full_required == '"+('true' if kind=='required' else 'false')+"'"
+                self.assertIn('    if: ${{ '+('success() && ' if part == 'bridges' else '')+condition+' }}\n', lane)
                 self.assertNotIn('continue-on-error', lane)
                 self.assertNotIn('policy.py finish', lane)
                 self.assertNotIn('actions/cache/', lane)
@@ -375,7 +377,20 @@ class WorkflowContract(unittest.TestCase):
                 else:
                     self.assertNotIn('mac_garment_witness.py', lane)
         self.assertIn('bash experiments/27-ci-baseline/check.sh native', expected['workspace'])
-        self.assertIn('timeout-minutes: 12', expected['bridges'])
+        self.assertIn('timeout-minutes: 12', mutation)
+        for kind in ('required', 'background'):
+            lane = job(workflow, f'mac-mutation-{kind}')
+            self.assertIn('    runs-on: macos-15\n    timeout-minutes: 75\n', lane)
+            self.assertIn('fail-fast: false', lane)
+            self.assertIn('group: [arm-and-garment, foot]', lane)
+            self.assertIn('--case-group ${{ matrix.group }} --disposable-checkout', lane)
+            self.assertIn('timeout-minutes: 12', lane)
+            self.assertNotIn('continue-on-error', lane)
+            self.assertNotIn('actions/cache/', lane)
+            self.assertNotIn(mutation, job(workflow, f'mac-bridges-{kind}'))
+        source = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()
+        self.assertIn("'arm-and-garment': {'omit-authored-arm-pose', 'stale-garment-upload'}", source)
+        self.assertIn("'foot': {'omit-authored-foot-counterrotation'}", source)
         self.assertIn('timeout-minutes: 20', matrix)
         for name in ('mac-matrix-required', 'mac-matrix-background'):
             self.assertNotIn('  '+name+':\n', workflow)
@@ -383,12 +398,12 @@ class WorkflowContract(unittest.TestCase):
         self.assertIn('run_matrix.py', linux)
         self.assertIn('linux_garment_controls.py', linux)
         gate = job(workflow, 'required-gate')
-        self.assertIn('mac-workspace-required, mac-bridges-required]', gate)
+        self.assertIn('mac-workspace-required, mac-bridges-required, mac-mutation-required]', gate)
         self.assertNotIn('mac-matrix', gate)
         self.assertNotIn('mac-workspace-background', gate)
         report = job(workflow, 'full-mac-report')
         for kind in ['required', 'background']:
-            for part in expected:
+            for part in (*expected, 'mutation'):
                 self.assertIn('mac-'+part+'-'+kind, report)
         self.assertNotIn('mac-matrix', report)
 

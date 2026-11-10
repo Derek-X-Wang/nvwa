@@ -55,7 +55,7 @@ class PortableSplitControls(unittest.TestCase):
         required = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-matrix', 'linux-check', 'mac-smoke', 'b1-source-regression')
         self.assertEqual(policy.REQUIRED, required)
         gate = job(workflow, 'required-gate')
-        self.assertIn('    needs: ['+', '.join(required)+', mac-workspace-required, mac-bridges-required]\n', gate)
+        self.assertIn('    needs: ['+', '.join(required)+', mac-workspace-required, mac-bridges-required, mac-mutation-required]\n', gate)
         self.assertIn('    if: ${{ always() }}\n', gate)
         self.assertNotIn('continue-on-error', gate)
 

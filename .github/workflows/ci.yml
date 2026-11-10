@@ -324,8 +324,8 @@ jobs:
       # native-cache-trial begin
   mac-bridges-required:
     name: Complete Mac Appearance and mutation required
-    needs: [classify, portable, portable-eye]
-    if: ${{ needs.classify.outputs.full_required == 'true' }}
+    needs: [classify, portable, portable-eye, mac-mutation-required]
+    if: ${{ success() && needs.classify.outputs.full_required == 'true' }}
     runs-on: macos-15
     timeout-minutes: 75
     env:
@@ -357,14 +357,41 @@ jobs:
           cargo test --manifest-path experiments/73-high-poly-eyes/Cargo.toml --lib --locked --offline
           cargo fmt --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --package b1-shoulder-source-corrective --check
           cargo test --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --locked --offline
-      - name: Check B1 production-source mutation witnesses
-        timeout-minutes: 12
-        run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
+  mac-mutation-required:
+    name: Complete Mac production mutation (${{ matrix.group }}) required
+    needs: [classify, portable, portable-eye]
+    if: ${{ needs.classify.outputs.full_required == 'true' }}
+    runs-on: macos-15
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [arm-and-garment, foot]
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Confirm native Mac host
+        run: test "$(uname -s)" = Darwin && test "$(uname -m)" = arm64
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Fetch locked production mutation graph
+        run: cargo fetch --locked
+      - name: Check B1 production-source mutation witnesses
+        timeout-minutes: 12
+        run: python3 -B scripts/check-b1-motion-mutations.py --case-group ${{ matrix.group }} --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
   mac-workspace-background:
     name: Complete Mac Workspace and CPU background
     needs: [classify, portable, portable-eye]
@@ -406,8 +433,8 @@ jobs:
       # native-cache-trial begin
   mac-bridges-background:
     name: Complete Mac Appearance and mutation background
-    needs: [classify, portable, portable-eye]
-    if: ${{ needs.classify.outputs.full_required == 'false' }}
+    needs: [classify, portable, portable-eye, mac-mutation-background]
+    if: ${{ success() && needs.classify.outputs.full_required == 'false' }}
     runs-on: macos-15
     timeout-minutes: 75
     env:
@@ -439,14 +466,41 @@ jobs:
           cargo test --manifest-path experiments/73-high-poly-eyes/Cargo.toml --lib --locked --offline
           cargo fmt --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --package b1-shoulder-source-corrective --check
           cargo test --manifest-path experiments/79-shoulder-pose-corrective/Cargo.toml --lib --locked --offline
-      - name: Check B1 production-source mutation witnesses
-        timeout-minutes: 12
-        run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
+  mac-mutation-background:
+    name: Complete Mac production mutation (${{ matrix.group }}) background
+    needs: [classify, portable, portable-eye]
+    if: ${{ needs.classify.outputs.full_required == 'false' }}
+    runs-on: macos-15
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        group: [arm-and-garment, foot]
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Confirm native Mac host
+        run: test "$(uname -s)" = Darwin && test "$(uname -m)" = arm64
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Fetch locked production mutation graph
+        run: cargo fetch --locked
+      - name: Check B1 production-source mutation witnesses
+        timeout-minutes: 12
+        run: python3 -B scripts/check-b1-motion-mutations.py --case-group ${{ matrix.group }} --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
   mac-full-background:
     name: Complete Mac background evidence
     # Reject cheap portable failures before spending a cold graphical compile.
@@ -886,7 +940,7 @@ jobs:
   required-gate:
     name: Required CI gate
     if: ${{ always() }}
-    needs: [classify, portable, portable-eye, linux-shared, linux-matrix, linux-check, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required]
+    needs: [classify, portable, portable-eye, linux-shared, linux-matrix, linux-check, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required, mac-mutation-required]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -900,7 +954,7 @@ jobs:
   full-mac-report:
     name: Complete Mac result report
     if: ${{ always() }}
-    needs: [classify, mac-workspace-required, mac-bridges-required, mac-workspace-background, mac-bridges-background]
+    needs: [classify, mac-workspace-required, mac-bridges-required, mac-workspace-background, mac-bridges-background, mac-mutation-required, mac-mutation-background]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

@@ -20,6 +20,15 @@ V5_SOURCE_DIGESTS = {
     'experiments/60-b1-continuous-motion/src/bin/matrix.rs': '2922ef91088120e8ecbc102264db4127ae76544dd633a5cc75baf43c0b0a1482',
 }
 
+V9_MUTATION_JOB_DIGESTS = {
+    'mac-mutation-required': 'bf118326915a050e9f1ce27f50301ccf06a0cc2fd5b2db0836f76bf1f1c57c94',
+    'mac-mutation-background': '8a4fc030d6f0089a3d773873b00b857bd8e1729cf606facd8bf350693749ca16',
+}
+V9_MUTATION_STEP = '''      - name: Check B1 production-source mutation witnesses
+        timeout-minutes: 12
+        run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+'''
+
 def job(text, name):
     found = re.findall(r'(?ms)^  '+re.escape(name)+r':\n.*?(?=^  [a-z][a-z0-9-]*:\n|\Z)', text)
     if len(found) != 1:
@@ -27,6 +36,37 @@ def job(text, name):
     return found[0]
 
 def project(workflow, checks):
+    # V9: the same three semantic red/green witnesses run in two parallel
+    # Mac matrix slices. Authenticate exact jobs, then restore v8 topology.
+    for name, digest in V9_MUTATION_JOB_DIGESTS.items():
+        block = job(workflow, name)
+        checks.assertEqual(hashlib.sha256(block.encode()).hexdigest(), digest, name)
+        workflow = workflow.replace(block, '', 1)
+    for kind in ('required', 'background'):
+        name = 'mac-bridges-' + kind
+        block = job(workflow, name)
+        marker = '      - name: Report existing command timing\n'
+        checks.assertEqual(block.count(marker), 1, name)
+        checks.assertNotIn(V9_MUTATION_STEP, block)
+        old_dependency = ("    needs: [classify, portable, portable-eye, mac-mutation-"+kind+"]\n"
+                          "    if: ${{ success() && needs.classify.outputs.full_required == '"+("true" if kind == "required" else "false")+"' }}\n")
+        old_condition = ("    needs: [classify, portable, portable-eye]\n"
+                         "    if: ${{ needs.classify.outputs.full_required == '"+("true" if kind == "required" else "false")+"' }}\n")
+        checks.assertEqual(block.count(old_dependency), 1, name)
+        restored = block.replace(old_dependency, old_condition, 1)
+        workflow = workflow.replace(block, restored.replace(marker, V9_MUTATION_STEP + marker, 1), 1)
+    gate = job(workflow, 'required-gate')
+    new_gate = 'mac-workspace-required, mac-bridges-required, mac-mutation-required]'
+    checks.assertEqual(gate.count(new_gate), 1)
+    workflow = workflow.replace(gate, gate.replace(new_gate, 'mac-workspace-required, mac-bridges-required]', 1), 1)
+    report = job(workflow, 'full-mac-report')
+    new_report = 'mac-workspace-background, mac-bridges-background, mac-mutation-required, mac-mutation-background]'
+    checks.assertEqual(report.count(new_report), 1)
+    workflow = workflow.replace(report, report.replace(new_report, 'mac-workspace-background, mac-bridges-background]', 1), 1)
+    script = (ROOT/'scripts/check-b1-motion-mutations.py').read_bytes()
+    checks.assertEqual(hashlib.sha256(script).hexdigest(), '238c9f793af3422570f1c35c53cda3e629e2847ceeebda5e92bb8ff9fe83eea0')
+    old_script = project_input('scripts/check-b1-motion-mutations.py', checks, script)
+    checks.assertEqual(hashlib.sha256(old_script).hexdigest(), '0ce06d27b941aac799537376378ffd214d1384a571fcf8b1fe657e82846c9a31')
     for name, digest in V5_SOURCE_DIGESTS.items():
         checks.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(), digest, name)
     v4 = (ROOT/'scripts/ci-tiering/mac-matrix-v4-ci.yml').read_text()
@@ -121,6 +161,28 @@ V6_INPUTS = {
         'e85ebea2d0fa8cba5207ae5c50159334d4f9884395893c20fd3da76f8dd6e7ba'),
 }
 
+V9_REPLACEMENTS = {
+    "scripts/check-b1-motion-mutations.py": [
+        (b"    parser.add_argument('--case-group', choices=('all', 'arm-and-garment', 'foot'), default='all')\n", b""),
+        (b"    selected = {\n        'arm-and-garment': {'omit-authored-arm-pose', 'stale-garment-upload'},\n        'foot': {'omit-authored-foot-counterrotation'},\n    }.get(args.case_group)\n    if selected is not None:\n        cases = [case for case in cases if case[0] in selected]\n        if len(cases) != len(selected):\n            raise ValueError('mutation case group must cover its exact named cases')\n", b""),
+    ],
+    "scripts/ci-tiering/policy.py": [
+        (b"MAC_PARTS = ('workspace', 'bridges', 'mutation')\n", b"MAC_PARTS = ('workspace', 'bridges')\n"),
+        (b"    expected = (['success'] * len(MAC_PARTS), ['skipped'] * len(MAC_PARTS)) if full == 'true' else (['skipped'] * len(MAC_PARTS), ['success'] * len(MAC_PARTS))\n", b"    expected = (['success'] * 2, ['skipped'] * 2) if full == 'true' else (['skipped'] * 2, ['success'] * 2)\n"),
+    ],
+    "scripts/ci-tiering/test_portable_split.py": [
+        (b"        self.assertIn('    needs: ['+', '.join(required)+', mac-workspace-required, mac-bridges-required, mac-mutation-required]\\n', gate)\n", b"        self.assertIn('    needs: ['+', '.join(required)+', mac-workspace-required, mac-bridges-required]\\n', gate)\n"),
+    ],
+    "scripts/ci-tiering/test_policy.py": [
+        (b"            'bridges': section('Check appearance quality and production acceptance bridges', 'Check B1 production-source mutation witnesses'),\n", b"            'bridges': section('Check appearance quality and production acceptance bridges', 'Execute the actual B1 continuous motion matrix'),\n"),
+        (b"        mutation = section('Check B1 production-source mutation witnesses', 'Execute the actual B1 continuous motion matrix')\n", b""),
+        (b"                condition = \"needs.classify.outputs.full_required == '\"+('true' if kind=='required' else 'false')+\"'\"\n                self.assertIn('    if: ${{ '+('success() && ' if part == 'bridges' else '')+condition+' }}\\n', lane)\n", b"                self.assertIn(\"    if: ${{ needs.classify.outputs.full_required == '\"+('true' if kind=='required' else 'false')+\"' }}\\n\", lane)\n"),
+        (b"        self.assertIn('timeout-minutes: 12', mutation)\n        for kind in ('required', 'background'):\n            lane = job(workflow, f'mac-mutation-{kind}')\n            self.assertIn('    runs-on: macos-15\\n    timeout-minutes: 75\\n', lane)\n            self.assertIn('fail-fast: false', lane)\n            self.assertIn('group: [arm-and-garment, foot]', lane)\n            self.assertIn('--case-group ${{ matrix.group }} --disposable-checkout', lane)\n            self.assertIn('timeout-minutes: 12', lane)\n            self.assertNotIn('continue-on-error', lane)\n            self.assertNotIn('actions/cache/', lane)\n            self.assertNotIn(mutation, job(workflow, f'mac-bridges-{kind}'))\n        source = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()\n        self.assertIn(\"'arm-and-garment': {'omit-authored-arm-pose', 'stale-garment-upload'}\", source)\n        self.assertIn(\"'foot': {'omit-authored-foot-counterrotation'}\", source)\n", b"        self.assertIn('timeout-minutes: 12', expected['bridges'])\n"),
+        (b"        self.assertIn('mac-workspace-required, mac-bridges-required, mac-mutation-required]', gate)\n", b"        self.assertIn('mac-workspace-required, mac-bridges-required]', gate)\n"),
+        (b"            for part in (*expected, 'mutation'):\n", b"            for part in expected:\n"),
+    ],
+}
+
 V8_REPLACEMENTS = {
     "scripts/ci-tiering/policy.py": [
         (b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-matrix', 'linux-check', 'mac-smoke', 'b1-source-regression')", b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-check', 'mac-smoke', 'b1-source-regression')"),
@@ -156,6 +218,9 @@ V7_REPLACEMENTS = {
 }
 
 def project_input(name, checks, data):
+    for current, previous in V9_REPLACEMENTS.get(name, []):
+        checks.assertEqual(data.count(current), 1, name)
+        data = data.replace(current, previous, 1)
     for current, previous in V8_REPLACEMENTS.get(name, []):
         checks.assertEqual(data.count(current), 1, name)
         data = data.replace(current, previous, 1)
