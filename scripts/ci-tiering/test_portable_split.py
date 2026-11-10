@@ -52,7 +52,7 @@ class PortableSplitControls(unittest.TestCase):
         for name in ['native-and-wasm', 'mac-full-background']:
             self.assertIn('    needs: [classify, portable, portable-eye]\n', job(workflow, name))
         self.assertIn('    needs: [portable, portable-eye]\n', job(workflow, 'b1-source-regression'))
-        required = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-check', 'mac-smoke', 'b1-source-regression')
+        required = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-matrix', 'linux-check', 'mac-smoke', 'b1-source-regression')
         self.assertEqual(policy.REQUIRED, required)
         gate = job(workflow, 'required-gate')
         self.assertIn('    needs: ['+', '.join(required)+', mac-workspace-required, mac-bridges-required]\n', gate)

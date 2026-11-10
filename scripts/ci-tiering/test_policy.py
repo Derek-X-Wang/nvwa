@@ -412,7 +412,7 @@ class WorkflowContract(unittest.TestCase):
         self.assertIn('"$(uname -s)" == Linux', linux)
         workflow = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-shared')
         self.assertIn('timeout-minutes: 12', workflow)
-        self.assertIn('timeout-minutes: 20', workflow)
+        self.assertNotIn('timeout-minutes: 20', workflow)
         self.assertIn('--linux-backend --disposable-checkout', workflow)
         self.assertNotIn('continue-on-error', workflow)
 
@@ -425,13 +425,51 @@ class WorkflowContract(unittest.TestCase):
         self.assertNotIn('actions/cache/', check)
         self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh check\n'), 1)
         self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh workspace\n'), 1)
-        self.assertIn('linux-shared, linux-check, mac-smoke',
+        self.assertIn('linux-shared, linux-matrix, linux-check, mac-smoke',
                       job((ROOT / '.github/workflows/ci.yml').read_text(), 'required-gate'))
         check_mode = linux[linux.index('  check)\n'):linux.index('  workspace)\n')]
         workspace_mode = linux[linux.index('  workspace)\n'):linux.index('  bridges)\n')]
         self.assertIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', check_mode)
         self.assertNotIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)
         self.assertIn('cargo test --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)
+        matrix = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-matrix')
+        self.assertIn('    needs: [classify, linux-shared]\n', matrix)
+        self.assertIn('    runs-on: ubuntu-24.04\n    timeout-minutes: 75\n', matrix)
+        self.assertIn("      CARGO_BUILD_JOBS: '1'\n", matrix)
+        self.assertIn('      - name: Complete 594-frame matrix and real garment controls\n        timeout-minutes: 20\n', matrix)
+        self.assertIn('run: bash scripts/ci-tiering/linux-matrix-run.sh\n', matrix)
+        self.assertIn('actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093', matrix)
+        self.assertIn('EXPECTED_MATRIX_SHA256: ${{ needs.linux-shared.outputs.matrix_sha256 }}', matrix)
+        self.assertNotIn('continue-on-error', matrix)
+        self.assertNotIn('actions/cache/', matrix)
+        self.assertNotIn('run: bash scripts/ci-tiering/linux-shared.sh matrix\n', workflow + check + matrix)
+        self.assertIn('bash scripts/ci-tiering/linux-shared.sh matrix-build\n', workflow)
+        self.assertIn('actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02', workflow)
+        self.assertIn('if-no-files-found: error', workflow)
+        self.assertIn('matrix_sha256: ${{ steps.motion-probe.outputs.matrix_sha256 }}', workflow)
+        source_linux = (HERE / 'linux-shared.sh').read_text()
+        self.assertEqual(source_linux.count('  matrix-build)\n'), 1)
+        build_mode = source_linux.split('  matrix-build)\n', 1)[1].split('  matrix)\n', 1)[0]
+        self.assertIn('cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml', build_mode)
+        self.assertIn('cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline --features bevy/x11', build_mode)
+        old_matrix = source_linux.split('  matrix)\n', 1)[1].split('    ;;\n', 1)[0]
+        runtime = old_matrix[old_matrix.index('    python3 -B experiments/60-'):]
+        expected_runtime = ''.join(line[4:] if line.startswith('    ') else line for line in runtime.splitlines(keepends=True))
+        runner = (HERE / 'linux-matrix-run.sh').read_text()
+        self.assertIn('"$(uname -s)" == Linux', runner)
+        self.assertIn('Matrix artifact digest mismatch', runner)
+        self.assertEqual(runner.split('trap verify_lock EXIT\n', 1)[1], expected_runtime + '\n')
+        if sys.platform.startswith('linux'):
+            with tempfile.TemporaryDirectory() as temp:
+                binary = Path(temp) / 'debug/matrix'
+                binary.parent.mkdir()
+                binary.write_bytes(b'wrong-matrix-artifact')
+                env = dict(os.environ, CARGO_TARGET_DIR=temp, EXPECTED_MATRIX_SHA256='0' * 64)
+                result = subprocess.run(['bash', str(HERE / 'linux-matrix-run.sh')],
+                                        env=env, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('Matrix artifact digest mismatch', result.stderr)
+
 
     def test_linux_mutation_copy_preserves_original_source_gate_bytes(self):
         original = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()
