@@ -443,7 +443,7 @@ class WorkflowContract(unittest.TestCase):
         self.assertNotIn('run: bash scripts/ci-tiering/linux-shared.sh matrix\n', workflow + check)
         self.assertEqual((workflow + check + matrix).count('run: bash scripts/ci-tiering/linux-shared.sh matrix\n'), 1)
         self.assertIn('run_matrix.py', linux[linux.index('  matrix)\n'):])
-        self.assertIn('linux_garment_controls.py', linux[linux.index('  matrix)\n'):])
+        self.assertIn(linux_entry, (HERE / 'linux-shared.sh').read_text().split('  matrix)\n', 1)[1])
 
 
     def test_linux_mutation_copy_preserves_original_source_gate_bytes(self):
