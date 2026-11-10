@@ -3,6 +3,7 @@ from frozen_context import has_waist_inputs,_waist_context,waist_regular_file,WA
 from frozen_context import _combined_context,COMBINED_CONTEXT_ID
 from frozen_context import has_leg_inputs,leg_source_context,LEG_CONTEXT_ID,has_upper_inputs,upper_source_context,UPPER_CONTEXT_ID
 from frozen_context import has_hip_inputs,hip_source_context,HIP_CONTEXT_ID
+from frozen_context import has_arm_inputs,arm_source_context,ARM_CONTEXT_ID
 from frozen_context import has_cpu_inputs,_cpu_context,cpu_regular_file,CPU_CONTEXT_ID,CPU_ADDITIONS,check_cpu_preexisting,_pre_cpu_sources
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
@@ -90,10 +91,13 @@ class SourceContract(unittest.TestCase):
    legs=has_leg_inputs(ROOT)
    upper=has_upper_inputs(ROOT)
    hip=has_hip_inputs(ROOT)
-   if reference_motion or waist or legs or upper or hip or has_cpu_inputs(ROOT):
+   arm=has_arm_inputs(ROOT)
+   if reference_motion or waist or legs or upper or hip or arm or has_cpu_inputs(ROOT):
     previous=_motion_query_source_context(EXP,_running_source_context(EXP,inputs,contexts))
     cpu=_cpu_context(EXP,previous[1])
-    if hip:
+    if arm:
+     product=arm_source_context(EXP,cpu)
+    elif hip:
      product=hip_source_context(EXP,cpu)
     elif upper:
      product=upper_source_context(EXP,cpu)
@@ -142,7 +146,9 @@ class SourceContract(unittest.TestCase):
      context,selected=select_context(actual,[motion_query])
      check_cpu_preexisting(ROOT,_pre_cpu_sources(EXP,motion_query[1]))
   except ValueError as error:self.fail(str(error))
-  if context == HIP_CONTEXT_ID:
+  if context == ARM_CONTEXT_ID:
+   self.assertEqual(len(selected),812,'FROZEN-INPUTS.json arm complete source set required')
+  elif context == HIP_CONTEXT_ID:
    self.assertEqual(len(selected),689,'FROZEN-INPUTS.json hip complete source set required')
   elif context == UPPER_CONTEXT_ID:
    self.assertEqual(len(selected),580,'FROZEN-INPUTS.json upper complete source set required')

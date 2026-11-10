@@ -24,11 +24,14 @@ class HipContourSourceContext(unittest.TestCase):
         leg = CONTEXT._leg_context(HERE, combined)
         cls.predecessor = CONTEXT._upper_context(HERE, leg)
         cls.current = CONTEXT._hip_context(HERE, cls.predecessor)
+        if CONTEXT.has_arm_inputs(ROOT):
+            CONTEXT._pre_arm_sources(HERE, cls.current)
 
     def test_exact_union_preserves_v7(self):
         self.assertEqual(self.predecessor[0], CONTEXT.UPPER_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 292)
-        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], CONTEXT.HIP_CONTEXT_ID)
+        expected = CONTEXT.ARM_CONTEXT_ID if CONTEXT.has_arm_inputs(ROOT) else CONTEXT.HIP_CONTEXT_ID
+        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], expected)
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},
                          set(CONTEXT.HIP_CHANGED))
@@ -41,7 +44,9 @@ class HipContourSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 destination = root / name
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, destination)
+                historical = HERE / CONTEXT.ARM_FIXTURES / name
+                shutil.copyfile(historical if name in CONTEXT.ARM_CHANGED and historical.is_file()
+                                else ROOT / name, destination)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'], CONTEXT.HIP_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',
                          'assets/characters/mpfb-b1-v8/manifest.json',

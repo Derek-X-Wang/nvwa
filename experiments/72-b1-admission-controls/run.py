@@ -28,6 +28,7 @@ PACKAGE += ('input-context-v4.json', 'input-context-v5.json')
 PACKAGE += ('input-context-legs-v1.json', 'test_leg_context.py')
 PACKAGE += ('input-context-upper-body-v1.json', 'test_upper_body_context.py')
 PACKAGE += ('input-context-hip-contour-v1.json', 'test_hip_contour_context.py')
+PACKAGE += ('input-context-arm-proportions-v1.json', 'test_arm_proportions_context.py')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -696,6 +697,70 @@ HIP_NEW_CODE = ('crates/nvwa-cli/tests/hip_contour.rs', 'crates/nvwa-core/tests/
                 'scripts/build-hip-contour-v8.py')
 HIP_ASSET_PREFIX = 'assets/characters/mpfb-b1-v8/'
 
+ARM_CONTEXT_NAME = 'input-context-arm-proportions-v1.json'
+ARM_CONTEXT_SHA = '9b00a24d037abc21b3b13a21222ad1e1e37a9d307391f252276413b1f1c8835b'
+ARM_BASELINES_SHA = '2981c726a1ba8f83dad54529838c927de525d48a22881cb03e6a899c8f8e2337'
+ARM_CONTEXT_ID = 'b1-arm-proportions-product-v1'
+ARM_PREDECESSOR_COMMIT = 'ff536bc417ec5f8ff5311fe5f8e7a53c20226c03'
+ARM_FIXTURES = 'fixtures/pre-arm-proportions'
+ARM_CHANGED = HIP_CHANGED + ('docs/research/character-foundation/body-control-coverage.md',)
+ARM_NEW_CODE = ('crates/nvwa-cli/tests/arm_proportions.rs',
+                'crates/nvwa-core/tests/arm_proportions.rs',
+                'scripts/build-arm-proportions-v9.py')
+ARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v9/'
+
+
+def has_arm_inputs(root):
+    path = root / ARM_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def _pre_arm_sources(exp, previous):
+    manifest = source_file(exp, f'{ARM_FIXTURES}/manifest.json')
+    raw = manifest.read_bytes()
+    require(sha(raw) == ARM_BASELINES_SHA, 'arm predecessor manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == previous[0]
+            and value['source_commit'] == ARM_PREDECESSOR_COMMIT
+            and set(value['files']) == set(ARM_CHANGED),
+            'arm predecessor complete inventory required')
+    for name in ARM_CHANGED:
+        item = value['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{ARM_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'arm predecessor historical pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'arm predecessor bytes mismatch: ' + name)
+    fixture_root = exp / ARM_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(ARM_CHANGED),
+            'arm predecessor fixture inventory mismatch')
+
+
+def _arm_context(exp, previous):
+    _pre_arm_sources(exp, previous)
+    raw = source_file(exp, ARM_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == ARM_CONTEXT_SHA, 'arm source context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == ARM_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == ARM_PREDECESSOR_COMMIT
+            and set(previous[1]) <= set(files)
+            and len(files) == 524 and len(additions) == 123
+            and additions == {p for p in additions if p.startswith(ARM_ASSET_PREFIX)} | set(ARM_NEW_CODE)
+            and {p for p in previous[1] if files[p] != previous[1][p]} == set(ARM_CHANGED),
+            'arm source context exact union required')
+    return value['context'], files
+
 
 def has_hip_inputs(root):
     path = root / HIP_ASSET_PREFIX
@@ -864,7 +929,29 @@ def check_source_context(root, pins, historical_only=False):
         actual[relative] = file_sha(path)
     reference_motion = has_reference_motion_inputs(root)
     waist = has_waist_inputs(root)
-    if has_hip_inputs(root):
+    if has_arm_inputs(root):
+        require(not historical_only, 'source input context mismatch: arm source is not historical')
+        cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
+        leg = _leg_context(HERE, _combined_context(HERE, cpu))
+        upper = _upper_context(HERE, leg)
+        hip = _hip_context(HERE, upper)
+        context, expected = _arm_context(HERE, hip)
+        asset_root = root / ARM_ASSET_PREFIX
+        paths = list(asset_root.rglob('*'))
+        require(not asset_root.is_symlink()
+                and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                    == {p for p in expected if p.startswith(ARM_ASSET_PREFIX)},
+                'arm source asset inventory mismatch')
+        actual = {}
+        for relative, item in expected.items():
+            path = source_file(root, relative)
+            require(path.stat().st_size == item['bytes'],
+                    'arm source context byte count mismatch: ' + relative)
+            actual[relative] = file_sha(path)
+        require(actual == {name: item['sha256'] for name, item in expected.items()},
+                'source input context mismatch: exact arm source required')
+    elif has_hip_inputs(root):
         require(not historical_only, 'source input context mismatch: hip source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
         leg = _leg_context(HERE, _combined_context(HERE, cpu))

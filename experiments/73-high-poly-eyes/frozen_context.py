@@ -661,6 +661,36 @@ HIP_CONTEXT_NAME = '../72-b1-admission-controls/input-context-hip-contour-v1.jso
 HIP_CONTEXT_SHA = '441d9b64b08fc138a67ae13a88831f037082a60cdccb19eafa6876fc351baa38'
 HIP_CONTEXT_ID = 'b1-hip-contour-product-v1'
 
+ARM_CONTEXT_NAME = '../72-b1-admission-controls/input-context-arm-proportions-v1.json'
+ARM_CONTEXT_SHA = '9b00a24d037abc21b3b13a21222ad1e1e37a9d307391f252276413b1f1c8835b'
+ARM_CONTEXT_ID = 'b1-arm-proportions-product-v1'
+
+
+def has_arm_inputs(root):
+    return (root / 'assets/characters/mpfb-b1-v9').exists()
+
+
+def arm_source_context(exp, cpu):
+    """Admit only the exact v9 successor after the immutable v8 context."""
+    hip = hip_source_context(exp, cpu)
+    raw = regular_file(exp, ARM_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == ARM_CONTEXT_SHA,
+            'arm source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == ARM_CONTEXT_ID
+            and value['predecessor'] == HIP_CONTEXT_ID
+            and value['predecessor_commit'] == 'ff536bc417ec5f8ff5311fe5f8e7a53c20226c03',
+            'arm source context predecessor/version mismatch')
+    files = dict(hip[1]); files.update(value['files'])
+    require(len(value['files']) == 524 and len(files) == 812
+            and len(set(hip[1]) & set(value['files'])) == 401
+            and set(files) == set(hip[1]) | set(value['files']),
+            'arm source context complete union required')
+    return ARM_CONTEXT_ID, files
+
 
 def has_hip_inputs(root):
     return (root / 'assets/characters/mpfb-b1-v8').exists()
