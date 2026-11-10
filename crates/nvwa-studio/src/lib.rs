@@ -722,6 +722,7 @@ fn draw_editor_ui(
     let mut new_upper_body = false;
     let mut new_hip_contour = false;
     let mut new_arm_proportions = false;
+    let mut new_hand_size = false;
     let mut new_lower_contour = false;
     let mut new_running = false;
     let mut command = None;
@@ -786,6 +787,13 @@ fn draw_editor_ui(
                         .clicked()
                     {
                         new_arm_proportions = true;
+                        ui.close();
+                    }
+                    if ui
+                        .button("新建静态手部人物… / New static hand-size character…")
+                        .clicked()
+                    {
+                        new_hand_size = true;
                         ui.close();
                     }
                     if ui
@@ -937,14 +945,17 @@ fn draw_editor_ui(
                         if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V6) {
                             ui.small("腿部四项是 -1–1 相对形变权重，非厘米；邻近关节与衣物可变化。静态试用 / Four relative leg controls, not centimetres; static only.");
                         }
-                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V7 | nvwa_core::B1AssetVersion::V8 | nvwa_core::B1AssetVersion::V9)) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V7 | nvwa_core::B1AssetVersion::V8 | nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11)) {
                             ui.small("胸围、肩距和上臂围度是 -1–1 相对形变权重，非厘米；衣物和动作需单独验收。 / Relative upper-body shape weights, not centimetres; static trial only.");
                         }
-                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V8 | nvwa_core::B1AssetVersion::V9)) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V8 | nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11)) {
                             ui.small("髋部厚度和臀部体积是 -1–1 相对形变权重，非厘米；衣物和动作需单独验收。 / Relative hip and buttocks shape weights, not centimetres; static trial only.");
                         }
-                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V9) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11)) {
                             ui.small("上臂、前臂长度和腕围是 -1–1 相对形变权重，非厘米；关节、衣物和动作需单独验收。 / Relative arm and wrist weights, not centimetres; static trial only.");
+                        }
+                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V11) {
+                            ui.small("左右手尺寸分别为 -1–1 相对形变权重，非厘米；握物和动作需单独验收。 / Independent hand size weights, not centimetres; static trial only.");
                         }
                         if editor.preview.is_some() {
                             ui.label("Preview · document unchanged");
@@ -1323,8 +1334,11 @@ fn draw_editor_ui(
         || new_upper_body
         || new_hip_contour
         || new_arm_proportions
+        || new_hand_size
     {
-        let profile = if new_arm_proportions {
+        let profile = if new_hand_size {
+            nvwa_core::CharacterProfile::b1_character_hand_size()
+        } else if new_arm_proportions {
             nvwa_core::CharacterProfile::b1_character_arm_proportions()
         } else if new_hip_contour {
             nvwa_core::CharacterProfile::b1_character_hip_contour()
@@ -1554,6 +1568,8 @@ fn shape_parameter_label(id: &str) -> String {
         "chin_width" => "下巴宽度 / Chin width".into(),
         "neck_width" => "颈部宽度 / Neck width".into(),
         "hip_width" => "髋部宽度 / Hip width".into(),
+        "left_hand_size" => "左手尺寸 / Left hand size".into(),
+        "right_hand_size" => "右手尺寸 / Right hand size".into(),
         _ => id.replace('_', " "),
     }
 }
