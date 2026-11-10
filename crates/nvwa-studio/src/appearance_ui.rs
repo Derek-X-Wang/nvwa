@@ -15,6 +15,7 @@ pub(super) fn draw(ui: &mut egui::Ui, document: &SceneDocument) -> Option<Comman
                 | B1AssetVersion::V8
                 | B1AssetVersion::V9
                 | B1AssetVersion::V11
+                | B1AssetVersion::V12
         )
     ) {
         ui.small(

@@ -87,6 +87,14 @@ pub const B1_V11_ASSET_MANIFEST_SHA256: &str =
 pub const B1_V11_ASSET_MANIFEST_BYTES: &[u8] =
     include_bytes!("../../../assets/characters/mpfb-b1-v11/manifest.json");
 
+pub const B1_SHOULDER_FORM_PROFILE_ID: &str = "nvwa-mpfb-b1-shoulder-form-v1";
+pub const B1_V12_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v12";
+pub const B1_V12_ASSET_PATH: &str = "characters/mpfb-b1-v12/manifest.json";
+pub const B1_V12_ASSET_MANIFEST_SHA256: &str =
+    "4bd02ea911f3967c862a4760cd7d223dee2f32d0ca59f72ccb252bc69ed8f8b3";
+pub const B1_V12_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v12/manifest.json");
+
 /// Finite shipped base catalogue. This is not a caller-defined asset registry.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum B1AssetVersion {
@@ -100,6 +108,7 @@ pub enum B1AssetVersion {
     V8,
     V9,
     V11,
+    V12,
 }
 impl B1AssetVersion {
     pub const fn asset_id(self) -> &'static str {
@@ -114,6 +123,7 @@ impl B1AssetVersion {
             Self::V8 => B1_V8_ASSET_ID,
             Self::V9 => B1_V9_ASSET_ID,
             Self::V11 => B1_V11_ASSET_ID,
+            Self::V12 => B1_V12_ASSET_ID,
         }
     }
     pub const fn manifest_path(self) -> &'static str {
@@ -128,6 +138,7 @@ impl B1AssetVersion {
             Self::V8 => B1_V8_ASSET_PATH,
             Self::V9 => B1_V9_ASSET_PATH,
             Self::V11 => B1_V11_ASSET_PATH,
+            Self::V12 => B1_V12_ASSET_PATH,
         }
     }
     pub const fn manifest_sha256(self) -> &'static str {
@@ -142,6 +153,7 @@ impl B1AssetVersion {
             Self::V8 => B1_V8_ASSET_MANIFEST_SHA256,
             Self::V9 => B1_V9_ASSET_MANIFEST_SHA256,
             Self::V11 => B1_V11_ASSET_MANIFEST_SHA256,
+            Self::V12 => B1_V12_ASSET_MANIFEST_SHA256,
         }
     }
     pub const fn manifest_bytes(self) -> &'static [u8] {
@@ -156,6 +168,7 @@ impl B1AssetVersion {
             Self::V8 => B1_V8_ASSET_MANIFEST_BYTES,
             Self::V9 => B1_V9_ASSET_MANIFEST_BYTES,
             Self::V11 => B1_V11_ASSET_MANIFEST_BYTES,
+            Self::V12 => B1_V12_ASSET_MANIFEST_BYTES,
         }
     }
     pub fn parameters(self) -> &'static [B1ParameterTargets] {
@@ -170,6 +183,7 @@ impl B1AssetVersion {
             Self::V8 => &B1_HIP_CONTOUR_PARAMETER_TARGETS,
             Self::V9 => &B1_ARM_PROPORTIONS_PARAMETER_TARGETS,
             Self::V11 => &B1_HAND_SIZE_PARAMETER_TARGETS,
+            Self::V12 => &B1_SHOULDER_FORM_PARAMETER_TARGETS,
         }
     }
 }
@@ -441,6 +455,40 @@ pub const B1_HAND_SIZE_PARAMETER_TARGETS: [B1ParameterTargets; 25] = [
         increase: "r-hand-scale-incr",
     },
 ];
+/// Bilateral shoulder muscle shape, separate from shoulder span. A signed
+/// source-target weight is not a mass, circumference or posture measurement.
+pub const B1_SHOULDER_FORM_PARAMETER_TARGETS: [B1ParameterTargets; 26] = [
+    B1_HAND_SIZE_PARAMETER_TARGETS[0],
+    B1_HAND_SIZE_PARAMETER_TARGETS[1],
+    B1_HAND_SIZE_PARAMETER_TARGETS[2],
+    B1_HAND_SIZE_PARAMETER_TARGETS[3],
+    B1_HAND_SIZE_PARAMETER_TARGETS[4],
+    B1_HAND_SIZE_PARAMETER_TARGETS[5],
+    B1_HAND_SIZE_PARAMETER_TARGETS[6],
+    B1_HAND_SIZE_PARAMETER_TARGETS[7],
+    B1_HAND_SIZE_PARAMETER_TARGETS[8],
+    B1_HAND_SIZE_PARAMETER_TARGETS[9],
+    B1_HAND_SIZE_PARAMETER_TARGETS[10],
+    B1_HAND_SIZE_PARAMETER_TARGETS[11],
+    B1_HAND_SIZE_PARAMETER_TARGETS[12],
+    B1_HAND_SIZE_PARAMETER_TARGETS[13],
+    B1_HAND_SIZE_PARAMETER_TARGETS[14],
+    B1_HAND_SIZE_PARAMETER_TARGETS[15],
+    B1_HAND_SIZE_PARAMETER_TARGETS[16],
+    B1_HAND_SIZE_PARAMETER_TARGETS[17],
+    B1_HAND_SIZE_PARAMETER_TARGETS[18],
+    B1_HAND_SIZE_PARAMETER_TARGETS[19],
+    B1_HAND_SIZE_PARAMETER_TARGETS[20],
+    B1_HAND_SIZE_PARAMETER_TARGETS[21],
+    B1_HAND_SIZE_PARAMETER_TARGETS[22],
+    B1_HAND_SIZE_PARAMETER_TARGETS[23],
+    B1_HAND_SIZE_PARAMETER_TARGETS[24],
+    B1ParameterTargets {
+        id: "shoulder_muscle_fullness",
+        decrease: "shoulder-muscle-decr",
+        increase: "shoulder-muscle-incr",
+    },
+];
 pub const B1_DIAGNOSTIC_POSES: [&str; 5] = ["neutral", "shoulder", "elbow", "knee", "combined"];
 pub const B1_MAX_MANIFEST_BYTES: usize = 32 * 1024;
 pub const B1_MAX_ASSET_BYTES: usize = 4 * 1024 * 1024;
@@ -560,6 +608,10 @@ impl CharacterBackend {
                 asset_id,
                 schema_version: 13,
             } if asset_id == B1_V11_ASSET_ID => Some(B1AssetVersion::V11),
+            CharacterBackend::B1Cpu {
+                asset_id,
+                schema_version: 14,
+            } if asset_id == B1_V12_ASSET_ID => Some(B1AssetVersion::V12),
             _ => None,
         }
     }
@@ -573,7 +625,7 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 && !(matches!(version, 2..=13) && self.is_b1()) {
+        if version != 1 && !(matches!(version, 2..=14) && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported"),
@@ -845,6 +897,25 @@ impl CharacterProfile {
             ));
         profile
     }
+    /// Static bilateral shoulder-muscle extension. Zero preserves v11 geometry.
+    pub fn b1_character_shoulder_form() -> Self {
+        let mut profile = Self::b1_character_hand_size();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 14,
+            asset_id: B1_V12_ASSET_ID.into(),
+        };
+        profile.id = B1_SHOULDER_FORM_PROFILE_ID.into();
+        profile.asset_path = B1_V12_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V12_ASSET_MANIFEST_SHA256.into();
+        profile.parameters.push(ParameterSpec {
+            id: "shoulder_muscle_fullness".into(),
+            morph_index: 25,
+            min: -1.0,
+            max: 1.0,
+            default: 0.0,
+        });
+        profile
+    }
     /// New immutable finite running profile on the exact existing V4 asset set.
     pub fn b1_running() -> Self {
         let mut profile = Self::b1_character_lower_contour();
@@ -873,7 +944,9 @@ impl CharacterProfile {
                 "B1 backend version does not match its canonical profile identity",
             ));
         }
-        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V11) {
+        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V12) {
+            Self::b1_character_shoulder_form()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V11) {
             Self::b1_character_hand_size()
         } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V9) {
             Self::b1_character_arm_proportions()
@@ -990,6 +1063,7 @@ impl B1AssetManifest {
             B1_V8_ASSET_ID => B1AssetVersion::V8,
             B1_V9_ASSET_ID => B1AssetVersion::V9,
             B1_V11_ASSET_ID => B1AssetVersion::V11,
+            B1_V12_ASSET_ID => B1AssetVersion::V12,
             _ => return Err(CoreError::new("invalid_asset", "unknown B1 asset identity")),
         };
         let canonical = Self::decode(version.manifest_bytes())?;
@@ -1009,6 +1083,7 @@ impl B1AssetManifest {
                     B1AssetVersion::V8 => 49,
                     B1AssetVersion::V9 => 55,
                     B1AssetVersion::V11 => 59,
+                    B1AssetVersion::V12 => 61,
                 }
         {
             return Err(CoreError::new(
