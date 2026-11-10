@@ -814,6 +814,26 @@ jobs:
       - name: Shared production mutation red and restored green
         timeout-minutes: 12
         run: python3 -B scripts/ci-tiering/linux_mutations.py --linux-backend --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+      - name: Report existing command timing
+        if: ${{ always() }}
+        shell: bash
+        run: python3 -B scripts/ci-timing.py report
+  linux-matrix:
+    name: Linux full motion matrix and real garment controls
+    needs: classify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      CARGO_BUILD_JOBS: '1'
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install repository Rust version
+        run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
+      - name: Fetch all exact shared graphs
+        run: bash scripts/ci-tiering/linux-shared.sh fetch
       - name: Complete 594-frame matrix and real garment controls
         timeout-minutes: 20
         run: bash scripts/ci-tiering/linux-shared.sh matrix
@@ -846,7 +866,7 @@ jobs:
   required-gate:
     name: Required CI gate
     if: ${{ always() }}
-    needs: [classify, portable, portable-eye, linux-shared, linux-check, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required]
+    needs: [classify, portable, portable-eye, linux-shared, linux-matrix, linux-check, mac-smoke, b1-source-regression, mac-workspace-required, mac-bridges-required]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

@@ -309,3 +309,21 @@ torso+1/jaw0/arm2/source2帧；严格拒绝缺帧、重复、错绑定及非Darw
 main-only缓存种子。完整Mac报告的默认分支触发、普通PR后台现场行为与实际
 required-status规则仍待上线验收。发布和Mac相关工作仍需目标SHA全部适用
 检查通过；衣物质量、动作画面与性能HOLD不因主机调整解除。
+
+## Linux 完整动作矩阵独立必需作业（2026-11-10）
+
+[#156 的精确 head 运行](https://github.com/Derek-X-Wang/nvwa/actions/runs/42811101279)
+在完整 Linux shared 作业约 75 分钟上限取消，发生于 594 帧矩阵步骤；不能把
+此前 workspace／CPU、appearance 与生产 mutation 通过推断为完整矩阵及衣物通过。
+Required CI gate 正确失败，完整 Mac 两项已通过。旧取消记录和发布 HOLD 保留。
+
+在既有分组授权下，完整矩阵步骤原封不动移到独立的 Ubuntu 24.04 必需作业：
+锁定依赖 fetch 后，仍由 Linux guard、单 Cargo worker、原 `matrix` 模式
+执行真实 594 帧／30 深度关键帧、source2 实帧和衣物 normal／`-O`。
+新作业与 Linux shared 同时在 classify 后启动；两者以及独立 workspace check
+都必须 success，失败、取消、跳过或缺失均使 Required CI gate 失败。
+Linux shared 保留原 workspace／CPU、appearance 和三类生产 mutation 的顺序
+与共享 target。原 matrix 步骤20分钟、mutation12分钟、作业75分钟上限不变；
+不使用缓存、`continue-on-error` 或新增权限。新 runner 的冷编译可能使
+matrix20 超时，必须以新精确 head 的 hosted 结果实测；并行不等于减少总计算量。
+历史合同先认证新作业和完整命令，再投影回旧拓扑；不刷新原哈希或改写失败。

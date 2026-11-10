@@ -412,7 +412,7 @@ class WorkflowContract(unittest.TestCase):
         self.assertIn('"$(uname -s)" == Linux', linux)
         workflow = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-shared')
         self.assertIn('timeout-minutes: 12', workflow)
-        self.assertIn('timeout-minutes: 20', workflow)
+        self.assertNotIn('timeout-minutes: 20', workflow)
         self.assertIn('--linux-backend --disposable-checkout', workflow)
         self.assertNotIn('continue-on-error', workflow)
 
@@ -425,13 +425,26 @@ class WorkflowContract(unittest.TestCase):
         self.assertNotIn('actions/cache/', check)
         self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh check\n'), 1)
         self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh workspace\n'), 1)
-        self.assertIn('linux-shared, linux-check, mac-smoke',
+        self.assertIn('linux-shared, linux-matrix, linux-check, mac-smoke',
                       job((ROOT / '.github/workflows/ci.yml').read_text(), 'required-gate'))
         check_mode = linux[linux.index('  check)\n'):linux.index('  workspace)\n')]
         workspace_mode = linux[linux.index('  workspace)\n'):linux.index('  bridges)\n')]
         self.assertIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', check_mode)
         self.assertNotIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)
         self.assertIn('cargo test --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)
+        matrix = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-matrix')
+        self.assertIn('    needs: classify\n', matrix)
+        self.assertIn('    runs-on: ubuntu-24.04\n    timeout-minutes: 75\n', matrix)
+        self.assertIn("      CARGO_BUILD_JOBS: '1'\n", matrix)
+        self.assertIn('      - name: Complete 594-frame matrix and real garment controls\n        timeout-minutes: 20\n        run: bash scripts/ci-tiering/linux-shared.sh matrix\n', matrix)
+        self.assertIn('run: bash scripts/ci-tiering/linux-shared.sh fetch\n', matrix)
+        self.assertNotIn('continue-on-error', matrix)
+        self.assertNotIn('actions/cache/', matrix)
+        self.assertNotIn('run: bash scripts/ci-tiering/linux-shared.sh matrix\n', workflow + check)
+        self.assertEqual((workflow + check + matrix).count('run: bash scripts/ci-tiering/linux-shared.sh matrix\n'), 1)
+        self.assertIn('run_matrix.py', linux[linux.index('  matrix)\n'):])
+        self.assertIn('linux_garment_controls.py', linux[linux.index('  matrix)\n'):])
+
 
     def test_linux_mutation_copy_preserves_original_source_gate_bytes(self):
         original = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()

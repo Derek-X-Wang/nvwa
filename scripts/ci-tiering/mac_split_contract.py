@@ -44,6 +44,22 @@ def project(workflow, checks):
                    + '      - name: Check shared workspace graph\n'
                      '        run: bash scripts/ci-tiering/linux-shared.sh check\n'
                    + timing)
+    # V8: the complete Linux matrix and real garment controls run in their
+    # own required job. Reconstruct V7 before checking its older projection.
+    matrix_start = old_linux.index('      - name: Complete 594-frame matrix and real garment controls\n')
+    matrix_step = old_linux[matrix_start:timing_start]
+    shared_without_matrix = old_linux[:matrix_start] + timing
+    matrix_job = (setup.replace('  linux-shared:\n', '  linux-matrix:\n', 1)
+                  .replace('    name: Linux shared runtime and full motion evidence\n',
+                           '    name: Linux full motion matrix and real garment controls\n', 1)
+                  + matrix_step + timing)
+    checks.assertEqual(job(workflow, 'linux-shared'), shared_without_matrix)
+    checks.assertEqual(job(workflow, 'linux-matrix'), matrix_job)
+    workflow = workflow.replace(matrix_job, '', 1).replace(shared_without_matrix, old_linux, 1)
+    gate = job(workflow, 'required-gate')
+    v8_needs = 'linux-shared, linux-matrix, linux-check, mac-smoke'
+    checks.assertEqual(gate.count(v8_needs), 1)
+    workflow = workflow.replace(gate, gate.replace(v8_needs, 'linux-shared, linux-check, mac-smoke', 1), 1)
     checks.assertEqual(job(workflow, 'linux-shared'), old_linux)
     checks.assertEqual(job(workflow, 'linux-check'), split_check)
     workflow = workflow.replace(split_check, '', 1)
@@ -100,6 +116,20 @@ V6_INPUTS = {
         'e85ebea2d0fa8cba5207ae5c50159334d4f9884395893c20fd3da76f8dd6e7ba'),
 }
 
+V8_REPLACEMENTS = {
+    "scripts/ci-tiering/policy.py": [
+        (b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-matrix', 'linux-check', 'mac-smoke', 'b1-source-regression')", b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-check', 'mac-smoke', 'b1-source-regression')"),
+    ],
+    "scripts/ci-tiering/test_portable_split.py": [
+        (b"required = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-matrix', 'linux-check', 'mac-smoke', 'b1-source-regression')", b"required = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-check', 'mac-smoke', 'b1-source-regression')"),
+    ],
+    "scripts/ci-tiering/test_policy.py": [
+        (b"        self.assertNotIn('timeout-minutes: 20', workflow)\n", b"        self.assertIn('timeout-minutes: 20', workflow)\n"),
+        (b"        self.assertIn('linux-shared, linux-matrix, linux-check, mac-smoke',\n                      job((ROOT / '.github/workflows/ci.yml').read_text(), 'required-gate'))", b"        self.assertIn('linux-shared, linux-check, mac-smoke',\n                      job((ROOT / '.github/workflows/ci.yml').read_text(), 'required-gate'))"),
+        (b"        matrix = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-matrix')\n        self.assertIn('    needs: classify\\n', matrix)\n        self.assertIn('    runs-on: ubuntu-24.04\\n    timeout-minutes: 75\\n', matrix)\n        self.assertIn(\"      CARGO_BUILD_JOBS: '1'\\n\", matrix)\n        self.assertIn('      - name: Complete 594-frame matrix and real garment controls\\n        timeout-minutes: 20\\n        run: bash scripts/ci-tiering/linux-shared.sh matrix\\n', matrix)\n        self.assertIn('run: bash scripts/ci-tiering/linux-shared.sh fetch\\n', matrix)\n        self.assertNotIn('continue-on-error', matrix)\n        self.assertNotIn('actions/cache/', matrix)\n        self.assertNotIn('run: bash scripts/ci-tiering/linux-shared.sh matrix\\n', workflow + check)\n        self.assertEqual((workflow + check + matrix).count('run: bash scripts/ci-tiering/linux-shared.sh matrix\\n'), 1)\n        self.assertIn('run_matrix.py', linux[linux.index('  matrix)\\n'):])\n        self.assertIn('linux_garment_controls.py', linux[linux.index('  matrix)\\n'):])\n\n", b""),
+    ],
+}
+
 V7_REPLACEMENTS = {
     "scripts/ci-tiering/policy.py": [
         (b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-check', 'mac-smoke', 'b1-source-regression')", b"REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'mac-smoke', 'b1-source-regression')"),
@@ -117,6 +147,9 @@ V7_REPLACEMENTS = {
 }
 
 def project_input(name, checks, data):
+    for current, previous in V8_REPLACEMENTS.get(name, []):
+        checks.assertEqual(data.count(current), 1, name)
+        data = data.replace(current, previous, 1)
     for current, previous in V7_REPLACEMENTS.get(name, []):
         checks.assertEqual(data.count(current), 1, name)
         data = data.replace(current, previous, 1)
