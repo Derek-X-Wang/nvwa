@@ -153,6 +153,7 @@ fn body_reference_restores_clothing_hidden_body_across_views_and_pose() {
     assert_eq!(front["parts"].as_array().unwrap().len(), 1);
     assert_eq!(front["parts"][0][0], "body");
     assert_eq!(front["parts"][0][1], combined["parts"][0][1]);
+    assert_eq!(front["parts"][0][2], 26_756);
     assert!(front["parts"][0][2].as_u64().unwrap() > combined["parts"][0][2].as_u64().unwrap());
     assert!(front["covered_pixels"].as_u64().unwrap() > 100);
     assert_ne!(front["png_sha256"], combined["png_sha256"]);
@@ -236,6 +237,7 @@ fn body_reference_shows_waist_hip_and_leg_recipe_without_garment() {
         ));
         assert_eq!(zero["parts"].as_array().unwrap().len(), 1);
         assert_eq!(shaped["parts"].as_array().unwrap().len(), 1);
+        assert_eq!(zero["parts"][0][2], 26_756);
         assert_eq!(zero["parts"][0][2], shaped["parts"][0][2]);
         assert_ne!(
             zero["png_sha256"], shaped["png_sha256"],

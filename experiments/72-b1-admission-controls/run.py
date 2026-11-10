@@ -710,7 +710,7 @@ ARM_NEW_CODE = ('crates/nvwa-cli/tests/arm_proportions.rs',
 ARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v9/'
 
 BODY_REFERENCE_CONTEXT_NAME = 'input-context-body-reference-v1.json'
-BODY_REFERENCE_CONTEXT_SHA = 'f63e04a4d2b3bf485f2602ad72b775c28e5a71cb88f667b68e6ed3b82a467b4e'
+BODY_REFERENCE_CONTEXT_SHA = '451b150461319889ace4211838748177640d3cd89ab27a26e58fa508328e6e80'
 BODY_REFERENCE_CONTEXT_ID = 'b1-body-reference-product-v1'
 BODY_REFERENCE_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs',
                           'crates/nvwa-cli/tests/cpu_render.rs',

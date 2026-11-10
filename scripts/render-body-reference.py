@@ -45,10 +45,16 @@ def main() -> None:
     cli = args.cli.resolve(strict=True)
     work_path = args.work.resolve(strict=True)
     assets = args.assets.resolve(strict=True)
+    source_bytes = work_path.read_bytes()
+    source_sha256 = hashlib.sha256(source_bytes).hexdigest()
+    source = json.loads(source_bytes)
+    cli_sha256 = digest(cli)
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
-    source = json.loads(work_path.read_text())
+    source_copy = output / "source-work.nvwa.json"
+    source_copy.write_bytes(source_bytes)
     rows = []
+    asset_sha256 = None
     for pose in poses:
         for view, azimuth in VIEWS.items():
             work = json.loads(json.dumps(source))
@@ -75,16 +81,22 @@ def main() -> None:
                     or len(receipt["parts"]) != 1
                     or receipt["parts"][0][0] != "body"
                     or receipt["work_sha256"] != digest(saved_work)
+                    or receipt["executable_sha256"] != cli_sha256
                     or receipt["png_sha256"] != digest(folder / "actual.png")):
                 raise RuntimeError(f"{name}: incomplete or inconsistent body reference receipt")
+            if asset_sha256 is None:
+                asset_sha256 = receipt["asset_sha256"]
+            elif receipt["asset_sha256"] != asset_sha256:
+                raise RuntimeError(f"{name}: asset bytes changed between views")
             rows.append({"pose": pose, "view": view, "work": saved_work.name,
                          "folder": name, "png_sha256": receipt["png_sha256"],
                          "geometry_sha256": receipt["geometry_sha256"]})
             print(name, receipt["png_sha256"][:12], flush=True)
 
     manifest = {"schema_version": 1, "mode": "body_reference",
-                "source_work_sha256": digest(work_path), "cli_sha256": digest(cli),
-                "asset_root": str(assets), "width": args.width, "height": args.height,
+                "source_work": source_copy.name, "source_work_sha256": source_sha256,
+                "cli_sha256": cli_sha256, "asset_root": str(assets),
+                "asset_sha256": asset_sha256, "width": args.width, "height": args.height,
                 "camera": {"distance": args.distance, "target_height": args.target_height,
                            "fov_degrees": args.fov, "elevation_degrees": 0.0},
                 "rows": rows,
