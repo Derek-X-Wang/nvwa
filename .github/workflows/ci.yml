@@ -322,10 +322,10 @@ jobs:
         shell: bash
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
-  mac-bridges-required:
-    name: Complete Mac Appearance and mutation required
-    needs: [classify, portable, portable-eye, mac-mutation-required]
-    if: ${{ success() && needs.classify.outputs.full_required == 'true' }}
+  mac-appearance-required:
+    name: Complete Mac Appearance bridges required
+    needs: [classify, portable, portable-eye]
+    if: ${{ needs.classify.outputs.full_required == 'true' }}
     runs-on: macos-15
     timeout-minutes: 75
     env:
@@ -390,6 +390,21 @@ jobs:
         if: ${{ always() }}
         shell: bash
         run: python3 -B scripts/ci-timing.py report
+  mac-bridges-required:
+    name: Complete Mac Appearance and mutation required
+    needs: [classify, mac-appearance-required, mac-mutation-required]
+    if: ${{ always() && needs.classify.outputs.full_required == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require appearance and mutation evidence
+        env:
+          APPEARANCE_RESULT: ${{ needs.mac-appearance-required.result }}
+          MUTATION_RESULT: ${{ needs.mac-mutation-required.result }}
+        run: |
+          printf "appearance=%s mutation=%s\n" "$APPEARANCE_RESULT" "$MUTATION_RESULT"
+          test "$APPEARANCE_RESULT" = success
+          test "$MUTATION_RESULT" = success
   mac-workspace-background:
     name: Complete Mac Workspace and CPU background
     needs: [classify, portable, portable-eye]
@@ -429,10 +444,10 @@ jobs:
         shell: bash
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
-  mac-bridges-background:
-    name: Complete Mac Appearance and mutation background
-    needs: [classify, portable, portable-eye, mac-mutation-background]
-    if: ${{ success() && needs.classify.outputs.full_required == 'false' }}
+  mac-appearance-background:
+    name: Complete Mac Appearance bridges background
+    needs: [classify, portable, portable-eye]
+    if: ${{ needs.classify.outputs.full_required == 'false' }}
     runs-on: macos-15
     timeout-minutes: 75
     env:
@@ -497,6 +512,21 @@ jobs:
         if: ${{ always() }}
         shell: bash
         run: python3 -B scripts/ci-timing.py report
+  mac-bridges-background:
+    name: Complete Mac Appearance and mutation background
+    needs: [classify, mac-appearance-background, mac-mutation-background]
+    if: ${{ always() && needs.classify.outputs.full_required == 'false' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require appearance and mutation evidence
+        env:
+          APPEARANCE_RESULT: ${{ needs.mac-appearance-background.result }}
+          MUTATION_RESULT: ${{ needs.mac-mutation-background.result }}
+        run: |
+          printf "appearance=%s mutation=%s\n" "$APPEARANCE_RESULT" "$MUTATION_RESULT"
+          test "$APPEARANCE_RESULT" = success
+          test "$MUTATION_RESULT" = success
   mac-full-background:
     name: Complete Mac background evidence
     # Reject cheap portable failures before spending a cold graphical compile.

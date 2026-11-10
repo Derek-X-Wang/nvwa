@@ -248,7 +248,8 @@ class CompletionReport(unittest.TestCase):
                 self.assertIn(title, self.namespace['NAMES'])
             bridge = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-bridges-{kind}')
             self.assertIn(f'mac-mutation-{kind}', bridge)
-            self.assertIn('success() &&', bridge)
+            self.assertIn(f'mac-appearance-{kind}', bridge)
+            self.assertIn('always()', bridge)
         self.assertNotIn('checkout', '\n'.join(line for line in workflow.splitlines() if not line.startswith('#')))
         self.assertNotIn('write', '\n'.join(line for line in workflow.splitlines() if line.strip().startswith(('actions:', 'contents:', 'pull-requests:', 'issues:'))))
 
@@ -353,7 +354,7 @@ class WorkflowContract(unittest.TestCase):
             return old[old.index('      - name: '+start+'\n'):old.index('      - name: '+end+'\n')]
         expected = {
             'workspace': section('Run workspace CPU tests', 'Check appearance quality and production acceptance bridges'),
-            'bridges': section('Check appearance quality and production acceptance bridges', 'Check B1 production-source mutation witnesses'),
+            'appearance': section('Check appearance quality and production acceptance bridges', 'Check B1 production-source mutation witnesses'),
         }
         mutation = section('Check B1 production-source mutation witnesses', 'Execute the actual B1 continuous motion matrix')
         matrix = section('Execute the actual B1 continuous motion matrix', 'Report existing command timing')
@@ -362,8 +363,7 @@ class WorkflowContract(unittest.TestCase):
                 lane = job(workflow, f'mac-{part}-{kind}')
                 self.assertEqual(lane.count(body), 1)
                 self.assertIn('    runs-on: macos-15\n    timeout-minutes: 75\n', lane)
-                condition = "needs.classify.outputs.full_required == '"+('true' if kind=='required' else 'false')+"'"
-                self.assertIn('    if: ${{ '+('success() && ' if part == 'bridges' else '')+condition+' }}\n', lane)
+                self.assertIn("    if: ${{ needs.classify.outputs.full_required == '"+('true' if kind=='required' else 'false')+"' }}\n", lane)
                 self.assertNotIn('continue-on-error', lane)
                 self.assertNotIn('policy.py finish', lane)
                 self.assertNotIn('actions/cache/', lane)
@@ -389,7 +389,13 @@ class WorkflowContract(unittest.TestCase):
             self.assertEqual(lane.count(mutation), 1)
             self.assertNotIn('continue-on-error', lane)
             self.assertNotIn('actions/cache/', lane)
-            self.assertNotIn(mutation, job(workflow, f'mac-bridges-{kind}'))
+            bridge = job(workflow, f'mac-bridges-{kind}')
+            self.assertIn(f'needs: [classify, mac-appearance-{kind}, mac-mutation-{kind}]', bridge)
+            self.assertIn('APPEARANCE_RESULT:', bridge)
+            self.assertIn('MUTATION_RESULT:', bridge)
+            self.assertIn('test "$APPEARANCE_RESULT" = success', bridge)
+            self.assertIn('test "$MUTATION_RESULT" = success', bridge)
+            self.assertNotIn('continue-on-error', bridge)
         self.assertIn('timeout-minutes: 20', matrix)
         for name in ('mac-matrix-required', 'mac-matrix-background'):
             self.assertNotIn('  '+name+':\n', workflow)
@@ -402,9 +408,24 @@ class WorkflowContract(unittest.TestCase):
         self.assertNotIn('mac-workspace-background', gate)
         report = job(workflow, 'full-mac-report')
         for kind in ['required', 'background']:
-            for part in (*expected, 'mutation'):
+            for part in ('workspace', 'bridges', 'mutation'):
                 self.assertIn('mac-'+part+'-'+kind, report)
         self.assertNotIn('mac-matrix', report)
+
+    def test_mac_bridge_aggregate_propagates_each_missing_or_failed_half(self):
+        workflow = (ROOT/'.github/workflows/ci.yml').read_text()
+        for kind in ('required', 'background'):
+            aggregate = job(workflow, f'mac-bridges-{kind}')
+            command = ''.join(line[10:] + '\n' for line in
+                              aggregate.split('        run: |\n', 1)[1].splitlines())
+            for appearance in ('success', 'failure', 'cancelled', 'skipped', ''):
+                for mutation in ('success', 'failure', 'cancelled', 'skipped', ''):
+                    env = dict(os.environ, APPEARANCE_RESULT=appearance, MUTATION_RESULT=mutation)
+                    result = subprocess.run(['bash', '-e', '-o', 'pipefail', '-c', command],
+                                            env=env, capture_output=True, text=True)
+                    self.assertEqual(result.returncode == 0,
+                                     appearance == mutation == 'success',
+                                     (kind, appearance, mutation, result.stdout, result.stderr))
 
     def test_linux_preserves_all_shared_commands_with_explicit_backend(self):
         old = job((HERE / 'predecessor-ci.yml').read_text(), 'native-and-wasm')
