@@ -363,15 +363,11 @@ jobs:
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
   mac-mutation-required:
-    name: Complete Mac production mutation (${{ matrix.group }}) required
+    name: Complete Mac production mutation required
     needs: [classify, portable, portable-eye]
     if: ${{ needs.classify.outputs.full_required == 'true' }}
     runs-on: macos-15
     timeout-minutes: 75
-    strategy:
-      fail-fast: false
-      matrix:
-        group: [arm-and-garment, foot]
     env:
       CARGO_BUILD_JOBS: '1'
       CARGO_TARGET_DIR: ${{ github.workspace }}/target
@@ -385,9 +381,11 @@ jobs:
         run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
       - name: Fetch locked production mutation graph
         run: cargo fetch --locked
+      - name: Precompile exact production mutation graph
+        run: cargo test --workspace --lib --locked --offline --no-run
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
-        run: python3 -B scripts/check-b1-motion-mutations.py --case-group ${{ matrix.group }} --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+        run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash
@@ -472,15 +470,11 @@ jobs:
         run: python3 -B scripts/ci-timing.py report
       # native-cache-trial begin
   mac-mutation-background:
-    name: Complete Mac production mutation (${{ matrix.group }}) background
+    name: Complete Mac production mutation background
     needs: [classify, portable, portable-eye]
     if: ${{ needs.classify.outputs.full_required == 'false' }}
     runs-on: macos-15
     timeout-minutes: 75
-    strategy:
-      fail-fast: false
-      matrix:
-        group: [arm-and-garment, foot]
     env:
       CARGO_BUILD_JOBS: '1'
       CARGO_TARGET_DIR: ${{ github.workspace }}/target
@@ -494,9 +488,11 @@ jobs:
         run: rustup toolchain install 1.95.0 --profile minimal --component rustfmt --component clippy --target wasm32-unknown-unknown
       - name: Fetch locked production mutation graph
         run: cargo fetch --locked
+      - name: Precompile exact production mutation graph
+        run: cargo test --workspace --lib --locked --offline --no-run
       - name: Check B1 production-source mutation witnesses
         timeout-minutes: 12
-        run: python3 -B scripts/check-b1-motion-mutations.py --case-group ${{ matrix.group }} --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
+        run: python3 -B scripts/check-b1-motion-mutations.py --disposable-checkout --out "$RUNNER_TEMP/nvwa-b1-motion-mutations"
       - name: Report existing command timing
         if: ${{ always() }}
         shell: bash

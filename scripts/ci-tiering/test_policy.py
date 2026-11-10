@@ -384,16 +384,12 @@ class WorkflowContract(unittest.TestCase):
         for kind in ('required', 'background'):
             lane = job(workflow, f'mac-mutation-{kind}')
             self.assertIn('    runs-on: macos-15\n    timeout-minutes: 75\n', lane)
-            self.assertIn('fail-fast: false', lane)
-            self.assertIn('group: [arm-and-garment, foot]', lane)
-            self.assertIn('--case-group ${{ matrix.group }} --disposable-checkout', lane)
+            self.assertIn('run: cargo test --workspace --lib --locked --offline --no-run', lane)
             self.assertIn('timeout-minutes: 12', lane)
+            self.assertEqual(lane.count(mutation), 1)
             self.assertNotIn('continue-on-error', lane)
             self.assertNotIn('actions/cache/', lane)
             self.assertNotIn(mutation, job(workflow, f'mac-bridges-{kind}'))
-        source = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()
-        self.assertIn("'arm-and-garment': {'omit-authored-arm-pose', 'stale-garment-upload'}", source)
-        self.assertIn("'foot': {'omit-authored-foot-counterrotation'}", source)
         self.assertIn('timeout-minutes: 20', matrix)
         for name in ('mac-matrix-required', 'mac-matrix-background'):
             self.assertNotIn('  '+name+':\n', workflow)
@@ -490,12 +486,7 @@ class WorkflowContract(unittest.TestCase):
 
 
     def test_linux_mutation_copy_preserves_original_source_gate_bytes(self):
-        source = (ROOT/'scripts/check-b1-motion-mutations.py').read_bytes()
-        import importlib.util
-        split_spec = importlib.util.spec_from_file_location('mac_split_contract', HERE/'mac_split_contract.py')
-        split_module = importlib.util.module_from_spec(split_spec)
-        split_spec.loader.exec_module(split_module)
-        original = split_module.project_input('scripts/check-b1-motion-mutations.py', self, source).decode()
+        original = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()
         self.assertEqual(hashlib.sha256(original.encode()).hexdigest(),
                          '0ce06d27b941aac799537376378ffd214d1384a571fcf8b1fe657e82846c9a31')
         linux = (HERE/'linux_mutations.py').read_text()
