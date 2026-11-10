@@ -15,6 +15,8 @@ pub struct CpuImage {
     pub projection: [f32; 16],
     pub near: f32,
     pub far: f32,
+    /// True only when the complete fitted body is rendered without garments.
+    pub body_reference: bool,
 }
 
 pub fn validate_export_work(doc: &SceneDocument) -> Result<(), String> {
@@ -28,7 +30,7 @@ pub fn validate_export_work(doc: &SceneDocument) -> Result<(), String> {
         || !doc.timeline.is_empty()
         || doc.character.appearance != nvwa_core::CharacterAppearance::None
     {
-        return Err("CPU silhouette requires new-character or a static waist/leg profile, an empty timeline and appearance none; use set_diagnostic_pose to select a saved static pose".into());
+        return Err("CPU export requires a supported B1 motion or static body profile, an empty timeline and appearance none; use set_diagnostic_pose to select a saved static pose".into());
     }
     crate::stage::camera_geometry(&doc.stage.camera, doc.character.scale)?;
     Ok(())
@@ -77,6 +79,28 @@ pub fn render_silhouette(
     width: u32,
     height: u32,
 ) -> Result<CpuImage, String> {
+    render_inner(doc, bytes, width, height, false)
+}
+
+/// Render the same fitted and posed B1 body as the published frame, restoring
+/// triangles hidden by both upper and lower garments. This is a static image
+/// reference, not a mesh/rig export or continuous-animation claim.
+pub fn render_body_reference(
+    doc: &SceneDocument,
+    bytes: BTreeMap<String, Vec<u8>>,
+    width: u32,
+    height: u32,
+) -> Result<CpuImage, String> {
+    render_inner(doc, bytes, width, height, true)
+}
+
+fn render_inner(
+    doc: &SceneDocument,
+    bytes: BTreeMap<String, Vec<u8>>,
+    width: u32,
+    height: u32,
+    body_reference: bool,
+) -> Result<CpuImage, String> {
     validate_export_work(doc)?;
     if !(64..=2048).contains(&width) || !(64..=2048).contains(&height) {
         return Err("CPU export dimensions must each be 64..=2048".into());
@@ -117,7 +141,7 @@ pub fn render_silhouette(
         }
         std::thread::sleep(Duration::from_millis(2));
     }
-    let frame = published_cpu_frame(app.world())?;
+    let frame = published_cpu_frame_with_body_topology(app.world(), body_reference)?;
     if frame.doc != doc || frame.sample.position != 0.0 || !frame.sample.clip_id.is_empty() {
         return Err("Published CPU frame differs from requested Work/static pose".into());
     }
@@ -125,10 +149,20 @@ pub fn render_silhouette(
     let mut geometry_bytes = Vec::new();
     let mut parts = Vec::new();
     for part in frame.parts {
+        if body_reference && part.name != "body" {
+            continue;
+        }
+        let indices: &[usize] = if body_reference {
+            part.full_body_indices
+                .as_deref()
+                .ok_or("complete fitted body topology absent")?
+        } else {
+            &part.indices
+        };
         let transform = Mat4::from_cols_array(&part.transform);
         let matrix = projection * view * transform;
         let positions = &part.frame.positions;
-        if part.indices.len() % 3 != 0 || positions.is_empty() {
+        if indices.len() % 3 != 0 || positions.is_empty() {
             return Err("Published CPU mesh has invalid triangle topology".into());
         }
         geometry_bytes.extend_from_slice(part.name.as_bytes());
@@ -145,24 +179,32 @@ pub fn render_silhouette(
         for v in part.transform {
             geometry_bytes.extend_from_slice(&v.to_le_bytes());
         }
-        geometry_bytes.extend_from_slice(&(part.indices.len() as u64).to_le_bytes());
-        for index in &part.indices {
+        geometry_bytes.extend_from_slice(&(indices.len() as u64).to_le_bytes());
+        for index in indices {
             geometry_bytes.extend_from_slice(&(*index as u64).to_le_bytes());
         }
-        for triangle in part.indices.chunks_exact(3) {
+        for triangle in indices.chunks_exact(3) {
             let mut vertices = [Vec4::ZERO; 3];
+            let mut world_points = [Vec3::ZERO; 3];
             for (i, index) in triangle.iter().enumerate() {
                 let p = positions
                     .get(*index)
                     .ok_or("Published triangle index outside mesh")?;
                 vertices[i] = matrix * Vec3::from_array(*p).extend(1.0);
+                if body_reference {
+                    world_points[i] = transform.transform_point3(Vec3::from_array(*p));
+                }
                 if !vertices[i].is_finite() {
                     return Err("Nonfinite projected position".into());
                 }
             }
-            raster.triangle(vertices, far);
+            if body_reference {
+                raster.triangle_colored(vertices, far, body_reference_color(world_points));
+            } else {
+                raster.triangle(vertices, far);
+            }
         }
-        parts.push((part.name.into(), positions.len(), part.indices.len() / 3));
+        parts.push((part.name.into(), positions.len(), indices.len() / 3));
     }
     let covered_pixels = raster.depth.iter().filter(|z| z.is_finite()).count();
     if covered_pixels == 0 {
@@ -171,7 +213,7 @@ pub fn render_silhouette(
     let mut pixels = vec![255; (width * height * 3) as usize];
     for (i, z) in raster.depth.iter().enumerate() {
         if z.is_finite() {
-            pixels[i * 3..i * 3 + 3].copy_from_slice(&[65, 72, 80]);
+            pixels[i * 3..i * 3 + 3].copy_from_slice(&raster.color[i]);
         }
     }
     Ok(CpuImage {
@@ -183,13 +225,24 @@ pub fn render_silhouette(
         projection: projection.to_cols_array(),
         near,
         far,
+        body_reference,
     })
+}
+
+fn body_reference_color(world_points: [Vec3; 3]) -> [u8; 3] {
+    let normal = (world_points[1] - world_points[0])
+        .cross(world_points[2] - world_points[0])
+        .normalize_or_zero();
+    let light = Vec3::new(0.3, 0.45, 0.84).normalize();
+    let shade = 0.42 + 0.58 * normal.dot(light).abs();
+    [166_u8, 166, 170].map(|v| (f32::from(v) * shade).round() as u8)
 }
 
 struct Raster {
     width: u32,
     height: u32,
     depth: Vec<f64>,
+    color: Vec<[u8; 3]>,
 }
 impl Raster {
     fn new(width: u32, height: u32) -> Self {
@@ -197,9 +250,13 @@ impl Raster {
             width,
             height,
             depth: vec![f64::NEG_INFINITY; (width * height) as usize],
+            color: vec![[255, 255, 255]; (width * height) as usize],
         }
     }
     fn triangle(&mut self, vertices: [Vec4; 3], far: f32) {
+        self.triangle_colored(vertices, far, [65, 72, 80]);
+    }
+    fn triangle_colored(&mut self, vertices: [Vec4; 3], far: f32, color: [u8; 3]) {
         // Homogeneous clipping: sides, reverse-Z near/far, plus the saved
         // stage's finite far distance. Clip before division to handle crossings.
         let planes: [fn(Vec4, f32) -> f32; 7] = [
@@ -232,10 +289,10 @@ impl Raster {
             }
         }
         for i in 1..polygon.len().saturating_sub(1) {
-            self.clipped([polygon[0], polygon[i], polygon[i + 1]]);
+            self.clipped([polygon[0], polygon[i], polygon[i + 1]], color);
         }
     }
-    fn clipped(&mut self, points: [Vec4; 3]) {
+    fn clipped(&mut self, points: [Vec4; 3], color: [u8; 3]) {
         let p = points.map(|v| {
             let x = f64::from(v.x) / f64::from(v.w);
             let y = f64::from(v.y) / f64::from(v.w);
@@ -291,6 +348,7 @@ impl Raster {
                     let index = (y * self.width + x) as usize;
                     if z > self.depth[index] {
                         self.depth[index] = z;
+                        self.color[index] = color;
                     }
                 }
             }
