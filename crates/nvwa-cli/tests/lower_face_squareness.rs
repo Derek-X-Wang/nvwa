@@ -23,16 +23,24 @@ fn root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets")
 }
 fn dir() -> PathBuf {
-    let dir = std::env::temp_dir().join(format!(
-        "nvwa-lower-contour-{}-{}",
-        std::process::id(),
-        std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .unwrap()
-            .as_nanos()
-    ));
-    std::fs::create_dir(&dir).unwrap();
-    dir
+    static NEXT_DIR: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+
+    loop {
+        let dir = std::env::temp_dir().join(format!(
+            "nvwa-lower-contour-{}-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_nanos(),
+            NEXT_DIR.fetch_add(1, std::sync::atomic::Ordering::Relaxed)
+        ));
+        match std::fs::create_dir(&dir) {
+            Ok(()) => return dir,
+            Err(err) if err.kind() == std::io::ErrorKind::AlreadyExists => continue,
+            Err(err) => panic!("cannot create {}: {err}", dir.display()),
+        }
+    }
 }
 #[test]
 fn lower_contour_cli_creation_discovery_history_appearance_and_exchange() {

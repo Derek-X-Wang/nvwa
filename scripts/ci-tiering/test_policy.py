@@ -416,6 +416,23 @@ class WorkflowContract(unittest.TestCase):
         self.assertIn('--linux-backend --disposable-checkout', workflow)
         self.assertNotIn('continue-on-error', workflow)
 
+        check = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-check')
+        self.assertIn('    needs: classify\n', check)
+        self.assertIn('    runs-on: ubuntu-24.04\n    timeout-minutes: 75\n', check)
+        self.assertIn("      CARGO_BUILD_JOBS: '1'\n", check)
+        self.assertIn('run: bash scripts/ci-tiering/linux-shared.sh check\n', check)
+        self.assertNotIn('continue-on-error', check)
+        self.assertNotIn('actions/cache/', check)
+        self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh check\n'), 1)
+        self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh workspace\n'), 1)
+        self.assertIn('linux-shared, linux-check, mac-smoke',
+                      job((ROOT / '.github/workflows/ci.yml').read_text(), 'required-gate'))
+        check_mode = linux[linux.index('  check)\n'):linux.index('  workspace)\n')]
+        workspace_mode = linux[linux.index('  workspace)\n'):linux.index('  bridges)\n')]
+        self.assertIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', check_mode)
+        self.assertNotIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)
+        self.assertIn('cargo test --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)
+
     def test_linux_mutation_copy_preserves_original_source_gate_bytes(self):
         original = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()
         self.assertEqual(hashlib.sha256(original.encode()).hexdigest(),
