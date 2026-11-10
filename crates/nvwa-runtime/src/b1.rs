@@ -99,7 +99,7 @@ fn uses_prepared_rig(doc: &SceneDocument) -> bool {
     doc.profile.backend.is_b1_motion()
         || matches!(
             doc.profile.backend.b1_asset_version(),
-            Some(B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7)
+            Some(B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8)
         )
 }
 
@@ -3447,6 +3447,81 @@ mod tests {
                             .unwrap()
                             .iter()
                             .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                }
+            }
+        }
+    }
+    #[test]
+    fn hip_contour_zero_preserves_v7_mesh_and_bones_and_signed_edits_publish() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V7);
+        fill_version(&dir, B1AssetVersion::V8);
+        open_ready(
+            &mut app,
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_upper_body())
+                .unwrap(),
+        );
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc =
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_hip_contour())
+                .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (old_part, new_part) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(old_part["positions"], new_part["positions"]);
+            assert_eq!(old_part["rest_positions"], new_part["rest_positions"]);
+        }
+        for key in ["hip_depth", "buttocks_volume"] {
+            for value in [-1.0, 1.0] {
+                let mut doc = zero_doc.clone();
+                doc.character.parameters.insert(key.into(), value);
+                open_ready(&mut app, doc);
+                let frame = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                    "{key} {value} must deform uploaded body"
+                );
+                let bones = frame["bones"].as_array().unwrap();
+                assert_eq!(bones.len(), 53);
+                for bone in bones {
+                    assert!(
+                        bone["rest"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                    assert!(
+                        bone["posed"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                }
+                for stem in ["thigh", "calf"] {
+                    let find = |name: &str| bones.iter().find(|b| b["name"] == name).unwrap();
+                    let left = find(&format!("{stem}_l"))["rest"].as_array().unwrap();
+                    let right = find(&format!("{stem}_r"))["rest"].as_array().unwrap();
+                    let f = |v: &serde_json::Value| v.as_f64().unwrap();
+                    assert!(
+                        (f(&left[12]) + f(&right[12])).abs() < 0.02,
+                        "{key} {value} {stem} bilateral X"
+                    );
+                    assert!(
+                        (f(&left[13]) - f(&right[13])).abs() < 0.02,
+                        "{key} {value} {stem} bilateral Y"
+                    );
+                    assert!(
+                        (f(&left[14]) - f(&right[14])).abs() < 0.02,
+                        "{key} {value} {stem} bilateral Z"
                     );
                 }
             }

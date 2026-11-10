@@ -22,7 +22,8 @@ pub fn validate_export_work(doc: &SceneDocument) -> Result<(), String> {
     if (doc.profile != nvwa_core::CharacterProfile::b1_character()
         && doc.profile != nvwa_core::CharacterProfile::b1_character_waist()
         && doc.profile != nvwa_core::CharacterProfile::b1_character_legs()
-        && doc.profile != nvwa_core::CharacterProfile::b1_character_upper_body())
+        && doc.profile != nvwa_core::CharacterProfile::b1_character_upper_body()
+        && doc.profile != nvwa_core::CharacterProfile::b1_character_hip_contour())
         || !doc.timeline.is_empty()
         || doc.character.appearance != nvwa_core::CharacterAppearance::None
     {
