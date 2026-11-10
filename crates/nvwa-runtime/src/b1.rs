@@ -105,6 +105,7 @@ fn uses_prepared_rig(doc: &SceneDocument) -> bool {
                     | B1AssetVersion::V7
                     | B1AssetVersion::V8
                     | B1AssetVersion::V9
+                    | B1AssetVersion::V10
             )
         )
 }
@@ -3628,6 +3629,65 @@ mod tests {
                 assert_ne!(
                     frame["parts"][0]["positions"], posed["parts"][0]["positions"],
                     "{key} {value} elbow pose must publish"
+                );
+            }
+        }
+    }
+    #[test]
+    fn chest_placement_zero_preserves_v9_and_endpoints_keep_finite_bones() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V9);
+        fill_version(&dir, B1AssetVersion::V10);
+        let old_doc = SceneDocument::from_profile(
+            nvwa_core::CharacterProfile::b1_character_arm_proportions(),
+        )
+        .unwrap();
+        open_ready(&mut app, old_doc);
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc = SceneDocument::from_profile(
+            nvwa_core::CharacterProfile::b1_character_chest_placement(),
+        )
+        .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (before, after) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(before["positions"], after["positions"]);
+            assert_eq!(before["rest_positions"], after["rest_positions"]);
+        }
+        for key in ["breast_spacing", "breast_vertical_position"] {
+            for value in [-1.0, 1.0] {
+                let mut doc = zero_doc.clone();
+                doc.character.parameters.insert(key.into(), value);
+                open_ready(&mut app, doc.clone());
+                let frame = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                    "{key} {value}"
+                );
+                assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
+                for bone in frame["bones"].as_array().unwrap() {
+                    for matrix in [&bone["rest"], &bone["posed"]] {
+                        assert!(
+                            matrix
+                                .as_array()
+                                .unwrap()
+                                .iter()
+                                .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                        );
+                    }
+                }
+                doc.character.diagnostic_pose = Some("shoulder".into());
+                open_ready(&mut app, doc);
+                let posed = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"],
+                    posed["parts"][0]["positions"]
                 );
             }
         }

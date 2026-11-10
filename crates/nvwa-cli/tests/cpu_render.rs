@@ -616,3 +616,113 @@ fn arm_proportions_export_is_discoverable_as_supported() {
             .contains("arm-proportions")
     );
 }
+
+#[test]
+fn chest_placement_change_actual_front_side_back_and_shoulder_render() {
+    let trial = Trial::new();
+    let mut previous =
+        SceneDocument::from_profile(CharacterProfile::b1_character_arm_proportions()).unwrap();
+    let mut doc =
+        SceneDocument::from_profile(CharacterProfile::b1_character_chest_placement()).unwrap();
+    previous.stage.camera.elevation_degrees = 0.0;
+    doc.stage = previous.stage.clone();
+    let mut visible = std::collections::BTreeSet::new();
+    for (view, azimuth) in [("front", 0.0), ("side", 90.0), ("back", 180.0)] {
+        previous.stage.camera.azimuth_degrees = azimuth;
+        doc.stage.camera.azimuth_degrees = azimuth;
+        let old = success(render(
+            &trial.work(&format!("v9-{view}"), &previous),
+            &assets(),
+            &trial.0.join(format!("v9-{view}")),
+        ));
+        let zero = success(render(
+            &trial.work(&format!("v10-{view}-zero"), &doc),
+            &assets(),
+            &trial.0.join(format!("v10-{view}-zero")),
+        ));
+        assert_eq!(
+            old["geometry_sha256"], zero["geometry_sha256"],
+            "{view} zero geometry"
+        );
+        assert_eq!(old["png_sha256"], zero["png_sha256"], "{view} zero image");
+        for key in ["breast_spacing", "breast_vertical_position"] {
+            for (sign, value) in [("decr", -1.0), ("incr", 1.0)] {
+                doc.character.parameters.insert(key.into(), value);
+                let name = format!("v10-{view}-{key}-{sign}");
+                let changed = success(render(
+                    &trial.work(&name, &doc),
+                    &assets(),
+                    &trial.0.join(&name),
+                ));
+                assert_ne!(
+                    zero["geometry_sha256"], changed["geometry_sha256"],
+                    "{name} must deform mesh"
+                );
+                if zero["png_sha256"] != changed["png_sha256"] {
+                    visible.insert((key, sign));
+                }
+                assert!(changed["covered_pixels"].as_u64().unwrap() > 100);
+                doc.character.parameters.insert(key.into(), 0.0);
+            }
+        }
+    }
+    for key in ["breast_spacing", "breast_vertical_position"] {
+        for sign in ["decr", "incr"] {
+            assert!(
+                visible.contains(&(key, sign)),
+                "{key} {sign} must change a visible rendered view"
+            );
+        }
+    }
+    doc.character
+        .parameters
+        .insert("breast_spacing".into(), 0.5);
+    doc.character
+        .parameters
+        .insert("breast_vertical_position".into(), 0.5);
+    let neutral = success(render(
+        &trial.work("v10-mixed", &doc),
+        &assets(),
+        &trial.0.join("v10-mixed"),
+    ));
+    doc.character.diagnostic_pose = Some("shoulder".into());
+    let shoulder = success(render(
+        &trial.work("v10-mixed-shoulder", &doc),
+        &assets(),
+        &trial.0.join("v10-mixed-shoulder"),
+    ));
+    assert_ne!(neutral["geometry_sha256"], shoulder["geometry_sha256"]);
+}
+
+#[test]
+fn chest_placement_export_is_discoverable_as_supported() {
+    let trial = Trial::new();
+    let doc =
+        SceneDocument::from_profile(CharacterProfile::b1_character_chest_placement()).unwrap();
+    let work = trial.work("v10-discovery", &doc);
+    let output = Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
+        .args(["describe-capabilities".as_ref(), work.as_path()])
+        .output()
+        .unwrap();
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let capabilities: Value = serde_json::from_slice(&output.stdout).unwrap();
+    let exporter = &capabilities["cpu_render"];
+    assert_eq!(exporter["current_work_supported"], true);
+    assert!(
+        exporter["profiles"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|id| id.as_str() == Some(doc.profile.id.as_str()))
+    );
+    assert!(
+        exporter["usage"]
+            .as_str()
+            .unwrap()
+            .contains("chest-placement")
+    );
+}
