@@ -33,7 +33,7 @@ class HandSizeSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.HAND_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 661)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.SHOULDER_CONTEXT_ID)
+                         CONTEXT.FOREARM_CONTEXT_ID)
         with self.assertRaisesRegex(ValueError, 'not historical'):
             CONTEXT.check_source_context(ROOT, self.pins, historical_only=True)
         self.assertEqual({p for p in self.previous[1]

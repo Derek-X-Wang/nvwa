@@ -708,6 +708,20 @@ SHOULDER_NEW_CODE = ('crates/nvwa-cli/tests/shoulder_form.rs',
                      'scripts/render-shoulder-form-review.py',
                      'scripts/test-shoulder-form-v12.py')
 
+FOREARM_CONTEXT_NAME = '../72-b1-admission-controls/input-context-forearm-form-v1.json'
+FOREARM_CONTEXT_SHA = '4274c8761fe03b1a85436168fc1eeaf8db211bc7a8a2e16eb756e629c7e7ae45'
+FOREARM_CONTEXT_ID = 'b1-forearm-form-v13-product-v1'
+FOREARM_PREDECESSOR_COMMIT = 'd09ef1f12efa752a33a65b0fadfdaaae7f3c1d95'
+FOREARM_FIXTURES = '../72-b1-admission-controls/fixtures/pre-forearm-form'
+FOREARM_BASELINES_SHA = 'dbbf89ae3f64f38d24a4c840d8771ca4fdb155f016ba2490044f9b5b8ba780d3'
+FOREARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v13/'
+FOREARM_CHANGED = SHOULDER_CHANGED
+FOREARM_NEW_CODE = ('crates/nvwa-cli/tests/forearm_form.rs',
+                     'crates/nvwa-core/tests/forearm_form.rs',
+                     'scripts/build-forearm-form-v13.py',
+                     'scripts/render-forearm-form-review.py',
+                     'scripts/test-forearm-form-v13.py')
+
 
 def pre_body_reference_file(name):
     historical = Path(__file__).resolve().parent / BODY_REFERENCE_FIXTURES / name
@@ -822,6 +836,62 @@ def shoulder_source_context(exp, cpu):
             'shoulder exact successor delta required')
     result = dict(previous[1]); result.update(files)
     require(len(result) == 1094, 'shoulder complete source union required')
+    return value['context'], result
+
+
+def has_forearm_inputs(root):
+    path = root / FOREARM_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def forearm_source_context(exp, cpu):
+    previous = shoulder_source_context(exp, cpu)
+    require(previous[0] == SHOULDER_CONTEXT_ID and len(previous[1]) == 1094,
+            'forearm predecessor must be exact shoulder context')
+    raw = regular_file(exp, FOREARM_FIXTURES + '/manifest.json').read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == FOREARM_BASELINES_SHA,
+            'forearm predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == FOREARM_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(FOREARM_CHANGED),
+            'forearm predecessor changed-file inventory mismatch')
+    for name in FOREARM_CHANGED:
+        item = baseline['files'][name]
+        path = regular_file(exp, '../72-b1-admission-controls/' + item['fixture'])
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-forearm-form/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name]
+                and path.stat().st_size == item['bytes']
+                and hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'],
+                'forearm predecessor bytes mismatch: ' + name)
+    fixture_root = exp / FOREARM_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(FOREARM_CHANGED),
+            'forearm predecessor fixture inventory mismatch')
+    raw = regular_file(exp, FOREARM_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == FOREARM_CONTEXT_SHA,
+            'forearm context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']; additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == FOREARM_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == FOREARM_PREDECESSOR_COMMIT
+            and len(files) == 167 and len(additions) == 154
+            and sum(p.startswith(FOREARM_ASSET_PREFIX) for p in additions) == 149
+            and additions == {p for p in additions if p.startswith(FOREARM_ASSET_PREFIX)}
+                             | set(FOREARM_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(FOREARM_CHANGED)
+            and all(files[p] != previous[1][p] for p in FOREARM_CHANGED),
+            'forearm exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 1248, 'forearm complete source union required')
     return value['context'], result
 
 

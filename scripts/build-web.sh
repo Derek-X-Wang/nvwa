@@ -22,7 +22,7 @@ cp web/index.html dist/web/index.html
 cp web/start.html dist/web/start.html
 cp assets/character.profile.json dist/web/assets/
 mkdir -p dist/web/assets/characters dist/web/licenses/b1
-cp -R assets/characters/mpfb-b1-v1 assets/characters/mpfb-b1-v2 assets/characters/mpfb-b1-v3 assets/characters/mpfb-b1-v4 assets/characters/mpfb-b1-v5 assets/characters/mpfb-b1-v6 assets/characters/mpfb-b1-v7 assets/characters/mpfb-b1-v8 assets/characters/mpfb-b1-v9 assets/characters/mpfb-b1-v11 assets/characters/mpfb-b1-v12 dist/web/assets/characters/
+cp -R assets/characters/mpfb-b1-v1 assets/characters/mpfb-b1-v2 assets/characters/mpfb-b1-v3 assets/characters/mpfb-b1-v4 assets/characters/mpfb-b1-v5 assets/characters/mpfb-b1-v6 assets/characters/mpfb-b1-v7 assets/characters/mpfb-b1-v8 assets/characters/mpfb-b1-v9 assets/characters/mpfb-b1-v11 assets/characters/mpfb-b1-v12 assets/characters/mpfb-b1-v13 dist/web/assets/characters/
 for dependency in humentity bevy_obj wobj; do
   mkdir -p "dist/web/licenses/b1/$dependency"
   for notice in "vendor/$dependency"/LICENSE*; do

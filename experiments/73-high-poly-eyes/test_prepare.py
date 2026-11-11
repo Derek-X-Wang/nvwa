@@ -7,6 +7,7 @@ from frozen_context import has_arm_inputs,arm_source_context,ARM_CONTEXT_ID
 from frozen_context import has_body_reference_inputs,body_reference_source_context,BODY_REFERENCE_CONTEXT_ID
 from frozen_context import has_hand_inputs,hand_source_context,HAND_CONTEXT_ID
 from frozen_context import has_shoulder_inputs,shoulder_source_context,SHOULDER_CONTEXT_ID
+from frozen_context import has_forearm_inputs,forearm_source_context,FOREARM_CONTEXT_ID
 from frozen_context import has_cpu_inputs,_cpu_context,cpu_regular_file,CPU_CONTEXT_ID,CPU_ADDITIONS,check_cpu_preexisting,_pre_cpu_sources
 import hashlib,importlib.util,json,re,tomllib,unittest
 from pathlib import Path
@@ -99,7 +100,8 @@ class SourceContract(unittest.TestCase):
     previous=_motion_query_source_context(EXP,_running_source_context(EXP,inputs,contexts))
     cpu=_cpu_context(EXP,previous[1])
     if arm:
-     product=(shoulder_source_context(EXP,cpu) if has_shoulder_inputs(ROOT)
+     product=(forearm_source_context(EXP,cpu) if has_forearm_inputs(ROOT)
+              else shoulder_source_context(EXP,cpu) if has_shoulder_inputs(ROOT)
               else hand_source_context(EXP,cpu) if has_hand_inputs(ROOT)
               else body_reference_source_context(EXP,cpu) if has_body_reference_inputs(ROOT)
               else arm_source_context(EXP,cpu))
@@ -152,7 +154,9 @@ class SourceContract(unittest.TestCase):
      context,selected=select_context(actual,[motion_query])
      check_cpu_preexisting(ROOT,_pre_cpu_sources(EXP,motion_query[1]))
   except ValueError as error:self.fail(str(error))
-  if context == SHOULDER_CONTEXT_ID:
+  if context == FOREARM_CONTEXT_ID:
+   self.assertEqual(len(selected),1248,'FROZEN-INPUTS.json forearm complete source set required')
+  elif context == SHOULDER_CONTEXT_ID:
    self.assertEqual(len(selected),1094,'FROZEN-INPUTS.json shoulder complete source set required')
   elif context == HAND_CONTEXT_ID:
    self.assertEqual(len(selected),949,'FROZEN-INPUTS.json hand complete source set required')
