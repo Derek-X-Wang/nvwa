@@ -32,7 +32,7 @@ class ShoulderFormSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.SHOULDER_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 806)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.SHOULDER_CONTEXT_ID)
+                         CONTEXT.FOREARM_CONTEXT_ID)
         self.assertEqual({p for p in self.previous[1]
                           if self.current[1][p] != self.previous[1][p]},
                          set(CONTEXT.SHOULDER_CHANGED))
@@ -45,7 +45,7 @@ class ShoulderFormSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, target)
+                shutil.copyfile(HERE / CONTEXT.FOREARM_FIXTURES / name if name in CONTEXT.FOREARM_CHANGED else ROOT / name, target)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'],
                              CONTEXT.SHOULDER_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',

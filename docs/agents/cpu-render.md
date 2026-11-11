@@ -90,6 +90,11 @@ review; neither the sportsuit nor its masking enters this body's image pixels.
 Keep generated character-body references private unless their owner chooses to
 publish them.
 The v12 shoulder-form profile can be created with `new-character-shoulder-form`.
+The v13 forearm-form profile can be created with `new-character-forearm-form`.
+Its `forearm_fullness` control is a signed bilateral relative MPFB lower-arm
+soft-tissue target weight. It is not a measurement of circumference or muscle
+mass. Use `--mode body-reference` for fixed-view static comparison; clothing,
+gripping and continuous motion require separate acceptance.
 Its `shoulder_muscle_fullness` control is a signed, relative, bilateral MPFB
 target weight. Use fixed camera and pose comparisons for shape review; the
 body-only image does not validate clothing, props or continuous animation.
