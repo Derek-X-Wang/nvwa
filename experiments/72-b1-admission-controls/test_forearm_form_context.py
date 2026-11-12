@@ -33,7 +33,7 @@ class ForearmFormSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.FOREARM_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 960)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.FOREARM_CONTEXT_ID)
+                         CONTEXT.UPPER_ARM_CONTEXT_ID)
         self.assertEqual({p for p in self.previous[1]
                           if self.current[1][p] != self.previous[1][p]},
                          set(CONTEXT.FOREARM_CHANGED))
@@ -46,7 +46,9 @@ class ForearmFormSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, target)
+                source = (HERE / CONTEXT.UPPER_ARM_FIXTURES / name
+                          if name in CONTEXT.UPPER_ARM_CHANGED else ROOT / name)
+                shutil.copyfile(source, target)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'],
                              CONTEXT.FOREARM_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',
