@@ -2,11 +2,11 @@
 
 Nvwa's B1 controls are signed MPFB target weights in [-1, 1]. They are not centimetres, measured circumferences, cup sizes, or a guarantee of equal visual steps. Every added batch uses a new immutable asset identity; previous Work files and payloads retain their exact bytes.
 
-| Region | Existing through v12, with a local v13 forearm-form candidate | Remaining work |
+| Region | Existing through merged v13, with a local v14 upper-arm candidate | Remaining work |
 | --- | --- | --- |
 | Legs | thigh/lower-leg length and thigh/calf girth | wider poses, garments, asymmetry if needed |
 | Torso and chest | torso length, waist circumference, bust circumference | chest width/depth; separate breast spacing, projection and position |
-| Shoulder and arms | shoulder span, upper-arm girth, upper-/lower-arm length, wrist circumference and bilateral shoulder muscle form; v13 candidate adds forearm soft-tissue fullness | elbow form, wrist shape and pose quality |
+| Shoulder and arms | shoulder span, upper-arm girth, upper-/lower-arm length, wrist circumference, bilateral shoulder muscle form and forearm soft-tissue fullness; v14 candidate adds bilateral upper-arm muscle form | elbow form, wrist shape and pose quality |
 | Hip and buttocks | hip width; v8 experiment adds front/back depth and buttocks volume | hips circumference/height and full garment/pose acceptance |
 | Hands | v11 adds independent left/right whole-hand scale weights | palm/finger form, gripping and prop tests; artistic acceptance remains separate |
 | Elbow | diagnostic flex pose only | elbow shape control, separate from flex pose |
@@ -21,4 +21,6 @@ The merged v11 hand-size profile pins `l-hand-scale` and `r-hand-scale` decrease
 
 The v12 shoulder-form profile extends merged v11, without inheriting v10. It pins the four left/right `upperarm-shoulder-muscle` source targets at the same MPFB commit, composes each signed pair by exact row concatenation, and adds one bilateral relative weight `shoulder_muscle_fullness`. This controls authored shoulder muscle form, not shoulder span, an anatomical circumference, or a pose. Its 24 fixed-camera, body-only front/quarter/side renders cover zero and both endpoints in neutral and raised-shoulder diagnostic poses. The differences are subtle but visible around the shoulder cap; zero reproduces v11 PNG bytes. These static comparisons do not certify garment fit, gripping, continuous animation, or final art direction.
 
-The v13 forearm-form candidate extends v12 without inheriting the held v10 chest experiment. It pins MPFB bilateral `lowerarm-fat` increase/decrease sources and adds one relative `forearm_fullness` weight. The source describes soft-tissue fullness rather than exact circumference, muscle mass or elbow shape. Acceptance compares v12/v13 zero and signed endpoints in fixed front/quarter/side body-only views for neutral and elbow-bend static poses. Clothing fit, gripping and continuous animation remain separate. Elbow form and detailed wrist/hand shape remain open.
+The merged v13 forearm-form profile extends v12 without inheriting the held v10 chest experiment. It pins MPFB bilateral `lowerarm-fat` increase/decrease sources and adds one relative `forearm_fullness` weight. The source describes soft-tissue fullness rather than exact circumference, muscle mass or elbow shape. Its static checks compare v12/v13 zero and signed endpoints in fixed front/quarter/side body-only views for neutral and elbow-bend poses. Clothing fit, gripping and continuous animation remain separate. Elbow form and detailed wrist/hand shape remain open.
+
+The local v14 candidate extends merged v13, still excluding held v10. It pins the four MPFB left/right `upperarm-muscle` signed source targets and concatenates each direction only after checking vertex ID disjointness. `upper_arm_muscle_fullness` is an authored relative morph weight, separate from `upper_arm_girth` and `shoulder_muscle_fullness`; it does not measure muscle mass. Before review, verify v13/v14 zero identity, signed upper-arm body response in neutral/shoulder/elbow static views, asset tamper rejection and save/reload. Clothing, grip, full animation and final art remain separate.

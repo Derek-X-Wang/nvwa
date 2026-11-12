@@ -725,6 +725,7 @@ fn draw_editor_ui(
     let mut new_hand_size = false;
     let mut new_shoulder_form = false;
     let mut new_forearm_form = false;
+    let mut new_upper_arm_muscle = false;
     let mut new_lower_contour = false;
     let mut new_running = false;
     let mut command = None;
@@ -803,6 +804,13 @@ fn draw_editor_ui(
                         .clicked()
                     {
                         new_forearm_form = true;
+                        ui.close();
+                    }
+                    if ui
+                        .button("新建静态上臂人物… / New static upper-arm muscle character…")
+                        .clicked()
+                    {
+                        new_upper_arm_muscle = true;
                         ui.close();
                     }
                     if ui
@@ -961,23 +969,26 @@ fn draw_editor_ui(
                         if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V6) {
                             ui.small("腿部四项是 -1–1 相对形变权重，非厘米；邻近关节与衣物可变化。静态试用 / Four relative leg controls, not centimetres; static only.");
                         }
-                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V7 | nvwa_core::B1AssetVersion::V8 | nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11 | nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13)) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V7 | nvwa_core::B1AssetVersion::V8 | nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11 | nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13 | nvwa_core::B1AssetVersion::V14)) {
                             ui.small("胸围、肩距和上臂围度是 -1–1 相对形变权重，非厘米；衣物和动作需单独验收。 / Relative upper-body shape weights, not centimetres; static trial only.");
                         }
-                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V8 | nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11 | nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13)) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V8 | nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11 | nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13 | nvwa_core::B1AssetVersion::V14)) {
                             ui.small("髋部厚度和臀部体积是 -1–1 相对形变权重，非厘米；衣物和动作需单独验收。 / Relative hip and buttocks shape weights, not centimetres; static trial only.");
                         }
-                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11 | nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13)) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V9 | nvwa_core::B1AssetVersion::V11 | nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13 | nvwa_core::B1AssetVersion::V14)) {
                             ui.small("上臂、前臂长度和腕围是 -1–1 相对形变权重，非厘米；关节、衣物和动作需单独验收。 / Relative arm and wrist weights, not centimetres; static trial only.");
                         }
-                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V11 | nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13)) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V11 | nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13 | nvwa_core::B1AssetVersion::V14)) {
                             ui.small("左右手尺寸分别为 -1–1 相对形变权重，非厘米；握物和动作需单独验收。 / Independent hand size weights, not centimetres; static trial only.");
                         }
-                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13)) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V12 | nvwa_core::B1AssetVersion::V13 | nvwa_core::B1AssetVersion::V14)) {
                             ui.small("肩肌丰满度为 -1–1 双侧相对形变权重；非肌肉质量测量，衣物和动作需另验。 / Bilateral shoulder form weight; static body trial only.");
                         }
-                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V13) {
+                        if matches!(doc.profile.backend.b1_asset_version(), Some(nvwa_core::B1AssetVersion::V13 | nvwa_core::B1AssetVersion::V14)) {
                             ui.small("前臂丰满度为 -1–1 双侧相对形变权重；非精确围度或肌肉质量，衣物和动作需另验。 / Bilateral forearm fullness weight; static body trial only.");
+                        }
+                        if doc.profile.backend.b1_asset_version() == Some(nvwa_core::B1AssetVersion::V14) {
+                            ui.small("上臂肌肉形状为 -1–1 双侧相对形变权重；非精确围度或肌肉质量，衣物和动作需另验。 / Bilateral upper-arm muscle form weight; static body trial only.");
                         }
                         if editor.preview.is_some() {
                             ui.label("Preview · document unchanged");
@@ -1359,8 +1370,11 @@ fn draw_editor_ui(
         || new_hand_size
         || new_shoulder_form
         || new_forearm_form
+        || new_upper_arm_muscle
     {
-        let profile = if new_forearm_form {
+        let profile = if new_upper_arm_muscle {
+            nvwa_core::CharacterProfile::b1_character_upper_arm_muscle()
+        } else if new_forearm_form {
             nvwa_core::CharacterProfile::b1_character_forearm_form()
         } else if new_shoulder_form {
             nvwa_core::CharacterProfile::b1_character_shoulder_form()
@@ -1600,6 +1614,7 @@ fn shape_parameter_label(id: &str) -> String {
         "right_hand_size" => "右手尺寸 / Right hand size".into(),
         "shoulder_muscle_fullness" => "肩肌丰满度 / Shoulder muscle fullness".into(),
         "forearm_fullness" => "前臂丰满度 / Forearm fullness".into(),
+        "upper_arm_muscle_fullness" => "上臂肌肉形状 / Upper-arm muscle form".into(),
         _ => id.replace('_', " "),
     }
 }
