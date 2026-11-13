@@ -789,7 +789,7 @@ UPPER_ARM_NEW_CODE = ('crates/nvwa-cli/tests/upper_arm_muscle.rs',
                       'scripts/test-upper-arm-muscle-v14.py')
 
 LEVEL1_CONTEXT_NAME = 'input-context-level1-display-v1.json'
-LEVEL1_CONTEXT_SHA = 'dab284b6211f727213b927c79dd6700ec9c96438e558d45cb882ca5dba4d917b'
+LEVEL1_CONTEXT_SHA = 'f6e676cf19932f154fb2b26340b9ee8f5c27925afe3585f98db739a0b9950957'
 LEVEL1_CONTEXT_ID = 'b1-level1-display-v14-product-v1'
 LEVEL1_PREDECESSOR_COMMIT = 'bac24197e0c2c329180550b0ce8f5b2a0c54a2ad'
 LEVEL1_FIXTURES = 'fixtures/pre-level1-display'

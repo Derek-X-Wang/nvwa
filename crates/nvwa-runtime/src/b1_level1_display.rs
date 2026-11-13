@@ -4,6 +4,9 @@ use super::level1_geometry::{Level1Plan, Level1Workspace};
 use super::*;
 use bevy::mesh::{PrimitiveTopology, VertexAttributeValues};
 
+const NORMAL_MAP_ERROR: &str =
+    "B1 Level 1 does not admit a normal-mapped material without tangents";
+
 /// Opt-in visual subdivision for B1. Changing this resource at runtime is safe;
 /// `false` restores the original mesh on the next PostUpdate.
 #[derive(Resource, Default, Clone, Copy)]
@@ -246,7 +249,7 @@ fn create_overlay(world: &mut World, s: &Session) -> Result<Overlay, String> {
         .get(&material.0)
         .ok_or("B1 material asset absent")?;
     if material_asset.normal_map_texture.is_some() {
-        return Err("B1 Level 1 does not admit a normal-mapped material without tangents".into());
+        return Err(NORMAL_MAP_ERROR.into());
     }
     let handle = world.resource_mut::<Assets<Mesh>>().add(mesh);
     let entity = world
@@ -256,7 +259,7 @@ fn create_overlay(world: &mut World, s: &Session) -> Result<Overlay, String> {
             bevy::camera::visibility::NoFrustumCulling,
             transform,
             global,
-            Visibility::Inherited,
+            original_visibility.unwrap_or(Visibility::Inherited),
         ))
         .id();
     Ok(Overlay {
@@ -321,11 +324,14 @@ fn update_overlay(world: &mut World, overlay: &mut Overlay, s: &Session) -> Resu
         .get(&material.0)
         .ok_or("B1 material asset absent")?;
     if material_asset.normal_map_texture.is_some() {
-        return Err("B1 Level 1 does not admit a normal-mapped material without tangents".into());
+        return Err(NORMAL_MAP_ERROR.into());
     }
-    world
-        .entity_mut(overlay.entity)
-        .insert((transform, global, material, Visibility::Inherited));
+    world.entity_mut(overlay.entity).insert((
+        transform,
+        global,
+        material,
+        overlay.original_visibility.unwrap_or(Visibility::Inherited),
+    ));
     world.entity_mut(overlay.owner).insert(Visibility::Hidden);
     Ok(())
 }
@@ -344,7 +350,18 @@ pub(super) fn publish(world: &mut World) {
         state.1 = None;
     } else if let Some(s) = runtime.active.as_ref() {
         if let Some((owner, serial, error)) = &state.1 {
-            if *owner == s.displays[0] && *serial == s.serial {
+            let normal_map_still_blocked = world
+                .get::<MeshMaterial3d<StandardMaterial>>(*owner)
+                .and_then(|material| {
+                    world
+                        .resource::<Assets<StandardMaterial>>()
+                        .get(&material.0)
+                })
+                .is_some_and(|material| material.normal_map_texture.is_some());
+            if *owner == s.displays[0]
+                && *serial == s.serial
+                && (error != NORMAL_MAP_ERROR || normal_map_still_blocked)
+            {
                 status.error = Some(error.clone());
                 world.insert_resource(runtime);
                 world.insert_resource(state);

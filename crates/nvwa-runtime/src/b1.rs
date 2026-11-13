@@ -97,7 +97,9 @@ pub(super) fn install(app: &mut App) {
                 level1_display::publish,
             )
                 .chain()
-                .after(bevy::transform::TransformSystems::Propagate),
+                .after(bevy::transform::TransformSystems::Propagate)
+                .before(bevy::camera::visibility::VisibilitySystems::CalculateBounds)
+                .before(bevy::camera::visibility::VisibilitySystems::VisibilityPropagate),
         );
 }
 
@@ -1252,6 +1254,9 @@ mod tests {
         }
     }
     fn harness(mutate: bool) -> (App, Dir, Arc<AtomicUsize>) {
+        harness_with_visibility(mutate, false)
+    }
+    fn harness_with_visibility(mutate: bool, visibility: bool) -> (App, Dir, Arc<AtomicUsize>) {
         let dir = Dir::default();
         fill(&dir);
         let reads = Arc::new(AtomicUsize::new(0));
@@ -1284,6 +1289,9 @@ mod tests {
         .init_resource::<CharacterAsset>()
         .init_resource::<RuntimeStatus>()
         .init_resource::<Playback>();
+        if visibility {
+            app.add_plugins(bevy::camera::visibility::VisibilityPlugin);
+        }
         install(&mut app);
         app.finish();
         app.cleanup();
@@ -1423,6 +1431,114 @@ mod tests {
             app.world().resource::<B1DisplaySubdivisionStatus>().error,
             error
         );
+        let serial = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .serial;
+        app.world_mut()
+            .resource_mut::<Assets<StandardMaterial>>()
+            .get_mut(&material)
+            .unwrap()
+            .normal_map_texture = None;
+        app.update();
+        assert_eq!(
+            app.world()
+                .resource::<B1Runtime>()
+                .active
+                .as_ref()
+                .unwrap()
+                .serial,
+            serial,
+            "material recovery must not rely on motion"
+        );
+        let status = app.world().resource::<B1DisplaySubdivisionStatus>();
+        assert!(status.active, "Level 1 did not recover: {:?}", status.error);
+        assert!(status.error.is_none());
+    }
+    #[test]
+    fn level1_display_visibility_is_current_on_toggle_and_keeps_hidden_body_hidden() {
+        use bevy::camera::visibility::InheritedVisibility;
+
+        let (mut app, _, _) = harness_with_visibility(false, true);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<RuntimeStatus>().ready
+                && w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.phase == 2)
+        });
+        let body = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .displays[0];
+        assert!(app.world().get::<InheritedVisibility>(body).unwrap().get());
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = true;
+        app.update();
+        let overlay = app
+            .world()
+            .resource::<level1_display::Level1DisplayState>()
+            .0
+            .as_ref()
+            .unwrap()
+            .entity;
+        assert!(!app.world().get::<InheritedVisibility>(body).unwrap().get());
+        assert!(
+            app.world()
+                .get::<InheritedVisibility>(overlay)
+                .unwrap()
+                .get()
+        );
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = false;
+        app.update();
+        assert!(app.world().get::<InheritedVisibility>(body).unwrap().get());
+
+        app.world_mut().entity_mut(body).insert(Visibility::Hidden);
+        app.update();
+        assert!(!app.world().get::<InheritedVisibility>(body).unwrap().get());
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = true;
+        app.update();
+        let overlay = app
+            .world()
+            .resource::<level1_display::Level1DisplayState>()
+            .0
+            .as_ref()
+            .unwrap()
+            .entity;
+        assert_eq!(
+            app.world().get::<Visibility>(overlay),
+            Some(&Visibility::Hidden)
+        );
+        assert!(
+            !app.world()
+                .get::<InheritedVisibility>(overlay)
+                .unwrap()
+                .get()
+        );
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = false;
+        app.update();
+        assert_eq!(
+            app.world().get::<Visibility>(body),
+            Some(&Visibility::Hidden)
+        );
+        assert!(!app.world().get::<InheritedVisibility>(body).unwrap().get());
     }
     fn uploaded_positions(app: &App) -> Vec<Vec<[f32; 3]>> {
         let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
