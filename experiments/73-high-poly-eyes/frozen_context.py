@@ -722,6 +722,25 @@ FOREARM_NEW_CODE = ('crates/nvwa-cli/tests/forearm_form.rs',
                      'scripts/render-forearm-form-review.py',
                      'scripts/test-forearm-form-v13.py')
 
+UPPER_ARM_CONTEXT_NAME = '../72-b1-admission-controls/input-context-upper-arm-muscle-v1.json'
+UPPER_ARM_CONTEXT_SHA = '30a784e5de573fc614233ff6961df3e34e764738ae45058f49f0b3f95e5c4815'
+UPPER_ARM_CONTEXT_ID = 'b1-upper-arm-muscle-v14-product-v1'
+UPPER_ARM_PREDECESSOR_COMMIT = '0226ac10bbc1f8619bf0d488131f283a1fe3681a'
+UPPER_ARM_FIXTURES = '../72-b1-admission-controls/fixtures/pre-upper-arm-muscle'
+UPPER_ARM_BASELINES_SHA = '2fc4cf9ff8919478aea6bbce4fd4f0c39b14118605a1d1bc6b256d370f0bb9ac'
+UPPER_ARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v14/'
+UPPER_ARM_CHANGED = FOREARM_CHANGED
+UPPER_ARM_NEW_CODE = ('crates/nvwa-cli/tests/upper_arm_muscle.rs',
+                      'crates/nvwa-core/tests/upper_arm_muscle.rs',
+                      'scripts/README.md',
+                      'scripts/build-upper-arm-muscle-v14.py',
+                      'scripts/portable-checks.json',
+                      'scripts/portable_catalog_v14.py',
+                      'scripts/render-upper-arm-muscle-review.py',
+                      'scripts/test-ci-timing.py',
+                      'scripts/test-portable-checks.py',
+                      'scripts/test-upper-arm-muscle-v14.py')
+
 
 def pre_body_reference_file(name):
     historical = Path(__file__).resolve().parent / BODY_REFERENCE_FIXTURES / name
@@ -892,6 +911,62 @@ def forearm_source_context(exp, cpu):
             'forearm exact successor delta required')
     result = dict(previous[1]); result.update(files)
     require(len(result) == 1248, 'forearm complete source union required')
+    return value['context'], result
+
+
+def has_upper_arm_inputs(root):
+    path = root / UPPER_ARM_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def upper_arm_source_context(exp, cpu):
+    previous = forearm_source_context(exp, cpu)
+    require(previous[0] == FOREARM_CONTEXT_ID and len(previous[1]) == 1248,
+            'upper arm predecessor must be exact forearm context')
+    raw = regular_file(exp, UPPER_ARM_FIXTURES + '/manifest.json').read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == UPPER_ARM_BASELINES_SHA,
+            'upper arm predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == UPPER_ARM_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(UPPER_ARM_CHANGED),
+            'upper arm predecessor changed-file inventory mismatch')
+    for name in UPPER_ARM_CHANGED:
+        item = baseline['files'][name]
+        path = regular_file(exp, '../72-b1-admission-controls/' + item['fixture'])
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-upper-arm-muscle/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name]
+                and path.stat().st_size == item['bytes']
+                and hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'],
+                'upper arm predecessor bytes mismatch: ' + name)
+    fixture_root = exp / UPPER_ARM_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(UPPER_ARM_CHANGED),
+            'upper arm predecessor fixture inventory mismatch')
+    raw = regular_file(exp, UPPER_ARM_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == UPPER_ARM_CONTEXT_SHA,
+            'upper arm context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']; additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == UPPER_ARM_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == UPPER_ARM_PREDECESSOR_COMMIT
+            and len(files) == 181 and len(additions) == 168
+            and sum(p.startswith(UPPER_ARM_ASSET_PREFIX) for p in additions) == 158
+            and additions == {p for p in additions if p.startswith(UPPER_ARM_ASSET_PREFIX)}
+                             | set(UPPER_ARM_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(UPPER_ARM_CHANGED)
+            and all(files[p] != previous[1][p] for p in UPPER_ARM_CHANGED),
+            'upper arm exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 1416, 'upper arm complete source union required')
     return value['context'], result
 
 

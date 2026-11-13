@@ -27,6 +27,7 @@ ASSET_TREES = (
     "characters/mpfb-b1-v11",
     "characters/mpfb-b1-v12",
     "characters/mpfb-b1-v13",
+    "characters/mpfb-b1-v14",
     "appearances/mpfb-b1-cc0-v1",
     "appearances/mpfb-b1-cc0-v2",
     "appearances/mpfb-b1-cc0-v2-short01-v1",

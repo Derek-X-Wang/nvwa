@@ -32,7 +32,7 @@ class ShoulderFormSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.SHOULDER_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 806)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.FOREARM_CONTEXT_ID)
+                         CONTEXT.UPPER_ARM_CONTEXT_ID)
         self.assertEqual({p for p in self.previous[1]
                           if self.current[1][p] != self.previous[1][p]},
                          set(CONTEXT.SHOULDER_CHANGED))

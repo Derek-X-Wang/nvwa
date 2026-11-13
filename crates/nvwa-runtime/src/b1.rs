@@ -108,6 +108,7 @@ fn uses_prepared_rig(doc: &SceneDocument) -> bool {
                     | B1AssetVersion::V11
                     | B1AssetVersion::V12
                     | B1AssetVersion::V13
+                    | B1AssetVersion::V14
             )
         )
 }
@@ -3786,6 +3787,99 @@ mod tests {
             assert_ne!(
                 frame["parts"][0]["positions"], zero["parts"][0]["positions"],
                 "forearm {value} must alter actual body vertices"
+            );
+            assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
+            for bone in frame["bones"].as_array().unwrap() {
+                for matrix in [&bone["rest"], &bone["posed"]] {
+                    assert!(
+                        matrix
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                }
+            }
+            for pose in ["shoulder", "elbow"] {
+                doc.character.diagnostic_pose = Some(pose.into());
+                open_ready(&mut app, doc.clone());
+                let posed = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"],
+                    posed["parts"][0]["positions"]
+                );
+            }
+        }
+    }
+    #[test]
+    fn upper_arm_muscle_zero_preserves_v13_and_both_signs_publish_in_static_poses() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V13);
+        fill_version(&dir, B1AssetVersion::V14);
+        open_ready(
+            &mut app,
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_forearm_form())
+                .unwrap(),
+        );
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc = SceneDocument::from_profile(
+            nvwa_core::CharacterProfile::b1_character_upper_arm_muscle(),
+        )
+        .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (before, after) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(before["positions"], after["positions"]);
+            assert_eq!(before["rest_positions"], after["rest_positions"]);
+        }
+        for value in [-1.0, 1.0] {
+            let mut doc = zero_doc.clone();
+            doc.character
+                .parameters
+                .insert("upper_arm_muscle_fullness".into(), value);
+            open_ready(&mut app, doc.clone());
+            let frame = b1_frame_snapshot(app.world()).unwrap();
+            assert_ne!(
+                frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                "upper-arm muscle {value} must alter actual body vertices"
+            );
+            let target_name = if value < 0.0 {
+                "upperarm-muscle-decr.target"
+            } else {
+                "upperarm-muscle-incr.target"
+            };
+            let target = std::fs::read_to_string(
+                std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+                    .join("../../assets/characters/mpfb-b1-v14/targets")
+                    .join(target_name),
+            )
+            .unwrap();
+            let target_ids: std::collections::BTreeSet<u64> = target
+                .lines()
+                .filter(|line| !line.is_empty() && !line.starts_with('#'))
+                .map(|line| line.split_whitespace().next().unwrap().parse().unwrap())
+                .collect();
+            let changed_ids: std::collections::BTreeSet<u64> = zero["parts"][0]["source_ids"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .zip(zero["parts"][0]["rest_positions"].as_array().unwrap())
+                .zip(frame["parts"][0]["rest_positions"].as_array().unwrap())
+                .filter_map(|((id, before), after)| (before != after).then(|| id.as_u64().unwrap()))
+                .collect();
+            assert!(
+                !changed_ids.is_empty(),
+                "upper-arm target must affect body source IDs"
+            );
+            assert!(
+                changed_ids.is_subset(&target_ids),
+                "upper-arm target changed body IDs outside its pinned source rows"
             );
             assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
             for bone in frame["bones"].as_array().unwrap() {

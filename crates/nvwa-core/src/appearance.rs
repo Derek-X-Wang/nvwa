@@ -78,7 +78,8 @@ impl B1AppearanceSet {
             | B1AssetVersion::V9
             | B1AssetVersion::V11
             | B1AssetVersion::V12
-            | B1AssetVersion::V13 => None,
+            | B1AssetVersion::V13
+            | B1AssetVersion::V14 => None,
         }
     }
     pub const fn base(self) -> B1AssetVersion {

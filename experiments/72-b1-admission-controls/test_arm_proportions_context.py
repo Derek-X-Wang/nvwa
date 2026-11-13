@@ -29,7 +29,7 @@ class ArmProportionsSourceContext(unittest.TestCase):
     def test_exact_union_preserves_v8(self):
         self.assertEqual(self.predecessor[0], CONTEXT.HIP_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 401)
-        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], CONTEXT.FOREARM_CONTEXT_ID)
+        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], CONTEXT.UPPER_ARM_CONTEXT_ID)
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},
                          set(CONTEXT.ARM_CHANGED))

@@ -95,6 +95,10 @@ Its `forearm_fullness` control is a signed bilateral relative MPFB lower-arm
 soft-tissue target weight. It is not a measurement of circumference or muscle
 mass. Use `--mode body-reference` for fixed-view static comparison; clothing,
 gripping and continuous motion require separate acceptance.
+The v14 upper-arm profile can be created with `new-character-upper-arm-muscle`.
+Its `upper_arm_muscle_fullness` is a signed bilateral relative MPFB target weight,
+separate from upper-arm girth and shoulder form. It does not measure muscle mass;
+compare body-only front, quarter and side views in neutral and diagnostic poses.
 Its `shoulder_muscle_fullness` control is a signed, relative, bilateral MPFB
 target weight. Use fixed camera and pose comparisons for shape review; the
 body-only image does not validate clothing, props or continuous animation.
