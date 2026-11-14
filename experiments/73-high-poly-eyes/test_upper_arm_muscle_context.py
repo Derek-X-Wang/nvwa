@@ -7,6 +7,8 @@ import unittest
 from frozen_context import (FOREARM_CONTEXT_ID, UPPER_ARM_CHANGED,
                             UPPER_ARM_CONTEXT_ID, upper_arm_source_context,
                             _cpu_context)
+from frozen_context import (LEVEL1_CONTEXT_ID, LEVEL1_CHANGED, LEVEL1_ADDED,
+                            level1_source_context, pre_level1_file)
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
@@ -23,6 +25,16 @@ class UpperArmMuscleContext(unittest.TestCase):
         self.assertEqual(len(files), 1416)
         self.assertEqual({p for p in UPPER_ARM_CHANGED if p in files}, set(UPPER_ARM_CHANGED))
         for path, expected in files.items():
+            source = pre_level1_file(path)
+            self.assertTrue(source.is_file(), path)
+            self.assertEqual(source.stat().st_size, expected['bytes'], path)
+            self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), expected['sha256'], path)
+        successor, current = level1_source_context(HERE, cpu)
+        self.assertEqual(successor, LEVEL1_CONTEXT_ID)
+        self.assertEqual(len(current), 1418)
+        self.assertEqual({p for p in files if current[p] != files[p]}, set(LEVEL1_CHANGED))
+        self.assertEqual(set(current) - set(files), set(LEVEL1_ADDED))
+        for path, expected in current.items():
             source = ROOT / path
             self.assertTrue(source.is_file(), path)
             self.assertEqual(source.stat().st_size, expected['bytes'], path)

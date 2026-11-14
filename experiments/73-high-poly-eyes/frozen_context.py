@@ -741,6 +741,26 @@ UPPER_ARM_NEW_CODE = ('crates/nvwa-cli/tests/upper_arm_muscle.rs',
                       'scripts/test-portable-checks.py',
                       'scripts/test-upper-arm-muscle-v14.py')
 
+LEVEL1_CONTEXT_NAME = '../72-b1-admission-controls/input-context-level1-display-v1.json'
+LEVEL1_CONTEXT_SHA = 'f6e676cf19932f154fb2b26340b9ee8f5c27925afe3585f98db739a0b9950957'
+LEVEL1_CONTEXT_ID = 'b1-level1-display-v14-product-v1'
+LEVEL1_PREDECESSOR_COMMIT = 'bac24197e0c2c329180550b0ce8f5b2a0c54a2ad'
+LEVEL1_FIXTURES = '../72-b1-admission-controls/fixtures/pre-level1-display'
+LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1.rs',
+                  'crates/nvwa-runtime/src/lib.rs')
+LEVEL1_ADDED = ('crates/nvwa-runtime/src/b1_level1_geometry.rs',
+                'crates/nvwa-runtime/src/b1_level1_display.rs')
+
+
+def has_level1_inputs(root):
+    return any((root / name).exists() or (root / name).is_symlink()
+               for name in LEVEL1_ADDED)
+
+
+def pre_level1_file(name):
+    fixture = Path(__file__).resolve().parent / LEVEL1_FIXTURES / name
+    return fixture if name in LEVEL1_CHANGED else Path(__file__).resolve().parents[2] / name
+
 
 def pre_body_reference_file(name):
     historical = Path(__file__).resolve().parent / BODY_REFERENCE_FIXTURES / name
@@ -967,6 +987,47 @@ def upper_arm_source_context(exp, cpu):
             'upper arm exact successor delta required')
     result = dict(previous[1]); result.update(files)
     require(len(result) == 1416, 'upper arm complete source union required')
+    return value['context'], result
+
+
+def level1_source_context(exp, cpu):
+    """Independently consume the exact display successor without altering v14."""
+    previous = upper_arm_source_context(exp, cpu)
+    require(previous[0] == UPPER_ARM_CONTEXT_ID and len(previous[1]) == 1416,
+            'level1 predecessor must be exact upper-arm context')
+    fixture_root = exp / LEVEL1_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == set(LEVEL1_CHANGED),
+            'level1 predecessor fixture inventory mismatch')
+    for name in LEVEL1_CHANGED:
+        path = regular_file(exp, f'{LEVEL1_FIXTURES}/{name}')
+        require({'bytes': path.stat().st_size,
+                 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()} == previous[1][name],
+                'level1 predecessor bytes mismatch: ' + name)
+    raw = regular_file(exp, LEVEL1_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == LEVEL1_CONTEXT_SHA,
+            'level1 context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == LEVEL1_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == LEVEL1_PREDECESSOR_COMMIT
+            and set(value['files']) == set(LEVEL1_CHANGED) | set(LEVEL1_ADDED)
+            and all(name in previous[1] and value['files'][name] != previous[1][name]
+                    for name in LEVEL1_CHANGED)
+            and all(name not in previous[1] for name in LEVEL1_ADDED)
+            and all(set(item) == {'bytes', 'sha256'}
+                    and isinstance(item['bytes'], int) and item['bytes'] > 0
+                    and isinstance(item['sha256'], str) and len(item['sha256']) == 64
+                    for item in value['files'].values()),
+            'level1 exact successor delta required')
+    result = dict(previous[1]); result.update(value['files'])
+    require(len(result) == 1418, 'level1 complete source union required')
     return value['context'], result
 
 

@@ -21,7 +21,7 @@ class BodyReferenceSourceContext(unittest.TestCase):
     def test_exact_successor_and_changed_file_rejection(self):
         pins = json.loads((HERE / 'pins.json').read_bytes())
         live = CONTEXT.check_source_context(ROOT, pins)
-        self.assertEqual(live['id'], CONTEXT.UPPER_ARM_CONTEXT_ID)
+        self.assertEqual(live['id'], CONTEXT.LEVEL1_CONTEXT_ID)
         cpu = CONTEXT.cpu_source_context(pins)
         combined = CONTEXT._combined_context(HERE, cpu)
         leg = CONTEXT._leg_context(HERE, combined)
@@ -37,7 +37,8 @@ class BodyReferenceSourceContext(unittest.TestCase):
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
                 before_hand = HERE / CONTEXT.HAND_FIXTURES / name
-                shutil.copyfile(before_hand if before_hand.is_file() else ROOT / name, target)
+                source = before_hand if before_hand.is_file() else CONTEXT.pre_level1_file(name)
+                shutil.copyfile(source, target)
             self.assertEqual(CONTEXT.check_source_context(root, pins)['id'],
                              CONTEXT.BODY_REFERENCE_CONTEXT_ID)
             for name in (CONTEXT.BODY_REFERENCE_CHANGED[0],
