@@ -35,6 +35,7 @@ def main() -> None:
     parser.add_argument("--distance", type=float, default=4.2)
     parser.add_argument("--target-height", type=float, default=0.95)
     parser.add_argument("--fov", type=float, default=36.0)
+    parser.add_argument("--subdivision", choices=("original", "level1"), default="original")
     args = parser.parse_args()
 
     poses = args.poses.split(",")
@@ -73,6 +74,8 @@ def main() -> None:
             command = [str(cli), "render", str(saved_work), "--assets", str(assets),
                        "--output", str(folder), "--width", str(args.width),
                        "--height", str(args.height), "--mode", "body-reference"]
+            if args.subdivision == "level1":
+                command += ["--subdivision", "level1"]
             result = subprocess.run(command, capture_output=True, text=True, check=False)
             if result.returncode != 0:
                 raise RuntimeError(f"{name}: nvwa-cli exited {result.returncode}: {result.stderr}")
@@ -84,6 +87,8 @@ def main() -> None:
                     or receipt["executable_sha256"] != cli_sha256
                     or receipt["png_sha256"] != digest(folder / "actual.png")):
                 raise RuntimeError(f"{name}: incomplete or inconsistent body reference receipt")
+            if (args.subdivision == "level1") != (receipt.get("subdivision") == "level1"):
+                raise RuntimeError(f"{name}: subdivision receipt mismatch")
             if asset_sha256 is None:
                 asset_sha256 = receipt["asset_sha256"]
             elif receipt["asset_sha256"] != asset_sha256:
@@ -101,6 +106,8 @@ def main() -> None:
                            "fov_degrees": args.fov, "elevation_degrees": 0.0},
                 "rows": rows,
                 "limits": ["static_poses_only", "png_not_3d_model", "no_pbr_or_artistic_acceptance"]}
+    if args.subdivision == "level1":
+        manifest["subdivision"] = "level1"
     (output / "matrix.json").write_text(json.dumps(manifest, indent=2) + "\n")
     figures = []
     for row in rows:

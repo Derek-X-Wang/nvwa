@@ -30,7 +30,7 @@ class HipContourSourceContext(unittest.TestCase):
     def test_exact_union_preserves_v7(self):
         self.assertEqual(self.predecessor[0], CONTEXT.UPPER_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 292)
-        expected = CONTEXT.LEVEL1_CONTEXT_ID if CONTEXT.has_level1_inputs(ROOT) else CONTEXT.UPPER_ARM_CONTEXT_ID if CONTEXT.has_upper_arm_inputs(ROOT) else CONTEXT.FOREARM_CONTEXT_ID if CONTEXT.has_forearm_inputs(ROOT) else CONTEXT.SHOULDER_CONTEXT_ID if CONTEXT.has_shoulder_inputs(ROOT) else CONTEXT.HAND_CONTEXT_ID if CONTEXT.has_hand_inputs(ROOT) else CONTEXT.BODY_REFERENCE_CONTEXT_ID if CONTEXT.has_body_reference_inputs(ROOT) else CONTEXT.ARM_CONTEXT_ID if CONTEXT.has_arm_inputs(ROOT) else CONTEXT.HIP_CONTEXT_ID
+        expected = CONTEXT.CLI_LEVEL1_CONTEXT_ID if CONTEXT.has_level1_inputs(ROOT) else CONTEXT.UPPER_ARM_CONTEXT_ID if CONTEXT.has_upper_arm_inputs(ROOT) else CONTEXT.FOREARM_CONTEXT_ID if CONTEXT.has_forearm_inputs(ROOT) else CONTEXT.SHOULDER_CONTEXT_ID if CONTEXT.has_shoulder_inputs(ROOT) else CONTEXT.HAND_CONTEXT_ID if CONTEXT.has_hand_inputs(ROOT) else CONTEXT.BODY_REFERENCE_CONTEXT_ID if CONTEXT.has_body_reference_inputs(ROOT) else CONTEXT.ARM_CONTEXT_ID if CONTEXT.has_arm_inputs(ROOT) else CONTEXT.HIP_CONTEXT_ID
         self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], expected)
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},

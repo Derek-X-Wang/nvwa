@@ -798,6 +798,26 @@ LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1.rs',
 LEVEL1_ADDED = ('crates/nvwa-runtime/src/b1_level1_geometry.rs',
                 'crates/nvwa-runtime/src/b1_level1_display.rs')
 
+CLI_LEVEL1_CONTEXT_NAME = 'input-context-cli-level1-v1.json'
+CLI_LEVEL1_CONTEXT_SHA = '59a5b0fcd77aa9b52eb9c105952a85ad7caba394f0209668b63f9b301d7d612c'
+CLI_LEVEL1_CONTEXT_ID = 'b1-cli-level1-reference-v14-product-v1'
+CLI_LEVEL1_PREDECESSOR_COMMIT = '8432a4616f3b7ee444c6548df3eae69c36705c2a'
+CLI_LEVEL1_FIXTURES = 'fixtures/pre-cli-level1'
+CLI_LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1/cpu_render.rs',
+                      'crates/nvwa-runtime/src/lib.rs',
+                      'crates/nvwa-cli/src/cpu_render.rs',
+                      'crates/nvwa-cli/tests/cpu_render.rs',
+                      'scripts/render-body-reference.py',
+                      'docs/agents/cpu-render.md')
+
+
+def has_cli_level1_inputs(root):
+    return (root / 'experiments/72-b1-admission-controls' / CLI_LEVEL1_CONTEXT_NAME).exists()
+
+
+def pre_cli_level1_file(name):
+    return HERE / CLI_LEVEL1_FIXTURES / name if name in CLI_LEVEL1_CHANGED else HERE.parents[1] / name
+
 
 def has_level1_inputs(root):
     return any((root / name).exists() or (root / name).is_symlink()
@@ -806,7 +826,7 @@ def has_level1_inputs(root):
 
 def pre_level1_file(name):
     fixture = HERE / LEVEL1_FIXTURES / name
-    return fixture if name in LEVEL1_CHANGED else HERE.parents[1] / name
+    return fixture if name in LEVEL1_CHANGED else pre_cli_level1_file(name)
 
 
 def pre_body_reference_file(name):
@@ -814,7 +834,7 @@ def pre_body_reference_file(name):
     if historical.is_file():
         return historical
     before_hand = HERE / HAND_FIXTURES / name
-    return before_hand if before_hand.is_file() else HERE.parents[1] / name
+    return before_hand if before_hand.is_file() else pre_cli_level1_file(name)
 
 
 def has_body_reference_inputs(root):
@@ -1077,6 +1097,44 @@ def _level1_context(exp, previous):
             'level1 exact successor delta required')
     result = dict(previous[1]); result.update(value['files'])
     require(len(result) == 1130, 'level1 complete source union required')
+    return value['context'], result
+
+
+def _cli_level1_context(exp, previous):
+    """Admit only the six changed CLI source files; retain the #164 identity."""
+    require(previous[0] == LEVEL1_CONTEXT_ID and len(previous[1]) == 1130,
+            'CLI Level 1 predecessor must be exact display context')
+    fixture_root = exp / CLI_LEVEL1_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == set(CLI_LEVEL1_CHANGED),
+            'CLI Level 1 predecessor fixture inventory mismatch')
+    for name in CLI_LEVEL1_CHANGED:
+        path = source_file(exp, f'{CLI_LEVEL1_FIXTURES}/{name}')
+        require({'bytes': path.stat().st_size, 'sha256': file_sha(path)} == previous[1][name],
+                'CLI Level 1 predecessor bytes mismatch: ' + name)
+    raw = source_file(exp, CLI_LEVEL1_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == CLI_LEVEL1_CONTEXT_SHA,
+            'CLI Level 1 manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == CLI_LEVEL1_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == CLI_LEVEL1_PREDECESSOR_COMMIT
+            and set(value['files']) == set(CLI_LEVEL1_CHANGED)
+            and all(name in previous[1] and value['files'][name] != previous[1][name]
+                    for name in CLI_LEVEL1_CHANGED)
+            and all(set(item) == {'bytes', 'sha256'}
+                    and isinstance(item['bytes'], int) and item['bytes'] > 0
+                    and isinstance(item['sha256'], str) and len(item['sha256']) == 64
+                    for item in value['files'].values()),
+            'CLI Level 1 exact successor delta required')
+    result = dict(previous[1]); result.update(value['files'])
+    require(len(result) == 1130, 'CLI Level 1 complete source union required')
     return value['context'], result
 
 
@@ -1361,6 +1419,8 @@ def check_source_context(root, pins, historical_only=False):
         context, expected = _upper_arm_context(HERE, _forearm_context(HERE, _shoulder_context(HERE, _hand_context(HERE, body)))) if upper_arm else _forearm_context(HERE, _shoulder_context(HERE, _hand_context(HERE, body))) if forearm else _shoulder_context(HERE, _hand_context(HERE, body)) if shoulder else _hand_context(HERE, body) if hand else body
         if has_level1_inputs(root):
             context, expected = _level1_context(HERE, (context, expected))
+        if has_cli_level1_inputs(root):
+            context, expected = _cli_level1_context(HERE, (context, expected))
         asset_root = root / ARM_ASSET_PREFIX
         paths = list(asset_root.rglob('*'))
         require(not asset_root.is_symlink()
@@ -1404,12 +1464,12 @@ def check_source_context(root, pins, historical_only=False):
         for relative, item in expected.items():
             path = source_file(root, relative)
             require(path.stat().st_size == item['bytes'],
-                    ('level1 display' if has_level1_inputs(root) else 'upper arm' if upper_arm else 'forearm' if forearm else 'shoulder' if shoulder else 'hand' if hand else 'body reference' if body_reference else 'arm')
+                    ('CLI Level 1' if has_cli_level1_inputs(root) else 'level1 display' if has_level1_inputs(root) else 'upper arm' if upper_arm else 'forearm' if forearm else 'shoulder' if shoulder else 'hand' if hand else 'body reference' if body_reference else 'arm')
                     + ' source context byte count mismatch: ' + relative)
             actual[relative] = file_sha(path)
         require(actual == {name: item['sha256'] for name, item in expected.items()},
                 'source input context mismatch: exact '
-                + ('level1 display' if has_level1_inputs(root) else 'upper arm' if upper_arm else 'forearm' if forearm else 'shoulder' if shoulder else 'hand' if hand else 'body reference' if body_reference else 'arm') + ' source required')
+                + ('CLI Level 1' if has_cli_level1_inputs(root) else 'level1 display' if has_level1_inputs(root) else 'upper arm' if upper_arm else 'forearm' if forearm else 'shoulder' if shoulder else 'hand' if hand else 'body reference' if body_reference else 'arm') + ' source required')
     elif has_hip_inputs(root):
         require(not historical_only, 'source input context mismatch: hip source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])

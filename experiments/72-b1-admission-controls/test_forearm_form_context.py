@@ -33,7 +33,7 @@ class ForearmFormSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.FOREARM_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 960)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.LEVEL1_CONTEXT_ID)
+                         CONTEXT.CLI_LEVEL1_CONTEXT_ID)
         self.assertEqual({p for p in self.previous[1]
                           if self.current[1][p] != self.previous[1][p]},
                          set(CONTEXT.FOREARM_CHANGED))
