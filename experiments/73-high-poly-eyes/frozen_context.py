@@ -751,6 +751,28 @@ LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1.rs',
 LEVEL1_ADDED = ('crates/nvwa-runtime/src/b1_level1_geometry.rs',
                 'crates/nvwa-runtime/src/b1_level1_display.rs')
 
+CLI_LEVEL1_CONTEXT_NAME = '../72-b1-admission-controls/input-context-cli-level1-v1.json'
+CLI_LEVEL1_CONTEXT_SHA = '59a5b0fcd77aa9b52eb9c105952a85ad7caba394f0209668b63f9b301d7d612c'
+CLI_LEVEL1_CONTEXT_ID = 'b1-cli-level1-reference-v14-product-v1'
+CLI_LEVEL1_PREDECESSOR_COMMIT = '8432a4616f3b7ee444c6548df3eae69c36705c2a'
+CLI_LEVEL1_FIXTURES = '../72-b1-admission-controls/fixtures/pre-cli-level1'
+CLI_LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1/cpu_render.rs',
+                      'crates/nvwa-runtime/src/lib.rs',
+                      'crates/nvwa-cli/src/cpu_render.rs',
+                      'crates/nvwa-cli/tests/cpu_render.rs',
+                      'scripts/render-body-reference.py',
+                      'docs/agents/cpu-render.md')
+
+
+def has_cli_level1_inputs(root):
+    path = root / 'experiments/72-b1-admission-controls/input-context-cli-level1-v1.json'
+    return path.exists() or path.is_symlink()
+
+
+def pre_cli_level1_file(name):
+    fixture = Path(__file__).resolve().parent / CLI_LEVEL1_FIXTURES / name
+    return fixture if name in CLI_LEVEL1_CHANGED else Path(__file__).resolve().parents[2] / name
+
 
 def has_level1_inputs(root):
     return any((root / name).exists() or (root / name).is_symlink()
@@ -759,7 +781,7 @@ def has_level1_inputs(root):
 
 def pre_level1_file(name):
     fixture = Path(__file__).resolve().parent / LEVEL1_FIXTURES / name
-    return fixture if name in LEVEL1_CHANGED else Path(__file__).resolve().parents[2] / name
+    return fixture if name in LEVEL1_CHANGED else pre_cli_level1_file(name)
 
 
 def pre_body_reference_file(name):
@@ -767,7 +789,7 @@ def pre_body_reference_file(name):
     if historical.is_file():
         return historical
     before_hand = Path(__file__).resolve().parent / HAND_FIXTURES / name
-    return before_hand if before_hand.is_file() else Path(__file__).resolve().parents[2] / name
+    return before_hand if before_hand.is_file() else pre_cli_level1_file(name)
 
 
 def has_body_reference_inputs(root):
@@ -1029,6 +1051,50 @@ def level1_source_context(exp, cpu):
     result = dict(previous[1]); result.update(value['files'])
     require(len(result) == 1418, 'level1 complete source union required')
     return value['context'], result
+
+
+def _cli_level1_context(exp, previous):
+    """Authenticate the exact CLI delta from a separately checked #164 map."""
+    require(previous[0] == LEVEL1_CONTEXT_ID and len(previous[1]) == 1418,
+            'CLI Level 1 predecessor must be exact display context')
+    fixture_root = exp / CLI_LEVEL1_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == set(CLI_LEVEL1_CHANGED),
+            'CLI Level 1 predecessor fixture inventory mismatch')
+    for name in CLI_LEVEL1_CHANGED:
+        path = regular_file(exp, f'{CLI_LEVEL1_FIXTURES}/{name}')
+        require({'bytes': path.stat().st_size,
+                 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()} == previous[1][name],
+                'CLI Level 1 predecessor bytes mismatch: ' + name)
+    raw = regular_file(exp, CLI_LEVEL1_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CLI_LEVEL1_CONTEXT_SHA,
+            'CLI Level 1 context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == CLI_LEVEL1_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == CLI_LEVEL1_PREDECESSOR_COMMIT
+            and set(value['files']) == set(CLI_LEVEL1_CHANGED)
+            and all(name in previous[1] and value['files'][name] != previous[1][name]
+                    for name in CLI_LEVEL1_CHANGED)
+            and all(set(item) == {'bytes', 'sha256'}
+                    and isinstance(item['bytes'], int) and item['bytes'] > 0
+                    and isinstance(item['sha256'], str) and len(item['sha256']) == 64
+                    for item in value['files'].values()),
+            'CLI Level 1 exact successor delta required')
+    result = dict(previous[1]); result.update(value['files'])
+    require(len(result) == 1418, 'CLI Level 1 complete source union required')
+    return value['context'], result
+
+
+def cli_level1_source_context(exp, cpu):
+    """Admit CLI Level 1 only after validating all historical predecessors."""
+    return _cli_level1_context(exp, level1_source_context(exp, cpu))
 
 
 def hand_source_context(exp, cpu):
