@@ -1,6 +1,7 @@
 //! Bounded, windowless export of the actual published B1 body and garment.
 //! No RenderPlugin, WindowPlugin, GPU adapter, experimental oracle or alternate
 //! morph/rig/garment implementation is installed here.
+use super::level1_geometry::Level1Plan;
 use super::*;
 use bevy::asset::{AssetMetaCheck, io::memory::Dir};
 use std::time::{Duration, Instant};
@@ -83,7 +84,18 @@ pub fn render_silhouette(
     width: u32,
     height: u32,
 ) -> Result<CpuImage, String> {
-    render_inner(doc, bytes, width, height, false)
+    render_inner(doc, bytes, width, height, false, false)
+}
+
+/// Opt-in Level 1 surface for the static CPU silhouette. The fitted and
+/// skinned source frame remains authoritative and the garment is unchanged.
+pub fn render_silhouette_level1(
+    doc: &SceneDocument,
+    bytes: BTreeMap<String, Vec<u8>>,
+    width: u32,
+    height: u32,
+) -> Result<CpuImage, String> {
+    render_inner(doc, bytes, width, height, false, true)
 }
 
 /// Render the same fitted and posed B1 body as the published frame, restoring
@@ -95,7 +107,90 @@ pub fn render_body_reference(
     width: u32,
     height: u32,
 ) -> Result<CpuImage, String> {
-    render_inner(doc, bytes, width, height, true)
+    render_inner(doc, bytes, width, height, true, false)
+}
+
+/// Opt-in Level 1 static full-body reference image; no mesh export.
+pub fn render_body_reference_level1(
+    doc: &SceneDocument,
+    bytes: BTreeMap<String, Vec<u8>>,
+    width: u32,
+    height: u32,
+) -> Result<CpuImage, String> {
+    render_inner(doc, bytes, width, height, true, true)
+}
+
+fn level1_body(
+    part: &PublishedCpuPart,
+    full_body: bool,
+) -> Result<(Vec<[f32; 3]>, Vec<usize>), String> {
+    let complete = part
+        .full_body_indices
+        .as_ref()
+        .ok_or("complete fitted body topology absent")?;
+    if complete.len() % 6 != 0 || part.indices.len() % 6 != 0 {
+        return Err("B1 Level 1 source quad fan absent".into());
+    }
+    let source = &part.source_ids;
+    let mut faces = Vec::new();
+    let mut selected = Vec::new();
+    let visible: BTreeSet<[usize; 6]> = part
+        .indices
+        .chunks_exact(6)
+        .map(|q| q.try_into().expect("six indices"))
+        .collect();
+    for quad in complete.chunks_exact(6) {
+        if quad[0] != quad[3] || quad[2] != quad[4] {
+            return Err("B1 Level 1 source quad order changed".into());
+        }
+        let mut face = [0; 4];
+        for (slot, &index) in [quad[0], quad[1], quad[2], quad[5]].iter().enumerate() {
+            face[slot] = *source.get(index).ok_or("B1 Level 1 source ID absent")? as usize;
+        }
+        if face.iter().any(|&v| v >= 13_380) {
+            return Err("B1 Level 1 source ID outside cage".into());
+        }
+        selected.push(full_body || visible.contains(quad));
+        faces.push(face);
+    }
+    let plan = Level1Plan::new(13_380, faces)?;
+    let mut cage = vec![Vec3::ZERO; 13_380];
+    let mut seen = vec![false; 13_380];
+    for (&id, &position) in source.iter().zip(&part.frame.positions) {
+        let id = id as usize;
+        if id >= cage.len() {
+            continue;
+        }
+        let position = Vec3::from_array(position);
+        if seen[id] && (cage[id] - position).length() > 1e-6 {
+            return Err("B1 Level 1 UV-seam source positions diverged".into());
+        }
+        cage[id] = position;
+        seen[id] = true;
+    }
+    if seen.iter().any(|&v| !v) {
+        return Err("B1 Level 1 source cage ID missing".into());
+    }
+    let mut work = plan.workspace();
+    plan.update(&cage, &mut work)?;
+    let indices = selected
+        .iter()
+        .enumerate()
+        .flat_map(|(fi, &show)| {
+            if show {
+                plan.triangles[fi * 24..(fi + 1) * 24]
+                    .iter()
+                    .map(|&v| v as usize)
+                    .collect::<Vec<_>>()
+            } else {
+                Vec::new()
+            }
+        })
+        .collect();
+    Ok((
+        work.positions.into_iter().map(|p| p.to_array()).collect(),
+        indices,
+    ))
 }
 
 fn render_inner(
@@ -104,6 +199,7 @@ fn render_inner(
     width: u32,
     height: u32,
     body_reference: bool,
+    level1: bool,
 ) -> Result<CpuImage, String> {
     validate_export_work(doc)?;
     if !(64..=2048).contains(&width) || !(64..=2048).contains(&height) {
@@ -145,7 +241,7 @@ fn render_inner(
         }
         std::thread::sleep(Duration::from_millis(2));
     }
-    let frame = published_cpu_frame_with_body_topology(app.world(), body_reference)?;
+    let frame = published_cpu_frame_with_body_topology(app.world(), body_reference || level1)?;
     if frame.doc != doc || frame.sample.position != 0.0 || !frame.sample.clip_id.is_empty() {
         return Err("Published CPU frame differs from requested Work/static pose".into());
     }
@@ -156,7 +252,7 @@ fn render_inner(
         if body_reference && part.name != "body" {
             continue;
         }
-        let indices: &[usize] = if body_reference {
+        let original_indices: &[usize] = if body_reference {
             part.full_body_indices
                 .as_deref()
                 .ok_or("complete fitted body topology absent")?
@@ -165,7 +261,17 @@ fn render_inner(
         };
         let transform = Mat4::from_cols_array(&part.transform);
         let matrix = projection * view * transform;
-        let positions = &part.frame.positions;
+        let refined = if level1 && part.name == "body" {
+            Some(level1_body(&part, body_reference)?)
+        } else {
+            None
+        };
+        let indices: &[usize] = refined
+            .as_ref()
+            .map_or(original_indices, |(_, indices)| indices);
+        let positions: &[[f32; 3]] = refined
+            .as_ref()
+            .map_or(&part.frame.positions, |(positions, _)| positions);
         if indices.len() % 3 != 0 || positions.is_empty() {
             return Err("Published CPU mesh has invalid triangle topology".into());
         }

@@ -89,6 +89,14 @@ or continuous motion. Clothing fit and outfit style are a separate later
 review; neither the sportsuit nor its masking enters this body's image pixels.
 Keep generated character-body references private unless their owner chooses to
 publish them.
+
+For a smoother static body reference, add `--subdivision level1` to either
+render mode or the companion script. The default `original` preserves the
+existing CLI output. Level 1 refines only the rendered body surface after
+the normal fitting and skinning step; the garment stays at its original
+resolution. The opt-in receipt records `subdivision: level1`. This does not
+change the saved Work, original published mesh, or 3D export geometry. It does
+not establish clothing fit, motion quality, GPU cost, or visual acceptance.
 The v12 shoulder-form profile can be created with `new-character-shoulder-form`.
 The v13 forearm-form profile can be created with `new-character-forearm-form`.
 Its `forearm_fullness` control is a signed bilateral relative MPFB lower-arm

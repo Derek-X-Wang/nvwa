@@ -41,7 +41,7 @@ class Level1DisplaySourceContext(unittest.TestCase):
         self.assertEqual(set(self.current[1]) - set(self.previous[1]),
                          set(CONTEXT.LEVEL1_ADDED))
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.LEVEL1_CONTEXT_ID)
+                         CONTEXT.CLI_LEVEL1_CONTEXT_ID)
 
     def test_exact_files_reject_mutation_and_old_source_stays_admitted(self):
         with tempfile.TemporaryDirectory(prefix='nvwa-level1-context-') as directory:
@@ -49,7 +49,7 @@ class Level1DisplaySourceContext(unittest.TestCase):
             for name in self.current[1]:
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, target)
+                shutil.copyfile(CONTEXT.pre_cli_level1_file(name), target)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'],
                              CONTEXT.LEVEL1_CONTEXT_ID)
             for name in CONTEXT.LEVEL1_CHANGED + CONTEXT.LEVEL1_ADDED:
@@ -73,7 +73,7 @@ class Level1DisplaySourceContext(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'level1 display source context byte count mismatch'):
                 CONTEXT.check_source_context(root, self.pins)
             for name in CONTEXT.LEVEL1_CHANGED:
-                shutil.copyfile(ROOT / name, root / name)
+                shutil.copyfile(CONTEXT.pre_cli_level1_file(name), root / name)
             with self.assertRaisesRegex(ValueError, 'missing: crates/nvwa-runtime/src/b1_level1_display.rs'):
                 CONTEXT.check_source_context(root, self.pins)
 

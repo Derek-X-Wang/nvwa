@@ -21,7 +21,7 @@ class BodyReferenceSourceContext(unittest.TestCase):
     def test_exact_successor_and_changed_file_rejection(self):
         pins = json.loads((HERE / 'pins.json').read_bytes())
         live = CONTEXT.check_source_context(ROOT, pins)
-        self.assertEqual(live['id'], CONTEXT.LEVEL1_CONTEXT_ID)
+        self.assertEqual(live['id'], CONTEXT.CLI_LEVEL1_CONTEXT_ID)
         cpu = CONTEXT.cpu_source_context(pins)
         combined = CONTEXT._combined_context(HERE, cpu)
         leg = CONTEXT._leg_context(HERE, combined)

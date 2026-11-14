@@ -5,7 +5,32 @@ use serde_json::Value;
 use std::{
     path::{Path, PathBuf},
     process::{Command, Output},
+    sync::{Condvar, Mutex, OnceLock},
 };
+// Each real headless Bevy child can exceed 1 GiB RSS. Cap this test binary's
+// simultaneous children without changing the CLI or weakening assertions.
+struct RenderSlot;
+fn render_slots() -> &'static (Mutex<usize>, Condvar) {
+    static SLOTS: OnceLock<(Mutex<usize>, Condvar)> = OnceLock::new();
+    SLOTS.get_or_init(|| (Mutex::new(0), Condvar::new()))
+}
+fn render_slot() -> RenderSlot {
+    let (lock, ready) = render_slots();
+    let mut active = lock.lock().unwrap();
+    while *active >= 3 {
+        active = ready.wait(active).unwrap();
+    }
+    *active += 1;
+    RenderSlot
+}
+impl Drop for RenderSlot {
+    fn drop(&mut self) {
+        let (lock, ready) = render_slots();
+        let mut active = lock.lock().unwrap();
+        *active -= 1;
+        ready.notify_one();
+    }
+}
 struct Trial(PathBuf);
 impl Trial {
     fn new() -> Self {
@@ -35,6 +60,7 @@ fn assets() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets")
 }
 fn render(work: &Path, root: &Path, out: &Path) -> Output {
+    let _slot = render_slot();
     Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
         .args([
             "render".as_ref(),
@@ -54,6 +80,7 @@ fn render(work: &Path, root: &Path, out: &Path) -> Output {
         .unwrap()
 }
 fn render_body(work: &Path, root: &Path, out: &Path) -> Output {
+    let _slot = render_slot();
     Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
         .args([
             "render".as_ref(),
@@ -74,10 +101,35 @@ fn render_body(work: &Path, root: &Path, out: &Path) -> Output {
         .output()
         .unwrap()
 }
+fn render_subdivision(work: &Path, root: &Path, out: &Path, mode: &str, level: &str) -> Output {
+    let _slot = render_slot();
+    Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
+        .args([
+            "render".as_ref(),
+            work,
+            "--assets".as_ref(),
+            root,
+            "--output".as_ref(),
+            out,
+            "--width".as_ref(),
+            "320".as_ref(),
+            "--height".as_ref(),
+            "320".as_ref(),
+            "--mode".as_ref(),
+            mode.as_ref(),
+            "--subdivision".as_ref(),
+            level.as_ref(),
+        ])
+        .env_remove("DISPLAY")
+        .env_remove("WAYLAND_DISPLAY")
+        .output()
+        .unwrap()
+}
 fn success(output: Output) -> Value {
     assert!(
         output.status.success(),
-        "{}",
+        "status={} stderr={}",
+        output.status,
         String::from_utf8_lossy(&output.stderr)
     );
     assert!(output.stderr.is_empty());
@@ -95,6 +147,82 @@ fn neutral() -> SceneDocument {
     doc.stage.camera.azimuth_degrees = 0.0;
     doc.stage.camera.elevation_degrees = 0.0;
     doc
+}
+#[test]
+fn level1_is_opt_in_and_preserves_source_work_and_garment() {
+    let t = Trial::new();
+    let doc = neutral();
+    let work = t.work("level1-source", &doc);
+    let before = std::fs::read(&work).unwrap();
+    let raw = success(render_body(&work, &assets(), &t.0.join("body-raw")));
+    let explicit = success(render_subdivision(
+        &work,
+        &assets(),
+        &t.0.join("body-explicit"),
+        "body-reference",
+        "original",
+    ));
+    assert_eq!(raw["png_sha256"], explicit["png_sha256"]);
+    assert_eq!(raw["parts"], explicit["parts"]);
+    assert!(raw.get("subdivision").is_none());
+    let level1 = success(render_subdivision(
+        &work,
+        &assets(),
+        &t.0.join("body-level1"),
+        "body-reference",
+        "level1",
+    ));
+    assert_eq!(level1["subdivision"], "level1");
+    assert_eq!(
+        level1["body_topology"],
+        "level1_full_fitted_body_from_restored_clothing_hidden_source_quads"
+    );
+    assert_eq!(raw["work_sha256"], level1["work_sha256"]);
+    assert_eq!(std::fs::read(&work).unwrap(), before);
+    assert_eq!(
+        std::fs::read(t.0.join("body-level1/work.nvwa.json")).unwrap(),
+        before
+    );
+    assert_ne!(raw["png_sha256"], level1["png_sha256"]);
+    assert!(level1["parts"][0][1].as_u64().unwrap() > raw["parts"][0][1].as_u64().unwrap());
+    let dressed_raw = success(render(&work, &assets(), &t.0.join("dressed-raw")));
+    let dressed_level1 = success(render_subdivision(
+        &work,
+        &assets(),
+        &t.0.join("dressed-level1"),
+        "silhouette",
+        "level1",
+    ));
+    assert_eq!(dressed_raw["parts"][1], dressed_level1["parts"][1]);
+    assert_ne!(dressed_raw["png_sha256"], dressed_level1["png_sha256"]);
+    let mut changed_doc = doc.clone();
+    changed_doc
+        .character
+        .parameters
+        .insert("hip_width".into(), 1.0);
+    changed_doc.character.diagnostic_pose = Some("knee".into());
+    let changed_work = t.work("level1-changed", &changed_doc);
+    let changed = success(render_subdivision(
+        &changed_work,
+        &assets(),
+        &t.0.join("body-level1-changed"),
+        "body-reference",
+        "level1",
+    ));
+    assert_eq!(changed["subdivision"], "level1");
+    assert_ne!(level1["geometry_sha256"], changed["geometry_sha256"]);
+    assert_ne!(level1["png_sha256"], changed["png_sha256"]);
+    reject(
+        render_subdivision(
+            &work,
+            &assets(),
+            &t.0.join("invalid-level"),
+            "body-reference",
+            "level2",
+        ),
+        "unsupported_render",
+    );
+    assert!(!t.0.join("invalid-level").exists());
 }
 #[test]
 fn real_cpu_export_repeats_preserves_work_and_obeys_saved_camera_shape_and_pose() {
