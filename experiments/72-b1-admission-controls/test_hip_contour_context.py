@@ -30,8 +30,9 @@ class HipContourSourceContext(unittest.TestCase):
     def test_exact_union_preserves_v7(self):
         self.assertEqual(self.predecessor[0], CONTEXT.UPPER_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 292)
-        expected = (CONTEXT.CHEST_CONTEXT_ID if CONTEXT.has_chest_inputs(ROOT) else
-                    CONTEXT.ARM_CONTEXT_ID if CONTEXT.has_arm_inputs(ROOT) else CONTEXT.HIP_CONTEXT_ID)
+        expected = CONTEXT.CLI_LEVEL1_CONTEXT_ID if CONTEXT.has_level1_inputs(ROOT) else CONTEXT.UPPER_ARM_CONTEXT_ID if CONTEXT.has_upper_arm_inputs(ROOT) else CONTEXT.FOREARM_CONTEXT_ID if CONTEXT.has_forearm_inputs(ROOT) else CONTEXT.SHOULDER_CONTEXT_ID if CONTEXT.has_shoulder_inputs(ROOT) else CONTEXT.HAND_CONTEXT_ID if CONTEXT.has_hand_inputs(ROOT) else CONTEXT.BODY_REFERENCE_CONTEXT_ID if CONTEXT.has_body_reference_inputs(ROOT) else CONTEXT.ARM_CONTEXT_ID if CONTEXT.has_arm_inputs(ROOT) else CONTEXT.HIP_CONTEXT_ID
+        if CONTEXT.has_chest_inputs(ROOT) and CONTEXT.has_upper_arm_inputs(ROOT):
+            expected = 'b1-chest-v10-with-v14-cli-level1-integration-candidate-v1'
         self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], expected)
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},
@@ -47,7 +48,7 @@ class HipContourSourceContext(unittest.TestCase):
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 historical = HERE / CONTEXT.ARM_FIXTURES / name
                 shutil.copyfile(historical if name in CONTEXT.ARM_CHANGED and historical.is_file()
-                                else ROOT / name, destination)
+                                else CONTEXT.pre_body_reference_file(name), destination)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'], CONTEXT.HIP_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',
                          'assets/characters/mpfb-b1-v8/manifest.json',

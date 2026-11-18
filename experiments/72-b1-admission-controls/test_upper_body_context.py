@@ -26,7 +26,7 @@ class UpperBodySourceContext(unittest.TestCase):
         cls.legacy_dir = tempfile.TemporaryDirectory(prefix='nvwa-upper-historical-')
         cls.legacy_root = Path(cls.legacy_dir.name)
         for name in cls.current[1]:
-            source = HERE / CONTEXT.HIP_FIXTURES / name if name in CONTEXT.HIP_CHANGED else ROOT / name
+            source = HERE / CONTEXT.HIP_FIXTURES / name if name in CONTEXT.HIP_CHANGED else CONTEXT.pre_body_reference_file(name)
             destination = cls.legacy_root / name
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, destination)

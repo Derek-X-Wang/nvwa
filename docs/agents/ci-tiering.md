@@ -309,3 +309,66 @@ torso+1/jaw0/arm2/source2帧；严格拒绝缺帧、重复、错绑定及非Darw
 main-only缓存种子。完整Mac报告的默认分支触发、普通PR后台现场行为与实际
 required-status规则仍待上线验收。发布和Mac相关工作仍需目标SHA全部适用
 检查通过；衣物质量、动作画面与性能HOLD不因主机调整解除。
+
+## Linux 完整动作矩阵独立必需作业（2026-11-10）
+
+[#156 的精确 head 运行](https://github.com/Derek-X-Wang/nvwa/actions/runs/42811101279)
+在完整 Linux shared 作业约75分钟上限取消，发生于594帧矩阵步骤；此前
+workspace／CPU、appearance 与三类生产 mutation 通过不能推断矩阵及衣物完成。
+Required CI gate 正确失败，完整Mac两项通过。旧取消与发布HOLD保留。
+
+首次独立冷runner候选 [51c5a67 / 42824045098](https://github.com/Derek-X-Wang/nvwa/actions/runs/42824045098)
+被新合同测试的历史字符串误用挡在分类作业，未测矩阵；修正后
+[68902a0 / 42824494336](https://github.com/Derek-X-Wang/nvwa/actions/runs/42824494336)
+的独立矩阵步骤确实在20分钟上限失败：Cargo冷编译19分56秒才完成，
+594帧和衣物控制都未开始。这两条失败不改写为通过，也不靠加时掩盖。
+
+后续候选让 Linux shared 在原 workspace／CPU、appearance、生产 mutation
+之后，使用同一已预热target、原Linux guard和锁定离线依赖编译完整矩阵二进制。
+同次运行的不可变 artifact 只传递该二进制；必需 matrix 作业必须等待 shared
+成功，校验来自其输出的 SHA256 后才运行原完整594帧／30关键帧、真实source2
+衣物normal／`-O`，不接受未知或缺失二进制。artifact 按run attempt命名，
+下载失败或摘要不符保持红色。原矩阵本地入口保留；新runner只执行由它拆出的
+原运行与断言命令。源码、素材和探针均来自同次精确checkout，不使用跨运行
+cache或部分native seed，不增加GitHub token权限。
+
+两个Linux作业、独立workspace check以及原有portable／Mac等仍被Required
+CI gate直接要求success。mutation12分钟、矩阵执行步骤20分钟及各作业75分钟
+上限不变；没有`continue-on-error`。共享作业增加已预热编译及artifact
+上传，可能挤压它自己的75分钟余量；新runner和串行交接也增加总耗时／成本。
+必须以新精确head正式CI验证，不能将静态合同或先前局部成功当成验收。
+历史消费者先认证交接拓扑与原命令，再还原旧整工作流及原哈希。
+
+
+## Mac 生产 mutation 的独立预热与并行验收（2026-11-10）
+
+[#158 合并后 main 自然运行 42842699353](https://github.com/Derek-X-Wang/nvwa/actions/runs/42842699353)
+的完整 Mac appearance 作业先通过六个原有桥接图，随后三类生产源码
+mutation 在原 12 分钟步骤上限取消。日志显示 Cargo/rustc 尚在执行，
+没有完整的红测／恢复绿测摘要；timing report 因记录不完整也正确失败。
+Required gate、Mac 结果报告和后续发布证据保持红色。此前同一步骤在
+[#158 PR 运行 42829525866](https://github.com/Derek-X-Wang/nvwa/actions/runs/42829525866)
+耗时 10 分 25 秒通过，故仅靠偶然快一次不足以保证稳定。
+
+第一版 #159 候选曾改动原 mutation 脚本以分两组；分类合同修复后，
+[运行 42859105888](https://github.com/Derek-X-Wang/nvwa/actions/runs/42859105888)
+的 portable-eye 来源门禁正确拒绝脚本字节变化。72 号实验的精确
+来源清单含此脚本，不能为了 CI 分组刷新产品来源边界。旧红色结果保留。
+
+当前候选恢复原 mutation 脚本的完全相同字节，在独立 Mac 原生作业中先
+使用与原脚本一致的 locked/offline workspace lib Cargo 特征组合进行
+只编译预热，再运行原三类源码 mutation 红测／恢复绿测，命令、seam、断言、
+恢复及日志均不变。预热编译失败仍使作业和门禁变红；原 mutation 步骤
+仍限 12 分钟，独立作业仍限 75 分钟，没有缓存或 continue-on-error。
+预热使 12 分钟步骤覆盖增量编译和真实测试，冷编译在同一75分钟作业的
+前置步骤中；这是分组与资源成本变化，不能把它称为测试计算量降低。
+
+appearance 桥接与 mutation 在两个独立 Mac runner 并行运行，不因对方
+失败而跳过本身测试。只读的 Ubuntu 汇总作业保留原完整 Mac 桥接显示名称，
+仅当 appearance 与 mutation 均成功才成功；因此旧默认分支完成报告
+不会误绿。运行内报告和 Required gate 另外直接读取 mutation 与汇总状态。
+普通 PR 的完整 Mac 后台分支同样运行这两项并自动报告真实失败／取消；
+发布与 Mac 相关工作需目标 SHA 全部适用检查通过。新增 runner与汇总
+可能增加排队和总成本，冷构建、mutation12分钟和关键路径必须以精确 head
+hosted CI 实测。历史消费者先认证新拓扑并还原原工作流及输入，再核对
+保留的旧哈希和负向控制；不修改安全设置或旧失败记录。

@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from portable_catalog_v14 import UPPER_ARM_CHECKS, predecessor_bytes, predecessor_catalog
 
 ROOT = Path(__file__).resolve().parent.parent
 RUNNER = ROOT / "scripts/check-portable.py"
@@ -33,7 +34,8 @@ def historical_input_catalog(catalog):
 
 
 CURRENT_CATALOG = json.loads((ROOT / "scripts/portable-checks.json").read_text())
-CATALOG = historical_input_catalog(CURRENT_CATALOG)
+PRE_UPPER_ARM_CATALOG = predecessor_catalog(CURRENT_CATALOG)
+CATALOG = historical_input_catalog(PRE_UPPER_ARM_CATALOG)
 # SHA-256 of the exact run bodies in the portable job at b03e7a345f01f6f6e940a19cf63906bff807e719.
 # Keep this independent of the catalog: a removed mode, argument or command fails.
 BASELINE = {
@@ -283,14 +285,14 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
     def test_cheek_asset_checks_are_additive_and_run_in_both_modes(self):
         result = self.call('b1-inputs')
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual([row[:2] for row in self.records()][-4:], [
+        self.assertEqual([row[:2] for row in self.records()][-6:-2], [
             ['python3', '-B scripts/derive-cheek-volume.py'],
             ['python3', '-B -O scripts/derive-cheek-volume.py'],
             ['python3', '-B scripts/tests/test_derive_cheek_volume.py'],
             ['python3', '-B -O scripts/tests/test_derive_cheek_volume.py'],
         ])
-        self.assertEqual(len(self.records()), 8)
-        for group in CURRENT_CATALOG:
+        self.assertEqual(len(self.records()), 10)
+        for group in PRE_UPPER_ARM_CATALOG:
             if group['name'] == 'b1-inputs':
                 old = next(item for item in CATALOG if item['name'] == 'b1-inputs')
                 self.assertEqual(group['run'], old['run'] + CHEEK_INPUT_CHECKS)
@@ -300,7 +302,7 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
                          ('scripts/tests/test_derive_cheek_volume.py', 'scripts/tests/other.py'),
                          (CHEEK_INPUT_CHECKS, ''),
                          (CHEEK_INPUT_CHECKS, CHEEK_INPUT_CHECKS * 2)]:
-            changed = [dict(group, run=group['run'].replace(old, new)) for group in CURRENT_CATALOG]
+            changed = [dict(group, run=group['run'].replace(old, new)) for group in PRE_UPPER_ARM_CATALOG]
             with self.subTest(mutation=(old, new)), self.assertRaises(ValueError):
                 historical_input_catalog(changed)
         self.env.update(FAIL_TOOL='python3', FAIL_MATCH='scripts/derive-cheek-volume.py')
@@ -308,6 +310,30 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         self.assertEqual(result.returncode, 79, result.stderr)
         self.assertEqual(len(self.records()), 5)
         self.assertEqual(self.records()[-1][:2], ['python3', '-B scripts/derive-cheek-volume.py'])
+
+    def test_upper_arm_asset_checks_are_additive_in_both_modes_and_fail_closed(self):
+        result = self.call('b1-inputs')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual([row[:2] for row in self.records()][-2:], [
+            ['python3', '-B scripts/test-upper-arm-muscle-v14.py'],
+            ['python3', '-B -O scripts/test-upper-arm-muscle-v14.py'],
+        ])
+        original = (ROOT / 'scripts/portable-checks.json').read_bytes()
+        self.assertEqual(hashlib.sha256(predecessor_bytes(original)).hexdigest(),
+                         '1a2719b28dad9a288f28e0ff5ba793120e6108217c564099d662fc1b104d7f14')
+        for old, new in [(UPPER_ARM_CHECKS, ''),
+                         (UPPER_ARM_CHECKS, UPPER_ARM_CHECKS * 2),
+                         ('-B -O scripts/test-upper-arm-muscle-v14.py', '-B scripts/test-upper-arm-muscle-v14.py'),
+                         ('test-upper-arm-muscle-v14.py', 'other-script.py')]:
+            changed = [dict(group, run=group['run'].replace(old, new)) for group in CURRENT_CATALOG]
+            with self.subTest(mutation=(old, new)), self.assertRaises(ValueError):
+                predecessor_catalog(changed)
+        self.log.unlink()
+        self.env.update(FAIL_TOOL='python3', FAIL_MATCH='scripts/test-upper-arm-muscle-v14.py')
+        result = self.call('b1-inputs', 'motion-comparator')
+        self.assertEqual(result.returncode, 79, result.stderr)
+        self.assertEqual(len(self.records()), 9)
+        self.assertEqual(self.records()[-1][:2], ['python3', '-B scripts/test-upper-arm-muscle-v14.py'])
 
     def test_exact_original_command_inventory_and_order(self):
         self.assertEqual([group["name"] for group in CATALOG], ["runner-contract", "ci-timing-contract", *list(BASELINE)[:-1], "native-cache-contract", "native-main-cache-contract", "shoulder-rest-refit", "current19-shoulder-refit", "frozen-upper-arm"])
@@ -573,7 +599,7 @@ class TieringContract(unittest.TestCase):
         current = (ROOT/'.github/workflows/ci.yml').read_text()
         self.assertEqual(historical_tiering_workflow(current, self), predecessor.decode())
         self.assertEqual(len(re.findall(r'^        run: ', predecessor.decode(), re.M)), 48)
-        self.assertEqual(hashlib.sha256((ROOT/'scripts/portable-checks.json').read_bytes()).hexdigest(), '1a2719b28dad9a288f28e0ff5ba793120e6108217c564099d662fc1b104d7f14')
+        self.assertEqual(hashlib.sha256(predecessor_bytes((ROOT/'scripts/portable-checks.json').read_bytes())).hexdigest(), '1a2719b28dad9a288f28e0ff5ba793120e6108217c564099d662fc1b104d7f14')
         for name, digest in TIER_INPUT_SHA256.items():
             self.assertEqual(hashlib.sha256(historical_tiering_input(name, self)).hexdigest(), digest, name)
         for name in LINUX_GARMENT_V2_SHA256:

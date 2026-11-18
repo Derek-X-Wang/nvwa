@@ -1,0 +1,59 @@
+{
+  "files": [
+    {
+      "compressed_bytes": 8182,
+      "compressed_sha256": "be10c1d44a229f1faf302f7d51f45a0146e70a1912d3f9022c0ce5a3761ebb88",
+      "expanded_bytes": 27059,
+      "expanded_sha256": "e0c8bd8894e44a704627650a5023faa8a8b78e9ab365b20143ec7a9aee31985a",
+      "id_range": [
+        1762,
+        18144
+      ],
+      "max_delta_m": 0.0323,
+      "rows": 1518,
+      "runtime_path": "targets/measure-waist-circ-decr.target",
+      "source_relative": "data/targets/torso/measure-waist-circ-decr.target.gz",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/torso/measure-waist-circ-decr.target.gz"
+    },
+    {
+      "compressed_bytes": 8032,
+      "compressed_sha256": "dcbca91a872f64c9015ecc3473a6769e2ccbb2ad551dce1a7692d277a88d39a1",
+      "expanded_bytes": 27078,
+      "expanded_sha256": "fc622241d5a985bdec45afae004c23828fda0ea493c4ab377f356a1ebfe3298b",
+      "id_range": [
+        1762,
+        18144
+      ],
+      "max_delta_m": 0.0323,
+      "rows": 1518,
+      "runtime_path": "targets/measure-waist-circ-incr.target",
+      "source_relative": "data/targets/torso/measure-waist-circ-incr.target.gz",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/torso/measure-waist-circ-incr.target.gz"
+    }
+  ],
+  "format": "nvwa-waist-circumference-source",
+  "legacy_payloads": {
+    "byte_identical": true,
+    "count": 29,
+    "manifest_sha256": "6b11cb9fc53158bf5673d0c5e1636d30d6e2347f4f51ce34f5fea8650baec090"
+  },
+  "license": "CC0-1.0",
+  "operation": "gzip expansion only; all original bytes, rows and zero rows retained; no coordinate or amplitude conversion",
+  "parameter": {
+    "default": 0,
+    "id": "waist_circumference",
+    "meaning": "fraction of authored waist circumference target displacement; not measured circumference, centimeters, or width-only control",
+    "range": [
+      -1,
+      1
+    ]
+  },
+  "prior_extraction_receipt": "experiments/53-character-comparison/delivery/mpfb-extraction-receipt.json",
+  "quality": "HOLD: source identity and data validation are not visual, garment, rig or motion admission",
+  "runtime_payloads_sha256": "f9a3091c1d7d6f6ed8c16daa6d3fca5d4d8cbb7f4f51e52e83e3d70ccb9c3b28",
+  "runtime_units": "existing target loader converts source XYZ by 0.1 exactly once",
+  "schema_version": 1,
+  "source_commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e",
+  "source_project": "MPFB",
+  "source_version": "2.0.18"
+}

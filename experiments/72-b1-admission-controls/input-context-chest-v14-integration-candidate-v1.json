@@ -1,0 +1,340 @@
+{
+  "candidate_overrides": {
+    "crates/nvwa-cli/src/cpu_render.rs": {
+      "bytes": 13211,
+      "sha256": "6b646d200ba9eda15a69522d2ab3c035033dff22af6c6f2d04868e132befc2fc"
+    },
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 47906,
+      "sha256": "8d941ee0d73e19f1dab47e3bb8f37a4a3628186d19e3d7ab83ffdfab463c810e"
+    },
+    "crates/nvwa-cli/tests/cpu_render.rs": {
+      "bytes": 37400,
+      "sha256": "ab9b180d807c6afef4d27092bd738d33fd825e3322bc901449184e51c15624bf"
+    },
+    "crates/nvwa-core/src/appearance.rs": {
+      "bytes": 21167,
+      "sha256": "489a1ed21662f3460f2740356870fe95d6d3e47ca1af3b193501955c7673cc65"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 55982,
+      "sha256": "44c46a5fda048031865318350ac51770e53894ce623d9a95da030db127d8954b"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 257284,
+      "sha256": "a0e1c81d1430948ada2fc0f49ebc049307096a6480cec5f08be4f54f82169aa0"
+    },
+    "crates/nvwa-runtime/src/b1/cpu_render.rs": {
+      "bytes": 18720,
+      "sha256": "a6bc7e8f5f2fdf35fb1d9dc57c4d87d8765af508434227c723f8e698513c38a0"
+    },
+    "crates/nvwa-studio/src/appearance_ui.rs": {
+      "bytes": 3348,
+      "sha256": "bf9bea5095b6056ca54fc2339c68c88ddf90804c8b395b5e37d2ff3861baf7dd"
+    },
+    "crates/nvwa-studio/src/lib.rs": {
+      "bytes": 96301,
+      "sha256": "7ecd9453e5d0d478d795757a9f5a08c45c460b37e9ebeecc51816e920a5a96f4"
+    },
+    "docs/research/character-foundation/body-control-coverage.md": {
+      "bytes": 6511,
+      "sha256": "a6b0e45da115936e8fbe1a70fd97253f029f512010b082d393e2c39456d21209"
+    },
+    "scripts/build-web.sh": {
+      "bytes": 5004,
+      "sha256": "7cf6c83576c9d55315c875ce1bd2ae9d36359a3d9cc5b879abda4a352e0cea1a"
+    },
+    "scripts/package-cli.py": {
+      "bytes": 9007,
+      "sha256": "c1dcea16e6ef17ba0459262ebde108fc5bc004e555c3c0756115417b643f7c1a"
+    },
+    "scripts/package-native.py": {
+      "bytes": 4677,
+      "sha256": "dc53b2624ee325764bdcfe54372e127b3aa16c84930b03f920b19b6d8a064d8e"
+    },
+    "scripts/test-cli-package.py": {
+      "bytes": 36313,
+      "sha256": "df2ab06831e85168208e628456e58a6ac1e6c009c95be980f72a42a2c51fc94c"
+    }
+  },
+  "changed_paths": [
+    "crates/nvwa-cli/src/cpu_render.rs",
+    "crates/nvwa-cli/src/main.rs",
+    "crates/nvwa-cli/tests/cpu_render.rs",
+    "crates/nvwa-core/src/appearance.rs",
+    "crates/nvwa-core/src/b1.rs",
+    "crates/nvwa-runtime/src/b1.rs",
+    "crates/nvwa-runtime/src/b1/cpu_render.rs",
+    "crates/nvwa-studio/src/appearance_ui.rs",
+    "crates/nvwa-studio/src/lib.rs",
+    "docs/research/character-foundation/body-control-coverage.md",
+    "scripts/build-web.sh",
+    "scripts/package-cli.py",
+    "scripts/package-native.py",
+    "scripts/test-cli-package.py"
+  ],
+  "cohorts": {
+    "72": {
+      "conflicting_predecessor_paths": [
+        "crates/nvwa-cli/src/cpu_render.rs",
+        "crates/nvwa-cli/src/main.rs",
+        "crates/nvwa-cli/tests/cpu_render.rs",
+        "crates/nvwa-core/src/appearance.rs",
+        "crates/nvwa-core/src/b1.rs",
+        "crates/nvwa-runtime/src/b1.rs",
+        "crates/nvwa-runtime/src/b1/cpu_render.rs",
+        "crates/nvwa-runtime/src/lib.rs",
+        "crates/nvwa-studio/src/appearance_ui.rs",
+        "crates/nvwa-studio/src/lib.rs",
+        "docs/agents/cpu-render.md",
+        "docs/research/character-foundation/body-control-coverage.md",
+        "scripts/build-web.sh",
+        "scripts/package-cli.py",
+        "scripts/package-native.py",
+        "scripts/test-cli-package.py"
+      ],
+      "main_context": "b1-cli-level1-reference-v14-product-v1",
+      "main_count": 1130,
+      "pr_context": "b1-chest-placement-product-v1",
+      "pr_count": 658,
+      "union_count": 1264
+    },
+    "73": {
+      "conflicting_predecessor_paths": [
+        "crates/nvwa-cli/src/cpu_render.rs",
+        "crates/nvwa-cli/src/main.rs",
+        "crates/nvwa-cli/tests/cpu_render.rs",
+        "crates/nvwa-core/src/appearance.rs",
+        "crates/nvwa-core/src/b1.rs",
+        "crates/nvwa-runtime/src/b1.rs",
+        "crates/nvwa-runtime/src/b1/cpu_render.rs",
+        "crates/nvwa-runtime/src/lib.rs",
+        "crates/nvwa-studio/src/appearance_ui.rs",
+        "crates/nvwa-studio/src/lib.rs",
+        "docs/agents/cpu-render.md",
+        "docs/research/character-foundation/body-control-coverage.md",
+        "scripts/build-web.sh",
+        "scripts/package-cli.py",
+        "scripts/package-native.py",
+        "scripts/test-cli-package.py"
+      ],
+      "main_context": "b1-cli-level1-reference-v14-product-v1",
+      "main_count": 1418,
+      "pr_context": "b1-chest-placement-product-v1",
+      "pr_count": 946,
+      "union_count": 1552
+    }
+  },
+  "context": "b1-chest-v10-with-v14-cli-level1-integration-candidate-v1",
+  "fixtures": {
+    "main/crates/nvwa-cli/src/cpu_render.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-cli/src/cpu_render.rs",
+      "pin": {
+        "bytes": 13161,
+        "sha256": "ef5a856c0ee75e5f394daf2bd28cf091959c8be0468b207fd9f95d66374be37d"
+      }
+    },
+    "main/crates/nvwa-cli/src/main.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-cli/src/main.rs",
+      "pin": {
+        "bytes": 46643,
+        "sha256": "e8eaf6f0b5a41730a0bfbea309ec65f6fa58bd6f00bbd1489620d0d3ced41b32"
+      }
+    },
+    "main/crates/nvwa-cli/tests/cpu_render.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-cli/tests/cpu_render.rs",
+      "pin": {
+        "bytes": 33311,
+        "sha256": "86ab128f186ba65d335826c89d5a8a1352da4279490956d830a04b147006d002"
+      }
+    },
+    "main/crates/nvwa-core/src/appearance.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-core/src/appearance.rs",
+      "pin": {
+        "bytes": 21133,
+        "sha256": "78041e0130019b0868fc802e87aa2d96d9564815d632f85664c1a19d40df5b86"
+      }
+    },
+    "main/crates/nvwa-core/src/b1.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-core/src/b1.rs",
+      "pin": {
+        "bytes": 52386,
+        "sha256": "5c29adb7d16f2c45e5c111192c20756b3b717cc6e8f8942fb5becbcd1b49cfef"
+      }
+    },
+    "main/crates/nvwa-runtime/src/b1.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-runtime/src/b1.rs",
+      "pin": {
+        "bytes": 254703,
+        "sha256": "e9aa3f29bcbcc2c0ca9a90ee46cc47234b51ed4b6c4c190fd3335b6f8ce4e5c2"
+      }
+    },
+    "main/crates/nvwa-runtime/src/b1/cpu_render.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-runtime/src/b1/cpu_render.rs",
+      "pin": {
+        "bytes": 18634,
+        "sha256": "caebf092e68ad7248f1848ce55256f663138cadb6d4b2ff945efaec88bf725d9"
+      }
+    },
+    "main/crates/nvwa-studio/src/appearance_ui.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-studio/src/appearance_ui.rs",
+      "pin": {
+        "bytes": 3310,
+        "sha256": "29645edc02bb5c6d5ed62bdc3e67d5cd22d8408130ee15881d2fe2c2d9df5971"
+      }
+    },
+    "main/crates/nvwa-studio/src/lib.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/crates/nvwa-studio/src/lib.rs",
+      "pin": {
+        "bytes": 95183,
+        "sha256": "5d3b0c240689dca29bea5a5d0a844252998431eec065066d9a5f5b730b2ff19f"
+      }
+    },
+    "main/docs/research/character-foundation/body-control-coverage.md": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/docs/research/character-foundation/body-control-coverage.md",
+      "pin": {
+        "bytes": 5667,
+        "sha256": "6c92583b7d93543d347e554a6e514e408b3730561e5e06948e9f19f5a245fa73"
+      }
+    },
+    "main/scripts/build-web.sh": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/scripts/build-web.sh",
+      "pin": {
+        "bytes": 4974,
+        "sha256": "246b0f694c599a3bda5cbf2a3ae0df16f1224b88f055f5b6d0176581ca3eb7b2"
+      }
+    },
+    "main/scripts/package-cli.py": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/scripts/package-cli.py",
+      "pin": {
+        "bytes": 8977,
+        "sha256": "349ddb98476bbd044ec08476f21af17aa4d2149b9e138f75f52d72860bd327e7"
+      }
+    },
+    "main/scripts/package-native.py": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/scripts/package-native.py",
+      "pin": {
+        "bytes": 4662,
+        "sha256": "e42ce89ecb7fe820946e6379fdc2d3e758f04d68445f16d4b3069a6e55fe6edc"
+      }
+    },
+    "main/scripts/test-cli-package.py": {
+      "fixture": "fixtures/pre-chest-v14-integration/main/scripts/test-cli-package.py",
+      "pin": {
+        "bytes": 35065,
+        "sha256": "9231e9c9d971553df8dd7ca0a666b829823b568fe217f1b660044e29405270c7"
+      }
+    },
+    "pr/crates/nvwa-cli/src/cpu_render.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-cli/src/cpu_render.rs",
+      "pin": {
+        "bytes": 9643,
+        "sha256": "f304821ce1716531521ac53fdcb0d2d24ebd801fd14ea62b78c54e1e05556273"
+      }
+    },
+    "pr/crates/nvwa-cli/src/main.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-cli/src/main.rs",
+      "pin": {
+        "bytes": 42820,
+        "sha256": "0831d1c7f8721cf7ce9d0e600fc3ec2f326d95f9ca5f9e810dbdcc0a5d2c330a"
+      }
+    },
+    "pr/crates/nvwa-cli/tests/cpu_render.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-cli/tests/cpu_render.rs",
+      "pin": {
+        "bytes": 28089,
+        "sha256": "17fc84ca61c9205c2a38caf054383ac7b2d6a2c89b03c70346e3c9b315480bdc"
+      }
+    },
+    "pr/crates/nvwa-core/src/appearance.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-core/src/appearance.rs",
+      "pin": {
+        "bytes": 21031,
+        "sha256": "a46c1252d175e0adc88fcba92477c7ceeba04c304b70a57973c186b787418712"
+      }
+    },
+    "pr/crates/nvwa-core/src/b1.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-core/src/b1.rs",
+      "pin": {
+        "bytes": 42199,
+        "sha256": "95671268e9a45df61a00726867f3700937c7cf88ea24301c4bde5bef78261ddd"
+      }
+    },
+    "pr/crates/nvwa-runtime/src/b1.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-runtime/src/b1.rs",
+      "pin": {
+        "bytes": 233205,
+        "sha256": "565dd894483e4f47a77ec0dc2e8b466604966ba207f49eff81e739c8a0df2f0f"
+      }
+    },
+    "pr/crates/nvwa-runtime/src/b1/cpu_render.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-runtime/src/b1/cpu_render.rs",
+      "pin": {
+        "bytes": 12613,
+        "sha256": "620273d843b6b1b737ae3682c3cd4668975cb585b930d6270d7e615d72c7dd7a"
+      }
+    },
+    "pr/crates/nvwa-runtime/src/lib.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-runtime/src/lib.rs",
+      "pin": {
+        "bytes": 86174,
+        "sha256": "52e061750558370beb01fb9ac0cc0a1d4ccd57f60778b030a9fcbe4f63334d8f"
+      }
+    },
+    "pr/crates/nvwa-studio/src/appearance_ui.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-studio/src/appearance_ui.rs",
+      "pin": {
+        "bytes": 3196,
+        "sha256": "dcaa1d32bf26aeaa8c57776212e12538a5a545f05d437b8aff5b5651c1f47dbc"
+      }
+    },
+    "pr/crates/nvwa-studio/src/lib.rs": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/crates/nvwa-studio/src/lib.rs",
+      "pin": {
+        "bytes": 92030,
+        "sha256": "4c05c9f234f03243678d4c6010d8eb0cefbbdc476c485b70f19324676e3cc45e"
+      }
+    },
+    "pr/docs/agents/cpu-render.md": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/docs/agents/cpu-render.md",
+      "pin": {
+        "bytes": 4622,
+        "sha256": "c2d77904f1a8893ce0c899d139378ef680cb14ae20154140748b86a665639ebe"
+      }
+    },
+    "pr/docs/research/character-foundation/body-control-coverage.md": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/docs/research/character-foundation/body-control-coverage.md",
+      "pin": {
+        "bytes": 3600,
+        "sha256": "e2f754e27ad417463df7dc3e49b8f95acffae995472418480c600aff366b7b03"
+      }
+    },
+    "pr/scripts/build-web.sh": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/scripts/build-web.sh",
+      "pin": {
+        "bytes": 4884,
+        "sha256": "88e2d57dbfc1e0e8f551e9745cd1bf2b3cfa3437e9637b90f4a90548fab37d8a"
+      }
+    },
+    "pr/scripts/package-cli.py": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/scripts/package-cli.py",
+      "pin": {
+        "bytes": 8887,
+        "sha256": "ba4cd816249c78520129d9d6eb8124d7741fe280c1138faed5ab6e31d79c9c99"
+      }
+    },
+    "pr/scripts/package-native.py": {
+      "fixture": "fixtures/pre-chest-v14-integration/pr/scripts/package-native.py",
+      "pin": {
+        "bytes": 4617,
+        "sha256": "cd19d42e03f80e5f553b9d0399072e838ddb2594174e125a686cc94ceb0fa571"
+      }
+    }
+  },
+  "refs": {
+    "main": "b23d09762feeb78f50bcbecb57da193718cf4cdb",
+    "pr": "08d692fb5579db9b55f3880d2ef2d1c849d30280"
+  },
+  "schema_version": 1,
+  "status": "OFFLINE_CANDIDATE_PENDING_INDEPENDENT_REVIEW"
+}

@@ -87,6 +87,38 @@ pub const B1_V10_ASSET_MANIFEST_SHA256: &str =
 pub const B1_V10_ASSET_MANIFEST_BYTES: &[u8] =
     include_bytes!("../../../assets/characters/mpfb-b1-v10/manifest.json");
 
+pub const B1_HAND_SIZE_PROFILE_ID: &str = "nvwa-mpfb-b1-hand-size-v1";
+pub const B1_V11_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v11";
+pub const B1_V11_ASSET_PATH: &str = "characters/mpfb-b1-v11/manifest.json";
+pub const B1_V11_ASSET_MANIFEST_SHA256: &str =
+    "27e4810fed7241ea26e90e28d69da8d1c553ba8ca2e68eee6843301968bb090d";
+pub const B1_V11_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v11/manifest.json");
+
+pub const B1_SHOULDER_FORM_PROFILE_ID: &str = "nvwa-mpfb-b1-shoulder-form-v1";
+pub const B1_V12_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v12";
+pub const B1_V12_ASSET_PATH: &str = "characters/mpfb-b1-v12/manifest.json";
+pub const B1_V12_ASSET_MANIFEST_SHA256: &str =
+    "4bd02ea911f3967c862a4760cd7d223dee2f32d0ca59f72ccb252bc69ed8f8b3";
+pub const B1_V12_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v12/manifest.json");
+
+pub const B1_FOREARM_FORM_PROFILE_ID: &str = "nvwa-mpfb-b1-forearm-form-v1";
+pub const B1_V13_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v13";
+pub const B1_V13_ASSET_PATH: &str = "characters/mpfb-b1-v13/manifest.json";
+pub const B1_V13_ASSET_MANIFEST_SHA256: &str =
+    "7817a890ec32212123595f4b6c44d1267292de4f36d228731f1fbb06d47dc078";
+pub const B1_V13_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v13/manifest.json");
+
+pub const B1_UPPER_ARM_MUSCLE_PROFILE_ID: &str = "nvwa-mpfb-b1-upper-arm-muscle-v1";
+pub const B1_V14_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v14";
+pub const B1_V14_ASSET_PATH: &str = "characters/mpfb-b1-v14/manifest.json";
+pub const B1_V14_ASSET_MANIFEST_SHA256: &str =
+    "bc842dd32317fdec1ba548c1acfe8bf2e66f465f4a20ebf36beceb2fdbf0b6d1";
+pub const B1_V14_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v14/manifest.json");
+
 /// Finite shipped base catalogue. This is not a caller-defined asset registry.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum B1AssetVersion {
@@ -100,6 +132,10 @@ pub enum B1AssetVersion {
     V8,
     V9,
     V10,
+    V11,
+    V12,
+    V13,
+    V14,
 }
 impl B1AssetVersion {
     pub const fn asset_id(self) -> &'static str {
@@ -114,6 +150,10 @@ impl B1AssetVersion {
             Self::V8 => B1_V8_ASSET_ID,
             Self::V9 => B1_V9_ASSET_ID,
             Self::V10 => B1_V10_ASSET_ID,
+            Self::V11 => B1_V11_ASSET_ID,
+            Self::V12 => B1_V12_ASSET_ID,
+            Self::V13 => B1_V13_ASSET_ID,
+            Self::V14 => B1_V14_ASSET_ID,
         }
     }
     pub const fn manifest_path(self) -> &'static str {
@@ -128,6 +168,10 @@ impl B1AssetVersion {
             Self::V8 => B1_V8_ASSET_PATH,
             Self::V9 => B1_V9_ASSET_PATH,
             Self::V10 => B1_V10_ASSET_PATH,
+            Self::V11 => B1_V11_ASSET_PATH,
+            Self::V12 => B1_V12_ASSET_PATH,
+            Self::V13 => B1_V13_ASSET_PATH,
+            Self::V14 => B1_V14_ASSET_PATH,
         }
     }
     pub const fn manifest_sha256(self) -> &'static str {
@@ -142,6 +186,10 @@ impl B1AssetVersion {
             Self::V8 => B1_V8_ASSET_MANIFEST_SHA256,
             Self::V9 => B1_V9_ASSET_MANIFEST_SHA256,
             Self::V10 => B1_V10_ASSET_MANIFEST_SHA256,
+            Self::V11 => B1_V11_ASSET_MANIFEST_SHA256,
+            Self::V12 => B1_V12_ASSET_MANIFEST_SHA256,
+            Self::V13 => B1_V13_ASSET_MANIFEST_SHA256,
+            Self::V14 => B1_V14_ASSET_MANIFEST_SHA256,
         }
     }
     pub const fn manifest_bytes(self) -> &'static [u8] {
@@ -156,6 +204,10 @@ impl B1AssetVersion {
             Self::V8 => B1_V8_ASSET_MANIFEST_BYTES,
             Self::V9 => B1_V9_ASSET_MANIFEST_BYTES,
             Self::V10 => B1_V10_ASSET_MANIFEST_BYTES,
+            Self::V11 => B1_V11_ASSET_MANIFEST_BYTES,
+            Self::V12 => B1_V12_ASSET_MANIFEST_BYTES,
+            Self::V13 => B1_V13_ASSET_MANIFEST_BYTES,
+            Self::V14 => B1_V14_ASSET_MANIFEST_BYTES,
         }
     }
     pub fn parameters(self) -> &'static [B1ParameterTargets] {
@@ -170,6 +222,10 @@ impl B1AssetVersion {
             Self::V8 => &B1_HIP_CONTOUR_PARAMETER_TARGETS,
             Self::V9 => &B1_ARM_PROPORTIONS_PARAMETER_TARGETS,
             Self::V10 => &B1_CHEST_PLACEMENT_PARAMETER_TARGETS,
+            Self::V11 => &B1_HAND_SIZE_PARAMETER_TARGETS,
+            Self::V12 => &B1_SHOULDER_FORM_PARAMETER_TARGETS,
+            Self::V13 => &B1_FOREARM_FORM_PARAMETER_TARGETS,
+            Self::V14 => &B1_UPPER_ARM_MUSCLE_PARAMETER_TARGETS,
         }
     }
 }
@@ -439,7 +495,149 @@ pub const B1_CHEST_PLACEMENT_PARAMETER_TARGETS: [B1ParameterTargets; 25] = [
         increase: "breast-trans-up",
     },
 ];
+/// Independent authored left/right hand-size target weights. These are not
+/// centimetres and do not certify finger articulation or prop grip.
+pub const B1_HAND_SIZE_PARAMETER_TARGETS: [B1ParameterTargets; 25] = [
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[0],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[1],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[2],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[3],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[4],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[5],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[6],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[7],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[8],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[9],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[10],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[11],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[12],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[13],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[14],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[15],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[16],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[17],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[18],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[19],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[20],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[21],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[22],
+    B1ParameterTargets {
+        id: "left_hand_size",
+        decrease: "l-hand-scale-decr",
+        increase: "l-hand-scale-incr",
+    },
+    B1ParameterTargets {
+        id: "right_hand_size",
+        decrease: "r-hand-scale-decr",
+        increase: "r-hand-scale-incr",
+    },
+];
+/// Bilateral shoulder muscle shape, separate from shoulder span. A signed
+/// source-target weight is not a mass, circumference or posture measurement.
+pub const B1_SHOULDER_FORM_PARAMETER_TARGETS: [B1ParameterTargets; 26] = [
+    B1_HAND_SIZE_PARAMETER_TARGETS[0],
+    B1_HAND_SIZE_PARAMETER_TARGETS[1],
+    B1_HAND_SIZE_PARAMETER_TARGETS[2],
+    B1_HAND_SIZE_PARAMETER_TARGETS[3],
+    B1_HAND_SIZE_PARAMETER_TARGETS[4],
+    B1_HAND_SIZE_PARAMETER_TARGETS[5],
+    B1_HAND_SIZE_PARAMETER_TARGETS[6],
+    B1_HAND_SIZE_PARAMETER_TARGETS[7],
+    B1_HAND_SIZE_PARAMETER_TARGETS[8],
+    B1_HAND_SIZE_PARAMETER_TARGETS[9],
+    B1_HAND_SIZE_PARAMETER_TARGETS[10],
+    B1_HAND_SIZE_PARAMETER_TARGETS[11],
+    B1_HAND_SIZE_PARAMETER_TARGETS[12],
+    B1_HAND_SIZE_PARAMETER_TARGETS[13],
+    B1_HAND_SIZE_PARAMETER_TARGETS[14],
+    B1_HAND_SIZE_PARAMETER_TARGETS[15],
+    B1_HAND_SIZE_PARAMETER_TARGETS[16],
+    B1_HAND_SIZE_PARAMETER_TARGETS[17],
+    B1_HAND_SIZE_PARAMETER_TARGETS[18],
+    B1_HAND_SIZE_PARAMETER_TARGETS[19],
+    B1_HAND_SIZE_PARAMETER_TARGETS[20],
+    B1_HAND_SIZE_PARAMETER_TARGETS[21],
+    B1_HAND_SIZE_PARAMETER_TARGETS[22],
+    B1_HAND_SIZE_PARAMETER_TARGETS[23],
+    B1_HAND_SIZE_PARAMETER_TARGETS[24],
+    B1ParameterTargets {
+        id: "shoulder_muscle_fullness",
+        decrease: "shoulder-muscle-decr",
+        increase: "shoulder-muscle-incr",
+    },
+];
+/// Bilateral forearm soft-tissue fullness from authored MPFB lowerarm-fat targets.
+/// This relative weight does not measure forearm circumference or muscle mass.
+pub const B1_FOREARM_FORM_PARAMETER_TARGETS: [B1ParameterTargets; 27] = [
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[0],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[1],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[2],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[3],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[4],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[5],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[6],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[7],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[8],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[9],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[10],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[11],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[12],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[13],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[14],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[15],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[16],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[17],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[18],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[19],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[20],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[21],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[22],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[23],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[24],
+    B1_SHOULDER_FORM_PARAMETER_TARGETS[25],
+    B1ParameterTargets {
+        id: "forearm_fullness",
+        decrease: "forearm-fat-decr",
+        increase: "forearm-fat-incr",
+    },
+];
 pub const B1_DIAGNOSTIC_POSES: [&str; 5] = ["neutral", "shoulder", "elbow", "knee", "combined"];
+/// Bilateral upper-arm muscle form from MPFB left/right target pairs.
+/// This is a relative morph weight, distinct from circumference and shoulder form.
+pub const B1_UPPER_ARM_MUSCLE_PARAMETER_TARGETS: [B1ParameterTargets; 28] = [
+    B1_FOREARM_FORM_PARAMETER_TARGETS[0],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[1],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[2],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[3],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[4],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[5],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[6],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[7],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[8],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[9],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[10],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[11],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[12],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[13],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[14],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[15],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[16],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[17],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[18],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[19],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[20],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[21],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[22],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[23],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[24],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[25],
+    B1_FOREARM_FORM_PARAMETER_TARGETS[26],
+    B1ParameterTargets {
+        id: "upper_arm_muscle_fullness",
+        decrease: "upperarm-muscle-decr",
+        increase: "upperarm-muscle-incr",
+    },
+];
 pub const B1_MAX_MANIFEST_BYTES: usize = 32 * 1024;
 pub const B1_MAX_ASSET_BYTES: usize = 4 * 1024 * 1024;
 pub const B1_MAX_TOTAL_ASSET_BYTES: usize = 8 * 1024 * 1024;
@@ -558,6 +756,22 @@ impl CharacterBackend {
                 schema_version: 12,
                 asset_id,
             } if asset_id == B1_V10_ASSET_ID => Some(B1AssetVersion::V10),
+            CharacterBackend::B1Cpu {
+                asset_id,
+                schema_version: 13,
+            } if asset_id == B1_V11_ASSET_ID => Some(B1AssetVersion::V11),
+            CharacterBackend::B1Cpu {
+                asset_id,
+                schema_version: 14,
+            } if asset_id == B1_V12_ASSET_ID => Some(B1AssetVersion::V12),
+            CharacterBackend::B1Cpu {
+                asset_id,
+                schema_version: 15,
+            } if asset_id == B1_V13_ASSET_ID => Some(B1AssetVersion::V13),
+            CharacterBackend::B1Cpu {
+                asset_id,
+                schema_version: 16,
+            } if asset_id == B1_V14_ASSET_ID => Some(B1AssetVersion::V14),
             _ => None,
         }
     }
@@ -571,7 +785,7 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 && !(matches!(version, 2..=12) && self.is_b1()) {
+        if version != 1 && !(matches!(version, 2..=16) && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported"),
@@ -844,6 +1058,87 @@ impl CharacterProfile {
         );
         profile
     }
+    /// Static independent hand-size extension. Zero retains v9 geometry;
+    /// older Works remain pinned to their original assets and profile.
+    pub fn b1_character_hand_size() -> Self {
+        let mut profile = Self::b1_character_arm_proportions();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 13,
+            asset_id: B1_V11_ASSET_ID.into(),
+        };
+        profile.id = B1_HAND_SIZE_PROFILE_ID.into();
+        profile.asset_path = B1_V11_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V11_ASSET_MANIFEST_SHA256.into();
+        profile
+            .parameters
+            .extend(B1_HAND_SIZE_PARAMETER_TARGETS[23..].iter().enumerate().map(
+                |(offset, target)| ParameterSpec {
+                    id: target.id.into(),
+                    morph_index: 23 + offset,
+                    min: -1.0,
+                    max: 1.0,
+                    default: 0.0,
+                },
+            ));
+        profile
+    }
+    /// Static bilateral shoulder-muscle extension. Zero preserves v11 geometry.
+    pub fn b1_character_shoulder_form() -> Self {
+        let mut profile = Self::b1_character_hand_size();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 14,
+            asset_id: B1_V12_ASSET_ID.into(),
+        };
+        profile.id = B1_SHOULDER_FORM_PROFILE_ID.into();
+        profile.asset_path = B1_V12_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V12_ASSET_MANIFEST_SHA256.into();
+        profile.parameters.push(ParameterSpec {
+            id: "shoulder_muscle_fullness".into(),
+            morph_index: 25,
+            min: -1.0,
+            max: 1.0,
+            default: 0.0,
+        });
+        profile
+    }
+    /// Static bilateral forearm fullness extension. Zero preserves v12 geometry.
+    pub fn b1_character_forearm_form() -> Self {
+        let mut profile = Self::b1_character_shoulder_form();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 15,
+            asset_id: B1_V13_ASSET_ID.into(),
+        };
+        profile.id = B1_FOREARM_FORM_PROFILE_ID.into();
+        profile.asset_path = B1_V13_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V13_ASSET_MANIFEST_SHA256.into();
+        profile.parameters.push(ParameterSpec {
+            id: "forearm_fullness".into(),
+            morph_index: 26,
+            min: -1.0,
+            max: 1.0,
+            default: 0.0,
+        });
+        profile
+    }
+    /// Static bilateral upper-arm muscle form. Zero preserves v13 geometry.
+    pub fn b1_character_upper_arm_muscle() -> Self {
+        let mut profile = Self::b1_character_forearm_form();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 16,
+            asset_id: B1_V14_ASSET_ID.into(),
+        };
+        profile.id = B1_UPPER_ARM_MUSCLE_PROFILE_ID.into();
+        profile.asset_path = B1_V14_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V14_ASSET_MANIFEST_SHA256.into();
+        profile.parameters.push(ParameterSpec {
+            id: "upper_arm_muscle_fullness".into(),
+            morph_index: 27,
+            min: -1.0,
+            max: 1.0,
+            default: 0.0,
+        });
+        profile
+    }
     /// New immutable finite running profile on the exact existing V4 asset set.
     pub fn b1_running() -> Self {
         let mut profile = Self::b1_character_lower_contour();
@@ -872,7 +1167,15 @@ impl CharacterProfile {
                 "B1 backend version does not match its canonical profile identity",
             ));
         }
-        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V10) {
+        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V14) {
+            Self::b1_character_upper_arm_muscle()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V13) {
+            Self::b1_character_forearm_form()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V12) {
+            Self::b1_character_shoulder_form()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V11) {
+            Self::b1_character_hand_size()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V10) {
             Self::b1_character_chest_placement()
         } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V9) {
             Self::b1_character_arm_proportions()
@@ -989,6 +1292,10 @@ impl B1AssetManifest {
             B1_V8_ASSET_ID => B1AssetVersion::V8,
             B1_V9_ASSET_ID => B1AssetVersion::V9,
             B1_V10_ASSET_ID => B1AssetVersion::V10,
+            B1_V11_ASSET_ID => B1AssetVersion::V11,
+            B1_V12_ASSET_ID => B1AssetVersion::V12,
+            B1_V13_ASSET_ID => B1AssetVersion::V13,
+            B1_V14_ASSET_ID => B1AssetVersion::V14,
             _ => return Err(CoreError::new("invalid_asset", "unknown B1 asset identity")),
         };
         let canonical = Self::decode(version.manifest_bytes())?;
@@ -1008,6 +1315,10 @@ impl B1AssetManifest {
                     B1AssetVersion::V8 => 49,
                     B1AssetVersion::V9 => 55,
                     B1AssetVersion::V10 => 59,
+                    B1AssetVersion::V11 => 59,
+                    B1AssetVersion::V12 => 61,
+                    B1AssetVersion::V13 => 63,
+                    B1AssetVersion::V14 => 65,
                 }
         {
             return Err(CoreError::new(

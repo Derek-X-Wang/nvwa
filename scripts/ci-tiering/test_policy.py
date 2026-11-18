@@ -238,11 +238,18 @@ class CompletionReport(unittest.TestCase):
         self.jobs = [{'id': i+1, 'run_id': 123, 'head_sha': 'a'*40, 'name': name,
                       'status': 'completed', 'conclusion': state}
                      for i, (name, state) in enumerate(zip(self.namespace['NAMES'], ['skipped']*2+['success']*2))]
+        self.jobs += [{'id': i+5, 'run_id': 123, 'head_sha': 'a'*40,
+                       'name': name, 'status': 'completed', 'conclusion': 'skipped'}
+                      for i, name in enumerate(self.namespace['RETIRED_NAMES'])]
         for kind in ('required', 'background'):
-            for part in policy.MAC_PARTS:
+            for part in ('workspace', 'bridges'):
                 lane = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-{part}-{kind}')
                 title = lane.split('    name: ', 1)[1].split('\n', 1)[0]
                 self.assertIn(title, self.namespace['NAMES'])
+            bridge = job((ROOT/'.github/workflows/ci.yml').read_text(), f'mac-bridges-{kind}')
+            self.assertIn(f'mac-mutation-{kind}', bridge)
+            self.assertIn(f'mac-appearance-{kind}', bridge)
+            self.assertIn('always()', bridge)
         self.assertNotIn('checkout', '\n'.join(line for line in workflow.splitlines() if not line.startswith('#')))
         self.assertNotIn('write', '\n'.join(line for line in workflow.splitlines() if line.strip().startswith(('actions:', 'contents:', 'pull-requests:', 'issues:'))))
 
@@ -253,12 +260,12 @@ class CompletionReport(unittest.TestCase):
             with self.subTest(key=key), self.assertRaises(ValueError):
                 self.namespace['identity']({**event, 'workflow_run': {**self.run, key: value}})
         filler = [{**self.jobs[0], 'id': i+10, 'name': 'Other'} for i in range(100)]
-        pages = [{'total_count': 104, 'jobs': filler}, {'total_count': 104, 'jobs': self.jobs}]
+        pages = [{'total_count': 106, 'jobs': filler}, {'total_count': 106, 'jobs': self.jobs}]
         urls = []
         def fetch(url):
             urls.append(url)
             return pages.pop(0)
-        self.assertEqual(len(self.namespace['collect'](self.run, fetch)), 104)
+        self.assertEqual(len(self.namespace['collect'](self.run, fetch)), 106)
         self.assertIn('/attempts/2/jobs?per_page=100&page=2', urls[1])
         for jobs in [self.jobs*2, [{**self.jobs[0], 'run_id': 7}], [{**self.jobs[0], 'head_sha': 'b'*40}]]:
             with self.assertRaises(ValueError):
@@ -284,6 +291,33 @@ class CompletionReport(unittest.TestCase):
         self.assertFalse(self.namespace['result'](self.jobs[:1])[1])
         self.assertFalse(self.namespace['result'](self.jobs*2)[1])
         self.assertFalse(self.namespace['result']([{**j, 'conclusion': 'success'} for j in self.jobs])[1])
+
+    def test_pre_rollout_legacy_requires_exact_inventory_and_success(self):
+        names = self.namespace['LEGACY_NAMES']
+        old_run = {**self.run, 'created_at': '2026-11-09T22:16:37Z'}
+        old_jobs = [{'id': i+1, 'run_id': 123, 'head_sha': 'a'*40, 'name': name,
+                     'status': 'completed', 'conclusion': 'success' if name == names[2] else 'skipped'}
+                    for i, name in enumerate(names)]
+        result = self.namespace['result']
+        self.assertTrue(result(old_jobs, old_run)[1])
+        for state in ('failure', 'cancelled', 'timed_out', 'skipped', None):
+            altered = [{**j} for j in old_jobs]
+            altered[2]['conclusion'] = state
+            self.assertFalse(result(altered, old_run)[1], state)
+        for altered in (old_jobs[:2], old_jobs + [old_jobs[2]],
+                        old_jobs + [{**old_jobs[0], 'id': 99, 'name': 'unexpected'}]):
+            self.assertFalse(result(altered, old_run)[1])
+        for created in ('2026-11-09T22:52:38Z', '2026-11-10T00:00:00Z', 'bad', None):
+            self.assertFalse(result(old_jobs, {**old_run, 'created_at': created})[1])
+        self.assertFalse(result(old_jobs)[1])
+        # A split run begun before rollout still uses the four current results.
+        self.assertTrue(result(self.jobs, old_run)[1])
+        for index in (4, 5):
+            for state in ('success', 'failure', 'cancelled', None):
+                altered = [{**j} for j in self.jobs]
+                altered[index]['conclusion'] = state
+                self.assertFalse(result(altered, old_run)[1], (index, state))
+            self.assertFalse(result(self.jobs + [self.jobs[index]], old_run)[1])
 
 
 class WorkflowContract(unittest.TestCase):
@@ -320,8 +354,9 @@ class WorkflowContract(unittest.TestCase):
             return old[old.index('      - name: '+start+'\n'):old.index('      - name: '+end+'\n')]
         expected = {
             'workspace': section('Run workspace CPU tests', 'Check appearance quality and production acceptance bridges'),
-            'bridges': section('Check appearance quality and production acceptance bridges', 'Execute the actual B1 continuous motion matrix'),
+            'appearance': section('Check appearance quality and production acceptance bridges', 'Check B1 production-source mutation witnesses'),
         }
+        mutation = section('Check B1 production-source mutation witnesses', 'Execute the actual B1 continuous motion matrix')
         matrix = section('Execute the actual B1 continuous motion matrix', 'Report existing command timing')
         for kind in ['required', 'background']:
             for part, body in expected.items():
@@ -345,7 +380,23 @@ class WorkflowContract(unittest.TestCase):
                 else:
                     self.assertNotIn('mac_garment_witness.py', lane)
         self.assertIn('bash experiments/27-ci-baseline/check.sh native', expected['workspace'])
-        self.assertIn('timeout-minutes: 12', expected['bridges'])
+        self.assertIn('timeout-minutes: 12', mutation)
+        for kind in ('required', 'background'):
+            lane = job(workflow, f'mac-mutation-{kind}')
+            self.assertIn('    runs-on: macos-15\n    timeout-minutes: 75\n', lane)
+            self.assertIn('run: cargo test --workspace --lib --locked --offline --no-run', lane)
+            self.assertIn('timeout-minutes: 12', lane)
+            self.assertEqual(lane.count(mutation), 1)
+            self.assertNotIn('continue-on-error', lane)
+            self.assertNotIn('actions/cache/', lane)
+            bridge = job(workflow, f'mac-bridges-{kind}')
+            self.assertIn(f'needs: [classify, mac-appearance-{kind}, mac-mutation-{kind}]', bridge)
+            self.assertIn('      - name: Require appearance and mutation evidence\n        shell: bash\n', bridge)
+            self.assertIn('APPEARANCE_RESULT:', bridge)
+            self.assertIn('MUTATION_RESULT:', bridge)
+            self.assertIn('test "$APPEARANCE_RESULT" = success', bridge)
+            self.assertIn('test "$MUTATION_RESULT" = success', bridge)
+            self.assertNotIn('continue-on-error', bridge)
         self.assertIn('timeout-minutes: 20', matrix)
         for name in ('mac-matrix-required', 'mac-matrix-background'):
             self.assertNotIn('  '+name+':\n', workflow)
@@ -353,14 +404,29 @@ class WorkflowContract(unittest.TestCase):
         self.assertIn('run_matrix.py', linux)
         self.assertIn('linux_garment_controls.py', linux)
         gate = job(workflow, 'required-gate')
-        self.assertIn('mac-workspace-required, mac-bridges-required]', gate)
+        self.assertIn('mac-workspace-required, mac-bridges-required, mac-mutation-required]', gate)
         self.assertNotIn('mac-matrix', gate)
         self.assertNotIn('mac-workspace-background', gate)
         report = job(workflow, 'full-mac-report')
         for kind in ['required', 'background']:
-            for part in expected:
+            for part in ('workspace', 'bridges', 'mutation'):
                 self.assertIn('mac-'+part+'-'+kind, report)
         self.assertNotIn('mac-matrix', report)
+
+    def test_mac_bridge_aggregate_propagates_each_missing_or_failed_half(self):
+        workflow = (ROOT/'.github/workflows/ci.yml').read_text()
+        for kind in ('required', 'background'):
+            aggregate = job(workflow, f'mac-bridges-{kind}')
+            command = ''.join(line[10:] + '\n' for line in
+                              aggregate.split('        run: |\n', 1)[1].splitlines())
+            for appearance in ('success', 'failure', 'cancelled', 'skipped', ''):
+                for mutation in ('success', 'failure', 'cancelled', 'skipped', ''):
+                    env = dict(os.environ, APPEARANCE_RESULT=appearance, MUTATION_RESULT=mutation)
+                    result = subprocess.run(['bash', '-e', '-o', 'pipefail', '-c', command],
+                                            env=env, capture_output=True, text=True)
+                    self.assertEqual(result.returncode == 0,
+                                     appearance == mutation == 'success',
+                                     (kind, appearance, mutation, result.stdout, result.stderr))
 
     def test_linux_preserves_all_shared_commands_with_explicit_backend(self):
         old = job((HERE / 'predecessor-ci.yml').read_text(), 'native-and-wasm')
@@ -382,9 +448,64 @@ class WorkflowContract(unittest.TestCase):
         self.assertIn('"$(uname -s)" == Linux', linux)
         workflow = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-shared')
         self.assertIn('timeout-minutes: 12', workflow)
-        self.assertIn('timeout-minutes: 20', workflow)
+        self.assertNotIn('timeout-minutes: 20', workflow)
         self.assertIn('--linux-backend --disposable-checkout', workflow)
         self.assertNotIn('continue-on-error', workflow)
+
+        check = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-check')
+        self.assertIn('    needs: classify\n', check)
+        self.assertIn('    runs-on: ubuntu-24.04\n    timeout-minutes: 75\n', check)
+        self.assertIn("      CARGO_BUILD_JOBS: '1'\n", check)
+        self.assertIn('run: bash scripts/ci-tiering/linux-shared.sh check\n', check)
+        self.assertNotIn('continue-on-error', check)
+        self.assertNotIn('actions/cache/', check)
+        self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh check\n'), 1)
+        self.assertEqual((workflow + check).count('run: bash scripts/ci-tiering/linux-shared.sh workspace\n'), 1)
+        self.assertIn('linux-shared, linux-matrix, linux-check, mac-smoke',
+                      job((ROOT / '.github/workflows/ci.yml').read_text(), 'required-gate'))
+        check_mode = linux[linux.index('  check)\n'):linux.index('  workspace)\n')]
+        workspace_mode = linux[linux.index('  workspace)\n'):linux.index('  bridges)\n')]
+        self.assertIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', check_mode)
+        self.assertNotIn('cargo check --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)
+        self.assertIn('cargo test --workspace --locked --features nvwa-cli/motion-query,bevy/x11', workspace_mode)
+        matrix = job((ROOT / '.github/workflows/ci.yml').read_text(), 'linux-matrix')
+        self.assertIn('    needs: [classify, linux-shared]\n', matrix)
+        self.assertIn('    runs-on: ubuntu-24.04\n    timeout-minutes: 75\n', matrix)
+        self.assertIn("      CARGO_BUILD_JOBS: '1'\n", matrix)
+        self.assertIn('      - name: Complete 594-frame matrix and real garment controls\n        timeout-minutes: 20\n', matrix)
+        self.assertIn('run: bash scripts/ci-tiering/linux-matrix-run.sh\n', matrix)
+        self.assertIn('actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093', matrix)
+        self.assertIn('EXPECTED_MATRIX_SHA256: ${{ needs.linux-shared.outputs.matrix_sha256 }}', matrix)
+        self.assertNotIn('continue-on-error', matrix)
+        self.assertNotIn('actions/cache/', matrix)
+        self.assertNotIn('run: bash scripts/ci-tiering/linux-shared.sh matrix\n', workflow + check + matrix)
+        self.assertIn('bash scripts/ci-tiering/linux-shared.sh matrix-build\n', workflow)
+        self.assertIn('actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02', workflow)
+        self.assertIn('if-no-files-found: error', workflow)
+        self.assertIn('matrix_sha256: ${{ steps.motion-probe.outputs.matrix_sha256 }}', workflow)
+        source_linux = (HERE / 'linux-shared.sh').read_text()
+        self.assertEqual(source_linux.count('  matrix-build)\n'), 1)
+        build_mode = source_linux.split('  matrix-build)\n', 1)[1].split('  matrix)\n', 1)[0]
+        self.assertIn('cargo fmt --manifest-path experiments/60-b1-continuous-motion/Cargo.toml', build_mode)
+        self.assertIn('cargo build --manifest-path experiments/60-b1-continuous-motion/Cargo.toml --bins --locked --offline --features bevy/x11', build_mode)
+        old_matrix = source_linux.split('  matrix)\n', 1)[1].split('    ;;\n', 1)[0]
+        runtime = old_matrix[old_matrix.index('    python3 -B experiments/60-'):]
+        expected_runtime = ''.join(line[4:] if line.startswith('    ') else line for line in runtime.splitlines(keepends=True))
+        runner = (HERE / 'linux-matrix-run.sh').read_text()
+        self.assertIn('"$(uname -s)" == Linux', runner)
+        self.assertIn('Matrix artifact digest mismatch', runner)
+        self.assertEqual(runner.split('trap verify_lock EXIT\n', 1)[1], expected_runtime + '\n')
+        if sys.platform.startswith('linux'):
+            with tempfile.TemporaryDirectory() as temp:
+                binary = Path(temp) / 'debug/matrix'
+                binary.parent.mkdir()
+                binary.write_bytes(b'wrong-matrix-artifact')
+                env = dict(os.environ, CARGO_TARGET_DIR=temp, EXPECTED_MATRIX_SHA256='0' * 64)
+                result = subprocess.run(['bash', str(HERE / 'linux-matrix-run.sh')],
+                                        env=env, capture_output=True, text=True)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('Matrix artifact digest mismatch', result.stderr)
+
 
     def test_linux_mutation_copy_preserves_original_source_gate_bytes(self):
         original = (ROOT/'scripts/check-b1-motion-mutations.py').read_text()

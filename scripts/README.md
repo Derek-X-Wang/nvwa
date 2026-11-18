@@ -15,7 +15,7 @@ selects one group from that same file. `all` runs these groups in this order:
 | `ci-timing-contract` | Observer, stream/failure, queue metadata, and complete workflow inventory controls, normal and optimized Python. |
 | `source-cli` | Existing portable source checks: Rust formatting, strict core/CLI Clippy, core/CLI tests. Requires the pinned Rust toolchain and Cargo dependencies. |
 | `cli-distribution` | Offline CLI build and standalone package controls, normal and optimized Python. Uses the dependencies prepared by `source-cli`. |
-| `b1-inputs` | Admitted production inputs and source verifier plus rejection controls, normal and optimized Python. |
+| `b1-inputs` | Admitted production inputs and source verifier plus rejection controls; retained cheek checks and v14 upper-arm target provenance/tamper checks run in normal and optimized Python. |
 | `motion-comparator` | Independent B1 motion comparator and server controls, normal and optimized Python. |
 | `diagnostics` | Existing bounded diagnostic controls. Requires Node and Python. |
 | `appearance` | Appearance diagnostic and preview/build controls, normal and optimized Python. |

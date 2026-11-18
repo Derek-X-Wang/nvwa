@@ -14,7 +14,7 @@ MAC = re.compile(r'macos|darwin|apple|appkit|cocoa|objc|metal|coregraphics|NSWin
 # cfg(test) attribute is platform-neutral and common in ordinary shared files.
 TEST_ONLY = re.compile(r'#\s*\[\s*cfg\s*\(\s*test\s*\)\s*\]')
 CONDITIONAL = re.compile(r'\bcfg(?:_attr)?\b|\bunix\b|target_(?:os|arch|family|vendor|env)', re.I)
-REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'mac-smoke', 'b1-source-regression')
+REQUIRED = ('classify', 'portable', 'portable-eye', 'linux-shared', 'linux-matrix', 'linux-check', 'mac-smoke', 'b1-source-regression')
 
 
 def git(root, *args):
@@ -109,12 +109,12 @@ def classify(root, event_name, event):
         return {'full_required': True, 'reasons': ['classification incomplete: ' + type(error).__name__], 'head': ''}
 
 
-MAC_PARTS = ('workspace', 'bridges')
+MAC_PARTS = ('workspace', 'bridges', 'mutation')
 
 def mac_results(needs, full):
     required = [needs.get(f'mac-{part}-required', {}).get('result', 'missing') for part in MAC_PARTS]
     background = [needs.get(f'mac-{part}-background', {}).get('result', 'missing') for part in MAC_PARTS]
-    expected = (['success'] * 2, ['skipped'] * 2) if full == 'true' else (['skipped'] * 2, ['success'] * 2)
+    expected = (['success'] * len(MAC_PARTS), ['skipped'] * len(MAC_PARTS)) if full == 'true' else (['skipped'] * len(MAC_PARTS), ['success'] * len(MAC_PARTS))
     return required, background, required == expected[0] and background == expected[1]
 
 

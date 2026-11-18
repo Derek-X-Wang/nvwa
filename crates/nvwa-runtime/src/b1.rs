@@ -2,7 +2,12 @@
 //! Raw bytes are authenticated once per explicit Open and typed loaders consume
 //! an immutable in-memory copy, never a second read of the original source.
 mod foot_clearance;
+#[path = "b1_level1_display.rs"]
+mod level1_display;
+#[path = "b1_level1_geometry.rs"]
+mod level1_geometry;
 pub use foot_clearance::b1_foot_clearance;
+pub use level1_display::{B1DisplaySubdivision, B1DisplaySubdivisionStatus};
 
 use super::{CharacterAsset, EditorState, Playback, RuntimeStatus};
 use bevy::{
@@ -63,9 +68,18 @@ pub fn register_b1_asset_source(app: &mut App) {
 }
 
 pub(super) fn install(app: &mut App) {
+    if !app.world().contains_resource::<B1DisplaySubdivision>() {
+        #[cfg(not(target_arch = "wasm32"))]
+        let enabled = std::env::var("NVWA_B1_LEVEL1_DISPLAY").is_ok_and(|value| value == "1");
+        #[cfg(target_arch = "wasm32")]
+        let enabled = false;
+        app.insert_resource(B1DisplaySubdivision { enabled });
+    }
     app.add_plugins(HumentityPlugin)
         .insert_resource(SkeletonLodConfig::new(&[BoneMergeConfig::full()]))
         .init_resource::<B1Runtime>()
+        .init_resource::<level1_display::Level1DisplayState>()
+        .init_resource::<B1DisplaySubdivisionStatus>()
         .init_resource::<super::appearance::AppearanceRuntime>()
         .init_resource::<super::appearance::AppearanceStatus>()
         .add_systems(
@@ -80,9 +94,12 @@ pub(super) fn install(app: &mut App) {
             (
                 publish,
                 super::appearance::update.in_set(super::RuntimeSystems::Appearance),
+                level1_display::publish,
             )
                 .chain()
-                .after(bevy::transform::TransformSystems::Propagate),
+                .after(bevy::transform::TransformSystems::Propagate)
+                .before(bevy::camera::visibility::VisibilitySystems::CalculateBounds)
+                .before(bevy::camera::visibility::VisibilitySystems::VisibilityPropagate),
         );
 }
 
@@ -106,6 +123,10 @@ fn uses_prepared_rig(doc: &SceneDocument) -> bool {
                     | B1AssetVersion::V8
                     | B1AssetVersion::V9
                     | B1AssetVersion::V10
+                    | B1AssetVersion::V11
+                    | B1AssetVersion::V12
+                    | B1AssetVersion::V13
+                    | B1AssetVersion::V14
             )
         )
 }
@@ -1234,6 +1255,9 @@ mod tests {
         }
     }
     fn harness(mutate: bool) -> (App, Dir, Arc<AtomicUsize>) {
+        harness_with_visibility(mutate, false)
+    }
+    fn harness_with_visibility(mutate: bool, visibility: bool) -> (App, Dir, Arc<AtomicUsize>) {
         let dir = Dir::default();
         fill(&dir);
         let reads = Arc::new(AtomicUsize::new(0));
@@ -1266,6 +1290,9 @@ mod tests {
         .init_resource::<CharacterAsset>()
         .init_resource::<RuntimeStatus>()
         .init_resource::<Playback>();
+        if visibility {
+            app.add_plugins(bevy::camera::visibility::VisibilityPlugin);
+        }
         install(&mut app);
         app.finish();
         app.cleanup();
@@ -1287,6 +1314,232 @@ mod tests {
             app.world().resource::<RuntimeStatus>(),
             app.world().resource::<EditorState>().open_error
         );
+    }
+    #[test]
+    fn level1_display_toggle_preserves_original_b1_publication() {
+        let (mut app, _, _) = harness(false);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<RuntimeStatus>().ready
+                && w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.phase == 2)
+        });
+        let body = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .displays[0];
+        let original = app.world().get::<Mesh3d>(body).unwrap().0.clone();
+        let original_positions = uploaded_positions(&app)[0].clone();
+        let original_visibility = app.world().get::<Visibility>(body).copied();
+        assert!(
+            app.world()
+                .get::<Visibility>(body)
+                .is_none_or(|visibility| *visibility == Visibility::Inherited)
+        );
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = true;
+        app.update();
+        let status = app.world().resource::<B1DisplaySubdivisionStatus>();
+        assert!(status.active, "Level 1 display failed: {:?}", status.error);
+        eprintln!(
+            "B1 Level 1 display vertices={} triangles={}",
+            status.vertices, status.triangles
+        );
+        assert!(status.vertices > 22_077 && status.triangles > 22_892);
+        assert_eq!(
+            app.world().get::<Visibility>(body),
+            Some(&Visibility::Hidden)
+        );
+        assert_eq!(app.world().get::<Mesh3d>(body).unwrap().0, original);
+        assert!(
+            validate_structure(
+                app.world(),
+                app.world().resource::<B1Runtime>().active.as_ref().unwrap()
+            )
+            .is_ok()
+        );
+        assert_eq!(uploaded_positions(&app)[0], original_positions);
+        let overlay = app
+            .world()
+            .resource::<level1_display::Level1DisplayState>()
+            .0
+            .as_ref()
+            .unwrap();
+        assert_eq!(
+            app.world().get::<Visibility>(overlay.entity),
+            Some(&Visibility::Inherited)
+        );
+        assert_ne!(overlay.mesh, original);
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = false;
+        app.update();
+        assert!(!app.world().resource::<B1DisplaySubdivisionStatus>().active);
+        assert_eq!(
+            app.world().get::<Visibility>(body).copied(),
+            original_visibility
+        );
+        assert_eq!(app.world().get::<Mesh3d>(body).unwrap().0, original);
+        assert!(
+            validate_structure(
+                app.world(),
+                app.world().resource::<B1Runtime>().active.as_ref().unwrap()
+            )
+            .is_ok()
+        );
+        assert_eq!(uploaded_positions(&app)[0], original_positions);
+        let material = app
+            .world()
+            .get::<MeshMaterial3d<StandardMaterial>>(body)
+            .unwrap()
+            .0
+            .clone();
+        app.world_mut()
+            .resource_mut::<Assets<StandardMaterial>>()
+            .get_mut(&material)
+            .unwrap()
+            .normal_map_texture = Some(Handle::default());
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = true;
+        app.update();
+        let error = app
+            .world()
+            .resource::<B1DisplaySubdivisionStatus>()
+            .error
+            .clone();
+        assert!(
+            error
+                .as_deref()
+                .is_some_and(|e| e.contains("normal-mapped"))
+        );
+        assert!(!app.world().resource::<B1DisplaySubdivisionStatus>().active);
+        assert_eq!(
+            app.world().get::<Visibility>(body).copied(),
+            original_visibility
+        );
+        app.update();
+        assert_eq!(
+            app.world().resource::<B1DisplaySubdivisionStatus>().error,
+            error
+        );
+        let serial = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .serial;
+        app.world_mut()
+            .resource_mut::<Assets<StandardMaterial>>()
+            .get_mut(&material)
+            .unwrap()
+            .normal_map_texture = None;
+        app.update();
+        assert_eq!(
+            app.world()
+                .resource::<B1Runtime>()
+                .active
+                .as_ref()
+                .unwrap()
+                .serial,
+            serial,
+            "material recovery must not rely on motion"
+        );
+        let status = app.world().resource::<B1DisplaySubdivisionStatus>();
+        assert!(status.active, "Level 1 did not recover: {:?}", status.error);
+        assert!(status.error.is_none());
+    }
+    #[test]
+    fn level1_display_visibility_is_current_on_toggle_and_keeps_hidden_body_hidden() {
+        use bevy::camera::visibility::InheritedVisibility;
+
+        let (mut app, _, _) = harness_with_visibility(false, true);
+        app.world_mut()
+            .resource_mut::<EditorState>()
+            .request_open(b1())
+            .unwrap();
+        until(&mut app, |w| {
+            w.resource::<RuntimeStatus>().ready
+                && w.resource::<B1Runtime>()
+                    .active
+                    .as_ref()
+                    .is_some_and(|s| s.phase == 2)
+        });
+        let body = app
+            .world()
+            .resource::<B1Runtime>()
+            .active
+            .as_ref()
+            .unwrap()
+            .displays[0];
+        assert!(app.world().get::<InheritedVisibility>(body).unwrap().get());
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = true;
+        app.update();
+        let overlay = app
+            .world()
+            .resource::<level1_display::Level1DisplayState>()
+            .0
+            .as_ref()
+            .unwrap()
+            .entity;
+        assert!(!app.world().get::<InheritedVisibility>(body).unwrap().get());
+        assert!(
+            app.world()
+                .get::<InheritedVisibility>(overlay)
+                .unwrap()
+                .get()
+        );
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = false;
+        app.update();
+        assert!(app.world().get::<InheritedVisibility>(body).unwrap().get());
+
+        app.world_mut().entity_mut(body).insert(Visibility::Hidden);
+        app.update();
+        assert!(!app.world().get::<InheritedVisibility>(body).unwrap().get());
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = true;
+        app.update();
+        let overlay = app
+            .world()
+            .resource::<level1_display::Level1DisplayState>()
+            .0
+            .as_ref()
+            .unwrap()
+            .entity;
+        assert_eq!(
+            app.world().get::<Visibility>(overlay),
+            Some(&Visibility::Hidden)
+        );
+        assert!(
+            !app.world()
+                .get::<InheritedVisibility>(overlay)
+                .unwrap()
+                .get()
+        );
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = false;
+        app.update();
+        assert_eq!(
+            app.world().get::<Visibility>(body),
+            Some(&Visibility::Hidden)
+        );
+        assert!(!app.world().get::<InheritedVisibility>(body).unwrap().get());
     }
     fn uploaded_positions(app: &App) -> Vec<Vec<[f32; 3]>> {
         let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
@@ -2119,6 +2372,74 @@ mod tests {
     fn motion_seek(app: &mut App, seconds: f32) {
         app.world_mut().resource_mut::<Playback>().seek_request = Some(seconds);
         motion_tick(app, 0.0);
+    }
+    #[test]
+    fn level1_display_tracks_real_b1_motion_without_rebuilding_topology() {
+        let (mut app, _, _) = motion_app();
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = true;
+        app.update();
+        let status = app.world().resource::<B1DisplaySubdivisionStatus>();
+        assert!(
+            status.active,
+            "Level 1 motion display failed: {:?}",
+            status.error
+        );
+        let overlay_mesh = app
+            .world()
+            .resource::<level1_display::Level1DisplayState>()
+            .0
+            .as_ref()
+            .unwrap()
+            .mesh
+            .clone();
+        let positions = |app: &App| -> Vec<[f32; 3]> {
+            match app
+                .world()
+                .resource::<Assets<Mesh>>()
+                .get(&overlay_mesh)
+                .unwrap()
+                .attribute(Mesh::ATTRIBUTE_POSITION)
+                .unwrap()
+            {
+                bevy::mesh::VertexAttributeValues::Float32x3(v) => v.clone(),
+                _ => panic!("Level 1 positions absent"),
+            }
+        };
+        let mut previous = positions(&app);
+        for seconds in [0.5, 1.0, 1.5] {
+            motion_seek(&mut app, seconds);
+            let status = app.world().resource::<B1DisplaySubdivisionStatus>();
+            assert!(
+                status.active,
+                "Level 1 motion display failed: {:?}",
+                status.error
+            );
+            let active = app.world().resource::<B1Runtime>().active.as_ref().unwrap();
+            let overlay = app
+                .world()
+                .resource::<level1_display::Level1DisplayState>()
+                .0
+                .as_ref()
+                .unwrap();
+            assert_eq!(
+                overlay.mesh, overlay_mesh,
+                "motion must retain display topology"
+            );
+            assert_eq!(overlay.last_serial, active.serial);
+            let current = positions(&app);
+            assert_ne!(
+                current, previous,
+                "motion must update actual Level 1 positions"
+            );
+            previous = current;
+        }
+        app.world_mut()
+            .resource_mut::<B1DisplaySubdivision>()
+            .enabled = false;
+        app.update();
+        assert!(!app.world().resource::<B1DisplaySubdivisionStatus>().active);
     }
     #[test]
     fn actual_motion_clock_changes_bones_and_both_uploaded_meshes_without_refit() {
@@ -3684,6 +4005,274 @@ mod tests {
                 }
                 doc.character.diagnostic_pose = Some("shoulder".into());
                 open_ready(&mut app, doc);
+                let posed = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"],
+                    posed["parts"][0]["positions"]
+                );
+            }
+        }
+    }
+    #[test]
+    fn hand_size_zero_preserves_v9_and_signed_endpoints_publish_body_and_elbow_pose() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V9);
+        fill_version(&dir, B1AssetVersion::V11);
+        open_ready(&mut app, SceneDocument::from_profile(
+            nvwa_core::CharacterProfile::b1_character_arm_proportions()).unwrap());
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc =
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_hand_size())
+                .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (before, after) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(before["positions"], after["positions"]);
+            assert_eq!(before["rest_positions"], after["rest_positions"]);
+        }
+        for key in ["left_hand_size", "right_hand_size"] {
+            for value in [-1.0, 1.0] {
+                let mut doc = zero_doc.clone();
+                doc.character.parameters.insert(key.into(), value);
+                open_ready(&mut app, doc.clone());
+                let frame = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                    "{key} {value} must alter actual body vertices"
+                );
+                assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
+                for bone in frame["bones"].as_array().unwrap() {
+                    for matrix in [&bone["rest"], &bone["posed"]] {
+                        assert!(
+                            matrix
+                                .as_array()
+                                .unwrap()
+                                .iter()
+                                .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                        );
+                    }
+                }
+                doc.character.diagnostic_pose = Some("elbow".into());
+                open_ready(&mut app, doc);
+                let posed = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"],
+                    posed["parts"][0]["positions"]
+                );
+            }
+        }
+    }
+    #[test]
+    fn shoulder_form_zero_preserves_v11_and_both_signs_publish_in_static_poses() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V11);
+        fill_version(&dir, B1AssetVersion::V12);
+        open_ready(
+            &mut app,
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_hand_size())
+                .unwrap(),
+        );
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc =
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_shoulder_form())
+                .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (before, after) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(before["positions"], after["positions"]);
+            assert_eq!(before["rest_positions"], after["rest_positions"]);
+        }
+        for value in [-1.0, 1.0] {
+            let mut doc = zero_doc.clone();
+            doc.character
+                .parameters
+                .insert("shoulder_muscle_fullness".into(), value);
+            open_ready(&mut app, doc.clone());
+            let frame = b1_frame_snapshot(app.world()).unwrap();
+            assert_ne!(
+                frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                "shoulder {value} must alter actual body vertices"
+            );
+            assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
+            for bone in frame["bones"].as_array().unwrap() {
+                for matrix in [&bone["rest"], &bone["posed"]] {
+                    assert!(
+                        matrix
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                }
+            }
+            for pose in ["shoulder", "elbow"] {
+                doc.character.diagnostic_pose = Some(pose.into());
+                open_ready(&mut app, doc.clone());
+                let posed = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"],
+                    posed["parts"][0]["positions"]
+                );
+            }
+        }
+    }
+    #[test]
+    fn forearm_form_zero_preserves_v12_and_both_signs_publish_in_static_poses() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V12);
+        fill_version(&dir, B1AssetVersion::V13);
+        open_ready(
+            &mut app,
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_shoulder_form())
+                .unwrap(),
+        );
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc =
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_forearm_form())
+                .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (before, after) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(before["positions"], after["positions"]);
+            assert_eq!(before["rest_positions"], after["rest_positions"]);
+        }
+        for value in [-1.0, 1.0] {
+            let mut doc = zero_doc.clone();
+            doc.character
+                .parameters
+                .insert("forearm_fullness".into(), value);
+            open_ready(&mut app, doc.clone());
+            let frame = b1_frame_snapshot(app.world()).unwrap();
+            assert_ne!(
+                frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                "forearm {value} must alter actual body vertices"
+            );
+            assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
+            for bone in frame["bones"].as_array().unwrap() {
+                for matrix in [&bone["rest"], &bone["posed"]] {
+                    assert!(
+                        matrix
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                }
+            }
+            for pose in ["shoulder", "elbow"] {
+                doc.character.diagnostic_pose = Some(pose.into());
+                open_ready(&mut app, doc.clone());
+                let posed = b1_frame_snapshot(app.world()).unwrap();
+                assert_ne!(
+                    frame["parts"][0]["positions"],
+                    posed["parts"][0]["positions"]
+                );
+            }
+        }
+    }
+    #[test]
+    fn upper_arm_muscle_zero_preserves_v13_and_both_signs_publish_in_static_poses() {
+        let (mut app, dir, _) = motion_app();
+        fill_version(&dir, B1AssetVersion::V13);
+        fill_version(&dir, B1AssetVersion::V14);
+        open_ready(
+            &mut app,
+            SceneDocument::from_profile(nvwa_core::CharacterProfile::b1_character_forearm_form())
+                .unwrap(),
+        );
+        let old = b1_frame_snapshot(app.world()).unwrap();
+        let zero_doc = SceneDocument::from_profile(
+            nvwa_core::CharacterProfile::b1_character_upper_arm_muscle(),
+        )
+        .unwrap();
+        open_ready(&mut app, zero_doc.clone());
+        let zero = b1_frame_snapshot(app.world()).unwrap();
+        assert_eq!(old["bones"], zero["bones"]);
+        for (before, after) in old["parts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .zip(zero["parts"].as_array().unwrap())
+        {
+            assert_eq!(before["positions"], after["positions"]);
+            assert_eq!(before["rest_positions"], after["rest_positions"]);
+        }
+        for value in [-1.0, 1.0] {
+            let mut doc = zero_doc.clone();
+            doc.character
+                .parameters
+                .insert("upper_arm_muscle_fullness".into(), value);
+            open_ready(&mut app, doc.clone());
+            let frame = b1_frame_snapshot(app.world()).unwrap();
+            assert_ne!(
+                frame["parts"][0]["positions"], zero["parts"][0]["positions"],
+                "upper-arm muscle {value} must alter actual body vertices"
+            );
+            let target_name = if value < 0.0 {
+                "upperarm-muscle-decr.target"
+            } else {
+                "upperarm-muscle-incr.target"
+            };
+            let target = std::fs::read_to_string(
+                std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+                    .join("../../assets/characters/mpfb-b1-v14/targets")
+                    .join(target_name),
+            )
+            .unwrap();
+            let target_ids: std::collections::BTreeSet<u64> = target
+                .lines()
+                .filter(|line| !line.is_empty() && !line.starts_with('#'))
+                .map(|line| line.split_whitespace().next().unwrap().parse().unwrap())
+                .collect();
+            let changed_ids: std::collections::BTreeSet<u64> = zero["parts"][0]["source_ids"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .zip(zero["parts"][0]["rest_positions"].as_array().unwrap())
+                .zip(frame["parts"][0]["rest_positions"].as_array().unwrap())
+                .filter_map(|((id, before), after)| (before != after).then(|| id.as_u64().unwrap()))
+                .collect();
+            assert!(
+                !changed_ids.is_empty(),
+                "upper-arm target must affect body source IDs"
+            );
+            assert!(
+                changed_ids.is_subset(&target_ids),
+                "upper-arm target changed body IDs outside its pinned source rows"
+            );
+            assert_eq!(frame["bones"].as_array().unwrap().len(), 53);
+            for bone in frame["bones"].as_array().unwrap() {
+                for matrix in [&bone["rest"], &bone["posed"]] {
+                    assert!(
+                        matrix
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                }
+            }
+            for pose in ["shoulder", "elbow"] {
+                doc.character.diagnostic_pose = Some(pose.into());
+                open_ready(&mut app, doc.clone());
                 let posed = b1_frame_snapshot(app.world()).unwrap();
                 assert_ne!(
                     frame["parts"][0]["positions"],
@@ -5671,6 +6260,8 @@ struct PublishedCpuPart {
     mesh: Handle<Mesh>,
     source_ids: Vec<u16>,
     indices: Vec<usize>,
+    #[cfg(feature = "cpu-render")]
+    full_body_indices: Option<Vec<usize>>,
     frame: nvwa_b1_adapter::SkinFrame,
     transform: [f32; 16],
 }
@@ -5682,6 +6273,12 @@ struct PublishedCpuFrame<'a> {
     parts: Vec<PublishedCpuPart>,
 }
 fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
+    published_cpu_frame_with_body_topology(world, false)
+}
+fn published_cpu_frame_with_body_topology(
+    world: &World,
+    full_body: bool,
+) -> Result<PublishedCpuFrame<'_>, String> {
     use bevy::mesh::VertexAttributeValues;
     let (active, doc, sample, binding) = published_motion_frame(world)?;
     let bones = active
@@ -5727,6 +6324,27 @@ fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
         if indices != active.display_indices[i] {
             return Err("B1 uploaded triangle binding changed".into());
         }
+        #[cfg(feature = "cpu-render")]
+        let full_body_indices = if full_body && part.name == "body" {
+            let fitted_mesh = world
+                .resource::<Assets<Mesh>>()
+                .get(&part.mesh)
+                .ok_or("fitted body mesh absent")?;
+            let full = visible_body_indices(
+                fitted_mesh.indices().ok_or("fitted body indices absent")?,
+                &active.source_ids[i],
+                &[],
+            )?;
+            let complete: Vec<_> = full.iter().collect();
+            if complete.len() <= indices.len() {
+                return Err("body reference did not restore clothing-hidden triangles".into());
+            }
+            Some(complete)
+        } else {
+            None
+        };
+        #[cfg(not(feature = "cpu-render"))]
+        let _ = full_body;
         let transform = world
             .get::<GlobalTransform>(entity)
             .ok_or("display transform absent")?
@@ -5741,6 +6359,8 @@ fn published_cpu_frame(world: &World) -> Result<PublishedCpuFrame<'_>, String> {
             mesh: handle.clone(),
             source_ids: active.source_ids[i].clone(),
             indices,
+            #[cfg(feature = "cpu-render")]
+            full_body_indices,
             frame,
             transform,
         });

@@ -1,0 +1,106 @@
+{
+  "format": "nvwa-b1-cheek-volume-derivation",
+  "schema_version": 1,
+  "license": "CC0-1.0",
+  "source": {
+    "project": "MakeHuman MPFB",
+    "version": "2.0.18",
+    "commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e"
+  },
+  "sources": [
+    {
+      "source_relative": "data/targets/cheek/l-cheek-volume-decr.target.gz",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/cheek/l-cheek-volume-decr.target.gz",
+      "retained_path": "provenance/source/data/targets/cheek/l-cheek-volume-decr.target.gz",
+      "compressed_bytes": 787,
+      "compressed_sha256": "202ff036e39abea154e0896ad34641184c5e8b77610dca9e1e8e4ce4a5db1bc4",
+      "expanded_bytes": 3015,
+      "expanded_sha256": "d88cedb8d78e4ac0009d83e425245cb8f584c064b9c3be3419d167d1c22b3539",
+      "stored_rows": 194,
+      "nonzero_rows": 152,
+      "id_range": [
+        6968,
+        11942
+      ]
+    },
+    {
+      "source_relative": "data/targets/cheek/r-cheek-volume-decr.target.gz",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/cheek/r-cheek-volume-decr.target.gz",
+      "retained_path": "provenance/source/data/targets/cheek/r-cheek-volume-decr.target.gz",
+      "compressed_bytes": 765,
+      "compressed_sha256": "ea12455c7a85e7b3b5e6e4882b4b68823a00bcaef4ea048cc49be452a139c1bc",
+      "expanded_bytes": 2670,
+      "expanded_sha256": "ca0576cfb9a49216f6844a97d6347eaf662b56b1c165f5938661c91d1d04d617",
+      "stored_rows": 194,
+      "nonzero_rows": 152,
+      "id_range": [
+        192,
+        5339
+      ]
+    },
+    {
+      "source_relative": "data/targets/cheek/l-cheek-volume-incr.target.gz",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/cheek/l-cheek-volume-incr.target.gz",
+      "retained_path": "provenance/source/data/targets/cheek/l-cheek-volume-incr.target.gz",
+      "compressed_bytes": 1274,
+      "compressed_sha256": "75bf330b96d0036c46f779ed003782c7380c77dd06c14fd80f1fa20a5093fee1",
+      "expanded_bytes": 4150,
+      "expanded_sha256": "7a47a6a0121657092266df2a27ec6e134462642fd3f781ee47daeec40d1426fd",
+      "stored_rows": 229,
+      "nonzero_rows": 210,
+      "id_range": [
+        6826,
+        11944
+      ]
+    },
+    {
+      "source_relative": "data/targets/cheek/r-cheek-volume-incr.target.gz",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/cheek/r-cheek-volume-incr.target.gz",
+      "retained_path": "provenance/source/data/targets/cheek/r-cheek-volume-incr.target.gz",
+      "compressed_bytes": 1288,
+      "compressed_sha256": "4df3e61e843c2d3381ef534e90d347b6b8ea763428d69eba8ef2ed5ab0affb8c",
+      "expanded_bytes": 4086,
+      "expanded_sha256": "95e57c5e1313c118d5e3c4e43ec3d0dd9952957e5ba1bcbed1c8027d40940e43",
+      "stored_rows": 229,
+      "nonzero_rows": 210,
+      "id_range": [
+        42,
+        5341
+      ]
+    }
+  ],
+  "recipe": {
+    "script": "scripts/derive-cheek-volume.py",
+    "script_sha256": "34dc77833e02217666b0f2897441bd46df14f5f289a138bdc5fc04d442688812",
+    "operation": "For each sign, verify disjoint left/right stored ID sets; sort their full union by integer source vertex ID; emit all four original numeric tokens separated by one ASCII space and terminated by LF. Retain zero rows.",
+    "arithmetic": "none",
+    "source_units": "unchanged; existing runtime loader converts once by 0.1",
+    "base_source_vertex_count": 19158
+  },
+  "outputs": [
+    {
+      "path": "targets/cheek-volume-bilateral-decr.target",
+      "bytes": 5685,
+      "sha256": "aeab40d480502a05d4be4a9d9b9589212bbddf4a2da7f2418bc4ffc4fed2a487",
+      "stored_rows": 388,
+      "nonzero_rows": 304,
+      "source_id_sets_disjoint": true
+    },
+    {
+      "path": "targets/cheek-volume-bilateral-incr.target",
+      "bytes": 8236,
+      "sha256": "3eba8dad1ee2d2bf01cb49f1cd50a50cae7a947b37f556405bf173fa26053a84",
+      "stored_rows": 458,
+      "nonzero_rows": 420,
+      "source_id_sets_disjoint": true
+    }
+  ],
+  "legacy_payloads": {
+    "manifest_sha256": "15834b6bea9bc7daff2d7189e15a66e044130c3b6b4cc75f4b3e508a4e97f3f4",
+    "count": 25,
+    "byte_identical": true,
+    "retained_manifest": "provenance/legacy-v2-manifest.json"
+  },
+  "runtime_payloads_sha256": "1d5c480bc488742877f6aa4281b4c388d95f62eb631d458b1686a391d0b1197a",
+  "quality": "Source derivation receipt only. Visual, runtime, and product acceptance are separate evidence; prior quality holds remain unchanged."
+}

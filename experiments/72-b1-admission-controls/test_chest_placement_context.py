@@ -1,3 +1,4 @@
+from integration_context import historical_input,current_test_identity
 """Exact v10 source admission with immutable v9 predecessor bytes."""
 import gzip
 import hashlib
@@ -30,7 +31,7 @@ class ChestPlacementSourceContext(unittest.TestCase):
     def test_exact_union_preserves_v9(self):
         self.assertEqual(self.predecessor[0], CONTEXT.ARM_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 524)
-        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], CONTEXT.CHEST_CONTEXT_ID)
+        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], current_test_identity(CONTEXT, ROOT, CONTEXT.CHEST_CONTEXT_ID))
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},
                          set(CONTEXT.CHEST_CHANGED))
@@ -43,7 +44,7 @@ class ChestPlacementSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 destination = root / name
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / name, destination)
+                shutil.copyfile(historical_input(name, self.current[1][name], ROOT), destination)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'], CONTEXT.CHEST_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',
                          'assets/characters/mpfb-b1-v10/manifest.json',
@@ -55,6 +56,15 @@ class ChestPlacementSourceContext(unittest.TestCase):
                     with self.assertRaisesRegex(ValueError, 'byte count mismatch'):
                         CONTEXT.check_source_context(root, self.pins)
                     path.write_bytes(original)
+            # Previous routing admitted these partial v11–13 lineages as the historical v10.
+            for version in (11, 12, 13):
+                sibling = root / f'assets/characters/mpfb-b1-v{version}'
+                sibling.mkdir()
+                try:
+                    with self.subTest(sibling=version), self.assertRaisesRegex(ValueError, 'integration candidate:'):
+                        CONTEXT.check_source_context(root, self.pins)
+                finally:
+                    sibling.rmdir()
             extra = root / CONTEXT.CHEST_ASSET_PREFIX / 'unreviewed.target'
             extra.write_bytes(b'unreviewed')
             with self.assertRaisesRegex(ValueError, 'chest source asset inventory mismatch'):

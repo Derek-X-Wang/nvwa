@@ -1,0 +1,41 @@
+{
+  "files": [
+    {
+      "bytes": 32837,
+      "expanded_bytes": 150149,
+      "expanded_sha256": "5d1ead7e75d7a17315dee460188676fb7e3c640c172c887309f7b655ff808c52",
+      "public_nonzero_weight": false,
+      "runtime_path": "targets/chin-bones-decr.target",
+      "sha256": "88613903c211706f31de1868318bfb88d51bd23791a11e1a4488266a88083396",
+      "source_relative": "data/targets/chin/chin-bones-decr.target.gz",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/chin/chin-bones-decr.target.gz"
+    },
+    {
+      "bytes": 3341,
+      "expanded_bytes": 13844,
+      "expanded_sha256": "4b1558340919c6a1241165129a318d838bf6eb1d39559e0ca0f0aa8b5ba6ba4e",
+      "public_nonzero_weight": true,
+      "runtime_path": "targets/chin-bones-incr.target",
+      "sha256": "72c76aeb7956fb083aaf0d5efa00b2cdfa0f328eefc01d5e28f4610719de50c3",
+      "source_relative": "data/targets/chin/chin-bones-incr.target.gz",
+      "url": "https://raw.githubusercontent.com/makehumancommunity/mpfb2/d0a32e57a7f915cb2f2b95410e2117648c7bbb7e/src/mpfb/data/targets/chin/chin-bones-incr.target.gz"
+    }
+  ],
+  "format": "nvwa-lower-face-squaring-source",
+  "license": "CC0-1.0",
+  "operation": "gzip expansion only; all original bytes, rows and zero rows retained; no coordinate or amplitude conversion",
+  "parameter": {
+    "default": 0,
+    "id": "lower_face_squareness",
+    "negative_endpoint": "retained for fixed pair-loader authentication only; public negative values reject; chin-bones-decr remains visual HOLD",
+    "positive_endpoint": "chin-bones-incr",
+    "range": [
+      0,
+      1
+    ]
+  },
+  "runtime_units": "existing target loader converts source XYZ by0.1 exactly once",
+  "schema_version": 1,
+  "source_commit": "d0a32e57a7f915cb2f2b95410e2117648c7bbb7e",
+  "source_project": "MPFB"
+}

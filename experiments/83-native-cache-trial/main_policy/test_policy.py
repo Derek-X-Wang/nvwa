@@ -21,6 +21,9 @@ from email.message import Message
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
+CATALOG_SPEC = importlib.util.spec_from_file_location('portable_catalog_v14', ROOT / 'scripts/portable_catalog_v14.py')
+CATALOG = importlib.util.module_from_spec(CATALOG_SPEC)
+CATALOG_SPEC.loader.exec_module(CATALOG)
 spec = importlib.util.spec_from_file_location('main_native_policy', HERE / 'policy.py')
 policy = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(policy)
@@ -1141,7 +1144,7 @@ class TieringContract(unittest.TestCase):
         current = (ROOT/'.github/workflows/ci.yml').read_text()
         self.assertEqual(historical_tiering_workflow(current, self), predecessor.decode())
         self.assertEqual(len(re.findall(r'^        run: ', predecessor.decode(), re.M)), 48)
-        self.assertEqual(hashlib.sha256((ROOT/'scripts/portable-checks.json').read_bytes()).hexdigest(), '1a2719b28dad9a288f28e0ff5ba793120e6108217c564099d662fc1b104d7f14')
+        self.assertEqual(hashlib.sha256(CATALOG.predecessor_bytes((ROOT/'scripts/portable-checks.json').read_bytes())).hexdigest(), '1a2719b28dad9a288f28e0ff5ba793120e6108217c564099d662fc1b104d7f14')
         for name, digest in TIER_INPUT_SHA256.items():
             self.assertEqual(hashlib.sha256(historical_tiering_input(name, self)).hexdigest(), digest, name)
         for name in LINUX_GARMENT_V2_SHA256:

@@ -29,6 +29,9 @@ PACKAGE += ('input-context-legs-v1.json', 'test_leg_context.py')
 PACKAGE += ('input-context-upper-body-v1.json', 'test_upper_body_context.py')
 PACKAGE += ('input-context-hip-contour-v1.json', 'test_hip_contour_context.py')
 PACKAGE += ('input-context-arm-proportions-v1.json', 'test_arm_proportions_context.py')
+PACKAGE += ('input-context-hand-size-v1.json', 'test_hand_size_context.py')
+PACKAGE += ('input-context-shoulder-form-v1.json', 'test_shoulder_form_context.py')
+PACKAGE += ('input-context-forearm-form-v1.json', 'test_forearm_form_context.py')
 PACKAGE += ('input-context-chest-placement-v1.json', 'test_chest_placement_context.py')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
@@ -710,10 +713,483 @@ ARM_NEW_CODE = ('crates/nvwa-cli/tests/arm_proportions.rs',
                 'scripts/build-arm-proportions-v9.py')
 ARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v9/'
 
+BODY_REFERENCE_CONTEXT_NAME = 'input-context-body-reference-v1.json'
+BODY_REFERENCE_CONTEXT_SHA = '451b150461319889ace4211838748177640d3cd89ab27a26e58fa508328e6e80'
+BODY_REFERENCE_CONTEXT_ID = 'b1-body-reference-product-v1'
+BODY_REFERENCE_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs',
+                          'crates/nvwa-cli/tests/cpu_render.rs',
+                          'crates/nvwa-runtime/src/b1.rs',
+                          'crates/nvwa-runtime/src/b1/cpu_render.rs',
+                          'crates/nvwa-runtime/src/lib.rs',
+                          'docs/agents/cpu-render.md')
+BODY_REFERENCE_ADDED = 'scripts/render-body-reference.py'
+BODY_REFERENCE_FIXTURES = 'fixtures/pre-body-reference'
+BODY_REFERENCE_BASELINES_SHA = 'ce83e2433a77d41b591af765d5feb22aa626267f51d71a5c893ac4c912f73bf5'
+HAND_CONTEXT_NAME = 'input-context-hand-size-v1.json'
+HAND_CONTEXT_SHA = '9922760204d771cbdbaa742944f81dd6d023df55e1ca5748aeba80834ec94016'
+HAND_CONTEXT_ID = 'b1-hand-size-v11-product-v1'
+HAND_PREDECESSOR_COMMIT = '91f4187a8fc66ac1baa41a771045ef9ca2b4384b'
+HAND_FIXTURES = 'fixtures/pre-hand-size'
+HAND_BASELINES_SHA = '84265be2e081758a0fa1e7156e9fc1bfd79039cae92aac7e191d4b3cd6d73c41'
+HAND_ASSET_PREFIX = 'assets/characters/mpfb-b1-v11/'
+HAND_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/src/main.rs',
+                'crates/nvwa-core/src/appearance.rs', 'crates/nvwa-core/src/b1.rs',
+                'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs',
+                'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs',
+                'docs/agents/cpu-render.md',
+                'docs/research/character-foundation/body-control-coverage.md',
+                'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py')
+HAND_NEW_CODE = ('crates/nvwa-cli/tests/hand_size.rs', 'crates/nvwa-core/tests/hand_size.rs',
+                 'scripts/build-hand-size-v11.py', 'scripts/render-hand-size-review.py',
+                 'scripts/test-hand-size-v11.py')
+SHOULDER_CONTEXT_NAME = 'input-context-shoulder-form-v1.json'
+SHOULDER_CONTEXT_SHA = '49c7504006c1bfa624dda9bb8843fdfd73c12a15f10a3d1cc0e158e308d2edf2'
+SHOULDER_CONTEXT_ID = 'b1-shoulder-form-v12-product-v1'
+SHOULDER_PREDECESSOR_COMMIT = 'a0e484f717012bb1b5ab436cd94a50be7006698c'
+SHOULDER_FIXTURES = 'fixtures/pre-shoulder-form'
+SHOULDER_BASELINES_SHA = '7b15d7a59cd9972d992b2de4ea2a316bd3b6bf6f3f10df743f3a6fadd9a64d97'
+SHOULDER_ASSET_PREFIX = 'assets/characters/mpfb-b1-v12/'
+SHOULDER_CHANGED = HAND_CHANGED
+SHOULDER_NEW_CODE = ('crates/nvwa-cli/tests/shoulder_form.rs',
+                     'crates/nvwa-core/tests/shoulder_form.rs',
+                     'scripts/build-shoulder-form-v12.py',
+                     'scripts/render-shoulder-form-review.py',
+                     'scripts/test-shoulder-form-v12.py')
+
+FOREARM_CONTEXT_NAME = 'input-context-forearm-form-v1.json'
+FOREARM_CONTEXT_SHA = '4274c8761fe03b1a85436168fc1eeaf8db211bc7a8a2e16eb756e629c7e7ae45'
+FOREARM_CONTEXT_ID = 'b1-forearm-form-v13-product-v1'
+FOREARM_PREDECESSOR_COMMIT = 'd09ef1f12efa752a33a65b0fadfdaaae7f3c1d95'
+FOREARM_FIXTURES = 'fixtures/pre-forearm-form'
+FOREARM_BASELINES_SHA = 'dbbf89ae3f64f38d24a4c840d8771ca4fdb155f016ba2490044f9b5b8ba780d3'
+FOREARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v13/'
+FOREARM_CHANGED = SHOULDER_CHANGED
+FOREARM_NEW_CODE = ('crates/nvwa-cli/tests/forearm_form.rs',
+                     'crates/nvwa-core/tests/forearm_form.rs',
+                     'scripts/build-forearm-form-v13.py',
+                     'scripts/render-forearm-form-review.py',
+                     'scripts/test-forearm-form-v13.py')
+
+UPPER_ARM_CONTEXT_NAME = 'input-context-upper-arm-muscle-v1.json'
+UPPER_ARM_CONTEXT_SHA = '30a784e5de573fc614233ff6961df3e34e764738ae45058f49f0b3f95e5c4815'
+UPPER_ARM_CONTEXT_ID = 'b1-upper-arm-muscle-v14-product-v1'
+UPPER_ARM_PREDECESSOR_COMMIT = '0226ac10bbc1f8619bf0d488131f283a1fe3681a'
+UPPER_ARM_FIXTURES = 'fixtures/pre-upper-arm-muscle'
+UPPER_ARM_BASELINES_SHA = '2fc4cf9ff8919478aea6bbce4fd4f0c39b14118605a1d1bc6b256d370f0bb9ac'
+UPPER_ARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v14/'
+UPPER_ARM_CHANGED = FOREARM_CHANGED
+UPPER_ARM_NEW_CODE = ('crates/nvwa-cli/tests/upper_arm_muscle.rs',
+                      'crates/nvwa-core/tests/upper_arm_muscle.rs',
+                      'scripts/README.md',
+                      'scripts/build-upper-arm-muscle-v14.py',
+                      'scripts/portable-checks.json',
+                      'scripts/portable_catalog_v14.py',
+                      'scripts/render-upper-arm-muscle-review.py',
+                      'scripts/test-ci-timing.py',
+                      'scripts/test-portable-checks.py',
+                      'scripts/test-upper-arm-muscle-v14.py')
+
+LEVEL1_CONTEXT_NAME = 'input-context-level1-display-v1.json'
+LEVEL1_CONTEXT_SHA = 'f6e676cf19932f154fb2b26340b9ee8f5c27925afe3585f98db739a0b9950957'
+LEVEL1_CONTEXT_ID = 'b1-level1-display-v14-product-v1'
+LEVEL1_PREDECESSOR_COMMIT = 'bac24197e0c2c329180550b0ce8f5b2a0c54a2ad'
+LEVEL1_FIXTURES = 'fixtures/pre-level1-display'
+LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1.rs',
+                  'crates/nvwa-runtime/src/lib.rs')
+LEVEL1_ADDED = ('crates/nvwa-runtime/src/b1_level1_geometry.rs',
+                'crates/nvwa-runtime/src/b1_level1_display.rs')
+
+CLI_LEVEL1_CONTEXT_NAME = 'input-context-cli-level1-v1.json'
+CLI_LEVEL1_CONTEXT_SHA = '59a5b0fcd77aa9b52eb9c105952a85ad7caba394f0209668b63f9b301d7d612c'
+CLI_LEVEL1_CONTEXT_ID = 'b1-cli-level1-reference-v14-product-v1'
+CLI_LEVEL1_PREDECESSOR_COMMIT = '8432a4616f3b7ee444c6548df3eae69c36705c2a'
+CLI_LEVEL1_FIXTURES = 'fixtures/pre-cli-level1'
+CLI_LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1/cpu_render.rs',
+                      'crates/nvwa-runtime/src/lib.rs',
+                      'crates/nvwa-cli/src/cpu_render.rs',
+                      'crates/nvwa-cli/tests/cpu_render.rs',
+                      'scripts/render-body-reference.py',
+                      'docs/agents/cpu-render.md')
+
+
+def has_cli_level1_inputs(root):
+    return (root / 'experiments/72-b1-admission-controls' / CLI_LEVEL1_CONTEXT_NAME).exists()
+
+
+def pre_cli_level1_file(name):
+    return HERE / CLI_LEVEL1_FIXTURES / name if name in CLI_LEVEL1_CHANGED else HERE.parents[1] / name
+
+
+def has_level1_inputs(root):
+    return any((root / name).exists() or (root / name).is_symlink()
+               for name in LEVEL1_ADDED)
+
+
+def pre_level1_file(name):
+    fixture = HERE / LEVEL1_FIXTURES / name
+    return fixture if name in LEVEL1_CHANGED else pre_cli_level1_file(name)
+
+
+def pre_body_reference_file(name):
+    historical = HERE / BODY_REFERENCE_FIXTURES / name
+    if historical.is_file():
+        return historical
+    before_hand = HERE / HAND_FIXTURES / name
+    return before_hand if before_hand.is_file() else pre_cli_level1_file(name)
+
+
+def has_body_reference_inputs(root):
+    path = root / BODY_REFERENCE_ADDED
+    return path.exists() or path.is_symlink()
+
+
+def _body_reference_context(exp, previous):
+    manifest_path = source_file(exp, f'{BODY_REFERENCE_FIXTURES}/manifest.json')
+    baseline_raw = manifest_path.read_bytes()
+    require(sha(baseline_raw) == BODY_REFERENCE_BASELINES_SHA,
+            'body reference predecessor manifest identity mismatch')
+    baseline = json.loads(baseline_raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1
+            and baseline['context'] == previous[0]
+            and baseline['source_commit'] == 'ba9883ed4e510ec612569a0796732e25d888a6d4'
+            and set(baseline['files']) == set(BODY_REFERENCE_CHANGED),
+            'body reference predecessor identity mismatch')
+    for name, item in baseline['files'].items():
+        path = source_file(exp, item['fixture'])
+        require({'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name]
+                and item['fixture'] == f'{BODY_REFERENCE_FIXTURES}/{name}'
+                and path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'body reference predecessor bytes mismatch: ' + name)
+    fixture_root = exp / BODY_REFERENCE_FIXTURES
+    fixture_paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in fixture_paths)
+            and {p.relative_to(fixture_root).as_posix() for p in fixture_paths if p.is_file()}
+                == {'manifest.json'} | set(BODY_REFERENCE_CHANGED),
+            'body reference predecessor fixture inventory mismatch')
+    raw = source_file(exp, BODY_REFERENCE_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == BODY_REFERENCE_CONTEXT_SHA,
+            'body reference source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == BODY_REFERENCE_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and set(value['files']) == set(BODY_REFERENCE_CHANGED) | {BODY_REFERENCE_ADDED},
+            'body reference source context exact delta required')
+    require(all(name in previous[1] and value['files'][name] != previous[1][name]
+                for name in BODY_REFERENCE_CHANGED)
+            and BODY_REFERENCE_ADDED not in previous[1],
+            'body reference source context predecessor mismatch')
+    files = dict(previous[1]); files.update(value['files'])
+    require(len(files) == 525, 'body reference complete source union required')
+    return value['context'], files
+
 
 def has_arm_inputs(root):
     path = root / ARM_ASSET_PREFIX
     return path.exists() or path.is_symlink()
+
+
+def has_hand_inputs(root):
+    path = root / HAND_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def has_shoulder_inputs(root):
+    path = root / SHOULDER_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def _shoulder_context(exp, previous):
+    """Admit one exact v12 successor while keeping all v11 historical bytes pinned."""
+    require(previous[0] == HAND_CONTEXT_ID and len(previous[1]) == 661,
+            'shoulder predecessor must be exact hand context')
+    raw = source_file(exp, f'{SHOULDER_FIXTURES}/manifest.json').read_bytes()
+    require(sha(raw) == SHOULDER_BASELINES_SHA, 'shoulder predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == SHOULDER_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(SHOULDER_CHANGED),
+            'shoulder predecessor changed-file inventory mismatch')
+    for name in SHOULDER_CHANGED:
+        item = baseline['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{SHOULDER_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'shoulder predecessor pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'shoulder predecessor bytes mismatch: ' + name)
+    fixture_root = exp / SHOULDER_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(SHOULDER_CHANGED),
+            'shoulder predecessor fixture inventory mismatch')
+    raw = source_file(exp, SHOULDER_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == SHOULDER_CONTEXT_SHA, 'shoulder context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == SHOULDER_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == SHOULDER_PREDECESSOR_COMMIT
+            and len(files) == 158 and len(additions) == 145
+            and sum(p.startswith(SHOULDER_ASSET_PREFIX) for p in additions) == 140
+            and additions == {p for p in additions if p.startswith(SHOULDER_ASSET_PREFIX)}
+                             | set(SHOULDER_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(SHOULDER_CHANGED)
+            and all(files[p] != previous[1][p] for p in SHOULDER_CHANGED),
+            'shoulder exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 806, 'shoulder complete source union required')
+    return value['context'], result
+
+
+def has_forearm_inputs(root):
+    path = root / FOREARM_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def _forearm_context(exp, previous):
+    """Admit one exact v13 successor while keeping all v12 historical bytes pinned."""
+    require(previous[0] == SHOULDER_CONTEXT_ID and len(previous[1]) == 806,
+            'forearm predecessor must be exact shoulder context')
+    raw = source_file(exp, f'{FOREARM_FIXTURES}/manifest.json').read_bytes()
+    require(sha(raw) == FOREARM_BASELINES_SHA, 'forearm predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == FOREARM_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(FOREARM_CHANGED),
+            'forearm predecessor changed-file inventory mismatch')
+    for name in FOREARM_CHANGED:
+        item = baseline['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{FOREARM_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'forearm predecessor pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'forearm predecessor bytes mismatch: ' + name)
+    fixture_root = exp / FOREARM_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(FOREARM_CHANGED),
+            'forearm predecessor fixture inventory mismatch')
+    raw = source_file(exp, FOREARM_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == FOREARM_CONTEXT_SHA, 'forearm context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == FOREARM_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == FOREARM_PREDECESSOR_COMMIT
+            and len(files) == 167 and len(additions) == 154
+            and sum(p.startswith(FOREARM_ASSET_PREFIX) for p in additions) == 149
+            and additions == {p for p in additions if p.startswith(FOREARM_ASSET_PREFIX)}
+                             | set(FOREARM_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(FOREARM_CHANGED)
+            and all(files[p] != previous[1][p] for p in FOREARM_CHANGED),
+            'forearm exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 960, 'forearm complete source union required')
+    return value['context'], result
+
+
+def has_upper_arm_inputs(root):
+    path = root / UPPER_ARM_ASSET_PREFIX
+    source = root / 'crates/nvwa-core/src/b1.rs'
+    present = source.is_file() and not source.is_symlink() and 'upper_arm_muscle_fullness' in source.read_text()
+    sentinels = [root / 'crates/nvwa-core/tests/upper_arm_muscle.rs', root / 'crates/nvwa-cli/tests/upper_arm_muscle.rs']
+    present = present or any(p.exists() or p.is_symlink() for p in sentinels)
+    return path.exists() or path.is_symlink() or present
+
+
+def _upper_arm_context(exp, previous):
+    """Admit the exact v14 successor while retaining v13 historical bytes."""
+    require(previous[0] == FOREARM_CONTEXT_ID and len(previous[1]) == 960,
+            'upper arm predecessor must be exact forearm context')
+    raw = source_file(exp, f'{UPPER_ARM_FIXTURES}/manifest.json').read_bytes()
+    require(sha(raw) == UPPER_ARM_BASELINES_SHA,
+            'upper arm predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == UPPER_ARM_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(UPPER_ARM_CHANGED),
+            'upper arm predecessor changed-file inventory mismatch')
+    for name in UPPER_ARM_CHANGED:
+        item = baseline['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{UPPER_ARM_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'upper arm predecessor pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'upper arm predecessor bytes mismatch: ' + name)
+    fixture_root = exp / UPPER_ARM_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(UPPER_ARM_CHANGED),
+            'upper arm predecessor fixture inventory mismatch')
+    raw = source_file(exp, UPPER_ARM_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == UPPER_ARM_CONTEXT_SHA, 'upper arm context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == UPPER_ARM_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == UPPER_ARM_PREDECESSOR_COMMIT
+            and len(files) == 181 and len(additions) == 168
+            and sum(p.startswith(UPPER_ARM_ASSET_PREFIX) for p in additions) == 158
+            and additions == {p for p in additions if p.startswith(UPPER_ARM_ASSET_PREFIX)}
+                             | set(UPPER_ARM_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(UPPER_ARM_CHANGED)
+            and all(files[p] != previous[1][p] for p in UPPER_ARM_CHANGED),
+            'upper arm exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 1128, 'upper arm complete source union required')
+    return value['context'], result
+
+
+def _level1_context(exp, previous):
+    """Admit one complete display successor; authenticate old v14 bytes separately."""
+    require(previous[0] == UPPER_ARM_CONTEXT_ID and len(previous[1]) == 1128,
+            'level1 predecessor must be exact upper-arm context')
+    fixture_root = exp / LEVEL1_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == set(LEVEL1_CHANGED),
+            'level1 predecessor fixture inventory mismatch')
+    for name in LEVEL1_CHANGED:
+        path = source_file(exp, f'{LEVEL1_FIXTURES}/{name}')
+        require({'bytes': path.stat().st_size, 'sha256': file_sha(path)} == previous[1][name],
+                'level1 predecessor bytes mismatch: ' + name)
+    raw = source_file(exp, LEVEL1_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == LEVEL1_CONTEXT_SHA, 'level1 context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == LEVEL1_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == LEVEL1_PREDECESSOR_COMMIT
+            and set(value['files']) == set(LEVEL1_CHANGED) | set(LEVEL1_ADDED)
+            and all(name in previous[1] and value['files'][name] != previous[1][name]
+                    for name in LEVEL1_CHANGED)
+            and all(name not in previous[1] for name in LEVEL1_ADDED)
+            and all(set(item) == {'bytes', 'sha256'}
+                    and isinstance(item['bytes'], int) and item['bytes'] > 0
+                    and isinstance(item['sha256'], str) and len(item['sha256']) == 64
+                    for item in value['files'].values()),
+            'level1 exact successor delta required')
+    result = dict(previous[1]); result.update(value['files'])
+    require(len(result) == 1130, 'level1 complete source union required')
+    return value['context'], result
+
+
+def _cli_level1_context(exp, previous):
+    """Admit only the six changed CLI source files; retain the #164 identity."""
+    require(previous[0] == LEVEL1_CONTEXT_ID and len(previous[1]) == 1130,
+            'CLI Level 1 predecessor must be exact display context')
+    fixture_root = exp / CLI_LEVEL1_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == set(CLI_LEVEL1_CHANGED),
+            'CLI Level 1 predecessor fixture inventory mismatch')
+    for name in CLI_LEVEL1_CHANGED:
+        path = source_file(exp, f'{CLI_LEVEL1_FIXTURES}/{name}')
+        require({'bytes': path.stat().st_size, 'sha256': file_sha(path)} == previous[1][name],
+                'CLI Level 1 predecessor bytes mismatch: ' + name)
+    raw = source_file(exp, CLI_LEVEL1_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == CLI_LEVEL1_CONTEXT_SHA,
+            'CLI Level 1 manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == CLI_LEVEL1_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == CLI_LEVEL1_PREDECESSOR_COMMIT
+            and set(value['files']) == set(CLI_LEVEL1_CHANGED)
+            and all(name in previous[1] and value['files'][name] != previous[1][name]
+                    for name in CLI_LEVEL1_CHANGED)
+            and all(set(item) == {'bytes', 'sha256'}
+                    and isinstance(item['bytes'], int) and item['bytes'] > 0
+                    and isinstance(item['sha256'], str) and len(item['sha256']) == 64
+                    for item in value['files'].values()),
+            'CLI Level 1 exact successor delta required')
+    result = dict(previous[1]); result.update(value['files'])
+    require(len(result) == 1130, 'CLI Level 1 complete source union required')
+    return value['context'], result
+
+
+def _hand_context(exp, previous):
+    """Admit one exact hand successor while preserving body-reference history."""
+    require(previous[0] == BODY_REFERENCE_CONTEXT_ID and len(previous[1]) == 525,
+            'hand predecessor must be exact body reference')
+    raw = source_file(exp, f'{HAND_FIXTURES}/manifest.json').read_bytes()
+    require(sha(raw) == HAND_BASELINES_SHA, 'hand predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == HAND_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(HAND_CHANGED),
+            'hand predecessor complete changed-file inventory required')
+    for name in HAND_CHANGED:
+        item = baseline['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{HAND_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'hand predecessor pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'hand predecessor bytes mismatch: ' + name)
+    fixture_root = exp / HAND_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(HAND_CHANGED),
+            'hand predecessor fixture inventory mismatch')
+    raw = source_file(exp, HAND_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == HAND_CONTEXT_SHA, 'hand context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == HAND_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == HAND_PREDECESSOR_COMMIT
+            and len(files) == 149 and len(additions) == 136
+            and sum(p.startswith(HAND_ASSET_PREFIX) for p in additions) == 131
+            and additions == {p for p in additions if p.startswith(HAND_ASSET_PREFIX)} | set(HAND_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(HAND_CHANGED)
+            and all(files[p] != previous[1][p] for p in HAND_CHANGED),
+            'hand exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 661, 'hand complete source union required')
+    return value['context'], result
 
 
 def _pre_arm_sources(exp, previous):
@@ -787,7 +1263,11 @@ CHEST_ASSET_PREFIX = 'assets/characters/mpfb-b1-v10/'
 
 def has_chest_inputs(root):
     path = root / CHEST_ASSET_PREFIX
-    return path.exists() or path.is_symlink()
+    source = root / 'crates/nvwa-core/src/b1.rs'
+    present = source.is_file() and not source.is_symlink() and 'breast_spacing' in source.read_text()
+    sentinels = [root / 'crates/nvwa-core/tests/chest_placement.rs', root / 'crates/nvwa-cli/tests/chest_placement.rs']
+    present = present or any(p.exists() or p.is_symlink() for p in sentinels)
+    return path.exists() or path.is_symlink() or present
 
 
 def _pre_chest_sources(exp, previous):
@@ -991,8 +1471,39 @@ def _leg_context(exp, previous):
     return value['context'], files
 
 
+def has_chest_sibling_inputs(root):
+    # A partial later lineage is not the immutable chest-only branch.
+    return (has_hand_inputs(root) or has_shoulder_inputs(root)
+            or has_forearm_inputs(root) or has_upper_arm_inputs(root)
+            or has_body_reference_inputs(root) or has_level1_inputs(root)
+            or has_cli_level1_inputs(root))
+
+
 def check_source_context(root, pins, historical_only=False):
     """Authenticate one complete source context; never mix baseline/current files."""
+    # Any sibling marker selects the exact union gate; partial unions must fail.
+    if has_chest_inputs(root) and has_chest_sibling_inputs(root):
+        current_source_contexts(pins) # retain original historical manifest authentication first
+        from importlib.util import spec_from_file_location, module_from_spec
+        require((HERE / 'integration_context.py').is_file(), 'integration context module missing')
+        _spec = spec_from_file_location('nvwa_integration_context', HERE / 'integration_context.py')
+        _integration = module_from_spec(_spec); _spec.loader.exec_module(_integration)
+        require(not historical_only, 'source input context mismatch: integration candidate is not historical')
+        from types import SimpleNamespace
+        main, chest = _integration.predecessors72(SimpleNamespace(**globals()), pins)
+        context, expected = _integration.verify(root, main, chest, '72')
+        bridge = json.loads((HERE / 'input-context-v1.json').read_text())
+        check_unchanged_sections((root / RUNTIME).read_text(), bridge)
+        controls = ['integration_context.py', 'test_integration_context.py', _integration.NAME]
+        controls += [p.relative_to(HERE).as_posix() for folder in
+                     ['fixtures/pre-chest-v14-integration', 'fixtures/integration-historical-tests']
+                     for p in (HERE / folder).rglob('*') if p.is_file()]
+        control_hashes = {n: file_sha(source_file(HERE, n)) for n in sorted(controls)}
+        return {'id': context, 'files': {n: i['sha256'] for n, i in expected.items()},
+                'current_rust_execution': 'NOT-RUN', 'execution_source': 'offline candidate, independent review pending',
+                'integration_control_hashes': control_hashes}
+    require(not has_level1_inputs(root) or has_upper_arm_inputs(root),
+            'level1 display requires exact v14 source')
     contexts = current_source_contexts(pins)
     actual = {}
     for relative in pins['files']:
@@ -1033,7 +1544,18 @@ def check_source_context(root, pins, historical_only=False):
         leg = _leg_context(HERE, _combined_context(HERE, cpu))
         upper = _upper_context(HERE, leg)
         hip = _hip_context(HERE, upper)
-        context, expected = _arm_context(HERE, hip)
+        arm = _arm_context(HERE, hip)
+        body_reference = has_body_reference_inputs(root)
+        body = _body_reference_context(HERE, arm) if body_reference else arm
+        hand = has_hand_inputs(root)
+        shoulder = has_shoulder_inputs(root)
+        forearm = has_forearm_inputs(root)
+        upper_arm = has_upper_arm_inputs(root)
+        context, expected = _upper_arm_context(HERE, _forearm_context(HERE, _shoulder_context(HERE, _hand_context(HERE, body)))) if upper_arm else _forearm_context(HERE, _shoulder_context(HERE, _hand_context(HERE, body))) if forearm else _shoulder_context(HERE, _hand_context(HERE, body)) if shoulder else _hand_context(HERE, body) if hand else body
+        if has_level1_inputs(root):
+            context, expected = _level1_context(HERE, (context, expected))
+        if has_cli_level1_inputs(root):
+            context, expected = _cli_level1_context(HERE, (context, expected))
         asset_root = root / ARM_ASSET_PREFIX
         paths = list(asset_root.rglob('*'))
         require(not asset_root.is_symlink()
@@ -1041,14 +1563,48 @@ def check_source_context(root, pins, historical_only=False):
                 and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
                     == {p for p in expected if p.startswith(ARM_ASSET_PREFIX)},
                 'arm source asset inventory mismatch')
+        if hand:
+            asset_root = root / HAND_ASSET_PREFIX
+            paths = list(asset_root.rglob('*'))
+            require(not asset_root.is_symlink()
+                    and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                    and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                        == {p for p in expected if p.startswith(HAND_ASSET_PREFIX)},
+                    'hand source asset inventory mismatch')
+        if shoulder:
+            asset_root = root / SHOULDER_ASSET_PREFIX
+            paths = list(asset_root.rglob('*'))
+            require(not asset_root.is_symlink()
+                    and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                    and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                        == {p for p in expected if p.startswith(SHOULDER_ASSET_PREFIX)},
+                    'shoulder source asset inventory mismatch')
+        if forearm:
+            asset_root = root / FOREARM_ASSET_PREFIX
+            paths = list(asset_root.rglob('*'))
+            require(not asset_root.is_symlink()
+                    and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                    and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                        == {p for p in expected if p.startswith(FOREARM_ASSET_PREFIX)},
+                    'forearm source asset inventory mismatch')
+        if upper_arm:
+            asset_root = root / UPPER_ARM_ASSET_PREFIX
+            paths = list(asset_root.rglob('*'))
+            require(not asset_root.is_symlink()
+                    and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                    and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                        == {p for p in expected if p.startswith(UPPER_ARM_ASSET_PREFIX)},
+                    'upper arm source asset inventory mismatch')
         actual = {}
         for relative, item in expected.items():
             path = source_file(root, relative)
             require(path.stat().st_size == item['bytes'],
-                    'arm source context byte count mismatch: ' + relative)
+                    ('CLI Level 1' if has_cli_level1_inputs(root) else 'level1 display' if has_level1_inputs(root) else 'upper arm' if upper_arm else 'forearm' if forearm else 'shoulder' if shoulder else 'hand' if hand else 'body reference' if body_reference else 'arm')
+                    + ' source context byte count mismatch: ' + relative)
             actual[relative] = file_sha(path)
         require(actual == {name: item['sha256'] for name, item in expected.items()},
-                'source input context mismatch: exact arm source required')
+                'source input context mismatch: exact '
+                + ('CLI Level 1' if has_cli_level1_inputs(root) else 'level1 display' if has_level1_inputs(root) else 'upper arm' if upper_arm else 'forearm' if forearm else 'shoulder' if shoulder else 'hand' if hand else 'body reference' if body_reference else 'arm') + ' source required')
     elif has_hip_inputs(root):
         require(not historical_only, 'source input context mismatch: hip source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
@@ -1298,6 +1854,14 @@ def run(args):
         for name in PACKAGE:
             shutil.copy2(HERE / name, out / name)
             require(file_sha(out / name) == receipt['control_hashes'][name], 'control package changed during copy')
+        # Separate admission-tool receipt/copy; never overlay it onto immutable baseline581 execution.
+        for name, digest in pins['checked_input_context'].get('integration_control_hashes', {}).items():
+            source_control = source_file(HERE, name)
+            require(file_sha(source_control) == digest, 'integration control changed during copy: ' + name)
+            destination = out / 'integration-admission' / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source_control, destination)
+            require(file_sha(destination) == digest, 'integration control copied bytes differ: ' + name)
         execute('checkout-head', ['git', 'rev-parse', 'HEAD'], root)
         receipt['source_checkout_head'] = (logs / 'checkout-head.log').read_text().strip()
         require(re.fullmatch(r'[0-9a-f]{40}', receipt['source_checkout_head']) is not None, 'invalid checkout HEAD')
