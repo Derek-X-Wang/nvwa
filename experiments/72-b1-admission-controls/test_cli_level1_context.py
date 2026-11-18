@@ -1,3 +1,4 @@
+from integration_context import historical_input,current_test_identity
 """CLI Level 1 successor preserves the merged display source identity."""
 import importlib.util
 import json
@@ -39,7 +40,7 @@ class CliLevel1Context(unittest.TestCase):
                           if self.current[1][p] != self.previous[1][p]},
                          set(CONTEXT.CLI_LEVEL1_CHANGED))
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.CLI_LEVEL1_CONTEXT_ID)
+                         current_test_identity(CONTEXT, ROOT, CONTEXT.CLI_LEVEL1_CONTEXT_ID))
 
     def test_manifest_and_historical_fixtures_are_pinned(self):
         with tempfile.TemporaryDirectory(prefix='nvwa-cli-level1-context-') as directory:

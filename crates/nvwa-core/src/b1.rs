@@ -79,6 +79,14 @@ pub const B1_V9_ASSET_MANIFEST_SHA256: &str =
 pub const B1_V9_ASSET_MANIFEST_BYTES: &[u8] =
     include_bytes!("../../../assets/characters/mpfb-b1-v9/manifest.json");
 
+pub const B1_CHEST_PLACEMENT_PROFILE_ID: &str = "nvwa-mpfb-b1-chest-placement-v1";
+pub const B1_V10_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v10";
+pub const B1_V10_ASSET_PATH: &str = "characters/mpfb-b1-v10/manifest.json";
+pub const B1_V10_ASSET_MANIFEST_SHA256: &str =
+    "d03bc6aac15f936bb8aad8c5e0133d13b259db17c224c8264c086861b2b1990a";
+pub const B1_V10_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v10/manifest.json");
+
 pub const B1_HAND_SIZE_PROFILE_ID: &str = "nvwa-mpfb-b1-hand-size-v1";
 pub const B1_V11_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v11";
 pub const B1_V11_ASSET_PATH: &str = "characters/mpfb-b1-v11/manifest.json";
@@ -123,6 +131,7 @@ pub enum B1AssetVersion {
     V7,
     V8,
     V9,
+    V10,
     V11,
     V12,
     V13,
@@ -140,6 +149,7 @@ impl B1AssetVersion {
             Self::V7 => B1_V7_ASSET_ID,
             Self::V8 => B1_V8_ASSET_ID,
             Self::V9 => B1_V9_ASSET_ID,
+            Self::V10 => B1_V10_ASSET_ID,
             Self::V11 => B1_V11_ASSET_ID,
             Self::V12 => B1_V12_ASSET_ID,
             Self::V13 => B1_V13_ASSET_ID,
@@ -157,6 +167,7 @@ impl B1AssetVersion {
             Self::V7 => B1_V7_ASSET_PATH,
             Self::V8 => B1_V8_ASSET_PATH,
             Self::V9 => B1_V9_ASSET_PATH,
+            Self::V10 => B1_V10_ASSET_PATH,
             Self::V11 => B1_V11_ASSET_PATH,
             Self::V12 => B1_V12_ASSET_PATH,
             Self::V13 => B1_V13_ASSET_PATH,
@@ -174,6 +185,7 @@ impl B1AssetVersion {
             Self::V7 => B1_V7_ASSET_MANIFEST_SHA256,
             Self::V8 => B1_V8_ASSET_MANIFEST_SHA256,
             Self::V9 => B1_V9_ASSET_MANIFEST_SHA256,
+            Self::V10 => B1_V10_ASSET_MANIFEST_SHA256,
             Self::V11 => B1_V11_ASSET_MANIFEST_SHA256,
             Self::V12 => B1_V12_ASSET_MANIFEST_SHA256,
             Self::V13 => B1_V13_ASSET_MANIFEST_SHA256,
@@ -191,6 +203,7 @@ impl B1AssetVersion {
             Self::V7 => B1_V7_ASSET_MANIFEST_BYTES,
             Self::V8 => B1_V8_ASSET_MANIFEST_BYTES,
             Self::V9 => B1_V9_ASSET_MANIFEST_BYTES,
+            Self::V10 => B1_V10_ASSET_MANIFEST_BYTES,
             Self::V11 => B1_V11_ASSET_MANIFEST_BYTES,
             Self::V12 => B1_V12_ASSET_MANIFEST_BYTES,
             Self::V13 => B1_V13_ASSET_MANIFEST_BYTES,
@@ -208,6 +221,7 @@ impl B1AssetVersion {
             Self::V7 => &B1_UPPER_BODY_PARAMETER_TARGETS,
             Self::V8 => &B1_HIP_CONTOUR_PARAMETER_TARGETS,
             Self::V9 => &B1_ARM_PROPORTIONS_PARAMETER_TARGETS,
+            Self::V10 => &B1_CHEST_PLACEMENT_PARAMETER_TARGETS,
             Self::V11 => &B1_HAND_SIZE_PARAMETER_TARGETS,
             Self::V12 => &B1_SHOULDER_FORM_PARAMETER_TARGETS,
             Self::V13 => &B1_FOREARM_FORM_PARAMETER_TARGETS,
@@ -444,6 +458,41 @@ pub const B1_ARM_PROPORTIONS_PARAMETER_TARGETS: [B1ParameterTargets; 23] = [
         id: "wrist_circumference",
         decrease: "measure-wrist-circ-decr",
         increase: "measure-wrist-circ-incr",
+    },
+];
+pub const B1_CHEST_PLACEMENT_PARAMETER_TARGETS: [B1ParameterTargets; 25] = [
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[0],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[1],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[2],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[3],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[4],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[5],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[6],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[7],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[8],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[9],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[10],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[11],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[12],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[13],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[14],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[15],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[16],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[17],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[18],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[19],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[20],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[21],
+    B1_ARM_PROPORTIONS_PARAMETER_TARGETS[22],
+    B1ParameterTargets {
+        id: "breast_spacing",
+        decrease: "breast-dist-decr",
+        increase: "breast-dist-incr",
+    },
+    B1ParameterTargets {
+        id: "breast_vertical_position",
+        decrease: "breast-trans-down",
+        increase: "breast-trans-up",
     },
 ];
 /// Independent authored left/right hand-size target weights. These are not
@@ -703,6 +752,10 @@ impl CharacterBackend {
                 schema_version: 11,
                 asset_id,
             } if asset_id == B1_V9_ASSET_ID => Some(B1AssetVersion::V9),
+            CharacterBackend::B1Cpu {
+                schema_version: 12,
+                asset_id,
+            } if asset_id == B1_V10_ASSET_ID => Some(B1AssetVersion::V10),
             CharacterBackend::B1Cpu {
                 asset_id,
                 schema_version: 13,
@@ -980,6 +1033,31 @@ impl CharacterProfile {
         );
         profile
     }
+    /// Static chest spacing and vertical placement weights. These are authored
+    /// source targets, not centimetres or a measured anatomical model.
+    pub fn b1_character_chest_placement() -> Self {
+        let mut profile = Self::b1_character_arm_proportions();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 12,
+            asset_id: B1_V10_ASSET_ID.into(),
+        };
+        profile.id = B1_CHEST_PLACEMENT_PROFILE_ID.into();
+        profile.asset_path = B1_V10_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V10_ASSET_MANIFEST_SHA256.into();
+        profile.parameters.extend(
+            B1_CHEST_PLACEMENT_PARAMETER_TARGETS[23..]
+                .iter()
+                .enumerate()
+                .map(|(offset, target)| ParameterSpec {
+                    id: target.id.into(),
+                    morph_index: 23 + offset,
+                    min: -1.0,
+                    max: 1.0,
+                    default: 0.0,
+                }),
+        );
+        profile
+    }
     /// Static independent hand-size extension. Zero retains v9 geometry;
     /// older Works remain pinned to their original assets and profile.
     pub fn b1_character_hand_size() -> Self {
@@ -1097,6 +1175,8 @@ impl CharacterProfile {
             Self::b1_character_shoulder_form()
         } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V11) {
             Self::b1_character_hand_size()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V10) {
+            Self::b1_character_chest_placement()
         } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V9) {
             Self::b1_character_arm_proportions()
         } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V8) {
@@ -1211,6 +1291,7 @@ impl B1AssetManifest {
             B1_V7_ASSET_ID => B1AssetVersion::V7,
             B1_V8_ASSET_ID => B1AssetVersion::V8,
             B1_V9_ASSET_ID => B1AssetVersion::V9,
+            B1_V10_ASSET_ID => B1AssetVersion::V10,
             B1_V11_ASSET_ID => B1AssetVersion::V11,
             B1_V12_ASSET_ID => B1AssetVersion::V12,
             B1_V13_ASSET_ID => B1AssetVersion::V13,
@@ -1233,6 +1314,7 @@ impl B1AssetManifest {
                     B1AssetVersion::V7 => 45,
                     B1AssetVersion::V8 => 49,
                     B1AssetVersion::V9 => 55,
+                    B1AssetVersion::V10 => 59,
                     B1AssetVersion::V11 => 59,
                     B1AssetVersion::V12 => 61,
                     B1AssetVersion::V13 => 63,

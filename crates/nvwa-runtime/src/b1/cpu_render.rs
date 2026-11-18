@@ -28,6 +28,7 @@ pub fn validate_export_work(doc: &SceneDocument) -> Result<(), String> {
         && doc.profile != nvwa_core::CharacterProfile::b1_character_upper_body()
         && doc.profile != nvwa_core::CharacterProfile::b1_character_hip_contour()
         && doc.profile != nvwa_core::CharacterProfile::b1_character_arm_proportions()
+        && doc.profile != nvwa_core::CharacterProfile::b1_character_chest_placement()
         && doc.profile != nvwa_core::CharacterProfile::b1_character_hand_size()
         && doc.profile != nvwa_core::CharacterProfile::b1_character_shoulder_form()
         && doc.profile != nvwa_core::CharacterProfile::b1_character_forearm_form()

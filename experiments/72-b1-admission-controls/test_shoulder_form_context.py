@@ -1,3 +1,4 @@
+from integration_context import historical_input,current_test_identity
 """The v12 shoulder-form source is admitted without weakening v11 history."""
 import importlib.util
 import json
@@ -32,7 +33,7 @@ class ShoulderFormSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.SHOULDER_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 806)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.CLI_LEVEL1_CONTEXT_ID)
+                         current_test_identity(CONTEXT, ROOT, CONTEXT.CLI_LEVEL1_CONTEXT_ID))
         self.assertEqual({p for p in self.previous[1]
                           if self.current[1][p] != self.previous[1][p]},
                          set(CONTEXT.SHOULDER_CHANGED))
@@ -45,7 +46,7 @@ class ShoulderFormSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(HERE / CONTEXT.FOREARM_FIXTURES / name if name in CONTEXT.FOREARM_CHANGED else CONTEXT.pre_level1_file(name), target)
+                shutil.copyfile(historical_input(name, self.current[1][name], ROOT), target)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'],
                              CONTEXT.SHOULDER_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',

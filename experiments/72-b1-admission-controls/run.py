@@ -32,6 +32,7 @@ PACKAGE += ('input-context-arm-proportions-v1.json', 'test_arm_proportions_conte
 PACKAGE += ('input-context-hand-size-v1.json', 'test_hand_size_context.py')
 PACKAGE += ('input-context-shoulder-form-v1.json', 'test_shoulder_form_context.py')
 PACKAGE += ('input-context-forearm-form-v1.json', 'test_forearm_form_context.py')
+PACKAGE += ('input-context-chest-placement-v1.json', 'test_chest_placement_context.py')
 ENDPOINT = 'b1::tests::new_base_zero_is_exact_and_every_signed_parameter_drives_actual_uploaded_geometry'
 ZERO = 'b1::tests::admission72_zero_exact_uploaded_buffers_and_all_bone_fields'
 FORTY = 'b1::tests::admission72_original_eight_recipes_five_diagnostics_real_production_compatibility'
@@ -1008,7 +1009,11 @@ def _forearm_context(exp, previous):
 
 def has_upper_arm_inputs(root):
     path = root / UPPER_ARM_ASSET_PREFIX
-    return path.exists() or path.is_symlink()
+    source = root / 'crates/nvwa-core/src/b1.rs'
+    present = source.is_file() and not source.is_symlink() and 'upper_arm_muscle_fullness' in source.read_text()
+    sentinels = [root / 'crates/nvwa-core/tests/upper_arm_muscle.rs', root / 'crates/nvwa-cli/tests/upper_arm_muscle.rs']
+    present = present or any(p.exists() or p.is_symlink() for p in sentinels)
+    return path.exists() or path.is_symlink() or present
 
 
 def _upper_arm_context(exp, previous):
@@ -1234,6 +1239,84 @@ def _arm_context(exp, previous):
     return value['context'], files
 
 
+CHEST_CONTEXT_NAME = 'input-context-chest-placement-v1.json'
+CHEST_CONTEXT_SHA = 'd63c4405d6407205a0f626727e81466a449d629cef68e3b9c96436db28e7899c'
+CHEST_BASELINES_SHA = '05996245786aac89c8c6173c6ae90bb13740e224b603438837b69b814d6e686e'
+CHEST_CONTEXT_ID = 'b1-chest-placement-product-v1'
+CHEST_PREDECESSOR_COMMIT = 'b41e8d02806a409d262daee233e190d53598cb21'
+CHEST_FIXTURES = 'fixtures/pre-chest-placement'
+CHEST_CHANGED = (
+    'crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/src/main.rs',
+    'crates/nvwa-cli/tests/cpu_render.rs', 'crates/nvwa-core/src/appearance.rs',
+    'crates/nvwa-core/src/b1.rs', 'crates/nvwa-runtime/src/b1.rs',
+    'crates/nvwa-runtime/src/b1/cpu_render.rs',
+    'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs',
+    'scripts/build-web.sh', 'scripts/package-cli.py',
+    'scripts/package-native.py', 'scripts/test-cli-package.py',
+    'docs/research/character-foundation/body-control-coverage.md',
+)
+CHEST_NEW_CODE = ('crates/nvwa-cli/tests/chest_placement.rs',
+                'crates/nvwa-core/tests/chest_placement.rs',
+                'scripts/build-chest-placement-v10.py')
+CHEST_ASSET_PREFIX = 'assets/characters/mpfb-b1-v10/'
+
+
+def has_chest_inputs(root):
+    path = root / CHEST_ASSET_PREFIX
+    source = root / 'crates/nvwa-core/src/b1.rs'
+    present = source.is_file() and not source.is_symlink() and 'breast_spacing' in source.read_text()
+    sentinels = [root / 'crates/nvwa-core/tests/chest_placement.rs', root / 'crates/nvwa-cli/tests/chest_placement.rs']
+    present = present or any(p.exists() or p.is_symlink() for p in sentinels)
+    return path.exists() or path.is_symlink() or present
+
+
+def _pre_chest_sources(exp, previous):
+    manifest = source_file(exp, f'{CHEST_FIXTURES}/manifest.json')
+    raw = manifest.read_bytes()
+    require(sha(raw) == CHEST_BASELINES_SHA, 'chest predecessor manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == previous[0]
+            and value['source_commit'] == CHEST_PREDECESSOR_COMMIT
+            and set(value['files']) == set(CHEST_CHANGED),
+            'chest predecessor complete inventory required')
+    for name in CHEST_CHANGED:
+        item = value['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == f'{CHEST_FIXTURES}/{name}'
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'chest predecessor historical pin mismatch: ' + name)
+        path = source_file(exp, item['fixture'])
+        require(path.stat().st_size == item['bytes'] and file_sha(path) == item['sha256'],
+                'chest predecessor bytes mismatch: ' + name)
+    fixture_root = exp / CHEST_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(CHEST_CHANGED),
+            'chest predecessor fixture inventory mismatch')
+
+
+def _chest_context(exp, previous):
+    _pre_chest_sources(exp, previous)
+    raw = source_file(exp, CHEST_CONTEXT_NAME).read_bytes()
+    require(sha(raw) == CHEST_CONTEXT_SHA, 'chest source context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == CHEST_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == CHEST_PREDECESSOR_COMMIT
+            and set(previous[1]) <= set(files)
+            and len(files) == 658 and len(additions) == 134
+            and additions == {p for p in additions if p.startswith(CHEST_ASSET_PREFIX)} | set(CHEST_NEW_CODE)
+            and {p for p in previous[1] if files[p] != previous[1][p]} == set(CHEST_CHANGED),
+            'chest source context exact union required')
+    return value['context'], files
+
+
 def has_hip_inputs(root):
     path = root / HIP_ASSET_PREFIX
     return path.exists() or path.is_symlink()
@@ -1388,8 +1471,37 @@ def _leg_context(exp, previous):
     return value['context'], files
 
 
+def has_chest_sibling_inputs(root):
+    # A partial later lineage is not the immutable chest-only branch.
+    return (has_hand_inputs(root) or has_shoulder_inputs(root)
+            or has_forearm_inputs(root) or has_upper_arm_inputs(root)
+            or has_body_reference_inputs(root) or has_level1_inputs(root)
+            or has_cli_level1_inputs(root))
+
+
 def check_source_context(root, pins, historical_only=False):
     """Authenticate one complete source context; never mix baseline/current files."""
+    # Any sibling marker selects the exact union gate; partial unions must fail.
+    if has_chest_inputs(root) and has_chest_sibling_inputs(root):
+        current_source_contexts(pins) # retain original historical manifest authentication first
+        from importlib.util import spec_from_file_location, module_from_spec
+        require((HERE / 'integration_context.py').is_file(), 'integration context module missing')
+        _spec = spec_from_file_location('nvwa_integration_context', HERE / 'integration_context.py')
+        _integration = module_from_spec(_spec); _spec.loader.exec_module(_integration)
+        require(not historical_only, 'source input context mismatch: integration candidate is not historical')
+        from types import SimpleNamespace
+        main, chest = _integration.predecessors72(SimpleNamespace(**globals()), pins)
+        context, expected = _integration.verify(root, main, chest, '72')
+        bridge = json.loads((HERE / 'input-context-v1.json').read_text())
+        check_unchanged_sections((root / RUNTIME).read_text(), bridge)
+        controls = ['integration_context.py', 'test_integration_context.py', _integration.NAME]
+        controls += [p.relative_to(HERE).as_posix() for folder in
+                     ['fixtures/pre-chest-v14-integration', 'fixtures/integration-historical-tests']
+                     for p in (HERE / folder).rglob('*') if p.is_file()]
+        control_hashes = {n: file_sha(source_file(HERE, n)) for n in sorted(controls)}
+        return {'id': context, 'files': {n: i['sha256'] for n, i in expected.items()},
+                'current_rust_execution': 'NOT-RUN', 'execution_source': 'offline candidate, independent review pending',
+                'integration_control_hashes': control_hashes}
     require(not has_level1_inputs(root) or has_upper_arm_inputs(root),
             'level1 display requires exact v14 source')
     contexts = current_source_contexts(pins)
@@ -1403,7 +1515,30 @@ def check_source_context(root, pins, historical_only=False):
         actual[relative] = file_sha(path)
     reference_motion = has_reference_motion_inputs(root)
     waist = has_waist_inputs(root)
-    if has_arm_inputs(root):
+    if has_chest_inputs(root):
+        require(not historical_only, 'source input context mismatch: chest source is not historical')
+        cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
+        leg = _leg_context(HERE, _combined_context(HERE, cpu))
+        upper = _upper_context(HERE, leg)
+        hip = _hip_context(HERE, upper)
+        arm = _arm_context(HERE, hip)
+        context, expected = _chest_context(HERE, arm)
+        asset_root = root / CHEST_ASSET_PREFIX
+        paths = list(asset_root.rglob('*'))
+        require(not asset_root.is_symlink()
+                and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+                and {p.relative_to(root).as_posix() for p in paths if p.is_file()}
+                    == {p for p in expected if p.startswith(CHEST_ASSET_PREFIX)},
+                'chest source asset inventory mismatch')
+        actual = {}
+        for relative, item in expected.items():
+            path = source_file(root, relative)
+            require(path.stat().st_size == item['bytes'],
+                    'chest source context byte count mismatch: ' + relative)
+            actual[relative] = file_sha(path)
+        require(actual == {name: item['sha256'] for name, item in expected.items()},
+                'source input context mismatch: exact chest source required')
+    elif has_arm_inputs(root):
         require(not historical_only, 'source input context mismatch: arm source is not historical')
         cpu = _cpu_context(HERE, _motion_query_source_context(_running_source_context(pins, contexts))[1])
         leg = _leg_context(HERE, _combined_context(HERE, cpu))
@@ -1719,6 +1854,14 @@ def run(args):
         for name in PACKAGE:
             shutil.copy2(HERE / name, out / name)
             require(file_sha(out / name) == receipt['control_hashes'][name], 'control package changed during copy')
+        # Separate admission-tool receipt/copy; never overlay it onto immutable baseline581 execution.
+        for name, digest in pins['checked_input_context'].get('integration_control_hashes', {}).items():
+            source_control = source_file(HERE, name)
+            require(file_sha(source_control) == digest, 'integration control changed during copy: ' + name)
+            destination = out / 'integration-admission' / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source_control, destination)
+            require(file_sha(destination) == digest, 'integration control copied bytes differ: ' + name)
         execute('checkout-head', ['git', 'rev-parse', 'HEAD'], root)
         receipt['source_checkout_head'] = (logs / 'checkout-head.log').read_text().strip()
         require(re.fullmatch(r'[0-9a-f]{40}', receipt['source_checkout_head']) is not None, 'invalid checkout HEAD')

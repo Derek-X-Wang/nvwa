@@ -20,6 +20,16 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 
 
+def historical_source(path, previously_selected):
+    # Only redirect a former live-HEAD fallback for a file displaced by the
+    # sibling integration. Older Level1-specific fixtures still take priority.
+    # The caller authenticates the result against the unmodified historical map.
+    retained = HERE.parent / '72-b1-admission-controls/fixtures/pre-chest-v14-integration/main' / path
+    if previously_selected == ROOT / path and retained.is_file():
+        return retained
+    return previously_selected
+
+
 class UpperArmMuscleContext(unittest.TestCase):
     def test_exact_successor_and_predecessor_bytes(self):
         frozen = json.loads((HERE / 'FROZEN-INPUTS.json').read_bytes())
@@ -31,7 +41,7 @@ class UpperArmMuscleContext(unittest.TestCase):
         self.assertEqual(len(files), 1416)
         self.assertEqual({p for p in UPPER_ARM_CHANGED if p in files}, set(UPPER_ARM_CHANGED))
         for path, expected in files.items():
-            source = pre_level1_file(path)
+            source = historical_source(path, pre_level1_file(path))
             self.assertTrue(source.is_file(), path)
             self.assertEqual(source.stat().st_size, expected['bytes'], path)
             self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), expected['sha256'], path)
@@ -41,7 +51,7 @@ class UpperArmMuscleContext(unittest.TestCase):
         self.assertEqual({p for p in files if current[p] != files[p]}, set(LEVEL1_CHANGED))
         self.assertEqual(set(current) - set(files), set(LEVEL1_ADDED))
         for path, expected in current.items():
-            source = pre_cli_level1_file(path)
+            source = historical_source(path, pre_cli_level1_file(path))
             self.assertTrue(source.is_file(), path)
             self.assertEqual(source.stat().st_size, expected['bytes'], path)
             self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), expected['sha256'], path)
@@ -51,7 +61,7 @@ class UpperArmMuscleContext(unittest.TestCase):
         self.assertEqual({p for p in current if cli_current[p] != current[p]},
                          set(CLI_LEVEL1_CHANGED))
         for path, expected in cli_current.items():
-            source = ROOT / path
+            source = historical_source(path, ROOT / path)
             self.assertTrue(source.is_file(), path)
             self.assertEqual(source.stat().st_size, expected['bytes'], path)
             self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), expected['sha256'], path)

@@ -1,3 +1,4 @@
+from integration_context import historical_input,current_test_identity
 """Exact v9 source admission with immutable v8 predecessor bytes."""
 import gzip
 import hashlib
@@ -29,7 +30,8 @@ class ArmProportionsSourceContext(unittest.TestCase):
     def test_exact_union_preserves_v8(self):
         self.assertEqual(self.predecessor[0], CONTEXT.HIP_CONTEXT_ID)
         self.assertEqual(len(self.predecessor[1]), 401)
-        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], CONTEXT.CLI_LEVEL1_CONTEXT_ID)
+        expected = 'b1-chest-v10-with-v14-cli-level1-integration-candidate-v1' if CONTEXT.has_chest_inputs(ROOT) and CONTEXT.has_upper_arm_inputs(ROOT) else CONTEXT.CLI_LEVEL1_CONTEXT_ID
+        self.assertEqual(CONTEXT.check_inputs(ROOT)['checked_input_context']['id'], expected)
         self.assertEqual({name for name in self.predecessor[1]
                           if self.current[1][name] != self.predecessor[1][name]},
                          set(CONTEXT.ARM_CHANGED))
@@ -42,7 +44,7 @@ class ArmProportionsSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 destination = root / name
                 destination.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(CONTEXT.pre_body_reference_file(name), destination)
+                shutil.copyfile(historical_input(name, self.current[1][name], ROOT), destination)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'], CONTEXT.ARM_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',
                          'assets/characters/mpfb-b1-v9/manifest.json',

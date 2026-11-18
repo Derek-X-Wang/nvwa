@@ -1,3 +1,4 @@
+from integration_context import historical_input,current_test_identity
 """The v13 forearm-form source is admitted without weakening v12 history."""
 import importlib.util
 import json
@@ -33,7 +34,7 @@ class ForearmFormSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.FOREARM_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 960)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.CLI_LEVEL1_CONTEXT_ID)
+                         current_test_identity(CONTEXT, ROOT, CONTEXT.CLI_LEVEL1_CONTEXT_ID))
         self.assertEqual({p for p in self.previous[1]
                           if self.current[1][p] != self.previous[1][p]},
                          set(CONTEXT.FOREARM_CHANGED))
@@ -48,7 +49,7 @@ class ForearmFormSourceContext(unittest.TestCase):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 source = (HERE / CONTEXT.UPPER_ARM_FIXTURES / name
                           if name in CONTEXT.UPPER_ARM_CHANGED else CONTEXT.pre_level1_file(name))
-                shutil.copyfile(source, target)
+                shutil.copyfile(historical_input(name, self.current[1][name], ROOT), target)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'],
                              CONTEXT.FOREARM_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',

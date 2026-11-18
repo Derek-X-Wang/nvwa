@@ -1,3 +1,4 @@
+from integration_context import historical_input,current_test_identity
 """The exact v14 source succeeds while v13 predecessor bytes remain pinned."""
 import importlib.util
 import json
@@ -34,7 +35,7 @@ class UpperArmMuscleSourceContext(unittest.TestCase):
         self.assertEqual(self.current[0], CONTEXT.UPPER_ARM_CONTEXT_ID)
         self.assertEqual(len(self.current[1]), 1128)
         self.assertEqual(CONTEXT.check_source_context(ROOT, self.pins)['id'],
-                         CONTEXT.CLI_LEVEL1_CONTEXT_ID)
+                         current_test_identity(CONTEXT, ROOT, CONTEXT.CLI_LEVEL1_CONTEXT_ID))
         self.assertEqual({p for p in self.previous[1]
                           if self.current[1][p] != self.previous[1][p]},
                          set(CONTEXT.UPPER_ARM_CHANGED))
@@ -47,7 +48,7 @@ class UpperArmMuscleSourceContext(unittest.TestCase):
             for name in self.current[1]:
                 target = root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(CONTEXT.pre_level1_file(name), target)
+                shutil.copyfile(historical_input(name, self.current[1][name], ROOT), target)
             self.assertEqual(CONTEXT.check_source_context(root, self.pins)['id'],
                              CONTEXT.UPPER_ARM_CONTEXT_ID)
             for name in ('crates/nvwa-core/src/b1.rs',

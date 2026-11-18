@@ -958,7 +958,11 @@ def forearm_source_context(exp, cpu):
 
 def has_upper_arm_inputs(root):
     path = root / UPPER_ARM_ASSET_PREFIX
-    return path.exists() or path.is_symlink()
+    source = root / 'crates/nvwa-core/src/b1.rs'
+    present = source.is_file() and not source.is_symlink() and 'upper_arm_muscle_fullness' in source.read_text()
+    sentinels = [root / 'crates/nvwa-core/tests/upper_arm_muscle.rs', root / 'crates/nvwa-cli/tests/upper_arm_muscle.rs']
+    present = present or any(p.exists() or p.is_symlink() for p in sentinels)
+    return path.exists() or path.is_symlink() or present
 
 
 def upper_arm_source_context(exp, cpu):
@@ -1171,6 +1175,46 @@ def arm_source_context(exp, cpu):
     return ARM_CONTEXT_ID, files
 
 
+CHEST_CONTEXT_NAME = '../72-b1-admission-controls/input-context-chest-placement-v1.json'
+CHEST_CONTEXT_SHA = 'd63c4405d6407205a0f626727e81466a449d629cef68e3b9c96436db28e7899c'
+CHEST_CONTEXT_ID = 'b1-chest-placement-product-v1'
+
+
+def has_chest_inputs(root):
+    path = root / 'assets/characters/mpfb-b1-v10'
+    return path.exists() or path.is_symlink()
+
+
+def has_chest_sibling_inputs(root):
+    # A partial later lineage is not the immutable chest-only branch.
+    return (has_hand_inputs(root) or has_shoulder_inputs(root)
+            or has_forearm_inputs(root) or has_upper_arm_inputs(root)
+            or has_body_reference_inputs(root) or has_level1_inputs(root)
+            or has_cli_level1_inputs(root))
+
+
+def chest_source_context(exp, cpu):
+    """Admit only the exact v10 successor after the immutable v9 context."""
+    arm = arm_source_context(exp, cpu)
+    raw = regular_file(exp, CHEST_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CHEST_CONTEXT_SHA,
+            'chest source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == CHEST_CONTEXT_ID
+            and value['predecessor'] == ARM_CONTEXT_ID
+            and value['predecessor_commit'] == 'b41e8d02806a409d262daee233e190d53598cb21',
+            'chest source context predecessor/version mismatch')
+    files = dict(arm[1]); files.update(value['files'])
+    require(len(value['files']) == 658 and len(files) == 946
+            and len(set(arm[1]) & set(value['files'])) == 524
+            and set(files) == set(arm[1]) | set(value['files']),
+            'chest source context complete union required')
+    return CHEST_CONTEXT_ID, files
+
+
 def has_hip_inputs(root):
     return (root / 'assets/characters/mpfb-b1-v8').exists()
 
@@ -1246,3 +1290,12 @@ def leg_source_context(exp, cpu):
     require(len(files) == 482 and len(value['files']) == 194,
             'leg source context complete union required')
     return LEG_CONTEXT_ID, files
+
+
+# Explicit integration identity, separate from all frozen historical contexts.
+INTEGRATION_CONTEXT_ID = 'b1-chest-v10-with-v14-cli-level1-integration-candidate-v1'
+def integration_source_context(exp, cpu, root):
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('nvwa_integration_context73', exp.parent / '72-b1-admission-controls/integration_context.py')
+    integration = importlib.util.module_from_spec(spec); spec.loader.exec_module(integration)
+    return integration.verify(root, cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')
