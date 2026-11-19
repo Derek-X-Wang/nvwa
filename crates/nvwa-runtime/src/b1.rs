@@ -1233,6 +1233,12 @@ fn publish(world: &mut World) {
 
 #[cfg(test)]
 mod tests {
+    mod belly_mixed_diagnostic {
+        include!(concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/src/b1/belly_mixed_diagnostic.rs"
+        ));
+    }
     use super::*;
     use bevy::asset::{
         AssetMetaCheck,
