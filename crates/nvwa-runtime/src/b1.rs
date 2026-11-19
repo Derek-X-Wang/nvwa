@@ -127,6 +127,7 @@ fn uses_prepared_rig(doc: &SceneDocument) -> bool {
                     | B1AssetVersion::V12
                     | B1AssetVersion::V13
                     | B1AssetVersion::V14
+                    | B1AssetVersion::V15
             )
         )
 }
@@ -201,6 +202,9 @@ struct B1Runtime {
     active: Option<Session>,
     initialized: bool,
     extra_targets: Vec<Handle<TargetAsset>>,
+    // The V10-derived V15 branch cannot assume the old ordinal extension
+    // cache is a prefix (V11–V14 have a different lineage).
+    belly_profile_targets: BTreeMap<&'static str, Handle<TargetAsset>>,
     last_failed: Option<(u64, Selection)>,
     timeline: Vec<TimelineClip>,
     transport_generation: u64,
@@ -301,6 +305,21 @@ fn initialize(world: &mut World, bytes: VerifiedBytes) -> Result<(), String> {
     world.flush();
     Ok(())
 }
+fn extension_target_names(version: B1AssetVersion) -> impl Iterator<Item = &'static str> {
+    version.parameters()[2..]
+        .iter()
+        .flat_map(|t| [t.decrease, t.increase])
+        .chain(version.one_sided_target().map(|t| t.increase))
+}
+fn needs_extension_targets(runtime: &B1Runtime, version: B1AssetVersion) -> bool {
+    if version == B1AssetVersion::V15 {
+        extension_target_names(version)
+            .any(|name| !runtime.belly_profile_targets.contains_key(name))
+    } else {
+        runtime.extra_targets.len() < (version.parameters().len() - 2) * 2
+    }
+}
+
 fn initialize_selected(
     world: &mut World,
     runtime: &mut B1Runtime,
@@ -308,25 +327,30 @@ fn initialize_selected(
     mut bytes: VerifiedBytes,
 ) -> Result<(), String> {
     let mut extra = Vec::new();
-    if version != B1AssetVersion::V1 {
-        for targets in &version.parameters()[2..] {
-            for name in [targets.decrease, targets.increase] {
-                let path = format!("targets/{name}.target");
-                let data = bytes.remove(&path).ok_or_else(|| {
-                    format!("invalid_asset: authenticated target missing: {path}")
-                })?;
-                extra.push((path, data));
-            }
-        }
+    for name in extension_target_names(version) {
+        let path = format!("targets/{name}.target");
+        let data = bytes.remove(&path).ok_or_else(|| {
+            format!("invalid_asset: authenticated target missing: {path}")
+        })?;
+        extra.push((name, path, data));
     }
     if !runtime.initialized {
         initialize(world, bytes)?;
         runtime.initialized = true;
     }
-    if runtime.extra_targets.len() < extra.len() {
+    if version == B1AssetVersion::V15 {
         let source = world.resource::<VerifiedSource>().clone();
         let server = world.resource::<AssetServer>().clone();
-        for (path, data) in extra.into_iter().skip(runtime.extra_targets.len()) {
+        for (name, path, data) in extra {
+            runtime.belly_profile_targets.entry(name).or_insert_with(|| {
+                source.0.insert_asset(Path::new(&path), data);
+                server.load(asset(&path))
+            });
+        }
+    } else if runtime.extra_targets.len() < extra.len() {
+        let source = world.resource::<VerifiedSource>().clone();
+        let server = world.resource::<AssetServer>().clone();
+        for (_, path, data) in extra.into_iter().skip(runtime.extra_targets.len()) {
             source.0.insert_asset(Path::new(&path), data);
             runtime.extra_targets.push(server.load(asset(&path)));
         }
@@ -342,17 +366,28 @@ fn extra_targets_ready(
         return Ok(true);
     }
     let required = (version.parameters().len() - 2) * 2;
-    if runtime.extra_targets.len() < required {
-        return Err(format!(
-            "invalid_asset: {required} explicit extension target handles required"
-        ));
-    }
     let server = world.resource::<AssetServer>();
-    for handle in &runtime.extra_targets[..required] {
+    let check = |handle: &Handle<TargetAsset>| {
         if let Some(bevy::asset::LoadState::Failed(error)) = server.get_load_state(handle.id()) {
             return Err(format!(
                 "invalid_asset: B1 extension target load failed: {error}"
             ));
+        }
+        Ok(())
+    };
+    if version == B1AssetVersion::V15 {
+        for name in extension_target_names(version) {
+            let handle = runtime.belly_profile_targets.get(name).ok_or_else(|| {
+                format!("invalid_asset: explicit extension target handle missing: {name}")
+            })?;
+            check(handle)?;
+        }
+    } else {
+        let handles = runtime.extra_targets.get(..required).ok_or_else(|| {
+            format!("invalid_asset: {required} explicit extension target handles required")
+        })?;
+        for handle in handles {
+            check(handle)?;
         }
     }
     let morphs = world.resource::<MakeHumanMorphs>();
@@ -363,7 +398,8 @@ fn extra_targets_ready(
     Ok(version
         .parameters()
         .iter()
-        .all(|t| loaded.contains_key(t.decrease) && loaded.contains_key(t.increase)))
+        .all(|t| loaded.contains_key(t.decrease) && loaded.contains_key(t.increase))
+        && version.one_sided_target().is_none_or(|t| loaded.contains_key(t.increase)))
 }
 fn selection_current(world: &World, c: &Candidate) -> bool {
     let editor = world.resource::<EditorState>();
@@ -496,7 +532,7 @@ fn drive(world: &mut World) {
         let version = selected.base;
         let task = (is_open
             || !runtime.initialized
-            || (runtime.extra_targets.len() < (version.parameters().len() - 2) * 2))
+            || needs_extension_targets(&runtime, version))
             .then(|| {
                 let server = world.resource::<AssetServer>().clone();
                 IoTaskPool::get().spawn(verify_source(server, version))
@@ -682,6 +718,7 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             .parameters()
             .iter()
             .flat_map(|t| [t.decrease, t.increase])
+            .chain(version.one_sided_target().map(|t| t.increase))
         {
             if !morphs
                 .targets
@@ -709,6 +746,11 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
                     requested.insert(humentity::NAME_INTERNER.intern(name).leak(), weight);
                 }
             }
+        }
+        if let Some(target) = version.one_sided_target()
+            && let Some(weight) = target.positive_weight(values[target.id])
+        {
+            requested.insert(humentity::NAME_INTERNER.intern(target.increase).leak(), weight);
         }
         let resolved = morphs
             .compute_target_weights(&requested)
@@ -3954,6 +3996,68 @@ mod tests {
             }
         }
     }
+    #[test]
+    fn belly_shape_v15_reopens_after_each_old_branch_without_altering_zero() {
+        for old_version in [B1AssetVersion::V10, B1AssetVersion::V11] {
+            let (mut app, dir, _) = motion_app();
+            fill_version(&dir, old_version);
+            fill_version(&dir, B1AssetVersion::V15);
+            let old_profile = if old_version == B1AssetVersion::V10 {
+                nvwa_core::CharacterProfile::b1_character_chest_placement()
+            } else {
+                nvwa_core::CharacterProfile::b1_character_hand_size()
+            };
+            let mut old = SceneDocument::from_profile(old_profile).unwrap();
+            let mut zero = SceneDocument::from_profile(
+                nvwa_core::CharacterProfile::b1_character_belly_shape(),
+            )
+            .unwrap();
+            for (key, value) in [
+                ("waist_circumference", 0.3),
+                ("bust_circumference", 0.2),
+                ("hip_depth", 0.2),
+            ] {
+                old.character.parameters.insert(key.into(), value);
+                zero.character.parameters.insert(key.into(), value);
+            }
+            open_ready(&mut app, old.clone());
+            let old_frame = b1_frame_snapshot(app.world()).unwrap();
+            open_ready(&mut app, zero.clone());
+            let zero_frame = b1_frame_snapshot(app.world()).unwrap();
+            if old_version == B1AssetVersion::V10 {
+                assert_eq!(old_frame["parts"][0]["positions"], zero_frame["parts"][0]["positions"]);
+                assert_eq!(old_frame["parts"][0]["rest_positions"], zero_frame["parts"][0]["rest_positions"]);
+                assert_eq!(old_frame["bones"], zero_frame["bones"]);
+            }
+            let mut endpoint = zero.clone();
+            endpoint.character.parameters.insert(nvwa_core::B1_BELLY_SHAPE_TARGET.id.into(), 1.0);
+            open_ready(&mut app, endpoint.clone());
+            let fitted = b1_frame_snapshot(app.world()).unwrap();
+            assert_ne!(fitted["parts"][0]["positions"], zero_frame["parts"][0]["positions"]);
+            assert_eq!(fitted["bones"].as_array().unwrap().len(), 53);
+            for bone in fitted["bones"].as_array().unwrap() {
+                for matrix in [&bone["rest"], &bone["posed"]] {
+                    assert!(
+                        matrix.as_array().unwrap().iter().all(|v| v.as_f64().is_some_and(f64::is_finite))
+                    );
+                }
+            }
+            endpoint.character.diagnostic_pose = Some("elbow".into());
+            open_ready(&mut app, endpoint);
+            let posed = b1_frame_snapshot(app.world()).unwrap();
+            assert_ne!(posed["parts"][0]["positions"], fitted["parts"][0]["positions"]);
+            open_ready(&mut app, old);
+            let replay_old = b1_frame_snapshot(app.world()).unwrap();
+            assert_eq!(old_frame["parts"][0]["positions"], replay_old["parts"][0]["positions"]);
+            assert_eq!(old_frame["bones"], replay_old["bones"]);
+            open_ready(&mut app, zero);
+            let replay_zero = b1_frame_snapshot(app.world()).unwrap();
+            assert_eq!(zero_frame["parts"][0]["positions"], replay_zero["parts"][0]["positions"]);
+            assert_eq!(zero_frame["bones"], replay_zero["bones"]);
+            assert_eq!(app.world().resource::<B1Runtime>().belly_profile_targets.len(), 47);
+        }
+    }
+
     #[test]
     fn chest_placement_zero_preserves_v9_and_endpoints_keep_finite_bones() {
         let (mut app, dir, _) = motion_app();
