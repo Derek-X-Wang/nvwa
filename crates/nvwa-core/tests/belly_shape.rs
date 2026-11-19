@@ -8,10 +8,16 @@ fn belly_profile_adds_exactly_one_authenticated_target_to_v10() {
     assert_eq!(profile.parameters[..25], predecessor.parameters);
     assert_eq!(profile.parameters.len(), 26);
     assert!(!profile.backend.supports_timeline());
-    assert_eq!(profile.backend.b1_asset_version(), Some(B1AssetVersion::V15));
+    assert_eq!(
+        profile.backend.b1_asset_version(),
+        Some(B1AssetVersion::V15)
+    );
     let p = &profile.parameters[25];
     let target = B1AssetVersion::V15.one_sided_target().unwrap();
-    assert_eq!((p.id.as_str(), p.morph_index, p.min, p.max, p.default), (target.id, 25, 0.0, 1.0, 0.0));
+    assert_eq!(
+        (p.id.as_str(), p.morph_index, p.min, p.max, p.default),
+        (target.id, 25, 0.0, 1.0, 0.0)
+    );
     assert_eq!(B1AssetVersion::V10.one_sided_target(), None);
     assert_eq!(B1AssetVersion::V11.one_sided_target(), None);
     assert_eq!(target.positive_weight(0.0), None);
@@ -21,15 +27,27 @@ fn belly_profile_adds_exactly_one_authenticated_target_to_v10() {
     assert_eq!(target.positive_weight(-0.01), None);
     assert_eq!(target.positive_weight(1.01), None);
     assert_eq!(target.positive_weight(f32::NAN), None);
-    let old = B1AssetManifest::from_bytes_for(B1AssetVersion::V10, B1AssetVersion::V10.manifest_bytes()).unwrap();
-    let new = B1AssetManifest::from_bytes_for(B1AssetVersion::V15, B1AssetVersion::V15.manifest_bytes()).unwrap();
+    let old =
+        B1AssetManifest::from_bytes_for(B1AssetVersion::V10, B1AssetVersion::V10.manifest_bytes())
+            .unwrap();
+    let new =
+        B1AssetManifest::from_bytes_for(B1AssetVersion::V15, B1AssetVersion::V15.manifest_bytes())
+            .unwrap();
     assert_eq!(new.files.len(), old.files.len() + 1);
     assert!(old.files.iter().all(|f| new.files.contains(f)));
     let path = format!("targets/{}.target", target.increase);
-    let bytes = include_bytes!("../../../assets/characters/mpfb-b1-v15/targets/stomach-pregnant-incr.target");
+    let bytes = include_bytes!(
+        "../../../assets/characters/mpfb-b1-v15/targets/stomach-pregnant-incr.target"
+    );
     new.validate_file_bytes(&path, bytes).unwrap();
-    assert!(new.validate_file_bytes(&path, &bytes[..bytes.len() - 1]).is_err());
-    assert!(new.validate_file_bytes("targets/stomach-pregnant-decr.target", bytes).is_err());
+    assert!(
+        new.validate_file_bytes(&path, &bytes[..bytes.len() - 1])
+            .is_err()
+    );
+    assert!(
+        new.validate_file_bytes("targets/stomach-pregnant-decr.target", bytes)
+            .is_err()
+    );
     let mut forged = profile;
     forged.asset_sha256 = predecessor.asset_sha256;
     assert!(SceneDocument::from_profile(forged).is_err());

@@ -1298,4 +1298,13 @@ def integration_source_context(exp, cpu, root):
     import importlib.util
     spec = importlib.util.spec_from_file_location('nvwa_integration_context73', exp.parent / '72-b1-admission-controls/integration_context.py')
     integration = importlib.util.module_from_spec(spec); spec.loader.exec_module(integration)
+    v15_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
+                   'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
+                   'scripts/build-belly-shape-v15.py')
+    if any((root / name).exists() or (root / name).is_symlink() for name in v15_markers):
+        v15_spec = importlib.util.spec_from_file_location(
+            'nvwa_v15_source_context73', exp.parent / '72-b1-admission-controls/v15_source_context.py')
+        v15 = importlib.util.module_from_spec(v15_spec); v15_spec.loader.exec_module(v15)
+        _, previous = integration.expected(cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')
+        return v15.verify(root, previous)
     return integration.verify(root, cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')

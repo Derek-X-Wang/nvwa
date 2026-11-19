@@ -1,4 +1,7 @@
-use std::sync::{Arc, RwLock};
+use std::{
+    ops::{Deref, DerefMut},
+    sync::{Arc, RwLock},
+};
 
 use crate::{
     loaders::{CompositeTargetsAsset, MacroDataAsset, TargetAsset},
@@ -26,8 +29,53 @@ pub enum MorphError {
 }
 
 /// A type for storing generic morph target weights
-#[derive(Component, Deref, DerefMut, Clone, Default, Debug)]
-pub struct MorphTargets(AHashMap<&'static str, f32>);
+#[derive(Component, Clone, Default, Debug)]
+pub struct MorphTargets(AHashMap<&'static str, f32>, bool);
+
+impl Deref for MorphTargets {
+    type Target = AHashMap<&'static str, f32>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl DerefMut for MorphTargets {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+impl MorphTargets {
+    /// Opt into stable target-name accumulation for explicit target weights.
+    /// This runtime-only choice is not stored in morph assets or Work files.
+    pub fn use_stable_target_order(&mut self) {
+        self.1 = true;
+    }
+
+    pub(crate) fn accumulation_entries(&self) -> impl Iterator<Item = (&'static str, f32)> + '_ {
+        // With fewer than two active deltas, leave the original zero/single
+        // target path untouched. Do not drop zero entries or change weight bits.
+        let stable = self.1
+            && self
+                .values()
+                .filter(|&&weight| weight != 0.0)
+                .take(2)
+                .count()
+                == 2;
+        let sorted = stable.then(|| {
+            let mut entries: Vec<_> = self.0.iter().map(|(&name, &weight)| (name, weight)).collect();
+            entries.sort_unstable_by_key(|&(name, _)| name);
+            entries
+        });
+        sorted.into_iter().flatten().chain(
+            (!stable)
+                .then(|| self.0.iter().map(|(&name, &weight)| (name, weight)))
+                .into_iter()
+                .flatten(),
+        )
+    }
+}
 
 impl Serialize for MorphTargets {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
@@ -52,7 +100,7 @@ impl<'de> Deserialize<'de> for MorphTargets {
             result.insert(key, v);
         }
 
-        Ok(MorphTargets(result))
+        Ok(MorphTargets(result, false))
     }
 }
 
@@ -173,6 +221,7 @@ impl MakeHumanMorphs {
         };
 
         let mut result = MorphTargets::default();
+        result.1 = morph_targets.1;
 
         if macros.macrotargets.is_empty() {
             return Err(MorphError::MacrosNotLoaded);
@@ -556,7 +605,7 @@ pub(crate) fn adjust_helpers_with_targets(
     basemesh_vertices: &[Vec3],
 ) -> Result<Vec<Vec3>, MorphError> {
     let mut helpers = basemesh_vertices.to_vec();
-    for (&target_name, &value) in morph_values.iter() {
+    for (target_name, value) in morph_values.accumulation_entries() {
         let Some(target) = targets.get(target_name) else {
             return Err(MorphError::TargetNotFound(target_name));
         };
@@ -596,4 +645,45 @@ fn compute_macro_weights(
     }
 
     result
+}
+
+#[cfg(test)]
+mod accumulation_tests {
+    use super::*;
+
+    #[test]
+    fn explicit_order_is_opt_in_and_does_not_rewrite_weight_bits() {
+        fn raw(weights: &MorphTargets) -> Vec<(&'static str, u32)> {
+            weights
+                .iter()
+                .map(|(&name, &weight)| (name, weight.to_bits()))
+                .collect()
+        }
+        fn consumed(weights: &MorphTargets) -> Vec<(&'static str, u32)> {
+            weights
+                .accumulation_entries()
+                .map(|(name, weight)| (name, weight.to_bits()))
+                .collect()
+        }
+        let entries = [("z", 0.25f32), ("a", 0.75), ("zero", -0.0)];
+        let mut first = MorphTargets::default();
+        let mut reversed = MorphTargets::default();
+        first.extend(entries);
+        reversed.extend(entries.into_iter().rev());
+        assert_eq!(consumed(&first), raw(&first));
+        assert_eq!(consumed(&reversed), raw(&reversed));
+
+        first.use_stable_target_order();
+        reversed.use_stable_target_order();
+        let sorted = [entries[1], entries[0], entries[2]].map(|(name, weight)| (name, weight.to_bits()));
+        assert_eq!(consumed(&first), sorted);
+        assert_eq!(consumed(&reversed), sorted);
+
+        first.remove("a");
+        assert_eq!(
+            consumed(&first),
+            raw(&first),
+            "single active target keeps legacy traversal"
+        );
+    }
 }

@@ -139,7 +139,7 @@ fn bake_shape_deltas(
 ) -> Vec<TargetDelta> {
     use crate::loaders::TargetDelta as ShapeDelta;
     let mut accumulated: AHashMap<u16, Vec3> = AHashMap::default();
-    for (&target_name, &target_weight) in shape_morphs.iter() {
+    for (target_name, target_weight) in shape_morphs.accumulation_entries() {
         let Some(target) = targets.get(target_name) else {
             panic!(
                 "template shape references morph target '{target_name}' with no loaded target: gate template creation on HumentityAssetsReady"

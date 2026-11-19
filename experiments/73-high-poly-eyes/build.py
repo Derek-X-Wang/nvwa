@@ -16,7 +16,11 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def closure():
-    files = [ROOT/name for name in ['Cargo.toml','Cargo.lock','rust-toolchain.toml']]
+    files = [ROOT/name for name in ['Cargo.toml','Cargo.lock','rust-toolchain.toml',
+        'scripts/check-v15-history.py','scripts/check-v15-live73.py',
+        'scripts/v15-test-partition.py','scripts/v15-historical-test-ids.json',
+        'experiments/72-b1-admission-controls/v15_source_context.py',
+        'experiments/72-b1-admission-controls/input-context-v15-experimental-v1.json']]
     for directory in [ROOT/'crates', ROOT/'vendor', ROOT/'assets', EXP]:
         files += [p for p in directory.rglob('*') if p.is_file() and not set(p.relative_to(ROOT).parts)&{'target','__pycache__','.git'}]
     frozen=EXP/'FROZEN-INPUTS.json'
@@ -44,7 +48,7 @@ def main():
         print(('PASS ' if not process.returncode else 'FAIL ')+label,flush=True)
         if process.returncode:raise SystemExit(f'{label} failed; retained log, no successful export receipt')
     manifest=str(EXP/'Cargo.toml')
-    run('source-tests',[sys.executable,'-B','-m','unittest','discover','-s',str(EXP),'-p','test_*.py'])
+    run('source-tests',[sys.executable,'-B','scripts/check-v15-history.py','--cohort','73','--offline','--normal-only'])
     run('format',['rustfmt','--edition','2024','--check',*[str(p) for p in sorted((EXP/'src').rglob('*.rs'))]])
     run('native-tests',['cargo','test','--manifest-path',manifest,'--lib','--locked','--offline'])
     run('native-build',['cargo','build','--manifest-path',manifest,'--bin','studio73','--locked','--offline'])

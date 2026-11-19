@@ -16,7 +16,11 @@ fn run(args: &[&Path]) -> std::process::Output {
 }
 fn success(args: &[&Path]) -> Value {
     let output = run(args);
-    assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
     serde_json::from_slice(&output.stdout).unwrap()
 }
 fn temp() -> PathBuf {
@@ -40,9 +44,22 @@ fn belly_shape_cli_creates_discovers_validates_and_saves_real_work() {
     assert_eq!(doc.character.parameters[B1_BELLY_SHAPE_TARGET.id], 0.0);
     success(&["validate".as_ref(), &initial, &root()]);
     let caps = success(&["describe-capabilities".as_ref(), &initial]);
-    assert_eq!(caps["cli_contract"]["belly_shape"]["max_authored_target_weight"], 0.25);
-    assert_eq!(caps["cli_contract"]["chest_placement_shape"]["supported"], true);
-    assert_eq!(caps["cli_contract"]["set_appearance"]["b1_cc0_supported"], false);
+    assert_eq!(
+        caps["cli_contract"]["belly_shape"]["asset_availability"],
+        "requires_v15_assets_not_in_standard_cli_bundle"
+    );
+    assert_eq!(
+        caps["cli_contract"]["belly_shape"]["max_authored_target_weight"],
+        0.25
+    );
+    assert_eq!(
+        caps["cli_contract"]["chest_placement_shape"]["supported"],
+        true
+    );
+    assert_eq!(
+        caps["cli_contract"]["set_appearance"]["b1_cc0_supported"],
+        false
+    );
     #[cfg(feature = "cpu-render")]
     assert_eq!(caps["cpu_render"]["current_work_supported"], true);
     let request = dir.join("request.json");
@@ -57,7 +74,11 @@ fn belly_shape_cli_creates_discovers_validates_and_saves_real_work() {
         if v <= 1.0 {
             success(&["apply".as_ref(), &initial, &request, &changed]);
         } else {
-            assert!(!run(&["apply".as_ref(), &initial, &request, &rejected]).status.success());
+            assert!(
+                !run(&["apply".as_ref(), &initial, &request, &rejected])
+                    .status
+                    .success()
+            );
             assert!(!rejected.exists());
         }
     }
@@ -76,7 +97,9 @@ fn absent_or_corrupt_belly_asset_never_writes_work() {
     let manifest = B1AssetManifest::from_bytes_for(version, version.manifest_bytes()).unwrap();
     let parent = Path::new(version.manifest_path()).parent().unwrap();
     let belly = "targets/stomach-pregnant-incr.target";
-    for path in std::iter::once("manifest.json").chain(manifest.files.iter().map(|f| f.path.as_str())) {
+    for path in
+        std::iter::once("manifest.json").chain(manifest.files.iter().map(|f| f.path.as_str()))
+    {
         if path == belly {
             continue;
         }
@@ -88,7 +111,10 @@ fn absent_or_corrupt_belly_asset_never_writes_work() {
     for expected in ["asset_missing", "invalid_asset"] {
         let output = run(&["new-character-belly-shape".as_ref(), &assets, &output_path]);
         assert_eq!(output.status.code(), Some(1));
-        assert_eq!(serde_json::from_slice::<Value>(&output.stderr).unwrap()["code"], expected);
+        assert_eq!(
+            serde_json::from_slice::<Value>(&output.stderr).unwrap()["code"],
+            expected
+        );
         assert!(!output_path.exists());
         if expected == "asset_missing" {
             std::fs::write(assets.join(parent).join(belly), b"broken").unwrap();
