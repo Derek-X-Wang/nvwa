@@ -747,14 +747,20 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
                 }
             }
         }
-        if let Some(target) = version.one_sided_target()
-            && let Some(weight) = target.positive_weight(values[target.id])
-        {
-            requested.insert(humentity::NAME_INTERNER.intern(target.increase).leak(), weight);
-        }
         let resolved = morphs
             .compute_target_weights(&requested)
             .map_err(|e| e.to_string())?;
+        // The one-sided profile binds a distinct, already authenticated explicit
+        // target. Compose it with the resolved signed weights only when active.
+        let resolved = if let Some(target) = version.one_sided_target()
+            && let Some(weight) = target.positive_weight(values[target.id])
+        {
+            let mut resolved = resolved;
+            resolved.insert(humentity::NAME_INTERNER.intern(target.increase).leak(), weight);
+            resolved
+        } else {
+            resolved
+        };
         let template =
             world
                 .resource_mut::<Assets<CharacterTemplate>>()
@@ -4019,6 +4025,12 @@ mod tests {
             ] {
                 old.character.parameters.insert(key.into(), value);
                 zero.character.parameters.insert(key.into(), value);
+            }
+            if old_version == B1AssetVersion::V10 {
+                for (key, value) in [("breast_spacing", 0.4), ("breast_vertical_position", -0.3)] {
+                    old.character.parameters.insert(key.into(), value);
+                    zero.character.parameters.insert(key.into(), value);
+                }
             }
             open_ready(&mut app, old.clone());
             let old_frame = b1_frame_snapshot(app.world()).unwrap();
