@@ -5,7 +5,7 @@ import json
 import stat
 
 NAME = 'input-context-v15-experimental-v1.json'
-SHA = '49b6d1760faf1cabaa172f10dd8129c4540fb0312e64e10d97ee5d0af24bc72d'
+SHA = '9a4e0a4d7c1b51b689c39b8b3d15ffffa6d26177060d8f74cde30ea3198591ed'
 ID = 'nvwa-v15-experimental-source-context-v1'
 PREDECESSOR = '23bcfbc4f01ade8c4ef5bb05e4ba1e300e13dcc6'
 PREFIX = 'assets/characters/mpfb-b1-v15'
