@@ -52,7 +52,7 @@ done
 cp licenses/craft-ui/LICENSE-MIT.txt dist/web/licenses/craft-ui/
 python3 scripts/bundle-sizes.py
 if [[ -n "${NVWA_WEB_EXPORT:-}" ]]; then
-  python3 -B scripts/verify-b1-inputs.py --asset-root dist/web/assets/characters/mpfb-b1-v1
+  python3 -B scripts/verify-b1-inputs-v15.py --asset-root dist/web/assets/characters/mpfb-b1-v1
   python3 - "$NVWA_WEB_EXPORT" <<'PY'
 import hashlib
 import json

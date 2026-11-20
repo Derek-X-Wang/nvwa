@@ -1,0 +1,22 @@
+{
+  "status": "PASS_source_and_payload_checks_only",
+  "manifest_sha256": "9513686fe1a2d24bf64cd067ce1a83d615e7fff30225804ee215991967ff95a2",
+  "checks": [
+    "both compressed target hashes and lengths match historical extraction receipt",
+    "each runtime target is byte-exact gzip expansion",
+    "all 31 runtime payload hashes/lengths match manifest",
+    "all 29 previous runtime payloads byte-identical to v4",
+    "all target rows finite and unique with vertex indices in actual base mesh range",
+    "both endpoints affect same 1518 vertex IDs"
+  ],
+  "base_mesh_vertices": 19158,
+  "opposite_endpoints_max_source_component_residual": 0.0,
+  "not_run": [
+    "actual renderer",
+    "body-garment intersections",
+    "bone deformation",
+    "motion",
+    "visual acceptance"
+  ],
+  "existing_quality_holds_preserved": true
+}

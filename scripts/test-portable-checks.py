@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from portable_catalog_v14 import UPPER_ARM_CHECKS, predecessor_bytes, predecessor_catalog
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -441,10 +442,17 @@ if [[ "$tool" == "${FAIL_TOOL:-}" && "$*" == *"${FAIL_MATCH:-}"* ]]; then exit 7
         temps = {row[3] for row in records}
         self.assertEqual(len(temps), 1)
         self.assertFalse(Path(temps.pop()).exists())
-        for experiment in ["72-b1-admission-controls", "73-high-poly-eyes"]:
-            for mode in ["-B", "-B -O"]:
-                command = f"{mode} -m unittest discover -s experiments/{experiment} -p test_*.py -v"
-                self.assertIn(["python3", command], [row[:2] for row in records])
+        helper = ["python3", "-B scripts/check-v15-history.py"]
+        commands = [row[:2] for row in records]
+        self.assertEqual(commands.count(helper), 1)
+        idx = commands.index(helper)
+        self.assertIn("experiments/71-b1-character-parameters", commands[idx - 1][1])
+        self.assertIn("experiments/79-shoulder-pose-corrective", commands[idx + 1][1])
+        # The successor driver is independently checked with mock child
+        # processes; this runner unit test still proves the exact shell seam.
+        for mode in ["-B", "-B -O"]:
+            self.assertIn(["python3", f"{mode} scripts/verify-b1-inputs-v15.py"], commands)
+            self.assertIn(["python3", f"{mode} scripts/verify-b1-inputs-v15.py --historical-test"], commands)
 
     def test_selection_uses_catalog_order_and_preserves_inherited_environment_and_temp(self):
         self.env.update(RUNNER_TEMP=str(self.temp), CARGO_BUILD_JOBS="7")
@@ -637,6 +645,65 @@ class TieringContract(unittest.TestCase):
             self.assertNotEqual(mutant, original)
             with self.subTest(selector=old), self.assertRaises(AssertionError):
                 historical_tiering_workflow(mutant, self)
+
+class V15PortableDispatch(unittest.TestCase):
+    @staticmethod
+    def load_helper():
+        spec = importlib.util.spec_from_file_location("v15_history_control", ROOT / "scripts/check-v15-history.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+
+    def test_both_live_and_historical_run_conditions(self):
+        module = self.load_helper()
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(
+                module, "materialize", return_value={"source": "isolated"}
+        ) as export, mock.patch.object(module, "current_context") as live, mock.patch.object(
+                module, "dispatch"
+        ) as dispatch, mock.patch.object(
+                module, "protected_experiments", return_value={module.EXP72: set(), module.EXP73: {"test_new"}}
+        ) as protected:
+            scratch = Path(directory)
+            history = ROOT / "required-historical-repository"
+            cohorts = (module.EXP72, module.EXP73)
+            module.replay(ROOT, ([], ["-O"]), history, scratch, cohorts)
+            dest = scratch / "tree"
+            export.assert_called_once_with(history, ROOT, dest)
+            parts = json.loads((ROOT / "scripts/v15-historical-test-ids.json").read_bytes())
+            bytecode = scratch / "empty-bytecode-cache"
+            live.assert_has_calls([mock.call(ROOT, flags, exp, bytecode)
+                                   for exp in cohorts for flags in ([], ["-O"])])
+            protected.assert_called_once_with(ROOT, dest)
+            dispatch.assert_has_calls([
+                mock.call(ROOT, dest, exp, flags, parts[exp],
+                          {"test_new"} if exp == module.EXP73 else set(), bytecode)
+                for exp in cohorts for flags in ([], ["-O"])
+            ])
+
+    def test_partition_is_exact_and_candidate_tests_default_to_live(self):
+        module = self.load_helper()
+        old = {"legacy": "a", "camera": "b"}
+        current = {"legacy": "a", "camera": "c", "new": "d"}
+        self.assertEqual(module.planned(current, old, {"legacy"}), (["camera", "new"], ["legacy"]))
+        for invalid, pinned in (
+            ({"legacy": "a", "new": "d"}, {"legacy"}),
+            ({"legacy": "changed", "camera": "c"}, {"legacy"}),
+            (current, {"legacy", "typo"}),
+        ):
+            with self.assertRaises(module.ReplayError):
+                module.planned(invalid, old, pinned)
+
+    def test_failure_before_test_dispatch_propagates(self):
+        module = self.load_helper()
+        with tempfile.TemporaryDirectory() as directory, mock.patch.object(
+                module, "materialize", return_value={}
+        ), mock.patch.object(module, "dispatch") as dispatch, mock.patch.object(
+                module, "current_context", side_effect=module.ReplayError("live gate")
+        ):
+            with self.assertRaisesRegex(module.ReplayError, "live gate"):
+                module.replay(ROOT, ([],), ROOT, Path(directory), (module.EXP73,))
+            dispatch.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -119,6 +119,14 @@ pub const B1_V14_ASSET_MANIFEST_SHA256: &str =
 pub const B1_V14_ASSET_MANIFEST_BYTES: &[u8] =
     include_bytes!("../../../assets/characters/mpfb-b1-v14/manifest.json");
 
+pub const B1_BELLY_SHAPE_PROFILE_ID: &str = "nvwa-mpfb-b1-belly-shape-v1";
+pub const B1_V15_ASSET_ID: &str = "mpfb-hm08-game-engine-female-sportsuit01-v15";
+pub const B1_V15_ASSET_PATH: &str = "characters/mpfb-b1-v15/manifest.json";
+pub const B1_V15_ASSET_MANIFEST_SHA256: &str =
+    "ea05307c27d2e94a208f05cdd92b9eefa905360dbab2453b6a043ac78221e401";
+pub const B1_V15_ASSET_MANIFEST_BYTES: &[u8] =
+    include_bytes!("../../../assets/characters/mpfb-b1-v15/manifest.json");
+
 /// Finite shipped base catalogue. This is not a caller-defined asset registry.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum B1AssetVersion {
@@ -136,6 +144,7 @@ pub enum B1AssetVersion {
     V12,
     V13,
     V14,
+    V15,
 }
 impl B1AssetVersion {
     pub const fn asset_id(self) -> &'static str {
@@ -154,6 +163,7 @@ impl B1AssetVersion {
             Self::V12 => B1_V12_ASSET_ID,
             Self::V13 => B1_V13_ASSET_ID,
             Self::V14 => B1_V14_ASSET_ID,
+            Self::V15 => B1_V15_ASSET_ID,
         }
     }
     pub const fn manifest_path(self) -> &'static str {
@@ -172,6 +182,7 @@ impl B1AssetVersion {
             Self::V12 => B1_V12_ASSET_PATH,
             Self::V13 => B1_V13_ASSET_PATH,
             Self::V14 => B1_V14_ASSET_PATH,
+            Self::V15 => B1_V15_ASSET_PATH,
         }
     }
     pub const fn manifest_sha256(self) -> &'static str {
@@ -190,6 +201,7 @@ impl B1AssetVersion {
             Self::V12 => B1_V12_ASSET_MANIFEST_SHA256,
             Self::V13 => B1_V13_ASSET_MANIFEST_SHA256,
             Self::V14 => B1_V14_ASSET_MANIFEST_SHA256,
+            Self::V15 => B1_V15_ASSET_MANIFEST_SHA256,
         }
     }
     pub const fn manifest_bytes(self) -> &'static [u8] {
@@ -208,8 +220,16 @@ impl B1AssetVersion {
             Self::V12 => B1_V12_ASSET_MANIFEST_BYTES,
             Self::V13 => B1_V13_ASSET_MANIFEST_BYTES,
             Self::V14 => B1_V14_ASSET_MANIFEST_BYTES,
+            Self::V15 => B1_V15_ASSET_MANIFEST_BYTES,
         }
     }
+    pub const fn one_sided_target(self) -> Option<B1OneSidedTarget> {
+        match self {
+            Self::V15 => Some(B1_BELLY_SHAPE_TARGET),
+            _ => None,
+        }
+    }
+
     pub fn parameters(self) -> &'static [B1ParameterTargets] {
         match self {
             Self::V1 => &B1_PARAMETER_TARGETS[..2],
@@ -226,9 +246,29 @@ impl B1AssetVersion {
             Self::V12 => &B1_SHOULDER_FORM_PARAMETER_TARGETS,
             Self::V13 => &B1_FOREARM_FORM_PARAMETER_TARGETS,
             Self::V14 => &B1_UPPER_ARM_MUSCLE_PARAMETER_TARGETS,
+            Self::V15 => &B1_CHEST_PLACEMENT_PARAMETER_TARGETS,
         }
     }
 }
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct B1OneSidedTarget {
+    pub id: &'static str,
+    pub increase: &'static str,
+    pub max_weight: f32,
+}
+
+impl B1OneSidedTarget {
+    pub fn positive_weight(self, value: f32) -> Option<f32> {
+        (value > 0.0 && value <= 1.0).then_some(value * self.max_weight)
+    }
+}
+
+pub const B1_BELLY_SHAPE_TARGET: B1OneSidedTarget = B1OneSidedTarget {
+    id: "belly_shape_strength",
+    increase: "stomach-pregnant-incr",
+    max_weight: 0.25,
+};
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct B1ParameterTargets {
@@ -772,6 +812,10 @@ impl CharacterBackend {
                 asset_id,
                 schema_version: 16,
             } if asset_id == B1_V14_ASSET_ID => Some(B1AssetVersion::V14),
+            CharacterBackend::B1Cpu {
+                asset_id,
+                schema_version: 17,
+            } if asset_id == B1_V15_ASSET_ID => Some(B1AssetVersion::V15),
             _ => None,
         }
     }
@@ -785,7 +829,7 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 && !(matches!(version, 2..=16) && self.is_b1()) {
+        if version != 1 && !(matches!(version, 2..=17) && self.is_b1()) {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported"),
@@ -1058,6 +1102,26 @@ impl CharacterProfile {
         );
         profile
     }
+    /// Experimental, static V10 successor. Strength is a bounded visual weight.
+    pub fn b1_character_belly_shape() -> Self {
+        let mut profile = Self::b1_character_chest_placement();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: 17,
+            asset_id: B1_V15_ASSET_ID.into(),
+        };
+        profile.id = B1_BELLY_SHAPE_PROFILE_ID.into();
+        profile.asset_path = B1_V15_ASSET_PATH.into();
+        profile.asset_sha256 = B1_V15_ASSET_MANIFEST_SHA256.into();
+        profile.parameters.push(ParameterSpec {
+            id: B1_BELLY_SHAPE_TARGET.id.into(),
+            morph_index: 25,
+            min: 0.0,
+            max: 1.0,
+            default: 0.0,
+        });
+        profile
+    }
+
     /// Static independent hand-size extension. Zero retains v9 geometry;
     /// older Works remain pinned to their original assets and profile.
     pub fn b1_character_hand_size() -> Self {
@@ -1167,7 +1231,9 @@ impl CharacterProfile {
                 "B1 backend version does not match its canonical profile identity",
             ));
         }
-        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V14) {
+        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V15) {
+            Self::b1_character_belly_shape()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V14) {
             Self::b1_character_upper_arm_muscle()
         } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V13) {
             Self::b1_character_forearm_form()
@@ -1296,6 +1362,7 @@ impl B1AssetManifest {
             B1_V12_ASSET_ID => B1AssetVersion::V12,
             B1_V13_ASSET_ID => B1AssetVersion::V13,
             B1_V14_ASSET_ID => B1AssetVersion::V14,
+            B1_V15_ASSET_ID => B1AssetVersion::V15,
             _ => return Err(CoreError::new("invalid_asset", "unknown B1 asset identity")),
         };
         let canonical = Self::decode(version.manifest_bytes())?;
@@ -1319,6 +1386,7 @@ impl B1AssetManifest {
                     B1AssetVersion::V12 => 61,
                     B1AssetVersion::V13 => 63,
                     B1AssetVersion::V14 => 65,
+                    B1AssetVersion::V15 => 60,
                 }
         {
             return Err(CoreError::new(

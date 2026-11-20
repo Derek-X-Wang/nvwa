@@ -36,6 +36,35 @@ def identity(invocation_cwd):
     print("Identity only: ignored caches and tool versions are not authenticated.", flush=True)
 
 
+def v15_body(group):
+    """Bind a successor to the two original catalog groups without rewriting the catalog."""
+    name, body = group["name"], group["run"]
+    if name == "eye-hair-parameters":
+        cohorts = "72-b1-admission-controls 73-high-poly-eyes "
+        step = '  python3 -B -m unittest discover -s "experiments/$experiment"'
+        if body.count(cohorts) != 1 or body.count(step) != 1:
+            raise ValueError("V15 requires the exact historical eye/hair replay seams")
+        # Node and suites 67/68/69/71 run exactly as before. At the former 72/73
+        # boundary, run two live gates and then those exact suites on #154.
+        body = body.replace(cohorts, "v15-current-and-history ", 1)
+        body = body.replace(step, '  if [ "$experiment" = v15-current-and-history ]; then\n'
+                            '    python3 -B scripts/check-v15-history.py\n'
+                            '    continue\n  fi\n' + step, 1)
+    elif name == "b1-inputs":
+        old = ("python3 -B scripts/verify-b1-inputs.py\n"
+               "python3 -B -O scripts/verify-b1-inputs.py\n"
+               "python3 -B scripts/test-b1-inputs.py\n"
+               "python3 -B -O scripts/test-b1-inputs.py\n")
+        new = ("python3 -B scripts/verify-b1-inputs-v15.py\n"
+               "python3 -B -O scripts/verify-b1-inputs-v15.py\n"
+               "python3 -B scripts/verify-b1-inputs-v15.py --historical-test\n"
+               "python3 -B -O scripts/verify-b1-inputs-v15.py --historical-test\n")
+        if body.count(old) != 1:
+            raise ValueError("V15 requires the exact historical B1 verifier seams")
+        body = body.replace(old, new, 1)
+    return body
+
+
 def run(groups, environment):
     for group in groups:
         print(f"\n[{group['name']}] {group['title']}", flush=True)
@@ -43,7 +72,7 @@ def run(groups, environment):
         # is evaluated in Python, so loops, quoting and interpreter failures keep
         # their original Bash behavior.
         result = subprocess.run(
-            ["bash", "--noprofile", "--norc", "-e", "-c", group["run"]],
+            ["bash", "--noprofile", "--norc", "-e", "-c", v15_body(group)],
             cwd=ROOT, env=environment,
         )
         if result.returncode:
