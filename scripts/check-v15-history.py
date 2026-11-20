@@ -20,6 +20,8 @@ EXP73 = "experiments/73-high-poly-eyes"
 CONTEXT_MANIFEST = EXP72 + "/input-context-v15-experimental-v1.json"
 NEW_CONTEXT_CONTROLS = {CONTEXT_MANIFEST, EXP72 + "/v15_source_context.py"}
 EXPERIMENT_BUILD_OUTPUTS = {"target", "__pycache__", ".work"}
+STDLIB_CACHE_HELPER = "scripts/ci-v15-stdlib-cache.py"
+STDLIB_CACHE_HELPER_SHA256 = "d2386c0eab74eea80b0a38b32a76aee2216debc8bd559085f0ed83ee1434aeea"
 
 
 class ReplayError(Exception):
@@ -304,13 +306,54 @@ def dispatch(live, dest, exp, flags, history_ids, additions, bytecode):
                        input=json.dumps(ids).encode())
 
 
-def replay(live, modes, historical, temporary, cohorts):
+def ci_prewarm_enabled(args, environment):
+    # Do not change the default local replay, standalone/offline export, or a
+    # manually narrowed probe. Only the existing GitHub-hosted job opts in.
+    return (not args.offline and not args.normal_only and args.cohort is None
+            and environment.get("GITHUB_ACTIONS") == "true"
+            and environment.get("GITHUB_JOB") == "portable-eye"
+            and environment.get("RUNNER_OS") == "Linux"
+            and environment.get("RUNNER_ENVIRONMENT") == "github-hosted")
+
+
+def prewarm_stdlib(live, temporary):
+    helper = live / STDLIB_CACHE_HELPER
+    need(helper.resolve(strict=True) == helper and stat.S_ISREG(helper.lstat().st_mode),
+         "stdlib prewarm helper must be an ordinary checkout file")
+    source = helper.read_bytes()
+    need(hashlib.sha256(source).hexdigest() == STDLIB_CACHE_HELPER_SHA256,
+         "stdlib prewarm helper identity mismatch")
+    # Isolate compiler imports from the checkout, user/site hooks, and inherited
+    # Python knobs. Execute the same bytes we authenticated, not a second path read.
+    result = subprocess.check_output(
+        [sys.executable, "-I", "-S", "-B", "-c", source.decode("utf-8"), str(temporary)],
+        cwd=temporary, env=clean_env(), text=True,
+    )
+    try:
+        receipt = json.loads(result)
+    except json.JSONDecodeError as error:
+        raise ReplayError("invalid stdlib prewarm receipt") from error
+    need(isinstance(receipt, dict) and receipt.get("modes") == [0, 1]
+         and type(receipt.get("source_files")) is int and receipt["source_files"] > 0
+         and receipt.get("checked_hash_files") == 2 * receipt["source_files"],
+         "invalid stdlib prewarm receipt")
+    prefix = temporary / "stdlib-bytecode-cache"
+    need(prefix.resolve(strict=True) == prefix and stat.S_ISDIR(prefix.lstat().st_mode),
+         "missing private stdlib cache")
+    print("V15 CI stdlib prewarm: " + json.dumps(receipt, sort_keys=True), flush=True)
+    return prefix
+
+
+def replay(live, modes, historical, temporary, cohorts, *, prewarm=False):
     dest = temporary / "tree"
     dest.mkdir()
-    bytecode = temporary / "empty-bytecode-cache"
-    bytecode.mkdir()
+    if not prewarm:
+        bytecode = temporary / "empty-bytecode-cache"
+        bytecode.mkdir()
     identity = materialize(historical, live, dest)
     print(json.dumps(identity), flush=True)
+    if prewarm:
+        bytecode = prewarm_stdlib(live, temporary)
     file = live / "scripts/v15-historical-test-ids.json"
     parts = json.loads(file.read_bytes())
     need(set(parts) == {EXP72, EXP73}, "wrong historical partition registry")
@@ -352,7 +395,7 @@ def main():
                            env=dict(clean_env(), GIT_ALLOW_PROTOCOL="https"),
                            check=True, timeout=120)
         modes = ([],) if args.normal_only else ([], ["-O"])
-        replay(live, modes, repo, scratch, cohorts)
+        replay(live, modes, repo, scratch, cohorts, prewarm=ci_prewarm_enabled(args, os.environ))
 
 
 if __name__ == "__main__":
