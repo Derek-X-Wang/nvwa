@@ -64,7 +64,7 @@
 
 [#79](https://github.com/Derek-X-Wang/nvwa/issues/79) 的完整发际／眼睑／接触质量、[#80](https://github.com/Derek-X-Wang/nvwa/issues/80) 衣物和 M2 动作质量继续 **HOLD**；[#112](https://github.com/Derek-X-Wang/nvwa/issues/112) 原始失败、[#3](https://github.com/Derek-X-Wang/nvwa/issues/3) 阻塞、[#4](https://github.com/Derek-X-Wang/nvwa/issues/4) 测量缺口保留。#86 呈现稳定性、其他平台及公开发行仍需各自证据。
 
-日常按[验收策略](agents/verification.md)运行相关 Web／CLI 验收；桌面专项和既有自动测试、原生／Wasm 编译、CI 门禁保留。普通桌面画面按大版本策略延后并记 `NOT-RUN`。旧实验通过不能替代当前提交的实际验收；不新增云端发布、下载或模型推理授权。
+日常以[正式 CLI 验收](agents/verification.md)为主。涉及浏览器行为、连续播放的视觉问题或明确的跨端验收时，再运行对应的 Web 场景。桌面专项和既有自动测试、原生／Wasm 编译、CI 门禁保留。普通桌面画面按大版本策略延后并记 `NOT-RUN`。旧实验通过不能替代当前提交的实际验收；不新增云端发布、下载或模型推理授权。
 
 证据入口：[脸颊 AI 创作候选](evidence/b1-contour-agent/README.md) · [B1 动作编排](evidence/b1-motion-authoring/README.md) · [人物基础阶段总结](closeout/character-foundation-20261020.md) · [八参数人物](evidence/b1-character-quality/RESULTS.md) · [short01](evidence/hair79-short01/README.md) · [外观保存交换](evidence/b1-appearance-work/RESULTS.md) · [试演舞台 A](evidence/rehearsal-stage/ACCEPTANCE.md) · [CLI 支持](CLI-SUPPORT.md)。各报告的历史状态只属于其原提交与验收范围。
 
