@@ -125,13 +125,36 @@ fn queries_actual_scene_travel_and_hold_using_the_work_scale() {
             decimal[4] = end.as_ref();
             let endpoint = success(&decimal);
             assert_eq!(endpoint["sampling"]["count"], 1);
-            assert_eq!(endpoint["end"]["t_s"], json!(duration as f32));
+            assert_eq!(endpoint["end"]["t_s"], json!(duration));
+            let returned_time = endpoint["end"]["t_s"].to_string();
+            decimal[3] = Path::new(&returned_time);
+            decimal[4] = Path::new(&returned_time);
+            assert_eq!(success(&decimal)["end"], endpoint["end"]);
             assert_eq!(endpoint["end"]["source_t_s"], json!(4.0));
             decimal[4] = beyond.as_ref();
             rejected(&decimal, "travel_query_range");
         }
     } else {
         rejected(&request, "travel_query_unavailable");
+    }
+    let oversized_character = dir.join("oversized.nvwa.json");
+    std::fs::write(
+        &commands,
+        serde_json::to_vec(&json!({"command_id":"oversized", "expected_revision":2,
+            "command":{"type":"set_scale","character_id":"character-1","scale":101}}))
+        .unwrap(),
+    )
+    .unwrap();
+    success(&["apply".as_ref(), &work, &commands, &oversized_character]);
+    let caps = success(&["describe-capabilities".as_ref(), &oversized_character]);
+    assert_eq!(
+        caps["cli_contract"]["travel_query"]["work_supported"],
+        false
+    );
+    if cfg!(feature = "motion-query") {
+        let mut out_of_scale = request;
+        out_of_scale[1] = &oversized_character;
+        rejected(&out_of_scale, "travel_query_unsupported_work");
     }
     assert_eq!(std::fs::read(&work).unwrap(), original);
     std::fs::remove_dir_all(dir).unwrap();

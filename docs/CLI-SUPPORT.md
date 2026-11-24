@@ -65,6 +65,7 @@ for the measured workflow and its limits.
 To check how far a running character moves, read
 `cli_contract.travel_query` in `describe-capabilities`. The command takes the
 Work, asset root, inclusive start and end times, and sampling interval in seconds.
+The production display supports saved character scales from 0.001 through 100.
 
 ```sh
 target/debug/nvwa-cli travel-query forward.nvwa.json assets 0 5 1

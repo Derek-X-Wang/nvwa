@@ -232,7 +232,10 @@ fn supports_motion_query(work: &SceneDocument) -> bool {
 }
 
 fn supports_travel_query(work: &SceneDocument) -> bool {
-    work.profile.backend.is_b1_running() && !work.timeline.is_empty()
+    // The production display-origin observer requires a representable stage camera.
+    work.profile.backend.is_b1_running()
+        && !work.timeline.is_empty()
+        && (0.001..=100.0).contains(&work.character.scale)
 }
 
 fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError> {

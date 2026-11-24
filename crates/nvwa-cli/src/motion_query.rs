@@ -322,10 +322,15 @@ struct TravelFrame {
     origins: [[f64; 3]; 2],
 }
 
+// Use the Work's serialized precision for public timestamps, including query bounds.
+fn work_seconds(seconds: f32) -> f64 {
+    seconds.to_string().parse().expect("finite Work timestamp")
+}
+
 impl TravelFrame {
     fn value(&self) -> Value {
         json!({
-            "t_s": self.seconds,
+            "t_s": work_seconds(self.seconds),
             "source_t_s": self.source_seconds,
             "timeline_id": self.timeline_id,
             "positions_metres": {"body": self.origins[0], "garment": self.origins[1]},
@@ -359,15 +364,12 @@ pub(super) fn run_travel(args: &[String]) -> Result<Value, CoreError> {
     if !super::supports_travel_query(&work) {
         return Err(CoreError::new(
             "travel_query_unsupported_work",
-            "Travel query supports finite B1 running-profile timelines",
+            "Travel query requires a finite B1 running timeline at a stage presentation scale of 0.001 through 100",
         ));
     }
     // Validate the requested time against the public decimal endpoint. The
     // runtime still seeks at f32 precision after the request passes that check.
-    let duration = serde_json::to_string(&work.timeline_duration_seconds())
-        .expect("validated timeline duration is serializable")
-        .parse::<f64>()
-        .expect("validated timeline duration is a number");
+    let duration = work_seconds(work.timeline_duration_seconds());
     let times = request.times(request.end, duration, "travel_query_range")?;
     let revision = work.revision;
     let failure = |message| CoreError::new("travel_query_failed", message);
