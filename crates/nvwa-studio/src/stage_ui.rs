@@ -499,7 +499,9 @@ mod tests {
             ("白棚 / White", StageSettings::white_studio()),
         ] {
             let out = h.frame(vec![]);
-            h.click(label(&out, button).center());
+            let position = label(&out, button).center();
+            out.drop_without_applying_deltas();
+            h.click(position);
             let actual = &h.editor.document().unwrap().stage;
             assert_eq!(actual.background_color_srgb, expected.background_color_srgb);
             let saved = h.editor.document().unwrap().to_json().unwrap();

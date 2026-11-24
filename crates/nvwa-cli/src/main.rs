@@ -512,16 +512,16 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "default_output": "summary",
             "renderer_required": false
         },
-        "contact_query": {
-            "available": cfg!(feature = "motion-query"),
-            "work_supported": supports_travel_query(document) && document.stage.contact_target.is_some(),
-            "landmark": "left_index_distal_surface",
-            "supported_display_subdivision_level": 0,
-            "target": {"field":"stage.contact_target", "optional":true, "write_command":"set_stage",
-                       "example":{"id":"switch-a","position_metres":[0.5,1.62,2.18],"radius_metres":0.015}},
-            "usage": CONTACT_QUERY_USAGE, "default_output":"summary", "renderer_required":false
-        },
         "studio_control": false
+    });
+    capabilities["contact_query"] = serde_json::json!({
+        "available": cfg!(feature = "motion-query"),
+        "work_supported": supports_travel_query(document) && document.stage.contact_target.is_some(),
+        "landmark": "left_index_distal_surface",
+        "supported_display_subdivision_level": 0,
+        "target": {"field":"stage.contact_target", "optional":true, "write_command":"set_stage",
+                   "example":{"id":"switch-a","position_metres":[0.5,1.62,2.18],"radius_metres":0.015}},
+        "usage": CONTACT_QUERY_USAGE, "default_output":"summary", "renderer_required":false
     });
     capabilities["leg_shape"] = leg_shape;
     capabilities["upper_body_shape"] = upper_body_shape;

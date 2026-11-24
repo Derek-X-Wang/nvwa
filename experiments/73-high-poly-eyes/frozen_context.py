@@ -1312,7 +1312,7 @@ def leg_source_context(exp, cpu):
 INTEGRATION_CONTEXT_ID = 'b1-chest-v10-with-v14-cli-level1-integration-candidate-v1'
 # Only the digest in this assignment is substituted by the contact manifest's
 # selector template; the rest of this file is byte-exact.
-CONTACT_HELPER_SHA = '7faf38e98cf0ef01531a86dd88fb7afae45f5aa42563f005f2f646743343bb94'
+CONTACT_HELPER_SHA = '90694e718731d255d1dd07c87c6d7220f21bef33ffab572eb216f552b3f5e7b5'
 TRAVEL_HELPER_SHA = '081847e1a9ebedfca49d0a34dcb1e27008116b8fe745552210dd165a011decc1'
 CONTACT_INTEGRATION_SHA = '2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5'
 
