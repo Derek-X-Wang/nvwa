@@ -25,6 +25,7 @@ def closure():
         'experiments/72-b1-admission-controls/input-context-travel-query-v1.json',
         'experiments/72-b1-admission-controls/travel_query_source_context.py',
         'experiments/72-b1-admission-controls/test_travel_query_context.py',
+        'experiments/72-b1-admission-controls/test_waist_context.py',
         'experiments/72-b1-admission-controls/pre-travel-query/crates/nvwa-cli/src/main.rs',
         'experiments/72-b1-admission-controls/pre-travel-query/crates/nvwa-cli/src/motion_query.rs']]
     for directory in [ROOT/'crates', ROOT/'vendor', ROOT/'assets', EXP]:
