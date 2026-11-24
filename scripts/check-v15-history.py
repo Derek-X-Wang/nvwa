@@ -260,11 +260,11 @@ def protected_experiments(live, dest):
             need(after[name] == source_pin(candidate[name][0]), "changed new replay input: " + name)
         extra = candidate.keys() - old.keys() - allowed
         expected_test = re.escape(exp) + r"/test_[A-Za-z0-9_]+\.py"
-        for name in extra:
-            need(re.fullmatch(expected_test, name) and not candidate[name][1],
+        test_files = {name for name in extra | new_delta if re.fullmatch(expected_test, name)}
+        for name in extra | test_files:
+            need(name in test_files and not candidate[name][1],
                  "unsupported experiment input: " + name)
-        additions[exp] = {Path(name).stem for name in extra | new_delta
-                          if re.fullmatch(expected_test, name)}
+        additions[exp] = {Path(name).stem for name in test_files}
     return additions
 
 

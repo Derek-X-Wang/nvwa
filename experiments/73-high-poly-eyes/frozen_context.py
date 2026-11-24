@@ -311,7 +311,8 @@ def pre_running_sources(exp, contexts):
 MOTION_QUERY_CONTEXT = 'b1-motion-query-product-v1'
 MOTION_QUERY_CONTEXT_NAME = 'source-context-b1-motion-query-v1.json'
 MOTION_QUERY_CONTEXT_SHA = '12f03cc2d1cd9db12c9d5d112b52a0174d0253054a58531185ee71a4bf7dfc03'
-MOTION_QUERY_NEW = ('crates/nvwa-cli/src/motion_query.rs', 'crates/nvwa-cli/tests/motion_query.rs',
+MOTION_QUERY_SOURCE = 'crates/nvwa-cli/src/motion_query.rs'
+MOTION_QUERY_NEW = (MOTION_QUERY_SOURCE, 'crates/nvwa-cli/tests/motion_query.rs',
                     'crates/nvwa-runtime/src/b1/foot_clearance.rs')
 MOTION_QUERY_OUTSIDE = {
     'crates/nvwa-studio/examples/nvwa-preview.rs': {'bytes': 22049, 'sha256': 'c32c5bb4f71989af875ae1d24af40d6d7810ff97d4e4582d94c12311964e2452'},
@@ -449,7 +450,12 @@ def _cpu_context(exp, previous):
 
 
 def pre_cpu_sources(exp, raw, original):
-    return _pre_cpu_sources(exp, _motion_query_source_context(exp, running_source_context(exp, raw, original))[1])
+    previous = _motion_query_source_context(exp, running_source_context(exp, raw, original))[1]
+    retained = _pre_cpu_sources(exp, previous)
+    data = retained_motion_query_file(exp).read_bytes()
+    require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == previous[MOTION_QUERY_SOURCE],
+            'retained motion-query bytes mismatch: ' + MOTION_QUERY_SOURCE)
+    return retained | {MOTION_QUERY_SOURCE: data}
 
 
 def cpu_source_context(exp, raw, original):
@@ -769,8 +775,15 @@ def has_cli_level1_inputs(root):
     return path.exists() or path.is_symlink()
 
 
+def retained_motion_query_file(exp):
+    return regular_file(exp, f'../72-b1-admission-controls/fixtures/pre-travel-query/{MOTION_QUERY_SOURCE}')
+
+
 def pre_cli_level1_file(name):
-    fixture = Path(__file__).resolve().parent / CLI_LEVEL1_FIXTURES / name
+    exp = Path(__file__).resolve().parent
+    if name == MOTION_QUERY_SOURCE:
+        return retained_motion_query_file(exp)
+    fixture = exp / CLI_LEVEL1_FIXTURES / name
     return fixture if name in CLI_LEVEL1_CHANGED else Path(__file__).resolve().parents[2] / name
 
 
@@ -1298,16 +1311,18 @@ def integration_source_context(exp, cpu, root):
     import importlib.util
     spec = importlib.util.spec_from_file_location('nvwa_integration_context73', exp.parent / '72-b1-admission-controls/integration_context.py')
     integration = importlib.util.module_from_spec(spec); spec.loader.exec_module(integration)
-    successor_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
-                         'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
-                         'scripts/build-belly-shape-v15.py', 'crates/nvwa-cli/tests/travel_query.rs')
-    if any((root / name).exists() or (root / name).is_symlink() for name in successor_markers):
-        travel_spec = importlib.util.spec_from_file_location(
-            'nvwa_travel_query_source_context73',
-            regular_file(exp, '../72-b1-admission-controls/travel_query_source_context.py'))
-        travel = importlib.util.module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
+    v15_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
+                   'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
+                   'scripts/build-belly-shape-v15.py')
+    v15_present = any((root / name).exists() or (root / name).is_symlink() for name in v15_markers)
+    travel_spec = importlib.util.spec_from_file_location(
+        'nvwa_travel_query_source_context73',
+        regular_file(Path(__file__).resolve().parent, '../72-b1-admission-controls/travel_query_source_context.py'))
+    travel = importlib.util.module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
+    travel_query = travel.present(root, exp.parent / '72-b1-admission-controls', v15_present)
+    if v15_present or travel_query:
         _, previous = integration.expected(cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')
-        if travel.present(root):
+        if travel_query:
             return travel.verify(root, previous)
         v15_spec = importlib.util.spec_from_file_location(
             'nvwa_v15_source_context73', exp.parent / '72-b1-admission-controls/v15_source_context.py')

@@ -6,7 +6,7 @@ from types import ModuleType
 
 EXP = Path(__file__).resolve().parent
 NAME = 'input-context-travel-query-v1.json'
-SHA = '7b4c4a7b1b8a0a6988e580abd438cd10a955346e62736f9993b20253edaf7b4f'
+SHA = '889f8f85081ddb6419044497091de5d0b016ec387e292bdd2c96b63ec6e303da'
 ID = 'nvwa-travel-query-source-context-v1'
 PREDECESSOR = '693902b8f06156401706691a40c2804c6029f535'
 PREDECESSOR_ID = 'nvwa-v15-experimental-source-context-v1'
@@ -28,12 +28,20 @@ CHANGED = set(MARKERS) | {
     'scripts/check-v15-live73.py',
 }
 ADDED = {TRAVEL_TEST, f'{EXP72}/test_travel_query_context.py'} | {f'{EXP72}/{name}' for name in RETAINED}
+CONTROLS = (ADDED - {TRAVEL_TEST}) | {f'{EXP72}/{NAME}', f'{EXP72}/travel_query_source_context.py'}
 
 
-def present(root):
+def present(root, control_exp, v15_present):
     test = root / TRAVEL_TEST
     if test.exists() or test.is_symlink():
         return True
+    # Historical controls may explicitly supply a disposable control directory
+    # inside the test tree. A live checkout or any V15 tree must authenticate
+    # the successor files that are actually inside the requested source root.
+    separate_controls = control_exp != EXP and root / EXP72 == control_exp
+    if v15_present or not separate_controls:
+        if any((root / name).exists() or (root / name).is_symlink() for name in CONTROLS):
+            return True
     # If the added test is missing, either implementation file still selects
     # this gate. The full map check rejects incomplete and modified sources.
     for name, marker in MARKERS.items():

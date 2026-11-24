@@ -22,7 +22,8 @@ SHORT01_CONTEXT_SHA = 'ed7accc23126ca827d21e25675148a34c00b8d550a09ff54944f183ec
 CHEEK_CONTEXT_SHA = 'd743b42f361cf271603b7cbba950bd5005989aacff5a137804f776ebb7f6dc14'
 LOWER_CONTEXT_SHA = '5663c4470d9332f8e3fc02da1d094b48c39c5b9903caa1ce8a22aac45307b2e9'
 LOWER_BASELINES_SHA = '993525f21e2f298b46373f3609319e6b1a1db50ef9cb01dbe488d406a64c861f'
-HERE = Path(__file__).resolve().parent
+CONTROL_HOME = Path(__file__).resolve().parent
+HERE = CONTROL_HOME
 PACKAGE = ('run.py', 'test_controls.py', 'compatibility.rs', 'cases.json', 'pins.json', 'README.md', 'REVIEW.md', 'input-context-v1.json', 'input-context-v2.json', 'input-context-v3.json')
 PACKAGE += ('input-context-v4.json', 'input-context-v5.json')
 PACKAGE += ('input-context-legs-v1.json', 'test_leg_context.py')
@@ -296,7 +297,8 @@ def _pre_running_sources(pins, contexts):
 MOTION_QUERY_CONTEXT = 'b1-motion-query-product-v1'
 MOTION_QUERY_CONTEXT_NAME = 'input-context-v7.json'
 MOTION_QUERY_CONTEXT_SHA = 'c4701231f75f94f00c6df90cf5d9562ae0421f4cbcf75a34a81f09b98c1bffa7'
-MOTION_QUERY_NEW = ('crates/nvwa-cli/src/motion_query.rs', 'crates/nvwa-cli/tests/motion_query.rs',
+MOTION_QUERY_SOURCE = 'crates/nvwa-cli/src/motion_query.rs'
+MOTION_QUERY_NEW = (MOTION_QUERY_SOURCE, 'crates/nvwa-cli/tests/motion_query.rs',
                     'crates/nvwa-runtime/src/b1/foot_clearance.rs')
 MOTION_QUERY_OUTSIDE = {
     'crates/nvwa-cli/Cargo.toml': {'bytes': 236, 'sha256': '8393f7aa78a68a1cc6781c8e8d3d211226be5e809cc7fe84821a56e3c9fbb508'},
@@ -442,7 +444,12 @@ def _cpu_context(exp, previous):
 
 
 def pre_cpu_sources(pins):
-    return _pre_cpu_sources(HERE, _motion_query_source_context(running_source_context(pins))[1])
+    previous = _motion_query_source_context(running_source_context(pins))[1]
+    retained = _pre_cpu_sources(HERE, previous)
+    raw = retained_motion_query_file().read_bytes()
+    require({'bytes': len(raw), 'sha256': sha(raw)} == previous[MOTION_QUERY_SOURCE],
+            'retained motion-query bytes mismatch: ' + MOTION_QUERY_SOURCE)
+    return retained | {MOTION_QUERY_SOURCE: raw}
 
 
 def cpu_source_context(pins):
@@ -816,7 +823,13 @@ def has_cli_level1_inputs(root):
     return (root / 'experiments/72-b1-admission-controls' / CLI_LEVEL1_CONTEXT_NAME).exists()
 
 
+def retained_motion_query_file():
+    return source_file(HERE, f'fixtures/pre-travel-query/{MOTION_QUERY_SOURCE}')
+
+
 def pre_cli_level1_file(name):
+    if name == MOTION_QUERY_SOURCE:
+        return retained_motion_query_file()
     return HERE / CLI_LEVEL1_FIXTURES / name if name in CLI_LEVEL1_CHANGED else HERE.parents[1] / name
 
 
@@ -1484,14 +1497,15 @@ def check_source_context(root, pins, historical_only=False):
     from importlib.util import module_from_spec, spec_from_file_location
 
     # An incomplete marker still selects the context whose inputs it declares.
-    successor_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
-                         'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
-                         'scripts/build-belly-shape-v15.py', 'crates/nvwa-cli/tests/travel_query.rs')
-    if any((root / name).exists() or (root / name).is_symlink() for name in successor_markers):
-        travel_spec = spec_from_file_location('nvwa_travel_query_source_context',
-                                             source_file(HERE, 'travel_query_source_context.py'))
-        travel = module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
-        travel_query = travel.present(root)
+    v15_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
+                   'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
+                   'scripts/build-belly-shape-v15.py')
+    v15_present = any((root / name).exists() or (root / name).is_symlink() for name in v15_markers)
+    travel_spec = spec_from_file_location('nvwa_travel_query_source_context',
+                                         source_file(CONTROL_HOME, 'travel_query_source_context.py'))
+    travel = module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
+    travel_query = travel.present(root, HERE, v15_present)
+    if v15_present or travel_query:
         source = 'travel-query exact source' if travel_query else 'V15 source'
         require(not historical_only, 'source input context mismatch: ' + source + ' is not historical')
         current_source_contexts(pins)
