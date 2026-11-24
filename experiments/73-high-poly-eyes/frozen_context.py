@@ -1312,14 +1312,14 @@ def leg_source_context(exp, cpu):
 INTEGRATION_CONTEXT_ID = 'b1-chest-v10-with-v14-cli-level1-integration-candidate-v1'
 # Only the digest in this assignment is substituted by the contact manifest's
 # selector template; the rest of this file is byte-exact.
-CONTACT_HELPER_SHA = '46e5cb92648cec4a5842f113f28914aabb77ef014cb4441f2916b7fb9e6b7740'
-TRAVEL_HELPER_SHA = '401198edbfd609ebfa3f63b0e3029c70bd6446d4d53f966f9308c5f687b5aff5'
+CONTACT_HELPER_SHA = '7faf38e98cf0ef01531a86dd88fb7afae45f5aa42563f005f2f646743343bb94'
+TRAVEL_HELPER_SHA = '081847e1a9ebedfca49d0a34dcb1e27008116b8fe745552210dd165a011decc1'
 CONTACT_INTEGRATION_SHA = '2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5'
 
 
-def authenticated_module(path, expected):
+def authenticated_module(path, expected, verified_bytes=None):
     from types import ModuleType
-    raw = path.read_bytes()
+    raw = path.read_bytes() if verified_bytes is None else verified_bytes
     require(hashlib.sha256(raw).hexdigest() == expected, 'source helper identity: ' + path.name)
     module = ModuleType(path.stem)
     module.__file__ = str(path)
@@ -1336,7 +1336,8 @@ def integration_source_context(exp, cpu, root):
     release = Path(__file__).resolve().parent
     travel = authenticated_module(regular_file(release, '../72-b1-admission-controls/travel_query_source_context.py'), TRAVEL_HELPER_SHA)
     travel_query = travel.present(root, exp.parent / '72-b1-admission-controls', v15_present)
-    contact = authenticated_module(regular_file(release, '../72-b1-admission-controls/contact_target_source_context.py'), CONTACT_HELPER_SHA)
+    contact_path = regular_file(release, '../72-b1-admission-controls/contact_target_source_context.py')
+    contact = authenticated_module(contact_path, CONTACT_HELPER_SHA, travel.contact_bytes(contact_path.parent))
     contact_target = contact.present(root, exp.parent / '72-b1-admission-controls', v15_present, travel, travel_query)
     if contact_target:
         integration = authenticated_module(regular_file(exp, '../72-b1-admission-controls/integration_context.py'), CONTACT_INTEGRATION_SHA)

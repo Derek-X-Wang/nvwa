@@ -288,7 +288,28 @@ def protected_experiments(live, dest):
     return additions
 
 
+TRAVEL_HELPER_SHA = '081847e1a9ebedfca49d0a34dcb1e27008116b8fe745552210dd165a011decc1'
+
+
+def check_contact_bootstrap(live):
+    from types import ModuleType
+    exp = live / EXP72
+    path = exp / 'travel_query_source_context.py'
+    need(path.is_file() and not path.is_symlink(), 'missing trusted travel helper')
+    raw = path.read_bytes()
+    need(hashlib.sha256(raw).hexdigest() == TRAVEL_HELPER_SHA, 'trusted travel helper identity')
+    travel = ModuleType('nvwa_replay_contact_authority')
+    travel.__file__ = str(path)
+    exec(compile(raw, str(path), 'exec'), travel.__dict__)
+    travel.contact_bytes(exp)
+    policy = json.loads((live / CONTACT_MANIFEST).read_bytes())
+    for name in (EXP72 + '/run.py', EXP73 + '/frozen_context.py'):
+        need(policy['after'][name] == contact_replay_pin(live, name, live / name),
+             'unverified contact selector before replay: ' + name)
+
+
 def current_context(live, flags, exp, bytecode):
+    check_contact_bootstrap(live)
     if exp == EXP72:
         command = [sys.executable, "-B", *flags, f"{exp}/run.py", "--check-inputs"]
         field = "checked_input_context"

@@ -7,7 +7,7 @@ EXP = Path(__file__).resolve().parent
 EXP72 = 'experiments/72-b1-admission-controls'
 EXP73 = 'experiments/73-high-poly-eyes'
 NAME = 'input-context-contact-target-v1.json'
-SHA = '3e2b21af811d6dfb08740c309a748ce5a8cf9569a74f9fa4a49923e94c02845c'
+SHA = '695212b6cce6ee2a2414567eb210c830e1362bd23951983ab55b540885de44bc'
 ID = 'nvwa-contact-target-source-context-v1'
 PREDECESSOR = 'e7574dfaaa13d769e824630a32d60ea536c15a83'
 FIXTURES = 'pre-contact-target'
@@ -87,7 +87,7 @@ def records(v15):
     raw = v15.file(EXP, NAME).read_bytes()
     need(hashlib.sha256(raw).hexdigest() == SHA, 'manifest identity')
     data = json.loads(raw)
-    need(set(data) == {'format', 'predecessor_context', 'predecessor_commit', 'before', 'after', 'rust_inventory'}
+    need(set(data) == {'format', 'predecessor_context', 'predecessor_commit', 'before', 'after', 'rust_inventory', 'helper_template'}
          and data['format'] == ID and data['predecessor_context'] == 'nvwa-travel-query-source-context-v1'
          and data['predecessor_commit'] == PREDECESSOR
          and data['before'].keys() == data['after'].keys() == CHANGED | ADDED

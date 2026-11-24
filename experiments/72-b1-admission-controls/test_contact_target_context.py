@@ -138,8 +138,35 @@ class ContactTargetContext(unittest.TestCase):
                              f"\nfrom pathlib import Path\nPath({str(sentinel)!r}).touch()\n".encode()):
                     local.write_bytes(original.read_bytes() + edit)
                     for gate in (first, second):
-                        with self.subTest(helper=name), self.assertRaisesRegex(ValueError, 'source helper identity'):
+                        reason = 'contact helper template identity' if name == 'contact_target_source_context.py' else 'source helper identity'
+                        with self.subTest(helper=name), self.assertRaisesRegex(ValueError, reason):
                             gate(tree)
                         self.assertFalse(sentinel.exists())
                 local.unlink()
                 os.link(original, local)
+
+
+    def test_coordinated_helper_and_selector_digest_edits_fail_before_exec(self):
+        with tempfile.TemporaryDirectory() as temp:
+            tree = Path(temp).resolve()
+            source_tree(tree, predecessor=False)
+            helper = tree / contact.HELPER
+            old = helper.read_bytes()
+            sentinel = tree / 'untrusted-coordinated-exec'
+            changed = old + f"\nfrom pathlib import Path\nPath({str(sentinel)!r}).touch()\n".encode()
+            helper.unlink()
+            helper.write_bytes(changed)
+            old_sha = hashlib.sha256(old).hexdigest().encode()
+            new_sha = hashlib.sha256(changed).hexdigest().encode()
+            for name in contact.SELECTORS:
+                path = tree / name
+                raw = path.read_bytes()
+                self.assertEqual(raw.count(old_sha), 1)
+                path.unlink()
+                path.write_bytes(raw.replace(old_sha, new_sha))
+            first, second = gates(tree)
+            history = load(tree / 'scripts/check-v15-history.py')
+            for gate in (first, second, history.check_contact_bootstrap):
+                with self.subTest(gate=gate), self.assertRaisesRegex(ValueError, 'contact helper template identity'):
+                    gate(tree)
+                self.assertFalse(sentinel.exists())
