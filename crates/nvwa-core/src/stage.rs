@@ -48,6 +48,21 @@ pub struct StageCamera {
     /// Vertical field of view.
     pub fov_degrees: f32,
 }
+/// One author-placed sphere in fixed stage-world coordinates. Distances are metres.
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct StageContactTarget {
+    pub id: String,
+    pub position_metres: [f32; 3],
+    pub radius_metres: f32,
+}
+
+fn present_contact_target<'de, D: serde::Deserializer<'de>>(
+    deserializer: D,
+) -> std::result::Result<Option<StageContactTarget>, D::Error> {
+    StageContactTarget::deserialize(deserializer).map(Some)
+}
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct StageSettings {
@@ -58,6 +73,12 @@ pub struct StageSettings {
     pub floor: StageFloor,
     pub camera: StageCamera,
     pub quality: StageQuality,
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "present_contact_target"
+    )]
+    pub contact_target: Option<StageContactTarget>,
 }
 
 pub(crate) fn bounded(value: f32, min: f32, max: f32, name: &str) -> Result<()> {
@@ -158,6 +179,7 @@ impl StageSettings {
             },
             camera: StageCamera::full_body(),
             quality: StageQuality::Balanced,
+            contact_target: None,
         }
     }
     pub fn black_space() -> Self {
@@ -188,6 +210,19 @@ impl StageSettings {
         }
     }
     pub fn validate(&self) -> Result<()> {
+        if let Some(target) = &self.contact_target {
+            crate::id(&target.id, "contact_target.id")?;
+            if target.id.len() > 128 || target.id.chars().any(char::is_control) {
+                return Err(CoreError::new(
+                    "invalid_id",
+                    "contact target ID must fit 128 UTF-8 bytes and contain no control characters",
+                ));
+            }
+            for coordinate in target.position_metres {
+                finite(coordinate, "contact_target.position_metres")?;
+            }
+            crate::positive(target.radius_metres, "contact_target.radius_metres")?;
+        }
         self.key_light.validate()?;
         self.fill_light.validate()?;
         bounded(self.ambient.brightness, 0.0, 2000.0, "ambient brightness")?;

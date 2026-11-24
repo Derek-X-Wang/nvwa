@@ -73,6 +73,9 @@ def historical_input(name, expected_pin, root):
   relative='pre-travel-query/'+name
   p=EXP/relative
   if p.is_file() and pin(file(EXP,relative).read_bytes())==expected_pin:return p
+ relative='pre-contact-target/'+name
+ p=EXP/relative
+ if p.is_file() and pin(file(EXP,relative).read_bytes())==expected_pin:return p
  raise ValueError('no authenticated historical fixture for '+name)
 
 def current_test_identity(api, root, previous_id):

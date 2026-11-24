@@ -417,3 +417,88 @@ mod tests {
         assert!(sample_times(0.141, 0.3415, 0.001).is_err());
     }
 }
+
+struct ContactSample {
+    seconds: f32,
+    position: [f32; 3],
+    distance: f64,
+    inside: bool,
+}
+
+impl ContactSample {
+    fn value(&self) -> Value {
+        json!({"t_s": work_seconds(self.seconds), "position_metres": self.position,
+            "distance_to_center_metres": self.distance, "inside": self.inside})
+    }
+}
+
+pub(super) fn run_contact(args: &[String]) -> Result<Value, CoreError> {
+    let request = query_request(args, super::CONTACT_QUERY_USAGE, "contact_query_range")?;
+    let raw = super::read(request.path)?;
+    let work = SceneDocument::from_json(&raw)?;
+    if !super::supports_travel_query(&work) {
+        return Err(CoreError::new(
+            "contact_query_unsupported_work",
+            "Contact query requires an admitted running timeline with presentation scale 0.001 through 100",
+        ));
+    }
+    let target = work.stage.contact_target.clone().ok_or_else(|| {
+        CoreError::new(
+            "contact_target_absent",
+            "Save stage.contact_target using set_stage first",
+        )
+    })?;
+    let times = request.times(
+        request.end,
+        work_seconds(work.timeline_duration_seconds()),
+        "contact_query_range",
+    )?;
+    let revision = work.revision;
+    let failure = |message| CoreError::new("contact_query_failed", message);
+    let mut app = headless_app(request.assets, work).map_err(failure)?;
+    let mut samples = Vec::with_capacity(times.len());
+    for seconds in times {
+        let world = seek(&mut app, seconds).map_err(failure)?;
+        let position = nvwa_runtime::b1_running_left_index_position(world)?;
+        let distance = position
+            .iter()
+            .zip(target.position_metres)
+            .map(|(&a, b)| (f64::from(a) - f64::from(b)).powi(2))
+            .sum::<f64>()
+            .sqrt();
+        samples.push(ContactSample {
+            seconds,
+            position,
+            distance,
+            inside: distance <= f64::from(target.radius_metres),
+        });
+    }
+    let first = samples.first().expect("at least one sample");
+    let last = samples.last().expect("at least one sample");
+    let nearest = samples
+        .iter()
+        .min_by(|a, b| a.distance.total_cmp(&b.distance))
+        .unwrap();
+    let changes = samples
+        .windows(2)
+        .filter(|w| w[0].inside != w[1].inside)
+        .map(|w| {
+            json!({"event": if w[1].inside {"enter"} else {"exit"},
+             "bracket_s":[work_seconds(w[0].seconds),work_seconds(w[1].seconds)]})
+        })
+        .collect::<Vec<_>>();
+    // Match the canonical f32 decimals reported by inspect and persisted by save.
+    let target: Value =
+        serde_json::from_str(&serde_json::to_string(&target).expect("validated target"))
+            .expect("serialized target JSON");
+    let mut result = json!({
+        "schema_version": 1, "work":{"revision":revision, "sha256":appearance_sha256(raw.as_bytes())},
+        "landmark":"left_index_distal_surface", "space":"stage_world_xyz", "axes":{"up":"+Y","forward":"+Z"},
+        "target":target, "sampling":{"start_s":request.start, "end_s":request.end, "step_s":request.step, "count":samples.len()},
+        "start":first.value(), "end":last.value(), "nearest":nearest.value(), "changes":changes
+    });
+    if request.expand {
+        result["samples"] = json!(samples.iter().map(ContactSample::value).collect::<Vec<_>>());
+    }
+    Ok(result)
+}

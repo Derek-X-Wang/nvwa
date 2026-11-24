@@ -1,6 +1,7 @@
 """Authenticate the exact travel-query successor to the V15 source context."""
 import hashlib
 import json
+import re
 from pathlib import Path
 from types import ModuleType
 
@@ -107,7 +108,7 @@ def records(v15):
     return value
 
 
-def verify(root, integration):
+def expected(integration):
     v15 = predecessor_gate()
     value = records(v15)
     baseline = v15.records()
@@ -125,12 +126,45 @@ def verify(root, integration):
     for fixture, name in RETAINED.items():
         need(v15.pin(v15.file(EXP, fixture)) == previous[name], 'predecessor fixture bytes: ' + name)
 
-    expected = previous | value['after']
+    return v15, previous | value['after']
+
+
+def verify(root, integration):
+    v15, expected_files = expected(integration)
+    verify_files(root, v15, expected_files, need)
+    return ID, expected_files
+
+
+def verify_files(root, v15, expected, require):
     for name, pin in expected.items():
-        need(v15.pin(v15.file(root, name)) == pin, 'source bytes mismatch: ' + name)
+        require(v15.pin(v15.file(root, name)) == pin, 'source bytes mismatch: ' + name)
     for version in range(9, 16):
         prefix = f'assets/characters/mpfb-b1-v{version}'
         actual = v15.inventory(root, prefix)
-        need(actual == {name for name in expected if name.startswith(prefix + '/')},
+        require(actual == {name for name in expected if name.startswith(prefix + '/')},
              'asset inventory mismatch: ' + prefix)
-    return ID, expected
+
+
+# The travel helper is authenticated by its full raw hash before this function
+# can run. The only variable slot in the successor helper is a digest literal.
+# Bind every executable byte to a separate pin so a forged helper cannot accept
+# itself by changing the digest slots in both live selectors.
+CONTACT_HELPER_TEMPLATE_SHA = '062b106417831b547efb1e411fc12c4306439c8f5b8be7e26f58655029a20318'
+
+
+def contact_bytes(exp):
+    helper = exp / 'contact_target_source_context.py'
+    manifest = exp / 'input-context-contact-target-v1.json'
+    for path in (helper, manifest):
+        need(path.is_file() and not path.is_symlink(), 'missing/nonregular contact authority: ' + path.name)
+    raw = helper.read_bytes()
+    policy = manifest.read_bytes()
+    sha_field = rb"(?m)^SHA = '([0-9a-f]{64})'$"
+    recorded = re.findall(sha_field, raw)
+    need(recorded == [hashlib.sha256(policy).hexdigest().encode('ascii')], 'contact helper manifest binding')
+    canonical = re.sub(sha_field, b"SHA = '" + b'0' * 64 + b"'", raw)
+    digest = hashlib.sha256(canonical).hexdigest()
+    need(digest == CONTACT_HELPER_TEMPLATE_SHA
+         and json.loads(policy).get('helper_template') == {'bytes': len(raw), 'template_sha256': digest},
+         'contact helper template identity')
+    return raw
