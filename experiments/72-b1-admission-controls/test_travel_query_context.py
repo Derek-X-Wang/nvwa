@@ -7,26 +7,6 @@ import shutil
 import tempfile
 import unittest
 
-HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
-EYE = ROOT / 'experiments/73-high-poly-eyes'
-RETAINED = HERE / 'pre-travel-query'
-MAIN = 'crates/nvwa-cli/src/main.rs'
-QUERY = 'crates/nvwa-cli/src/motion_query.rs'
-TEST = 'crates/nvwa-cli/tests/travel_query.rs'
-V15_ASSET = 'assets/characters/mpfb-b1-v15/manifest.json'
-INTEGRATION = HERE / 'integration_context.py'
-MANIFEST = HERE / 'input-context-travel-query-v1.json'
-WAIST_SETUP = HERE / 'test_waist_context.py'
-CONTROL_FILES = (
-    MANIFEST,
-    INTEGRATION,
-    HERE / 'travel_query_source_context.py',
-    HERE / 'test_travel_query_context.py',
-    WAIST_SETUP,
-    RETAINED / MAIN,
-    RETAINED / QUERY,
-)
 
 
 def load(name, path):
@@ -36,8 +16,37 @@ def load(name, path):
     return module
 
 
-API = load('nvwa_test_travel_run72', HERE / 'run.py')
-FROZEN = load('nvwa_test_travel_frozen73', EYE / 'frozen_context.py')
+def setUpModule():
+    # Run the original travel tests against the exact predecessor even when
+    # contact-target is the current live source. All original assertions follow.
+    global ROOT, HERE, EYE, RETAINED, MAIN, QUERY, TEST, V15_ASSET, INTEGRATION
+    global MANIFEST, WAIST_SETUP, CONTROL_FILES, API, FROZEN
+    from test_contact_target_context import source_tree
+    tmp = tempfile.TemporaryDirectory(prefix='nvwa-travel-predecessor-')
+    unittest.addModuleCleanup(tmp.cleanup)
+    ROOT = Path(tmp.name).resolve()
+    source_tree(ROOT, predecessor=True)
+    HERE = ROOT / 'experiments/72-b1-admission-controls'
+    EYE = ROOT / 'experiments/73-high-poly-eyes'
+    RETAINED = HERE / 'pre-travel-query'
+    MAIN = 'crates/nvwa-cli/src/main.rs'
+    QUERY = 'crates/nvwa-cli/src/motion_query.rs'
+    TEST = 'crates/nvwa-cli/tests/travel_query.rs'
+    V15_ASSET = 'assets/characters/mpfb-b1-v15/manifest.json'
+    INTEGRATION = HERE / 'integration_context.py'
+    MANIFEST = HERE / 'input-context-travel-query-v1.json'
+    WAIST_SETUP = HERE / 'test_waist_context.py'
+    CONTROL_FILES = (
+        MANIFEST,
+        INTEGRATION,
+        HERE / 'travel_query_source_context.py',
+        HERE / 'test_travel_query_context.py',
+        WAIST_SETUP,
+        RETAINED / MAIN,
+        RETAINED / QUERY,
+    )
+    API = load('nvwa_test_travel_run72', HERE / 'run.py')
+    FROZEN = load('nvwa_test_travel_frozen73', EYE / 'frozen_context.py')
 
 
 class TravelQueryContext(unittest.TestCase):

@@ -6841,3 +6841,44 @@ mod running;
 pub fn b1_running_observation(world: &World) -> Result<serde_json::Value, String> {
     running::observation(world)
 }
+
+/// Position in stage metres of the visible distal left index on the admitted running body.
+/// Source vertex 8746 is the unique base.obj vertex at (0.45653, 0.16535, 0.31685);
+/// the original rest-bone-guided surface measurement used display vertex 9690.
+pub fn b1_running_left_index_position(world: &World) -> Result<[f32; 3], String> {
+    let (active, _, _) = running::resolved_binding(world)?;
+    let body = active
+        .parts
+        .iter()
+        .position(|part| part.name == "body")
+        .ok_or("running body absent")?;
+    let vertex = active.source_ids[body]
+        .iter()
+        .position(|&source| source == 8746)
+        .ok_or("left index source absent from the running body")?;
+    if !active.display_indices[body].contains(&vertex) {
+        return Err("left index surface is not visible on the running body".into());
+    }
+    // resolved_binding proved these published buffers still equal the displayed mesh
+    // and its actual stage transform. Do not resample bones or a rest landmark.
+    let meshes = world.resource::<Assets<Mesh>>();
+    let mesh = meshes
+        .get(&active.display_meshes[body])
+        .ok_or("running body mesh absent")?;
+    let Some(bevy::mesh::VertexAttributeValues::Float32x3(positions)) =
+        mesh.attribute(Mesh::ATTRIBUTE_POSITION)
+    else {
+        return Err("running body positions absent".into());
+    };
+    let local = *positions
+        .get(vertex)
+        .ok_or("running left index vertex absent")?;
+    let transform = world
+        .get::<GlobalTransform>(active.displays[body])
+        .ok_or("running body transform absent")?;
+    let position = transform.transform_point(Vec3::from_array(local));
+    if !position.is_finite() {
+        return Err("nonfinite running left index position".into());
+    }
+    Ok(position.to_array())
+}

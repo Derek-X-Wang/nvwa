@@ -29,6 +29,10 @@ def closure():
         'experiments/72-b1-admission-controls/test_waist_context.py',
         'experiments/72-b1-admission-controls/pre-travel-query/crates/nvwa-cli/src/main.rs',
         'experiments/72-b1-admission-controls/pre-travel-query/crates/nvwa-cli/src/motion_query.rs']]
+    contact = ROOT/'experiments/72-b1-admission-controls'
+    files.extend(contact/name for name in ('input-context-contact-target-v1.json',
+                 'contact_target_source_context.py', 'test_contact_target_context.py'))
+    files.extend(p for p in (contact/'pre-contact-target').rglob('*') if p.is_file())
     for directory in [ROOT/'crates', ROOT/'vendor', ROOT/'assets', EXP]:
         files += [p for p in directory.rglob('*') if p.is_file() and not set(p.relative_to(ROOT).parts)&{'target','__pycache__','.git'}]
     frozen=EXP/'FROZEN-INPUTS.json'

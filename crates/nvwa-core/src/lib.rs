@@ -9,7 +9,10 @@ pub use appearance::*;
 mod b1;
 pub use b1::*;
 mod stage;
-pub use stage::{StageAmbient, StageCamera, StageFloor, StageLight, StageQuality, StageSettings};
+pub use stage::{
+    StageAmbient, StageCamera, StageContactTarget, StageFloor, StageLight, StageQuality,
+    StageSettings,
+};
 #[cfg(test)]
 mod bounded_history_tests;
 
@@ -125,6 +128,11 @@ impl<'de> Deserialize<'de> for SceneDocument {
             (_, None) => return Err(serde::de::Error::missing_field("stage")),
             (_, Some(stage)) => stage,
         };
+        if wire.schema_version < SCHEMA_VERSION && stage.contact_target.is_some() {
+            return Err(serde::de::Error::custom(
+                "contact target requires Work schema 4",
+            ));
+        }
         let profile = wire
             .profile
             .into_profile(legacy)

@@ -830,7 +830,10 @@ def retained_motion_query_file():
 def pre_cli_level1_file(name):
     if name == MOTION_QUERY_SOURCE:
         return retained_motion_query_file()
-    return HERE / CLI_LEVEL1_FIXTURES / name if name in CLI_LEVEL1_CHANGED else HERE.parents[1] / name
+    if name in CLI_LEVEL1_CHANGED:
+        return HERE / CLI_LEVEL1_FIXTURES / name
+    before_contact = HERE / 'pre-contact-target' / name
+    return before_contact if before_contact.is_file() else HERE.parents[1] / name
 
 
 def has_level1_inputs(root):
@@ -1505,8 +1508,12 @@ def check_source_context(root, pins, historical_only=False):
                                          source_file(CONTROL_HOME, 'travel_query_source_context.py'))
     travel = module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
     travel_query = travel.present(root, HERE, v15_present)
-    if v15_present or travel_query:
-        source = 'travel-query exact source' if travel_query else 'V15 source'
+    contact_spec = spec_from_file_location('nvwa_contact_target_source_context',
+                                          source_file(CONTROL_HOME, 'contact_target_source_context.py'))
+    contact = module_from_spec(contact_spec); contact_spec.loader.exec_module(contact)
+    contact_target = contact.present(root, HERE, v15_present, travel, travel_query)
+    if v15_present or travel_query or contact_target:
+        source = 'contact-target exact source' if contact_target else 'travel-query exact source' if travel_query else 'V15 source'
         require(not historical_only, 'source input context mismatch: ' + source + ' is not historical')
         current_source_contexts(pins)
         from types import SimpleNamespace
@@ -1514,7 +1521,9 @@ def check_source_context(root, pins, historical_only=False):
         integration = module_from_spec(spec); spec.loader.exec_module(integration)
         main, chest = integration.predecessors72(SimpleNamespace(**globals()), pins)
         _, previous = integration.expected(main, chest, '72')
-        if travel_query:
+        if contact_target:
+            context, expected = contact.verify(root, travel, previous)
+        elif travel_query:
             context, expected = travel.verify(root, previous)
         else:
             v15_spec = spec_from_file_location('nvwa_v15_source_context', HERE / 'v15_source_context.py')
@@ -1524,7 +1533,7 @@ def check_source_context(root, pins, historical_only=False):
         check_unchanged_sections((root / RUNTIME).read_text(), bridge)
         return {'id': context, 'files': {n: i['sha256'] for n, i in expected.items()},
                 'current_rust_execution': 'NOT-RUN',
-                'execution_source': source if travel_query else 'V15 experimental exact source (review candidate)'}
+                'execution_source': source if contact_target or travel_query else 'V15 experimental exact source (review candidate)'}
     # Any sibling marker selects the exact union gate; partial unions must fail.
     if has_chest_inputs(root) and has_chest_sibling_inputs(root):
         current_source_contexts(pins) # retain original historical manifest authentication first

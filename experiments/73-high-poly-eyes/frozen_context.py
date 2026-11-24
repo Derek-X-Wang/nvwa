@@ -784,7 +784,10 @@ def pre_cli_level1_file(name):
     if name == MOTION_QUERY_SOURCE:
         return retained_motion_query_file(exp)
     fixture = exp / CLI_LEVEL1_FIXTURES / name
-    return fixture if name in CLI_LEVEL1_CHANGED else Path(__file__).resolve().parents[2] / name
+    if name in CLI_LEVEL1_CHANGED:
+        return fixture
+    before_contact = exp.parent / '72-b1-admission-controls/pre-contact-target' / name
+    return before_contact if before_contact.is_file() else exp.parents[1] / name
 
 
 def has_level1_inputs(root):
@@ -1320,8 +1323,15 @@ def integration_source_context(exp, cpu, root):
         regular_file(Path(__file__).resolve().parent, '../72-b1-admission-controls/travel_query_source_context.py'))
     travel = importlib.util.module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
     travel_query = travel.present(root, exp.parent / '72-b1-admission-controls', v15_present)
-    if v15_present or travel_query:
+    contact_spec = importlib.util.spec_from_file_location(
+        'nvwa_contact_target_source_context73',
+        regular_file(Path(__file__).resolve().parent, '../72-b1-admission-controls/contact_target_source_context.py'))
+    contact = importlib.util.module_from_spec(contact_spec); contact_spec.loader.exec_module(contact)
+    contact_target = contact.present(root, exp.parent / '72-b1-admission-controls', v15_present, travel, travel_query)
+    if v15_present or travel_query or contact_target:
         _, previous = integration.expected(cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')
+        if contact_target:
+            return contact.verify(root, travel, previous)
         if travel_query:
             return travel.verify(root, previous)
         v15_spec = importlib.util.spec_from_file_location(

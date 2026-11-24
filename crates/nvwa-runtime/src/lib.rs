@@ -10,7 +10,7 @@ pub use b1::cpu_render::{
 };
 pub use b1::{
     B1DisplaySubdivision, B1DisplaySubdivisionStatus, b1_foot_clearance, b1_frame_snapshot,
-    b1_running_observation, register_b1_asset_source,
+    b1_running_left_index_position, b1_running_observation, register_b1_asset_source,
 };
 pub use stage::StageViewOverride;
 use std::collections::{BTreeMap, BTreeSet};

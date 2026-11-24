@@ -107,7 +107,7 @@ def records(v15):
     return value
 
 
-def verify(root, integration):
+def expected(integration):
     v15 = predecessor_gate()
     value = records(v15)
     baseline = v15.records()
@@ -125,12 +125,20 @@ def verify(root, integration):
     for fixture, name in RETAINED.items():
         need(v15.pin(v15.file(EXP, fixture)) == previous[name], 'predecessor fixture bytes: ' + name)
 
-    expected = previous | value['after']
+    return v15, previous | value['after']
+
+
+def verify(root, integration):
+    v15, expected_files = expected(integration)
+    verify_files(root, v15, expected_files, need)
+    return ID, expected_files
+
+
+def verify_files(root, v15, expected, require):
     for name, pin in expected.items():
-        need(v15.pin(v15.file(root, name)) == pin, 'source bytes mismatch: ' + name)
+        require(v15.pin(v15.file(root, name)) == pin, 'source bytes mismatch: ' + name)
     for version in range(9, 16):
         prefix = f'assets/characters/mpfb-b1-v{version}'
         actual = v15.inventory(root, prefix)
-        need(actual == {name for name in expected if name.startswith(prefix + '/')},
+        require(actual == {name for name in expected if name.startswith(prefix + '/')},
              'asset inventory mismatch: ' + prefix)
-    return ID, expected

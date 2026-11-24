@@ -17,6 +17,7 @@ The CLI supports these local operations:
 | `apply` | Apply `set_parameters`, `set_scale`, `set_timeline`, `set_stage`, `set_diagnostic_pose` (B1), `set_appearance`, `undo` or `redo` commands and save the result to an output file. |
 | `validate` | Check a Work and optional GLB assets; B1 requires the explicit root and authenticates every payload of the selected body and appearance manifests, including roles that are off. |
 | `motion-query` | Sample foot clearance and clip boundaries in a finite B1 rehearsal Work. Requires the `motion-query` build feature. |
+| `contact-query` | Sample the running character’s left index fingertip against a named sphere saved in the Work. Requires the `motion-query` build feature. |
 | `travel-query` | Measure body and garment displacement in stage coordinates for a finite B1 running Work. Requires the `motion-query` build feature. |
 | `save` | Validate and reserialize a Work without changing its revision. |
 
@@ -59,6 +60,35 @@ repeat the query at the same range and step. Review the final candidate in
 normal playback and take screenshots where a specific visual detail needs
 inspection. See the [short dance comparison](evidence/motion-query/RESULTS.md)
 for the measured workflow and its limits.
+
+## Fingertip contact with a saved target
+
+Place a target **before** editing the reach. The existing `set_stage` command
+replaces the whole stage. Start from the saved stage so other settings survive.
+The optional target has a nonblank ID (up to 128 UTF-8 bytes, no control characters),
+three finite stage-world coordinates in metres (+Y up, +Z forward), and a positive
+radius in metres. Omit `contact_target` to remove it. The point stays fixed as the
+character moves or changes scale.
+
+```sh
+nvwa-cli inspect reach.json | jq '{command_id:"place",expected_revision:.revision,
+  command:{type:"set_stage",stage:(.stage + {contact_target:{
+    id:"switch-a",position_metres:[0.5,1.62,2.18],radius_metres:0.015}})}}' > place.json
+nvwa-cli apply reach.json place.json reach-with-target.json
+nvwa-cli contact-query reach-with-target.json assets 6 6.5 0.01
+```
+
+`describe-capabilities` exposes `cli_contract.contact_query`. Use an admitted
+finite B1 running Work at scale 0.001 through 100. A fresh CLI opens the Work
+and reads the **displayed distal left index surface** on the authenticated running
+body. Each sample tests whether the distance to the saved centre is at most
+the radius. The output includes start, end, nearest sample and an adjacent-time
+bracket for each observed entry or exit. The earliest sample wins a nearest-distance
+tie. A query starting inside reports that state directly. A crossing and return
+between two samples can be missed. Narrow the range or step to resolve it.
+Add `--samples` for each position and distance. The range is inclusive with at
+most 201 samples and a minimum 0.001 s step. Button events and physical forces
+belong to the game host. This observation needs no renderer.
 
 ## Headless travel observation
 
