@@ -1310,24 +1310,39 @@ def leg_source_context(exp, cpu):
 
 # Explicit integration identity, separate from all frozen historical contexts.
 INTEGRATION_CONTEXT_ID = 'b1-chest-v10-with-v14-cli-level1-integration-candidate-v1'
+# Only the digest in this assignment is substituted by the contact manifest's
+# selector template; the rest of this file is byte-exact.
+CONTACT_HELPER_SHA = '46e5cb92648cec4a5842f113f28914aabb77ef014cb4441f2916b7fb9e6b7740'
+TRAVEL_HELPER_SHA = '401198edbfd609ebfa3f63b0e3029c70bd6446d4d53f966f9308c5f687b5aff5'
+CONTACT_INTEGRATION_SHA = '2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5'
+
+
+def authenticated_module(path, expected):
+    from types import ModuleType
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == expected, 'source helper identity: ' + path.name)
+    module = ModuleType(path.stem)
+    module.__file__ = str(path)
+    exec(compile(raw, str(path), 'exec'), module.__dict__)
+    return module
+
+
 def integration_source_context(exp, cpu, root):
     import importlib.util
-    spec = importlib.util.spec_from_file_location('nvwa_integration_context73', exp.parent / '72-b1-admission-controls/integration_context.py')
-    integration = importlib.util.module_from_spec(spec); spec.loader.exec_module(integration)
     v15_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
                    'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
                    'scripts/build-belly-shape-v15.py')
     v15_present = any((root / name).exists() or (root / name).is_symlink() for name in v15_markers)
-    travel_spec = importlib.util.spec_from_file_location(
-        'nvwa_travel_query_source_context73',
-        regular_file(Path(__file__).resolve().parent, '../72-b1-admission-controls/travel_query_source_context.py'))
-    travel = importlib.util.module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
+    release = Path(__file__).resolve().parent
+    travel = authenticated_module(regular_file(release, '../72-b1-admission-controls/travel_query_source_context.py'), TRAVEL_HELPER_SHA)
     travel_query = travel.present(root, exp.parent / '72-b1-admission-controls', v15_present)
-    contact_spec = importlib.util.spec_from_file_location(
-        'nvwa_contact_target_source_context73',
-        regular_file(Path(__file__).resolve().parent, '../72-b1-admission-controls/contact_target_source_context.py'))
-    contact = importlib.util.module_from_spec(contact_spec); contact_spec.loader.exec_module(contact)
+    contact = authenticated_module(regular_file(release, '../72-b1-admission-controls/contact_target_source_context.py'), CONTACT_HELPER_SHA)
     contact_target = contact.present(root, exp.parent / '72-b1-admission-controls', v15_present, travel, travel_query)
+    if contact_target:
+        integration = authenticated_module(regular_file(exp, '../72-b1-admission-controls/integration_context.py'), CONTACT_INTEGRATION_SHA)
+    else:
+        spec = importlib.util.spec_from_file_location('nvwa_integration_context73', exp.parent / '72-b1-admission-controls/integration_context.py')
+        integration = importlib.util.module_from_spec(spec); spec.loader.exec_module(integration)
     if v15_present or travel_query or contact_target:
         _, previous = integration.expected(cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')
         if contact_target:

@@ -3,6 +3,7 @@ use std::{fs, path::Path, process::Command};
 
 fn cli(args: &[&Path], success: bool) -> Value {
     let output = Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
+        .env_remove("NVWA_B1_LEVEL1_DISPLAY")
         .args(args)
         .output()
         .unwrap();
@@ -101,6 +102,23 @@ fn stage_contact_roundtrip_and_visible_index_brackets() {
             query(&source, false, false)["code"],
             "contact_target_absent"
         );
+        let overlay = Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
+            .env("NVWA_B1_LEVEL1_DISPLAY", "1")
+            .args([
+                "contact-query".as_ref(),
+                reopened.as_path(),
+                assets.as_path(),
+                "6.5".as_ref(),
+                "6.5".as_ref(),
+                "0.01".as_ref(),
+            ])
+            .output()
+            .unwrap();
+        assert_eq!(overlay.status.code(), Some(1));
+        assert!(overlay.stdout.is_empty());
+        let diagnostic: Value = serde_json::from_slice(&overlay.stderr).unwrap();
+        assert_eq!(diagnostic["code"], "contact_query_unsupported_display");
+        assert!(diagnostic["message"].as_str().unwrap().contains("Level 1"));
         let baseline = query(&reopened, false, true);
         assert!(baseline.get("samples").is_none());
         assert_eq!(baseline["start"]["inside"], false);

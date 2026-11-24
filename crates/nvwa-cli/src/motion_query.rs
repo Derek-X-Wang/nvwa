@@ -459,7 +459,7 @@ pub(super) fn run_contact(args: &[String]) -> Result<Value, CoreError> {
     let mut samples = Vec::with_capacity(times.len());
     for seconds in times {
         let world = seek(&mut app, seconds).map_err(failure)?;
-        let position = nvwa_runtime::b1_running_left_index_position(world).map_err(failure)?;
+        let position = nvwa_runtime::b1_running_left_index_position(world)?;
         let distance = position
             .iter()
             .zip(target.position_metres)

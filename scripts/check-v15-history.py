@@ -222,6 +222,17 @@ def source_pin(path):
     return {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
 
 
+def contact_replay_pin(live, name, path):
+    if name not in (EXP72 + '/run.py', EXP73 + '/frozen_context.py'):
+        return source_pin(path)
+    raw = path.read_bytes()
+    helper_sha = source_pin(live / EXP72 / 'contact_target_source_context.py')['sha256']
+    literal = b"CONTACT_HELPER_SHA = '" + helper_sha.encode('ascii') + b"'\n"
+    need(raw.count(literal) == 1, 'invalid contact helper binding: ' + name)
+    canonical = raw.replace(literal, b"CONTACT_HELPER_SHA = '" + b'0' * 64 + b"'\n")
+    return {'bytes': len(raw), 'template_sha256': hashlib.sha256(canonical).hexdigest()}
+
+
 def protected_experiments(live, dest):
     # The live gate authenticates the manifests before replay. Compose their
     # exact deltas to compare the successor directly with the isolated #154 tree.
@@ -260,7 +271,7 @@ def protected_experiments(live, dest):
             new_path, executable = candidate[name]
             need(executable == old_executable, "changed protected experiment mode: " + name)
             if name in before:
-                need(before[name] == source_pin(old_path) and after[name] == source_pin(new_path),
+                need(before[name] == source_pin(old_path) and after[name] == contact_replay_pin(live, name, new_path),
                      "experiment before/after mismatch: " + name)
             else:
                 need(old_path.read_bytes() == new_path.read_bytes(),

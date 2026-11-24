@@ -76,17 +76,20 @@ pub(super) fn draw(ctx: &egui::Context, state: &mut StageUi, stage: &StageSettin
             .show(ctx, |ui| {
                 ui.small("随作品保存 / Saved with Work · Esc cancels preview");
                 ui.horizontal_wrapped(|ui| {
-                    if ui.button("白棚 / White").clicked() {
-                        let mut preset = StageSettings::white_studio();
-                        preset.camera = stage.camera.clone();
-                        preset.quality = stage.quality;
-                        intent.command = Some(Command::SetStage { stage: preset });
-                    }
-                    if ui.button("黑场 / Black").clicked() {
-                        let mut preset = StageSettings::black_space();
-                        preset.camera = stage.camera.clone();
-                        preset.quality = stage.quality;
-                        intent.command = Some(Command::SetStage { stage: preset });
+                    for (label, make_preset) in [
+                        (
+                            "白棚 / White",
+                            StageSettings::white_studio as fn() -> StageSettings,
+                        ),
+                        ("黑场 / Black", StageSettings::black_space),
+                    ] {
+                        if ui.button(label).clicked() {
+                            let mut preset = make_preset();
+                            preset.camera = stage.camera.clone();
+                            preset.quality = stage.quality;
+                            preset.contact_target = stage.contact_target.clone();
+                            intent.command = Some(Command::SetStage { stage: preset });
+                        }
                     }
                 });
                 ui.horizontal_wrapped(|ui| {
@@ -479,6 +482,32 @@ mod tests {
             );
         }
     }
+    #[test]
+    fn lighting_presets_keep_the_saved_contact_target() {
+        let mut h = Harness::new(egui::vec2(1280.0, 720.0));
+        let target = nvwa_core::StageContactTarget {
+            id: "switch-a".into(),
+            position_metres: [0.5, 1.62, 2.18],
+            radius_metres: 0.015,
+        };
+        let mut stage = h.editor.document().unwrap().stage.clone();
+        stage.contact_target = Some(target.clone());
+        h.editor.apply(Command::SetStage { stage }).unwrap();
+        h.frame(vec![]).drop_without_applying_deltas();
+        for (button, expected) in [
+            ("黑场 / Black", StageSettings::black_space()),
+            ("白棚 / White", StageSettings::white_studio()),
+        ] {
+            let out = h.frame(vec![]);
+            h.click(label(&out, button).center());
+            let actual = &h.editor.document().unwrap().stage;
+            assert_eq!(actual.background_color_srgb, expected.background_color_srgb);
+            let saved = h.editor.document().unwrap().to_json().unwrap();
+            let reopened = SceneDocument::from_json(&saved).unwrap();
+            assert_eq!(reopened.stage.contact_target.as_ref(), Some(&target));
+        }
+    }
+
     #[test]
     fn real_stage_presets_hide_return_and_viewport_orbit_preserve_character_and_playback() {
         let mut h = Harness::new(egui::vec2(1280.0, 720.0));

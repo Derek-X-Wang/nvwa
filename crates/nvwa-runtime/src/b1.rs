@@ -6845,7 +6845,18 @@ pub fn b1_running_observation(world: &World) -> Result<serde_json::Value, String
 /// Position in stage metres of the visible distal left index on the admitted running body.
 /// Source vertex 8746 is the unique base.obj vertex at (0.45653, 0.16535, 0.31685);
 /// the original rest-bone-guided surface measurement used display vertex 9690.
-pub fn b1_running_left_index_position(world: &World) -> Result<[f32; 3], String> {
+pub fn b1_running_left_index_position(world: &World) -> Result<[f32; 3], nvwa_core::CoreError> {
+    if world.resource::<B1DisplaySubdivisionStatus>().active {
+        return Err(nvwa_core::CoreError::new(
+            "contact_query_unsupported_display",
+            "Left index contact requires the original Level 0 body. A Level 1 surface is displayed.",
+        ));
+    }
+    running_level0_left_index(world)
+        .map_err(|message| nvwa_core::CoreError::new("contact_query_failed", message))
+}
+
+fn running_level0_left_index(world: &World) -> Result<[f32; 3], String> {
     let (active, _, _) = running::resolved_binding(world)?;
     let body = active
         .parts

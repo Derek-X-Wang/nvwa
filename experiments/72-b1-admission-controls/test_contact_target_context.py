@@ -1,4 +1,5 @@
 """Check both live contact selectors and the exact predecessor, including failed edits."""
+import hashlib
 import importlib.util
 import json
 import os
@@ -64,9 +65,12 @@ class ContactTargetContext(unittest.TestCase):
         self.assertEqual((a['id'], b[0]), (contact.ID, contact.ID))
         self.assertEqual(a['current_rust_execution'], 'NOT-RUN')
         after = json.loads((ROOT / contact.MANIFEST).read_bytes())['after']
-        self.assertEqual({name: a['files'][name] for name in after},
-                         {name: pin['sha256'] for name, pin in after.items()})
-        self.assertEqual({name: b[1][name] for name in after}, after)
+        for name, expected in after.items():
+            raw = (ROOT / name).read_bytes()
+            pin = {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+            if name not in contact.SELECTORS:
+                self.assertEqual(expected, pin)
+            self.assertEqual((a['files'][name], b[1][name]), (pin['sha256'], pin))
         with tempfile.TemporaryDirectory() as temp:
             tree = Path(temp).resolve()
             source_tree(tree, predecessor=False)
@@ -110,9 +114,32 @@ class ContactTargetContext(unittest.TestCase):
             for name in contact.TRAVEL_EXTRA_PINS:
                 path = tree / name
                 path.unlink()
+                for gate in current:
+                    with self.subTest(missing=name), self.assertRaisesRegex(ValueError, 'missing/nonregular'):
+                        gate(tree)
                 path.write_bytes(b'unknown successor bytes')
                 for gate in current:
                     with self.subTest(orphan=name), self.assertRaisesRegex(ValueError, 'missing/nonregular'):
                         gate(tree)
                 path.unlink()
                 os.link(ROOT / (contact.FIXTURE_PATH + name), path)
+
+    def test_reject_edited_helpers_before_loading_them_in_the_candidate_checkout(self):
+        with tempfile.TemporaryDirectory() as temp:
+            tree = Path(temp).resolve()
+            source_tree(tree, predecessor=False)
+            first, second = gates(tree)
+            sentinel = tree / 'untrusted-helper-executed'
+            for name in ('contact_target_source_context.py', 'travel_query_source_context.py', 'integration_context.py'):
+                original = ROOT / contact.EXP72 / name
+                local = tree / contact.EXP72 / name
+                local.unlink()
+                for edit in (b'\n# harmless edit\n',
+                             f"\nfrom pathlib import Path\nPath({str(sentinel)!r}).touch()\n".encode()):
+                    local.write_bytes(original.read_bytes() + edit)
+                    for gate in (first, second):
+                        with self.subTest(helper=name), self.assertRaisesRegex(ValueError, 'source helper identity'):
+                            gate(tree)
+                        self.assertFalse(sentinel.exists())
+                local.unlink()
+                os.link(original, local)

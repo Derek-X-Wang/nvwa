@@ -1495,6 +1495,23 @@ def has_chest_sibling_inputs(root):
             or has_cli_level1_inputs(root))
 
 
+# Only the digest in this assignment is substituted by the contact manifest's
+# selector template; the rest of this file is byte-exact.
+CONTACT_HELPER_SHA = '46e5cb92648cec4a5842f113f28914aabb77ef014cb4441f2916b7fb9e6b7740'
+TRAVEL_HELPER_SHA = '401198edbfd609ebfa3f63b0e3029c70bd6446d4d53f966f9308c5f687b5aff5'
+CONTACT_INTEGRATION_SHA = '2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5'
+
+
+def authenticated_module(path, expected):
+    from types import ModuleType
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == expected, 'source helper identity: ' + path.name)
+    module = ModuleType(path.stem)
+    module.__file__ = str(path)
+    exec(compile(raw, str(path), 'exec'), module.__dict__)
+    return module
+
+
 def check_source_context(root, pins, historical_only=False):
     """Authenticate one complete source context; never mix baseline/current files."""
     from importlib.util import module_from_spec, spec_from_file_location
@@ -1504,21 +1521,20 @@ def check_source_context(root, pins, historical_only=False):
                    'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
                    'scripts/build-belly-shape-v15.py')
     v15_present = any((root / name).exists() or (root / name).is_symlink() for name in v15_markers)
-    travel_spec = spec_from_file_location('nvwa_travel_query_source_context',
-                                         source_file(CONTROL_HOME, 'travel_query_source_context.py'))
-    travel = module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
+    travel = authenticated_module(source_file(CONTROL_HOME, 'travel_query_source_context.py'), TRAVEL_HELPER_SHA)
     travel_query = travel.present(root, HERE, v15_present)
-    contact_spec = spec_from_file_location('nvwa_contact_target_source_context',
-                                          source_file(CONTROL_HOME, 'contact_target_source_context.py'))
-    contact = module_from_spec(contact_spec); contact_spec.loader.exec_module(contact)
+    contact = authenticated_module(source_file(CONTROL_HOME, 'contact_target_source_context.py'), CONTACT_HELPER_SHA)
     contact_target = contact.present(root, HERE, v15_present, travel, travel_query)
     if v15_present or travel_query or contact_target:
         source = 'contact-target exact source' if contact_target else 'travel-query exact source' if travel_query else 'V15 source'
         require(not historical_only, 'source input context mismatch: ' + source + ' is not historical')
         current_source_contexts(pins)
         from types import SimpleNamespace
-        spec = spec_from_file_location('nvwa_integration_context', HERE / 'integration_context.py')
-        integration = module_from_spec(spec); spec.loader.exec_module(integration)
+        if contact_target:
+            integration = authenticated_module(source_file(HERE, 'integration_context.py'), CONTACT_INTEGRATION_SHA)
+        else:
+            spec = spec_from_file_location('nvwa_integration_context', HERE / 'integration_context.py')
+            integration = module_from_spec(spec); spec.loader.exec_module(integration)
         main, chest = integration.predecessors72(SimpleNamespace(**globals()), pins)
         _, previous = integration.expected(main, chest, '72')
         if contact_target:

@@ -7,7 +7,7 @@ EXP = Path(__file__).resolve().parent
 EXP72 = 'experiments/72-b1-admission-controls'
 EXP73 = 'experiments/73-high-poly-eyes'
 NAME = 'input-context-contact-target-v1.json'
-SHA = '080ccfd7bdbbe0046081fd52c3e2abc5d2d9fa79be605c489e8d018ee8bc0699'
+SHA = '3e2b21af811d6dfb08740c309a748ce5a8cf9569a74f9fa4a49923e94c02845c'
 ID = 'nvwa-contact-target-source-context-v1'
 PREDECESSOR = 'e7574dfaaa13d769e824630a32d60ea536c15a83'
 FIXTURES = 'pre-contact-target'
@@ -22,6 +22,7 @@ PRODUCT = {
     'crates/nvwa-cli/src/main.rs': b'CONTACT_QUERY_USAGE',
     'crates/nvwa-cli/src/motion_query.rs': b'fn run_contact(',
     'docs/CLI-SUPPORT.md': b'contact-query',
+    'crates/nvwa-studio/src/stage_ui.rs': b'contact_target',
 }
 CHANGED = set(PRODUCT) | {
     f'{EXP72}/travel_query_source_context.py',
@@ -35,6 +36,9 @@ CHANGED = set(PRODUCT) | {
     'scripts/check-v15-live73.py',
 }
 TRAVEL_EXTRA_PINS = {
+    'crates/nvwa-studio/src/stage_ui.rs': {
+        'bytes': 28403, 'sha256': 'cc10a4c29c7c9b3efd3e31fc4e31a3c318e346e9d6b65eced9d0b723834730db',
+    },
     'crates/nvwa-core/src/stage.rs': {
         'bytes': 6274, 'sha256': '27acf1d66321c39a5cbc88f0502204b6c689d5bc7f8c02d1c641a7fb529ba21a',
     },
@@ -66,11 +70,11 @@ def present(root, control_exp, v15_present, travel, travel_query):
         if any(exists(name) for name in (MANIFEST, HELPER, f'{EXP72}/test_contact_target_context.py')):
             return True
     # The travel map omitted its helper and CLI guide in both cohorts, and
-    # stage.rs in 72. Their original source identities distinguish a lone
+    # stage sources outside their original maps. Their original source identities distinguish a lone
     # successor edit even after every newly introduced marker is removed.
     if travel_query and (v15_present or not separate_controls):
         for name, before in TRAVEL_EXTRA_PINS.items():
-            if travel.replay_control_changed(root, name, before):
+            if not exists(name) or travel.replay_control_changed(root, name, before):
                 return True
     for name, marker in PRODUCT.items():
         path = root / name
@@ -93,6 +97,23 @@ def records(v15):
     return data
 
 
+SELECTORS = (f'{EXP72}/run.py', f'{EXP73}/frozen_context.py')
+
+
+def selector_pin(path, template, helper_sha):
+    # The helper contains the manifest digest, and each selector authenticates
+    # this helper before execution. Store only the fixed-position digest field
+    # as zeroes in the manifest template to break that mutual hash dependency.
+    raw = path.read_bytes()
+    literal = b"CONTACT_HELPER_SHA = '" + helper_sha.encode('ascii') + b"'\n"
+    need(raw.count(literal) == 1, 'selector helper binding: ' + path.name)
+    zero = b"CONTACT_HELPER_SHA = '" + b'0' * 64 + b"'\n"
+    canonical = raw.replace(literal, zero)
+    need(template == {'bytes': len(raw), 'template_sha256': hashlib.sha256(canonical).hexdigest()},
+         'selector template bytes: ' + path.name)
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
 def verify(root, travel, integration):
     v15, previous = travel.expected(integration)
     data = records(v15)
@@ -108,6 +129,9 @@ def verify(root, travel, integration):
         need(v15.pin(v15.file(EXP, FIXTURES + '/' + name)) == before, 'predecessor fixture: ' + name)
         need(data['after'][FIXTURE_PATH + name] == before, 'candidate predecessor bytes: ' + name)
     expected = previous | data['after']
+    helper_sha = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    for name in SELECTORS:
+        expected[name] = selector_pin(v15.file(root, name), data['after'][name], helper_sha)
     travel.verify_files(root, v15, expected, need)
     names = []
     for crate in ('nvwa-cli', 'nvwa-core', 'nvwa-runtime'):

@@ -81,7 +81,9 @@ nvwa-cli contact-query reach-with-target.json assets 6 6.5 0.01
 `describe-capabilities` exposes `cli_contract.contact_query`. Use an admitted
 finite B1 running Work at scale 0.001 through 100. A fresh CLI opens the Work
 and reads the **displayed distal left index surface** on the authenticated running
-body. Each sample tests whether the distance to the saved centre is at most
+body at Level 0. When the experimental Level 1 surface is active, the query
+returns `contact_query_unsupported_display`. To query Level 0, reopen the Work
+with `NVWA_B1_LEVEL1_DISPLAY` unset. Each sample tests whether the distance to the saved centre is at most
 the radius. The output includes start, end, nearest sample and an adjacent-time
 bracket for each observed entry or exit. The earliest sample wins a nearest-distance
 tie. A query starting inside reports that state directly. A crossing and return

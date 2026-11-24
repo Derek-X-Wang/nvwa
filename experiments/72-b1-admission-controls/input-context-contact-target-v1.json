@@ -27,6 +27,10 @@
       "bytes": 86318,
       "sha256": "6dbf831eed7a875b8e4c8bad98463de7b95ff728a9e56e36c566098758c58efe"
     },
+    "crates/nvwa-studio/src/stage_ui.rs": {
+      "bytes": 28403,
+      "sha256": "cc10a4c29c7c9b3efd3e31fc4e31a3c318e346e9d6b65eced9d0b723834730db"
+    },
     "docs/CLI-SUPPORT.md": {
       "bytes": 14994,
       "sha256": "63ac1c16aa74ba1388246556169843cf1fcfaf34fd0e3bdc0d5db38b1293d420"
@@ -74,6 +78,7 @@
     "experiments/72-b1-admission-controls/pre-contact-target/crates/nvwa-core/src/stage.rs": null,
     "experiments/72-b1-admission-controls/pre-contact-target/crates/nvwa-runtime/src/b1.rs": null,
     "experiments/72-b1-admission-controls/pre-contact-target/crates/nvwa-runtime/src/lib.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-target/crates/nvwa-studio/src/stage_ui.rs": null,
     "experiments/72-b1-admission-controls/pre-contact-target/docs/CLI-SUPPORT.md": null,
     "experiments/72-b1-admission-controls/pre-contact-target/experiments/72-b1-admission-controls/integration_context.py": null,
     "experiments/72-b1-admission-controls/pre-contact-target/experiments/72-b1-admission-controls/run.py": null,
@@ -88,16 +93,16 @@
   },
   "after": {
     "crates/nvwa-cli/src/main.rs": {
-      "bytes": 52266,
-      "sha256": "d15cdff70350517de9a323e197c0203670725b71be2467d6e024716147942876"
+      "bytes": 52320,
+      "sha256": "4999e1167360dd3ce3ac929f3e2b9560d25073f7f38bb32c2914b3e6d315d248"
     },
     "crates/nvwa-cli/src/motion_query.rs": {
-      "bytes": 18321,
-      "sha256": "4a02cdba086c445f9f6045c7d11ea6ccc41b0eed70a3fb0a4aea16e1e23a8c8f"
+      "bytes": 18304,
+      "sha256": "e56eb56fb6a8dd7794c74776e6cb22f5305eb75056c731c93baa1e7610eb36cd"
     },
     "crates/nvwa-cli/tests/contact_query.rs": {
-      "bytes": 5426,
-      "sha256": "1f4c6f7d5772d8c04166b461cd7c6a134bd69aeb3a04139f4babfef38bb6a89d"
+      "bytes": 6209,
+      "sha256": "4c97b951a02250db47e896027921e2cb5c48131ba5976ae41c087c816d511b1f"
     },
     "crates/nvwa-core/src/lib.rs": {
       "bytes": 45923,
@@ -108,16 +113,20 @@
       "sha256": "909eb31519fdf7b5b17bc9f3c094cade7d0f1c5e41be075ea8fba3121e63a211"
     },
     "crates/nvwa-runtime/src/b1.rs": {
-      "bytes": 268646,
-      "sha256": "8f318e2e86fb87d80b8b9e7cb6d81ef1b43fe04f107a187ed45a555273fbb2eb"
+      "bytes": 269139,
+      "sha256": "232856c40e8b25380f1cfacf0e4ba4f2e1fa82b752aae378f2446b1838ab27a5"
     },
     "crates/nvwa-runtime/src/lib.rs": {
       "bytes": 86350,
       "sha256": "9c9715c99fc7c42d075be1a4770492121a86ae7b72ef468172964734affab5b7"
     },
+    "crates/nvwa-studio/src/stage_ui.rs": {
+      "bytes": 29674,
+      "sha256": "ccaf029f5c5772064380b965c09a15d645498cfc6eba8f8c0b27bf2258d0d079"
+    },
     "docs/CLI-SUPPORT.md": {
-      "bytes": 16866,
-      "sha256": "578fa5664ff9cb06589ff09b24ce4b6f2988e132bcb815f777c391db5ded127b"
+      "bytes": 17052,
+      "sha256": "7070b715c93210707eeb68b81f80506a5e2d8eebe60a66ea56da51aaf0c615ea"
     },
     "experiments/72-b1-admission-controls/integration_context.py": {
       "bytes": 5018,
@@ -146,6 +155,10 @@
     "experiments/72-b1-admission-controls/pre-contact-target/crates/nvwa-runtime/src/lib.rs": {
       "bytes": 86318,
       "sha256": "6dbf831eed7a875b8e4c8bad98463de7b95ff728a9e56e36c566098758c58efe"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-target/crates/nvwa-studio/src/stage_ui.rs": {
+      "bytes": 28403,
+      "sha256": "cc10a4c29c7c9b3efd3e31fc4e31a3c318e346e9d6b65eced9d0b723834730db"
     },
     "experiments/72-b1-admission-controls/pre-contact-target/docs/CLI-SUPPORT.md": {
       "bytes": 14994,
@@ -188,12 +201,12 @@
       "sha256": "290bed6f356220d5068e8f4ef569fb81ee93e6dec9d979bb74cf2813ba860fae"
     },
     "experiments/72-b1-admission-controls/run.py": {
-      "bytes": 124975,
-      "sha256": "0bf26ff722ead8a4fc1a7480f0cd56f1ce62dd10a01b2ea59b6d8dfdf0b2cad7"
+      "bytes": 125589,
+      "template_sha256": "7d93aa67e56c3d133f969e58d7995d8a0ebfe648cfe492e937a35b768f388425"
     },
     "experiments/72-b1-admission-controls/test_contact_target_context.py": {
-      "bytes": 5710,
-      "sha256": "df8182b4ca64781f0c6a0f6e76cfe24313689f20b93450151f17421ed64a7ad1"
+      "bytes": 7190,
+      "sha256": "a7171ca1c357923293de129e8c9c72921cccb0adad0a4285cb6cc28f4cc9bb36"
     },
     "experiments/72-b1-admission-controls/test_travel_query_context.py": {
       "bytes": 6967,
@@ -212,12 +225,12 @@
       "sha256": "86481ee2804caf181e2847d7b61e1b0c1085877f5bd5f610afc218abee276861"
     },
     "experiments/73-high-poly-eyes/frozen_context.py": {
-      "bytes": 83690,
-      "sha256": "ab08ffb4ef41a111af34efafb13748e88a43dad14e288752302c3717e3e042ae"
+      "bytes": 84303,
+      "template_sha256": "0eb0cd55d332bf6f96a54cfb0aee77b3935e7c4e58033f61841774335d74cedd"
     },
     "scripts/check-v15-history.py": {
-      "bytes": 20952,
-      "sha256": "22d483385b2cdf3ead44aafbb76565a122c9c7e0a3ebb95b963be570638fd3c4"
+      "bytes": 21564,
+      "sha256": "fadace4b7351828cd24294df49d85ef042e8c646c6022e41878545bf78708fc1"
     },
     "scripts/check-v15-live73.py": {
       "bytes": 780,
