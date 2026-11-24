@@ -1,4 +1,4 @@
-"""Exercise 73's actual integration gate against V15 without editing old test cases."""
+"""Require 73's actual integration gate to admit the exact travel-query source."""
 import json
 from pathlib import Path
 import sys
@@ -13,6 +13,6 @@ contexts = f.current_source_contexts(exp, raw, inputs)
 previous = f._motion_query_source_context(exp, f._running_source_context(exp, inputs, contexts))
 cpu = f._cpu_context(exp, previous[1])
 name, files = f.integration_source_context(exp, cpu, root)
-if name != 'nvwa-v15-experimental-source-context-v1':
-    raise ValueError('Did not select the V15 live context')
+if name != 'nvwa-travel-query-source-context-v1':
+    raise ValueError('Did not select the travel-query live context')
 print(json.dumps({'id': name, 'files': len(files)}))

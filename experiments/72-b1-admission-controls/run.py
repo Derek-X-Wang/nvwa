@@ -1481,31 +1481,39 @@ def has_chest_sibling_inputs(root):
 
 def check_source_context(root, pins, historical_only=False):
     """Authenticate one complete source context; never mix baseline/current files."""
-    # Presence selects V15 even when its marker is incomplete; no predecessor fallback.
-    v15_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
-                   'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
-                   'scripts/build-belly-shape-v15.py')
-    if any((root / name).exists() or (root / name).is_symlink() for name in v15_markers):
-        from importlib.util import spec_from_file_location, module_from_spec
-        v15_spec = spec_from_file_location('nvwa_v15_source_context', HERE / 'v15_source_context.py')
-        v15 = module_from_spec(v15_spec); v15_spec.loader.exec_module(v15)
-        require(not historical_only, 'source input context mismatch: V15 source is not historical')
+    from importlib.util import module_from_spec, spec_from_file_location
+
+    # An incomplete marker still selects the context whose inputs it declares.
+    successor_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
+                         'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
+                         'scripts/build-belly-shape-v15.py', 'crates/nvwa-cli/tests/travel_query.rs')
+    if any((root / name).exists() or (root / name).is_symlink() for name in successor_markers):
+        travel_spec = spec_from_file_location('nvwa_travel_query_source_context',
+                                             source_file(HERE, 'travel_query_source_context.py'))
+        travel = module_from_spec(travel_spec); travel_spec.loader.exec_module(travel)
+        travel_query = travel.present(root)
+        source = 'travel-query exact source' if travel_query else 'V15 source'
+        require(not historical_only, 'source input context mismatch: ' + source + ' is not historical')
         current_source_contexts(pins)
         from types import SimpleNamespace
         spec = spec_from_file_location('nvwa_integration_context', HERE / 'integration_context.py')
         integration = module_from_spec(spec); spec.loader.exec_module(integration)
         main, chest = integration.predecessors72(SimpleNamespace(**globals()), pins)
         _, previous = integration.expected(main, chest, '72')
-        context, expected = v15.verify(root, previous)
+        if travel_query:
+            context, expected = travel.verify(root, previous)
+        else:
+            v15_spec = spec_from_file_location('nvwa_v15_source_context', HERE / 'v15_source_context.py')
+            v15 = module_from_spec(v15_spec); v15_spec.loader.exec_module(v15)
+            context, expected = v15.verify(root, previous)
         bridge = json.loads((HERE / 'input-context-v1.json').read_text())
         check_unchanged_sections((root / RUNTIME).read_text(), bridge)
         return {'id': context, 'files': {n: i['sha256'] for n, i in expected.items()},
                 'current_rust_execution': 'NOT-RUN',
-                'execution_source': 'V15 experimental exact source (review candidate)'}
+                'execution_source': source if travel_query else 'V15 experimental exact source (review candidate)'}
     # Any sibling marker selects the exact union gate; partial unions must fail.
     if has_chest_inputs(root) and has_chest_sibling_inputs(root):
         current_source_contexts(pins) # retain original historical manifest authentication first
-        from importlib.util import spec_from_file_location, module_from_spec
         require((HERE / 'integration_context.py').is_file(), 'integration context module missing')
         _spec = spec_from_file_location('nvwa_integration_context', HERE / 'integration_context.py')
         _integration = module_from_spec(_spec); _spec.loader.exec_module(_integration)
