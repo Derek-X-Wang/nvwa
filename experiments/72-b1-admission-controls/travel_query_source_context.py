@@ -6,7 +6,7 @@ from types import ModuleType
 
 EXP = Path(__file__).resolve().parent
 NAME = 'input-context-travel-query-v1.json'
-SHA = 'a4ff54d56e56d3f1aba6964aab88c9476ae065b1d05492b6ba42accebec32b43'
+SHA = '981cf08bbf58a6a01fb9866b1791ceffe6f6f69f92e3d8c6d261225ed5af690a'
 ID = 'nvwa-travel-query-source-context-v1'
 PREDECESSOR = '693902b8f06156401706691a40c2804c6029f535'
 PREDECESSOR_ID = 'nvwa-v15-experimental-source-context-v1'
@@ -39,6 +39,19 @@ ADDED = {TRAVEL_TEST, TEST_MODULE} | RETAINED_PATHS
 CONTROL_FILES = {TEST_MODULE, f'{EXP72}/{NAME}', f'{EXP72}/travel_query_source_context.py'}
 
 
+def replay_control_changed(root, name, before):
+    path = root
+    for part in Path(name).parts:
+        path = path / part
+        if path.is_symlink():
+            return True
+    if not path.exists():
+        return False
+    if not path.is_file() or path.stat().st_size != before['bytes']:
+        return True
+    return hashlib.sha256(path.read_bytes()).hexdigest() != before['sha256']
+
+
 def present(root, control_exp, v15_present):
     if any((root / name).exists() or (root / name).is_symlink() for name in {TRAVEL_TEST} | RETAINED_PATHS):
         return True
@@ -48,6 +61,8 @@ def present(root, control_exp, v15_present):
     separate_controls = control_exp != EXP and root / EXP72 == control_exp
     if v15_present or not separate_controls:
         if any((root / name).exists() or (root / name).is_symlink() for name in CONTROL_FILES):
+            return True
+        if any(replay_control_changed(root, name, before) for name, before in PREDECESSOR_REPLAY_CONTROLS.items()):
             return True
     # If the added test is missing, either implementation file still selects
     # this gate. The full map check rejects incomplete and modified sources.

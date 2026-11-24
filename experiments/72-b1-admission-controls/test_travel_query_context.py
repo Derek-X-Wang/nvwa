@@ -15,10 +15,12 @@ MAIN = 'crates/nvwa-cli/src/main.rs'
 QUERY = 'crates/nvwa-cli/src/motion_query.rs'
 TEST = 'crates/nvwa-cli/tests/travel_query.rs'
 V15_ASSET = 'assets/characters/mpfb-b1-v15/manifest.json'
+WAIST_SETUP = HERE / 'test_waist_context.py'
 CONTROL_FILES = (
     HERE / 'input-context-travel-query-v1.json',
     HERE / 'travel_query_source_context.py',
     HERE / 'test_travel_query_context.py',
+    WAIST_SETUP,
     RETAINED / MAIN,
     RETAINED / QUERY,
 )
@@ -101,7 +103,7 @@ class TravelQueryContext(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, r'V15 exact source: source bytes mismatch: (experiments|scripts)/'):
                     gate()
 
-            # Any one successor-only file routes the same tree to travel
+            # Any one successor input routes the same tree to travel
             # admission, which must reject the V15 product bytes.
             for source in (*CONTROL_FILES, ROOT / TEST):
                 relative = source.relative_to(ROOT)
@@ -114,3 +116,10 @@ class TravelQueryContext(unittest.TestCase):
                                 gate()
                 finally:
                     target.unlink()
+
+            target = root / WAIST_SETUP.relative_to(ROOT)
+            target.symlink_to(root / 'missing-waist-setup')
+            for cohort, gate in zip((72, 73), gates):
+                with self.subTest(cohort=cohort, control='dangling waist setup'):
+                    with self.assertRaisesRegex(ValueError, r'travel-query exact source: source bytes mismatch: crates/nvwa-cli/src/'):
+                        gate()
