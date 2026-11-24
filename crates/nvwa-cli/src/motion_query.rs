@@ -324,7 +324,10 @@ struct TravelFrame {
 
 // Use the Work's serialized precision for public timestamps, including query bounds.
 fn work_seconds(seconds: f32) -> f64 {
-    seconds.to_string().parse().expect("finite Work timestamp")
+    serde_json::to_string(&seconds)
+        .expect("serializable Work timestamp")
+        .parse()
+        .expect("finite Work timestamp")
 }
 
 impl TravelFrame {

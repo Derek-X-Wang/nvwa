@@ -110,8 +110,12 @@ fn queries_actual_scene_travel_and_hold_using_the_work_scale() {
         beyond_end[4] = "5.0000001".as_ref();
         rejected(&beyond_end, "travel_query_range");
 
-        // The binary f32 representations round down for 5.1 and up for 5.3.
-        for (duration, end, beyond) in [(5.1, "5.1", "5.1000001"), (5.3, "5.3", "5.3000001")] {
+        // Include both f32 rounding directions and a tie where Work JSON differs from Display.
+        for (duration, end, beyond) in [
+            (5.1, "5.1", "5.1000001"),
+            (5.3, "5.3", "5.3000001"),
+            (5.0039062, "5.0039062", "5.0039063"),
+        ] {
             let decimal_work = dir.join(format!("decimal-{end}.nvwa.json"));
             std::fs::write(
                 &commands,
