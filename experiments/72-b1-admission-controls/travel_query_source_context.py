@@ -6,7 +6,7 @@ from types import ModuleType
 
 EXP = Path(__file__).resolve().parent
 NAME = 'input-context-travel-query-v1.json'
-SHA = '981cf08bbf58a6a01fb9866b1791ceffe6f6f69f92e3d8c6d261225ed5af690a'
+SHA = '69649e558d631c76a8ee3a0138d5296ee58d3babba78b1ec61227c966726154f'
 ID = 'nvwa-travel-query-source-context-v1'
 PREDECESSOR = '693902b8f06156401706691a40c2804c6029f535'
 PREDECESSOR_ID = 'nvwa-v15-experimental-source-context-v1'
@@ -21,6 +21,10 @@ MARKERS = {
 TRAVEL_TEST = 'crates/nvwa-cli/tests/travel_query.rs'
 RETAINED = {f'{FIXTURES}/{name}': name for name in MARKERS}
 PREDECESSOR_REPLAY_CONTROLS = {
+    f'{EXP72}/integration_context.py': {
+        'bytes': 4702,
+        'sha256': 'ad5a597dcde047902ee76b24522f21b4b83a5d34996b8e7dbdb6e8b92fe09055',
+    },
     f'{EXP72}/test_waist_context.py': {
         'bytes': 16262,
         'sha256': '1f052a71248cfff801beaa599c3c1e643ffe8604f5724e67406b577a7385d84d',

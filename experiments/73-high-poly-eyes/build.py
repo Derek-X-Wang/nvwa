@@ -21,6 +21,7 @@ def closure():
         'scripts/v15-test-partition.py','scripts/v15-historical-test-ids.json',
         'experiments/72-b1-admission-controls/v15_source_context.py',
         'experiments/72-b1-admission-controls/input-context-v15-experimental-v1.json',
+        'experiments/72-b1-admission-controls/integration_context.py',
         'experiments/72-b1-admission-controls/run.py',
         'experiments/72-b1-admission-controls/input-context-travel-query-v1.json',
         'experiments/72-b1-admission-controls/travel_query_source_context.py',

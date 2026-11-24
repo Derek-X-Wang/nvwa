@@ -15,9 +15,12 @@ MAIN = 'crates/nvwa-cli/src/main.rs'
 QUERY = 'crates/nvwa-cli/src/motion_query.rs'
 TEST = 'crates/nvwa-cli/tests/travel_query.rs'
 V15_ASSET = 'assets/characters/mpfb-b1-v15/manifest.json'
+INTEGRATION = HERE / 'integration_context.py'
+MANIFEST = HERE / 'input-context-travel-query-v1.json'
 WAIST_SETUP = HERE / 'test_waist_context.py'
 CONTROL_FILES = (
-    HERE / 'input-context-travel-query-v1.json',
+    MANIFEST,
+    INTEGRATION,
     HERE / 'travel_query_source_context.py',
     HERE / 'test_travel_query_context.py',
     WAIST_SETUP,
@@ -52,10 +55,12 @@ class TravelQueryContext(unittest.TestCase):
 
     def test_live_selection_and_historical_only_rejection(self):
         self.assertEqual(self.selected['id'], 'nvwa-travel-query-source-context-v1')
-        self.assertEqual(len(self.selected['files']), 1424)
         self.assertEqual(self.selected['current_rust_execution'], 'NOT-RUN')
         self.assertEqual(self.frozen[0], self.selected['id'])
-        self.assertEqual(len(self.frozen[1]), 1710)
+        after = json.loads(MANIFEST.read_bytes())['after']
+        self.assertEqual({name: self.selected['files'][name] for name in after},
+                         {name: pin['sha256'] for name, pin in after.items()})
+        self.assertEqual({name: self.frozen[1][name] for name in after}, after)
         with self.assertRaisesRegex(ValueError, 'travel-query exact source is not historical'):
             API.check_source_context(ROOT, self.pins, historical_only=True)
 
@@ -117,9 +122,13 @@ class TravelQueryContext(unittest.TestCase):
                 finally:
                     target.unlink()
 
-            target = root / WAIST_SETUP.relative_to(ROOT)
-            target.symlink_to(root / 'missing-waist-setup')
-            for cohort, gate in zip((72, 73), gates):
-                with self.subTest(cohort=cohort, control='dangling waist setup'):
-                    with self.assertRaisesRegex(ValueError, r'travel-query exact source: source bytes mismatch: crates/nvwa-cli/src/'):
-                        gate()
+            for source in (INTEGRATION, WAIST_SETUP):
+                target = root / source.relative_to(ROOT)
+                target.symlink_to(root / 'missing-replay-control')
+                try:
+                    for cohort, gate in zip((72, 73), gates):
+                        with self.subTest(cohort=cohort, dangling=source.name):
+                            with self.assertRaisesRegex(ValueError, r'travel-query exact source: source bytes mismatch: crates/nvwa-cli/src/'):
+                                gate()
+                finally:
+                    target.unlink()
