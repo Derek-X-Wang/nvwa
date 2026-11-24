@@ -1,9 +1,9 @@
-//! Numeric observation of authenticated B1 rehearsal Work without a render app.
+//! Numeric observation of authenticated B1 motion without a render app.
 use bevy::{asset::AssetMetaCheck, prelude::*, time::TimeUpdateStrategy};
 use nvwa_core::{CoreError, SceneDocument, appearance_sha256};
 use nvwa_runtime::{
     EditorState, NvwaRuntimePlugin, Playback, RuntimeStatus, StartupDocumentPolicy,
-    b1_foot_clearance, register_b1_asset_source,
+    b1_foot_clearance, b1_running_observation, register_b1_asset_source,
 };
 use serde_json::{Value, json};
 use std::{
@@ -48,12 +48,13 @@ fn headless_app(root: &str, work: SceneDocument) -> Result<App, String> {
     .init_asset::<StandardMaterial>()
     .insert_resource(StartupDocumentPolicy::WaitForOpen)
     .add_plugins(NvwaRuntimePlugin);
-    // Use the production evaluator and stage transforms with CPU assets only.
-    // Saved clothing/hair presentation has no role in visible body-foot sampling.
-    app.configure_sets(
-        PostUpdate,
-        nvwa_runtime::RuntimeSystems::Appearance.run_if(|| false),
-    );
+    if !work.profile.backend.is_b1_running() {
+        // Saved clothing/hair presentation has no role in visible body-foot sampling.
+        app.configure_sets(
+            PostUpdate,
+            nvwa_runtime::RuntimeSystems::Appearance.run_if(|| false),
+        );
+    }
     app.finish();
     app.cleanup();
     app.world_mut()
@@ -80,7 +81,7 @@ fn headless_app(root: &str, work: SceneDocument) -> Result<App, String> {
     Ok(app)
 }
 
-fn frame(app: &mut App, seconds: f32) -> Result<Frame, String> {
+fn seek(app: &mut App, seconds: f32) -> Result<&World, String> {
     app.world_mut().resource_mut::<Playback>().seek_request = Some(seconds);
     app.update();
     let world = app.world();
@@ -93,11 +94,16 @@ fn frame(app: &mut App, seconds: f32) -> Result<Frame, String> {
             "B1 did not publish the requested paused frame at {seconds}s"
         ));
     }
+    Ok(world)
+}
+
+fn frame(app: &mut App, seconds: f32) -> Result<Frame, String> {
+    let world = seek(app, seconds)?;
     let geometry = b1_foot_clearance(world)?;
     let clearance = |side| geometry[side].as_f64().ok_or("Clearance value absent");
     Ok(Frame {
         seconds,
-        clip: playback.active_timeline_id.clone(),
+        clip: world.resource::<Playback>().active_timeline_id.clone(),
         feet: [clearance("left_cm")?, clearance("right_cm")?],
         geometry,
     })
@@ -148,23 +154,67 @@ fn sample_times(start: f64, end: f64, step: f64) -> Result<Vec<f32>, CoreError> 
     ))
 }
 
-pub(super) fn run(args: &[String]) -> Result<Value, CoreError> {
+struct QueryRequest<'a> {
+    path: &'a Path,
+    assets: &'a str,
+    start: f64,
+    end: f64,
+    step: f64,
+    expand: bool,
+}
+
+fn query_request<'a>(
+    args: &'a [String],
+    usage: &str,
+    range_code: &str,
+) -> Result<QueryRequest<'a>, CoreError> {
     let [path, assets, start, end, step, rest @ ..] = args else {
-        return Err(CoreError::new("usage", super::MOTION_QUERY_USAGE));
+        return Err(CoreError::new("usage", usage));
     };
     let expand = match rest {
         [] => false,
         [flag] if flag == "--samples" => true,
-        _ => return Err(CoreError::new("usage", super::MOTION_QUERY_USAGE)),
+        _ => return Err(CoreError::new("usage", usage)),
     };
     let number = |text: &str| {
         text.parse::<f64>()
             .ok()
             .filter(|value| value.is_finite())
-            .ok_or_else(|| CoreError::new("motion_query_range", "Times must be finite numbers"))
+            .ok_or_else(|| CoreError::new(range_code, "Times must be finite numbers"))
     };
-    let (start, end, step) = (number(start)?, number(end)?, number(step)?);
-    let raw = super::read(Path::new(path))?;
+    Ok(QueryRequest {
+        path: Path::new(path),
+        assets,
+        start: number(start)?,
+        end: number(end)?,
+        step: number(step)?,
+        expand,
+    })
+}
+
+impl QueryRequest<'_> {
+    fn times(
+        &self,
+        range_end: f64,
+        duration: f64,
+        range_code: &str,
+    ) -> Result<Vec<f32>, CoreError> {
+        let Self {
+            start, end, step, ..
+        } = *self;
+        if start < 0.0 || end < start || range_end > duration || step < 0.001 {
+            return Err(CoreError::new(
+                range_code,
+                format!("Require 0 <= start <= end <= {duration}s and step >= 0.001s"),
+            ));
+        }
+        sample_times(start, end, step).map_err(|error| CoreError::new(range_code, error.message))
+    }
+}
+
+pub(super) fn run(args: &[String]) -> Result<Value, CoreError> {
+    let request = query_request(args, super::MOTION_QUERY_USAGE, "motion_query_range")?;
+    let raw = super::read(request.path)?;
     let work = SceneDocument::from_json(&raw)?;
     if !super::supports_motion_query(&work) {
         return Err(CoreError::new(
@@ -174,13 +224,19 @@ pub(super) fn run(args: &[String]) -> Result<Value, CoreError> {
     }
     let sha256 = appearance_sha256(raw.as_bytes());
     let duration = f64::from(work.timeline_duration_seconds());
-    if start < 0.0 || end < start || end as f32 > duration as f32 || step < 0.001 {
-        return Err(CoreError::new(
-            "motion_query_range",
-            format!("Require 0 <= start <= end <= {duration}s and step >= 0.001s"),
-        ));
-    }
-    let times = sample_times(start, end, step)?;
+    let times = request.times(
+        f64::from(request.end as f32),
+        duration,
+        "motion_query_range",
+    )?;
+    let QueryRequest {
+        assets,
+        start,
+        end,
+        step,
+        expand,
+        ..
+    } = request;
     let revision = work.revision;
     let mut boundaries: Vec<f32> = work
         .timeline
@@ -255,6 +311,95 @@ pub(super) fn run(args: &[String]) -> Result<Value, CoreError> {
                 }))
                 .collect::<Vec<_>>()
         );
+    }
+    Ok(result)
+}
+
+struct TravelFrame {
+    seconds: f32,
+    source_seconds: f64,
+    timeline_id: String,
+    origins: [[f64; 3]; 2],
+}
+
+// Use the Work's serialized precision for public timestamps, including query bounds.
+fn work_seconds(seconds: f32) -> f64 {
+    serde_json::to_string(&seconds)
+        .expect("serializable Work timestamp")
+        .parse()
+        .expect("finite Work timestamp")
+}
+
+impl TravelFrame {
+    fn value(&self) -> Value {
+        json!({
+            "t_s": work_seconds(self.seconds),
+            "source_t_s": self.source_seconds,
+            "timeline_id": self.timeline_id,
+            "positions_metres": {"body": self.origins[0], "garment": self.origins[1]},
+        })
+    }
+}
+
+fn travel_frame(app: &mut App, seconds: f32) -> Result<TravelFrame, String> {
+    let world = seek(app, seconds)?;
+    let publication = b1_running_observation(world)?;
+    // The running publication validates the actual matrices in body, garment order.
+    // These are column-major stage transforms. The final column contains xyz.
+    let matrices: [[f64; 16]; 2] =
+        serde_json::from_value(publication["display_transforms"].clone())
+            .map_err(|error| error.to_string())?;
+    let source_seconds = publication["resolved"]["source_seconds"]
+        .as_f64()
+        .ok_or("Running publication missing source time")?;
+    Ok(TravelFrame {
+        seconds,
+        source_seconds,
+        timeline_id: world.resource::<Playback>().active_timeline_id.clone(),
+        origins: matrices.map(|matrix| [matrix[12], matrix[13], matrix[14]]),
+    })
+}
+
+pub(super) fn run_travel(args: &[String]) -> Result<Value, CoreError> {
+    let request = query_request(args, super::TRAVEL_QUERY_USAGE, "travel_query_range")?;
+    let raw = super::read(request.path)?;
+    let work = SceneDocument::from_json(&raw)?;
+    if !super::supports_travel_query(&work) {
+        return Err(CoreError::new(
+            "travel_query_unsupported_work",
+            "Travel query requires a finite B1 running timeline at a stage presentation scale of 0.001 through 100",
+        ));
+    }
+    // Validate the requested time against the public decimal endpoint. The
+    // runtime still seeks at f32 precision after the request passes that check.
+    let duration = work_seconds(work.timeline_duration_seconds());
+    let times = request.times(request.end, duration, "travel_query_range")?;
+    let revision = work.revision;
+    let failure = |message| CoreError::new("travel_query_failed", message);
+    let mut app = headless_app(request.assets, work).map_err(failure)?;
+    let frames = times
+        .into_iter()
+        .map(|seconds| travel_frame(&mut app, seconds).map_err(failure))
+        .collect::<Result<Vec<_>, _>>()?;
+    let first = frames.first().expect("at least one sample");
+    let last = frames.last().expect("at least one sample");
+    let displacement = |part: usize| {
+        std::array::from_fn::<_, 3, _>(|axis| last.origins[part][axis] - first.origins[part][axis])
+    };
+    let mut result = json!({
+        "schema_version": 1,
+        "work": {"revision": revision, "sha256": appearance_sha256(raw.as_bytes())},
+        "sampling": {"start_s": request.start, "end_s": request.end, "step_s": request.step,
+                     "count": frames.len()},
+        "method": "production_b1_body_and_garment_display_origins",
+        "space": "stage_world_xyz",
+        "axes": {"up": "+Y", "forward": "+Z"},
+        "start": first.value(),
+        "end": last.value(),
+        "displacement_metres": {"body": displacement(0), "garment": displacement(1)},
+    });
+    if request.expand {
+        result["samples"] = json!(frames.iter().map(TravelFrame::value).collect::<Vec<_>>());
     }
     Ok(result)
 }

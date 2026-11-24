@@ -42,3 +42,11 @@ nvwa-cli validate "$out/forward-reopened.nvwa.json" "$assets"
 跑步使用专用 Work 配置。命令保留人物 A 的八个身形参数、角色 ID 和比例，将跑步配置额外的两个参数保持为零。对本例的两份中立姿势，运行时读回了相同的骨架矩阵和逐顶点相同的身体、服装几何。这项结论只覆盖这里的参数和资源组合。
 
 站在 A 点时以显示模型原点作为起点，沿场景 +Z 前进。2 秒时，身体和衣物原点都比起点前移 1 米，4 秒时前移 2 米。随后保持终点位置，5 秒时播放结束。该位移取自运行时的场景变换；顶胯例中的关节角度和骨盆局部位移另行查询。
+
+使用带 `motion-query` 功能的 CLI，在上述命令的同一目录和 shell 中查询保存后的作品：
+
+```sh
+nvwa-cli travel-query "$out/forward-reopened.nvwa.json" "$assets" 0 5 1 --samples
+```
+
+先读 `displacement_metres`：身体和衣物的位移都是 `[0, 0, 2]` 米。再看 `samples`，第 4 秒和第 5 秒的位置相同。省略 `--samples` 可只取起止位置和净位移。

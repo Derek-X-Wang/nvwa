@@ -221,12 +221,21 @@ fn save(document: &SceneDocument, path: &Path) -> Result<(), CoreError> {
 
 const MOTION_QUERY_USAGE: &str =
     "motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples]";
+const TRAVEL_QUERY_USAGE: &str =
+    "travel-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples]";
 
 fn supports_motion_query(work: &SceneDocument) -> bool {
     work.profile.backend.is_b1_motion()
         && !work.profile.backend.is_b1_running()
         && !work.timeline.is_empty()
         && !work.is_single_loop()
+}
+
+fn supports_travel_query(work: &SceneDocument) -> bool {
+    // The production display-origin observer requires a representable stage camera.
+    work.profile.backend.is_b1_running()
+        && !work.timeline.is_empty()
+        && (0.001..=100.0).contains(&work.character.scale)
 }
 
 fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError> {
@@ -353,6 +362,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "describe-capabilities": ["input.json"],
             "validate": ["input.json", "optional_asset_root"],
             "motion-query": ["input.json", "asset_root", "start_s", "end_s", "step_s", "optional_--samples"],
+            "travel-query": ["input.json", "asset_root", "start_s", "end_s", "step_s", "optional_--samples"],
             "reference-pose": ["input.json", "seconds"],
             "apply": ["input.json", "command_or_array.json", "output.json"],
             "save": ["input.json", "output.json"]
@@ -488,6 +498,13 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "available": cfg!(feature = "motion-query"),
             "work_supported": supports_motion_query(document),
             "usage": MOTION_QUERY_USAGE,
+            "default_output": "summary",
+            "renderer_required": false
+        },
+        "travel_query": {
+            "available": cfg!(feature = "motion-query"),
+            "work_supported": supports_travel_query(document),
+            "usage": TRAVEL_QUERY_USAGE,
             "default_output": "summary",
             "renderer_required": false
         },
@@ -702,6 +719,19 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                 "Build nvwa-cli with --features motion-query to query motion",
             ));
         }
+        "travel-query" => {
+            if matches!(&args[1..], [flag] if flag == "--help" || flag == "-h") {
+                respond(TRAVEL_QUERY_USAGE)?;
+                return Ok(());
+            }
+            #[cfg(feature = "motion-query")]
+            respond(motion_query::run_travel(&args[1..])?)?;
+            #[cfg(not(feature = "motion-query"))]
+            return Err(CoreError::new(
+                "travel_query_unavailable",
+                "Build nvwa-cli with --features motion-query to query travel",
+            ));
+        }
         "apply" => {
             let document = SceneDocument::from_json(&read(&arg(1)?)?)?;
             let commands_json = read(&arg(2)?)?;
@@ -730,7 +760,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
         }
         "help" | "--help" | "-h" => {
             respond(
-                "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-waist <asset-root> <scene.json> (eleven parameters, static waist circumference, no appearance/motion)\n  new-character-legs <asset-root> <scene.json> (fifteen parameters; four unitless bilateral leg controls; static only)\n  new-character-upper-body <asset-root> <scene.json> (eighteen parameters; three upper-body shape weights; static only)\n  new-character-hip-contour <asset-root> <scene.json> (twenty parameters; hip depth and buttocks volume weights; static only)\n  new-character-chest-placement <asset-root> <scene.json> (twenty-five parameters; chest spacing and vertical placement weights; static only)\n  new-character-belly-shape <asset-root> <scene.json> (experimental; visual strength 0..1; static only; requires V15 assets not in standard CLI bundle)\n  new-character-hand-size <asset-root> <scene.json> (twenty-five parameters; independent hand size weights; static only)\n  new-character-shoulder-form <asset-root> <scene.json> (twenty-six parameters; bilateral shoulder muscle shape; static only)\n  new-character-forearm-form <asset-root> <scene.json> (twenty-seven parameters; bilateral forearm fullness shape; static only)\n  new-character-upper-arm-muscle <asset-root> <scene.json> (twenty-eight parameters; bilateral upper-arm muscle form; static only)\n  new-character-arm-proportions <asset-root> <scene.json> (twenty-three parameters; arm lengths and wrist circumference weights; static only)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
+                "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-waist <asset-root> <scene.json> (eleven parameters, static waist circumference, no appearance/motion)\n  new-character-legs <asset-root> <scene.json> (fifteen parameters; four unitless bilateral leg controls; static only)\n  new-character-upper-body <asset-root> <scene.json> (eighteen parameters; three upper-body shape weights; static only)\n  new-character-hip-contour <asset-root> <scene.json> (twenty parameters; hip depth and buttocks volume weights; static only)\n  new-character-chest-placement <asset-root> <scene.json> (twenty-five parameters; chest spacing and vertical placement weights; static only)\n  new-character-belly-shape <asset-root> <scene.json> (experimental; visual strength 0..1; static only; requires V15 assets not in standard CLI bundle)\n  new-character-hand-size <asset-root> <scene.json> (twenty-five parameters; independent hand size weights; static only)\n  new-character-shoulder-form <asset-root> <scene.json> (twenty-six parameters; bilateral shoulder muscle shape; static only)\n  new-character-forearm-form <asset-root> <scene.json> (twenty-seven parameters; bilateral forearm fullness shape; static only)\n  new-character-upper-arm-muscle <asset-root> <scene.json> (twenty-eight parameters; bilateral upper-arm muscle form; static only)\n  new-character-arm-proportions <asset-root> <scene.json> (twenty-three parameters; arm lengths and wrist circumference weights; static only)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  travel-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
             )?;
             respond(
                 "Reference motion: apply set_reference_motion or set_reference_rotation_key; reference-pose <work.json> <seconds> samples the saved motion.",

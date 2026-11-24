@@ -20,7 +20,15 @@ def closure():
         'scripts/check-v15-history.py','scripts/check-v15-live73.py',
         'scripts/v15-test-partition.py','scripts/v15-historical-test-ids.json',
         'experiments/72-b1-admission-controls/v15_source_context.py',
-        'experiments/72-b1-admission-controls/input-context-v15-experimental-v1.json']]
+        'experiments/72-b1-admission-controls/input-context-v15-experimental-v1.json',
+        'experiments/72-b1-admission-controls/integration_context.py',
+        'experiments/72-b1-admission-controls/run.py',
+        'experiments/72-b1-admission-controls/input-context-travel-query-v1.json',
+        'experiments/72-b1-admission-controls/travel_query_source_context.py',
+        'experiments/72-b1-admission-controls/test_travel_query_context.py',
+        'experiments/72-b1-admission-controls/test_waist_context.py',
+        'experiments/72-b1-admission-controls/pre-travel-query/crates/nvwa-cli/src/main.rs',
+        'experiments/72-b1-admission-controls/pre-travel-query/crates/nvwa-cli/src/motion_query.rs']]
     for directory in [ROOT/'crates', ROOT/'vendor', ROOT/'assets', EXP]:
         files += [p for p in directory.rglob('*') if p.is_file() and not set(p.relative_to(ROOT).parts)&{'target','__pycache__','.git'}]
     frozen=EXP/'FROZEN-INPUTS.json'

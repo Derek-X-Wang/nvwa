@@ -18,7 +18,10 @@ V15 = Path("assets/characters/mpfb-b1-v15")
 EXP72 = "experiments/72-b1-admission-controls"
 EXP73 = "experiments/73-high-poly-eyes"
 CONTEXT_MANIFEST = EXP72 + "/input-context-v15-experimental-v1.json"
-NEW_CONTEXT_CONTROLS = {CONTEXT_MANIFEST, EXP72 + "/v15_source_context.py"}
+TRAVEL_CONTEXT = "nvwa-travel-query-source-context-v1"
+TRAVEL_MANIFEST = EXP72 + "/input-context-travel-query-v1.json"
+NEW_CONTEXT_CONTROLS = {CONTEXT_MANIFEST, EXP72 + "/v15_source_context.py",
+                        TRAVEL_MANIFEST, EXP72 + "/travel_query_source_context.py"}
 EXPERIMENT_BUILD_OUTPUTS = {"target", "__pycache__", ".work"}
 STDLIB_CACHE_HELPER = "scripts/ci-v15-stdlib-cache.py"
 STDLIB_CACHE_HELPER_SHA256 = "d2386c0eab74eea80b0a38b32a76aee2216debc8bd559085f0ed83ee1434aeea"
@@ -218,42 +221,50 @@ def source_pin(path):
 
 
 def protected_experiments(live, dest):
-    # An actual successful V15 production-source admission precedes this check.
-    # It authenticates the independently pinned extension manifest. Compare
-    # unchanged experiment helpers, tests and fixture bytes that are outside
-    # that product map, without freezing unrelated files elsewhere in Nvwa.
+    # The live gate authenticates both manifests before replay. Compose their
+    # exact deltas to compare the successor directly with the isolated #154 tree.
     manifest = json.loads((live / CONTEXT_MANIFEST).read_bytes())
     before, after = manifest["before"], manifest["after"]
     need(before.keys() == after.keys(), "malformed V15 replay delta")
+    travel = json.loads((live / TRAVEL_MANIFEST).read_bytes())
+    travel_before, travel_after = travel["before"], travel["after"]
+    need(travel_before.keys() == travel_after.keys(), "malformed travel-query replay delta")
+    for name in after.keys() & travel_before.keys():
+        need(after[name] == travel_before[name], "travel-query predecessor pin mismatch: " + name)
+    before = travel_before | before
+    after = after | travel_after
     additions = {}
     for exp in (EXP72, EXP73):
         old, directories = experiment_files(dest, exp)
         candidate, candidate_dirs = experiment_files(live, exp, live=True)
+        new_controls = {name for name in NEW_CONTEXT_CONTROLS if name.startswith(exp + "/")}
+        new_delta = {name for name in after if name.startswith(exp + "/") and before[name] is None}
+        allowed = new_controls | new_delta
+        directories |= {p.as_posix() for name in allowed for p in Path(name).parents
+                        if p.as_posix().startswith(exp + "/")}
         need(directories == candidate_dirs, "unsupported experiment directories: " +
              ", ".join(sorted(directories ^ candidate_dirs)))
         need(old.keys() <= candidate.keys(), "missing protected experiment input: " +
              ", ".join(sorted(old.keys() - candidate.keys())))
-        new_controls = {name for name in NEW_CONTEXT_CONTROLS if name.startswith(exp + "/")}
-        new_delta = {name for name in after if name.startswith(exp + "/") and before[name] is None}
-        allowed = new_controls | new_delta
-        need(allowed <= candidate.keys() - old.keys(), "missing or historical V15 control input")
+        need(allowed <= candidate.keys() - old.keys(), "missing or historical replay control input")
         for name, (old_path, old_executable) in old.items():
             new_path, executable = candidate[name]
             need(executable == old_executable, "changed protected experiment mode: " + name)
             if name in before:
                 need(before[name] == source_pin(old_path) and after[name] == source_pin(new_path),
-                     "V15 experiment before/after mismatch: " + name)
+                     "experiment before/after mismatch: " + name)
             else:
                 need(old_path.read_bytes() == new_path.read_bytes(),
                      "changed protected experiment input: " + name)
         for name in new_delta:
-            need(after[name] == source_pin(candidate[name][0]), "changed new V15 input: " + name)
+            need(after[name] == source_pin(candidate[name][0]), "changed new replay input: " + name)
         extra = candidate.keys() - old.keys() - allowed
-        for name in extra:
-            expected = re.escape(exp) + r"/test_[A-Za-z0-9_]+\.py"
-            need(re.fullmatch(expected, name) and not candidate[name][1],
+        expected_test = re.escape(exp) + r"/test_[A-Za-z0-9_]+\.py"
+        test_files = {name for name in extra | new_delta if re.fullmatch(expected_test, name)}
+        for name in extra | test_files:
+            need(name in test_files and not candidate[name][1],
                  "unsupported experiment input: " + name)
-        additions[exp] = {Path(name).stem for name in extra}
+        additions[exp] = {Path(name).stem for name in test_files}
     return additions
 
 
@@ -272,9 +283,9 @@ def current_context(live, flags, exp, bytecode):
     obj = json.loads(run.stdout)
     if field:
         obj = obj[field]
-    need(obj["id"] == "nvwa-v15-experimental-source-context-v1",
+    need(obj["id"] == TRAVEL_CONTEXT,
          f"live source gate selected wrong context ({exp})")
-    print(f"Live V15 context: {exp}, {len(obj['files']) if field else obj['files']} pins", flush=True)
+    print(f"Live travel-query context: {exp}, {len(obj['files']) if field else obj['files']} pins", flush=True)
 
 
 def planned(live_ids, old_ids, historical):

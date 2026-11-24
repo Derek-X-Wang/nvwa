@@ -19,6 +19,8 @@ PRODUCT = ('assets/characters/mpfb-b1-v5/base.obj', 'assets/characters/mpfb-b1-v
 
 
 def pre_leg_bytes(name):
+    if name == CONTEXT.MOTION_QUERY_SOURCE:
+        return CONTEXT.retained_motion_query_file().read_bytes()
     path = HERE / CONTEXT.LEG_FIXTURES / name
     if path.is_file():
         return path.read_bytes()
