@@ -17,6 +17,7 @@ The CLI supports these local operations:
 | `apply` | Apply `set_parameters`, `set_scale`, `set_timeline`, `set_stage`, `set_diagnostic_pose` (B1), `set_appearance`, `undo` or `redo` commands and save the result to an output file. |
 | `validate` | Check a Work and optional GLB assets; B1 requires the explicit root and authenticates every payload of the selected body and appearance manifests, including roles that are off. |
 | `motion-query` | Sample foot clearance and clip boundaries in a finite B1 rehearsal Work. Requires the `motion-query` build feature. |
+| `travel-query` | Measure body and garment displacement in stage coordinates for a finite B1 running Work. Requires the `motion-query` build feature. |
 | `save` | Validate and reserialize a Work without changing its revision. |
 
 Successful machine-readable responses use JSON on stdout. Help uses text. Handled errors return exit code 1 and a `{ "code": "...", "message": "..." }` JSON diagnostic on stderr when stderr is writable. The exact response and recovery rules are in the [CLI authoring guide](agents/cli-authoring.md).
@@ -58,6 +59,24 @@ repeat the query at the same range and step. Review the final candidate in
 normal playback and take screenshots where a specific visual detail needs
 inspection. See the [short dance comparison](evidence/motion-query/RESULTS.md)
 for the measured workflow and its limits.
+
+## Headless travel observation
+
+To check how far a running character moves, read
+`cli_contract.travel_query` in `describe-capabilities`. The command takes the
+Work, asset root, inclusive start and end times, and sampling interval in seconds.
+
+```sh
+target/debug/nvwa-cli travel-query forward.nvwa.json assets 0 5 1
+```
+
+The summary gives start and end positions for the body and garment display
+origins and their end-minus-start displacement in stage XYZ metres (+Y up, +Z
+forward). The saved scale is applied. Add `--samples` to find the first sampled
+time when the character reaches a position. Each row includes the Work time,
+source clip time, and timeline entry ID. Use a smaller interval to narrow an
+arrival time. The query reads the Work without starting a renderer or changing
+the file. [Reproduce the two-metre example](examples/game-character/README.md)
 
 ## Rehearsal stage files
 
