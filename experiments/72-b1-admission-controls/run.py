@@ -824,7 +824,7 @@ def has_cli_level1_inputs(root):
 
 
 def retained_motion_query_file():
-    return source_file(HERE, f'fixtures/pre-travel-query/{MOTION_QUERY_SOURCE}')
+    return source_file(HERE, f'pre-travel-query/{MOTION_QUERY_SOURCE}')
 
 
 def pre_cli_level1_file(name):

@@ -6,12 +6,12 @@ from types import ModuleType
 
 EXP = Path(__file__).resolve().parent
 NAME = 'input-context-travel-query-v1.json'
-SHA = '889f8f85081ddb6419044497091de5d0b016ec387e292bdd2c96b63ec6e303da'
+SHA = '7d495a298a06c08f8ae4f7827f9167a7fa221f6d8829a297378284e14483c09f'
 ID = 'nvwa-travel-query-source-context-v1'
 PREDECESSOR = '693902b8f06156401706691a40c2804c6029f535'
 PREDECESSOR_ID = 'nvwa-v15-experimental-source-context-v1'
 V15_HELPER_SHA = '413d6b909bf7f5df64f679a8041ab712f54d73234f4f79b375f315c2a0317e75'
-FIXTURES = 'fixtures/pre-travel-query'
+FIXTURES = 'pre-travel-query'
 EXP72 = 'experiments/72-b1-admission-controls'
 EXP73 = 'experiments/73-high-poly-eyes'
 MARKERS = {
@@ -20,27 +20,34 @@ MARKERS = {
 }
 TRAVEL_TEST = 'crates/nvwa-cli/tests/travel_query.rs'
 RETAINED = {f'{FIXTURES}/{name}': name for name in MARKERS}
+PREDECESSOR_REPLAY_CONTROLS = {
+    f'{EXP72}/test_waist_context.py': {
+        'bytes': 16262,
+        'sha256': '1f052a71248cfff801beaa599c3c1e643ffe8604f5724e67406b577a7385d84d',
+    },
+}
 CHANGED = set(MARKERS) | {
     f'{EXP72}/run.py',
     f'{EXP73}/build.py',
     f'{EXP73}/frozen_context.py',
     'scripts/check-v15-history.py',
     'scripts/check-v15-live73.py',
-}
-ADDED = {TRAVEL_TEST, f'{EXP72}/test_travel_query_context.py'} | {f'{EXP72}/{name}' for name in RETAINED}
-CONTROLS = (ADDED - {TRAVEL_TEST}) | {f'{EXP72}/{NAME}', f'{EXP72}/travel_query_source_context.py'}
+} | PREDECESSOR_REPLAY_CONTROLS.keys()
+RETAINED_PATHS = {f'{EXP72}/{name}' for name in RETAINED}
+TEST_MODULE = f'{EXP72}/test_travel_query_context.py'
+ADDED = {TRAVEL_TEST, TEST_MODULE} | RETAINED_PATHS
+CONTROL_FILES = {TEST_MODULE, f'{EXP72}/{NAME}', f'{EXP72}/travel_query_source_context.py'}
 
 
 def present(root, control_exp, v15_present):
-    test = root / TRAVEL_TEST
-    if test.exists() or test.is_symlink():
+    if any((root / name).exists() or (root / name).is_symlink() for name in {TRAVEL_TEST} | RETAINED_PATHS):
         return True
     # Historical controls may explicitly supply a disposable control directory
     # inside the test tree. A live checkout or any V15 tree must authenticate
     # the successor files that are actually inside the requested source root.
     separate_controls = control_exp != EXP and root / EXP72 == control_exp
     if v15_present or not separate_controls:
-        if any((root / name).exists() or (root / name).is_symlink() for name in CONTROLS):
+        if any((root / name).exists() or (root / name).is_symlink() for name in CONTROL_FILES):
             return True
     # If the added test is missing, either implementation file still selects
     # this gate. The full map check rejects incomplete and modified sources.
@@ -88,6 +95,10 @@ def verify(root, integration):
     for name in integration.keys() & baseline['before'].keys():
         need(integration[name] == baseline['before'][name], 'V15 predecessor pin: ' + name)
     previous = integration | baseline['after']
+    # These controls were unchanged through V15 and were checked separately
+    # by replay against the #154 Git tree, outside its product source map.
+    need(not previous.keys() & PREDECESSOR_REPLAY_CONTROLS.keys(), 'unexpected inherited replay control')
+    previous.update(PREDECESSOR_REPLAY_CONTROLS)
     for name in CHANGED:
         need(name in previous and previous[name] == value['before'][name], 'predecessor pin: ' + name)
     need(not previous.keys() & ADDED, 'pre-existing successor addition')

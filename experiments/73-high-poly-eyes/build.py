@@ -25,8 +25,8 @@ def closure():
         'experiments/72-b1-admission-controls/input-context-travel-query-v1.json',
         'experiments/72-b1-admission-controls/travel_query_source_context.py',
         'experiments/72-b1-admission-controls/test_travel_query_context.py',
-        'experiments/72-b1-admission-controls/fixtures/pre-travel-query/crates/nvwa-cli/src/main.rs',
-        'experiments/72-b1-admission-controls/fixtures/pre-travel-query/crates/nvwa-cli/src/motion_query.rs']]
+        'experiments/72-b1-admission-controls/pre-travel-query/crates/nvwa-cli/src/main.rs',
+        'experiments/72-b1-admission-controls/pre-travel-query/crates/nvwa-cli/src/motion_query.rs']]
     for directory in [ROOT/'crates', ROOT/'vendor', ROOT/'assets', EXP]:
         files += [p for p in directory.rglob('*') if p.is_file() and not set(p.relative_to(ROOT).parts)&{'target','__pycache__','.git'}]
     frozen=EXP/'FROZEN-INPUTS.json'

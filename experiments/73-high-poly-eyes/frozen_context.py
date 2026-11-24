@@ -776,7 +776,7 @@ def has_cli_level1_inputs(root):
 
 
 def retained_motion_query_file(exp):
-    return regular_file(exp, f'../72-b1-admission-controls/fixtures/pre-travel-query/{MOTION_QUERY_SOURCE}')
+    return regular_file(exp, f'../72-b1-admission-controls/pre-travel-query/{MOTION_QUERY_SOURCE}')
 
 
 def pre_cli_level1_file(name):

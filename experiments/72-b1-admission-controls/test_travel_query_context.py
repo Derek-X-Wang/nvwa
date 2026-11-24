@@ -10,7 +10,7 @@ import unittest
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 EYE = ROOT / 'experiments/73-high-poly-eyes'
-RETAINED = HERE / 'fixtures/pre-travel-query'
+RETAINED = HERE / 'pre-travel-query'
 MAIN = 'crates/nvwa-cli/src/main.rs'
 QUERY = 'crates/nvwa-cli/src/motion_query.rs'
 TEST = 'crates/nvwa-cli/tests/travel_query.rs'
@@ -50,10 +50,10 @@ class TravelQueryContext(unittest.TestCase):
 
     def test_live_selection_and_historical_only_rejection(self):
         self.assertEqual(self.selected['id'], 'nvwa-travel-query-source-context-v1')
-        self.assertEqual(len(self.selected['files']), 1423)
+        self.assertEqual(len(self.selected['files']), 1424)
         self.assertEqual(self.selected['current_rust_execution'], 'NOT-RUN')
         self.assertEqual(self.frozen[0], self.selected['id'])
-        self.assertEqual(len(self.frozen[1]), 1709)
+        self.assertEqual(len(self.frozen[1]), 1710)
         with self.assertRaisesRegex(ValueError, 'travel-query exact source is not historical'):
             API.check_source_context(ROOT, self.pins, historical_only=True)
 
