@@ -1,0 +1,98 @@
+[
+  {
+    "command_id": "apply-shape",
+    "expected_revision": 0,
+    "command": {
+      "type": "set_parameters",
+      "character_id": "character-1",
+      "values": {
+        "cheek_fullness": 0,
+        "chin_width": 0,
+        "head_width": 1,
+        "hip_width": 0.7,
+        "jaw_drop": 0,
+        "lower_face_squareness": 0,
+        "mouth_width": 0,
+        "neck_width": 0,
+        "nose_width": 0,
+        "torso_length": 0.4
+      }
+    }
+  },
+  {
+    "command_id": "place-camera",
+    "expected_revision": 1,
+    "command": {
+      "type": "set_stage",
+      "stage": {
+        "key_light": {
+          "illuminance_lux": 10000.0,
+          "color_srgb": [
+            1.0,
+            0.94,
+            0.86
+          ],
+          "azimuth_degrees": -35.0,
+          "elevation_degrees": 42.0
+        },
+        "fill_light": {
+          "illuminance_lux": 3000.0,
+          "color_srgb": [
+            0.8,
+            0.89,
+            1.0
+          ],
+          "azimuth_degrees": 55.0,
+          "elevation_degrees": 28.0
+        },
+        "ambient": {
+          "brightness": 180.0,
+          "color_srgb": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "background_color_srgb": [
+          0.88,
+          0.9,
+          0.93
+        ],
+        "floor": {
+          "visible": true,
+          "color_srgb": [
+            0.72,
+            0.75,
+            0.8
+          ],
+          "shadows": true
+        },
+        "camera": {
+          "azimuth_degrees": 80,
+          "elevation_degrees": 8.0,
+          "distance": 6.8,
+          "target_height": 0.95,
+          "fov_degrees": 36.0
+        },
+        "quality": "balanced"
+      }
+    }
+  },
+  {
+    "command_id": "set-finite-timeline",
+    "expected_revision": 2,
+    "command": {
+      "type": "set_timeline",
+      "clips": [
+        {
+          "id": "point-a-to-b",
+          "clip_id": "b1_run_forward_authored_v1",
+          "start_seconds": 0,
+          "duration_seconds": 5,
+          "speed": 1,
+          "looping": false
+        }
+      ]
+    }
+  }
+]
