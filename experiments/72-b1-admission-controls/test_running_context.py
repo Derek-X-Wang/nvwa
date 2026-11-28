@@ -41,7 +41,7 @@ class RunningContext(unittest.TestCase):
         for name in previous_files.keys() | retained_cpu.keys():
             path = ROOT / name
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(retained_cpu[name] if name in retained_cpu else (live / name).read_bytes())
+            path.write_bytes(retained_cpu[name] if name in retained_cpu else ENTRY.pre_cli_level1_file(name).read_bytes())
         # Historical full-context controls also inspect the retained fixture pool.
         for folder in ('72-b1-admission-controls', '73-high-poly-eyes'):
             shutil.copytree(live / 'experiments' / folder / 'fixtures', ROOT / 'experiments' / folder / 'fixtures')

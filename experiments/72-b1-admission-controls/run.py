@@ -832,8 +832,11 @@ def pre_cli_level1_file(name):
         return retained_motion_query_file()
     if name in CLI_LEVEL1_CHANGED:
         return HERE / CLI_LEVEL1_FIXTURES / name
-    before_contact = HERE / 'pre-contact-target' / name
-    return before_contact if before_contact.is_file() else HERE.parents[1] / name
+    for directory in ('pre-contact-target', 'pre-contact-fit'):
+        candidate = HERE / directory / name
+        if candidate.is_file():
+            return candidate
+    return HERE.parents[1] / name
 
 
 def has_level1_inputs(root):
@@ -1498,8 +1501,10 @@ def has_chest_sibling_inputs(root):
 # Only the digest in this assignment is substituted by the contact manifest's
 # selector template; the rest of this file is byte-exact.
 CONTACT_HELPER_SHA = '90694e718731d255d1dd07c87c6d7220f21bef33ffab572eb216f552b3f5e7b5'
+FIT_HELPER_SHA = 'a29c145d9c2f0f17c17aa3996da996fb650059d5538e4f7e3158d754fc2ada44'
+FIT_BOOTSTRAP_SHA = '78af4b16327ac3c1e7952d45de96baa501cddebee38bd7c10a5c460ddaabf07b'
 TRAVEL_HELPER_SHA = '081847e1a9ebedfca49d0a34dcb1e27008116b8fe745552210dd165a011decc1'
-CONTACT_INTEGRATION_SHA = '2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5'
+CONTACT_INTEGRATION_SHA = 'bf39b7c512809299510796adc836cc2084a22d801bfe974810317eb480f67181'
 
 
 def authenticated_module(path, expected, verified_bytes=None):
@@ -1526,19 +1531,30 @@ def check_source_context(root, pins, historical_only=False):
     contact_path = source_file(CONTROL_HOME, 'contact_target_source_context.py')
     contact = authenticated_module(contact_path, CONTACT_HELPER_SHA, travel.contact_bytes(contact_path.parent))
     contact_target = contact.present(root, HERE, v15_present, travel, travel_query)
-    if v15_present or travel_query or contact_target:
-        source = 'contact-target exact source' if contact_target else 'travel-query exact source' if travel_query else 'V15 source'
+    bootstrap = authenticated_module(source_file(CONTROL_HOME, 'contact_fit_bootstrap.py'), FIT_BOOTSTRAP_SHA)
+    fit_path = contact_path.with_name('contact_fit_source_context.py')
+    fit = authenticated_module(fit_path, FIT_HELPER_SHA, bootstrap.fit_bytes(fit_path.parent))
+    contact_fit = fit.present(root, HERE, v15_present, contact_target, travel)
+    if v15_present or travel_query or contact_target or contact_fit:
+        if contact_fit:
+            source = 'contact-fit exact source'
+        elif contact_target:
+            source = 'contact-target exact source'
+        else:
+            source = 'travel-query exact source' if travel_query else 'V15 source'
         require(not historical_only, 'source input context mismatch: ' + source + ' is not historical')
         current_source_contexts(pins)
         from types import SimpleNamespace
-        if contact_target:
+        if contact_target or contact_fit:
             integration = authenticated_module(source_file(HERE, 'integration_context.py'), CONTACT_INTEGRATION_SHA)
         else:
             spec = spec_from_file_location('nvwa_integration_context', HERE / 'integration_context.py')
             integration = module_from_spec(spec); spec.loader.exec_module(integration)
         main, chest = integration.predecessors72(SimpleNamespace(**globals()), pins)
         _, previous = integration.expected(main, chest, '72')
-        if contact_target:
+        if contact_fit:
+            context, expected = fit.verify(root, travel, contact, previous)
+        elif contact_target:
             context, expected = contact.verify(root, travel, previous)
         elif travel_query:
             context, expected = travel.verify(root, previous)
@@ -1550,7 +1566,7 @@ def check_source_context(root, pins, historical_only=False):
         check_unchanged_sections((root / RUNTIME).read_text(), bridge)
         return {'id': context, 'files': {n: i['sha256'] for n, i in expected.items()},
                 'current_rust_execution': 'NOT-RUN',
-                'execution_source': source if contact_target or travel_query else 'V15 experimental exact source (review candidate)'}
+                'execution_source': source if contact_fit or contact_target or travel_query else 'V15 experimental exact source (review candidate)'}
     # Any sibling marker selects the exact union gate; partial unions must fail.
     if has_chest_inputs(root) and has_chest_sibling_inputs(root):
         current_source_contexts(pins) # retain original historical manifest authentication first

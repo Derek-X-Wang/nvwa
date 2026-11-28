@@ -1,0 +1,1357 @@
+"""Exact source-context admission; no historical execution or render claim."""
+import hashlib
+import json
+from pathlib import Path
+
+FROZEN_INPUTS_SHA = '66f024238ef009d0544d617251c46754b202b3069254ce5df47dc6dfc6debc33'
+CONTEXT_NAME = 'source-context-closeout-v1.json'
+CONTEXT_SHA = '0cd9302848da7a996232bca4cbb58cc6c6e12ec77263f59c53b790be2dfd3604'
+SHORT01_CONTEXT_NAME = 'source-context-hair79-short01-v1.json'
+SHORT01_CONTEXT_SHA = '4212de5a650eb8120c49ec985bc00928cca43af33c95a2f8bcc207158311f13f'
+SELECTOR_CONTEXT_NAME = 'source-context-hair79-selector-v1.json'
+SELECTOR_CONTEXT_SHA = 'c0416baa1cf9cb49e34217173ff37d00f02299fb782c83815602dab1977c5d35'
+AUTHORING_CONTEXT_NAME = 'source-context-b1-motion-authoring-v1.json'
+AUTHORING_CONTEXT_SHA = '9b518892e4317693d1b5ef43ec60665ce0fca9c030da817789a5ef9f4aba6c5b'
+AUTHORING_BASELINES = {
+    'crates/nvwa-studio/src/lib.rs': 'fixtures/b1-motion-authoring-baselines/studio-lib.rs',
+    'crates/nvwa-studio/src/editor_layout.rs': 'fixtures/b1-motion-authoring-baselines/editor-layout.rs',
+}
+MULTISEGMENT_CONTEXT_NAME = 'source-context-b1-multisegment-v1.json'
+MULTISEGMENT_CONTEXT_SHA = '3a2a387c0753ee0104fecff4d91e67ef0aa15a93cca62e356fef300bdd763b9a'
+MULTISEGMENT_BASELINES = {
+    'crates/nvwa-studio/src/lib.rs': 'fixtures/b1-multisegment-baselines/studio-lib.rs',
+}
+FIXTURES_NAME = 'fixtures/source-contexts/manifest.json'
+FIXTURES_SHA = 'b70450a16e7fa59b13fc333de598864ed6e995b88522b04cf520ab75e239de3a'
+CHEEK_CONTEXT_NAME = 'source-context-b1-cheek-fullness-v1.json'
+CHEEK_CONTEXT_SHA = '7eae6f15bd946baf7c7fdb258bd0ab8d6156012ce948e08875c6662389d151ce'
+CHEEK_BASELINES_NAME = 'fixtures/b1-cheek-fullness-baselines.json'
+CHEEK_BASELINES_SHA = '06a87ade124110f50738907c89913effc081183407dac0a67585d206bd74c74b'
+LOWER_CONTEXT_NAME = 'source-context-b1-lower-face-squareness-v1.json'
+LOWER_CONTEXT_SHA = '363f114fc1d6b2708f055c13433ef0a407d998a2813c3f283ac786f48c911b70'
+LOWER_BASELINES_NAME = 'fixtures/b1-lower-contour-baselines.json'
+LOWER_BASELINES_SHA = '8d5a168e2ec031c1d8a01129128b13a0cc7c7b5f9800204ba89d24164da0022b'
+
+
+def require(ok, message):
+    if not ok:
+        raise ValueError('FROZEN-INPUTS.json source context: ' + message)
+
+
+def regular_file(exp, relative):
+    path = exp
+    for part in Path(relative).parts:
+        path = path / part
+        require(not path.is_symlink(), 'context/fixture symlink rejected: ' + relative)
+    require(path.is_file(), 'context/fixture missing: ' + relative)
+    return path
+
+
+def historical_sources(exp, contexts):
+    """Authenticate retained historical bytes against immutable old context pins."""
+    path = regular_file(exp, FIXTURES_NAME)
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == FIXTURES_SHA,
+            'historical fixture manifest identity mismatch')
+    manifest = json.loads(raw)
+    require(manifest['schema_version'] == 1
+            and manifest['baseline_manifest'] == 'FROZEN-INPUTS.json'
+            and manifest['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
+            'historical fixture baseline/version mismatch')
+    expected = dict(contexts)
+    result = {}
+    declared = {FIXTURES_NAME}
+    for items in manifest['contexts'].values():
+        declared.update(item['fixture'] for item in items.values())
+    paths = list((exp / 'fixtures/source-contexts').rglob('*'))
+    require(all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths),
+            'historical fixture tree contains unsafe input')
+    require({str(path.relative_to(exp)) for path in paths if path.is_file()} == declared,
+            'historical fixture inventory is incomplete or contains extra files')
+    for context, items in manifest['contexts'].items():
+        result[context] = {}
+        for name, item in items.items():
+            pinned = expected[context][name]
+            require({'bytes': item['bytes'], 'sha256': item['sha256']} == pinned,
+                    'historical fixture differs from original context pin: ' + name)
+            raw = regular_file(exp, item['fixture']).read_bytes()
+            require(len(raw) == pinned['bytes'] and hashlib.sha256(raw).hexdigest() == pinned['sha256'],
+                    'historical fixture bytes mismatch: ' + name)
+            result[context][name] = raw
+    return result
+
+
+def authoring_baselines(exp, original):
+    """Shared old UI bytes remain pinned by the immutable original309 map."""
+    result = {}
+    for name, relative in AUTHORING_BASELINES.items():
+        raw = regular_file(exp, relative).read_bytes()
+        require({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == original[name],
+                'authoring baseline differs from original context pin: ' + name)
+        result[name] = raw
+    return result
+
+
+def multisegment_baselines(exp, contexts):
+    """Retain the preceding authoring UI bytes under their existing exact pin."""
+    result = {}
+    authoring = dict(contexts)['b1-motion-authoring-product-v1']
+    for name, relative in MULTISEGMENT_BASELINES.items():
+        raw = regular_file(exp, relative).read_bytes()
+        require({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == authoring[name],
+                'multisegment baseline differs from authoring context pin: ' + name)
+        result[name] = raw
+    return result
+
+
+def source_contexts(exp, raw, original):
+    require(hashlib.sha256(raw).hexdigest() == FROZEN_INPUTS_SHA,
+            'immutable original manifest identity mismatch')
+    require(original == json.loads(raw), 'original manifest map differs')
+    contexts = [('original-frozen309', original)]
+    for name, expected in ((CONTEXT_NAME, CONTEXT_SHA),
+                           (SHORT01_CONTEXT_NAME, SHORT01_CONTEXT_SHA),
+                           (SELECTOR_CONTEXT_NAME, SELECTOR_CONTEXT_SHA),
+                           (AUTHORING_CONTEXT_NAME, AUTHORING_CONTEXT_SHA),
+                           (MULTISEGMENT_CONTEXT_NAME, MULTISEGMENT_CONTEXT_SHA)):
+        path = regular_file(exp, name)
+        raw = path.read_bytes()
+        require(hashlib.sha256(raw).hexdigest() == expected,
+                'context manifest identity mismatch: ' + name)
+        context = json.loads(raw)
+        require(context['schema_version'] == 1 and context['baseline_manifest'] == 'FROZEN-INPUTS.json'
+                and context['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
+                'context baseline/version mismatch')
+        current = dict(original)
+        current.update(context['overrides'])
+        contexts.append((context['context'], current))
+    # Historical fixtures are mandatory and independently authenticated even when
+    # selecting the product context. No Git history or current-byte reversal.
+    historical_sources(exp, contexts)
+    authoring_baselines(exp, original)
+    multisegment_baselines(exp, contexts)
+    pre_contour_baselines(exp, contexts)
+    return contexts
+
+
+def pre_contour_baselines(exp, contexts):
+    """Retain every frozen crate input at its exact prior product identity."""
+    raw = regular_file(exp, CHEEK_BASELINES_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CHEEK_BASELINES_SHA,
+            'pre-contour baseline manifest identity mismatch')
+    manifest = json.loads(raw)
+    require(set(manifest) == {'schema_version', 'context', 'source_commit', 'files'}
+            and manifest['schema_version'] == 1
+            and manifest['context'] == 'b1-multisegment-product-v1'
+            and manifest['source_commit'] == '96cda1b6a63d7f271389b28d293f1223028f0de6',
+            'pre-contour baseline identity mismatch')
+    expected = dict(contexts)[manifest['context']]
+    items = manifest['files']
+    require(set(items) == {name for name in expected if name.startswith('crates/')},
+            'pre-contour baseline complete crate set required')
+    result = {}
+    declared = set()
+    prefix = 'fixtures/b1-cheek-fullness-baselines/'
+    for name, item in items.items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == prefix + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == expected[name],
+                'pre-contour baseline differs from historical pin: ' + name)
+        data = regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected[name],
+                'pre-contour baseline bytes mismatch: ' + name)
+        result[name] = data
+        declared.add(item['fixture'])
+    paths = list((exp / prefix).rglob('*'))
+    require(all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths)
+            and {str(path.relative_to(exp)) for path in paths if path.is_file()} == declared,
+            'pre-contour baseline fixture inventory mismatch')
+    return result
+
+
+def admitted_source_contexts(exp, raw, original):
+    """Append one exact current map; historical cohort enumeration stays fixed."""
+    contexts = source_contexts(exp, raw, original)
+    data = regular_file(exp, CHEEK_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == CHEEK_CONTEXT_SHA,
+            'cheek context manifest identity mismatch')
+    context = json.loads(data)
+    require(set(context) == {'schema_version', 'baseline_manifest', 'baseline_manifest_sha256',
+                             'context', 'overrides', 'scope'}
+            and context['schema_version'] == 1
+            and context['context'] == 'b1-cheek-fullness-product-v1'
+            and context['baseline_manifest'] == 'FROZEN-INPUTS.json'
+            and context['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
+            'cheek context baseline/version mismatch')
+    require(context['overrides'] and set(context['overrides']) <= set(original),
+            'cheek context must retain the exact original source paths')
+    current = dict(original)
+    current.update(context['overrides'])
+    contexts.append((context['context'], current))
+    return contexts
+
+
+
+def pre_lower_contour_baselines(exp, contexts):
+    """Retain all54 crate inputs from the exact preceding cheek context."""
+    raw = regular_file(exp, LOWER_BASELINES_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == LOWER_BASELINES_SHA,
+            'pre-lower-contour baseline manifest identity mismatch')
+    manifest = json.loads(raw)
+    require(set(manifest) == {'schema_version', 'context', 'source_commit', 'files'}
+            and manifest['schema_version'] == 1
+            and manifest['context'] == 'b1-cheek-fullness-product-v1'
+            and manifest['source_commit'] == 'e3c02689d7f59d97141ffe70835fa3524231c28a',
+            'pre-lower-contour baseline identity mismatch')
+    expected = dict(contexts)[manifest['context']]
+    require(set(manifest['files']) == {n for n in expected if n.startswith('crates/')},
+            'pre-lower-contour complete crate set required')
+    prefix = 'fixtures/b1-lower-contour-baselines/'
+    result = {}
+    for name, item in manifest['files'].items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'} and item['fixture'] == prefix + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == expected[name],
+                'pre-lower-contour historical pin mismatch: ' + name)
+        data = regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected[name],
+                'pre-lower-contour baseline bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / prefix).rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(exp)) for p in paths if p.is_file()}
+                == {i['fixture'] for i in manifest['files'].values()},
+            'pre-lower-contour baseline fixture inventory mismatch')
+    return result
+
+
+def current_source_contexts(exp, raw, original):
+    """Append current source while old six/seven-context cohorts remain fixed."""
+    contexts = admitted_source_contexts(exp, raw, original)
+    pre_lower_contour_baselines(exp, contexts)
+    data = regular_file(exp, LOWER_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == LOWER_CONTEXT_SHA,
+            'lower contour context manifest identity mismatch')
+    context = json.loads(data)
+    require(set(context) == {'schema_version', 'baseline_manifest', 'baseline_manifest_sha256',
+                             'context', 'overrides', 'scope'}
+            and context['schema_version'] == 1
+            and context['context'] == 'b1-lower-face-squareness-product-v1'
+            and context['baseline_manifest'] == 'FROZEN-INPUTS.json'
+            and context['baseline_manifest_sha256'] == FROZEN_INPUTS_SHA,
+            'lower contour context baseline/version mismatch')
+    require(context['overrides'] and set(context['overrides']) <= set(original),
+            'lower contour context must retain exact original source paths')
+    current = dict(original)
+    current.update(context['overrides'])
+    contexts.append((context['context'], current))
+    return contexts
+
+
+def select_context(actual, contexts):
+    for name, expected in contexts:
+        if actual == expected:
+            return name, expected
+    raise ValueError('FROZEN-INPUTS.json source context: exact original309, reviewed closeout309, reviewed short01 product309, reviewed selector product309, reviewed B1 authoring product309, or reviewed B1 multisegment product309 required')
+
+
+RUNNING_CONTEXT_NAME = 'source-context-b1-running-v1.json'
+RUNNING_CONTEXT_SHA = 'bfe4866e3fa733a949a5b096300b8dc88ff48bda4545f2e8c3e7c8131ce10f7e'
+RUNNING_BASELINES_NAME = 'fixtures/b1-running-predecessor-baselines.json'
+RUNNING_BASELINES_SHA = '3dccb28db161e75b780872118a5c548171e643f00d72cc6c2d3f59ad2afdae05'
+RUNNING_ADDITIONS = ('crates/nvwa-cli/tests/running.rs', 'crates/nvwa-core/src/running.rs', 'crates/nvwa-runtime/src/b1_running.rs', 'crates/nvwa-runtime/src/b1_running_controls.json', 'docs/b1-running-contract.md')
+
+
+def running_source_context(exp, raw, original):
+    """Authenticate a separate complete314 map; never alter original309."""
+    contexts = current_source_contexts(exp, raw, original)
+    return _running_source_context(exp, original, contexts)
+
+
+def _running_source_context(exp, original, contexts):
+    """Continue only with the context chain authenticated by this invocation."""
+    data = regular_file(exp, RUNNING_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == RUNNING_CONTEXT_SHA, 'running context manifest identity mismatch')
+    value = json.loads(data)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'source_freeze_sha256', 'files'}
+            and value['schema_version'] == 1 and value['context'] == 'b1-running-product-v1'
+            and value['predecessor'] == 'b1-lower-face-squareness-product-v1'
+            and value['source_freeze_sha256'] == 'ecc815dac0c868d1f3597324c2ca10b5f021199e87007c71fbf0cd4c33647044'
+            and set(value['files']) == set(original) | set(RUNNING_ADDITIONS)
+            and len(value['files']) == 314, 'running complete source union required')
+    pre_running_sources(exp, contexts)
+    return value['context'], value['files']
+
+
+def pre_running_sources(exp, contexts):
+    """Retain only replaced lower source; old gates still use current checker."""
+    data = regular_file(exp, RUNNING_BASELINES_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == RUNNING_BASELINES_SHA, 'pre-running manifest identity mismatch')
+    value = json.loads(data)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == 'b1-lower-face-squareness-product-v1'
+            and value['source_commit'] == '9251712313a3779bf4f0a4a854755a16f1a5df16', 'pre-running identity mismatch')
+    expected = dict(contexts)[value['context']]
+    result = {}
+    for name, item in value['files'].items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/b1-running-predecessor-baselines/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == expected[name],
+                'pre-running historical pin mismatch: ' + name)
+        data = regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected[name],
+                'pre-running bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / 'fixtures/b1-running-predecessor-baselines').rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(exp)) for p in paths if p.is_file()}
+                == {i['fixture'] for i in value['files'].values()}, 'pre-running fixture inventory mismatch')
+    return result
+
+
+MOTION_QUERY_CONTEXT = 'b1-motion-query-product-v1'
+MOTION_QUERY_CONTEXT_NAME = 'source-context-b1-motion-query-v1.json'
+MOTION_QUERY_CONTEXT_SHA = '12f03cc2d1cd9db12c9d5d112b52a0174d0253054a58531185ee71a4bf7dfc03'
+MOTION_QUERY_SOURCE = 'crates/nvwa-cli/src/motion_query.rs'
+MOTION_QUERY_NEW = (MOTION_QUERY_SOURCE, 'crates/nvwa-cli/tests/motion_query.rs',
+                    'crates/nvwa-runtime/src/b1/foot_clearance.rs')
+MOTION_QUERY_OUTSIDE = {
+    'crates/nvwa-studio/examples/nvwa-preview.rs': {'bytes': 22049, 'sha256': 'c32c5bb4f71989af875ae1d24af40d6d7810ff97d4e4582d94c12311964e2452'},
+}
+MOTION_QUERY_ADDITIONS = (*MOTION_QUERY_NEW, *MOTION_QUERY_OUTSIDE)
+MOTION_QUERY_CHANGED = ('Cargo.lock', 'crates/nvwa-cli/Cargo.toml', 'crates/nvwa-cli/src/main.rs',
+                        'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/lib.rs')
+MOTION_QUERY_FIXTURES = 'fixtures/pre-motion-query'
+
+
+def _motion_query_source_context(exp, running):
+    """Continue only with the running chain authenticated by this invocation."""
+    data = regular_file(exp, MOTION_QUERY_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(data).hexdigest() == MOTION_QUERY_CONTEXT_SHA,
+            'motion-query context manifest identity mismatch')
+    value = json.loads(data)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_manifest_sha256',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == MOTION_QUERY_CONTEXT
+            and value['predecessor'] == running[0]
+            and value['predecessor_manifest_sha256'] == RUNNING_CONTEXT_SHA
+            and value['predecessor_commit'] == 'd272e16fa6f5faa55337c4ae5f6ac18043f8ab01',
+            'motion-query context predecessor mismatch')
+    files = value['files']
+    require(set(files) == set(running[1]) | set(MOTION_QUERY_ADDITIONS)
+            and len(files) == 318
+            and {name for name, item in running[1].items() if files[name] != item} == set(MOTION_QUERY_CHANGED),
+            'motion-query complete source union required')
+    _pre_motion_query_sources(exp, running)
+    return value['context'], files
+
+
+def _pre_motion_query_sources(exp, running):
+    expected = {name: running[1][name] for name in MOTION_QUERY_CHANGED} | MOTION_QUERY_OUTSIDE
+    result = {}
+    declared = set()
+    for name, item in expected.items():
+        if name == 'crates/nvwa-cli/Cargo.toml':
+            relative = 'fixtures/b1-lower-contour-baselines/' + name
+        else:
+            relative = MOTION_QUERY_FIXTURES + '/' + name
+            declared.add(relative)
+        raw = regular_file(exp, relative).read_bytes()
+        require({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == item,
+                'pre-motion-query fixture bytes mismatch: ' + name)
+        result[name] = raw
+    paths = list((exp / MOTION_QUERY_FIXTURES).rglob('*'))
+    require(all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths)
+            and {str(path.relative_to(exp)) for path in paths if path.is_file()} == declared,
+            'pre-motion-query fixture inventory mismatch')
+    return result
+
+
+def pre_motion_query_sources(exp, raw, original):
+    """Return the exact displaced running inputs and pre-existing outside bytes."""
+    return _pre_motion_query_sources(exp, running_source_context(exp, raw, original))
+
+
+def check_no_motion_query_additions(root):
+    require(not any((root / name).exists() or (root / name).is_symlink() for name in MOTION_QUERY_NEW),
+            'motion-query additions in historical source')
+    for name, item in MOTION_QUERY_OUTSIDE.items():
+        if (root / name).exists() or (root / name).is_symlink():
+            raw = regular_file(root, name).read_bytes()
+            require({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == item,
+                    'motion-query outside source: ' + name)
+
+
+# A separate exact product context; all historical cohort APIs and pins stay fixed.
+CPU_CONTEXT_NAME = 'source-context-cpu-export-v1.json'
+CPU_CONTEXT_SHA = '152d47f6e5e2b4b2d199e8707dd44e6b3175ba246531f2374e6fbcfe6b47a5d2'
+CPU_BASELINES_SHA = '6d0a08f17b5ea871316e59670df4d4d8229f49958352e5badeb8282f5a55bf59'
+CPU_CONTEXT_ID = 'b1-cpu-export-product-v1'
+CPU_PREDECESSOR_COMMIT = '54384aeaaa70a7883978e3e33d4bf163c0c1f273'
+CPU_ADDITIONS = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/tests/cpu_render.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs', 'docs/agents/cli-authoring.md', 'docs/agents/cpu-render.md', 'experiments/27-ci-baseline/check.sh')
+CPU_NEW_FILES = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/tests/cpu_render.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs', 'docs/agents/cpu-render.md')
+CPU_PREEXISTING = ('docs/agents/cli-authoring.md', 'experiments/27-ci-baseline/check.sh')
+CPU_RETAINED = ('Cargo.lock', 'crates/nvwa-cli/Cargo.toml', 'crates/nvwa-cli/src/main.rs', 'crates/nvwa-runtime/Cargo.toml', 'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/lib.rs', 'crates/nvwa-runtime/src/stage.rs', 'docs/agents/cli-authoring.md', 'experiments/27-ci-baseline/check.sh')
+
+def cpu_regular_file(exp, relative):
+    path = exp
+    for part in Path(relative).parts:
+        path = path / part
+        require(not path.is_symlink(), 'CPU source context symlink: ' + relative)
+    require(path.is_file(), 'CPU source context missing: ' + relative)
+    return path
+
+
+def has_cpu_inputs(root):
+    return any((root / n).exists() or (root / n).is_symlink() for n in CPU_NEW_FILES)
+
+
+def _pre_cpu_sources(exp, previous):
+    path = cpu_regular_file(exp, 'fixtures/pre-cpu-export/manifest.json')
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CPU_BASELINES_SHA,
+            'CPU predecessor manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == 'b1-motion-query-product-v1'
+            and value['source_commit'] == CPU_PREDECESSOR_COMMIT
+            and set(value['files']) == set(CPU_RETAINED), 'CPU predecessor complete inventory required')
+    result = {}
+    for name, item in value['files'].items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-cpu-export/' + name,
+                'CPU predecessor fixture path mismatch')
+        expected = {k: item[k] for k in ('bytes', 'sha256')}
+        if name in previous:
+            require(expected == previous[name], 'CPU predecessor historical pin mismatch: ' + name)
+        data = cpu_regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected,
+                'CPU predecessor bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / 'fixtures/pre-cpu-export').rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(exp)) for p in paths if p.is_file()}
+                == {'fixtures/pre-cpu-export/manifest.json'} | {i['fixture'] for i in value['files'].values()},
+            'CPU predecessor fixture inventory mismatch')
+    return result
+
+
+def _cpu_context(exp, previous):
+    _pre_cpu_sources(exp, previous)
+    raw = cpu_regular_file(exp, CPU_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CPU_CONTEXT_SHA, 'CPU source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == CPU_CONTEXT_ID
+            and value['predecessor'] == 'b1-motion-query-product-v1'
+            and value['predecessor_commit'] == CPU_PREDECESSOR_COMMIT
+            and set(value['files']) == set(previous) | set(CPU_ADDITIONS),
+            'CPU source context complete union required')
+    return value['context'], value['files']
+
+
+def pre_cpu_sources(exp, raw, original):
+    previous = _motion_query_source_context(exp, running_source_context(exp, raw, original))[1]
+    retained = _pre_cpu_sources(exp, previous)
+    data = retained_motion_query_file(exp).read_bytes()
+    require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == previous[MOTION_QUERY_SOURCE],
+            'retained motion-query bytes mismatch: ' + MOTION_QUERY_SOURCE)
+    return retained | {MOTION_QUERY_SOURCE: data}
+
+
+def cpu_source_context(exp, raw, original):
+    return _cpu_context(exp, _motion_query_source_context(exp, running_source_context(exp, raw, original))[1])
+
+
+def check_cpu_preexisting(root, retained):
+    for name in CPU_PREEXISTING:
+        if (root / name).exists() or (root / name).is_symlink():
+            require(cpu_regular_file(root, name).read_bytes() == retained[name],
+                    'CPU source context mismatch: historical outside source: ' + name)
+
+
+# The exact reference motion source is an additive successor to CPU export.
+REFERENCE_MOTION_CONTEXT_NAME = 'source-context-reference-motion-v1.json'
+REFERENCE_MOTION_CONTEXT_SHA = '8731414a1fe9c3b402ecda348472aba2f78326e0e47af838ed4f710de27cd397'
+REFERENCE_MOTION_CONTEXT_ID = 'b1-reference-motion-product-v1'
+REFERENCE_MOTION_PREDECESSOR_COMMIT = '875213616aa68d81dbfcd6378f4e2292f5b24004'
+REFERENCE_MOTION_CHANGED = ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-core/src/lib.rs',
+                            'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-studio/src/lib.rs')
+REFERENCE_MOTION_ADDITIONS = ('crates/nvwa-cli/tests/reference_motion.rs',
+                              'crates/nvwa-core/src/reference_motion.rs',
+                              'docs/agents/reference-motion.md')
+REFERENCE_MOTION_FIXTURES = 'fixtures/pre-reference-motion'
+
+
+def has_reference_motion_inputs(root):
+    return any((root / name).exists() or (root / name).is_symlink()
+               for name in REFERENCE_MOTION_ADDITIONS)
+
+
+def _pre_reference_motion_sources(exp, previous):
+    """Read the displaced CPU source bytes against the authenticated CPU pins."""
+    result = {}
+    for name in REFERENCE_MOTION_CHANGED:
+        path = regular_file(exp, REFERENCE_MOTION_FIXTURES + '/' + name)
+        data = path.read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == previous[name],
+                'reference motion predecessor bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / REFERENCE_MOTION_FIXTURES).rglob('*'))
+    require(all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(exp / REFERENCE_MOTION_FIXTURES).as_posix()
+                 for p in paths if p.is_file()} == set(REFERENCE_MOTION_CHANGED),
+            'reference motion predecessor fixture inventory mismatch')
+    return result
+
+
+def _reference_motion_context(exp, cpu):
+    predecessor, previous = cpu
+    raw = regular_file(exp, REFERENCE_MOTION_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == REFERENCE_MOTION_CONTEXT_SHA,
+            'reference motion source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == REFERENCE_MOTION_CONTEXT_ID
+            and value['predecessor'] == predecessor
+            and value['predecessor_commit'] == REFERENCE_MOTION_PREDECESSOR_COMMIT
+            and set(value['files']) == set(previous) | set(REFERENCE_MOTION_ADDITIONS),
+            'reference motion source context complete union required')
+    require({name for name in previous if value['files'][name] != previous[name]}
+            == set(REFERENCE_MOTION_CHANGED), 'reference motion source context exact changes required')
+    _pre_reference_motion_sources(exp, previous)
+    return value['context'], value['files']
+
+
+def pre_reference_motion_sources(exp, raw, original):
+    return _pre_reference_motion_sources(exp, cpu_source_context(exp, raw, original)[1])
+
+# A separate exact product context; all historical cohort APIs and pins stay fixed.
+WAIST_CONTEXT_NAME = 'source-context-waist-v1.json'
+WAIST_CONTEXT_SHA = '43493146880230b5ee1246658b97eef88afbcfd39d227cccc86c9fe56899627b'
+WAIST_BASELINES_SHA = 'e42a0ec7fbb47fc3c52edd2948cf8f92ed1d52d20b77959f7da3f5a0add2a891'
+WAIST_CONTEXT_ID = 'b1-waist-circumference-product-v1'
+WAIST_PREDECESSOR_COMMIT = '875213616aa68d81dbfcd6378f4e2292f5b24004'
+WAIST_ADDITIONS = ('assets/characters/mpfb-b1-v5/base.obj', 'assets/characters/mpfb-b1-v5/body.mhclo', 'assets/characters/mpfb-b1-v5/composite.json', 'assets/characters/mpfb-b1-v5/empty.macro', 'assets/characters/mpfb-b1-v5/garment/female_sportsuit01.mhclo', 'assets/characters/mpfb-b1-v5/garment/female_sportsuit01.obj', 'assets/characters/mpfb-b1-v5/licenses/CC0-1.0.txt', 'assets/characters/mpfb-b1-v5/licenses/CHEEK-VOLUME-DERIVATION-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/LOWER-FACE-SQUARING-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/MPFB-LICENSE.md', 'assets/characters/mpfb-b1-v5/licenses/PARAMETER-SOURCE-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/SOURCE-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/provenance.json', 'assets/characters/mpfb-b1-v5/manifest.json', 'assets/characters/mpfb-b1-v5/provenance/README.md', 'assets/characters/mpfb-b1-v5/provenance/cheek-volume-derivation.json', 'assets/characters/mpfb-b1-v5/provenance/chin-bones-source.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v2-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v2-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v3-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v3-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v4-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v4-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/parameter-source-receipt.json', 'assets/characters/mpfb-b1-v5/provenance/runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/waist-circumference-source.json', 'assets/characters/mpfb-b1-v5/provenance/waist-source-validation.json', 'assets/characters/mpfb-b1-v5/rig.game_engine.json', 'assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-decr.target', 'assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-bones-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-bones-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-width-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-width-incr.target', 'assets/characters/mpfb-b1-v5/targets/head-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/head-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/measure-waist-circ-decr.target', 'assets/characters/mpfb-b1-v5/targets/measure-waist-circ-incr.target', 'assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/torso-scale-vert-decr.target', 'assets/characters/mpfb-b1-v5/targets/torso-scale-vert-incr.target', 'assets/characters/mpfb-b1-v5/vertex_groups.json', 'assets/characters/mpfb-b1-v5/weights.game_engine.json', 'crates/nvwa-cli/tests/waist.rs', 'crates/nvwa-core/tests/waist.rs', 'crates/nvwa-studio/src/lower_contour_ui_tests.rs', 'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py', 'scripts/test-cli-package.py')
+WAIST_NEW_FILES = ('assets/characters/mpfb-b1-v5/base.obj', 'assets/characters/mpfb-b1-v5/body.mhclo', 'assets/characters/mpfb-b1-v5/composite.json', 'assets/characters/mpfb-b1-v5/empty.macro', 'assets/characters/mpfb-b1-v5/garment/female_sportsuit01.mhclo', 'assets/characters/mpfb-b1-v5/garment/female_sportsuit01.obj', 'assets/characters/mpfb-b1-v5/licenses/CC0-1.0.txt', 'assets/characters/mpfb-b1-v5/licenses/CHEEK-VOLUME-DERIVATION-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/LOWER-FACE-SQUARING-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/MPFB-LICENSE.md', 'assets/characters/mpfb-b1-v5/licenses/PARAMETER-SOURCE-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/SOURCE-NOTICE.md', 'assets/characters/mpfb-b1-v5/licenses/provenance.json', 'assets/characters/mpfb-b1-v5/manifest.json', 'assets/characters/mpfb-b1-v5/provenance/README.md', 'assets/characters/mpfb-b1-v5/provenance/cheek-volume-derivation.json', 'assets/characters/mpfb-b1-v5/provenance/chin-bones-source.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v2-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v2-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v3-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v3-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v4-manifest.json', 'assets/characters/mpfb-b1-v5/provenance/legacy-v4-runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/parameter-source-receipt.json', 'assets/characters/mpfb-b1-v5/provenance/runtime-payloads.json', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/l-cheek-volume-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/cheek/r-cheek-volume-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/data/targets/chin/chin-bones-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-decr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/source/torso/measure-waist-circ-incr.target.gz', 'assets/characters/mpfb-b1-v5/provenance/waist-circumference-source.json', 'assets/characters/mpfb-b1-v5/provenance/waist-source-validation.json', 'assets/characters/mpfb-b1-v5/rig.game_engine.json', 'assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-decr.target', 'assets/characters/mpfb-b1-v5/targets/cheek-volume-bilateral-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-bones-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-bones-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-jaw-drop-incr.target', 'assets/characters/mpfb-b1-v5/targets/chin-width-decr.target', 'assets/characters/mpfb-b1-v5/targets/chin-width-incr.target', 'assets/characters/mpfb-b1-v5/targets/head-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/head-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/hip-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/measure-waist-circ-decr.target', 'assets/characters/mpfb-b1-v5/targets/measure-waist-circ-incr.target', 'assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/mouth-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/neck-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-decr.target', 'assets/characters/mpfb-b1-v5/targets/nose-scale-horiz-incr.target', 'assets/characters/mpfb-b1-v5/targets/torso-scale-vert-decr.target', 'assets/characters/mpfb-b1-v5/targets/torso-scale-vert-incr.target', 'assets/characters/mpfb-b1-v5/vertex_groups.json', 'assets/characters/mpfb-b1-v5/weights.game_engine.json', 'crates/nvwa-cli/tests/waist.rs', 'crates/nvwa-core/tests/waist.rs')
+WAIST_PREEXISTING = ('crates/nvwa-studio/src/lower_contour_ui_tests.rs', 'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py', 'scripts/test-cli-package.py')
+WAIST_RETAINED = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/src/main.rs', 'crates/nvwa-cli/tests/appearance.rs', 'crates/nvwa-cli/tests/cpu_render.rs', 'crates/nvwa-core/src/appearance.rs', 'crates/nvwa-core/src/b1.rs', 'crates/nvwa-core/tests/appearance.rs', 'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs', 'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs', 'crates/nvwa-studio/src/lower_contour_ui_tests.rs', 'docs/agents/cpu-render.md', 'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py', 'scripts/test-cli-package.py')
+
+def waist_regular_file(exp, relative):
+    path = exp
+    for part in Path(relative).parts:
+        path = path / part
+        require(not path.is_symlink(), 'WAIST source context symlink: ' + relative)
+    require(path.is_file(), 'WAIST source context missing: ' + relative)
+    return path
+
+
+def has_waist_inputs(root):
+    return any((root / n).exists() or (root / n).is_symlink() for n in WAIST_NEW_FILES)
+
+
+def _pre_waist_sources(exp, previous):
+    path = waist_regular_file(exp, 'fixtures/pre-waist/manifest.json')
+    raw = path.read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == WAIST_BASELINES_SHA,
+            'WAIST predecessor manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'source_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == 'b1-cpu-export-product-v1'
+            and value['source_commit'] == WAIST_PREDECESSOR_COMMIT
+            and set(value['files']) == set(WAIST_RETAINED), 'WAIST predecessor complete inventory required')
+    result = {}
+    for name, item in value['files'].items():
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-waist/' + name,
+                'WAIST predecessor fixture path mismatch')
+        expected = {k: item[k] for k in ('bytes', 'sha256')}
+        if name in previous:
+            require(expected == previous[name], 'WAIST predecessor historical pin mismatch: ' + name)
+        data = waist_regular_file(exp, item['fixture']).read_bytes()
+        require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == expected,
+                'WAIST predecessor bytes mismatch: ' + name)
+        result[name] = data
+    paths = list((exp / 'fixtures/pre-waist').rglob('*'))
+    require(all(not p.is_symlink() for p in paths)
+            and {str(p.relative_to(exp)) for p in paths if p.is_file()}
+                == {'fixtures/pre-waist/manifest.json'} | {i['fixture'] for i in value['files'].values()},
+            'WAIST predecessor fixture inventory mismatch')
+    return result
+
+
+def _waist_context(exp, previous):
+    _pre_waist_sources(exp, previous)
+    raw = waist_regular_file(exp, WAIST_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == WAIST_CONTEXT_SHA, 'WAIST source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == WAIST_CONTEXT_ID
+            and value['predecessor'] == 'b1-cpu-export-product-v1'
+            and value['predecessor_commit'] == WAIST_PREDECESSOR_COMMIT
+            and set(value['files']) == set(previous) | set(WAIST_ADDITIONS),
+            'WAIST source context complete union required')
+    return value['context'], value['files']
+
+
+def pre_waist_sources(exp, raw, original):
+    return _pre_waist_sources(exp, cpu_source_context(exp, raw, original)[1])
+
+
+def waist_source_context(exp, raw, original):
+    return _waist_context(exp, cpu_source_context(exp, raw, original)[1])
+
+
+def check_waist_preexisting(root, retained):
+    for name in WAIST_PREEXISTING:
+        if (root / name).exists() or (root / name).is_symlink():
+            require(waist_regular_file(root, name).read_bytes() == retained[name],
+                    'WAIST source context mismatch: historical outside source: ' + name)
+
+COMBINED_CONTEXT_NAME = 'source-context-waist-reference-motion-v1.json'
+COMBINED_CONTEXT_SHA = '355e1a19843d23284e5cddb85e39b279ef7ef0361682ba853528aaefaaabe738'
+COMBINED_CONTEXT_ID = 'b1-waist-reference-motion-product-v1'
+COMBINED_PREDECESSOR_COMMIT = '9031ce7f82167621e8b7fed2b7a0af5a899b8a17'
+COMBINED_FIXTURES = 'fixtures/pre-waist-reference-motion'
+COMBINED_REFERENCE_RETAINED = ('crates/nvwa-cli/src/main.rs', 'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-studio/src/lib.rs')
+
+
+def _combined_predecessors(exp, waist, reference):
+    variants = (('waist', REFERENCE_MOTION_CHANGED, waist[1]),
+                ('reference-motion', COMBINED_REFERENCE_RETAINED, reference[1]))
+    expected_paths = {f'{label}/{name}' for label, names, _ in variants for name in names}
+    fixture_root = exp / COMBINED_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not path.is_symlink() and (path.is_file() or path.is_dir()) for path in paths)
+            and {path.relative_to(fixture_root).as_posix() for path in paths if path.is_file()}
+            == expected_paths, 'combined source predecessor fixture inventory mismatch')
+    result = {}
+    for label, names, pins in variants:
+        retained = {}
+        for name in names:
+            data = regular_file(exp, f'{COMBINED_FIXTURES}/{label}/{name}').read_bytes()
+            require({'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()} == pins[name],
+                    'combined source predecessor bytes mismatch: ' + name)
+            retained[name] = data
+        result[label] = retained
+    return result
+
+
+def _combined_context(exp, cpu):
+    waist = _waist_context(exp, cpu[1])
+    reference = _reference_motion_context(exp, cpu)
+    _combined_predecessors(exp, waist, reference)
+    raw = regular_file(exp, COMBINED_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == COMBINED_CONTEXT_SHA,
+            'combined source context manifest identity mismatch')
+    value = json.loads(raw)
+    previous = waist[1]
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == COMBINED_CONTEXT_ID
+            and value['predecessor'] == waist[0]
+            and value['predecessor_commit'] == COMBINED_PREDECESSOR_COMMIT
+            and set(value['files']) == set(previous) | set(REFERENCE_MOTION_ADDITIONS),
+            'combined source context complete union required')
+    require({name for name in previous if value['files'][name] != previous[name]}
+            == set(REFERENCE_MOTION_CHANGED), 'combined source context exact changes required')
+    return value['context'], value['files']
+
+
+LEG_CONTEXT_NAME = '../72-b1-admission-controls/input-context-legs-v1.json'
+LEG_CONTEXT_SHA = '955d7a1c5ff4481ccf14d3fe7b393a482c71a325d770067b8e52d1b96d0a4665'
+LEG_CONTEXT_ID = 'b1-leg-morphology-product-v1'
+UPPER_CONTEXT_NAME = '../72-b1-admission-controls/input-context-upper-body-v1.json'
+UPPER_CONTEXT_SHA = 'a11c03173769831c45f9cda63506634adea0e92718910f521d6b4e947c44fbd2'
+UPPER_CONTEXT_ID = 'b1-upper-body-morphology-product-v1'
+HIP_CONTEXT_NAME = '../72-b1-admission-controls/input-context-hip-contour-v1.json'
+HIP_CONTEXT_SHA = '441d9b64b08fc138a67ae13a88831f037082a60cdccb19eafa6876fc351baa38'
+HIP_CONTEXT_ID = 'b1-hip-contour-product-v1'
+
+ARM_CONTEXT_NAME = '../72-b1-admission-controls/input-context-arm-proportions-v1.json'
+ARM_CONTEXT_SHA = '9b00a24d037abc21b3b13a21222ad1e1e37a9d307391f252276413b1f1c8835b'
+ARM_CONTEXT_ID = 'b1-arm-proportions-product-v1'
+
+BODY_REFERENCE_CONTEXT_NAME = '../72-b1-admission-controls/input-context-body-reference-v1.json'
+BODY_REFERENCE_CONTEXT_SHA = '451b150461319889ace4211838748177640d3cd89ab27a26e58fa508328e6e80'
+BODY_REFERENCE_CONTEXT_ID = 'b1-body-reference-product-v1'
+BODY_REFERENCE_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs',
+                          'crates/nvwa-cli/tests/cpu_render.rs',
+                          'crates/nvwa-runtime/src/b1.rs',
+                          'crates/nvwa-runtime/src/b1/cpu_render.rs',
+                          'crates/nvwa-runtime/src/lib.rs',
+                          'docs/agents/cpu-render.md')
+BODY_REFERENCE_ADDED = 'scripts/render-body-reference.py'
+BODY_REFERENCE_FIXTURES = '../72-b1-admission-controls/fixtures/pre-body-reference'
+BODY_REFERENCE_BASELINES_SHA = 'ce83e2433a77d41b591af765d5feb22aa626267f51d71a5c893ac4c912f73bf5'
+HAND_CONTEXT_NAME = '../72-b1-admission-controls/input-context-hand-size-v1.json'
+HAND_CONTEXT_SHA = '9922760204d771cbdbaa742944f81dd6d023df55e1ca5748aeba80834ec94016'
+HAND_CONTEXT_ID = 'b1-hand-size-v11-product-v1'
+HAND_PREDECESSOR_COMMIT = '91f4187a8fc66ac1baa41a771045ef9ca2b4384b'
+HAND_FIXTURES = '../72-b1-admission-controls/fixtures/pre-hand-size'
+HAND_BASELINES_SHA = '84265be2e081758a0fa1e7156e9fc1bfd79039cae92aac7e191d4b3cd6d73c41'
+HAND_ASSET_PREFIX = 'assets/characters/mpfb-b1-v11/'
+HAND_CHANGED = ('crates/nvwa-cli/src/cpu_render.rs', 'crates/nvwa-cli/src/main.rs',
+                'crates/nvwa-core/src/appearance.rs', 'crates/nvwa-core/src/b1.rs',
+                'crates/nvwa-runtime/src/b1.rs', 'crates/nvwa-runtime/src/b1/cpu_render.rs',
+                'crates/nvwa-studio/src/appearance_ui.rs', 'crates/nvwa-studio/src/lib.rs',
+                'docs/agents/cpu-render.md',
+                'docs/research/character-foundation/body-control-coverage.md',
+                'scripts/build-web.sh', 'scripts/package-cli.py', 'scripts/package-native.py')
+HAND_NEW_CODE = ('crates/nvwa-cli/tests/hand_size.rs', 'crates/nvwa-core/tests/hand_size.rs',
+                 'scripts/build-hand-size-v11.py', 'scripts/render-hand-size-review.py',
+                 'scripts/test-hand-size-v11.py')
+SHOULDER_CONTEXT_NAME = '../72-b1-admission-controls/input-context-shoulder-form-v1.json'
+SHOULDER_CONTEXT_SHA = '49c7504006c1bfa624dda9bb8843fdfd73c12a15f10a3d1cc0e158e308d2edf2'
+SHOULDER_CONTEXT_ID = 'b1-shoulder-form-v12-product-v1'
+SHOULDER_PREDECESSOR_COMMIT = 'a0e484f717012bb1b5ab436cd94a50be7006698c'
+SHOULDER_FIXTURES = '../72-b1-admission-controls/fixtures/pre-shoulder-form'
+SHOULDER_BASELINES_SHA = '7b15d7a59cd9972d992b2de4ea2a316bd3b6bf6f3f10df743f3a6fadd9a64d97'
+SHOULDER_ASSET_PREFIX = 'assets/characters/mpfb-b1-v12/'
+SHOULDER_CHANGED = HAND_CHANGED
+SHOULDER_NEW_CODE = ('crates/nvwa-cli/tests/shoulder_form.rs',
+                     'crates/nvwa-core/tests/shoulder_form.rs',
+                     'scripts/build-shoulder-form-v12.py',
+                     'scripts/render-shoulder-form-review.py',
+                     'scripts/test-shoulder-form-v12.py')
+
+FOREARM_CONTEXT_NAME = '../72-b1-admission-controls/input-context-forearm-form-v1.json'
+FOREARM_CONTEXT_SHA = '4274c8761fe03b1a85436168fc1eeaf8db211bc7a8a2e16eb756e629c7e7ae45'
+FOREARM_CONTEXT_ID = 'b1-forearm-form-v13-product-v1'
+FOREARM_PREDECESSOR_COMMIT = 'd09ef1f12efa752a33a65b0fadfdaaae7f3c1d95'
+FOREARM_FIXTURES = '../72-b1-admission-controls/fixtures/pre-forearm-form'
+FOREARM_BASELINES_SHA = 'dbbf89ae3f64f38d24a4c840d8771ca4fdb155f016ba2490044f9b5b8ba780d3'
+FOREARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v13/'
+FOREARM_CHANGED = SHOULDER_CHANGED
+FOREARM_NEW_CODE = ('crates/nvwa-cli/tests/forearm_form.rs',
+                     'crates/nvwa-core/tests/forearm_form.rs',
+                     'scripts/build-forearm-form-v13.py',
+                     'scripts/render-forearm-form-review.py',
+                     'scripts/test-forearm-form-v13.py')
+
+UPPER_ARM_CONTEXT_NAME = '../72-b1-admission-controls/input-context-upper-arm-muscle-v1.json'
+UPPER_ARM_CONTEXT_SHA = '30a784e5de573fc614233ff6961df3e34e764738ae45058f49f0b3f95e5c4815'
+UPPER_ARM_CONTEXT_ID = 'b1-upper-arm-muscle-v14-product-v1'
+UPPER_ARM_PREDECESSOR_COMMIT = '0226ac10bbc1f8619bf0d488131f283a1fe3681a'
+UPPER_ARM_FIXTURES = '../72-b1-admission-controls/fixtures/pre-upper-arm-muscle'
+UPPER_ARM_BASELINES_SHA = '2fc4cf9ff8919478aea6bbce4fd4f0c39b14118605a1d1bc6b256d370f0bb9ac'
+UPPER_ARM_ASSET_PREFIX = 'assets/characters/mpfb-b1-v14/'
+UPPER_ARM_CHANGED = FOREARM_CHANGED
+UPPER_ARM_NEW_CODE = ('crates/nvwa-cli/tests/upper_arm_muscle.rs',
+                      'crates/nvwa-core/tests/upper_arm_muscle.rs',
+                      'scripts/README.md',
+                      'scripts/build-upper-arm-muscle-v14.py',
+                      'scripts/portable-checks.json',
+                      'scripts/portable_catalog_v14.py',
+                      'scripts/render-upper-arm-muscle-review.py',
+                      'scripts/test-ci-timing.py',
+                      'scripts/test-portable-checks.py',
+                      'scripts/test-upper-arm-muscle-v14.py')
+
+LEVEL1_CONTEXT_NAME = '../72-b1-admission-controls/input-context-level1-display-v1.json'
+LEVEL1_CONTEXT_SHA = 'f6e676cf19932f154fb2b26340b9ee8f5c27925afe3585f98db739a0b9950957'
+LEVEL1_CONTEXT_ID = 'b1-level1-display-v14-product-v1'
+LEVEL1_PREDECESSOR_COMMIT = 'bac24197e0c2c329180550b0ce8f5b2a0c54a2ad'
+LEVEL1_FIXTURES = '../72-b1-admission-controls/fixtures/pre-level1-display'
+LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1.rs',
+                  'crates/nvwa-runtime/src/lib.rs')
+LEVEL1_ADDED = ('crates/nvwa-runtime/src/b1_level1_geometry.rs',
+                'crates/nvwa-runtime/src/b1_level1_display.rs')
+
+CLI_LEVEL1_CONTEXT_NAME = '../72-b1-admission-controls/input-context-cli-level1-v1.json'
+CLI_LEVEL1_CONTEXT_SHA = '59a5b0fcd77aa9b52eb9c105952a85ad7caba394f0209668b63f9b301d7d612c'
+CLI_LEVEL1_CONTEXT_ID = 'b1-cli-level1-reference-v14-product-v1'
+CLI_LEVEL1_PREDECESSOR_COMMIT = '8432a4616f3b7ee444c6548df3eae69c36705c2a'
+CLI_LEVEL1_FIXTURES = '../72-b1-admission-controls/fixtures/pre-cli-level1'
+CLI_LEVEL1_CHANGED = ('crates/nvwa-runtime/src/b1/cpu_render.rs',
+                      'crates/nvwa-runtime/src/lib.rs',
+                      'crates/nvwa-cli/src/cpu_render.rs',
+                      'crates/nvwa-cli/tests/cpu_render.rs',
+                      'scripts/render-body-reference.py',
+                      'docs/agents/cpu-render.md')
+
+
+def has_cli_level1_inputs(root):
+    path = root / 'experiments/72-b1-admission-controls/input-context-cli-level1-v1.json'
+    return path.exists() or path.is_symlink()
+
+
+def retained_motion_query_file(exp):
+    return regular_file(exp, f'../72-b1-admission-controls/pre-travel-query/{MOTION_QUERY_SOURCE}')
+
+
+def pre_cli_level1_file(name):
+    exp = Path(__file__).resolve().parent
+    if name == MOTION_QUERY_SOURCE:
+        return retained_motion_query_file(exp)
+    fixture = exp / CLI_LEVEL1_FIXTURES / name
+    if name in CLI_LEVEL1_CHANGED:
+        return fixture
+    before_contact = exp.parent / '72-b1-admission-controls/pre-contact-target' / name
+    return before_contact if before_contact.is_file() else exp.parents[1] / name
+
+
+def has_level1_inputs(root):
+    return any((root / name).exists() or (root / name).is_symlink()
+               for name in LEVEL1_ADDED)
+
+
+def pre_level1_file(name):
+    fixture = Path(__file__).resolve().parent / LEVEL1_FIXTURES / name
+    return fixture if name in LEVEL1_CHANGED else pre_cli_level1_file(name)
+
+
+def pre_body_reference_file(name):
+    historical = Path(__file__).resolve().parent / BODY_REFERENCE_FIXTURES / name
+    if historical.is_file():
+        return historical
+    before_hand = Path(__file__).resolve().parent / HAND_FIXTURES / name
+    return before_hand if before_hand.is_file() else pre_cli_level1_file(name)
+
+
+def has_body_reference_inputs(root):
+    path = root / BODY_REFERENCE_ADDED
+    return path.exists() or path.is_symlink()
+
+
+def body_reference_source_context(exp, cpu):
+    previous = arm_source_context(exp, cpu)
+    baseline_raw = regular_file(exp, BODY_REFERENCE_FIXTURES + '/manifest.json').read_bytes()
+    require(hashlib.sha256(baseline_raw).hexdigest() == BODY_REFERENCE_BASELINES_SHA,
+            'body reference predecessor manifest identity mismatch')
+    baseline = json.loads(baseline_raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1
+            and baseline['context'] == previous[0]
+            and baseline['source_commit'] == 'ba9883ed4e510ec612569a0796732e25d888a6d4'
+            and set(baseline['files']) == set(BODY_REFERENCE_CHANGED),
+            'body reference predecessor identity mismatch')
+    for name, item in baseline['files'].items():
+        path = regular_file(exp, '../72-b1-admission-controls/' + item['fixture'])
+        require({'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name]
+                and item['fixture'] == 'fixtures/pre-body-reference/' + name
+                and path.stat().st_size == item['bytes']
+                and hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'],
+                'body reference predecessor bytes mismatch: ' + name)
+    raw = regular_file(exp, BODY_REFERENCE_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == BODY_REFERENCE_CONTEXT_SHA,
+            'body reference source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == BODY_REFERENCE_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and set(value['files']) == set(BODY_REFERENCE_CHANGED) | {BODY_REFERENCE_ADDED},
+            'body reference source context exact delta required')
+    require(all(name in previous[1] and value['files'][name] != previous[1][name]
+                for name in BODY_REFERENCE_CHANGED)
+            and BODY_REFERENCE_ADDED not in previous[1],
+            'body reference source context predecessor mismatch')
+    files = dict(previous[1]); files.update(value['files'])
+    require(len(files) == 813, 'body reference complete source union required')
+    return value['context'], files
+
+
+def has_arm_inputs(root):
+    return (root / 'assets/characters/mpfb-b1-v9').exists()
+
+
+def has_hand_inputs(root):
+    path = root / HAND_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def has_shoulder_inputs(root):
+    path = root / SHOULDER_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def shoulder_source_context(exp, cpu):
+    previous = hand_source_context(exp, cpu)
+    require(previous[0] == HAND_CONTEXT_ID and len(previous[1]) == 949,
+            'shoulder predecessor must be exact hand context')
+    raw = regular_file(exp, SHOULDER_FIXTURES + '/manifest.json').read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == SHOULDER_BASELINES_SHA,
+            'shoulder predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == SHOULDER_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(SHOULDER_CHANGED),
+            'shoulder predecessor changed-file inventory mismatch')
+    for name in SHOULDER_CHANGED:
+        item = baseline['files'][name]
+        path = regular_file(exp, '../72-b1-admission-controls/' + item['fixture'])
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-shoulder-form/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name]
+                and path.stat().st_size == item['bytes']
+                and hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'],
+                'shoulder predecessor bytes mismatch: ' + name)
+    fixture_root = exp / SHOULDER_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(SHOULDER_CHANGED),
+            'shoulder predecessor fixture inventory mismatch')
+    raw = regular_file(exp, SHOULDER_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == SHOULDER_CONTEXT_SHA,
+            'shoulder context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']; additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == SHOULDER_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == SHOULDER_PREDECESSOR_COMMIT
+            and len(files) == 158 and len(additions) == 145
+            and sum(p.startswith(SHOULDER_ASSET_PREFIX) for p in additions) == 140
+            and additions == {p for p in additions if p.startswith(SHOULDER_ASSET_PREFIX)}
+                             | set(SHOULDER_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(SHOULDER_CHANGED)
+            and all(files[p] != previous[1][p] for p in SHOULDER_CHANGED),
+            'shoulder exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 1094, 'shoulder complete source union required')
+    return value['context'], result
+
+
+def has_forearm_inputs(root):
+    path = root / FOREARM_ASSET_PREFIX
+    return path.exists() or path.is_symlink()
+
+
+def forearm_source_context(exp, cpu):
+    previous = shoulder_source_context(exp, cpu)
+    require(previous[0] == SHOULDER_CONTEXT_ID and len(previous[1]) == 1094,
+            'forearm predecessor must be exact shoulder context')
+    raw = regular_file(exp, FOREARM_FIXTURES + '/manifest.json').read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == FOREARM_BASELINES_SHA,
+            'forearm predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == FOREARM_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(FOREARM_CHANGED),
+            'forearm predecessor changed-file inventory mismatch')
+    for name in FOREARM_CHANGED:
+        item = baseline['files'][name]
+        path = regular_file(exp, '../72-b1-admission-controls/' + item['fixture'])
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-forearm-form/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name]
+                and path.stat().st_size == item['bytes']
+                and hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'],
+                'forearm predecessor bytes mismatch: ' + name)
+    fixture_root = exp / FOREARM_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(FOREARM_CHANGED),
+            'forearm predecessor fixture inventory mismatch')
+    raw = regular_file(exp, FOREARM_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == FOREARM_CONTEXT_SHA,
+            'forearm context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']; additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == FOREARM_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == FOREARM_PREDECESSOR_COMMIT
+            and len(files) == 167 and len(additions) == 154
+            and sum(p.startswith(FOREARM_ASSET_PREFIX) for p in additions) == 149
+            and additions == {p for p in additions if p.startswith(FOREARM_ASSET_PREFIX)}
+                             | set(FOREARM_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(FOREARM_CHANGED)
+            and all(files[p] != previous[1][p] for p in FOREARM_CHANGED),
+            'forearm exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 1248, 'forearm complete source union required')
+    return value['context'], result
+
+
+def has_upper_arm_inputs(root):
+    path = root / UPPER_ARM_ASSET_PREFIX
+    source = root / 'crates/nvwa-core/src/b1.rs'
+    present = source.is_file() and not source.is_symlink() and 'upper_arm_muscle_fullness' in source.read_text()
+    sentinels = [root / 'crates/nvwa-core/tests/upper_arm_muscle.rs', root / 'crates/nvwa-cli/tests/upper_arm_muscle.rs']
+    present = present or any(p.exists() or p.is_symlink() for p in sentinels)
+    return path.exists() or path.is_symlink() or present
+
+
+def upper_arm_source_context(exp, cpu):
+    previous = forearm_source_context(exp, cpu)
+    require(previous[0] == FOREARM_CONTEXT_ID and len(previous[1]) == 1248,
+            'upper arm predecessor must be exact forearm context')
+    raw = regular_file(exp, UPPER_ARM_FIXTURES + '/manifest.json').read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == UPPER_ARM_BASELINES_SHA,
+            'upper arm predecessor manifest identity mismatch')
+    baseline = json.loads(raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == UPPER_ARM_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(UPPER_ARM_CHANGED),
+            'upper arm predecessor changed-file inventory mismatch')
+    for name in UPPER_ARM_CHANGED:
+        item = baseline['files'][name]
+        path = regular_file(exp, '../72-b1-admission-controls/' + item['fixture'])
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-upper-arm-muscle/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name]
+                and path.stat().st_size == item['bytes']
+                and hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'],
+                'upper arm predecessor bytes mismatch: ' + name)
+    fixture_root = exp / UPPER_ARM_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(UPPER_ARM_CHANGED),
+            'upper arm predecessor fixture inventory mismatch')
+    raw = regular_file(exp, UPPER_ARM_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == UPPER_ARM_CONTEXT_SHA,
+            'upper arm context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']; additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == UPPER_ARM_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == UPPER_ARM_PREDECESSOR_COMMIT
+            and len(files) == 181 and len(additions) == 168
+            and sum(p.startswith(UPPER_ARM_ASSET_PREFIX) for p in additions) == 158
+            and additions == {p for p in additions if p.startswith(UPPER_ARM_ASSET_PREFIX)}
+                             | set(UPPER_ARM_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(UPPER_ARM_CHANGED)
+            and all(files[p] != previous[1][p] for p in UPPER_ARM_CHANGED),
+            'upper arm exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 1416, 'upper arm complete source union required')
+    return value['context'], result
+
+
+def level1_source_context(exp, cpu):
+    """Independently consume the exact display successor without altering v14."""
+    previous = upper_arm_source_context(exp, cpu)
+    require(previous[0] == UPPER_ARM_CONTEXT_ID and len(previous[1]) == 1416,
+            'level1 predecessor must be exact upper-arm context')
+    fixture_root = exp / LEVEL1_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == set(LEVEL1_CHANGED),
+            'level1 predecessor fixture inventory mismatch')
+    for name in LEVEL1_CHANGED:
+        path = regular_file(exp, f'{LEVEL1_FIXTURES}/{name}')
+        require({'bytes': path.stat().st_size,
+                 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()} == previous[1][name],
+                'level1 predecessor bytes mismatch: ' + name)
+    raw = regular_file(exp, LEVEL1_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == LEVEL1_CONTEXT_SHA,
+            'level1 context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == LEVEL1_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == LEVEL1_PREDECESSOR_COMMIT
+            and set(value['files']) == set(LEVEL1_CHANGED) | set(LEVEL1_ADDED)
+            and all(name in previous[1] and value['files'][name] != previous[1][name]
+                    for name in LEVEL1_CHANGED)
+            and all(name not in previous[1] for name in LEVEL1_ADDED)
+            and all(set(item) == {'bytes', 'sha256'}
+                    and isinstance(item['bytes'], int) and item['bytes'] > 0
+                    and isinstance(item['sha256'], str) and len(item['sha256']) == 64
+                    for item in value['files'].values()),
+            'level1 exact successor delta required')
+    result = dict(previous[1]); result.update(value['files'])
+    require(len(result) == 1418, 'level1 complete source union required')
+    return value['context'], result
+
+
+def _cli_level1_context(exp, previous):
+    """Authenticate the exact CLI delta from a separately checked #164 map."""
+    require(previous[0] == LEVEL1_CONTEXT_ID and len(previous[1]) == 1418,
+            'CLI Level 1 predecessor must be exact display context')
+    fixture_root = exp / CLI_LEVEL1_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == set(CLI_LEVEL1_CHANGED),
+            'CLI Level 1 predecessor fixture inventory mismatch')
+    for name in CLI_LEVEL1_CHANGED:
+        path = regular_file(exp, f'{CLI_LEVEL1_FIXTURES}/{name}')
+        require({'bytes': path.stat().st_size,
+                 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()} == previous[1][name],
+                'CLI Level 1 predecessor bytes mismatch: ' + name)
+    raw = regular_file(exp, CLI_LEVEL1_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CLI_LEVEL1_CONTEXT_SHA,
+            'CLI Level 1 context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == CLI_LEVEL1_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == CLI_LEVEL1_PREDECESSOR_COMMIT
+            and set(value['files']) == set(CLI_LEVEL1_CHANGED)
+            and all(name in previous[1] and value['files'][name] != previous[1][name]
+                    for name in CLI_LEVEL1_CHANGED)
+            and all(set(item) == {'bytes', 'sha256'}
+                    and isinstance(item['bytes'], int) and item['bytes'] > 0
+                    and isinstance(item['sha256'], str) and len(item['sha256']) == 64
+                    for item in value['files'].values()),
+            'CLI Level 1 exact successor delta required')
+    result = dict(previous[1]); result.update(value['files'])
+    require(len(result) == 1418, 'CLI Level 1 complete source union required')
+    return value['context'], result
+
+
+def cli_level1_source_context(exp, cpu):
+    """Admit CLI Level 1 only after validating all historical predecessors."""
+    return _cli_level1_context(exp, level1_source_context(exp, cpu))
+
+
+def hand_source_context(exp, cpu):
+    previous = body_reference_source_context(exp, cpu)
+    require(previous[0] == BODY_REFERENCE_CONTEXT_ID and len(previous[1]) == 813,
+            'hand predecessor must be exact body reference')
+    baseline_raw = regular_file(exp, HAND_FIXTURES + '/manifest.json').read_bytes()
+    require(hashlib.sha256(baseline_raw).hexdigest() == HAND_BASELINES_SHA,
+            'hand predecessor manifest identity mismatch')
+    baseline = json.loads(baseline_raw)
+    require(set(baseline) == {'schema_version', 'context', 'source_commit', 'files'}
+            and baseline['schema_version'] == 1 and baseline['context'] == previous[0]
+            and baseline['source_commit'] == HAND_PREDECESSOR_COMMIT
+            and set(baseline['files']) == set(HAND_CHANGED),
+            'hand predecessor changed-file inventory mismatch')
+    for name in HAND_CHANGED:
+        item = baseline['files'][name]
+        require(set(item) == {'fixture', 'bytes', 'sha256'}
+                and item['fixture'] == 'fixtures/pre-hand-size/' + name
+                and {'bytes': item['bytes'], 'sha256': item['sha256']} == previous[1][name],
+                'hand predecessor pin mismatch: ' + name)
+        path = regular_file(exp, '../72-b1-admission-controls/' + item['fixture'])
+        require(path.stat().st_size == item['bytes']
+                and hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256'],
+                'hand predecessor bytes mismatch: ' + name)
+    fixture_root = exp / HAND_FIXTURES
+    paths = list(fixture_root.rglob('*'))
+    require(not fixture_root.is_symlink()
+            and all(not p.is_symlink() and (p.is_file() or p.is_dir()) for p in paths)
+            and {p.relative_to(fixture_root).as_posix() for p in paths if p.is_file()}
+                == {'manifest.json'} | set(HAND_CHANGED),
+            'hand predecessor fixture inventory mismatch')
+    raw = regular_file(exp, HAND_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == HAND_CONTEXT_SHA,
+            'hand context manifest identity mismatch')
+    value = json.loads(raw)
+    files = value['files']
+    additions = set(files) - set(previous[1])
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1 and value['context'] == HAND_CONTEXT_ID
+            and value['predecessor'] == previous[0]
+            and value['predecessor_commit'] == HAND_PREDECESSOR_COMMIT
+            and len(files) == 149 and len(additions) == 136
+            and sum(p.startswith(HAND_ASSET_PREFIX) for p in additions) == 131
+            and additions == {p for p in additions if p.startswith(HAND_ASSET_PREFIX)} | set(HAND_NEW_CODE)
+            and {p for p in previous[1] if p in files} == set(HAND_CHANGED)
+            and all(files[p] != previous[1][p] for p in HAND_CHANGED),
+            'hand exact successor delta required')
+    result = dict(previous[1]); result.update(files)
+    require(len(result) == 949, 'hand complete source union required')
+    return value['context'], result
+
+
+def arm_source_context(exp, cpu):
+    """Admit only the exact v9 successor after the immutable v8 context."""
+    hip = hip_source_context(exp, cpu)
+    raw = regular_file(exp, ARM_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == ARM_CONTEXT_SHA,
+            'arm source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == ARM_CONTEXT_ID
+            and value['predecessor'] == HIP_CONTEXT_ID
+            and value['predecessor_commit'] == 'ff536bc417ec5f8ff5311fe5f8e7a53c20226c03',
+            'arm source context predecessor/version mismatch')
+    files = dict(hip[1]); files.update(value['files'])
+    require(len(value['files']) == 524 and len(files) == 812
+            and len(set(hip[1]) & set(value['files'])) == 401
+            and set(files) == set(hip[1]) | set(value['files']),
+            'arm source context complete union required')
+    return ARM_CONTEXT_ID, files
+
+
+CHEST_CONTEXT_NAME = '../72-b1-admission-controls/input-context-chest-placement-v1.json'
+CHEST_CONTEXT_SHA = 'd63c4405d6407205a0f626727e81466a449d629cef68e3b9c96436db28e7899c'
+CHEST_CONTEXT_ID = 'b1-chest-placement-product-v1'
+
+
+def has_chest_inputs(root):
+    path = root / 'assets/characters/mpfb-b1-v10'
+    return path.exists() or path.is_symlink()
+
+
+def has_chest_sibling_inputs(root):
+    # A partial later lineage is not the immutable chest-only branch.
+    return (has_hand_inputs(root) or has_shoulder_inputs(root)
+            or has_forearm_inputs(root) or has_upper_arm_inputs(root)
+            or has_body_reference_inputs(root) or has_level1_inputs(root)
+            or has_cli_level1_inputs(root))
+
+
+def chest_source_context(exp, cpu):
+    """Admit only the exact v10 successor after the immutable v9 context."""
+    arm = arm_source_context(exp, cpu)
+    raw = regular_file(exp, CHEST_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == CHEST_CONTEXT_SHA,
+            'chest source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == CHEST_CONTEXT_ID
+            and value['predecessor'] == ARM_CONTEXT_ID
+            and value['predecessor_commit'] == 'b41e8d02806a409d262daee233e190d53598cb21',
+            'chest source context predecessor/version mismatch')
+    files = dict(arm[1]); files.update(value['files'])
+    require(len(value['files']) == 658 and len(files) == 946
+            and len(set(arm[1]) & set(value['files'])) == 524
+            and set(files) == set(arm[1]) | set(value['files']),
+            'chest source context complete union required')
+    return CHEST_CONTEXT_ID, files
+
+
+def has_hip_inputs(root):
+    return (root / 'assets/characters/mpfb-b1-v8').exists()
+
+
+def hip_source_context(exp, cpu):
+    """Admit only the exact v8 successor after the immutable v7 context."""
+    upper = upper_source_context(exp, cpu)
+    raw = regular_file(exp, HIP_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == HIP_CONTEXT_SHA,
+            'hip source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == HIP_CONTEXT_ID
+            and value['predecessor'] == UPPER_CONTEXT_ID
+            and value['predecessor_commit'] == 'e433bd3a430f457d120187823d549daf30b41e64',
+            'hip source context predecessor/version mismatch')
+    files = dict(upper[1]); files.update(value['files'])
+    require(len(value['files']) == 401 and len(files) == 689
+            and len(set(upper[1]) & set(value['files'])) == 292
+            and set(files) == set(upper[1]) | set(value['files']),
+            'hip source context complete union required')
+    return HIP_CONTEXT_ID, files
+
+
+def has_upper_inputs(root):
+    return (root / 'assets/characters/mpfb-b1-v7').exists()
+
+
+def upper_source_context(exp, cpu):
+    """Admit only the exact v7 successor after the immutable v6 context."""
+    leg = leg_source_context(exp, cpu)
+    raw = regular_file(exp, UPPER_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == UPPER_CONTEXT_SHA,
+            'upper source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == UPPER_CONTEXT_ID
+            and value['predecessor'] == LEG_CONTEXT_ID
+            and value['predecessor_commit'] == 'd5bc346ff96213a0337a167bc60e5d1834b81bf0',
+            'upper source context predecessor/version mismatch')
+    files = dict(leg[1]); files.update(value['files'])
+    require(len(value['files']) == 292 and len(files) == 580
+            and len(set(leg[1]) & set(value['files'])) == 194
+            and set(files) == set(leg[1]) | set(value['files']),
+            'upper source context complete union required')
+    return UPPER_CONTEXT_ID, files
+
+
+def has_leg_inputs(root):
+    return (root / 'assets/characters/mpfb-b1-v6').exists()
+
+
+def leg_source_context(exp, cpu):
+    """Admit only the exact v6 successor, retaining the combined predecessor gate."""
+    combined = _combined_context(exp, cpu)
+    raw = regular_file(exp, LEG_CONTEXT_NAME).read_bytes()
+    require(hashlib.sha256(raw).hexdigest() == LEG_CONTEXT_SHA,
+            'leg source context manifest identity mismatch')
+    value = json.loads(raw)
+    require(set(value) == {'schema_version', 'context', 'predecessor',
+                           'predecessor_commit', 'files'}
+            and value['schema_version'] == 1
+            and value['context'] == LEG_CONTEXT_ID
+            and value['predecessor'] == combined[0]
+            and value['predecessor_commit'] == 'e21322c95b3b9ca40334206de135a19b1ad6cb0f',
+            'leg source context predecessor/version mismatch')
+    files = dict(combined[1])
+    files.update(value['files'])
+    require(len(files) == 482 and len(value['files']) == 194,
+            'leg source context complete union required')
+    return LEG_CONTEXT_ID, files
+
+
+# Explicit integration identity, separate from all frozen historical contexts.
+INTEGRATION_CONTEXT_ID = 'b1-chest-v10-with-v14-cli-level1-integration-candidate-v1'
+# Only the digest in this assignment is substituted by the contact manifest's
+# selector template; the rest of this file is byte-exact.
+CONTACT_HELPER_SHA = '90694e718731d255d1dd07c87c6d7220f21bef33ffab572eb216f552b3f5e7b5'
+TRAVEL_HELPER_SHA = '081847e1a9ebedfca49d0a34dcb1e27008116b8fe745552210dd165a011decc1'
+CONTACT_INTEGRATION_SHA = '2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5'
+
+
+def authenticated_module(path, expected, verified_bytes=None):
+    from types import ModuleType
+    raw = path.read_bytes() if verified_bytes is None else verified_bytes
+    require(hashlib.sha256(raw).hexdigest() == expected, 'source helper identity: ' + path.name)
+    module = ModuleType(path.stem)
+    module.__file__ = str(path)
+    exec(compile(raw, str(path), 'exec'), module.__dict__)
+    return module
+
+
+def integration_source_context(exp, cpu, root):
+    import importlib.util
+    v15_markers = ('assets/characters/mpfb-b1-v15', 'crates/nvwa-cli/tests/belly_shape.rs',
+                   'crates/nvwa-core/tests/belly_shape.rs', 'docs/experiments/b1-belly-shape-v15.md',
+                   'scripts/build-belly-shape-v15.py')
+    v15_present = any((root / name).exists() or (root / name).is_symlink() for name in v15_markers)
+    release = Path(__file__).resolve().parent
+    travel = authenticated_module(regular_file(release, '../72-b1-admission-controls/travel_query_source_context.py'), TRAVEL_HELPER_SHA)
+    travel_query = travel.present(root, exp.parent / '72-b1-admission-controls', v15_present)
+    contact_path = regular_file(release, '../72-b1-admission-controls/contact_target_source_context.py')
+    contact = authenticated_module(contact_path, CONTACT_HELPER_SHA, travel.contact_bytes(contact_path.parent))
+    contact_target = contact.present(root, exp.parent / '72-b1-admission-controls', v15_present, travel, travel_query)
+    if contact_target:
+        integration = authenticated_module(regular_file(exp, '../72-b1-admission-controls/integration_context.py'), CONTACT_INTEGRATION_SHA)
+    else:
+        spec = importlib.util.spec_from_file_location('nvwa_integration_context73', exp.parent / '72-b1-admission-controls/integration_context.py')
+        integration = importlib.util.module_from_spec(spec); spec.loader.exec_module(integration)
+    if v15_present or travel_query or contact_target:
+        _, previous = integration.expected(cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')
+        if contact_target:
+            return contact.verify(root, travel, previous)
+        if travel_query:
+            return travel.verify(root, previous)
+        v15_spec = importlib.util.spec_from_file_location(
+            'nvwa_v15_source_context73', exp.parent / '72-b1-admission-controls/v15_source_context.py')
+        v15 = importlib.util.module_from_spec(v15_spec); v15_spec.loader.exec_module(v15)
+        return v15.verify(root, previous)
+    return integration.verify(root, cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')

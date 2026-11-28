@@ -33,6 +33,9 @@ def closure():
     files.extend(contact/name for name in ('input-context-contact-target-v1.json',
                  'contact_target_source_context.py', 'test_contact_target_context.py'))
     files.extend(p for p in (contact/'pre-contact-target').rglob('*') if p.is_file())
+    files.extend(contact/name for name in ('input-context-contact-fit-v1.json',
+                 'contact_fit_source_context.py', 'contact_fit_bootstrap.py', 'test_contact_fit_context.py'))
+    files.extend(p for p in (contact/'pre-contact-fit').rglob('*') if p.is_file())
     for directory in [ROOT/'crates', ROOT/'vendor', ROOT/'assets', EXP]:
         files += [p for p in directory.rglob('*') if p.is_file() and not set(p.relative_to(ROOT).parts)&{'target','__pycache__','.git'}]
     frozen=EXP/'FROZEN-INPUTS.json'

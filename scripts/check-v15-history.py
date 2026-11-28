@@ -18,12 +18,14 @@ V15 = Path("assets/characters/mpfb-b1-v15")
 EXP72 = "experiments/72-b1-admission-controls"
 EXP73 = "experiments/73-high-poly-eyes"
 CONTEXT_MANIFEST = EXP72 + "/input-context-v15-experimental-v1.json"
-CONTACT_CONTEXT = "nvwa-contact-target-source-context-v1"
+FIT_CONTEXT = "nvwa-contact-fit-source-context-v1"
+FIT_MANIFEST = EXP72 + "/input-context-contact-fit-v1.json"
 CONTACT_MANIFEST = EXP72 + "/input-context-contact-target-v1.json"
 TRAVEL_MANIFEST = EXP72 + "/input-context-travel-query-v1.json"
 NEW_CONTEXT_CONTROLS = {CONTEXT_MANIFEST, EXP72 + "/v15_source_context.py",
                         TRAVEL_MANIFEST, EXP72 + "/travel_query_source_context.py",
-                        CONTACT_MANIFEST, EXP72 + "/contact_target_source_context.py"}
+                        CONTACT_MANIFEST, EXP72 + "/contact_target_source_context.py",
+                        FIT_MANIFEST, EXP72 + "/contact_fit_source_context.py", EXP72 + "/contact_fit_bootstrap.py"}
 EXPERIMENT_BUILD_OUTPUTS = {"target", "__pycache__", ".work"}
 STDLIB_CACHE_HELPER = "scripts/ci-v15-stdlib-cache.py"
 STDLIB_CACHE_HELPER_SHA256 = "d2386c0eab74eea80b0a38b32a76aee2216debc8bd559085f0ed83ee1434aeea"
@@ -222,14 +224,22 @@ def source_pin(path):
     return {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
 
 
-def contact_replay_pin(live, name, path):
+def replay_pin(live, name, path, *, predecessor=False):
+    if name == 'scripts/check-v15-history.py' and not predecessor:
+        raw = path.read_bytes()
+        literal = b"FIT_MANIFEST_SHA = '" + FIT_MANIFEST_SHA.encode('ascii') + b"'\n"
+        need(raw.count(literal) == 1, 'history manifest binding')
+        canonical = raw.replace(literal, b"FIT_MANIFEST_SHA = '" + b'0' * 64 + b"'\n")
+        return {'bytes': len(raw), 'template_sha256': hashlib.sha256(canonical).hexdigest()}
     if name not in (EXP72 + '/run.py', EXP73 + '/frozen_context.py'):
         return source_pin(path)
     raw = path.read_bytes()
-    helper_sha = source_pin(live / EXP72 / 'contact_target_source_context.py')['sha256']
-    literal = b"CONTACT_HELPER_SHA = '" + helper_sha.encode('ascii') + b"'\n"
+    helper = 'contact_target' if predecessor else 'contact_fit'
+    field = b'CONTACT_HELPER_SHA' if predecessor else b'FIT_HELPER_SHA'
+    helper_sha = source_pin(live / EXP72 / (helper + '_source_context.py'))['sha256']
+    literal = field + b" = '" + helper_sha.encode('ascii') + b"'\n"
     need(raw.count(literal) == 1, 'invalid contact helper binding: ' + name)
-    canonical = raw.replace(literal, b"CONTACT_HELPER_SHA = '" + b'0' * 64 + b"'\n")
+    canonical = raw.replace(literal, field + b" = '" + b'0' * 64 + b"'\n")
     return {'bytes': len(raw), 'template_sha256': hashlib.sha256(canonical).hexdigest()}
 
 
@@ -253,6 +263,18 @@ def protected_experiments(live, dest):
         need(after[name] == contact_before[name], "contact-target predecessor pin mismatch: " + name)
     before = contact_before | before
     after = after | contact_after
+    fit = json.loads((live / FIT_MANIFEST).read_bytes())
+    fit_before, fit_after = fit["before"], fit["after"]
+    need(fit_before.keys() == fit_after.keys(), "malformed contact-fit replay delta")
+    for name in after.keys() & fit_before.keys():
+        prior = live / EXP72 / "pre-contact-fit" / name
+        if after[name] and "template_sha256" in after[name]:
+            need(replay_pin(live, name, prior, predecessor=True) == after[name]
+                 and source_pin(prior) == fit_before[name], "contact-fit predecessor selector mismatch: " + name)
+        else:
+            need(after[name] == fit_before[name], "contact-fit predecessor pin mismatch: " + name)
+    before = fit_before | before
+    after = after | fit_after
     additions = {}
     for exp in (EXP72, EXP73):
         old, directories = experiment_files(dest, exp)
@@ -271,7 +293,7 @@ def protected_experiments(live, dest):
             new_path, executable = candidate[name]
             need(executable == old_executable, "changed protected experiment mode: " + name)
             if name in before:
-                need(before[name] == source_pin(old_path) and after[name] == contact_replay_pin(live, name, new_path),
+                need(before[name] == source_pin(old_path) and after[name] == replay_pin(live, name, new_path),
                      "experiment before/after mismatch: " + name)
             else:
                 need(old_path.read_bytes() == new_path.read_bytes(),
@@ -291,21 +313,38 @@ def protected_experiments(live, dest):
 TRAVEL_HELPER_SHA = '081847e1a9ebedfca49d0a34dcb1e27008116b8fe745552210dd165a011decc1'
 
 
+FIT_MANIFEST_SHA = 'cea1fc008f19d402eb3216f6a6ebe5316974a5a54f9b69ab7fdaf029cdc76217'
+FIT_BOOTSTRAP_SHA = '78af4b16327ac3c1e7952d45de96baa501cddebee38bd7c10a5c460ddaabf07b'
+
+
 def check_contact_bootstrap(live):
     from types import ModuleType
     exp = live / EXP72
-    path = exp / 'travel_query_source_context.py'
-    need(path.is_file() and not path.is_symlink(), 'missing trusted travel helper')
-    raw = path.read_bytes()
-    need(hashlib.sha256(raw).hexdigest() == TRAVEL_HELPER_SHA, 'trusted travel helper identity')
-    travel = ModuleType('nvwa_replay_contact_authority')
-    travel.__file__ = str(path)
-    exec(compile(raw, str(path), 'exec'), travel.__dict__)
+
+    def trusted_module(filename, expected):
+        path = exp / filename
+        need(path.is_file() and not path.is_symlink(), 'missing trusted source helper: ' + filename)
+        raw = path.read_bytes()
+        need(hashlib.sha256(raw).hexdigest() == expected, 'trusted source helper identity: ' + filename)
+        module = ModuleType('nvwa_replay_' + path.stem)
+        module.__file__ = str(path)
+        exec(compile(raw, str(path), 'exec'), module.__dict__)
+        return module
+
+    # The replay entry point carries the independent release pin. Check it
+    # before reading a selector template or executing its candidate code.
+    manifest = live / FIT_MANIFEST
+    need(manifest.is_file() and not manifest.is_symlink()
+         and source_pin(manifest)['sha256'] == FIT_MANIFEST_SHA, 'contact-fit release manifest identity')
+    travel = trusted_module('travel_query_source_context.py', TRAVEL_HELPER_SHA)
     travel.contact_bytes(exp)
-    policy = json.loads((live / CONTACT_MANIFEST).read_bytes())
-    for name in (EXP72 + '/run.py', EXP73 + '/frozen_context.py'):
-        need(policy['after'][name] == contact_replay_pin(live, name, live / name),
-             'unverified contact selector before replay: ' + name)
+    trusted_module('contact_fit_bootstrap.py', FIT_BOOTSTRAP_SHA).fit_bytes(exp)
+    policy = json.loads((live / FIT_MANIFEST).read_bytes())
+    for name in ('scripts/check-v15-history.py', 'scripts/check-v15-live73.py',
+                 EXP72 + '/run.py', EXP73 + '/frozen_context.py'):
+        path = live / name
+        need(path.is_file() and not path.is_symlink() and policy['after'][name] == replay_pin(live, name, path),
+             'unverified contact-fit entry point before replay: ' + name)
 
 
 def current_context(live, flags, exp, bytecode):
@@ -324,9 +363,9 @@ def current_context(live, flags, exp, bytecode):
     obj = json.loads(run.stdout)
     if field:
         obj = obj[field]
-    need(obj["id"] == CONTACT_CONTEXT,
+    need(obj["id"] == FIT_CONTEXT,
          f"live source gate selected wrong context ({exp})")
-    print(f"Live contact-target context: {exp}, {len(obj['files']) if field else obj['files']} pins", flush=True)
+    print(f"Live contact-fit context: {exp}, {len(obj['files']) if field else obj['files']} pins", flush=True)
 
 
 def planned(live_ids, old_ids, historical):

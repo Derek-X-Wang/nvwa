@@ -27,8 +27,7 @@ def pre_leg_bytes(name):
     before_body = HERE / CONTEXT.BODY_REFERENCE_FIXTURES / name
     if before_body.is_file():
         return before_body.read_bytes()
-    before_contact = HERE / 'pre-contact-target' / name
-    return (before_contact if before_contact.is_file() else ROOT / name).read_bytes()
+    return CONTEXT.pre_cli_level1_file(name).read_bytes()
 
 
 class WaistSourceContext(unittest.TestCase):
