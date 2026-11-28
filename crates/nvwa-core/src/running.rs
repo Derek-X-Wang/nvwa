@@ -58,6 +58,10 @@ pub fn displacement(clip: &str, source: f64) -> Result<[f64; 3]> {
 }
 fn entry_sample(entry: &TimelineClip, wall: f64) -> Result<(f64, f64, u64, [f64; 3])> {
     let elapsed = wall.clamp(0.0, f64::from(entry.duration_seconds)) * f64::from(entry.speed);
+    if entry.clip_id == crate::reference_motion::REFERENCE_CLIP_ID {
+        // The validated shaped reference plays once and contributes no stage travel.
+        return Ok((elapsed, elapsed, 0, [0.0; 3]));
+    }
     if !elapsed.is_finite() {
         return Err(invalid("Running source elapsed overflow"));
     }
@@ -80,8 +84,12 @@ fn entry_sample(entry: &TimelineClip, wall: f64) -> Result<(f64, f64, u64, [f64;
 }
 /// Resolve only from the validated Work and wall time, including gaps and cuts.
 pub fn resolve(doc: &SceneDocument, position: f32) -> Result<ResolvedRunning> {
-    if !doc.profile.backend.is_b1_running() || !position.is_finite() {
-        return Err(invalid("Expected running Work and finite time"));
+    if !(doc.profile.backend.is_b1_running() || doc.profile.backend.is_b1_shaped_motion())
+        || !position.is_finite()
+    {
+        return Err(invalid(
+            "Expected running or shaped-motion Work and finite time",
+        ));
     }
     let position = position.clamp(0.0, doc.timeline_duration_seconds());
     if doc.timeline.is_empty() {

@@ -2,8 +2,8 @@
 use bevy::{asset::AssetMetaCheck, prelude::*, time::TimeUpdateStrategy};
 use nvwa_core::{CoreError, SceneDocument, appearance_sha256};
 use nvwa_runtime::{
-    EditorState, NvwaRuntimePlugin, Playback, RuntimeStatus, StartupDocumentPolicy,
-    b1_foot_clearance, b1_running_observation, register_b1_asset_source,
+    B1ContactHand, EditorState, NvwaRuntimePlugin, Playback, RuntimeStatus, StartupDocumentPolicy,
+    b1_foot_clearance, b1_running_index_position, b1_running_observation, register_b1_asset_source,
 };
 use serde_json::{Value, json};
 use std::{
@@ -48,7 +48,7 @@ fn headless_app(root: &str, work: SceneDocument) -> Result<App, String> {
     .init_asset::<StandardMaterial>()
     .insert_resource(StartupDocumentPolicy::WaitForOpen)
     .add_plugins(NvwaRuntimePlugin);
-    if !work.profile.backend.is_b1_running() {
+    if !work.profile.backend.is_b1_running() && !work.profile.backend.is_b1_shaped_motion() {
         // Saved clothing/hair presentation has no role in visible body-foot sampling.
         app.configure_sets(
             PostUpdate,
@@ -418,6 +418,36 @@ mod tests {
     }
 }
 
+fn finite_time(text: &str, code: &str) -> Result<f64, CoreError> {
+    text.parse::<f64>()
+        .ok()
+        .filter(|value| value.is_finite())
+        .ok_or_else(|| CoreError::new(code, "Times must be finite numbers"))
+}
+
+mod contact_fit;
+mod contact_recheck;
+
+pub(super) use contact_recheck::run as run_contact_recheck;
+
+pub(super) fn run_contact_fit(args: &[String]) -> Result<Value, CoreError> {
+    let [work, assets, reference, start, end, step, flag, hand] = args else {
+        return Err(CoreError::new("usage", super::CONTACT_FIT_USAGE));
+    };
+    if flag != "--hand" || !matches!(hand.as_str(), "left" | "right") {
+        return Err(CoreError::new("usage", super::CONTACT_FIT_USAGE));
+    }
+    contact_fit::fit(
+        Path::new(work),
+        assets,
+        Path::new(reference),
+        finite_time(start, "contact_fit_range")?,
+        finite_time(end, "contact_fit_range")?,
+        finite_time(step, "contact_fit_range")?,
+        hand,
+    )
+}
+
 struct ContactSample {
     seconds: f32,
     position: [f32; 3],
@@ -430,6 +460,29 @@ impl ContactSample {
         json!({"t_s": work_seconds(self.seconds), "position_metres": self.position,
             "distance_to_center_metres": self.distance, "inside": self.inside})
     }
+}
+
+fn sample_contact(
+    app: &mut App,
+    seconds: f32,
+    hand: B1ContactHand,
+    target: &nvwa_core::StageContactTarget,
+) -> Result<ContactSample, CoreError> {
+    let world =
+        seek(app, seconds).map_err(|message| CoreError::new("contact_query_failed", message))?;
+    let position = b1_running_index_position(world, hand)?;
+    let distance = position
+        .iter()
+        .zip(target.position_metres)
+        .map(|(&a, b)| (f64::from(a) - f64::from(b)).powi(2))
+        .sum::<f64>()
+        .sqrt();
+    Ok(ContactSample {
+        seconds,
+        position,
+        distance,
+        inside: distance <= f64::from(target.radius_metres),
+    })
 }
 
 pub(super) fn run_contact(args: &[String]) -> Result<Value, CoreError> {
@@ -458,20 +511,12 @@ pub(super) fn run_contact(args: &[String]) -> Result<Value, CoreError> {
     let mut app = headless_app(request.assets, work).map_err(failure)?;
     let mut samples = Vec::with_capacity(times.len());
     for seconds in times {
-        let world = seek(&mut app, seconds).map_err(failure)?;
-        let position = nvwa_runtime::b1_running_left_index_position(world)?;
-        let distance = position
-            .iter()
-            .zip(target.position_metres)
-            .map(|(&a, b)| (f64::from(a) - f64::from(b)).powi(2))
-            .sum::<f64>()
-            .sqrt();
-        samples.push(ContactSample {
+        samples.push(sample_contact(
+            &mut app,
             seconds,
-            position,
-            distance,
-            inside: distance <= f64::from(target.radius_metres),
-        });
+            B1ContactHand::Left,
+            &target,
+        )?);
     }
     let first = samples.first().expect("at least one sample");
     let last = samples.last().expect("at least one sample");

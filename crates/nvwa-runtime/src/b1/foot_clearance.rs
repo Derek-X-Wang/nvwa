@@ -1,11 +1,15 @@
-use super::published_motion_frame;
-use bevy::{mesh::VertexAttributeValues, prelude::*};
+use super::{PublishedBinding, Session, published_motion_frame};
+use bevy::{
+    mesh::{Indices, VertexAttributeValues},
+    prelude::*,
+};
+use humentity::prelude::ObjVertsAsset;
 use serde_json::{Value, json};
 
 // Body source IDs below the matching ankle's rest centre in the shared,
 // authenticated B1 base.obj. Positive source X is the character's left.
 // These masks exclude garment and joint helper vertices.
-const LEFT: &[(u16, u16)] = &[
+pub(super) const LEFT: &[(u16, u16)] = &[
     (11411, 11415),
     (11517, 11666),
     (12368, 12818),
@@ -32,7 +36,7 @@ const LEFT: &[(u16, u16)] = &[
     (13030, 13035),
     (13037, 13331),
 ];
-const RIGHT: &[(u16, u16)] = &[
+pub(super) const RIGHT: &[(u16, u16)] = &[
     (4793, 4797),
     (4899, 5048),
     (5771, 6221),
@@ -60,9 +64,62 @@ const RIGHT: &[(u16, u16)] = &[
     (6441, 6735),
 ];
 
-/// Read stage geometry from a successfully published CPU frame, without a renderer.
-pub fn b1_foot_clearance(world: &World) -> Result<Value, String> {
-    let (active, _, _, binding) = published_motion_frame(world)?;
+pub(super) struct PublishedBody<'a> {
+    positions: &'a [[f32; 3]],
+    indices: &'a Indices,
+    sources: &'a [u16],
+    pub(super) source_vertices: &'a Handle<ObjVertsAsset>,
+    transform: Mat4,
+}
+
+impl PublishedBody<'_> {
+    pub(super) fn point(&self, index: usize) -> Result<Vec3, String> {
+        let local = self
+            .positions
+            .get(index)
+            .ok_or("Published B1 foot vertex absent")?;
+        let stage = self.transform.transform_point3(Vec3::from_array(*local));
+        if !stage.is_finite() {
+            return Err("Published B1 foot vertex is not finite in stage space".into());
+        }
+        Ok(stage)
+    }
+
+    pub(super) fn bone_origin(&self, active: &Session, name: &str) -> Result<[f64; 3], String> {
+        // These matrices are the rig frames that produced the uploaded mesh.
+        let bone = active
+            .last_bones
+            .iter()
+            .find(|bone| bone.name == name)
+            .ok_or("B1 published foot-query rig landmark absent")?;
+        let point = Mat4::from_cols_array(&bone.posed).w_axis.truncate();
+        let stage = self.transform.transform_point3(point);
+        if !stage.is_finite() {
+            return Err("B1 published rig landmark is not finite in stage space".into());
+        }
+        Ok(stage.to_array().map(f64::from))
+    }
+
+    pub(super) fn visible_source_indices(&self) -> Result<Vec<Option<usize>>, String> {
+        // The approved base.obj body's source IDs precede the joint helper vertices.
+        // Use the first visible display vertex for each ID to count UV seams once.
+        let mut visible = vec![None; 13380];
+        for i in self.indices.iter() {
+            let source = *self.sources.get(i).ok_or("Published B1 source ID absent")?;
+            let slot = visible
+                .get_mut(usize::from(source))
+                .ok_or("Published B1 body triangle references a joint helper")?;
+            *slot = Some(slot.map_or(i, |previous: usize| previous.min(i)));
+        }
+        Ok(visible)
+    }
+}
+
+pub(super) fn published_body<'a>(
+    world: &'a World,
+    active: &'a Session,
+    binding: &PublishedBinding,
+) -> Result<PublishedBody<'a>, String> {
     let body = active
         .parts
         .iter()
@@ -87,8 +144,6 @@ pub fn b1_foot_clearance(world: &World) -> Result<Value, String> {
     if binding.display_transforms.get(body) != Some(&transform.to_cols_array()) {
         return Err("B1 body transform differs from publication".into());
     }
-    let mut left = f32::INFINITY;
-    let mut right = f32::INFINITY;
     let indices = mesh.indices().ok_or("B1 body indices absent")?;
     if !indices
         .iter()
@@ -96,10 +151,23 @@ pub fn b1_foot_clearance(world: &World) -> Result<Value, String> {
     {
         return Err("B1 body triangles differ from publication".into());
     }
-    for i in indices.iter() {
-        let id = *active.source_ids[body]
-            .get(i)
-            .ok_or("Published B1 source ID absent")?;
+    Ok(PublishedBody {
+        positions,
+        indices,
+        sources: &active.source_ids[body],
+        source_vertices: &active.parts[body].source_vertices,
+        transform,
+    })
+}
+
+/// Read stage geometry from a successfully published CPU frame, without a renderer.
+pub fn b1_foot_clearance(world: &World) -> Result<Value, String> {
+    let (active, _, _, binding) = published_motion_frame(world)?;
+    let body = published_body(world, active, binding)?;
+    let mut left = f32::INFINITY;
+    let mut right = f32::INFINITY;
+    for i in body.indices.iter() {
+        let id = *body.sources.get(i).ok_or("Published B1 source ID absent")?;
         let minimum = if LEFT.iter().any(|&(lo, hi)| (lo..=hi).contains(&id)) {
             &mut left
         } else if RIGHT.iter().any(|&(lo, hi)| (lo..=hi).contains(&id)) {
@@ -107,12 +175,7 @@ pub fn b1_foot_clearance(world: &World) -> Result<Value, String> {
         } else {
             continue;
         };
-        let position = positions.get(i).ok_or("Published B1 foot vertex absent")?;
-        let stage = transform.transform_point3(Vec3::from_array(*position));
-        if !stage.is_finite() {
-            return Err("Published B1 foot vertex is not finite in stage space".into());
-        }
-        *minimum = minimum.min(stage.y);
+        *minimum = minimum.min(body.point(i)?.y);
     }
     if !left.is_finite() || !right.is_finite() {
         return Err("Published B1 body has no visible geometry for one or both feet".into());

@@ -9,8 +9,10 @@ pub use b1::cpu_render::{
     render_silhouette_level1, validate_export_work,
 };
 pub use b1::{
-    B1DisplaySubdivision, B1DisplaySubdivisionStatus, b1_foot_clearance, b1_frame_snapshot,
-    b1_running_left_index_position, b1_running_observation, register_b1_asset_source,
+    B1ContactHand, B1DisplaySubdivision, B1DisplaySubdivisionStatus, B1SoleMeasurement,
+    b1_foot_clearance, b1_frame_snapshot, b1_running_index_position,
+    b1_running_left_index_position, b1_running_observation, b1_sole_and_pelvis_measurements,
+    register_b1_asset_source,
 };
 pub use stage::StageViewOverride;
 use std::collections::{BTreeMap, BTreeSet};

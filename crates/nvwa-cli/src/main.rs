@@ -224,12 +224,17 @@ const MOTION_QUERY_USAGE: &str =
 const TRAVEL_QUERY_USAGE: &str =
     "travel-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples]";
 
+const CONTACT_RECHECK_USAGE: &str = "contact-recheck <saved.json> <asset-root> <stance.json> <reference.json> <landing-s> --hand <left|right> --sole <left|right> --support <left|right>";
+const CONTACT_FIT_USAGE: &str = "contact-fit <work.json> <asset-root> <reference.json> <start-s> <end-s> <step-s> --hand <left|right>";
+const CONTACT_FIT_LEFT: [&str; 4] = ["spine_02", "spine_03", "upperarm_l", "lowerarm_l"];
+const CONTACT_FIT_RIGHT: [&str; 4] = ["spine_02", "spine_03", "upperarm_r", "lowerarm_r"];
 const CONTACT_QUERY_USAGE: &str =
     "contact-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples]";
 
 fn supports_motion_query(work: &SceneDocument) -> bool {
     work.profile.backend.is_b1_motion()
         && !work.profile.backend.is_b1_running()
+        && !work.profile.backend.is_b1_shaped_motion()
         && !work.timeline.is_empty()
         && !work.is_single_loop()
 }
@@ -237,6 +242,13 @@ fn supports_motion_query(work: &SceneDocument) -> bool {
 fn supports_travel_query(work: &SceneDocument) -> bool {
     // The production display-origin observer requires a representable stage camera.
     work.profile.backend.is_b1_running()
+        && !work.timeline.is_empty()
+        && (0.001..=100.0).contains(&work.character.scale)
+}
+
+fn supports_contact_edit(work: &SceneDocument) -> bool {
+    work.profile.backend.is_b1_shaped_motion()
+        && work.reference_motion.is_some()
         && !work.timeline.is_empty()
         && (0.001..=100.0).contains(&work.character.scale)
 }
@@ -266,6 +278,14 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         Command::Undo,
         Command::Redo,
     ];
+    if document.profile.backend.is_b1_shaped_motion()
+        && let Some(motion) = &document.reference_motion
+    {
+        commands.push(Command::SetShapedReferenceMotion {
+            clips: document.timeline.clone(),
+            motion: motion.clone(),
+        });
+    }
     if document.profile.backend.is_b1() {
         if !document.profile.backend.supports_timeline() || document.reference_motion.is_some() {
             commands.retain(|command| !matches!(command, Command::SetTimeline { .. }));
@@ -281,6 +301,9 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
                     .unwrap_or_else(|| "neutral".into()),
             },
         );
+    }
+    if document.profile.backend.is_b1_shaped_motion() {
+        commands.retain(|cmd| !matches!(cmd, Command::SetDiagnosticPose { .. }));
     }
     let examples: Vec<_> = commands
         .into_iter()
@@ -329,15 +352,20 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         .flat_map(|v| v.parameters())
         .map(|t| (t.id, [t.decrease, t.increase]))
         .collect();
-    let leg_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"parameters":["thigh_length","lower_leg_length","thigh_girth","calf_girth"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_target_weight_not_centimetres_or_exact_segment_measurement","surface_effect":"neighbouring_joints_and_garment_may_change","motion":"not_supported"});
-    let upper_body_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V7 | B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"parameters":["bust_circumference","shoulder_span","upper_arm_girth"],"range":[-1,1],"default":0,"meaning":"signed_authored_MPFB_target_weight_not_centimetres","surface_effect":"adjoining_torso_arms_and_garment_may_change","motion":"not_supported"});
-    let hip_contour_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"parameters":["hip_depth","buttocks_volume"],"range":[-1,1],"default":0,"meaning":"signed_authored_MPFB_target_weight_not_centimetres_or_anatomical_volume","surface_effect":"adjoining_pelvis_thighs_and_garment_may_change","motion":"not_supported"});
-    let arm_proportions_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"parameters":["upper_arm_length","forearm_length","wrist_circumference"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_target_weight_not_centimetres_or_exact_segment_measurement","surface_effect":"neighbouring_joints_hands_and_garment_may_change","motion":"not_supported"});
-    let chest_placement_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V10 | B1AssetVersion::V15)),"parameters":["breast_spacing","breast_vertical_position"],"range":[-1,1],"default":0,"meaning":"signed_authored_MPFB_chest_placement_weight_not_centimetres","surface_effect":"adjacent_torso_and_garment_may_change","motion":"not_supported"});
-    let hand_size_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14)),"parameters":["left_hand_size","right_hand_size"],"range":[-1,1],"default":0,"meaning":"independent_signed_MPFB_hand_scale_target_weights_not_centimetres","surface_effect":"fingers_wrist_and_prop_grip_may_change","motion":"not_supported"});
-    let shoulder_form_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14)),"parameters":["shoulder_muscle_fullness"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_shoulder_muscle_target_weight_not_anatomical_measurement","surface_effect":"shoulder_upper_arm_and_garment_may_change","motion":"not_supported"});
-    let forearm_form_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V13 | B1AssetVersion::V14)),"parameters":["forearm_fullness"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_lower_arm_fat_target_weight_not_exact_circumference_or_muscle_mass","surface_effect":"elbow_wrist_and_garment_may_change","motion":"not_supported"});
-    let upper_arm_muscle_shape = serde_json::json!({"supported":base == Some(B1AssetVersion::V14),"parameters":["upper_arm_muscle_fullness"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_upper_arm_muscle_target_weight_not_exact_girth_or_muscle_mass","surface_effect":"shoulder_elbow_and_garment_may_change","motion":"not_supported"});
+    let shape_motion_support = if document.profile.backend.is_b1_shaped_motion() {
+        "supported_in_saved_fitted_reference"
+    } else {
+        "not_supported"
+    };
+    let leg_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"parameters":["thigh_length","lower_leg_length","thigh_girth","calf_girth"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_target_weight_not_centimetres_or_exact_segment_measurement","surface_effect":"neighbouring_joints_and_garment_may_change","motion":shape_motion_support});
+    let upper_body_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V7 | B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"parameters":["bust_circumference","shoulder_span","upper_arm_girth"],"range":[-1,1],"default":0,"meaning":"signed_authored_MPFB_target_weight_not_centimetres","surface_effect":"adjoining_torso_arms_and_garment_may_change","motion":shape_motion_support});
+    let hip_contour_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"parameters":["hip_depth","buttocks_volume"],"range":[-1,1],"default":0,"meaning":"signed_authored_MPFB_target_weight_not_centimetres_or_anatomical_volume","surface_effect":"adjoining_pelvis_thighs_and_garment_may_change","motion":shape_motion_support});
+    let arm_proportions_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"parameters":["upper_arm_length","forearm_length","wrist_circumference"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_target_weight_not_centimetres_or_exact_segment_measurement","surface_effect":"neighbouring_joints_hands_and_garment_may_change","motion":shape_motion_support});
+    let chest_placement_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V10 | B1AssetVersion::V15)),"parameters":["breast_spacing","breast_vertical_position"],"range":[-1,1],"default":0,"meaning":"signed_authored_MPFB_chest_placement_weight_not_centimetres","surface_effect":"adjacent_torso_and_garment_may_change","motion":shape_motion_support});
+    let hand_size_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14)),"parameters":["left_hand_size","right_hand_size"],"range":[-1,1],"default":0,"meaning":"independent_signed_MPFB_hand_scale_target_weights_not_centimetres","surface_effect":"fingers_wrist_and_prop_grip_may_change","motion":shape_motion_support});
+    let shoulder_form_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14)),"parameters":["shoulder_muscle_fullness"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_shoulder_muscle_target_weight_not_anatomical_measurement","surface_effect":"shoulder_upper_arm_and_garment_may_change","motion":shape_motion_support});
+    let forearm_form_shape = serde_json::json!({"supported":matches!(base, Some(B1AssetVersion::V13 | B1AssetVersion::V14)),"parameters":["forearm_fullness"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_lower_arm_fat_target_weight_not_exact_circumference_or_muscle_mass","surface_effect":"elbow_wrist_and_garment_may_change","motion":shape_motion_support});
+    let upper_arm_muscle_shape = serde_json::json!({"supported":base == Some(B1AssetVersion::V14),"parameters":["upper_arm_muscle_fullness"],"range":[-1,1],"default":0,"meaning":"signed_bilateral_authored_MPFB_upper_arm_muscle_target_weight_not_exact_girth_or_muscle_mass","surface_effect":"shoulder_elbow_and_garment_may_change","motion":shape_motion_support});
     let mut capabilities = serde_json::json!({
         "schema_version": 1,
         "transport": "offline_files",
@@ -361,6 +389,8 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "new-character-upper-arm-muscle": ["asset_root", "output.json"],
             "new-character-lower-contour": ["asset_root", "output.json"],
             "new-character-running": ["asset_root", "output.json"],
+            "contact-fit": ["input.json", "asset_root", "reference.json", "start_s", "end_s", "step_s", "--hand", "left|right"],
+            "contact-recheck": ["saved.json", "asset_root", "stance.json", "reference.json", "landing_s", "--hand", "left|right", "--sole", "left|right", "--support", "left|right"],
             "inspect": ["input.json"],
             "describe-capabilities": ["input.json"],
             "validate": ["input.json", "optional_asset_root"],
@@ -414,7 +444,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "apply_save": "metadata_only_no_renderer_readiness_claim"
         },
         "cheek_fullness": {"supported":matches!(base, Some(B1AssetVersion::V3 | B1AssetVersion::V4 | B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"meaning":"symmetric_bilateral_cheek_volume_not_jaw_width","range":[-1,1],"default":0,"source_endpoints":"MPFB_left_and_right_cheek_volume_decr_incr","surface_effect":"adjoining_surfaces_may_change_no_mouth_or_nose_isolation_guarantee"},
-        "waist_circumference": {"supported":matches!(base, Some(B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"range":[-1,1],"default":0,"meaning":"authored_waist_circumference_shape_not_centimetres_or_width_only","surface_effect":"adjacent_torso_and_garment_may_change","motion":"not_supported"},
+        "waist_circumference": {"supported":matches!(base, Some(B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"range":[-1,1],"default":0,"meaning":"authored_waist_circumference_shape_not_centimetres_or_width_only","surface_effect":"adjacent_torso_and_garment_may_change","motion":shape_motion_support},
         "lower_face_squareness": {"supported":matches!(base, Some(B1AssetVersion::V4 | B1AssetVersion::V5 | B1AssetVersion::V6 | B1AssetVersion::V7 | B1AssetVersion::V8 | B1AssetVersion::V9 | B1AssetVersion::V10 | B1AssetVersion::V11 | B1AssetVersion::V12 | B1AssetVersion::V13 | B1AssetVersion::V14 | B1AssetVersion::V15)),"meaning":"lower_face_outline_squaring_not_literal_jaw_width","range":[0,1],"default":0,"zero":"no_added_deformation","one":"exact_authored_MPFB_chin_bones_incr_E","interior":"fraction_of_authored_displacement_not_measured_squareness","negative":"rejected; chin-bones-decr retained only for fixed pair-loader authentication, not a public direction; source A remains HOLD","surface_effect":"adjacent_height_depth_and_jaw_to_neck_transitions_may_change_no_anatomical_isolation_guarantee"},
         "character_backend": document.profile.backend,
         "authored_motion": if document.profile.backend.is_b1_running() {serde_json::json!({"supported":true,"provenance":"Nvwa original authored running; not AI-generated","clips":document.profile.clips,"arrangement":"finite_only_no_start_zero_singleton_loop","travel":{"forward_axis":"stage_positive_z","units":"metres_before_character_scale","source_seconds":4,"source_forward_metres":2,"anchors":"horizontal_only_from_Work_and_resolved_time","bounce":"source_local_vertical"}})}else{serde_json::json!({"supported":document.profile.backend.is_b1_motion(),"provenance":"Nvwa authored rehearsal; not AI-generated", "clips":document.profile.clips})},
@@ -514,6 +544,51 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
         },
         "studio_control": false
     });
+    if document.profile.backend.is_b1_shaped_motion() {
+        capabilities["authored_motion"] = serde_json::json!({"supported":false, "clips":[]});
+        capabilities["reference_motion"]["supported"] = serde_json::json!(true);
+        capabilities["reference_motion"]["write"] = serde_json::json!({
+            "type":"set_shaped_reference_motion","fields":["clips","motion"],
+            "timeline":"one full-duration, nonlooping, unit-speed reference clip starting at zero",
+        });
+        capabilities["diagnostic_poses"] =
+            serde_json::json!({"ids":["neutral"],"command_supported":false});
+        capabilities["set_timeline"] =
+            serde_json::json!({"command_supported":false,"use":"set_shaped_reference_motion"});
+        capabilities["shaped_reference_limits"] = serde_json::json!({
+            "character_backend_version":18,"requires_existing_work":true,
+            "maximum_parameter_values":{"bust_circumference":0.0,"buttocks_volume":0.0,"belly_shape_strength":0.0}
+        });
+    }
+    let fit_hands = ["left", "right"]
+        .into_iter()
+        .zip([CONTACT_FIT_LEFT, CONTACT_FIT_RIGHT])
+        .filter_map(|(hand, joints)| {
+            let motion = document.reference_motion.as_ref()?;
+            joints
+                .iter()
+                .any(|joint| motion.rotations.contains_key(*joint))
+                .then_some(hand)
+        })
+        .collect::<Vec<_>>();
+    capabilities["contact_recheck"] = serde_json::json!({
+        "available": cfg!(feature = "motion-query"),
+        "work_supported": supports_contact_edit(document) && document.stage.contact_target.is_some(),
+        "usage": CONTACT_RECHECK_USAGE,
+        "landing_baseline": "stance.json",
+        "timing_baseline": "reference.json",
+        "read_only": true
+    });
+    capabilities["contact_fit"] = serde_json::json!({
+        "available": cfg!(feature = "motion-query"),
+        "work_supported": supports_contact_edit(document) && !fit_hands.is_empty()
+            && document.stage.contact_target.is_some()
+            && document.timeline.iter().filter(|entry| entry.clip_id == nvwa_core::reference_motion::REFERENCE_CLIP_ID).count() == 1,
+        "hands_with_editable_tracks": fit_hands,
+        "usage": CONTACT_FIT_USAGE,
+        "output": "read-only plan; pass commands to apply, then verify foot and contact timing",
+        "requires": ["same saved contact target on both Works", "window inside one authored reference clip in each Work", "editable spine or selected arm rotation track"]
+    });
     capabilities["contact_query"] = serde_json::json!({
         "available": cfg!(feature = "motion-query"),
         "work_supported": supports_travel_query(document) && document.stage.contact_target.is_some(),
@@ -538,7 +613,7 @@ fn cli_contract(document: &SceneDocument) -> Result<serde_json::Value, CoreError
             "asset_availability":"requires_v15_assets_not_in_standard_cli_bundle",
             "parameter":target.id,
             "source_target":target.increase,
-            "range":[0,1],
+            "range":if document.profile.backend.is_b1_shaped_motion() {[0,0]} else {[0,1]},
             "default":0,
             "max_authored_target_weight":target.max_weight,
             "meaning":"visual_shape_strength_only_not_gestation_or_physical_measurement",
@@ -732,6 +807,30 @@ fn run(args: &[String]) -> Result<(), CoreError> {
                 "Build nvwa-cli with --features motion-query to query motion",
             ));
         }
+        "contact-recheck" => {
+            if matches!(&args[1..], [flag] if flag == "--help" || flag == "-h") {
+                return respond(CONTACT_RECHECK_USAGE);
+            }
+            #[cfg(feature = "motion-query")]
+            respond(motion_query::run_contact_recheck(&args[1..])?)?;
+            #[cfg(not(feature = "motion-query"))]
+            return Err(CoreError::new(
+                "contact_recheck_unavailable",
+                "Build nvwa-cli with --features motion-query to recheck contact and landing",
+            ));
+        }
+        "contact-fit" => {
+            if matches!(&args[1..], [flag] if flag == "--help" || flag == "-h") {
+                return respond(CONTACT_FIT_USAGE);
+            }
+            #[cfg(feature = "motion-query")]
+            respond(motion_query::run_contact_fit(&args[1..])?)?;
+            #[cfg(not(feature = "motion-query"))]
+            return Err(CoreError::new(
+                "contact_fit_unavailable",
+                "Build nvwa-cli with --features motion-query to fit fingertip contact",
+            ));
+        }
         "contact-query" => {
             if matches!(&args[1..], [flag] if flag == "--help" || flag == "-h") {
                 respond(CONTACT_QUERY_USAGE)?;
@@ -786,7 +885,7 @@ fn run(args: &[String]) -> Result<(), CoreError> {
         }
         "help" | "--help" | "-h" => {
             respond(
-                "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-waist <asset-root> <scene.json> (eleven parameters, static waist circumference, no appearance/motion)\n  new-character-legs <asset-root> <scene.json> (fifteen parameters; four unitless bilateral leg controls; static only)\n  new-character-upper-body <asset-root> <scene.json> (eighteen parameters; three upper-body shape weights; static only)\n  new-character-hip-contour <asset-root> <scene.json> (twenty parameters; hip depth and buttocks volume weights; static only)\n  new-character-chest-placement <asset-root> <scene.json> (twenty-five parameters; chest spacing and vertical placement weights; static only)\n  new-character-belly-shape <asset-root> <scene.json> (experimental; visual strength 0..1; static only; requires V15 assets not in standard CLI bundle)\n  new-character-hand-size <asset-root> <scene.json> (twenty-five parameters; independent hand size weights; static only)\n  new-character-shoulder-form <asset-root> <scene.json> (twenty-six parameters; bilateral shoulder muscle shape; static only)\n  new-character-forearm-form <asset-root> <scene.json> (twenty-seven parameters; bilateral forearm fullness shape; static only)\n  new-character-upper-arm-muscle <asset-root> <scene.json> (twenty-eight parameters; bilateral upper-arm muscle form; static only)\n  new-character-arm-proportions <asset-root> <scene.json> (twenty-three parameters; arm lengths and wrist circumference weights; static only)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  contact-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  travel-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
+                "Nvwa offline document CLI\n  new <profile.json> <scene.json>\n  new-b1 <asset-root> <scene.json>\n  new-b1-motion <asset-root> <scene.json>\n  new-character <asset-root> <scene.json> (eight shape parameters)\n  new-character-contour <asset-root> <scene.json> (nine parameters; symmetric cheek fullness, adjoining surfaces may change)\n  new-character-lower-contour <asset-root> <scene.json> (ten parameters; lower-face squaring0..1, exact positive source only, adjacent transitions may change)\n  new-character-waist <asset-root> <scene.json> (eleven parameters, static waist circumference, no appearance/motion)\n  new-character-legs <asset-root> <scene.json> (fifteen parameters; four unitless bilateral leg controls; static only)\n  new-character-upper-body <asset-root> <scene.json> (eighteen parameters; three upper-body shape weights; static only)\n  new-character-hip-contour <asset-root> <scene.json> (twenty parameters; hip depth and buttocks volume weights; static only)\n  new-character-chest-placement <asset-root> <scene.json> (twenty-five parameters; chest spacing and vertical placement weights; static only)\n  new-character-belly-shape <asset-root> <scene.json> (experimental; visual strength 0..1; static only; requires V15 assets not in standard CLI bundle)\n  new-character-hand-size <asset-root> <scene.json> (twenty-five parameters; independent hand size weights; static only)\n  new-character-shoulder-form <asset-root> <scene.json> (twenty-six parameters; bilateral shoulder muscle shape; static only)\n  new-character-forearm-form <asset-root> <scene.json> (twenty-seven parameters; bilateral forearm fullness shape; static only)\n  new-character-upper-arm-muscle <asset-root> <scene.json> (twenty-eight parameters; bilateral upper-arm muscle form; static only)\n  new-character-arm-proportions <asset-root> <scene.json> (twenty-three parameters; arm lengths and wrist circumference weights; static only)\n  new-character-running <asset-root> <scene.json> (finite authored forward running)\n  inspect <scene.json>\n  describe-capabilities <scene.json>\n  validate <scene.json> [asset-root]\n  motion-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  contact-fit <work.json> <asset-root> <reference.json> <start-s> <end-s> <step-s> --hand <left|right>\n  contact-recheck <saved.json> <asset-root> <stance.json> <reference.json> <landing-s> --hand <left|right> --sole <left|right> --support <left|right>\n  contact-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  travel-query <work.json> <asset-root> <start-s> <end-s> <step-s> [--samples] (with the motion-query build feature)\n  apply <scene.json> <command-or-array.json> <output.json>\n  save <scene.json> <output.json>\nCommands: set_parameters, set_scale, set_timeline, set_stage, set_diagnostic_pose (B1 only), set_appearance (B1 skin/eyes/hair; none on all backends), undo, redo.\nB1 validate requires an explicit asset-root. apply/save edit Work metadata only.\nThis edits files; it does not control a running Studio.",
             )?;
             respond(
                 "Reference motion: apply set_reference_motion or set_reference_rotation_key; reference-pose <work.json> <seconds> samples the saved motion.",

@@ -1,0 +1,5590 @@
+{
+  "schema_version": 4,
+  "revision": 7,
+  "profile": {
+    "backend": {
+      "type": "b1_cpu",
+      "schema_version": 18,
+      "asset_id": "mpfb-hm08-game-engine-female-sportsuit01-v15"
+    },
+    "id": "nvwa-mpfb-b1-shaped-motion-v1",
+    "asset_path": "characters/mpfb-b1-v15/manifest.json",
+    "asset_sha256": "ea05307c27d2e94a208f05cdd92b9eefa905360dbab2453b6a043ac78221e401",
+    "license": "CC0-1.0",
+    "parameters": [
+      {
+        "id": "torso_length",
+        "morph_index": 0,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "jaw_drop",
+        "morph_index": 1,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "head_width",
+        "morph_index": 2,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "nose_width",
+        "morph_index": 3,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "mouth_width",
+        "morph_index": 4,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "chin_width",
+        "morph_index": 5,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "neck_width",
+        "morph_index": 6,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "hip_width",
+        "morph_index": 7,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "cheek_fullness",
+        "morph_index": 8,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "lower_face_squareness",
+        "morph_index": 9,
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "waist_circumference",
+        "morph_index": 10,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "thigh_length",
+        "morph_index": 11,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "lower_leg_length",
+        "morph_index": 12,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "thigh_girth",
+        "morph_index": 13,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "calf_girth",
+        "morph_index": 14,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "bust_circumference",
+        "morph_index": 15,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "shoulder_span",
+        "morph_index": 16,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "upper_arm_girth",
+        "morph_index": 17,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "hip_depth",
+        "morph_index": 18,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "buttocks_volume",
+        "morph_index": 19,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "upper_arm_length",
+        "morph_index": 20,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "forearm_length",
+        "morph_index": 21,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "wrist_circumference",
+        "morph_index": 22,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "breast_spacing",
+        "morph_index": 23,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "breast_vertical_position",
+        "morph_index": 24,
+        "min": -1.0,
+        "max": 1.0,
+        "default": 0.0
+      },
+      {
+        "id": "belly_shape_strength",
+        "morph_index": 25,
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.0
+      }
+    ],
+    "clips": [
+      {
+        "id": "b1_shaped_step_v1",
+        "animation_index": 3,
+        "duration_seconds": 4.0
+      },
+      {
+        "id": "b1_run_forward_compact_v1",
+        "animation_index": 2,
+        "duration_seconds": 4.0
+      },
+      {
+        "id": "b1_arm_rehearsal_v1",
+        "animation_index": 0,
+        "duration_seconds": 4.0
+      },
+      {
+        "id": "b1_knee_flex_v1",
+        "animation_index": 1,
+        "duration_seconds": 4.0
+      }
+    ]
+  },
+  "character": {
+    "id": "character-1",
+    "profile_id": "nvwa-mpfb-b1-shaped-motion-v1",
+    "parameters": {
+      "belly_shape_strength": 0.0,
+      "breast_spacing": 0.0,
+      "breast_vertical_position": 0.0,
+      "bust_circumference": 0.0,
+      "buttocks_volume": 0.0,
+      "calf_girth": 0.77,
+      "cheek_fullness": 0.0,
+      "chin_width": 0.25,
+      "forearm_length": 0.23,
+      "head_width": 0.33,
+      "hip_depth": 0.42,
+      "hip_width": 0.79,
+      "jaw_drop": 0.0,
+      "lower_face_squareness": 0.52,
+      "lower_leg_length": -0.11,
+      "mouth_width": 0.0,
+      "neck_width": 0.45,
+      "nose_width": 0.0,
+      "shoulder_span": 0.94,
+      "thigh_girth": 0.86,
+      "thigh_length": -0.19,
+      "torso_length": -0.21,
+      "upper_arm_girth": 0.85,
+      "upper_arm_length": 0.18,
+      "waist_circumference": 0.91,
+      "wrist_circumference": 0.0
+    },
+    "scale": 1.0,
+    "diagnostic_pose": "neutral",
+    "appearance": {
+      "type": "none"
+    }
+  },
+  "timeline": [
+    {
+      "id": "mora-pump-stop",
+      "clip_id": "b1_reference_motion",
+      "start_seconds": 0.0,
+      "duration_seconds": 5.0,
+      "speed": 1.0,
+      "looping": false
+    }
+  ],
+  "reference_motion": {
+    "duration_seconds": 5.0,
+    "rotations": {
+      "calf_l": {
+        "axis": [
+          0.86415,
+          -0.08063468,
+          -0.4967322
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": 0.1151455
+          },
+          {
+            "seconds": 0.1,
+            "degrees": 0.41379628
+          },
+          {
+            "seconds": 0.15,
+            "degrees": 0.8255352
+          },
+          {
+            "seconds": 0.2,
+            "degrees": 1.3031651
+          },
+          {
+            "seconds": 0.25,
+            "degrees": 1.8326151
+          },
+          {
+            "seconds": 0.3,
+            "degrees": 1.9517854
+          },
+          {
+            "seconds": 0.35,
+            "degrees": 2.0926433
+          },
+          {
+            "seconds": 0.4,
+            "degrees": 2.2476404
+          },
+          {
+            "seconds": 0.45,
+            "degrees": 2.1098337
+          },
+          {
+            "seconds": 0.5,
+            "degrees": 1.4274982
+          },
+          {
+            "seconds": 0.55,
+            "degrees": 1.3683832
+          },
+          {
+            "seconds": 0.6,
+            "degrees": 1.5080773
+          },
+          {
+            "seconds": 0.65,
+            "degrees": 2.3295155
+          },
+          {
+            "seconds": 0.7,
+            "degrees": 4.020206
+          },
+          {
+            "seconds": 0.75,
+            "degrees": 3.4410481
+          },
+          {
+            "seconds": 0.8,
+            "degrees": 3.2382746
+          },
+          {
+            "seconds": 0.85,
+            "degrees": 3.265444
+          },
+          {
+            "seconds": 0.9,
+            "degrees": 2.1834428
+          },
+          {
+            "seconds": 0.95,
+            "degrees": 1.622845
+          },
+          {
+            "seconds": 1.0,
+            "degrees": 1.03544
+          },
+          {
+            "seconds": 1.05,
+            "degrees": 0.62634885
+          },
+          {
+            "seconds": 1.1,
+            "degrees": 0.039408725
+          },
+          {
+            "seconds": 1.15,
+            "degrees": -0.05771941
+          },
+          {
+            "seconds": 1.2,
+            "degrees": -0.22793506
+          },
+          {
+            "seconds": 1.25,
+            "degrees": -0.44710928
+          },
+          {
+            "seconds": 1.3,
+            "degrees": -0.6827364
+          },
+          {
+            "seconds": 1.35,
+            "degrees": -0.9151377
+          },
+          {
+            "seconds": 1.4,
+            "degrees": -1.0865194
+          },
+          {
+            "seconds": 1.45,
+            "degrees": -1.1855792
+          },
+          {
+            "seconds": 1.5,
+            "degrees": -1.2986664
+          },
+          {
+            "seconds": 1.55,
+            "degrees": -1.4080272
+          },
+          {
+            "seconds": 1.6,
+            "degrees": -1.497058
+          },
+          {
+            "seconds": 1.65,
+            "degrees": -1.5512335
+          },
+          {
+            "seconds": 1.7,
+            "degrees": -1.5675974
+          },
+          {
+            "seconds": 1.75,
+            "degrees": -1.5670596
+          },
+          {
+            "seconds": 1.8,
+            "degrees": -1.54949
+          },
+          {
+            "seconds": 1.85,
+            "degrees": -1.5181514
+          },
+          {
+            "seconds": 1.9,
+            "degrees": -1.4770784
+          },
+          {
+            "seconds": 1.95,
+            "degrees": -1.4282267
+          },
+          {
+            "seconds": 2.0,
+            "degrees": -1.3738874
+          },
+          {
+            "seconds": 2.05,
+            "degrees": -1.3158556
+          },
+          {
+            "seconds": 2.1,
+            "degrees": -1.258323
+          },
+          {
+            "seconds": 2.15,
+            "degrees": -1.2016021
+          },
+          {
+            "seconds": 2.2,
+            "degrees": -1.1475251
+          },
+          {
+            "seconds": 2.25,
+            "degrees": -1.1016886
+          },
+          {
+            "seconds": 2.3,
+            "degrees": -1.0610492
+          },
+          {
+            "seconds": 2.35,
+            "degrees": -1.0312691
+          },
+          {
+            "seconds": 2.4,
+            "degrees": -1.0139371
+          },
+          {
+            "seconds": 2.45,
+            "degrees": -1.006812
+          },
+          {
+            "seconds": 2.5,
+            "degrees": -1.004574
+          },
+          {
+            "seconds": 2.55,
+            "degrees": -1.006797
+          },
+          {
+            "seconds": 2.6,
+            "degrees": -1.0114688
+          },
+          {
+            "seconds": 2.65,
+            "degrees": -1.0167503
+          },
+          {
+            "seconds": 2.7,
+            "degrees": -1.0253564
+          },
+          {
+            "seconds": 2.75,
+            "degrees": -1.0366718
+          },
+          {
+            "seconds": 2.8,
+            "degrees": -1.0507228
+          },
+          {
+            "seconds": 2.85,
+            "degrees": -1.0677083
+          },
+          {
+            "seconds": 2.9,
+            "degrees": -1.0857335
+          },
+          {
+            "seconds": 2.95,
+            "degrees": -1.1065278
+          },
+          {
+            "seconds": 3.0,
+            "degrees": -1.1297514
+          },
+          {
+            "seconds": 3.05,
+            "degrees": -1.1535299
+          },
+          {
+            "seconds": 3.1,
+            "degrees": -1.1822335
+          },
+          {
+            "seconds": 3.15,
+            "degrees": -1.2091717
+          },
+          {
+            "seconds": 3.2,
+            "degrees": -1.2405163
+          },
+          {
+            "seconds": 3.25,
+            "degrees": -1.2690986
+          },
+          {
+            "seconds": 3.3,
+            "degrees": -1.3020989
+          },
+          {
+            "seconds": 3.35,
+            "degrees": -1.3378675
+          },
+          {
+            "seconds": 3.4,
+            "degrees": -1.3750398
+          },
+          {
+            "seconds": 3.45,
+            "degrees": -1.4135511
+          },
+          {
+            "seconds": 3.5,
+            "degrees": -1.4513253
+          },
+          {
+            "seconds": 3.55,
+            "degrees": -1.491851
+          },
+          {
+            "seconds": 3.6,
+            "degrees": -1.530307
+          },
+          {
+            "seconds": 3.65,
+            "degrees": -1.5716573
+          },
+          {
+            "seconds": 3.7,
+            "degrees": -1.6129441
+          },
+          {
+            "seconds": 3.75,
+            "degrees": -1.6469162
+          },
+          {
+            "seconds": 3.8,
+            "degrees": -1.4574208
+          },
+          {
+            "seconds": 3.85,
+            "degrees": -1.0073606
+          },
+          {
+            "seconds": 3.9,
+            "degrees": -0.38858315
+          },
+          {
+            "seconds": 3.95,
+            "degrees": 0.6932957
+          },
+          {
+            "seconds": 4.0,
+            "degrees": 1.5179024
+          },
+          {
+            "seconds": 4.05,
+            "degrees": 2.620674
+          },
+          {
+            "seconds": 4.1,
+            "degrees": 4.035504
+          },
+          {
+            "seconds": 4.15,
+            "degrees": 4.2052317
+          },
+          {
+            "seconds": 4.2,
+            "degrees": 4.6170444
+          },
+          {
+            "seconds": 4.25,
+            "degrees": 4.6349573
+          },
+          {
+            "seconds": 4.3,
+            "degrees": 4.699769
+          },
+          {
+            "seconds": 4.35,
+            "degrees": 1.8868909
+          },
+          {
+            "seconds": 4.4,
+            "degrees": 3.5483825
+          },
+          {
+            "seconds": 4.45,
+            "degrees": 2.6916637
+          },
+          {
+            "seconds": 4.5,
+            "degrees": 2.0321937
+          },
+          {
+            "seconds": 4.55,
+            "degrees": 1.7669305
+          },
+          {
+            "seconds": 4.6,
+            "degrees": 1.9415327
+          },
+          {
+            "seconds": 4.65,
+            "degrees": 1.8777605
+          },
+          {
+            "seconds": 4.7,
+            "degrees": 1.2058624
+          },
+          {
+            "seconds": 4.75,
+            "degrees": 1.178185
+          },
+          {
+            "seconds": 4.8,
+            "degrees": 1.1031392
+          },
+          {
+            "seconds": 4.85,
+            "degrees": 0.6534176
+          },
+          {
+            "seconds": 4.9,
+            "degrees": 0.32223237
+          },
+          {
+            "seconds": 4.95,
+            "degrees": 0.08797075
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "calf_r": {
+        "axis": [
+          0.9473963,
+          -0.0287648,
+          -0.31876773
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": 0.03679952
+          },
+          {
+            "seconds": 0.1,
+            "degrees": 0.13475844
+          },
+          {
+            "seconds": 0.15,
+            "degrees": 0.27495039
+          },
+          {
+            "seconds": 0.2,
+            "degrees": 0.35619804
+          },
+          {
+            "seconds": 0.25,
+            "degrees": 0.62363553
+          },
+          {
+            "seconds": 0.3,
+            "degrees": 0.8353747
+          },
+          {
+            "seconds": 0.35,
+            "degrees": 0.874381
+          },
+          {
+            "seconds": 0.4,
+            "degrees": 0.9444757
+          },
+          {
+            "seconds": 0.45,
+            "degrees": 0.6286197
+          },
+          {
+            "seconds": 0.5,
+            "degrees": -0.6027864
+          },
+          {
+            "seconds": 0.55,
+            "degrees": -1.4245647
+          },
+          {
+            "seconds": 0.6,
+            "degrees": -0.88786
+          },
+          {
+            "seconds": 0.65,
+            "degrees": 0.24606661
+          },
+          {
+            "seconds": 0.7,
+            "degrees": 3.245627
+          },
+          {
+            "seconds": 0.75,
+            "degrees": 4.0333
+          },
+          {
+            "seconds": 0.8,
+            "degrees": 5.669249
+          },
+          {
+            "seconds": 0.85,
+            "degrees": 7.355578
+          },
+          {
+            "seconds": 0.9,
+            "degrees": 8.027953
+          },
+          {
+            "seconds": 0.95,
+            "degrees": 9.337436
+          },
+          {
+            "seconds": 1.0,
+            "degrees": 10.458199
+          },
+          {
+            "seconds": 1.05,
+            "degrees": 11.64042
+          },
+          {
+            "seconds": 1.1,
+            "degrees": 12.313482
+          },
+          {
+            "seconds": 1.15,
+            "degrees": 13.227796
+          },
+          {
+            "seconds": 1.2,
+            "degrees": 13.957764
+          },
+          {
+            "seconds": 1.25,
+            "degrees": 14.4532175
+          },
+          {
+            "seconds": 1.3,
+            "degrees": 14.71376
+          },
+          {
+            "seconds": 1.35,
+            "degrees": 14.860122
+          },
+          {
+            "seconds": 1.4,
+            "degrees": 14.908105
+          },
+          {
+            "seconds": 1.45,
+            "degrees": 14.862763
+          },
+          {
+            "seconds": 1.5,
+            "degrees": 14.771625
+          },
+          {
+            "seconds": 1.55,
+            "degrees": 14.677839
+          },
+          {
+            "seconds": 1.6,
+            "degrees": 14.599268
+          },
+          {
+            "seconds": 1.65,
+            "degrees": 14.550488
+          },
+          {
+            "seconds": 1.7,
+            "degrees": 14.534226
+          },
+          {
+            "seconds": 1.75,
+            "degrees": 14.527674
+          },
+          {
+            "seconds": 1.8,
+            "degrees": 14.532751
+          },
+          {
+            "seconds": 1.85,
+            "degrees": 14.546469
+          },
+          {
+            "seconds": 1.9,
+            "degrees": 14.565991
+          },
+          {
+            "seconds": 1.95,
+            "degrees": 14.589968
+          },
+          {
+            "seconds": 2.0,
+            "degrees": 14.617636
+          },
+          {
+            "seconds": 2.05,
+            "degrees": 14.647428
+          },
+          {
+            "seconds": 2.1,
+            "degrees": 14.676888
+          },
+          {
+            "seconds": 2.15,
+            "degrees": 14.706045
+          },
+          {
+            "seconds": 2.2,
+            "degrees": 14.7345295
+          },
+          {
+            "seconds": 2.25,
+            "degrees": 14.757698
+          },
+          {
+            "seconds": 2.3,
+            "degrees": 14.77925
+          },
+          {
+            "seconds": 2.35,
+            "degrees": 14.795178
+          },
+          {
+            "seconds": 2.4,
+            "degrees": 14.805005
+          },
+          {
+            "seconds": 2.45,
+            "degrees": 14.810577
+          },
+          {
+            "seconds": 2.5,
+            "degrees": 14.812888
+          },
+          {
+            "seconds": 2.55,
+            "degrees": 14.810612
+          },
+          {
+            "seconds": 2.6,
+            "degrees": 14.805854
+          },
+          {
+            "seconds": 2.65,
+            "degrees": 14.800645
+          },
+          {
+            "seconds": 2.7,
+            "degrees": 14.79189
+          },
+          {
+            "seconds": 2.75,
+            "degrees": 14.780551
+          },
+          {
+            "seconds": 2.8,
+            "degrees": 14.766231
+          },
+          {
+            "seconds": 2.85,
+            "degrees": 14.748992
+          },
+          {
+            "seconds": 2.9,
+            "degrees": 14.730617
+          },
+          {
+            "seconds": 2.95,
+            "degrees": 14.709856
+          },
+          {
+            "seconds": 3.0,
+            "degrees": 14.686543
+          },
+          {
+            "seconds": 3.05,
+            "degrees": 14.662436
+          },
+          {
+            "seconds": 3.1,
+            "degrees": 14.633603
+          },
+          {
+            "seconds": 3.15,
+            "degrees": 14.606178
+          },
+          {
+            "seconds": 3.2,
+            "degrees": 14.574457
+          },
+          {
+            "seconds": 3.25,
+            "degrees": 14.545516
+          },
+          {
+            "seconds": 3.3,
+            "degrees": 14.51222
+          },
+          {
+            "seconds": 3.35,
+            "degrees": 14.476166
+          },
+          {
+            "seconds": 3.4,
+            "degrees": 14.438826
+          },
+          {
+            "seconds": 3.45,
+            "degrees": 14.399847
+          },
+          {
+            "seconds": 3.5,
+            "degrees": 14.361625
+          },
+          {
+            "seconds": 3.55,
+            "degrees": 14.320265
+          },
+          {
+            "seconds": 3.6,
+            "degrees": 14.2812195
+          },
+          {
+            "seconds": 3.65,
+            "degrees": 14.23922
+          },
+          {
+            "seconds": 3.7,
+            "degrees": 14.197382
+          },
+          {
+            "seconds": 3.75,
+            "degrees": 14.162379
+          },
+          {
+            "seconds": 3.8,
+            "degrees": 14.320397
+          },
+          {
+            "seconds": 3.85,
+            "degrees": 14.697855
+          },
+          {
+            "seconds": 3.9,
+            "degrees": 15.209365
+          },
+          {
+            "seconds": 3.95,
+            "degrees": 16.217052
+          },
+          {
+            "seconds": 4.0,
+            "degrees": 17.06564
+          },
+          {
+            "seconds": 4.05,
+            "degrees": 17.371267
+          },
+          {
+            "seconds": 4.1,
+            "degrees": 17.209875
+          },
+          {
+            "seconds": 4.15,
+            "degrees": 15.962002
+          },
+          {
+            "seconds": 4.2,
+            "degrees": 14.950266
+          },
+          {
+            "seconds": 4.25,
+            "degrees": 13.5109
+          },
+          {
+            "seconds": 4.3,
+            "degrees": 11.141324
+          },
+          {
+            "seconds": 4.35,
+            "degrees": 6.597622
+          },
+          {
+            "seconds": 4.4,
+            "degrees": 5.257525
+          },
+          {
+            "seconds": 4.45,
+            "degrees": 1.9195983
+          },
+          {
+            "seconds": 4.5,
+            "degrees": -0.48347723
+          },
+          {
+            "seconds": 4.55,
+            "degrees": -1.4382027
+          },
+          {
+            "seconds": 4.6,
+            "degrees": -1.2770549
+          },
+          {
+            "seconds": 4.65,
+            "degrees": -0.844352
+          },
+          {
+            "seconds": 4.7,
+            "degrees": -0.682236
+          },
+          {
+            "seconds": 4.75,
+            "degrees": 0.12550794
+          },
+          {
+            "seconds": 4.8,
+            "degrees": 0.5421007
+          },
+          {
+            "seconds": 4.85,
+            "degrees": 0.2814865
+          },
+          {
+            "seconds": 4.9,
+            "degrees": 0.13756037
+          },
+          {
+            "seconds": 4.95,
+            "degrees": 0.03687921
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "foot_l": {
+        "axis": [
+          -0.01987565,
+          0.8229215,
+          -0.5678073
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": -0.030605061
+          },
+          {
+            "seconds": 0.1,
+            "degrees": -0.109808
+          },
+          {
+            "seconds": 0.15,
+            "degrees": -0.22169803
+          },
+          {
+            "seconds": 0.2,
+            "degrees": -0.33797494
+          },
+          {
+            "seconds": 0.25,
+            "degrees": -0.47223645
+          },
+          {
+            "seconds": 0.3,
+            "degrees": -0.5075849
+          },
+          {
+            "seconds": 0.35,
+            "degrees": -0.5437511
+          },
+          {
+            "seconds": 0.4,
+            "degrees": -0.5856659
+          },
+          {
+            "seconds": 0.45,
+            "degrees": -0.5658487
+          },
+          {
+            "seconds": 0.5,
+            "degrees": -0.5223043
+          },
+          {
+            "seconds": 0.55,
+            "degrees": -0.5635493
+          },
+          {
+            "seconds": 0.6,
+            "degrees": -0.78499377
+          },
+          {
+            "seconds": 0.65,
+            "degrees": -1.1581806
+          },
+          {
+            "seconds": 0.7,
+            "degrees": -1.8670094
+          },
+          {
+            "seconds": 0.75,
+            "degrees": -2.0296707
+          },
+          {
+            "seconds": 0.8,
+            "degrees": -2.418717
+          },
+          {
+            "seconds": 0.85,
+            "degrees": -2.9010305
+          },
+          {
+            "seconds": 0.9,
+            "degrees": -3.1436276
+          },
+          {
+            "seconds": 0.95,
+            "degrees": -3.549021
+          },
+          {
+            "seconds": 1.0,
+            "degrees": -3.926349
+          },
+          {
+            "seconds": 1.05,
+            "degrees": -4.313784
+          },
+          {
+            "seconds": 1.1,
+            "degrees": -4.6251025
+          },
+          {
+            "seconds": 1.15,
+            "degrees": -4.9418826
+          },
+          {
+            "seconds": 1.2,
+            "degrees": -5.176799
+          },
+          {
+            "seconds": 1.25,
+            "degrees": -5.3312526
+          },
+          {
+            "seconds": 1.3,
+            "degrees": -5.4139423
+          },
+          {
+            "seconds": 1.35,
+            "degrees": -5.4260592
+          },
+          {
+            "seconds": 1.4,
+            "degrees": -5.4062324
+          },
+          {
+            "seconds": 1.45,
+            "degrees": -5.3968487
+          },
+          {
+            "seconds": 1.5,
+            "degrees": -5.3691845
+          },
+          {
+            "seconds": 1.55,
+            "degrees": -5.3405747
+          },
+          {
+            "seconds": 1.6,
+            "degrees": -5.3170233
+          },
+          {
+            "seconds": 1.65,
+            "degrees": -5.3035083
+          },
+          {
+            "seconds": 1.7,
+            "degrees": -5.300952
+          },
+          {
+            "seconds": 1.75,
+            "degrees": -5.3017187
+          },
+          {
+            "seconds": 1.8,
+            "degrees": -5.306543
+          },
+          {
+            "seconds": 1.85,
+            "degrees": -5.314261
+          },
+          {
+            "seconds": 1.9,
+            "degrees": -5.3240128
+          },
+          {
+            "seconds": 1.95,
+            "degrees": -5.335314
+          },
+          {
+            "seconds": 2.0,
+            "degrees": -5.347866
+          },
+          {
+            "seconds": 2.05,
+            "degrees": -5.361044
+          },
+          {
+            "seconds": 2.1,
+            "degrees": -5.37401
+          },
+          {
+            "seconds": 2.15,
+            "degrees": -5.3866754
+          },
+          {
+            "seconds": 2.2,
+            "degrees": -5.398842
+          },
+          {
+            "seconds": 2.25,
+            "degrees": -5.408922
+          },
+          {
+            "seconds": 2.3,
+            "degrees": -5.417957
+          },
+          {
+            "seconds": 2.35,
+            "degrees": -5.4246016
+          },
+          {
+            "seconds": 2.4,
+            "degrees": -5.4284987
+          },
+          {
+            "seconds": 2.45,
+            "degrees": -5.43026
+          },
+          {
+            "seconds": 2.5,
+            "degrees": -5.430963
+          },
+          {
+            "seconds": 2.55,
+            "degrees": -5.4302893
+          },
+          {
+            "seconds": 2.6,
+            "degrees": -5.4289203
+          },
+          {
+            "seconds": 2.65,
+            "degrees": -5.4275913
+          },
+          {
+            "seconds": 2.7,
+            "degrees": -5.4251294
+          },
+          {
+            "seconds": 2.75,
+            "degrees": -5.4219613
+          },
+          {
+            "seconds": 2.8,
+            "degrees": -5.417904
+          },
+          {
+            "seconds": 2.85,
+            "degrees": -5.413131
+          },
+          {
+            "seconds": 2.9,
+            "degrees": -5.408058
+          },
+          {
+            "seconds": 2.95,
+            "degrees": -5.4023547
+          },
+          {
+            "seconds": 3.0,
+            "degrees": -5.396077
+          },
+          {
+            "seconds": 3.05,
+            "degrees": -5.389364
+          },
+          {
+            "seconds": 3.1,
+            "degrees": -5.3812947
+          },
+          {
+            "seconds": 3.15,
+            "degrees": -5.3736653
+          },
+          {
+            "seconds": 3.2,
+            "degrees": -5.3647747
+          },
+          {
+            "seconds": 3.25,
+            "degrees": -5.356741
+          },
+          {
+            "seconds": 3.3,
+            "degrees": -5.34737
+          },
+          {
+            "seconds": 3.35,
+            "degrees": -5.337291
+          },
+          {
+            "seconds": 3.4,
+            "degrees": -5.326837
+          },
+          {
+            "seconds": 3.45,
+            "degrees": -5.3158174
+          },
+          {
+            "seconds": 3.5,
+            "degrees": -5.3050394
+          },
+          {
+            "seconds": 3.55,
+            "degrees": -5.293191
+          },
+          {
+            "seconds": 3.6,
+            "degrees": -5.282036
+          },
+          {
+            "seconds": 3.65,
+            "degrees": -5.2700014
+          },
+          {
+            "seconds": 3.7,
+            "degrees": -5.2581353
+          },
+          {
+            "seconds": 3.75,
+            "degrees": -5.2488103
+          },
+          {
+            "seconds": 3.8,
+            "degrees": -5.2935696
+          },
+          {
+            "seconds": 3.85,
+            "degrees": -5.400372
+          },
+          {
+            "seconds": 3.9,
+            "degrees": -5.545982
+          },
+          {
+            "seconds": 3.95,
+            "degrees": -5.834766
+          },
+          {
+            "seconds": 4.0,
+            "degrees": -6.1136007
+          },
+          {
+            "seconds": 4.05,
+            "degrees": -6.250017
+          },
+          {
+            "seconds": 4.1,
+            "degrees": -6.36638
+          },
+          {
+            "seconds": 4.15,
+            "degrees": -6.1971464
+          },
+          {
+            "seconds": 4.2,
+            "degrees": -6.059303
+          },
+          {
+            "seconds": 4.25,
+            "degrees": -5.737238
+          },
+          {
+            "seconds": 4.3,
+            "degrees": -5.161545
+          },
+          {
+            "seconds": 4.35,
+            "degrees": -3.840297
+          },
+          {
+            "seconds": 4.4,
+            "degrees": -3.63225
+          },
+          {
+            "seconds": 4.45,
+            "degrees": -2.8561907
+          },
+          {
+            "seconds": 4.5,
+            "degrees": -2.1099617
+          },
+          {
+            "seconds": 4.55,
+            "degrees": -1.551051
+          },
+          {
+            "seconds": 4.6,
+            "degrees": -1.1940445
+          },
+          {
+            "seconds": 4.65,
+            "degrees": -0.8407222
+          },
+          {
+            "seconds": 4.7,
+            "degrees": -0.43731356
+          },
+          {
+            "seconds": 4.75,
+            "degrees": -0.32976678
+          },
+          {
+            "seconds": 4.8,
+            "degrees": -0.30248713
+          },
+          {
+            "seconds": 4.85,
+            "degrees": -0.18365584
+          },
+          {
+            "seconds": 4.9,
+            "degrees": -0.091148816
+          },
+          {
+            "seconds": 4.95,
+            "degrees": -0.024993142
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "foot_r": {
+        "axis": [
+          0.94537866,
+          0.08132236,
+          0.3156673
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": -0.07307993
+          },
+          {
+            "seconds": 0.1,
+            "degrees": -0.26394823
+          },
+          {
+            "seconds": 0.15,
+            "degrees": -0.53161144
+          },
+          {
+            "seconds": 0.2,
+            "degrees": -0.8108528
+          },
+          {
+            "seconds": 0.25,
+            "degrees": -1.0708617
+          },
+          {
+            "seconds": 0.3,
+            "degrees": -1.2366302
+          },
+          {
+            "seconds": 0.35,
+            "degrees": -1.2709465
+          },
+          {
+            "seconds": 0.4,
+            "degrees": -1.4342294
+          },
+          {
+            "seconds": 0.45,
+            "degrees": -1.208061
+          },
+          {
+            "seconds": 0.5,
+            "degrees": 0.88730377
+          },
+          {
+            "seconds": 0.55,
+            "degrees": 2.678108
+          },
+          {
+            "seconds": 0.6,
+            "degrees": 3.887601
+          },
+          {
+            "seconds": 0.65,
+            "degrees": 3.1598108
+          },
+          {
+            "seconds": 0.7,
+            "degrees": 2.08906
+          },
+          {
+            "seconds": 0.75,
+            "degrees": 2.2303247
+          },
+          {
+            "seconds": 0.8,
+            "degrees": 1.2927583
+          },
+          {
+            "seconds": 0.85,
+            "degrees": -0.625895
+          },
+          {
+            "seconds": 0.9,
+            "degrees": -2.1690814
+          },
+          {
+            "seconds": 0.95,
+            "degrees": -3.897374
+          },
+          {
+            "seconds": 1.0,
+            "degrees": -5.053531
+          },
+          {
+            "seconds": 1.05,
+            "degrees": -6.102033
+          },
+          {
+            "seconds": 1.1,
+            "degrees": -6.670823
+          },
+          {
+            "seconds": 1.15,
+            "degrees": -7.8130884
+          },
+          {
+            "seconds": 1.2,
+            "degrees": -8.701054
+          },
+          {
+            "seconds": 1.25,
+            "degrees": -9.244997
+          },
+          {
+            "seconds": 1.3,
+            "degrees": -9.47435
+          },
+          {
+            "seconds": 1.35,
+            "degrees": -9.648658
+          },
+          {
+            "seconds": 1.4,
+            "degrees": -9.713362
+          },
+          {
+            "seconds": 1.45,
+            "degrees": -9.616037
+          },
+          {
+            "seconds": 1.5,
+            "degrees": -9.508439
+          },
+          {
+            "seconds": 1.55,
+            "degrees": -9.434451
+          },
+          {
+            "seconds": 1.6,
+            "degrees": -9.391689
+          },
+          {
+            "seconds": 1.65,
+            "degrees": -9.378022
+          },
+          {
+            "seconds": 1.7,
+            "degrees": -9.396174
+          },
+          {
+            "seconds": 1.75,
+            "degrees": -9.45226
+          },
+          {
+            "seconds": 1.8,
+            "degrees": -9.540458
+          },
+          {
+            "seconds": 1.85,
+            "degrees": -9.655629
+          },
+          {
+            "seconds": 1.9,
+            "degrees": -9.792545
+          },
+          {
+            "seconds": 1.95,
+            "degrees": -9.945763
+          },
+          {
+            "seconds": 2.0,
+            "degrees": -10.108431
+          },
+          {
+            "seconds": 2.05,
+            "degrees": -10.276266
+          },
+          {
+            "seconds": 2.1,
+            "degrees": -10.442795
+          },
+          {
+            "seconds": 2.15,
+            "degrees": -10.603458
+          },
+          {
+            "seconds": 2.2,
+            "degrees": -10.751934
+          },
+          {
+            "seconds": 2.25,
+            "degrees": -10.882455
+          },
+          {
+            "seconds": 2.3,
+            "degrees": -10.990083
+          },
+          {
+            "seconds": 2.35,
+            "degrees": -11.068477
+          },
+          {
+            "seconds": 2.4,
+            "degrees": -11.111344
+          },
+          {
+            "seconds": 2.45,
+            "degrees": -11.118761
+          },
+          {
+            "seconds": 2.5,
+            "degrees": -11.118574
+          },
+          {
+            "seconds": 2.55,
+            "degrees": -11.118793
+          },
+          {
+            "seconds": 2.6,
+            "degrees": -11.119544
+          },
+          {
+            "seconds": 2.65,
+            "degrees": -11.120998
+          },
+          {
+            "seconds": 2.7,
+            "degrees": -11.122285
+          },
+          {
+            "seconds": 2.75,
+            "degrees": -11.124394
+          },
+          {
+            "seconds": 2.8,
+            "degrees": -11.126863
+          },
+          {
+            "seconds": 2.85,
+            "degrees": -11.1303425
+          },
+          {
+            "seconds": 2.9,
+            "degrees": -11.133919
+          },
+          {
+            "seconds": 2.95,
+            "degrees": -11.137663
+          },
+          {
+            "seconds": 3.0,
+            "degrees": -11.1424
+          },
+          {
+            "seconds": 3.05,
+            "degrees": -11.147112
+          },
+          {
+            "seconds": 3.1,
+            "degrees": -11.151498
+          },
+          {
+            "seconds": 3.15,
+            "degrees": -11.157659
+          },
+          {
+            "seconds": 3.2,
+            "degrees": -11.163277
+          },
+          {
+            "seconds": 3.25,
+            "degrees": -11.169024
+          },
+          {
+            "seconds": 3.3,
+            "degrees": -11.174389
+          },
+          {
+            "seconds": 3.35,
+            "degrees": -11.1803875
+          },
+          {
+            "seconds": 3.4,
+            "degrees": -11.186413
+          },
+          {
+            "seconds": 3.45,
+            "degrees": -11.1931715
+          },
+          {
+            "seconds": 3.5,
+            "degrees": -11.200152
+          },
+          {
+            "seconds": 3.55,
+            "degrees": -11.207568
+          },
+          {
+            "seconds": 3.6,
+            "degrees": -11.21441
+          },
+          {
+            "seconds": 3.65,
+            "degrees": -11.221669
+          },
+          {
+            "seconds": 3.7,
+            "degrees": -11.229076
+          },
+          {
+            "seconds": 3.75,
+            "degrees": -11.241088
+          },
+          {
+            "seconds": 3.8,
+            "degrees": -11.364102
+          },
+          {
+            "seconds": 3.85,
+            "degrees": -11.655159
+          },
+          {
+            "seconds": 3.9,
+            "degrees": -12.119161
+          },
+          {
+            "seconds": 3.95,
+            "degrees": -12.492916
+          },
+          {
+            "seconds": 4.0,
+            "degrees": -12.71243
+          },
+          {
+            "seconds": 4.05,
+            "degrees": -14.262548
+          },
+          {
+            "seconds": 4.1,
+            "degrees": -16.116697
+          },
+          {
+            "seconds": 4.15,
+            "degrees": -15.032361
+          },
+          {
+            "seconds": 4.2,
+            "degrees": -13.703963
+          },
+          {
+            "seconds": 4.25,
+            "degrees": -11.140123
+          },
+          {
+            "seconds": 4.3,
+            "degrees": -9.043444
+          },
+          {
+            "seconds": 4.35,
+            "degrees": -4.288198
+          },
+          {
+            "seconds": 4.4,
+            "degrees": -3.2620082
+          },
+          {
+            "seconds": 4.45,
+            "degrees": -0.5857584
+          },
+          {
+            "seconds": 4.5,
+            "degrees": 1.0033581
+          },
+          {
+            "seconds": 4.55,
+            "degrees": 1.9441792
+          },
+          {
+            "seconds": 4.6,
+            "degrees": 1.7448303
+          },
+          {
+            "seconds": 4.65,
+            "degrees": 0.9415054
+          },
+          {
+            "seconds": 4.7,
+            "degrees": 0.2650415
+          },
+          {
+            "seconds": 4.75,
+            "degrees": -0.5262183
+          },
+          {
+            "seconds": 4.8,
+            "degrees": -0.66817147
+          },
+          {
+            "seconds": 4.85,
+            "degrees": -0.38068116
+          },
+          {
+            "seconds": 4.9,
+            "degrees": -0.18665728
+          },
+          {
+            "seconds": 4.95,
+            "degrees": -0.051006977
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "head": {
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.41,
+            "degrees": -4.0
+          },
+          {
+            "seconds": 0.85,
+            "degrees": 3.0
+          },
+          {
+            "seconds": 1.55,
+            "degrees": 5.0
+          },
+          {
+            "seconds": 2.41,
+            "degrees": 1.0
+          },
+          {
+            "seconds": 3.74,
+            "degrees": 1.0
+          },
+          {
+            "seconds": 4.18,
+            "degrees": -3.0
+          },
+          {
+            "seconds": 4.64,
+            "degrees": -1.0
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "lowerarm_l": {
+        "axis": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.37,
+            "degrees": 6.0
+          },
+          {
+            "seconds": 0.76,
+            "degrees": 13.0
+          },
+          {
+            "seconds": 1.42,
+            "degrees": 7.0
+          },
+          {
+            "seconds": 2.08,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.45,
+            "degrees": 5.0
+          },
+          {
+            "seconds": 3.74,
+            "degrees": 5.0
+          },
+          {
+            "seconds": 4.23,
+            "degrees": 10.0
+          },
+          {
+            "seconds": 4.44,
+            "degrees": 6.0
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "lowerarm_r": {
+        "axis": [
+          0.99232256,
+          0.032250144,
+          0.11939808
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": 0.31911197
+          },
+          {
+            "seconds": 0.1,
+            "degrees": 1.1776607
+          },
+          {
+            "seconds": 0.15,
+            "degrees": 2.4274657
+          },
+          {
+            "seconds": 0.2,
+            "degrees": 3.9203458
+          },
+          {
+            "seconds": 0.25,
+            "degrees": 5.508121
+          },
+          {
+            "seconds": 0.3,
+            "degrees": 7.04261
+          },
+          {
+            "seconds": 0.35,
+            "degrees": 8.375632
+          },
+          {
+            "seconds": 0.36,
+            "degrees": 8.605021
+          },
+          {
+            "seconds": 0.37,
+            "degrees": 8.830636
+          },
+          {
+            "seconds": 0.4,
+            "degrees": 9.546724
+          },
+          {
+            "seconds": 0.45,
+            "degrees": 10.840064
+          },
+          {
+            "seconds": 0.5,
+            "degrees": 12.202337
+          },
+          {
+            "seconds": 0.55,
+            "degrees": 13.569054
+          },
+          {
+            "seconds": 0.6,
+            "degrees": 14.875726
+          },
+          {
+            "seconds": 0.65,
+            "degrees": 16.057863
+          },
+          {
+            "seconds": 0.7,
+            "degrees": 17.050978
+          },
+          {
+            "seconds": 0.75,
+            "degrees": 17.790579
+          },
+          {
+            "seconds": 0.8,
+            "degrees": 18.21218
+          },
+          {
+            "seconds": 0.81,
+            "degrees": 18.252663
+          },
+          {
+            "seconds": 0.83,
+            "degrees": 18.28567
+          },
+          {
+            "seconds": 0.85,
+            "degrees": 18.270401
+          },
+          {
+            "seconds": 0.9,
+            "degrees": 18.105257
+          },
+          {
+            "seconds": 0.95,
+            "degrees": 17.77494
+          },
+          {
+            "seconds": 1.0,
+            "degrees": 17.299726
+          },
+          {
+            "seconds": 1.05,
+            "degrees": 16.69989
+          },
+          {
+            "seconds": 1.1,
+            "degrees": 15.995706
+          },
+          {
+            "seconds": 1.15,
+            "degrees": 15.207447
+          },
+          {
+            "seconds": 1.2,
+            "degrees": 14.355391
+          },
+          {
+            "seconds": 1.25,
+            "degrees": 13.45981
+          },
+          {
+            "seconds": 1.3,
+            "degrees": 12.54098
+          },
+          {
+            "seconds": 1.35,
+            "degrees": 11.619176
+          },
+          {
+            "seconds": 1.4,
+            "degrees": 10.714671
+          },
+          {
+            "seconds": 1.45,
+            "degrees": 9.847742
+          },
+          {
+            "seconds": 1.46,
+            "degrees": 9.680649
+          },
+          {
+            "seconds": 1.47,
+            "degrees": 9.50879
+          },
+          {
+            "seconds": 1.5,
+            "degrees": 8.926838
+          },
+          {
+            "seconds": 1.55,
+            "degrees": 7.7757635
+          },
+          {
+            "seconds": 1.6,
+            "degrees": 6.470651
+          },
+          {
+            "seconds": 1.65,
+            "degrees": 5.095042
+          },
+          {
+            "seconds": 1.7,
+            "degrees": 3.7324808
+          },
+          {
+            "seconds": 1.75,
+            "degrees": 2.4665082
+          },
+          {
+            "seconds": 1.8,
+            "degrees": 1.3806674
+          },
+          {
+            "seconds": 1.85,
+            "degrees": 0.5585011
+          },
+          {
+            "seconds": 1.9,
+            "degrees": 0.08355178
+          },
+          {
+            "seconds": 1.92,
+            "degrees": 0.009506311
+          },
+          {
+            "seconds": 1.93,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 1.95,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.05,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.1,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.15,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.2,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.25,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.3,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.346,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.35,
+            "degrees": 0.004122404
+          },
+          {
+            "seconds": 2.4,
+            "degrees": 0.7195
+          },
+          {
+            "seconds": 2.45,
+            "degrees": 2.5507803
+          },
+          {
+            "seconds": 2.5,
+            "degrees": 5.334341
+          },
+          {
+            "seconds": 2.55,
+            "degrees": 8.906561
+          },
+          {
+            "seconds": 2.6,
+            "degrees": 13.103816
+          },
+          {
+            "seconds": 2.65,
+            "degrees": 17.762486
+          },
+          {
+            "seconds": 2.7,
+            "degrees": 22.718948
+          },
+          {
+            "seconds": 2.75,
+            "degrees": 27.809582
+          },
+          {
+            "seconds": 2.8,
+            "degrees": 32.87076
+          },
+          {
+            "seconds": 2.85,
+            "degrees": 37.73887
+          },
+          {
+            "seconds": 2.9,
+            "degrees": 42.25028
+          },
+          {
+            "seconds": 2.95,
+            "degrees": 46.24137
+          },
+          {
+            "seconds": 3.0,
+            "degrees": 49.548523
+          },
+          {
+            "seconds": 3.05,
+            "degrees": 52.00811
+          },
+          {
+            "seconds": 3.1,
+            "degrees": 53.456516
+          },
+          {
+            "seconds": 3.136,
+            "degrees": 53.781384
+          },
+          {
+            "seconds": 3.15,
+            "degrees": 53.781384
+          },
+          {
+            "seconds": 3.2,
+            "degrees": 53.781384
+          },
+          {
+            "seconds": 3.25,
+            "degrees": 53.781384
+          },
+          {
+            "seconds": 3.3,
+            "degrees": 53.781384
+          },
+          {
+            "seconds": 3.35,
+            "degrees": 53.781384
+          },
+          {
+            "seconds": 3.4,
+            "degrees": 53.781384
+          },
+          {
+            "seconds": 3.402,
+            "degrees": 53.781384
+          },
+          {
+            "seconds": 3.45,
+            "degrees": 52.7714
+          },
+          {
+            "seconds": 3.5,
+            "degrees": 49.822865
+          },
+          {
+            "seconds": 3.55,
+            "degrees": 45.32671
+          },
+          {
+            "seconds": 3.6,
+            "degrees": 39.675735
+          },
+          {
+            "seconds": 3.65,
+            "degrees": 33.262737
+          },
+          {
+            "seconds": 3.7,
+            "degrees": 26.480509
+          },
+          {
+            "seconds": 3.75,
+            "degrees": 19.72185
+          },
+          {
+            "seconds": 3.8,
+            "degrees": 13.379553
+          },
+          {
+            "seconds": 3.85,
+            "degrees": 7.846418
+          },
+          {
+            "seconds": 3.9,
+            "degrees": 3.5152383
+          },
+          {
+            "seconds": 3.94,
+            "degrees": 1.1796621
+          },
+          {
+            "seconds": 3.95,
+            "degrees": 0.8843081
+          },
+          {
+            "seconds": 3.992,
+            "degrees": 2.39183
+          },
+          {
+            "seconds": 4.0,
+            "degrees": 3.0675306
+          },
+          {
+            "seconds": 4.05,
+            "degrees": 7.8554754
+          },
+          {
+            "seconds": 4.1,
+            "degrees": 11.4261465
+          },
+          {
+            "seconds": 4.12,
+            "degrees": 11.831904
+          },
+          {
+            "seconds": 4.15,
+            "degrees": 11.754943
+          },
+          {
+            "seconds": 4.2,
+            "degrees": 11.330625
+          },
+          {
+            "seconds": 4.25,
+            "degrees": 10.629681
+          },
+          {
+            "seconds": 4.3,
+            "degrees": 9.759922
+          },
+          {
+            "seconds": 4.35,
+            "degrees": 8.82916
+          },
+          {
+            "seconds": 4.4,
+            "degrees": 7.9452057
+          },
+          {
+            "seconds": 4.45,
+            "degrees": 7.2158704
+          },
+          {
+            "seconds": 4.47,
+            "degrees": 6.9915795
+          },
+          {
+            "seconds": 4.5,
+            "degrees": 6.7114735
+          },
+          {
+            "seconds": 4.55,
+            "degrees": 6.3216577
+          },
+          {
+            "seconds": 4.6,
+            "degrees": 5.991499
+          },
+          {
+            "seconds": 4.65,
+            "degrees": 5.6787353
+          },
+          {
+            "seconds": 4.7,
+            "degrees": 5.341104
+          },
+          {
+            "seconds": 4.75,
+            "degrees": 4.9363422
+          },
+          {
+            "seconds": 4.8,
+            "degrees": 4.422188
+          },
+          {
+            "seconds": 4.81,
+            "degrees": 4.3025107
+          },
+          {
+            "seconds": 4.84,
+            "degrees": 3.7532928
+          },
+          {
+            "seconds": 4.85,
+            "degrees": 3.5045166
+          },
+          {
+            "seconds": 4.9,
+            "degrees": 2.0147276
+          },
+          {
+            "seconds": 4.95,
+            "degrees": 0.6179731
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "pelvis": {
+        "axis": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": -0.039512224
+          },
+          {
+            "seconds": 0.1,
+            "degrees": -0.14322779
+          },
+          {
+            "seconds": 0.15,
+            "degrees": -0.28735223
+          },
+          {
+            "seconds": 0.2,
+            "degrees": -0.312104
+          },
+          {
+            "seconds": 0.25,
+            "degrees": -0.38730687
+          },
+          {
+            "seconds": 0.3,
+            "degrees": -0.47042394
+          },
+          {
+            "seconds": 0.35,
+            "degrees": -0.515533
+          },
+          {
+            "seconds": 0.4,
+            "degrees": -0.48923317
+          },
+          {
+            "seconds": 0.45,
+            "degrees": -0.48658466
+          },
+          {
+            "seconds": 0.5,
+            "degrees": -1.7446033
+          },
+          {
+            "seconds": 0.55,
+            "degrees": -1.8039938
+          },
+          {
+            "seconds": 0.6,
+            "degrees": -2.1278405
+          },
+          {
+            "seconds": 0.65,
+            "degrees": -2.796648
+          },
+          {
+            "seconds": 0.7,
+            "degrees": -4.5168443
+          },
+          {
+            "seconds": 0.75,
+            "degrees": -4.1037316
+          },
+          {
+            "seconds": 0.8,
+            "degrees": -3.5804858
+          },
+          {
+            "seconds": 0.85,
+            "degrees": -3.6410823
+          },
+          {
+            "seconds": 0.9,
+            "degrees": -2.8041234
+          },
+          {
+            "seconds": 0.95,
+            "degrees": -2.0855968
+          },
+          {
+            "seconds": 1.0,
+            "degrees": -1.4595786
+          },
+          {
+            "seconds": 1.05,
+            "degrees": -0.92683744
+          },
+          {
+            "seconds": 1.1,
+            "degrees": -0.3807479
+          },
+          {
+            "seconds": 1.15,
+            "degrees": 0.37487713
+          },
+          {
+            "seconds": 1.2,
+            "degrees": 1.0618484
+          },
+          {
+            "seconds": 1.25,
+            "degrees": 1.5925459
+          },
+          {
+            "seconds": 1.3,
+            "degrees": 1.9570848
+          },
+          {
+            "seconds": 1.35,
+            "degrees": 2.3154886
+          },
+          {
+            "seconds": 1.4,
+            "degrees": 2.547634
+          },
+          {
+            "seconds": 1.45,
+            "degrees": 2.5840652
+          },
+          {
+            "seconds": 1.5,
+            "degrees": 2.6399765
+          },
+          {
+            "seconds": 1.55,
+            "degrees": 2.7210364
+          },
+          {
+            "seconds": 1.6,
+            "degrees": 2.8026898
+          },
+          {
+            "seconds": 1.65,
+            "degrees": 2.8620884
+          },
+          {
+            "seconds": 1.7,
+            "degrees": 2.89632
+          },
+          {
+            "seconds": 1.75,
+            "degrees": 2.9394171
+          },
+          {
+            "seconds": 1.8,
+            "degrees": 2.9880128
+          },
+          {
+            "seconds": 1.85,
+            "degrees": 3.0418482
+          },
+          {
+            "seconds": 1.9,
+            "degrees": 3.1007888
+          },
+          {
+            "seconds": 1.95,
+            "degrees": 3.1631188
+          },
+          {
+            "seconds": 2.0,
+            "degrees": 3.2265344
+          },
+          {
+            "seconds": 2.05,
+            "degrees": 3.2899709
+          },
+          {
+            "seconds": 2.1,
+            "degrees": 3.3524938
+          },
+          {
+            "seconds": 2.15,
+            "degrees": 3.411657
+          },
+          {
+            "seconds": 2.2,
+            "degrees": 3.4646914
+          },
+          {
+            "seconds": 2.25,
+            "degrees": 3.5126486
+          },
+          {
+            "seconds": 2.3,
+            "degrees": 3.5499291
+          },
+          {
+            "seconds": 2.35,
+            "degrees": 3.5770512
+          },
+          {
+            "seconds": 2.4,
+            "degrees": 3.590748
+          },
+          {
+            "seconds": 2.45,
+            "degrees": 3.590289
+          },
+          {
+            "seconds": 2.5,
+            "degrees": 3.5884376
+          },
+          {
+            "seconds": 2.55,
+            "degrees": 3.590289
+          },
+          {
+            "seconds": 2.6,
+            "degrees": 3.594395
+          },
+          {
+            "seconds": 2.65,
+            "degrees": 3.5991583
+          },
+          {
+            "seconds": 2.7,
+            "degrees": 3.6067913
+          },
+          {
+            "seconds": 2.75,
+            "degrees": 3.616673
+          },
+          {
+            "seconds": 2.8,
+            "degrees": 3.6291993
+          },
+          {
+            "seconds": 2.85,
+            "degrees": 3.644318
+          },
+          {
+            "seconds": 2.9,
+            "degrees": 3.6606593
+          },
+          {
+            "seconds": 2.95,
+            "degrees": 3.678928
+          },
+          {
+            "seconds": 3.0,
+            "degrees": 3.6997073
+          },
+          {
+            "seconds": 3.05,
+            "degrees": 3.721051
+          },
+          {
+            "seconds": 3.1,
+            "degrees": 3.7461402
+          },
+          {
+            "seconds": 3.15,
+            "degrees": 3.770794
+          },
+          {
+            "seconds": 3.2,
+            "degrees": 3.7982416
+          },
+          {
+            "seconds": 3.25,
+            "degrees": 3.8238566
+          },
+          {
+            "seconds": 3.3,
+            "degrees": 3.8529198
+          },
+          {
+            "seconds": 3.35,
+            "degrees": 3.884274
+          },
+          {
+            "seconds": 3.4,
+            "degrees": 3.9166842
+          },
+          {
+            "seconds": 3.45,
+            "degrees": 3.9509583
+          },
+          {
+            "seconds": 3.5,
+            "degrees": 3.9844842
+          },
+          {
+            "seconds": 3.55,
+            "degrees": 4.020409
+          },
+          {
+            "seconds": 3.6,
+            "degrees": 4.0547276
+          },
+          {
+            "seconds": 3.65,
+            "degrees": 4.0911584
+          },
+          {
+            "seconds": 3.7,
+            "degrees": 4.1277156
+          },
+          {
+            "seconds": 3.75,
+            "degrees": 4.159984
+          },
+          {
+            "seconds": 3.8,
+            "degrees": 4.049731
+          },
+          {
+            "seconds": 3.85,
+            "degrees": 3.801394
+          },
+          {
+            "seconds": 3.9,
+            "degrees": 3.5102289
+          },
+          {
+            "seconds": 3.95,
+            "degrees": 2.7726724
+          },
+          {
+            "seconds": 4.0,
+            "degrees": 2.0300448
+          },
+          {
+            "seconds": 4.05,
+            "degrees": 2.974548
+          },
+          {
+            "seconds": 4.1,
+            "degrees": 3.0031364
+          },
+          {
+            "seconds": 4.15,
+            "degrees": 2.7329772
+          },
+          {
+            "seconds": 4.2,
+            "degrees": 1.7560716
+          },
+          {
+            "seconds": 4.25,
+            "degrees": 0.27584237
+          },
+          {
+            "seconds": 4.3,
+            "degrees": -0.7414781
+          },
+          {
+            "seconds": 4.35,
+            "degrees": -1.5840923
+          },
+          {
+            "seconds": 4.4,
+            "degrees": -2.4771867
+          },
+          {
+            "seconds": 4.45,
+            "degrees": -2.520713
+          },
+          {
+            "seconds": 4.5,
+            "degrees": -2.0682707
+          },
+          {
+            "seconds": 4.55,
+            "degrees": -2.0122325
+          },
+          {
+            "seconds": 4.6,
+            "degrees": -2.0574892
+          },
+          {
+            "seconds": 4.65,
+            "degrees": -1.5652295
+          },
+          {
+            "seconds": 4.7,
+            "degrees": -0.70560086
+          },
+          {
+            "seconds": 4.75,
+            "degrees": -0.41403586
+          },
+          {
+            "seconds": 4.8,
+            "degrees": -0.51663554
+          },
+          {
+            "seconds": 4.85,
+            "degrees": -0.35678682
+          },
+          {
+            "seconds": 4.9,
+            "degrees": -0.17973134
+          },
+          {
+            "seconds": 4.95,
+            "degrees": -0.04973266
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "spine_02": {
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.39,
+            "degrees": 5.0
+          },
+          {
+            "seconds": 0.79,
+            "degrees": -5.0
+          },
+          {
+            "seconds": 1.59,
+            "degrees": -9.0
+          },
+          {
+            "seconds": 2.41,
+            "degrees": -3.0
+          },
+          {
+            "seconds": 3.74,
+            "degrees": -3.0
+          },
+          {
+            "seconds": 4.29,
+            "degrees": 5.0
+          },
+          {
+            "seconds": 4.69,
+            "degrees": 2.0
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "spine_03": {
+        "axis": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.37,
+            "degrees": -3.0
+          },
+          {
+            "seconds": 0.84,
+            "degrees": 7.0
+          },
+          {
+            "seconds": 1.56,
+            "degrees": 4.0
+          },
+          {
+            "seconds": 2.41,
+            "degrees": 8.0
+          },
+          {
+            "seconds": 2.5,
+            "degrees": 8.0
+          },
+          {
+            "seconds": 2.523077,
+            "degrees": 8.669377
+          },
+          {
+            "seconds": 2.525,
+            "degrees": 8.771421
+          },
+          {
+            "seconds": 2.5461538,
+            "degrees": 10.128139
+          },
+          {
+            "seconds": 2.5692308,
+            "degrees": 11.709467
+          },
+          {
+            "seconds": 2.575,
+            "degrees": 12.067166
+          },
+          {
+            "seconds": 2.5923078,
+            "degrees": 12.9714155
+          },
+          {
+            "seconds": 2.6,
+            "degrees": 13.27689
+          },
+          {
+            "seconds": 2.6153846,
+            "degrees": 13.692122
+          },
+          {
+            "seconds": 2.625,
+            "degrees": 13.819094
+          },
+          {
+            "seconds": 2.6384616,
+            "degrees": 13.836165
+          },
+          {
+            "seconds": 2.65,
+            "degrees": 13.717047
+          },
+          {
+            "seconds": 2.6615384,
+            "degrees": 13.492033
+          },
+          {
+            "seconds": 2.675,
+            "degrees": 13.155256
+          },
+          {
+            "seconds": 2.6846154,
+            "degrees": 12.958809
+          },
+          {
+            "seconds": 2.7,
+            "degrees": 12.73074
+          },
+          {
+            "seconds": 2.7076924,
+            "degrees": 12.652834
+          },
+          {
+            "seconds": 2.725,
+            "degrees": 12.554527
+          },
+          {
+            "seconds": 2.7307692,
+            "degrees": 12.542848
+          },
+          {
+            "seconds": 2.75,
+            "degrees": 12.567177
+          },
+          {
+            "seconds": 2.775,
+            "degrees": 12.70925
+          },
+          {
+            "seconds": 2.825,
+            "degrees": 13.143911
+          },
+          {
+            "seconds": 2.85,
+            "degrees": 13.321123
+          },
+          {
+            "seconds": 2.8692307,
+            "degrees": 13.415641
+          },
+          {
+            "seconds": 2.8923078,
+            "degrees": 13.488758
+          },
+          {
+            "seconds": 2.925,
+            "degrees": 13.533853
+          },
+          {
+            "seconds": 3.0307693,
+            "degrees": 13.496077
+          },
+          {
+            "seconds": 3.2384615,
+            "degrees": 13.487421
+          },
+          {
+            "seconds": 3.5384617,
+            "degrees": 13.284315
+          },
+          {
+            "seconds": 3.575,
+            "degrees": 13.23892
+          },
+          {
+            "seconds": 3.6076922,
+            "degrees": 13.162056
+          },
+          {
+            "seconds": 3.65,
+            "degrees": 12.9837475
+          },
+          {
+            "seconds": 3.675,
+            "degrees": 12.823535
+          },
+          {
+            "seconds": 3.74,
+            "degrees": 12.344927
+          },
+          {
+            "seconds": 3.7692308,
+            "degrees": 11.027903
+          },
+          {
+            "seconds": 3.7923079,
+            "degrees": 10.090465
+          },
+          {
+            "seconds": 3.8,
+            "degrees": 9.8038435
+          },
+          {
+            "seconds": 3.8153846,
+            "degrees": 9.2760315
+          },
+          {
+            "seconds": 3.8384614,
+            "degrees": 8.601501
+          },
+          {
+            "seconds": 3.85,
+            "degrees": 8.209194
+          },
+          {
+            "seconds": 3.8615384,
+            "degrees": 7.7220044
+          },
+          {
+            "seconds": 3.875,
+            "degrees": 7.026321
+          },
+          {
+            "seconds": 3.8846154,
+            "degrees": 6.442735
+          },
+          {
+            "seconds": 3.9,
+            "degrees": 5.3611937
+          },
+          {
+            "seconds": 3.9076924,
+            "degrees": 4.756917
+          },
+          {
+            "seconds": 3.925,
+            "degrees": 3.2712638
+          },
+          {
+            "seconds": 3.9538462,
+            "degrees": 0.6134796
+          },
+          {
+            "seconds": 3.975,
+            "degrees": -1.1873424
+          },
+          {
+            "seconds": 3.976923,
+            "degrees": -1.3332605
+          },
+          {
+            "seconds": 4.0,
+            "degrees": -2.705885
+          },
+          {
+            "seconds": 4.08,
+            "degrees": -6.0
+          },
+          {
+            "seconds": 4.64,
+            "degrees": 2.0
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "thigh_l": {
+        "axis": [
+          0.5143924,
+          0.08032503,
+          0.85378474
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": -0.038515758
+          },
+          {
+            "seconds": 0.1,
+            "degrees": -0.13683708
+          },
+          {
+            "seconds": 0.15,
+            "degrees": -0.27331617
+          },
+          {
+            "seconds": 0.2,
+            "degrees": -0.48446688
+          },
+          {
+            "seconds": 0.25,
+            "degrees": -0.58073366
+          },
+          {
+            "seconds": 0.3,
+            "degrees": -0.50685465
+          },
+          {
+            "seconds": 0.35,
+            "degrees": -0.54807764
+          },
+          {
+            "seconds": 0.4,
+            "degrees": -0.59740937
+          },
+          {
+            "seconds": 0.45,
+            "degrees": -0.88449603
+          },
+          {
+            "seconds": 0.5,
+            "degrees": -2.5008779
+          },
+          {
+            "seconds": 0.55,
+            "degrees": -4.617382
+          },
+          {
+            "seconds": 0.6,
+            "degrees": -5.859686
+          },
+          {
+            "seconds": 0.65,
+            "degrees": -7.8363442
+          },
+          {
+            "seconds": 0.7,
+            "degrees": -9.241772
+          },
+          {
+            "seconds": 0.75,
+            "degrees": -10.688007
+          },
+          {
+            "seconds": 0.8,
+            "degrees": -11.58305
+          },
+          {
+            "seconds": 0.85,
+            "degrees": -12.645936
+          },
+          {
+            "seconds": 0.9,
+            "degrees": -13.595583
+          },
+          {
+            "seconds": 0.95,
+            "degrees": -14.221344
+          },
+          {
+            "seconds": 1.0,
+            "degrees": -14.724261
+          },
+          {
+            "seconds": 1.05,
+            "degrees": -15.075167
+          },
+          {
+            "seconds": 1.1,
+            "degrees": -15.492363
+          },
+          {
+            "seconds": 1.15,
+            "degrees": -15.81641
+          },
+          {
+            "seconds": 1.2,
+            "degrees": -16.017086
+          },
+          {
+            "seconds": 1.25,
+            "degrees": -16.096846
+          },
+          {
+            "seconds": 1.3,
+            "degrees": -16.06778
+          },
+          {
+            "seconds": 1.35,
+            "degrees": -15.977124
+          },
+          {
+            "seconds": 1.4,
+            "degrees": -15.894688
+          },
+          {
+            "seconds": 1.45,
+            "degrees": -15.878536
+          },
+          {
+            "seconds": 1.5,
+            "degrees": -15.870747
+          },
+          {
+            "seconds": 1.55,
+            "degrees": -15.871977
+          },
+          {
+            "seconds": 1.6,
+            "degrees": -15.878223
+          },
+          {
+            "seconds": 1.65,
+            "degrees": -15.886154
+          },
+          {
+            "seconds": 1.7,
+            "degrees": -15.895933
+          },
+          {
+            "seconds": 1.75,
+            "degrees": -15.913442
+          },
+          {
+            "seconds": 1.8,
+            "degrees": -15.93697
+          },
+          {
+            "seconds": 1.85,
+            "degrees": -15.965676
+          },
+          {
+            "seconds": 1.9,
+            "degrees": -15.998863
+          },
+          {
+            "seconds": 1.95,
+            "degrees": -16.035393
+          },
+          {
+            "seconds": 2.0,
+            "degrees": -16.073635
+          },
+          {
+            "seconds": 2.05,
+            "degrees": -16.112709
+          },
+          {
+            "seconds": 2.1,
+            "degrees": -16.15146
+          },
+          {
+            "seconds": 2.15,
+            "degrees": -16.188637
+          },
+          {
+            "seconds": 2.2,
+            "degrees": -16.222689
+          },
+          {
+            "seconds": 2.25,
+            "degrees": -16.25291
+          },
+          {
+            "seconds": 2.3,
+            "degrees": -16.277342
+          },
+          {
+            "seconds": 2.35,
+            "degrees": -16.295074
+          },
+          {
+            "seconds": 2.4,
+            "degrees": -16.304455
+          },
+          {
+            "seconds": 2.45,
+            "degrees": -16.305193
+          },
+          {
+            "seconds": 2.5,
+            "degrees": -16.304674
+          },
+          {
+            "seconds": 2.55,
+            "degrees": -16.305214
+          },
+          {
+            "seconds": 2.6,
+            "degrees": -16.306446
+          },
+          {
+            "seconds": 2.65,
+            "degrees": -16.308151
+          },
+          {
+            "seconds": 2.7,
+            "degrees": -16.31046
+          },
+          {
+            "seconds": 2.75,
+            "degrees": -16.313581
+          },
+          {
+            "seconds": 2.8,
+            "degrees": -16.317436
+          },
+          {
+            "seconds": 2.85,
+            "degrees": -16.322306
+          },
+          {
+            "seconds": 2.9,
+            "degrees": -16.32751
+          },
+          {
+            "seconds": 2.95,
+            "degrees": -16.333315
+          },
+          {
+            "seconds": 3.0,
+            "degrees": -16.340134
+          },
+          {
+            "seconds": 3.05,
+            "degrees": -16.346891
+          },
+          {
+            "seconds": 3.1,
+            "degrees": -16.354622
+          },
+          {
+            "seconds": 3.15,
+            "degrees": -16.362513
+          },
+          {
+            "seconds": 3.2,
+            "degrees": -16.371237
+          },
+          {
+            "seconds": 3.25,
+            "degrees": -16.379425
+          },
+          {
+            "seconds": 3.3,
+            "degrees": -16.388418
+          },
+          {
+            "seconds": 3.35,
+            "degrees": -16.39827
+          },
+          {
+            "seconds": 3.4,
+            "degrees": -16.408451
+          },
+          {
+            "seconds": 3.45,
+            "degrees": -16.419065
+          },
+          {
+            "seconds": 3.5,
+            "degrees": -16.429615
+          },
+          {
+            "seconds": 3.55,
+            "degrees": -16.440807
+          },
+          {
+            "seconds": 3.6,
+            "degrees": -16.451366
+          },
+          {
+            "seconds": 3.65,
+            "degrees": -16.462702
+          },
+          {
+            "seconds": 3.7,
+            "degrees": -16.474176
+          },
+          {
+            "seconds": 3.75,
+            "degrees": -16.48589
+          },
+          {
+            "seconds": 3.8,
+            "degrees": -16.480185
+          },
+          {
+            "seconds": 3.85,
+            "degrees": -16.466131
+          },
+          {
+            "seconds": 3.9,
+            "degrees": -16.466364
+          },
+          {
+            "seconds": 3.95,
+            "degrees": -16.339949
+          },
+          {
+            "seconds": 4.0,
+            "degrees": -16.262102
+          },
+          {
+            "seconds": 4.05,
+            "degrees": -16.727182
+          },
+          {
+            "seconds": 4.1,
+            "degrees": -17.587273
+          },
+          {
+            "seconds": 4.15,
+            "degrees": -17.92898
+          },
+          {
+            "seconds": 4.2,
+            "degrees": -17.755081
+          },
+          {
+            "seconds": 4.25,
+            "degrees": -16.89792
+          },
+          {
+            "seconds": 4.3,
+            "degrees": -16.149052
+          },
+          {
+            "seconds": 4.35,
+            "degrees": -14.562924
+          },
+          {
+            "seconds": 4.4,
+            "degrees": -12.404719
+          },
+          {
+            "seconds": 4.45,
+            "degrees": -9.760722
+          },
+          {
+            "seconds": 4.5,
+            "degrees": -7.6580367
+          },
+          {
+            "seconds": 4.55,
+            "degrees": -5.503289
+          },
+          {
+            "seconds": 4.6,
+            "degrees": -3.5028691
+          },
+          {
+            "seconds": 4.65,
+            "degrees": -2.2716541
+          },
+          {
+            "seconds": 4.7,
+            "degrees": -1.3800765
+          },
+          {
+            "seconds": 4.75,
+            "degrees": -0.6020483
+          },
+          {
+            "seconds": 4.8,
+            "degrees": -0.22156043
+          },
+          {
+            "seconds": 4.85,
+            "degrees": -0.15819566
+          },
+          {
+            "seconds": 4.9,
+            "degrees": -0.07855799
+          },
+          {
+            "seconds": 4.95,
+            "degrees": -0.021922791
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "thigh_r": {
+        "axis": [
+          -0.8417606,
+          -0.009818723,
+          0.5397618
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": -0.07328574
+          },
+          {
+            "seconds": 0.1,
+            "degrees": -0.26145482
+          },
+          {
+            "seconds": 0.15,
+            "degrees": -0.5168398
+          },
+          {
+            "seconds": 0.2,
+            "degrees": -0.89018023
+          },
+          {
+            "seconds": 0.25,
+            "degrees": -1.1241456
+          },
+          {
+            "seconds": 0.3,
+            "degrees": -1.0441592
+          },
+          {
+            "seconds": 0.35,
+            "degrees": -1.1349322
+          },
+          {
+            "seconds": 0.4,
+            "degrees": -1.2260834
+          },
+          {
+            "seconds": 0.45,
+            "degrees": -1.471559
+          },
+          {
+            "seconds": 0.5,
+            "degrees": -2.5243099
+          },
+          {
+            "seconds": 0.55,
+            "degrees": -3.8835385
+          },
+          {
+            "seconds": 0.6,
+            "degrees": -3.8371909
+          },
+          {
+            "seconds": 0.65,
+            "degrees": -4.274825
+          },
+          {
+            "seconds": 0.7,
+            "degrees": -3.6361637
+          },
+          {
+            "seconds": 0.75,
+            "degrees": -2.6788614
+          },
+          {
+            "seconds": 0.8,
+            "degrees": -1.0299479
+          },
+          {
+            "seconds": 0.85,
+            "degrees": 0.48552343
+          },
+          {
+            "seconds": 0.9,
+            "degrees": 2.3638256
+          },
+          {
+            "seconds": 0.95,
+            "degrees": 4.532802
+          },
+          {
+            "seconds": 1.0,
+            "degrees": 6.6647105
+          },
+          {
+            "seconds": 1.05,
+            "degrees": 8.668016
+          },
+          {
+            "seconds": 1.1,
+            "degrees": 10.341326
+          },
+          {
+            "seconds": 1.15,
+            "degrees": 11.773759
+          },
+          {
+            "seconds": 1.2,
+            "degrees": 13.097603
+          },
+          {
+            "seconds": 1.25,
+            "degrees": 14.189458
+          },
+          {
+            "seconds": 1.3,
+            "degrees": 14.996243
+          },
+          {
+            "seconds": 1.35,
+            "degrees": 15.664418
+          },
+          {
+            "seconds": 1.4,
+            "degrees": 16.066973
+          },
+          {
+            "seconds": 1.45,
+            "degrees": 16.148966
+          },
+          {
+            "seconds": 1.5,
+            "degrees": 16.17594
+          },
+          {
+            "seconds": 1.55,
+            "degrees": 16.191214
+          },
+          {
+            "seconds": 1.6,
+            "degrees": 16.198381
+          },
+          {
+            "seconds": 1.65,
+            "degrees": 16.199797
+          },
+          {
+            "seconds": 1.7,
+            "degrees": 16.195047
+          },
+          {
+            "seconds": 1.75,
+            "degrees": 16.17878
+          },
+          {
+            "seconds": 1.8,
+            "degrees": 16.153801
+          },
+          {
+            "seconds": 1.85,
+            "degrees": 16.120861
+          },
+          {
+            "seconds": 1.9,
+            "degrees": 16.081572
+          },
+          {
+            "seconds": 1.95,
+            "degrees": 16.037287
+          },
+          {
+            "seconds": 2.0,
+            "degrees": 15.990381
+          },
+          {
+            "seconds": 2.05,
+            "degrees": 15.94163
+          },
+          {
+            "seconds": 2.1,
+            "degrees": 15.8932495
+          },
+          {
+            "seconds": 2.15,
+            "degrees": 15.846355
+          },
+          {
+            "seconds": 2.2,
+            "degrees": 15.803124
+          },
+          {
+            "seconds": 2.25,
+            "degrees": 15.764866
+          },
+          {
+            "seconds": 2.3,
+            "degrees": 15.733288
+          },
+          {
+            "seconds": 2.35,
+            "degrees": 15.710371
+          },
+          {
+            "seconds": 2.4,
+            "degrees": 15.697996
+          },
+          {
+            "seconds": 2.45,
+            "degrees": 15.696062
+          },
+          {
+            "seconds": 2.5,
+            "degrees": 15.6964
+          },
+          {
+            "seconds": 2.55,
+            "degrees": 15.696079
+          },
+          {
+            "seconds": 2.6,
+            "degrees": 15.695381
+          },
+          {
+            "seconds": 2.65,
+            "degrees": 15.694648
+          },
+          {
+            "seconds": 2.7,
+            "degrees": 15.693393
+          },
+          {
+            "seconds": 2.75,
+            "degrees": 15.691817
+          },
+          {
+            "seconds": 2.8,
+            "degrees": 15.689654
+          },
+          {
+            "seconds": 2.85,
+            "degrees": 15.687043
+          },
+          {
+            "seconds": 2.9,
+            "degrees": 15.684219
+          },
+          {
+            "seconds": 2.95,
+            "degrees": 15.681452
+          },
+          {
+            "seconds": 3.0,
+            "degrees": 15.678146
+          },
+          {
+            "seconds": 3.05,
+            "degrees": 15.674544
+          },
+          {
+            "seconds": 3.1,
+            "degrees": 15.670674
+          },
+          {
+            "seconds": 3.15,
+            "degrees": 15.666341
+          },
+          {
+            "seconds": 3.2,
+            "degrees": 15.66175
+          },
+          {
+            "seconds": 3.25,
+            "degrees": 15.657444
+          },
+          {
+            "seconds": 3.3,
+            "degrees": 15.652791
+          },
+          {
+            "seconds": 3.35,
+            "degrees": 15.647768
+          },
+          {
+            "seconds": 3.4,
+            "degrees": 15.642683
+          },
+          {
+            "seconds": 3.45,
+            "degrees": 15.637055
+          },
+          {
+            "seconds": 3.5,
+            "degrees": 15.631486
+          },
+          {
+            "seconds": 3.55,
+            "degrees": 15.625179
+          },
+          {
+            "seconds": 3.6,
+            "degrees": 15.619419
+          },
+          {
+            "seconds": 3.65,
+            "degrees": 15.613214
+          },
+          {
+            "seconds": 3.7,
+            "degrees": 15.60712
+          },
+          {
+            "seconds": 3.75,
+            "degrees": 15.600673
+          },
+          {
+            "seconds": 3.8,
+            "degrees": 15.570101
+          },
+          {
+            "seconds": 3.85,
+            "degrees": 15.498952
+          },
+          {
+            "seconds": 3.9,
+            "degrees": 15.381657
+          },
+          {
+            "seconds": 3.95,
+            "degrees": 15.35255
+          },
+          {
+            "seconds": 4.0,
+            "degrees": 15.413404
+          },
+          {
+            "seconds": 4.05,
+            "degrees": 14.345169
+          },
+          {
+            "seconds": 4.1,
+            "degrees": 12.047055
+          },
+          {
+            "seconds": 4.15,
+            "degrees": 10.20652
+          },
+          {
+            "seconds": 4.2,
+            "degrees": 8.390562
+          },
+          {
+            "seconds": 4.25,
+            "degrees": 6.6020803
+          },
+          {
+            "seconds": 4.3,
+            "degrees": 3.8465624
+          },
+          {
+            "seconds": 4.35,
+            "degrees": 2.2769947
+          },
+          {
+            "seconds": 4.4,
+            "degrees": -0.23868462
+          },
+          {
+            "seconds": 4.45,
+            "degrees": -1.9222649
+          },
+          {
+            "seconds": 4.5,
+            "degrees": -3.0365918
+          },
+          {
+            "seconds": 4.55,
+            "degrees": -3.126992
+          },
+          {
+            "seconds": 4.6,
+            "degrees": -2.7428713
+          },
+          {
+            "seconds": 4.65,
+            "degrees": -2.2991667
+          },
+          {
+            "seconds": 4.7,
+            "degrees": -1.667906
+          },
+          {
+            "seconds": 4.75,
+            "degrees": -0.9682868
+          },
+          {
+            "seconds": 4.8,
+            "degrees": -0.5122484
+          },
+          {
+            "seconds": 4.85,
+            "degrees": -0.3405038
+          },
+          {
+            "seconds": 4.9,
+            "degrees": -0.16877565
+          },
+          {
+            "seconds": 4.95,
+            "degrees": -0.046711084
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "upperarm_l": {
+        "axis": [
+          0.99014753,
+          0.09901475,
+          0.09901475
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.37,
+            "degrees": -6.0
+          },
+          {
+            "seconds": 0.77,
+            "degrees": 11.0
+          },
+          {
+            "seconds": 1.42,
+            "degrees": 2.0
+          },
+          {
+            "seconds": 2.08,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.45,
+            "degrees": -3.0
+          },
+          {
+            "seconds": 3.74,
+            "degrees": -3.0
+          },
+          {
+            "seconds": 4.08,
+            "degrees": 9.0
+          },
+          {
+            "seconds": 4.41,
+            "degrees": -10.0
+          },
+          {
+            "seconds": 4.84,
+            "degrees": -2.0
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      },
+      "upperarm_r": {
+        "axis": [
+          -0.61232054,
+          0.69496375,
+          -0.37694687
+        ],
+        "keys": [
+          {
+            "seconds": 0.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 0.05,
+            "degrees": 0.20778437
+          },
+          {
+            "seconds": 0.1,
+            "degrees": 0.74884665
+          },
+          {
+            "seconds": 0.15,
+            "degrees": 1.4997505
+          },
+          {
+            "seconds": 0.2,
+            "degrees": 2.3370597
+          },
+          {
+            "seconds": 0.25,
+            "degrees": 3.1373382
+          },
+          {
+            "seconds": 0.3,
+            "degrees": 3.7771494
+          },
+          {
+            "seconds": 0.35,
+            "degrees": 4.1330576
+          },
+          {
+            "seconds": 0.36,
+            "degrees": 4.1593084
+          },
+          {
+            "seconds": 0.37,
+            "degrees": 4.1682777
+          },
+          {
+            "seconds": 0.4,
+            "degrees": 4.035499
+          },
+          {
+            "seconds": 0.45,
+            "degrees": 3.2990105
+          },
+          {
+            "seconds": 0.5,
+            "degrees": 2.0707488
+          },
+          {
+            "seconds": 0.55,
+            "degrees": 0.5263474
+          },
+          {
+            "seconds": 0.6,
+            "degrees": -1.1585606
+          },
+          {
+            "seconds": 0.65,
+            "degrees": -2.808342
+          },
+          {
+            "seconds": 0.7,
+            "degrees": -4.2473636
+          },
+          {
+            "seconds": 0.75,
+            "degrees": -5.299992
+          },
+          {
+            "seconds": 0.8,
+            "degrees": -5.790594
+          },
+          {
+            "seconds": 0.81,
+            "degrees": -5.8058157
+          },
+          {
+            "seconds": 0.83,
+            "degrees": -5.7996554
+          },
+          {
+            "seconds": 0.85,
+            "degrees": -5.7815514
+          },
+          {
+            "seconds": 0.9,
+            "degrees": -5.6877484
+          },
+          {
+            "seconds": 0.95,
+            "degrees": -5.5316687
+          },
+          {
+            "seconds": 1.0,
+            "degrees": -5.322149
+          },
+          {
+            "seconds": 1.05,
+            "degrees": -5.0680256
+          },
+          {
+            "seconds": 1.1,
+            "degrees": -4.7781353
+          },
+          {
+            "seconds": 1.15,
+            "degrees": -4.461315
+          },
+          {
+            "seconds": 1.2,
+            "degrees": -4.126402
+          },
+          {
+            "seconds": 1.25,
+            "degrees": -3.7822316
+          },
+          {
+            "seconds": 1.3,
+            "degrees": -3.4376419
+          },
+          {
+            "seconds": 1.35,
+            "degrees": -3.1014688
+          },
+          {
+            "seconds": 1.4,
+            "degrees": -2.7825491
+          },
+          {
+            "seconds": 1.45,
+            "degrees": -2.48972
+          },
+          {
+            "seconds": 1.46,
+            "degrees": -2.4350626
+          },
+          {
+            "seconds": 1.47,
+            "degrees": -2.3818731
+          },
+          {
+            "seconds": 1.5,
+            "degrees": -2.2145035
+          },
+          {
+            "seconds": 1.55,
+            "degrees": -1.8992283
+          },
+          {
+            "seconds": 1.6,
+            "degrees": -1.5556955
+          },
+          {
+            "seconds": 1.65,
+            "degrees": -1.2036935
+          },
+          {
+            "seconds": 1.7,
+            "degrees": -0.8630108
+          },
+          {
+            "seconds": 1.75,
+            "degrees": -0.553436
+          },
+          {
+            "seconds": 1.8,
+            "degrees": -0.29475743
+          },
+          {
+            "seconds": 1.85,
+            "degrees": -0.10676364
+          },
+          {
+            "seconds": 1.9,
+            "degrees": -0.009243092
+          },
+          {
+            "seconds": 1.92,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 1.93,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 1.95,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.0,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.05,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.1,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.15,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.2,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.25,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.3,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.346,
+            "degrees": 0.0
+          },
+          {
+            "seconds": 2.35,
+            "degrees": 0.001141083
+          },
+          {
+            "seconds": 2.4,
+            "degrees": 0.19915788
+          },
+          {
+            "seconds": 2.45,
+            "degrees": 0.70605695
+          },
+          {
+            "seconds": 2.5,
+            "degrees": 1.4765476
+          },
+          {
+            "seconds": 2.525,
+            "degrees": 3.006443
+          },
+          {
+            "seconds": 2.5461538,
+            "degrees": 5.3041315
+          },
+          {
+            "seconds": 2.575,
+            "degrees": 8.74375
+          },
+          {
+            "seconds": 2.5923078,
+            "degrees": 10.490643
+          },
+          {
+            "seconds": 2.6153846,
+            "degrees": 12.189178
+          },
+          {
+            "seconds": 2.625,
+            "degrees": 12.658054
+          },
+          {
+            "seconds": 2.65,
+            "degrees": 13.247406
+          },
+          {
+            "seconds": 2.6846154,
+            "degrees": 13.207675
+          },
+          {
+            "seconds": 2.7,
+            "degrees": 13.345965
+          },
+          {
+            "seconds": 2.7307692,
+            "degrees": 14.034687
+          },
+          {
+            "seconds": 2.775,
+            "degrees": 15.659084
+          },
+          {
+            "seconds": 2.85,
+            "degrees": 18.868418
+          },
+          {
+            "seconds": 2.9,
+            "degrees": 20.593176
+          },
+          {
+            "seconds": 2.9384615,
+            "degrees": 21.650604
+          },
+          {
+            "seconds": 3.0,
+            "degrees": 22.99791
+          },
+          {
+            "seconds": 3.05,
+            "degrees": 23.781855
+          },
+          {
+            "seconds": 3.1,
+            "degrees": 24.267218
+          },
+          {
+            "seconds": 3.2,
+            "degrees": 24.440441
+          },
+          {
+            "seconds": 3.375,
+            "degrees": 24.31543
+          },
+          {
+            "seconds": 3.402,
+            "degrees": 24.272667
+          },
+          {
+            "seconds": 3.45,
+            "degrees": 23.893372
+          },
+          {
+            "seconds": 3.5,
+            "degrees": 22.931538
+          },
+          {
+            "seconds": 3.55,
+            "degrees": 21.475298
+          },
+          {
+            "seconds": 3.6,
+            "degrees": 19.562302
+          },
+          {
+            "seconds": 3.6307693,
+            "degrees": 18.151184
+          },
+          {
+            "seconds": 3.725,
+            "degrees": 13.144239
+          },
+          {
+            "seconds": 3.7692308,
+            "degrees": 11.072121
+          },
+          {
+            "seconds": 3.8,
+            "degrees": 10.079254
+          },
+          {
+            "seconds": 3.85,
+            "degrees": 9.599333
+          },
+          {
+            "seconds": 3.875,
+            "degrees": 9.033208
+          },
+          {
+            "seconds": 3.8846154,
+            "degrees": 8.606003
+          },
+          {
+            "seconds": 3.9076924,
+            "degrees": 7.123398
+          },
+          {
+            "seconds": 3.925,
+            "degrees": 5.657944
+          },
+          {
+            "seconds": 3.975,
+            "degrees": 0.70141935
+          },
+          {
+            "seconds": 3.992,
+            "degrees": -0.4153237
+          },
+          {
+            "seconds": 4.0,
+            "degrees": -0.6787991
+          },
+          {
+            "seconds": 4.05,
+            "degrees": -1.8341625
+          },
+          {
+            "seconds": 4.1,
+            "degrees": -2.9340684
+          },
+          {
+            "seconds": 4.12,
+            "degrees": -3.2342782
+          },
+          {
+            "seconds": 4.15,
+            "degrees": -3.4239426
+          },
+          {
+            "seconds": 4.2,
+            "degrees": -2.8505287
+          },
+          {
+            "seconds": 4.25,
+            "degrees": -1.416994
+          },
+          {
+            "seconds": 4.3,
+            "degrees": 0.4466012
+          },
+          {
+            "seconds": 4.35,
+            "degrees": 2.3101964
+          },
+          {
+            "seconds": 4.4,
+            "degrees": 3.743731
+          },
+          {
+            "seconds": 4.45,
+            "degrees": 4.317145
+          },
+          {
+            "seconds": 4.47,
+            "degrees": 4.2974963
+          },
+          {
+            "seconds": 4.5,
+            "degrees": 4.1997356
+          },
+          {
+            "seconds": 4.55,
+            "degrees": 3.8834674
+          },
+          {
+            "seconds": 4.6,
+            "degrees": 3.4222798
+          },
+          {
+            "seconds": 4.65,
+            "degrees": 2.8701124
+          },
+          {
+            "seconds": 4.7,
+            "degrees": 2.2809048
+          },
+          {
+            "seconds": 4.75,
+            "degrees": 1.7085962
+          },
+          {
+            "seconds": 4.8,
+            "degrees": 1.2071267
+          },
+          {
+            "seconds": 4.81,
+            "degrees": 1.1200801
+          },
+          {
+            "seconds": 4.84,
+            "degrees": 0.8932024
+          },
+          {
+            "seconds": 4.85,
+            "degrees": 0.82499003
+          },
+          {
+            "seconds": 4.9,
+            "degrees": 0.45543748
+          },
+          {
+            "seconds": 4.95,
+            "degrees": 0.13605317
+          },
+          {
+            "seconds": 5.0,
+            "degrees": 0.0
+          }
+        ]
+      }
+    },
+    "pelvis_offsets": [
+      {
+        "seconds": 0.0,
+        "offset_metres": [
+          0.0,
+          -0.0,
+          0.0
+        ]
+      },
+      {
+        "seconds": 0.025,
+        "offset_metres": [
+          -0.0005217389,
+          -0.000056262565,
+          0.00078684237
+        ]
+      },
+      {
+        "seconds": 0.05,
+        "offset_metres": [
+          -0.0010432454,
+          -0.00011228741,
+          0.0007739232
+        ]
+      },
+      {
+        "seconds": 0.1,
+        "offset_metres": [
+          -0.003729612,
+          -0.0003891474,
+          0.00069485756
+        ]
+      },
+      {
+        "seconds": 0.15,
+        "offset_metres": [
+          -0.0073923967,
+          -0.00075826637,
+          0.00055820093
+        ]
+      },
+      {
+        "seconds": 0.2,
+        "offset_metres": [
+          -0.012477512,
+          -0.003306435,
+          0.00075122685
+        ]
+      },
+      {
+        "seconds": 0.25,
+        "offset_metres": [
+          -0.016072698,
+          -0.005516544,
+          0.000933651
+        ]
+      },
+      {
+        "seconds": 0.3,
+        "offset_metres": [
+          -0.015491639,
+          -0.00508303,
+          0.00074664026
+        ]
+      },
+      {
+        "seconds": 0.35,
+        "offset_metres": [
+          -0.016741604,
+          -0.0052945763,
+          0.0008351928
+        ]
+      },
+      {
+        "seconds": 0.4,
+        "offset_metres": [
+          -0.01811962,
+          -0.0066689625,
+          0.0008868521
+        ]
+      },
+      {
+        "seconds": 0.45,
+        "offset_metres": [
+          -0.020619273,
+          -0.006354378,
+          0.0012945979
+        ]
+      },
+      {
+        "seconds": 0.475,
+        "offset_metres": [
+          -0.025791809,
+          0.0027976832,
+          0.0024308662
+        ]
+      },
+      {
+        "seconds": 0.5,
+        "offset_metres": [
+          -0.030989941,
+          0.011966325,
+          0.003446316
+        ]
+      },
+      {
+        "seconds": 0.525,
+        "offset_metres": [
+          -0.03862536,
+          0.009634108,
+          0.0060335523
+        ]
+      },
+      {
+        "seconds": 0.55,
+        "offset_metres": [
+          -0.04629344,
+          0.007277624,
+          0.008535554
+        ]
+      },
+      {
+        "seconds": 0.6,
+        "offset_metres": [
+          -0.046055645,
+          0.0069965287,
+          0.011320982
+        ]
+      },
+      {
+        "seconds": 0.65,
+        "offset_metres": [
+          -0.054111715,
+          0.0064227013,
+          0.011398636
+        ]
+      },
+      {
+        "seconds": 0.675,
+        "offset_metres": [
+          -0.052855074,
+          0.011132796,
+          0.010566958
+        ]
+      },
+      {
+        "seconds": 0.7,
+        "offset_metres": [
+          -0.051651213,
+          0.015872704,
+          0.00943547
+        ]
+      },
+      {
+        "seconds": 0.75,
+        "offset_metres": [
+          -0.040517583,
+          0.010242818,
+          0.009897952
+        ]
+      },
+      {
+        "seconds": 0.775,
+        "offset_metres": [
+          -0.03148126,
+          0.006524238,
+          0.008893948
+        ]
+      },
+      {
+        "seconds": 0.8,
+        "offset_metres": [
+          -0.022437416,
+          0.002799407,
+          0.008363086
+        ]
+      },
+      {
+        "seconds": 0.85,
+        "offset_metres": [
+          -0.006801187,
+          0.0041451417,
+          0.0031012257
+        ]
+      },
+      {
+        "seconds": 0.875,
+        "offset_metres": [
+          0.004292503,
+          0.0028464259,
+          0.00063119456
+        ]
+      },
+      {
+        "seconds": 0.9,
+        "offset_metres": [
+          0.015356916,
+          0.001544137,
+          -0.0019699668
+        ]
+      },
+      {
+        "seconds": 0.925,
+        "offset_metres": [
+          0.027546624,
+          -0.0001204626,
+          -0.0049303486
+        ]
+      },
+      {
+        "seconds": 0.95,
+        "offset_metres": [
+          0.03971168,
+          -0.0017809322,
+          -0.008063584
+        ]
+      },
+      {
+        "seconds": 0.975,
+        "offset_metres": [
+          0.051856514,
+          -0.0025298465,
+          -0.0109012155
+        ]
+      },
+      {
+        "seconds": 1.0,
+        "offset_metres": [
+          0.063976064,
+          -0.003272217,
+          -0.013903834
+        ]
+      },
+      {
+        "seconds": 1.025,
+        "offset_metres": [
+          0.07515079,
+          -0.0040582013,
+          -0.016856732
+        ]
+      },
+      {
+        "seconds": 1.05,
+        "offset_metres": [
+          0.08629718,
+          -0.0048380904,
+          -0.019939747
+        ]
+      },
+      {
+        "seconds": 1.075,
+        "offset_metres": [
+          0.095919065,
+          -0.005258302,
+          -0.022438068
+        ]
+      },
+      {
+        "seconds": 1.1,
+        "offset_metres": [
+          0.10550455,
+          -0.005667643,
+          -0.025039267
+        ]
+      },
+      {
+        "seconds": 1.15,
+        "offset_metres": [
+          0.12066866,
+          -0.012223521,
+          -0.03023568
+        ]
+      },
+      {
+        "seconds": 1.2,
+        "offset_metres": [
+          0.13484976,
+          -0.017396314,
+          -0.035162926
+        ]
+      },
+      {
+        "seconds": 1.25,
+        "offset_metres": [
+          0.14677173,
+          -0.020535003,
+          -0.03922505
+        ]
+      },
+      {
+        "seconds": 1.3,
+        "offset_metres": [
+          0.15584978,
+          -0.02186455,
+          -0.042139493
+        ]
+      },
+      {
+        "seconds": 1.35,
+        "offset_metres": [
+          0.16345978,
+          -0.023264503,
+          -0.0445884
+        ]
+      },
+      {
+        "seconds": 1.4,
+        "offset_metres": [
+          0.16813193,
+          -0.024082193,
+          -0.046026487
+        ]
+      },
+      {
+        "seconds": 1.45,
+        "offset_metres": [
+          0.16927895,
+          -0.023822833,
+          -0.04614571
+        ]
+      },
+      {
+        "seconds": 1.5,
+        "offset_metres": [
+          0.1698557,
+          -0.023894195,
+          -0.046013057
+        ]
+      },
+      {
+        "seconds": 1.55,
+        "offset_metres": [
+          0.17026503,
+          -0.024342852,
+          -0.045864742
+        ]
+      },
+      {
+        "seconds": 1.6,
+        "offset_metres": [
+          0.17052221,
+          -0.02492923,
+          -0.04573672
+        ]
+      },
+      {
+        "seconds": 1.65,
+        "offset_metres": [
+          0.17063332,
+          -0.025422446,
+          -0.04566017
+        ]
+      },
+      {
+        "seconds": 1.7,
+        "offset_metres": [
+          0.17058633,
+          -0.025800211,
+          -0.045643363
+        ]
+      },
+      {
+        "seconds": 1.75,
+        "offset_metres": [
+          0.1703498,
+          -0.026408931,
+          -0.045639094
+        ]
+      },
+      {
+        "seconds": 1.8,
+        "offset_metres": [
+          0.16995923,
+          -0.02720213,
+          -0.04565015
+        ]
+      },
+      {
+        "seconds": 1.85,
+        "offset_metres": [
+          0.1694339,
+          -0.028155914,
+          -0.045671813
+        ]
+      },
+      {
+        "seconds": 1.9,
+        "offset_metres": [
+          0.16880246,
+          -0.029242503,
+          -0.04570418
+        ]
+      },
+      {
+        "seconds": 1.95,
+        "offset_metres": [
+          0.16808857,
+          -0.030425005,
+          -0.045745254
+        ]
+      },
+      {
+        "seconds": 2.0,
+        "offset_metres": [
+          0.16732855,
+          -0.031657092,
+          -0.045794465
+        ]
+      },
+      {
+        "seconds": 2.05,
+        "offset_metres": [
+          0.16653825,
+          -0.032912236,
+          -0.045848187
+        ]
+      },
+      {
+        "seconds": 2.1,
+        "offset_metres": [
+          0.16575438,
+          -0.03415134,
+          -0.045905385
+        ]
+      },
+      {
+        "seconds": 2.15,
+        "offset_metres": [
+          0.16499433,
+          -0.03533761,
+          -0.04596399
+        ]
+      },
+      {
+        "seconds": 2.2,
+        "offset_metres": [
+          0.16429095,
+          -0.03642144,
+          -0.046021856
+        ]
+      },
+      {
+        "seconds": 2.25,
+        "offset_metres": [
+          0.16367272,
+          -0.03738183,
+          -0.046074115
+        ]
+      },
+      {
+        "seconds": 2.3,
+        "offset_metres": [
+          0.16315857,
+          -0.03815955,
+          -0.046118814
+        ]
+      },
+      {
+        "seconds": 2.35,
+        "offset_metres": [
+          0.16278486,
+          -0.038726673,
+          -0.04615232
+        ]
+      },
+      {
+        "seconds": 2.4,
+        "offset_metres": [
+          0.16258062,
+          -0.039027866,
+          -0.046171665
+        ]
+      },
+      {
+        "seconds": 2.45,
+        "offset_metres": [
+          0.16254115,
+          -0.03906652,
+          -0.04617595
+        ]
+      },
+      {
+        "seconds": 2.5,
+        "offset_metres": [
+          0.16254158,
+          -0.039054763,
+          -0.04617719
+        ]
+      },
+      {
+        "seconds": 2.55,
+        "offset_metres": [
+          0.16254129,
+          -0.03906661,
+          -0.04617606
+        ]
+      },
+      {
+        "seconds": 2.6,
+        "offset_metres": [
+          0.16254021,
+          -0.03909433,
+          -0.04617388
+        ]
+      },
+      {
+        "seconds": 2.65,
+        "offset_metres": [
+          0.16253874,
+          -0.03912774,
+          -0.04617366
+        ]
+      },
+      {
+        "seconds": 2.7,
+        "offset_metres": [
+          0.16253704,
+          -0.03917992,
+          -0.04616959
+        ]
+      },
+      {
+        "seconds": 2.75,
+        "offset_metres": [
+          0.16253509,
+          -0.039246395,
+          -0.046166584
+        ]
+      },
+      {
+        "seconds": 2.8,
+        "offset_metres": [
+          0.1625307,
+          -0.03933282,
+          -0.046160877
+        ]
+      },
+      {
+        "seconds": 2.85,
+        "offset_metres": [
+          0.1625248,
+          -0.039436895,
+          -0.046155974
+        ]
+      },
+      {
+        "seconds": 2.9,
+        "offset_metres": [
+          0.16251834,
+          -0.039551295,
+          -0.04614876
+        ]
+      },
+      {
+        "seconds": 2.95,
+        "offset_metres": [
+          0.16251616,
+          -0.03967515,
+          -0.046143085
+        ]
+      },
+      {
+        "seconds": 3.0,
+        "offset_metres": [
+          0.16251078,
+          -0.03981881,
+          -0.04613641
+        ]
+      },
+      {
+        "seconds": 3.05,
+        "offset_metres": [
+          0.16250317,
+          -0.03996693,
+          -0.046128552
+        ]
+      },
+      {
+        "seconds": 3.1,
+        "offset_metres": [
+          0.16250063,
+          -0.040136263,
+          -0.04611823
+        ]
+      },
+      {
+        "seconds": 3.15,
+        "offset_metres": [
+          0.1624884,
+          -0.040310647,
+          -0.04611008
+        ]
+      },
+      {
+        "seconds": 3.2,
+        "offset_metres": [
+          0.16248068,
+          -0.040495906,
+          -0.04610013
+        ]
+      },
+      {
+        "seconds": 3.25,
+        "offset_metres": [
+          0.16247158,
+          -0.040673632,
+          -0.046091497
+        ]
+      },
+      {
+        "seconds": 3.3,
+        "offset_metres": [
+          0.16246589,
+          -0.04087114,
+          -0.046080332
+        ]
+      },
+      {
+        "seconds": 3.35,
+        "offset_metres": [
+          0.1624596,
+          -0.04108339,
+          -0.046069182
+        ]
+      },
+      {
+        "seconds": 3.4,
+        "offset_metres": [
+          0.16245456,
+          -0.04130155,
+          -0.04605796
+        ]
+      },
+      {
+        "seconds": 3.45,
+        "offset_metres": [
+          0.16244513,
+          -0.04153744,
+          -0.046044596
+        ]
+      },
+      {
+        "seconds": 3.5,
+        "offset_metres": [
+          0.16243483,
+          -0.041767284,
+          -0.046033274
+        ]
+      },
+      {
+        "seconds": 3.55,
+        "offset_metres": [
+          0.1624203,
+          -0.0420134,
+          -0.046020325
+        ]
+      },
+      {
+        "seconds": 3.6,
+        "offset_metres": [
+          0.162409,
+          -0.042250182,
+          -0.04600772
+        ]
+      },
+      {
+        "seconds": 3.65,
+        "offset_metres": [
+          0.1623967,
+          -0.042498164,
+          -0.045995086
+        ]
+      },
+      {
+        "seconds": 3.7,
+        "offset_metres": [
+          0.16238536,
+          -0.042748217,
+          -0.04598263
+        ]
+      },
+      {
+        "seconds": 3.75,
+        "offset_metres": [
+          0.16235404,
+          -0.042984176,
+          -0.045978993
+        ]
+      },
+      {
+        "seconds": 3.8,
+        "offset_metres": [
+          0.16161504,
+          -0.04263442,
+          -0.046133313
+        ]
+      },
+      {
+        "seconds": 3.85,
+        "offset_metres": [
+          0.15987156,
+          -0.041998517,
+          -0.046485435
+        ]
+      },
+      {
+        "seconds": 3.9,
+        "offset_metres": [
+          0.1571881,
+          -0.041837793,
+          -0.046992287
+        ]
+      },
+      {
+        "seconds": 3.95,
+        "offset_metres": [
+          0.15478846,
+          -0.03839861,
+          -0.04777076
+        ]
+      },
+      {
+        "seconds": 4.0,
+        "offset_metres": [
+          0.15384415,
+          -0.033302967,
+          -0.048110776
+        ]
+      },
+      {
+        "seconds": 4.025,
+        "offset_metres": [
+          0.1465271,
+          -0.04382102,
+          -0.047324512
+        ]
+      },
+      {
+        "seconds": 4.05,
+        "offset_metres": [
+          0.13914678,
+          -0.054374017,
+          -0.046415586
+        ]
+      },
+      {
+        "seconds": 4.1,
+        "offset_metres": [
+          0.11023569,
+          -0.06734775,
+          -0.04106341
+        ]
+      },
+      {
+        "seconds": 4.125,
+        "offset_metres": [
+          0.10062753,
+          -0.067925684,
+          -0.038080625
+        ]
+      },
+      {
+        "seconds": 4.15,
+        "offset_metres": [
+          0.09097296,
+          -0.06850196,
+          -0.035213888
+        ]
+      },
+      {
+        "seconds": 4.175,
+        "offset_metres": [
+          0.08125783,
+          -0.064850055,
+          -0.0319521
+        ]
+      },
+      {
+        "seconds": 4.2,
+        "offset_metres": [
+          0.07149511,
+          -0.061171364,
+          -0.028827468
+        ]
+      },
+      {
+        "seconds": 4.225,
+        "offset_metres": [
+          0.06261282,
+          -0.05282778,
+          -0.025197664
+        ]
+      },
+      {
+        "seconds": 4.25,
+        "offset_metres": [
+          0.05366515,
+          -0.04445024,
+          -0.02140073
+        ]
+      },
+      {
+        "seconds": 4.275,
+        "offset_metres": [
+          0.039169163,
+          -0.039097782,
+          -0.017401528
+        ]
+      },
+      {
+        "seconds": 4.3,
+        "offset_metres": [
+          0.024637805,
+          -0.033722326,
+          -0.013549668
+        ]
+      },
+      {
+        "seconds": 4.35,
+        "offset_metres": [
+          0.015504531,
+          -0.004236108,
+          -0.0064557143
+        ]
+      },
+      {
+        "seconds": 4.375,
+        "offset_metres": [
+          0.00085672573,
+          -0.0019627882,
+          -0.0040555503
+        ]
+      },
+      {
+        "seconds": 4.4,
+        "offset_metres": [
+          -0.013798247,
+          0.00031612115,
+          -0.001808868
+        ]
+      },
+      {
+        "seconds": 4.425,
+        "offset_metres": [
+          -0.021038633,
+          0.0055813366,
+          0.00009154946
+        ]
+      },
+      {
+        "seconds": 4.45,
+        "offset_metres": [
+          -0.028296946,
+          0.010846616,
+          0.002120534
+        ]
+      },
+      {
+        "seconds": 4.5,
+        "offset_metres": [
+          -0.037758023,
+          0.012219734,
+          0.0045288545
+        ]
+      },
+      {
+        "seconds": 4.55,
+        "offset_metres": [
+          -0.03681889,
+          0.016769316,
+          0.004932436
+        ]
+      },
+      {
+        "seconds": 4.6,
+        "offset_metres": [
+          -0.032224722,
+          0.019194465,
+          0.0037986343
+        ]
+      },
+      {
+        "seconds": 4.65,
+        "offset_metres": [
+          -0.027644845,
+          0.012582941,
+          0.003044137
+        ]
+      },
+      {
+        "seconds": 4.7,
+        "offset_metres": [
+          -0.020145418,
+          0.0036285066,
+          0.0021087113
+        ]
+      },
+      {
+        "seconds": 4.75,
+        "offset_metres": [
+          -0.012936429,
+          -0.0009320309,
+          0.0009807232
+        ]
+      },
+      {
+        "seconds": 4.8,
+        "offset_metres": [
+          -0.007854376,
+          0.0008968226,
+          0.00037260255
+        ]
+      },
+      {
+        "seconds": 4.825,
+        "offset_metres": [
+          -0.006453791,
+          0.0011035566,
+          0.00033482886
+        ]
+      },
+      {
+        "seconds": 4.85,
+        "offset_metres": [
+          -0.0050534876,
+          0.0013109789,
+          0.00041185372
+        ]
+      },
+      {
+        "seconds": 4.9,
+        "offset_metres": [
+          -0.0025002244,
+          0.00070518424,
+          0.0006068155
+        ]
+      },
+      {
+        "seconds": 4.95,
+        "offset_metres": [
+          -0.0006896026,
+          0.00020323895,
+          0.00074640557
+        ]
+      },
+      {
+        "seconds": 4.975,
+        "offset_metres": [
+          -0.00034479066,
+          0.000101683436,
+          0.0007732922
+        ]
+      },
+      {
+        "seconds": 5.0,
+        "offset_metres": [
+          0.0,
+          -0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "stage": {
+    "key_light": {
+      "illuminance_lux": 10000.0,
+      "color_srgb": [
+        1.0,
+        0.94,
+        0.86
+      ],
+      "azimuth_degrees": -35.0,
+      "elevation_degrees": 42.0
+    },
+    "fill_light": {
+      "illuminance_lux": 3000.0,
+      "color_srgb": [
+        0.8,
+        0.89,
+        1.0
+      ],
+      "azimuth_degrees": 55.0,
+      "elevation_degrees": 28.0
+    },
+    "ambient": {
+      "brightness": 180.0,
+      "color_srgb": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "background_color_srgb": [
+      0.88,
+      0.9,
+      0.93
+    ],
+    "floor": {
+      "visible": true,
+      "color_srgb": [
+        0.72,
+        0.75,
+        0.8
+      ],
+      "shadows": true
+    },
+    "camera": {
+      "azimuth_degrees": 16.0,
+      "elevation_degrees": 8.0,
+      "distance": 3.8,
+      "target_height": 0.95,
+      "fov_degrees": 36.0
+    },
+    "quality": "balanced",
+    "contact_target": {
+      "id": "pump-stop",
+      "position_metres": [
+        -0.115,
+        1.12,
+        0.48
+      ],
+      "radius_metres": 0.025
+    }
+  }
+}
