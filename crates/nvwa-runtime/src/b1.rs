@@ -6,8 +6,10 @@ mod foot_clearance;
 mod level1_display;
 #[path = "b1_level1_geometry.rs"]
 mod level1_geometry;
+mod sole_measurement;
 pub use foot_clearance::b1_foot_clearance;
 pub use level1_display::{B1DisplaySubdivision, B1DisplaySubdivisionStatus};
+pub use sole_measurement::{B1SoleMeasurement, b1_sole_and_pelvis_measurements};
 
 use super::{CharacterAsset, EditorState, Playback, RuntimeStatus};
 use bevy::{
@@ -130,6 +132,12 @@ fn uses_prepared_rig(doc: &SceneDocument) -> bool {
                     | B1AssetVersion::V15
             )
         )
+}
+
+/// Running and shaped reference motion publish fitted body, garment, bones and
+/// appearance together. Static V15 uses the same base with its own publication.
+pub(super) fn uses_fitted_publication(doc: &SceneDocument) -> bool {
+    doc.profile.backend.is_b1_running() || doc.profile.backend.is_b1_shaped_motion()
 }
 
 impl Selection {
@@ -448,7 +456,7 @@ fn discard(world: &mut World, candidate: Candidate) {
 fn fail(world: &mut World, runtime: &mut B1Runtime, error: String) {
     if let Some(candidate) = runtime.candidate.take() {
         runtime.last_failed = Some((candidate.request, Selection::from_doc(&candidate.document)));
-        if candidate.document.profile.backend.is_b1_running() {
+        if uses_fitted_publication(&candidate.document) {
             let mut playback = world.resource_mut::<Playback>();
             playback.playing = false;
             playback.error = Some(error.clone());
@@ -465,7 +473,7 @@ fn fail(world: &mut World, runtime: &mut B1Runtime, error: String) {
                     "B1 candidate rejected · current Work preserved".into();
             }
         } else {
-            if candidate.document.profile.backend.is_b1_running() {
+            if uses_fitted_publication(&candidate.document) {
                 let mut a = world.resource_mut::<super::appearance::AppearanceStatus>();
                 a.ready = false;
                 a.applied = None;
@@ -547,7 +555,7 @@ fn drive(world: &mut World) {
             }
             status.phase = "Preparing B1 candidate · last CPU frame retained".into();
         }
-        if doc.profile.backend.is_b1_running() && !is_open {
+        if uses_fitted_publication(&doc) && !is_open {
             let mut appearance = world.resource_mut::<super::appearance::AppearanceStatus>();
             appearance.requested = doc.character.appearance.clone();
             appearance.ready = false;
@@ -799,7 +807,7 @@ fn advance(world: &mut World, c: &mut Candidate) -> Result<(), String> {
             ))
             .id();
         let mut session = Session {
-            running: c.document.profile.backend.is_b1_running(),
+            running: uses_fitted_publication(&c.document),
             running_pose_backup: None,
             running_buffers: Vec::new(),
             character,
@@ -1113,7 +1121,7 @@ fn publish(world: &mut World) {
                     fail(world, &mut runtime, error);
                 }
                 Ok(()) => {
-                    let running_plan = if c.document.profile.backend.is_b1_running() {
+                    let running_plan = if uses_fitted_publication(&c.document) {
                         match running::prepare_candidate(world, &mut c) {
                             Ok(plan) => Some(plan),
                             Err(error) => {
@@ -5865,7 +5873,7 @@ struct FrameSample {
     reference_pose: Option<nvwa_core::reference_motion::ReferencePose>,
 }
 fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
-    if doc.reference_motion.is_some() {
+    if !uses_fitted_publication(doc) && doc.reference_motion.is_some() {
         let entry = &doc.timeline[0];
         let position = position.clamp(0.0, entry.duration_seconds);
         return FrameSample {
@@ -5881,17 +5889,23 @@ fn frame_sample(doc: &SceneDocument, position: f32) -> FrameSample {
             ),
         };
     }
-    if doc.profile.backend.is_b1_running() {
+    if uses_fitted_publication(doc) {
         let r = nvwa_core::running::resolve(doc, position)
             .expect("validated finite running timeline and transport");
+        let source = r.source_seconds as f32;
+        let reference_pose =
+            (r.clip_id == nvwa_core::reference_motion::REFERENCE_CLIP_ID).then(|| {
+                doc.reference_pose_at_source(source)
+                    .expect("validated reference entry and source time")
+            });
         return FrameSample {
             clip_id: r.clip_id,
             timeline_id: r.timeline_id,
             position: r.position_seconds,
-            source: r.source_seconds as f32,
+            source,
             running_source: Some(r.source_seconds),
             diagnostic: doc.character.diagnostic_pose.clone().unwrap_or_default(),
-            reference_pose: None,
+            reference_pose,
         };
     }
     if doc.timeline.is_empty() {
@@ -6607,6 +6621,8 @@ pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
     }).collect();
     let (left, right) = if active.running && sample.clip_id == nvwa_core::B1_RUN_CLIP_ID {
         ("authored_schedule", "authored_schedule")
+    } else if active.running && sample.reference_pose.is_some() {
+        ("unspecified", "unspecified")
     } else if sample.clip_id.is_empty() {
         ("diagnostic", "diagnostic")
     } else {
@@ -6617,8 +6633,13 @@ pub fn b1_frame_snapshot(world: &World) -> Result<serde_json::Value, String> {
         let (_, _, resolved) = running::resolved_binding(world)?;
         let frame = appearance_frame_for_session(world, active, doc.revision)?;
         value["schema_version"] = serde_json::json!(2);
-        value["running_publication"] = running::observation(world)?;
-        value["resolved_running"] = serde_json::to_value(resolved).map_err(|e| e.to_string())?;
+        if doc.profile.backend.is_b1_running() {
+            value["running_publication"] = running::observation(world)?;
+            value["resolved_running"] =
+                serde_json::to_value(resolved).map_err(|e| e.to_string())?;
+        } else {
+            running::require_ready(world)?;
+        }
         value["appearance"] =
             super::appearance::running_observation(world, &frame, &doc.character.appearance, true)?;
     }
@@ -6837,26 +6858,70 @@ fn appearance_fit_for_session(
 #[path = "b1_running.rs"]
 mod running;
 
+pub(super) fn validate_fitted_publication(world: &World) -> Result<(), String> {
+    running::resolved_binding(world)?;
+    running::require_ready(world)
+}
+
 /// Cheap, validated observation of a current running publication. No full mesh serialization.
 pub fn b1_running_observation(world: &World) -> Result<serde_json::Value, String> {
     running::observation(world)
 }
 
-/// Position in stage metres of the visible distal left index on the admitted running body.
-/// Source vertex 8746 is the unique base.obj vertex at (0.45653, 0.16535, 0.31685);
-/// the original rest-bone-guided surface measurement used display vertex 9690.
+/// Anatomical hand whose distal index surface is measured on the displayed body.
+#[derive(Clone, Copy)]
+pub enum B1ContactHand {
+    Left,
+    Right,
+}
+
+impl B1ContactHand {
+    pub const fn landmark(self) -> &'static str {
+        match self {
+            Self::Left => "left_index_distal_surface",
+            Self::Right => "right_index_distal_surface",
+        }
+    }
+
+    const fn source_vertex(self) -> u16 {
+        // The matching distal surface vertices in base.obj topology.
+        // Left: (0.45653, 0.16535, 0.31685); right: (-0.45653, 0.16535, 0.31685).
+        match self {
+            Self::Left => 8746,
+            Self::Right => 2078,
+        }
+    }
+}
+
+/// Position in stage metres of the visible distal left index on the published running or shaped reference body.
 pub fn b1_running_left_index_position(world: &World) -> Result<[f32; 3], nvwa_core::CoreError> {
+    b1_running_index_position(world, B1ContactHand::Left)
+}
+
+/// Position in stage metres of the selected visible distal index on the published running or shaped reference body.
+pub fn b1_running_index_position(
+    world: &World,
+    hand: B1ContactHand,
+) -> Result<[f32; 3], nvwa_core::CoreError> {
     if world.resource::<B1DisplaySubdivisionStatus>().active {
+        let message = match hand {
+            B1ContactHand::Left => {
+                "Left index contact requires the original Level 0 body. A Level 1 surface is displayed."
+            }
+            B1ContactHand::Right => {
+                "Right index contact requires the original Level 0 body. A Level 1 surface is displayed."
+            }
+        };
         return Err(nvwa_core::CoreError::new(
             "contact_query_unsupported_display",
-            "Left index contact requires the original Level 0 body. A Level 1 surface is displayed.",
+            message,
         ));
     }
-    running_level0_left_index(world)
+    running_level0_index(world, hand)
         .map_err(|message| nvwa_core::CoreError::new("contact_query_failed", message))
 }
 
-fn running_level0_left_index(world: &World) -> Result<[f32; 3], String> {
+fn running_level0_index(world: &World, hand: B1ContactHand) -> Result<[f32; 3], String> {
     let (active, _, _) = running::resolved_binding(world)?;
     let body = active
         .parts
@@ -6865,10 +6930,10 @@ fn running_level0_left_index(world: &World) -> Result<[f32; 3], String> {
         .ok_or("running body absent")?;
     let vertex = active.source_ids[body]
         .iter()
-        .position(|&source| source == 8746)
-        .ok_or("left index source absent from the running body")?;
+        .position(|&source| source == hand.source_vertex())
+        .ok_or("index source absent from the running body")?;
     if !active.display_indices[body].contains(&vertex) {
-        return Err("left index surface is not visible on the running body".into());
+        return Err("index surface is not visible on the running body".into());
     }
     // resolved_binding proved these published buffers still equal the displayed mesh
     // and its actual stage transform. Do not resample bones or a rest landmark.
@@ -6881,15 +6946,13 @@ fn running_level0_left_index(world: &World) -> Result<[f32; 3], String> {
     else {
         return Err("running body positions absent".into());
     };
-    let local = *positions
-        .get(vertex)
-        .ok_or("running left index vertex absent")?;
+    let local = *positions.get(vertex).ok_or("running index vertex absent")?;
     let transform = world
         .get::<GlobalTransform>(active.displays[body])
         .ok_or("running body transform absent")?;
     let position = transform.transform_point(Vec3::from_array(local));
     if !position.is_finite() {
-        return Err("nonfinite running left index position".into());
+        return Err("nonfinite running index position".into());
     }
     Ok(position.to_array())
 }

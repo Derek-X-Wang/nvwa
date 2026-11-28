@@ -152,6 +152,36 @@ impl ReferenceMotion {
         Ok(())
     }
 
+    pub(crate) fn validate_shaped_timeline(&self, clips: &[TimelineClip]) -> Result<()> {
+        self.validate()?;
+        let [clip] = clips else {
+            return Err(invalid(
+                "A shaped reference motion requires exactly one timeline entry",
+            ));
+        };
+        super::id(&clip.id, "timeline id")?;
+        if clip.clip_id != REFERENCE_CLIP_ID
+            || clip.start_seconds != 0.0
+            || clip.duration_seconds != self.duration_seconds
+            || clip.speed != 1.0
+            || clip.looping
+        {
+            return Err(invalid(
+                "The shaped reference clip must start at zero and play the full source once at normal speed",
+            ));
+        }
+        if self.rotations.values().any(|track| {
+            track.keys.first().unwrap().degrees != 0.0 || track.keys.last().unwrap().degrees != 0.0
+        }) || self.pelvis_offsets.first().unwrap().offset_metres != [0.0; 3]
+            || self.pelvis_offsets.last().unwrap().offset_metres != [0.0; 3]
+        {
+            return Err(invalid(
+                "A shaped reference motion must start and end at the fitted neutral pose",
+            ));
+        }
+        Ok(())
+    }
+
     pub(crate) fn clip(&self) -> TimelineClip {
         TimelineClip {
             id: "reference-motion".into(),
@@ -209,5 +239,122 @@ impl ReferenceMotion {
             rotations,
             pelvis_offset_metres,
         })
+    }
+}
+
+#[cfg(test)]
+mod shaped_tests {
+    use super::*;
+    use crate::{CharacterProfile, Command, Editor, SceneDocument, running};
+    use serde_json::json;
+
+    fn shaped_work() -> SceneDocument {
+        let mut work =
+            SceneDocument::from_profile(CharacterProfile::b1_character_belly_shape()).unwrap();
+        work.profile = CharacterProfile::b1_shaped_motion();
+        work.character.profile_id = work.profile.id.clone();
+        let motion: ReferenceMotion = serde_json::from_value(json!({
+            "duration_seconds": 5,
+            "rotations": {"pelvis": {"axis": [0,1,0], "keys": [
+                {"seconds":0,"degrees":0},{"seconds":2.5,"degrees":15},{"seconds":5,"degrees":0}
+            ]}},
+            "pelvis_offsets": [
+                {"seconds":0,"offset_metres":[0,0,0]},{"seconds":5,"offset_metres":[0,0,0]}
+            ]
+        }))
+        .unwrap();
+        let mut clip = motion.clip();
+        clip.id = "pump-stop".into();
+        work.timeline = vec![clip];
+        work.reference_motion = Some(motion);
+        work.validate().unwrap();
+        work
+    }
+
+    #[test]
+    fn shaped_reference_plays_the_complete_named_entry_with_no_stage_travel() {
+        let work = shaped_work();
+        let restored = SceneDocument::from_json(&work.to_json().unwrap()).unwrap();
+        assert_eq!(work, restored);
+        for t in [0.0, 2.5, 4.5, 5.0] {
+            let resolved = running::resolve(&restored, t).unwrap();
+            assert_eq!(resolved.timeline_id, "pump-stop");
+            assert_eq!(resolved.clip_id, REFERENCE_CLIP_ID);
+            assert_eq!(resolved.source_seconds, f64::from(t));
+            assert_eq!(resolved.actor_offset_metres, [0.0; 3]);
+        }
+        assert_eq!(
+            restored.reference_pose_at(2.5).unwrap().rotations[0].degrees,
+            15.0
+        );
+    }
+
+    #[test]
+    fn shaped_profile_rejects_unplayable_timelines_and_unsupported_shape_edits() {
+        let work = shaped_work();
+        let base = serde_json::to_value(&work).unwrap();
+        for (field, value) in [
+            ("clip_id", json!(crate::B1_SHAPED_STEP_CLIP_ID)),
+            ("id", json!(" ")),
+            ("looping", json!(true)),
+            ("start_seconds", json!(1)),
+            ("duration_seconds", json!(2.5)),
+            ("speed", json!(2)),
+        ] {
+            let mut candidate = base.clone();
+            candidate["timeline"][0][field] = value;
+            assert!(
+                SceneDocument::from_json(&candidate.to_string()).is_err(),
+                "{field}"
+            );
+        }
+        assert!(SceneDocument::from_profile(CharacterProfile::b1_shaped_motion()).is_err());
+        let editor = Editor::new(work).unwrap();
+        assert!(
+            editor
+                .preview(&Command::SetTimeline { clips: vec![] })
+                .is_err()
+        );
+        assert!(
+            editor
+                .preview(&Command::SetDiagnosticPose {
+                    character_id: editor.document().character.id.clone(),
+                    pose_id: "shoulder".into()
+                })
+                .is_err()
+        );
+        for name in [
+            "buttocks_volume",
+            "bust_circumference",
+            "belly_shape_strength",
+        ] {
+            let mut candidate = base.clone();
+            candidate["character"]["parameters"][name] = json!(0.1);
+            assert!(
+                SceneDocument::from_json(&candidate.to_string()).is_err(),
+                "{name}"
+            );
+            assert!(
+                editor
+                    .preview(&Command::SetParameters {
+                        character_id: editor.document().character.id.clone(),
+                        values: [(name.into(), 0.1)].into(),
+                    })
+                    .is_err(),
+                "{name}"
+            );
+        }
+        for field in [
+            "arm_pose_holds",
+            "arm_rotation_tracks",
+            "shaped_step_distances",
+        ] {
+            let mut candidate = base.clone();
+            candidate[field] = json!({});
+            assert!(
+                SceneDocument::from_json(&candidate.to_string()).is_err(),
+                "{field}"
+            );
+        }
     }
 }

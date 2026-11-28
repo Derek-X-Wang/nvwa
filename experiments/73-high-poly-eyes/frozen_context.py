@@ -786,8 +786,11 @@ def pre_cli_level1_file(name):
     fixture = exp / CLI_LEVEL1_FIXTURES / name
     if name in CLI_LEVEL1_CHANGED:
         return fixture
-    before_contact = exp.parent / '72-b1-admission-controls/pre-contact-target' / name
-    return before_contact if before_contact.is_file() else exp.parents[1] / name
+    for directory in ('pre-contact-target', 'pre-contact-fit'):
+        candidate = exp.parent / '72-b1-admission-controls' / directory / name
+        if candidate.is_file():
+            return candidate
+    return exp.parents[1] / name
 
 
 def has_level1_inputs(root):
@@ -1313,8 +1316,10 @@ INTEGRATION_CONTEXT_ID = 'b1-chest-v10-with-v14-cli-level1-integration-candidate
 # Only the digest in this assignment is substituted by the contact manifest's
 # selector template; the rest of this file is byte-exact.
 CONTACT_HELPER_SHA = '90694e718731d255d1dd07c87c6d7220f21bef33ffab572eb216f552b3f5e7b5'
+FIT_HELPER_SHA = 'a29c145d9c2f0f17c17aa3996da996fb650059d5538e4f7e3158d754fc2ada44'
+FIT_BOOTSTRAP_SHA = '78af4b16327ac3c1e7952d45de96baa501cddebee38bd7c10a5c460ddaabf07b'
 TRAVEL_HELPER_SHA = '081847e1a9ebedfca49d0a34dcb1e27008116b8fe745552210dd165a011decc1'
-CONTACT_INTEGRATION_SHA = '2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5'
+CONTACT_INTEGRATION_SHA = 'bf39b7c512809299510796adc836cc2084a22d801bfe974810317eb480f67181'
 
 
 def authenticated_module(path, expected, verified_bytes=None):
@@ -1339,13 +1344,19 @@ def integration_source_context(exp, cpu, root):
     contact_path = regular_file(release, '../72-b1-admission-controls/contact_target_source_context.py')
     contact = authenticated_module(contact_path, CONTACT_HELPER_SHA, travel.contact_bytes(contact_path.parent))
     contact_target = contact.present(root, exp.parent / '72-b1-admission-controls', v15_present, travel, travel_query)
-    if contact_target:
+    bootstrap = authenticated_module(regular_file(release, '../72-b1-admission-controls/contact_fit_bootstrap.py'), FIT_BOOTSTRAP_SHA)
+    fit_path = contact_path.with_name('contact_fit_source_context.py')
+    fit = authenticated_module(fit_path, FIT_HELPER_SHA, bootstrap.fit_bytes(fit_path.parent))
+    contact_fit = fit.present(root, exp.parent / '72-b1-admission-controls', v15_present, contact_target, travel)
+    if contact_target or contact_fit:
         integration = authenticated_module(regular_file(exp, '../72-b1-admission-controls/integration_context.py'), CONTACT_INTEGRATION_SHA)
     else:
         spec = importlib.util.spec_from_file_location('nvwa_integration_context73', exp.parent / '72-b1-admission-controls/integration_context.py')
         integration = importlib.util.module_from_spec(spec); spec.loader.exec_module(integration)
-    if v15_present or travel_query or contact_target:
+    if v15_present or travel_query or contact_target or contact_fit:
         _, previous = integration.expected(cli_level1_source_context(exp, cpu), chest_source_context(exp, cpu), '73')
+        if contact_fit:
+            return fit.verify(root, travel, contact, previous)
         if contact_target:
             return contact.verify(root, travel, previous)
         if travel_query:

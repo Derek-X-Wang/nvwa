@@ -5,6 +5,10 @@ use sha2::{Digest, Sha256};
 
 pub const B1_RUNNING_PROFILE_ID: &str = "nvwa-mpfb-b1-running-v1";
 pub const B1_RUN_CLIP_ID: &str = "b1_run_forward_authored_v1";
+pub const B1_SHAPED_MOTION_PROFILE_ID: &str = "nvwa-mpfb-b1-shaped-motion-v1";
+pub const B1_SHAPED_STEP_CLIP_ID: &str = "b1_shaped_step_v1";
+pub const B1_COMPACT_RUN_CLIP_ID: &str = "b1_run_forward_compact_v1";
+const B1_SHAPED_MOTION_SCHEMA_VERSION: u32 = 18;
 pub const B1_PROFILE_ID: &str = "nvwa-mpfb-b1-v1";
 pub const B1_MOTION_PROFILE_ID: &str = "nvwa-mpfb-b1-motion-v1";
 pub const B1_MOTION_CLIPS: [&str; 2] = ["b1_arm_rehearsal_v1", "b1_knee_flex_v1"];
@@ -750,9 +754,13 @@ impl CharacterBackend {
                 ..
             }
         ) || self.is_b1_running()
+            || self.is_b1_shaped_motion()
     }
     pub fn is_b1_running(&self) -> bool {
         matches!(self, Self::B1Cpu { schema_version: 6, asset_id } if asset_id == B1_V4_ASSET_ID)
+    }
+    pub fn is_b1_shaped_motion(&self) -> bool {
+        matches!(self, Self::B1Cpu { schema_version: B1_SHAPED_MOTION_SCHEMA_VERSION, asset_id } if asset_id == B1_V15_ASSET_ID)
     }
     pub fn b1_asset_version(&self) -> Option<B1AssetVersion> {
         match self {
@@ -814,7 +822,7 @@ impl CharacterBackend {
             } if asset_id == B1_V14_ASSET_ID => Some(B1AssetVersion::V14),
             CharacterBackend::B1Cpu {
                 asset_id,
-                schema_version: 17,
+                schema_version: 17 | B1_SHAPED_MOTION_SCHEMA_VERSION,
             } if asset_id == B1_V15_ASSET_ID => Some(B1AssetVersion::V15),
             _ => None,
         }
@@ -829,7 +837,8 @@ impl CharacterBackend {
         let version = match self {
             Self::Glb { schema_version } | Self::B1Cpu { schema_version, .. } => *schema_version,
         };
-        if version != 1 && !(matches!(version, 2..=17) && self.is_b1()) {
+        if version != 1 && !(matches!(version, 2..=B1_SHAPED_MOTION_SCHEMA_VERSION) && self.is_b1())
+        {
             return Err(CoreError::new(
                 "unsupported_character_version",
                 format!("character backend version {version} is unsupported"),
@@ -1222,6 +1231,27 @@ impl CharacterProfile {
         );
         profile
     }
+    /// The V18 wire profile retains its exact V15 assets and clip catalogue.
+    /// This release plays only a single embedded reference motion on this profile.
+    pub fn b1_shaped_motion() -> Self {
+        let mut profile = Self::b1_character_belly_shape();
+        profile.backend = CharacterBackend::B1Cpu {
+            schema_version: B1_SHAPED_MOTION_SCHEMA_VERSION,
+            asset_id: B1_V15_ASSET_ID.into(),
+        };
+        profile.id = B1_SHAPED_MOTION_PROFILE_ID.into();
+        profile.clips = [(B1_SHAPED_STEP_CLIP_ID, 3), (B1_COMPACT_RUN_CLIP_ID, 2)]
+            .into_iter()
+            .map(|(id, animation_index)| ClipSpec {
+                id: id.into(),
+                animation_index,
+                duration_seconds: crate::running::SOURCE_SECONDS as f32,
+            })
+            .chain(Self::b1_motion().clips)
+            .collect();
+        profile
+    }
+
     pub(crate) fn validate_b1(&self) -> Result<()> {
         if (self.id == B1_PROFILE_ID && self.backend.is_b1_motion())
             || (self.id == B1_MOTION_PROFILE_ID && !self.backend.is_b1_motion())
@@ -1231,7 +1261,9 @@ impl CharacterProfile {
                 "B1 backend version does not match its canonical profile identity",
             ));
         }
-        let canonical = if self.backend.b1_asset_version() == Some(B1AssetVersion::V15) {
+        let canonical = if self.backend.is_b1_shaped_motion() {
+            Self::b1_shaped_motion()
+        } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V15) {
             Self::b1_character_belly_shape()
         } else if self.backend.b1_asset_version() == Some(B1AssetVersion::V14) {
             Self::b1_character_upper_arm_muscle()

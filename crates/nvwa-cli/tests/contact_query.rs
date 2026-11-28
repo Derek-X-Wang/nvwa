@@ -66,6 +66,32 @@ fn stage_contact_roundtrip_and_visible_index_brackets() {
     cli(&["save".as_ref(), &saved, &reopened], true);
     let inspect = cli(&["inspect".as_ref(), &reopened], true);
     assert_eq!(inspect["stage"]["contact_target"], target);
+    for (command, key) in [
+        ("contact-fit", "contact_fit"),
+        ("contact-recheck", "contact_recheck"),
+    ] {
+        let caps = cli(&["describe-capabilities".as_ref(), &reopened], true);
+        assert_eq!(
+            caps["cli_contract"][key]["available"],
+            cfg!(feature = "motion-query")
+        );
+        assert_eq!(caps["cli_contract"][key]["work_supported"], false);
+        let help = Command::new(env!("CARGO_BIN_EXE_nvwa-cli"))
+            .args([command, "--help"])
+            .output()
+            .unwrap();
+        assert!(help.status.success());
+        assert_eq!(
+            String::from_utf8(help.stdout).unwrap().trim_end(),
+            caps["cli_contract"][key]["usage"].as_str().unwrap()
+        );
+        if !cfg!(feature = "motion-query") {
+            assert_eq!(
+                cli(&[command.as_ref()], false)["code"],
+                format!("{key}_unavailable")
+            );
+        }
+    }
     let mut legacy = inspect.clone();
     legacy["schema_version"] = json!(3);
     let legacy_path = dir.join("legacy-with-target.json");
@@ -151,4 +177,144 @@ fn stage_contact_roundtrip_and_visible_index_brackets() {
     }
     assert_eq!(fs::read(&source).unwrap(), original);
     fs::remove_dir_all(dir).unwrap();
+}
+
+#[test]
+#[cfg(feature = "motion-query")]
+fn fit_and_recheck_the_accepted_iris_and_mora_first_drafts() {
+    let crate_root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    let assets = crate_root.join("../../assets");
+    let scratch = std::env::temp_dir().join(format!("nvwa-contact-fit-{}", std::process::id()));
+    fs::create_dir(&scratch).unwrap();
+    for (role, accepted_sha, brackets) in [
+        (
+            "iris",
+            "6fc2cea4b5091b0a0e3e1d0c4d9aaeb2cb2b3afbb0f654ce66a336dbb68d625b",
+            [[3003, 3004], [3500, 3501]],
+        ),
+        (
+            "mora",
+            "5da679e027b86ad62f43ed4cda83267c768da72cdab8e9f83c811f54e830afec",
+            [[2997, 2998], [3498, 3499]],
+        ),
+    ] {
+        let case = crate_root.join("tests/fixtures/contact-fit").join(role);
+        let start = case.join("start.nvwa.json");
+        let reference = case.join("reference.nvwa.json");
+        let accepted = case.join("accepted.nvwa.json");
+        let before = [&start, &reference, &accepted].map(|path| fs::read(path).unwrap());
+        assert_eq!(nvwa_core::appearance_sha256(&before[2]), accepted_sha);
+        let caps = cli(&["describe-capabilities".as_ref(), &start], true);
+        assert_eq!(caps["cli_contract"]["authored_motion"]["supported"], false);
+        assert_eq!(
+            caps["cli_contract"]["motion_query"]["work_supported"],
+            false
+        );
+        assert_eq!(
+            caps["cli_contract"]["set_timeline"]["command_supported"],
+            false
+        );
+        let mut renamed = serde_json::from_slice::<Value>(&before[0]).unwrap()["timeline"].clone();
+        renamed[0]["id"] = json!("renamed-reference");
+        let rename = scratch.join("rename.json");
+        fs::write(&rename, json!({"command_id":"rename", "expected_revision":serde_json::from_slice::<Value>(&before[0]).unwrap()["revision"],
+            "command":{"type":"set_timeline","clips":renamed}}).to_string()).unwrap();
+        let rejected = scratch.join("rejected.json");
+        assert_eq!(
+            cli(&["apply".as_ref(), &start, &rename, &rejected], false)["code"],
+            "invalid_reference_motion"
+        );
+        assert!(!rejected.exists());
+        for cmd in ["contact_fit", "contact_recheck"] {
+            assert_eq!(caps["cli_contract"][cmd]["work_supported"], true);
+        }
+        let plan = cli(
+            &[
+                "contact-fit".as_ref(),
+                &start,
+                &assets,
+                &reference,
+                "2.50".as_ref(),
+                "4.00".as_ref(),
+                ".025".as_ref(),
+                "--hand".as_ref(),
+                "right".as_ref(),
+            ],
+            true,
+        );
+        let edit = scratch.join("edit.json");
+        let draft = scratch.join(format!("{role}.json"));
+        fs::write(&edit, serde_json::to_vec(&plan["commands"]).unwrap()).unwrap();
+        cli(&["apply".as_ref(), &start, &edit, &draft], true);
+        let mut proposed: Value = serde_json::from_slice(&fs::read(&draft).unwrap()).unwrap();
+        let initial: Value = serde_json::from_slice(&before[0]).unwrap();
+        let mut golden: Value = serde_json::from_slice(&before[2]).unwrap();
+        // Compare pass-through data exactly. Fit angles can differ at floating-point
+        // precision. Compare their changed joints and evaluate the resulting pose.
+        let rotations = |v: &mut Value| v["reference_motion"]["rotations"].take();
+        let actual_tracks = rotations(&mut proposed);
+        let golden_tracks = rotations(&mut golden);
+        assert_eq!(proposed, golden, "{role} edit scope");
+        let original = initial["reference_motion"]["rotations"]
+            .as_object()
+            .unwrap();
+        assert_eq!(actual_tracks.as_object().unwrap().len(), original.len());
+        for (joint, track) in original {
+            assert!(actual_tracks.get(joint).is_some());
+            assert_eq!(
+                actual_tracks[joint] != *track,
+                golden_tracks[joint] != *track,
+                "{role} {joint}"
+            );
+        }
+        for work in [&accepted, &draft] {
+            let receipt = cli(
+                &[
+                    "contact-recheck".as_ref(),
+                    work,
+                    &assets,
+                    &start,
+                    &reference,
+                    "3.25".as_ref(),
+                    "--hand".as_ref(),
+                    "right".as_ref(),
+                    "--sole".as_ref(),
+                    "left".as_ref(),
+                    "--support".as_ref(),
+                    "right".as_ref(),
+                ],
+                true,
+            );
+            assert_eq!(receipt["status"], "passed", "{role} {receipt}");
+            assert_eq!(
+                receipt["saved"]["sha256"],
+                nvwa_core::appearance_sha256(&fs::read(work).unwrap())
+            );
+            let timing = &receipt["contact_timing"];
+            for (label, count) in [("stance", 0), ("reference", 1), ("saved", 1)] {
+                assert_eq!(timing["guide"][label]["intervals"], count);
+            }
+            for (name, expected) in ["enter", "exit"].into_iter().zip(brackets) {
+                let edge = &timing["edges"][name];
+                assert_eq!(edge["saved_bracket_ms"], json!(expected), "{role} {name}");
+                assert!(edge["worst_case_absolute_delta_ms"].as_f64().unwrap() <= 1000.0 / 24.0);
+            }
+            assert_eq!(
+                receipt["landing"]["delta"]["landing_mm"],
+                json!([0.0, 0.0, 0.0])
+            );
+            assert!(
+                receipt["landing"]["checks"]
+                    .as_object()
+                    .unwrap()
+                    .values()
+                    .all(|v| v.as_bool() == Some(true))
+            );
+        }
+        assert_eq!(
+            before,
+            [&start, &reference, &accepted].map(|path| fs::read(path).unwrap())
+        );
+    }
+    fs::remove_dir_all(scratch).unwrap();
 }

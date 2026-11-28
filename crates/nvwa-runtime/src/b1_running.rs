@@ -350,7 +350,7 @@ pub(super) fn publish(world: &mut World, runtime: &mut B1Runtime) {
             .visible_document()
             .ok_or("running Work absent")?
             .clone();
-        if !doc.profile.backend.is_b1_running()
+        if !uses_fitted_publication(&doc)
             || active.selection != Selection::from_doc(&doc)
             || active.generation != world.resource::<EditorState>().document_generation
         {
@@ -462,7 +462,7 @@ pub(super) fn resolved_binding(
     let editor = world.resource::<EditorState>();
     let doc = editor.visible_document().ok_or("running Work absent")?;
     if !active.running
-        || !doc.profile.backend.is_b1_running()
+        || !uses_fitted_publication(doc)
         || active.frame_error.is_some()
         || active.pending_sample.is_some()
         || editor.pending_open.is_some()
@@ -567,11 +567,7 @@ pub(super) fn resolved_binding(
     crate::appearance::running_observation(world, &frame, &doc.character.appearance, false)?;
     Ok((active, doc, resolved))
 }
-pub(super) fn observation(world: &World) -> Result<Value, String> {
-    static CONTROL_HASH: OnceLock<String> = OnceLock::new();
-    let control_hash =
-        CONTROL_HASH.get_or_init(|| nvwa_core::appearance_sha256(CONTROL_DATA.as_bytes()));
-    let (active, doc, resolved) = resolved_binding(world)?;
+pub(super) fn require_ready(world: &World) -> Result<(), String> {
     let playback = world.resource::<Playback>();
     if let Some(error) = &playback.error {
         return Err(error.clone());
@@ -584,6 +580,18 @@ pub(super) fn observation(world: &World) -> Result<Value, String> {
     {
         return Err("running runtime not ready".into());
     }
+    Ok(())
+}
+pub(super) fn observation(world: &World) -> Result<Value, String> {
+    static CONTROL_HASH: OnceLock<String> = OnceLock::new();
+    let control_hash =
+        CONTROL_HASH.get_or_init(|| nvwa_core::appearance_sha256(CONTROL_DATA.as_bytes()));
+    let (active, doc, resolved) = resolved_binding(world)?;
+    if !doc.profile.backend.is_b1_running() {
+        return Err("Running publication requires a running profile".into());
+    }
+    require_ready(world)?;
+    let playback = world.resource::<Playback>();
     Ok(
         json!({"schema_version":1,"kind":"b1_running_publication","generation":active.generation,"revision":doc.revision,"profile_id":doc.profile.id,"work_sha256":nvwa_core::appearance_sha256(doc.to_json().map_err(|e|e.to_string())?.as_bytes()),"serial":active.serial,"playing":playback.playing,"completed":playback.completed,"position_seconds":playback.position_seconds,"resolved":resolved,"display_transforms":active.published_binding.as_ref().unwrap().display_transforms,"control_sha256":control_hash,"ready":true,"error":null}),
     )

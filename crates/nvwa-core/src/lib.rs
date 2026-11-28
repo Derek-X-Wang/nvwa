@@ -355,6 +355,10 @@ pub enum Command {
     SetReferenceMotion {
         motion: ReferenceMotion,
     },
+    SetShapedReferenceMotion {
+        clips: Vec<TimelineClip>,
+        motion: ReferenceMotion,
+    },
     SetReferenceRotationKey {
         bone: String,
         seconds: f32,
@@ -399,6 +403,10 @@ impl<'de> Deserialize<'de> for Command {
             SetReferenceMotion {
                 motion: ReferenceMotion,
             },
+            SetShapedReferenceMotion {
+                clips: Vec<TimelineClip>,
+                motion: ReferenceMotion,
+            },
             SetReferenceRotationKey {
                 bone: String,
                 seconds: f32,
@@ -441,6 +449,9 @@ impl<'de> Deserialize<'de> for Command {
             },
             StrictCommand::SetTimeline { clips } => Self::SetTimeline { clips },
             StrictCommand::SetReferenceMotion { motion } => Self::SetReferenceMotion { motion },
+            StrictCommand::SetShapedReferenceMotion { clips, motion } => {
+                Self::SetShapedReferenceMotion { clips, motion }
+            }
             StrictCommand::SetReferenceRotationKey {
                 bone,
                 seconds,
@@ -748,6 +759,21 @@ impl SceneDocument {
                 ));
             }
         }
+        if self.profile.backend.is_b1_shaped_motion() {
+            let motion = self.reference_motion.as_ref().ok_or_else(|| {
+                CoreError::new(
+                    "invalid_reference_motion",
+                    "The shaped-motion profile requires one saved reference clip",
+                )
+            })?;
+            if self.character.diagnostic_pose.as_deref() != Some("neutral") {
+                return Err(CoreError::new(
+                    "unsupported_pose",
+                    "A shaped reference clip requires the fitted neutral pose",
+                ));
+            }
+            return motion.validate_shaped_timeline(&self.timeline);
+        }
         if let Some(motion) = &self.reference_motion {
             if !self.supports_reference_motion() || self.timeline != [motion.clip()] {
                 return Err(CoreError::new(
@@ -817,6 +843,12 @@ impl SceneDocument {
 
     /// Sample a reference motion from a validated Work.
     pub fn reference_pose_at(&self, seconds: f32) -> Result<ReferencePose> {
+        // Both supported reference arrangements play once from zero at unit speed.
+        self.reference_pose_at_source(seconds)
+    }
+
+    /// Sample a validated reference motion in source-local seconds.
+    pub fn reference_pose_at_source(&self, seconds: f32) -> Result<ReferencePose> {
         self.reference_motion
             .as_ref()
             .ok_or_else(|| {
@@ -845,6 +877,18 @@ impl SceneDocument {
                 )
             })?;
         finite(value, parameter_id)?;
+        if self.profile.backend.is_b1_shaped_motion()
+            && value > 0.0
+            && matches!(
+                parameter_id,
+                "bust_circumference" | "buttocks_volume" | "belly_shape_strength"
+            )
+        {
+            return Err(CoreError::new(
+                "unsupported_character_operation",
+                format!("Positive {parameter_id} is unsupported on the shaped-motion profile"),
+            ));
+        }
         if value < spec.min || value > spec.max {
             return Err(CoreError::new(
                 "out_of_range",
@@ -907,6 +951,9 @@ impl CommandEnvelope {
                 }
             }
             Command::SetReferenceMotion { motion } => motion.validate()?,
+            Command::SetShapedReferenceMotion { clips, motion } => {
+                motion.validate_shaped_timeline(clips)?;
+            }
             Command::SetReferenceRotationKey {
                 seconds, degrees, ..
             } => {
@@ -1199,10 +1246,32 @@ fn apply_edit(document: &mut SceneDocument, command: &Command) -> Result<()> {
             document.character.appearance = appearance.clone();
         }
         Command::SetTimeline { clips } => {
+            if document.profile.backend.is_b1_shaped_motion() {
+                return Err(CoreError::new(
+                    "invalid_reference_motion",
+                    "Use set_shaped_reference_motion to change the shaped reference timeline",
+                ));
+            }
             document.timeline = clips.clone();
             document.reference_motion = None;
         }
+        Command::SetShapedReferenceMotion { clips, motion } => {
+            if !document.profile.backend.is_b1_shaped_motion() {
+                return Err(CoreError::new(
+                    "invalid_reference_motion",
+                    "A shaped reference clip requires the B1 shaped-motion profile",
+                ));
+            }
+            document.timeline = clips.clone();
+            document.reference_motion = Some(motion.clone());
+        }
         Command::SetReferenceMotion { motion } => {
+            if document.profile.backend.is_b1_shaped_motion() {
+                return Err(CoreError::new(
+                    "invalid_reference_motion",
+                    "Use set_shaped_reference_motion for the B1 shaped-motion profile",
+                ));
+            }
             document.timeline = vec![motion.clip()];
             document.reference_motion = Some(motion.clone());
         }
@@ -1251,6 +1320,7 @@ fn command_summary(command: &Command) -> String {
         Command::SetAppearance { .. } => "Set character appearance".into(),
         Command::SetTimeline { clips } => format!("Set {} timeline clip(s)", clips.len()),
         Command::SetReferenceMotion { .. } => "Set reference motion".into(),
+        Command::SetShapedReferenceMotion { .. } => "Set shaped reference motion".into(),
         Command::SetReferenceRotationKey { bone, seconds, .. } => {
             format!("Set {bone} rotation key at {seconds}s")
         }

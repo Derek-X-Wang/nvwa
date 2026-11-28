@@ -18,6 +18,8 @@ The CLI supports these local operations:
 | `validate` | Check a Work and optional GLB assets; B1 requires the explicit root and authenticates every payload of the selected body and appearance manifests, including roles that are off. |
 | `motion-query` | Sample foot clearance and clip boundaries in a finite B1 rehearsal Work. Requires the `motion-query` build feature. |
 | `contact-query` | Sample the running character’s left index fingertip against a named sphere saved in the Work. Requires the `motion-query` build feature. |
+| `contact-fit` | Use the character's own joint response to propose a local edit that restores fingertip contact with a saved target. |
+| `contact-recheck` | Reopen a saved edit, compare the selected sole with its stance, and measure press and release timing against the reference. |
 | `travel-query` | Measure body and garment displacement in stage coordinates for a finite B1 running Work. Requires the `motion-query` build feature. |
 | `save` | Validate and reserialize a Work without changing its revision. |
 
@@ -60,6 +62,46 @@ repeat the query at the same range and step. Review the final candidate in
 normal playback and take screenshots where a specific visual detail needs
 inspection. See the [short dance comparison](evidence/motion-query/RESULTS.md)
 for the measured workflow and its limits.
+
+## Fit and recheck an existing button press
+
+Build the native CLI with `cargo build --locked -p nvwa-cli --features motion-query`.
+Use the checkout’s `assets` directory. These commands work on an existing version 18
+shaped character with a single reference-motion clip. The input stance contains
+the landing to keep. The original reference contains the press and release to
+match. All inputs must use the same saved target. The fitted version 18 path
+supports the V15 body parameters used by Iris and Mora. Positive
+`bust_circumference`, `buttocks_volume`, and `belly_shape_strength` need
+additional deformation support.
+
+From the repository root, use a fresh output directory:
+
+```sh
+case_dir=crates/nvwa-cli/tests/fixtures/contact-fit/iris
+cli=target/debug/nvwa-cli
+out=$(mktemp -d)
+"$cli" contact-fit "$case_dir/start.nvwa.json" assets "$case_dir/reference.nvwa.json" \
+    2.50 4.00 .025 --hand right > "$out/plan.json"
+jq '.commands' "$out/plan.json" > "$out/edit.json"
+"$cli" apply "$case_dir/start.nvwa.json" "$out/edit.json" "$out/revised.nvwa.json"
+"$cli" contact-recheck "$out/revised.nvwa.json" assets "$case_dir/start.nvwa.json" \
+    "$case_dir/reference.nvwa.json" 3.25 --hand right --sole left --support right
+```
+
+The fit uses the specified hand, the character’s geometry and the rotation tracks
+already present. Inspect the plan before applying it. The recheck reads all three
+Works from disk. It compares landing XYZ, heel and forefoot heights, pitch,
+heading, and pelvis position relative to the support foot at the specified
+instant. For contact it samples the full clip at 25 ms, then samples at 1 ms
+around both Works’ observed edges. Positive timing differences mean later than
+the reference. Events entirely between coarse samples can go undetected.
+Read the JSON `status` (`passed`, `failed`, or `unassessable`) and the signed
+uncertainty range for each edge. A completed measurement writes JSON even if the
+motion misses the goal. The tolerance is one frame at 24 fps for each edge,
+0.001 mm per landing component and 0.001 degrees per angle. In these two
+fixtures the stance must miss and each finished Work must have one complete
+press. Both cases retain their original first drafts under
+[`tests/fixtures/contact-fit`](../crates/nvwa-cli/tests/fixtures/contact-fit).
 
 ## Fingertip contact with a saved target
 

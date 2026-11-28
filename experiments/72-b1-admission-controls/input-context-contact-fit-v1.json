@@ -1,0 +1,661 @@
+{
+  "format": "nvwa-contact-fit-source-context-v1",
+  "predecessor_context": "nvwa-contact-target-source-context-v1",
+  "predecessor_commit": "8da2d17fcde1a43d2d52595cbf1a808ae3b270b2",
+  "before": {
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 52318,
+      "sha256": "6ac1a51fed8690c371ed17b0586043f7023fdb07f4808514cd2cebf85f984474"
+    },
+    "crates/nvwa-cli/src/motion_query.rs": {
+      "bytes": 18304,
+      "sha256": "e56eb56fb6a8dd7794c74776e6cb22f5305eb75056c731c93baa1e7610eb36cd"
+    },
+    "crates/nvwa-cli/src/motion_query/contact_fit.rs": null,
+    "crates/nvwa-cli/src/motion_query/contact_recheck.rs": null,
+    "crates/nvwa-cli/tests/contact_query.rs": {
+      "bytes": 6209,
+      "sha256": "4c97b951a02250db47e896027921e2cb5c48131ba5976ae41c087c816d511b1f"
+    },
+    "crates/nvwa-cli/tests/fixtures/contact-fit/iris/accepted.nvwa.json": null,
+    "crates/nvwa-cli/tests/fixtures/contact-fit/iris/reference.nvwa.json": null,
+    "crates/nvwa-cli/tests/fixtures/contact-fit/iris/start.nvwa.json": null,
+    "crates/nvwa-cli/tests/fixtures/contact-fit/mora/accepted.nvwa.json": null,
+    "crates/nvwa-cli/tests/fixtures/contact-fit/mora/reference.nvwa.json": null,
+    "crates/nvwa-cli/tests/fixtures/contact-fit/mora/start.nvwa.json": null,
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 58547,
+      "sha256": "c9b91e2449d44fe8d781f7e46c8cf5ba1c99f51a11a27362326128e14a9d86af"
+    },
+    "crates/nvwa-core/src/lib.rs": {
+      "bytes": 45923,
+      "sha256": "0c60886819e1405d46135b0e7bbb238abdef4a2f169a6358acd9ca6d375ac473"
+    },
+    "crates/nvwa-core/src/reference_motion.rs": {
+      "bytes": 6421,
+      "sha256": "042ad6112adcb58e4ed3aa3693a4d2e4aebe2422d8b80c5debd55f6778d679e6"
+    },
+    "crates/nvwa-core/src/running.rs": {
+      "bytes": 12240,
+      "sha256": "7a36d1f632efdbaf1282f5d9d1232a28b0b822fc93253308f3707d2a41bce82f"
+    },
+    "crates/nvwa-runtime/src/appearance/mod.rs": {
+      "bytes": 68441,
+      "sha256": "b9b57bcaaf55b926e8b7318d0664d5a415dbd52ef71df6e899270760b232bdba"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 269139,
+      "sha256": "232856c40e8b25380f1cfacf0e4ba4f2e1fa82b752aae378f2446b1838ab27a5"
+    },
+    "crates/nvwa-runtime/src/b1/foot_clearance.rs": {
+      "bytes": 3867,
+      "sha256": "cbfebf4ffce3596d1df0a22db0947c2842b26bd55441e94af69434d5a421c55e"
+    },
+    "crates/nvwa-runtime/src/b1/sole_measurement.rs": null,
+    "crates/nvwa-runtime/src/b1_running.rs": {
+      "bytes": 27143,
+      "sha256": "49bff0cfbc84e86c9e239907d8bb825871e0a580e9904a6272bf8883c9fbce37"
+    },
+    "crates/nvwa-runtime/src/lib.rs": {
+      "bytes": 86350,
+      "sha256": "9c9715c99fc7c42d075be1a4770492121a86ae7b72ef468172964734affab5b7"
+    },
+    "docs/CLI-SUPPORT.md": {
+      "bytes": 17052,
+      "sha256": "7070b715c93210707eeb68b81f80506a5e2d8eebe60a66ea56da51aaf0c615ea"
+    },
+    "experiments/72-b1-admission-controls/contact_fit_bootstrap.py": null,
+    "experiments/72-b1-admission-controls/integration_context.py": {
+      "bytes": 5018,
+      "sha256": "2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-cli/src/main.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-cli/src/motion_query.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-cli/tests/contact_query.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-core/src/b1.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-core/src/lib.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-core/src/reference_motion.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-core/src/running.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/appearance/mod.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/b1.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/b1/foot_clearance.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/b1_running.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/lib.rs": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/docs/CLI-SUPPORT.md": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/integration_context.py": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/run.py": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/test_contact_target_context.py": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/test_running_context.py": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/test_waist_context.py": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/73-high-poly-eyes/build.py": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/73-high-poly-eyes/frozen_context.py": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/scripts/check-v15-history.py": null,
+    "experiments/72-b1-admission-controls/pre-contact-fit/scripts/check-v15-live73.py": null,
+    "experiments/72-b1-admission-controls/run.py": {
+      "bytes": 125731,
+      "sha256": "b7aee314d4e95d2ef1ccfa5ac3904ecc06146699a6b212663d67b4c4429cc829"
+    },
+    "experiments/72-b1-admission-controls/test_contact_fit_context.py": null,
+    "experiments/72-b1-admission-controls/test_contact_target_context.py": {
+      "bytes": 8630,
+      "sha256": "7da90d2b0abe432a6b060f206ff7ea50abfbe67ffe4ac3ab5b93bb89bf50ad19"
+    },
+    "experiments/72-b1-admission-controls/test_running_context.py": {
+      "bytes": 20348,
+      "sha256": "c6d1169920fb393131e4afb5bbbe4f83e6318629be46d89e35032681a7632a4a"
+    },
+    "experiments/72-b1-admission-controls/test_waist_context.py": {
+      "bytes": 16490,
+      "sha256": "984260157b2f4fa45f001f386264333e4bd812d04229f3f2a83d8eccf8ee7e45"
+    },
+    "experiments/73-high-poly-eyes/build.py": {
+      "bytes": 5123,
+      "sha256": "86481ee2804caf181e2847d7b61e1b0c1085877f5bd5f610afc218abee276861"
+    },
+    "experiments/73-high-poly-eyes/frozen_context.py": {
+      "bytes": 84445,
+      "sha256": "ac016ae8de275bd519ae3cdc6d1f039980485a49084427fd8a28d0007c71e957"
+    },
+    "scripts/check-v15-history.py": {
+      "bytes": 22498,
+      "sha256": "b01d6addd95409c0ffa87c0090e3c130745f54af02f95fa2e439a84d88095dd6"
+    },
+    "scripts/check-v15-live73.py": {
+      "bytes": 780,
+      "sha256": "4525a43832741125eba1066ae7f8c3da56f8a6e06eeaf779f95671bcd3aa85db"
+    }
+  },
+  "after": {
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 58018,
+      "sha256": "4c33520ea950bfc4d4b892d370e9335bdf9531b8460d3e7e02060a797f938b0b"
+    },
+    "crates/nvwa-cli/src/motion_query.rs": {
+      "bytes": 19654,
+      "sha256": "5926da895e55cb8ab84a3b0f953e056a6e100f2707ecc01c8ec35afac5460272"
+    },
+    "crates/nvwa-cli/src/motion_query/contact_fit.rs": {
+      "bytes": 32958,
+      "sha256": "5197b5c780d1cb9403bfbc152c0fab0df0d1ac89c50add280da730d8bcf802b2"
+    },
+    "crates/nvwa-cli/src/motion_query/contact_recheck.rs": {
+      "bytes": 22398,
+      "sha256": "3ea73d59a72b213b7824cfd8479c601e1d3971714ab317d080478c3cd2a3a3e4"
+    },
+    "crates/nvwa-cli/tests/contact_query.rs": {
+      "bytes": 13176,
+      "sha256": "e8503ac98d235b9772397b6b73a40a50bfc74aac2e55f738160345b85089568f"
+    },
+    "crates/nvwa-cli/tests/fixtures/contact-fit/iris/accepted.nvwa.json": {
+      "bytes": 119659,
+      "sha256": "6fc2cea4b5091b0a0e3e1d0c4d9aaeb2cb2b3afbb0f654ce66a336dbb68d625b"
+    },
+    "crates/nvwa-cli/tests/fixtures/contact-fit/iris/reference.nvwa.json": {
+      "bytes": 107390,
+      "sha256": "5b3ba83e8a44c61b1bf4d0a624ea8519b67e3627350319a9b2d575a330a3eccc"
+    },
+    "crates/nvwa-cli/tests/fixtures/contact-fit/iris/start.nvwa.json": {
+      "bytes": 113451,
+      "sha256": "2bf3efceda79ed3d90d61886518120c900867ac637286ddc181f8495315d0814"
+    },
+    "crates/nvwa-cli/tests/fixtures/contact-fit/mora/accepted.nvwa.json": {
+      "bytes": 116838,
+      "sha256": "5da679e027b86ad62f43ed4cda83267c768da72cdab8e9f83c811f54e830afec"
+    },
+    "crates/nvwa-cli/tests/fixtures/contact-fit/mora/reference.nvwa.json": {
+      "bytes": 112079,
+      "sha256": "e2f7389274834d6eb889faf8033325bcc321d01350dd0f645be39f4646bbc4f1"
+    },
+    "crates/nvwa-cli/tests/fixtures/contact-fit/mora/start.nvwa.json": {
+      "bytes": 112222,
+      "sha256": "c2d9ccafacbfba3a0a2d0cd465ee28e87df60be9542582fcd36484b40ffd687e"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 60087,
+      "sha256": "1253555ff6030ffa78c13fdbde640671297b6dd17694f7952d7aaac6a7aa22f7"
+    },
+    "crates/nvwa-core/src/lib.rs": {
+      "bytes": 48993,
+      "sha256": "917c0d53dbd0f9a437d847bea2167218359d158e6f7787b8009470812c244865"
+    },
+    "crates/nvwa-core/src/reference_motion.rs": {
+      "bytes": 11852,
+      "sha256": "1aaf5ebfc61a70376ab64c57bcfb236ea85b5c2df7731ab75e2c00b2b5f6aeaf"
+    },
+    "crates/nvwa-core/src/running.rs": {
+      "bytes": 12552,
+      "sha256": "674adb7b7bd59b54ce5e684f85f13c82118bbaa748ff572bc5c57883f88a71fe"
+    },
+    "crates/nvwa-runtime/src/appearance/mod.rs": {
+      "bytes": 68465,
+      "sha256": "32a56244195e2ea179ac5fcdb81bbe80dfdd9b394eece942cd048080db5df7db"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 271338,
+      "sha256": "ae74c249a49e94ad797d68664af176c0e23c2736de868b53a2c80746c8dfc15e"
+    },
+    "crates/nvwa-runtime/src/b1/foot_clearance.rs": {
+      "bytes": 6105,
+      "sha256": "ba94bd9ed60f3612882e96f85068b9347ebb57b6d379219e1d1ad58bf36f0a36"
+    },
+    "crates/nvwa-runtime/src/b1/sole_measurement.rs": {
+      "bytes": 11458,
+      "sha256": "967c16f95c0d94cfa99665b1799579a0fa9f8b9f21b6f36449f412f88991f82f"
+    },
+    "crates/nvwa-runtime/src/b1_running.rs": {
+      "bytes": 27415,
+      "sha256": "04dbd8d9cbe8ddff884cd6b47bf3a3c95efdfb975109f4df28912a6a2bd4d0c8"
+    },
+    "crates/nvwa-runtime/src/lib.rs": {
+      "bytes": 86452,
+      "sha256": "837838f3b908fb398d1ac56b9c036851ba393c7e0f3ab8f5ec705b42645285f2"
+    },
+    "docs/CLI-SUPPORT.md": {
+      "bytes": 19639,
+      "sha256": "04624a076847540409f2d28ec781708face09022eafe41aa9bf378e93bc56c23"
+    },
+    "experiments/72-b1-admission-controls/contact_fit_bootstrap.py": {
+      "bytes": 1124,
+      "sha256": "78af4b16327ac3c1e7952d45de96baa501cddebee38bd7c10a5c460ddaabf07b"
+    },
+    "experiments/72-b1-admission-controls/integration_context.py": {
+      "bytes": 5073,
+      "sha256": "bf39b7c512809299510796adc836cc2084a22d801bfe974810317eb480f67181"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-cli/src/main.rs": {
+      "bytes": 52318,
+      "sha256": "6ac1a51fed8690c371ed17b0586043f7023fdb07f4808514cd2cebf85f984474"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-cli/src/motion_query.rs": {
+      "bytes": 18304,
+      "sha256": "e56eb56fb6a8dd7794c74776e6cb22f5305eb75056c731c93baa1e7610eb36cd"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-cli/tests/contact_query.rs": {
+      "bytes": 6209,
+      "sha256": "4c97b951a02250db47e896027921e2cb5c48131ba5976ae41c087c816d511b1f"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-core/src/b1.rs": {
+      "bytes": 58547,
+      "sha256": "c9b91e2449d44fe8d781f7e46c8cf5ba1c99f51a11a27362326128e14a9d86af"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-core/src/lib.rs": {
+      "bytes": 45923,
+      "sha256": "0c60886819e1405d46135b0e7bbb238abdef4a2f169a6358acd9ca6d375ac473"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-core/src/reference_motion.rs": {
+      "bytes": 6421,
+      "sha256": "042ad6112adcb58e4ed3aa3693a4d2e4aebe2422d8b80c5debd55f6778d679e6"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-core/src/running.rs": {
+      "bytes": 12240,
+      "sha256": "7a36d1f632efdbaf1282f5d9d1232a28b0b822fc93253308f3707d2a41bce82f"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/appearance/mod.rs": {
+      "bytes": 68441,
+      "sha256": "b9b57bcaaf55b926e8b7318d0664d5a415dbd52ef71df6e899270760b232bdba"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 269139,
+      "sha256": "232856c40e8b25380f1cfacf0e4ba4f2e1fa82b752aae378f2446b1838ab27a5"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/b1/foot_clearance.rs": {
+      "bytes": 3867,
+      "sha256": "cbfebf4ffce3596d1df0a22db0947c2842b26bd55441e94af69434d5a421c55e"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/b1_running.rs": {
+      "bytes": 27143,
+      "sha256": "49bff0cfbc84e86c9e239907d8bb825871e0a580e9904a6272bf8883c9fbce37"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/crates/nvwa-runtime/src/lib.rs": {
+      "bytes": 86350,
+      "sha256": "9c9715c99fc7c42d075be1a4770492121a86ae7b72ef468172964734affab5b7"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/docs/CLI-SUPPORT.md": {
+      "bytes": 17052,
+      "sha256": "7070b715c93210707eeb68b81f80506a5e2d8eebe60a66ea56da51aaf0c615ea"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/integration_context.py": {
+      "bytes": 5018,
+      "sha256": "2b864f74325eac1a483e0325930fc7733c229cf789d620e791d6dfedfcce10a5"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/run.py": {
+      "bytes": 125731,
+      "sha256": "b7aee314d4e95d2ef1ccfa5ac3904ecc06146699a6b212663d67b4c4429cc829"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/test_contact_target_context.py": {
+      "bytes": 8630,
+      "sha256": "7da90d2b0abe432a6b060f206ff7ea50abfbe67ffe4ac3ab5b93bb89bf50ad19"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/test_running_context.py": {
+      "bytes": 20348,
+      "sha256": "c6d1169920fb393131e4afb5bbbe4f83e6318629be46d89e35032681a7632a4a"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/72-b1-admission-controls/test_waist_context.py": {
+      "bytes": 16490,
+      "sha256": "984260157b2f4fa45f001f386264333e4bd812d04229f3f2a83d8eccf8ee7e45"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/73-high-poly-eyes/build.py": {
+      "bytes": 5123,
+      "sha256": "86481ee2804caf181e2847d7b61e1b0c1085877f5bd5f610afc218abee276861"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/experiments/73-high-poly-eyes/frozen_context.py": {
+      "bytes": 84445,
+      "sha256": "ac016ae8de275bd519ae3cdc6d1f039980485a49084427fd8a28d0007c71e957"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/scripts/check-v15-history.py": {
+      "bytes": 22498,
+      "sha256": "b01d6addd95409c0ffa87c0090e3c130745f54af02f95fa2e439a84d88095dd6"
+    },
+    "experiments/72-b1-admission-controls/pre-contact-fit/scripts/check-v15-live73.py": {
+      "bytes": 780,
+      "sha256": "4525a43832741125eba1066ae7f8c3da56f8a6e06eeaf779f95671bcd3aa85db"
+    },
+    "experiments/72-b1-admission-controls/run.py": {
+      "bytes": 126587,
+      "template_sha256": "12c632a2e7f2de90d54fdf029a94075130a1f1417f4ce363d84dae288d4d0743"
+    },
+    "experiments/72-b1-admission-controls/test_contact_fit_context.py": {
+      "bytes": 9523,
+      "sha256": "9a4768cfa88354269bc23b1924d07af5a6a96500baae820fab115791939415a1"
+    },
+    "experiments/72-b1-admission-controls/test_contact_target_context.py": {
+      "bytes": 9407,
+      "sha256": "ae883e0103746874f0dae19762ad3972f3f17b87102605182d5345eef91b950f"
+    },
+    "experiments/72-b1-admission-controls/test_running_context.py": {
+      "bytes": 20366,
+      "sha256": "0e8a989954057218e1382489ae5573984846281668c2505e57f114155201d393"
+    },
+    "experiments/72-b1-admission-controls/test_waist_context.py": {
+      "bytes": 16406,
+      "sha256": "1462598b7a86db52665b769efe85ea2d9e5390fffd439e4f99579409554e6f88"
+    },
+    "experiments/73-high-poly-eyes/build.py": {
+      "bytes": 5396,
+      "sha256": "cdf10ac23b1a9e13e60ece6be008fa8afec4a85f531047d06c3cfc7f9b71532d"
+    },
+    "experiments/73-high-poly-eyes/frozen_context.py": {
+      "bytes": 85217,
+      "template_sha256": "9d07ce485d20190a9c0791bc3e195d156bfd899eb44295664c4cb43aba6076dc"
+    },
+    "scripts/check-v15-history.py": {
+      "bytes": 24856,
+      "template_sha256": "ff705aaa680d165621e84cc6d39ba797abaf34d145b1bd1e4774ae17ecc5c554"
+    },
+    "scripts/check-v15-live73.py": {
+      "bytes": 771,
+      "sha256": "8d9957fd7a9347b0c7757c65a2e880020b8c112c31504405957f960746265ade"
+    }
+  },
+  "rust_inventory": "6d63642845e63faf5663649447fd51cf0850d0647949d4a6092e242ea4cc9280",
+  "rust_files": {
+    "crates/nvwa-cli/src/cpu_render.rs": {
+      "bytes": 13273,
+      "sha256": "4bf7ef1ad70d7bcb4f65b66dd54cb378fd6f30cd7fcea596267ae8bdaa2123a7"
+    },
+    "crates/nvwa-cli/src/lib.rs": {
+      "bytes": 43,
+      "sha256": "79f73b57645f2b05b8b0221c94a6d6eb3676125e1c3184fc9ffb394d66d908a2"
+    },
+    "crates/nvwa-cli/src/main.rs": {
+      "bytes": 58018,
+      "sha256": "4c33520ea950bfc4d4b892d370e9335bdf9531b8460d3e7e02060a797f938b0b"
+    },
+    "crates/nvwa-cli/src/motion_query.rs": {
+      "bytes": 19654,
+      "sha256": "5926da895e55cb8ab84a3b0f953e056a6e100f2707ecc01c8ec35afac5460272"
+    },
+    "crates/nvwa-cli/src/motion_query/contact_fit.rs": {
+      "bytes": 32958,
+      "sha256": "5197b5c780d1cb9403bfbc152c0fab0df0d1ac89c50add280da730d8bcf802b2"
+    },
+    "crates/nvwa-cli/src/motion_query/contact_recheck.rs": {
+      "bytes": 22398,
+      "sha256": "3ea73d59a72b213b7824cfd8479c601e1d3971714ab317d080478c3cd2a3a3e4"
+    },
+    "crates/nvwa-cli/tests/appearance.rs": {
+      "bytes": 19195,
+      "sha256": "ddf2a305f1ba09c998f27920b7a1a428d8cd6e1a23a76bb0742afcb6ce806526"
+    },
+    "crates/nvwa-cli/tests/arm_proportions.rs": {
+      "bytes": 4373,
+      "sha256": "8896253b12207443f1a951d5f59f6368ed1a49632d57874a25e067f1337096a5"
+    },
+    "crates/nvwa-cli/tests/b1.rs": {
+      "bytes": 18579,
+      "sha256": "ec3082149fe3b23b6df3fbf3e2cbbccccf15a6a776613e9e8a272ec958a727ef"
+    },
+    "crates/nvwa-cli/tests/belly_shape.rs": {
+      "bytes": 4581,
+      "sha256": "c75ffee663c129701b4811960acd15c42ece5074941a49616ba9274346d09c1d"
+    },
+    "crates/nvwa-cli/tests/character.rs": {
+      "bytes": 8339,
+      "sha256": "c9e043b246cab0242b79af18b0777d0395888ce258de5ca09cd71d5b63fb4882"
+    },
+    "crates/nvwa-cli/tests/chest_placement.rs": {
+      "bytes": 4312,
+      "sha256": "67a73e219a9b3a523402addce8af5fbe5ea75e3a0b5d3ab54b76a1353997e4b1"
+    },
+    "crates/nvwa-cli/tests/contact_query.rs": {
+      "bytes": 13176,
+      "sha256": "e8503ac98d235b9772397b6b73a40a50bfc74aac2e55f738160345b85089568f"
+    },
+    "crates/nvwa-cli/tests/contour.rs": {
+      "bytes": 6247,
+      "sha256": "3226c30b073f8dc80898ff21e497f863c79bb0e6649bef8b413c0260dbc99ab4"
+    },
+    "crates/nvwa-cli/tests/cpu_render.rs": {
+      "bytes": 37400,
+      "sha256": "ab9b180d807c6afef4d27092bd738d33fd825e3322bc901449184e51c15624bf"
+    },
+    "crates/nvwa-cli/tests/discovery.rs": {
+      "bytes": 10561,
+      "sha256": "0707c25bbe173e979fadc13a1ed0093c0ab653a62b77e1624c03e1e09bf8b87b"
+    },
+    "crates/nvwa-cli/tests/forearm_form.rs": {
+      "bytes": 4084,
+      "sha256": "2dc05cbe36d0d6f42b8e0571b7a869bffcc6bbe0c149294869b5204095a47b2d"
+    },
+    "crates/nvwa-cli/tests/hand_size.rs": {
+      "bytes": 4125,
+      "sha256": "9cfdf97457bedf91a486998ee11719caa00daa2f3075e8b228b9eb1de84d91ff"
+    },
+    "crates/nvwa-cli/tests/hip_contour.rs": {
+      "bytes": 3884,
+      "sha256": "cce45c9f308862528cb47dcfb5fc8df4199d6c05018bb26768d27bbfcbb9bf1b"
+    },
+    "crates/nvwa-cli/tests/legs.rs": {
+      "bytes": 3994,
+      "sha256": "ec9e5efe03aa81f9cdf16ed5b666943b66bc38a0729d2828f0b3cfbf9de59a37"
+    },
+    "crates/nvwa-cli/tests/lower_face_squareness.rs": {
+      "bytes": 7853,
+      "sha256": "02d4c378f62f63c7b31b3b410727c7dbbb8d6e3bc594062dcc87d1fc8f856b38"
+    },
+    "crates/nvwa-cli/tests/motion_query.rs": {
+      "bytes": 3137,
+      "sha256": "2a80da69793c9089884b7750e66b2af7446617da80affd08ba90f731b18b3c45"
+    },
+    "crates/nvwa-cli/tests/offline.rs": {
+      "bytes": 7970,
+      "sha256": "fe25e2b452e955fa9781fc080453edc0a7d917d448a748475ccdef35159546c5"
+    },
+    "crates/nvwa-cli/tests/reference_motion.rs": {
+      "bytes": 5012,
+      "sha256": "bbcae96ecf44421d0e59c40fdd683886d75a6f39edae99913bc0f19b8afd736d"
+    },
+    "crates/nvwa-cli/tests/response_transport.rs": {
+      "bytes": 3458,
+      "sha256": "1e36e6b5c0d06718423369762850c81e2c97e27de199a49704819530aeb039c9"
+    },
+    "crates/nvwa-cli/tests/running.rs": {
+      "bytes": 3281,
+      "sha256": "ef64b4d40b5e23e850b166bc807452dc1f7974714e4e3d3d1b6f2e50e155ba32"
+    },
+    "crates/nvwa-cli/tests/sequence.rs": {
+      "bytes": 4068,
+      "sha256": "b5fd7f3572a64a81f608a1b3faeffc74b9adaf4af4bb04f16ca6523da067024d"
+    },
+    "crates/nvwa-cli/tests/shoulder_form.rs": {
+      "bytes": 4104,
+      "sha256": "c8cbc9c26c44a6a68eb59c2c7ee8d0f9cbcc53f7174229f73c72a4e0f5ba7e63"
+    },
+    "crates/nvwa-cli/tests/travel_query.rs": {
+      "bytes": 6612,
+      "sha256": "93a40cd1202f3e8d0231e6ee972a5a4a372d33b2151dcf7d81ccbba25f709d3e"
+    },
+    "crates/nvwa-cli/tests/upper_arm_muscle.rs": {
+      "bytes": 4187,
+      "sha256": "3e75b4a7e4eab7378bdb0c15ccc69697f9efcc0dbcb1a94fe325b38239d2072a"
+    },
+    "crates/nvwa-cli/tests/upper_body.rs": {
+      "bytes": 3852,
+      "sha256": "7ac2fcf26ed0583e708e4b45225c44f93bb6322bddcee4d4b4bcd6f492d21131"
+    },
+    "crates/nvwa-cli/tests/waist.rs": {
+      "bytes": 4734,
+      "sha256": "24fc992d434c52779baf8a9f859f68ed2ad42449746794e6c4add2cbffa62293"
+    },
+    "crates/nvwa-core/src/appearance.rs": {
+      "bytes": 21201,
+      "sha256": "b693b7be73319849fb193026f182348b29f274053009d0cb24b63bb97f8a2a42"
+    },
+    "crates/nvwa-core/src/asset.rs": {
+      "bytes": 6011,
+      "sha256": "ec90b518f8dd95fb1aa47c236f52518b41ab4afe3bb84c70cb93efc7b7485e3f"
+    },
+    "crates/nvwa-core/src/b1.rs": {
+      "bytes": 60087,
+      "sha256": "1253555ff6030ffa78c13fdbde640671297b6dd17694f7952d7aaac6a7aa22f7"
+    },
+    "crates/nvwa-core/src/b1_character_tests.rs": {
+      "bytes": 7257,
+      "sha256": "a05e433282c053bfef5e12f199794ae76e746e84f4dca7fd74650e16f8f9f65d"
+    },
+    "crates/nvwa-core/src/b1_motion_tests.rs": {
+      "bytes": 3961,
+      "sha256": "1122c33f27962c456d3bfe95179afed4bd9073e1c3142759b0ae965759204b0e"
+    },
+    "crates/nvwa-core/src/bounded_history_tests.rs": {
+      "bytes": 13337,
+      "sha256": "4d20f38f8ee7f270a469af64ab0de0c357d8b5e0e6d73a8abd856c3840762e3b"
+    },
+    "crates/nvwa-core/src/lib.rs": {
+      "bytes": 48993,
+      "sha256": "917c0d53dbd0f9a437d847bea2167218359d158e6f7787b8009470812c244865"
+    },
+    "crates/nvwa-core/src/reference_motion.rs": {
+      "bytes": 11852,
+      "sha256": "1aaf5ebfc61a70376ab64c57bcfb236ea85b5c2df7731ab75e2c00b2b5f6aeaf"
+    },
+    "crates/nvwa-core/src/running.rs": {
+      "bytes": 12552,
+      "sha256": "674adb7b7bd59b54ce5e684f85f13c82118bbaa748ff572bc5c57883f88a71fe"
+    },
+    "crates/nvwa-core/src/stage.rs": {
+      "bytes": 7637,
+      "sha256": "909eb31519fdf7b5b17bc9f3c094cade7d0f1c5e41be075ea8fba3121e63a211"
+    },
+    "crates/nvwa-core/tests/appearance.rs": {
+      "bytes": 25791,
+      "sha256": "9a7dc59d36da932db212039f3f0181571d87d435bf9e447e22efca9bdb1fa5c7"
+    },
+    "crates/nvwa-core/tests/arm_proportions.rs": {
+      "bytes": 3664,
+      "sha256": "3b17080c2b15c1558938e744fbf34eaf328940ad6e5e3ef28d38906fd0431bc4"
+    },
+    "crates/nvwa-core/tests/b1.rs": {
+      "bytes": 15804,
+      "sha256": "d1ca91f3a6b587efb3915b8c2ed55a0d6d7d8ad515db22dc1f83a389cc9b047a"
+    },
+    "crates/nvwa-core/tests/belly_shape.rs": {
+      "bytes": 3854,
+      "sha256": "3c45371bb1a4b72b50efced1acbf70dff18ecd26371693d90260de8c5710c487"
+    },
+    "crates/nvwa-core/tests/chest_placement.rs": {
+      "bytes": 3655,
+      "sha256": "1bfb8269d706c136f6a416a3b1ed2467875238e5f661416465d83193a284ab8e"
+    },
+    "crates/nvwa-core/tests/contour.rs": {
+      "bytes": 7919,
+      "sha256": "5f7e0ea83da3fcfd29b732609128926f0f093b51d999c3ba2de0abd4d567d02f"
+    },
+    "crates/nvwa-core/tests/forearm_form.rs": {
+      "bytes": 3578,
+      "sha256": "bd8c116b29e90ca0c914a433062ef3688239e43a54279bb9ed56147abebe88f8"
+    },
+    "crates/nvwa-core/tests/hand_size.rs": {
+      "bytes": 3798,
+      "sha256": "1a5771eccd5ba0104f97e504d7db93ddb74cb1041f11952b144b7ee231670b7a"
+    },
+    "crates/nvwa-core/tests/hip_contour.rs": {
+      "bytes": 3568,
+      "sha256": "87698443949a7274946fcd49f9d6570b0eba92ce9879fd29fb1db036b34eb628"
+    },
+    "crates/nvwa-core/tests/legs.rs": {
+      "bytes": 4140,
+      "sha256": "9ca3d08cb4c0171eeccfc6ca0563dd9f10eafee96a67f09e8c6dcafdf847f8cd"
+    },
+    "crates/nvwa-core/tests/lower_face_squareness.rs": {
+      "bytes": 7683,
+      "sha256": "67fbedd8de52b0af5f561c1274bc13820be3862130e8cf36126ab6284f366170"
+    },
+    "crates/nvwa-core/tests/shoulder_form.rs": {
+      "bytes": 3610,
+      "sha256": "81109a57d5de748c7319d8491cb839237e04b625f0b208b892c0ec058999af3d"
+    },
+    "crates/nvwa-core/tests/stage.rs": {
+      "bytes": 6871,
+      "sha256": "f26ce5f455b57a0bfbc297e87eb1cdb49151f89b911169f0a97fac26fc67c934"
+    },
+    "crates/nvwa-core/tests/transactions.rs": {
+      "bytes": 16941,
+      "sha256": "974a321709a6220a1ea04c14b401477c4c6d96638485413f4f3a4541dc837d6c"
+    },
+    "crates/nvwa-core/tests/upper_arm_muscle.rs": {
+      "bytes": 3642,
+      "sha256": "57515fffc1a155fadd6f1599a1481817a0ab474a6621a6994bc999653591df6a"
+    },
+    "crates/nvwa-core/tests/upper_body.rs": {
+      "bytes": 3588,
+      "sha256": "aeda8c884dbc5524d13489b4d24972e6fb2e51a8b790d5f82a0fcd713d49a343"
+    },
+    "crates/nvwa-core/tests/waist.rs": {
+      "bytes": 5576,
+      "sha256": "caa8d482f34458708cf16aefac320101346f8b3eb161927bdd8bbca6406a8170"
+    },
+    "crates/nvwa-runtime/src/appearance/assets.rs": {
+      "bytes": 16788,
+      "sha256": "6644d96100dccd48678c2a16dcf7b9cac7dc86dcef57dae5a9b4c13715c144ed"
+    },
+    "crates/nvwa-runtime/src/appearance/geometry.rs": {
+      "bytes": 18682,
+      "sha256": "91263726c0c7ac121bd74eb44e29380712abed5ba2fb6cb3a139021099b13ec6"
+    },
+    "crates/nvwa-runtime/src/appearance/mod.rs": {
+      "bytes": 68465,
+      "sha256": "32a56244195e2ea179ac5fcdb81bbe80dfdd9b394eece942cd048080db5df7db"
+    },
+    "crates/nvwa-runtime/src/b1.rs": {
+      "bytes": 271338,
+      "sha256": "ae74c249a49e94ad797d68664af176c0e23c2736de868b53a2c80746c8dfc15e"
+    },
+    "crates/nvwa-runtime/src/b1/cpu_render.rs": {
+      "bytes": 18802,
+      "sha256": "61f2a7ef24b586275bcafee56c08f1899cfcd504ef48c86a901ce38d930bf7cd"
+    },
+    "crates/nvwa-runtime/src/b1/foot_clearance.rs": {
+      "bytes": 6105,
+      "sha256": "ba94bd9ed60f3612882e96f85068b9347ebb57b6d379219e1d1ad58bf36f0a36"
+    },
+    "crates/nvwa-runtime/src/b1/sole_measurement.rs": {
+      "bytes": 11458,
+      "sha256": "967c16f95c0d94cfa99665b1799579a0fa9f8b9f21b6f36449f412f88991f82f"
+    },
+    "crates/nvwa-runtime/src/b1_contour_tests.rs": {
+      "bytes": 33808,
+      "sha256": "c962ebfd2ff981bc80130be9e4530f0aa755efd2981b214e2f33439ea74896e5"
+    },
+    "crates/nvwa-runtime/src/b1_level1_display.rs": {
+      "bytes": 14808,
+      "sha256": "72a0b33d99da43cbc4a905d8b57e693b026b1a75f10b8a27c633edb951db1bea"
+    },
+    "crates/nvwa-runtime/src/b1_level1_geometry.rs": {
+      "bytes": 7634,
+      "sha256": "39f6d1f29289da9002fbb67b2d825dad507612ee3c3aeed7f4b1173282ae643c"
+    },
+    "crates/nvwa-runtime/src/b1_lower_contour_tests.rs": {
+      "bytes": 16694,
+      "sha256": "67859583ae5d24d30e099a8a388e65fbe147e1fd2eb002b98adaa58b2b33b611"
+    },
+    "crates/nvwa-runtime/src/b1_running.rs": {
+      "bytes": 27415,
+      "sha256": "04dbd8d9cbe8ddff884cd6b47bf3a3c95efdfb975109f4df28912a6a2bd4d0c8"
+    },
+    "crates/nvwa-runtime/src/b1_web.rs": {
+      "bytes": 3709,
+      "sha256": "211146e76bb5d7d268e7b8fdfbcfa43bd7f30f88bfd2018c3568a0dcac4e8f65"
+    },
+    "crates/nvwa-runtime/src/lib.rs": {
+      "bytes": 86452,
+      "sha256": "837838f3b908fb398d1ac56b9c036851ba393c7e0f3ab8f5ec705b42645285f2"
+    },
+    "crates/nvwa-runtime/src/loading_tests.rs": {
+      "bytes": 32030,
+      "sha256": "fd6ecb9039ddcaeb3caa4da38a985f7b904d06bdd75bf9624d5a074b4b472804"
+    },
+    "crates/nvwa-runtime/src/stage.rs": {
+      "bytes": 22065,
+      "sha256": "e661eb0f71c2626e736fd5b3bc2126aff7500c5f42cb574e5e03b722ed77edbb"
+    },
+    "crates/nvwa-runtime/src/stalled_http_tests.rs": {
+      "bytes": 14338,
+      "sha256": "7fa3c0055bc39e04f47f3f3f2cb532f4d2aac9945a89c5dcc625fc3feebe9b55"
+    }
+  },
+  "helper_template": {
+    "bytes": 8644,
+    "template_sha256": "8edc51c8aee1773a2dc1d74c4c585bac3346e18b2a58f0bf901f25ceae3af37e"
+  }
+}

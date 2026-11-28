@@ -6,7 +6,7 @@ use crate::{
     EditorState, RuntimeStatus,
     b1::{
         AppearanceFit, AppearanceFrame, appearance_fit, appearance_frame, appearance_identity,
-        last_display_frame,
+        last_display_frame, uses_fitted_publication, validate_fitted_publication,
     },
 };
 use bevy::{
@@ -677,7 +677,7 @@ pub(super) fn update(world: &mut World) {
     if world
         .resource::<EditorState>()
         .visible_document()
-        .is_some_and(|d| d.profile.backend.is_b1_running())
+        .is_some_and(uses_fitted_publication)
     {
         return;
     }
@@ -801,9 +801,9 @@ pub fn appearance_snapshot(world: &mut World) -> Result<Value, String> {
     if world
         .resource::<EditorState>()
         .visible_document()
-        .is_some_and(|d| d.profile.backend.is_b1_running())
+        .is_some_and(uses_fitted_publication)
     {
-        crate::b1_running_observation(world)?;
+        validate_fitted_publication(world)?;
         let frame = appearance_frame(world)?;
         let requested = world
             .resource::<EditorState>()
